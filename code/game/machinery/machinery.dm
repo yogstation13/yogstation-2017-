@@ -465,7 +465,7 @@ Class Procs:
 	return 0
 
 /obj/machinery/proc/display_parts(mob/user)
-	to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
+	to_chat(user, "<span class='notice'>It contains the following parts:</span>")
 	for(var/obj/item/C in component_parts)
 		to_chat(user, "<span class='notice'>\icon[C] [C.name]</span>")
 

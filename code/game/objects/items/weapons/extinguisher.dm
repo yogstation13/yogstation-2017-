@@ -62,7 +62,7 @@
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
 	if(reagents.total_volume)
-		to_chat(user, "It contains [round(reagents.total_volume)] units.")
+		to_chat(user, "It contains [round(reagents.total_volume)] unit\s.")
 	else
 		to_chat(user, "It is empty.")
 

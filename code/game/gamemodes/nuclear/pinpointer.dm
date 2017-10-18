@@ -72,7 +72,7 @@
 	..()
 	for(var/obj/machinery/nuclearbomb/bomb in machines)
 		if(bomb.timing)
-			to_chat(user, "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft]")
+			to_chat(user, "Extreme danger.  Arming signal detected.   Time remaining: [bomb.timeleft].")
 
 
 /obj/item/weapon/pinpointer/advpinpointer

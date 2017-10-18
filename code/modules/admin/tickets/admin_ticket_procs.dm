@@ -191,7 +191,7 @@
 			to_process += M
 
 	for(var/client/C in to_process)
-		to_chat(C, "<span class='ticket-status'>-- [get_view_link(C)] has been set '<b>[resolved ? "resolved" : "unresolved"]</b>' by [key_name_params(usr, is_admin(C), is_admin(C))]</span>")
+		to_chat(C, "<span class='ticket-status'>-- [get_view_link(C)] has been set to '<b>[resolved ? "resolved" : "unresolved"]</b>' by [key_name_params(usr, is_admin(C), is_admin(C))]</span>")
 
 	if(resolved)
 		log_admin("Ticket #[ticket_id] marked as resolved by [get_fancy_key(usr)].")

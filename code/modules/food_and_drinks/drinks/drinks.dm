@@ -273,7 +273,7 @@
 		..()
 		return
 
-	visible_message("<span class='notice'>[user] cracks open [src]!</span>", "<span class='notice'>You crack open a can of [src]!</span>")
+	user.visible_message("<span class='notice'>[user] cracks open [src]!</span>", "<span class='notice'>You crack open a can of [src]!</span>")
 	playsound(loc, 'sound/effects/opencan.ogg', rand(5,15), 1)
 	cracked = TRUE
 

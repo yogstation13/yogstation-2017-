@@ -39,7 +39,7 @@
 
 /obj/structure/reagent_dispensers/examine(mob/user)
 	..()
-	to_chat(user, "It contains [reagents.total_volume] units.")
+	to_chat(user, "It contains [reagents.total_volume] unit\s.")
 
 //Dispensers
 /obj/structure/reagent_dispensers/watertank

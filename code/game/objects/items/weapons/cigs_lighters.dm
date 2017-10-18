@@ -505,7 +505,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			hitsound = 'sound/items/welder.ogg'
 			attack_verb = list("burnt", "singed")
 			if(!istype(src, /obj/item/weapon/lighter/greyscale))
-				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
+				user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and light [src] in one smooth movement.</span>")
 			else
 				var/mob/living/carbon/human/H = user
 				var/prot = 0
@@ -515,7 +515,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 						prot = (G.max_heat_protection_temperature > 360) // lazy code. nothing else seemed to work as properly as this though
 
 				if(!istype(src, /obj/item/weapon/lighter/greyscale))
-					user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and lights [src] in one smooth movement.</span>")
+					user.visible_message("Without even breaking stride, [user] flips open and lights [src] in one smooth movement.", "<span class='notice'>Without even breaking stride, you flip open and light [src] in one smooth movement.</span>")
 				else
 					if(prot > 0)
 						user.visible_message("After a few attempts, [user] manages to light [src], without burning themself.", "<span class='notice'>After a few attempts, you manage to light [src]. Your fire-resistant gloves shield you from burning yourself.</span>")
@@ -650,7 +650,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/capacity = 5
 
 /obj/item/weapon/ashtray/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] dumps the contents of the [src] into his mouth!</span>")
+	user.visible_message("<span class='suicide'>[user] dumps the contents of [src] into his mouth!</span>")
 	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
 	return (TOXLOSS)
 
@@ -675,7 +675,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!amount_of_stubs)
 		return
 	else
-		to_chat(user, "<span class='notice'>You empty the [src] onto the ground.</span>")
+		to_chat(user, "<span class='notice'>You empty [src] onto the ground.</span>")
 		new /obj/effect/decal/cleanable/ash(get_turf(src))
 		amount_of_stubs = 0
 		update_icon()
