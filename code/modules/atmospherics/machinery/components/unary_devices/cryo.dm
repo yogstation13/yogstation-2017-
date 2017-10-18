@@ -344,6 +344,7 @@
 		occupant_overlay.pixel_y--
 	add_overlay(occupant_overlay)
 	add_overlay("cover-on")
-	addtimer(src, "run_bob_anim", 7, TIMER_UNIQUE, anim_up, occupant_overlay) //hey yog your addtimer system sucks. sincerely, a /tg/coder.
+	// TODO: Update our timer system and change this to TIMER_UNIQUE
+	addtimer(src, "run_bob_anim", 7, TIMER_NORMAL, anim_up, occupant_overlay) //hey yog your addtimer system sucks. sincerely, a /tg/coder.
 
 #undef CRYOMOBS
