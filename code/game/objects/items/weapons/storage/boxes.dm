@@ -33,17 +33,17 @@
 /obj/item/weapon/storage/box/attack_self(mob/user)
 	..()
 	if(contents.len)
-		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
+		to_chat(user, "<span class='warning'>You can't fold this box with items still inside!</span>")
 	var/obj/item/I = unfold()
 	if(I)
 		user.put_in_hands(I)
-		user << "<span class='notice'>You fold [src] flat.</span>"
+		to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
 
 /obj/item/weapon/storage/box/attack_self_tk(mob/user)
 	if(contents.len)
-		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
+		to_chat(user, "<span class='warning'>You can't fold this box with items still inside!</span>")
 	if(unfold())
-		user << "<span class='notice'>You fold [src] flat.</span>"
+		to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
 
 /obj/item/weapon/storage/box/proc/unfold()
 	if(!foldable || contents.len || !ispath(foldable))
@@ -534,7 +534,7 @@
 
 /obj/item/weapon/storage/box/matches/attackby(obj/item/weapon/match/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/match))
-		user << "<span class='notice'>You light the [W].</span>"
+		to_chat(user, "<span class='notice'>You light the [W].</span>")
 		W.matchignite()
 
 /obj/item/weapon/storage/box/lights
@@ -682,17 +682,17 @@
 	if(istype(W, /obj/item/weapon/pen))
 		//if a pen is used on the sack, dialogue to change its design appears
 		if(contents.len)
-			user << "<span class='warning'>You can't modify this [src] with items still inside!</span>"
+			to_chat(user, "<span class='warning'>You can't modify this [src] with items still inside!</span>")
 			return
 		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILE, "Cancel")
 		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) as anything in designs
 		if(get_dist(usr, src) > 1)
-			usr << "<span class='warning'>You have moved too far away!</span>"
+			to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
 			return
 		var/choice = designs.Find(switchDesign)
 		if(design == designs[choice] || designs[choice] == "Cancel")
 			return 0
-		usr << "<span class='notice'>You make some modifications to the [src] using your pen.</span>"
+		to_chat(usr, "<span class='notice'>You make some modifications to the [src] using your pen.</span>")
 		design = designs[choice]
 		icon_state = "paperbag_[design]"
 		item_state = "paperbag_[design]"
@@ -891,7 +891,7 @@
 /obj/item/weapon/storage/box/chameleon/examine(mob/user)
 	..()
 	if(user.mind in ticker.mode.traitors)
-		user << "<span class='notice'>Activate to camouflage the [src.name]</span>"
+		to_chat(user, "<span class='notice'>Activate to camouflage the [src.name]</span>")
 
 /obj/item/weapon/storage/box/chameleon/attack_self(mob/user)
 	return

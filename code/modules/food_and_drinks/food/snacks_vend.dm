@@ -40,7 +40,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/chips/attack(mob/M, mob/user)
 	if(ishuman(M))
 		if(!open)
-			user << "<span class='warning'>You haven't opened the bag yet!</span>"
+			to_chat(user, "<span class='warning'>You haven't opened the bag yet!</span>")
 			return
 	return ..()
 

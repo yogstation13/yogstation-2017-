@@ -3,4 +3,4 @@
 	set category = "Preferences"
 	set desc = "Environments in this game and your characters condition can affect the sound you hear. Toggle whether you want that off or on."
 	prefs.soundenv = !prefs.soundenv
-	src << "Environments will [prefs.soundenv ? "now affect the sound you hear" : "no longer affect the sound you hear"]."
+	to_chat(src, "Environments will [prefs.soundenv ? "now affect the sound you hear" : "no longer affect the sound you hear"].")

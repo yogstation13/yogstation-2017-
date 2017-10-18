@@ -29,7 +29,7 @@
 
 /obj/structure/windoor_assembly/examine(mob/user)
 	..()
-	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
 
 /obj/structure/windoor_assembly/New(dir=NORTH)
 	..()
@@ -85,7 +85,7 @@
 
 					if(do_after(user, 40/W.toolspeed, target = src))
 						if(!src || !WT.isOn()) return
-						user << "<span class='notice'>You disassemble the windoor assembly.</span>"
+						to_chat(user, "<span class='notice'>You disassemble the windoor assembly.</span>")
 						var/obj/item/stack/sheet/rglass/RG = new (get_turf(src), 5)
 						RG.add_fingerprint(user)
 						if(secure)
@@ -99,7 +99,7 @@
 			if(istype(W, /obj/item/weapon/wrench) && !anchored)
 				for(var/obj/machinery/door/window/WD in loc)
 					if(WD.dir == dir)
-						user << "<span class='warning'>There is already a windoor in that location!</span>"
+						to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
 						return
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "<span class='notice'>You start to secure the windoor assembly to the floor...</span>")
@@ -109,9 +109,9 @@
 						return
 					for(var/obj/machinery/door/window/WD in loc)
 						if(WD.dir == dir)
-							user << "<span class='warning'>There is already a windoor in that location!</span>"
+							to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
 							return
-					user << "<span class='notice'>You secure the windoor assembly.</span>"
+					to_chat(user, "<span class='notice'>You secure the windoor assembly.</span>")
 					anchored = 1
 					if(secure)
 						name = "secure anchored windoor assembly"
@@ -126,7 +126,7 @@
 				if(do_after(user, 40/W.toolspeed, target = src))
 					if(!src || !anchored)
 						return
-					user << "<span class='notice'>You unsecure the windoor assembly.</span>"
+					to_chat(user, "<span class='notice'>You unsecure the windoor assembly.</span>")
 					anchored = 0
 					if(secure)
 						name = "secure windoor assembly"
@@ -137,16 +137,16 @@
 			else if(istype(W, /obj/item/stack/sheet/plasteel) && !secure)
 				var/obj/item/stack/sheet/plasteel/P = W
 				if(P.amount < 2)
-					user << "<span class='warning'>You need more plasteel to do this!</span>"
+					to_chat(user, "<span class='warning'>You need more plasteel to do this!</span>")
 					return
-				user << "<span class='notice'>You start to reinforce the windoor with plasteel...</span>"
+				to_chat(user, "<span class='notice'>You start to reinforce the windoor with plasteel...</span>")
 
 				if(do_after(user,40, target = src))
 					if(!src || secure)
 						return
 
 					P.use(2)
-					user << "<span class='notice'>You reinforce the windoor.</span>"
+					to_chat(user, "<span class='notice'>You reinforce the windoor.</span>")
 					secure = 1
 					if(anchored)
 						name = "secure anchored windoor assembly"
@@ -162,9 +162,9 @@
 						return
 					var/obj/item/stack/cable_coil/CC = W
 					if(!CC.use(1))
-						user << "<span class='warning'>You need more cable to do this!</span>"
+						to_chat(user, "<span class='warning'>You need more cable to do this!</span>")
 						return
-					user << "<span class='notice'>You wire the windoor.</span>"
+					to_chat(user, "<span class='notice'>You wire the windoor.</span>")
 					state = "02"
 					if(secure)
 						name = "secure wired windoor assembly"
@@ -184,7 +184,7 @@
 					if(!src || state != "02")
 						return
 
-					user << "<span class='notice'>You cut the windoor wires.</span>"
+					to_chat(user, "<span class='notice'>You cut the windoor wires.</span>")
 					new/obj/item/stack/cable_coil(get_turf(user), 1)
 					state = "01"
 					if(secure)
@@ -204,7 +204,7 @@
 					if(!src || electronics)
 						W.loc = src.loc
 						return
-					user << "<span class='notice'>You install the airlock electronics.</span>"
+					to_chat(user, "<span class='notice'>You install the airlock electronics.</span>")
 					name = "near finished windoor assembly"
 					electronics = W
 				else
@@ -221,7 +221,7 @@
 				if(do_after(user, 40/W.toolspeed, target = src))
 					if(!src || !electronics)
 						return
-					user << "<span class='notice'>You remove the airlock electronics.</span>"
+					to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 					name = "wired windoor assembly"
 					var/obj/item/weapon/electronics/airlock/ae
 					ae = electronics
@@ -242,7 +242,7 @@
 			//Crowbar to complete the assembly, Step 7 complete.
 			else if(istype(W, /obj/item/weapon/crowbar))
 				if(!electronics)
-					usr << "<span class='warning'>The assembly is missing electronics!</span>"
+					to_chat(usr, "<span class='warning'>The assembly is missing electronics!</span>")
 					return
 				usr << browse(null, "window=windoor_access")
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
@@ -253,7 +253,7 @@
 					if(loc && electronics)
 
 						density = 1 //Shouldn't matter but just incase
-						user << "<span class='notice'>You finish the windoor.</span>"
+						to_chat(user, "<span class='notice'>You finish the windoor.</span>")
 
 						if(secure)
 							var/obj/machinery/door/window/brigdoor/windoor = new /obj/machinery/door/window/brigdoor(loc)
@@ -313,7 +313,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	if (anchored)
-		usr << "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>"
+		to_chat(usr, "<span class='warning'>[src] cannot be rotated while it is fastened to the floor!</span>")
 		return 0
 	//if(state != "01")
 		//update_nearby_tiles(need_rebuild=1) //Compel updates before
@@ -330,7 +330,7 @@
 /obj/structure/windoor_assembly/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -346,11 +346,11 @@
 		return
 
 	if(facing == "l")
-		usr << "<span class='notice'>The windoor will now slide to the right.</span>"
+		to_chat(usr, "<span class='notice'>The windoor will now slide to the right.</span>")
 		facing = "r"
 	else
 		facing = "l"
-		usr << "<span class='notice'>The windoor will now slide to the left.</span>"
+		to_chat(usr, "<span class='notice'>The windoor will now slide to the left.</span>")
 
 	update_icon()
 	return

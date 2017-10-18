@@ -417,7 +417,7 @@
 	W.update_label()
 
 
-	H << "<span class='alert'>You are NOT security. You are NOT a head of department. You will NOT challenge a head of department and nor will you meddle in securities affairs. You have a gun ONLY to defend your valuable all-access ID. If you see criminals, you MAY stun them, and take the body they are holding. Nothing more. You MAY report their location, Nothing more. You are NOT security. Your job is to recover bodies to the morgue to ensure more players get to play a fair game. ( for more information https://wiki.yogstation.net/index.php?title=Recovery_Agent_manual )</span>"
+	to_chat(H, "<span class='alert'>You are NOT security. You are NOT a head of department. You will NOT challenge a head of department and nor will you meddle in securities affairs. You have a gun ONLY to defend your valuable all-access ID. If you see criminals, you MAY stun them, and take the body they are holding. Nothing more. You MAY report their location, Nothing more. You are NOT security. Your job is to recover bodies to the morgue to ensure more players get to play a fair game. ( for more information https://wiki.yogstation.net/index.php?title=Recovery_Agent_manual )</span>")
 
 
 /datum/outfit/recovery_throwback // for adminbuse.
