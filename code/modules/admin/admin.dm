@@ -568,9 +568,9 @@ var/global/BSACooldown = 0
 	set name="Toggle Entering"
 	enter_allowed = !( enter_allowed )
 	if (!( enter_allowed ))
-		world << "<B>New players may no longer enter the game.</B>"
+		to_chat(world, "<B>New players may no longer enter the game.</B>")
 	else
-		world << "<B>New players may now enter the game.</B>"
+		to_chat(world, "<B>New players may now enter the game.</B>")
 	log_admin("[key_name(usr)] toggled new player game entering.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] toggled new player game entering.</span>")
 	world.update_status()
@@ -697,9 +697,9 @@ var/global/BSACooldown = 0
 	set name="Toggle tinted welding helmes"
 	tinted_weldhelh = !( tinted_weldhelh )
 	if (tinted_weldhelh)
-		world << "<B>The tinted_weldhelh has been enabled!</B>"
+		to_chat(world, "<B>The tinted_weldhelh has been enabled!</B>")
 	else
-		world << "<B>The tinted_weldhelh has been disabled!</B>"
+		to_chat(world, "<B>The tinted_weldhelh has been disabled!</B>")
 	log_admin("[key_name(usr)] toggled tinted_weldhelh.")
 	message_admins("[key_name_admin(usr)] toggled tinted_weldhelh.")
 	feedback_add_details("admin_verb","TTWH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
