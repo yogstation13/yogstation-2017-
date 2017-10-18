@@ -19,7 +19,7 @@
 
 /datum/status_effect/z_level_lock/proc/kill()
 	if(message)
-		owner << message
+		to_chat(owner, message)
 	owner.gib(TRUE, TRUE)
 
 /datum/status_effect/z_level_lock/wizard_academy

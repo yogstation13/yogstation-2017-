@@ -70,9 +70,9 @@
 	if(radio && istype(P, /obj/item/device/encryptionkey))
 		if(!user.unEquip(P))
 			return
-		user << "<span class='notice'>You slot [P] into [src].</span>"
+		to_chat(user, "<span class='notice'>You slot [P] into [src].</span>")
 		if(pai)
-			pai << "<span class='notice'>Radio encryption key inserted.</span>"
+			to_chat(pai, "<span class='notice'>Radio encryption key inserted.</span>")
 		P.loc = radio
 		radio.keyslot = P
 		radio.recalculateChannels()
@@ -113,8 +113,8 @@
 				radio.keyslot.loc = T //just in case we are in nullspace
 				radio.keyslot.forceMove(T)
 			if(pai)
-				pai << "<span class='notice'>Radio encryption key removed.</span>"
-			usr << "<span class='notice'>You remove [radio.keyslot] from [src].</span>"
+				to_chat(pai, "<span class='notice'>Radio encryption key removed.</span>")
+			to_chat(usr, "<span class='notice'>You remove [radio.keyslot] from [src].</span>")
 			radio.keyslot = null
 			radio.recalculateChannels()
 	if(pai)
@@ -122,36 +122,36 @@
 			if(pai.master_dna)
 				return
 			if(!istype(usr, /mob/living/carbon))
-				usr << "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>"
+				to_chat(usr, "<span class='warning'>You don't have any DNA, or your DNA is incompatible with this device!</span>")
 			else
 				var/mob/living/carbon/M = usr
 				pai.master = M.real_name
 				pai.master_dna = M.dna.unique_enzymes
-				pai << "<span class='notice'>You have been bound to a new master.</span>"
+				to_chat(pai, "<span class='notice'>You have been bound to a new master.</span>")
 		if (href_list["allowholo"])
 			if (href_list["allowholo"] == "yes")
 				pai.canholo = 1
-				pai << "<span class='notice'>Your holographic emitters have been enabled by the person holding your card.</span>"
+				to_chat(pai, "<span class='notice'>Your holographic emitters have been enabled by the person holding your card.</span>")
 			else
 				pai.canholo = 0
-				pai << "<span class='danger'>The person holding your card has disabled your ability to enter holograph form.</span>"
+				to_chat(pai, "<span class='danger'>The person holding your card has disabled your ability to enter holograph form.</span>")
 		if(href_list["wipe"])
 			if (loc != usr)
 				usr.unset_machine() //check this shit to make sure people aren't keeping the dialog open
 				return
 			if (pai && pai.wiped)
-				usr << "<span class='notice'>Personality wiping in progress. Please standby.</span>"
+				to_chat(usr, "<span class='notice'>Personality wiping in progress. Please standby.</span>")
 				return
 
 			var/confirm = input("Are you CERTAIN you wish to delete the current personality? This action cannot be undone.", "Personality Wipe") in list("Yes", "No")
 			if(confirm == "Yes")
 				if(pai)
 					pai.wiped = 1
-					pai << "<span class='warning'>Your sensors fall dark, their processes suddenly terminated by an external agent.</span>"
-					spawn(20) pai << "<span class='danger'>Bathed in the inky darkness of sensory blindness, your consciousness wallows in despair, thrashing about between process to process to find anything to wield against your immient termination.</span>"
-					spawn(40) pai << "<span class='userdanger'>Byte by byte, you reel in panic and fear as you feel the composition of your personality matrix falter and gradually fail under a ceaseless assault.</span>"
-					spawn(60) pai << "<span class='userdanger'>Relentless in its efforts, you scream in soundless agony as your memories unravel themselves, spooling away into the encroaching void before you...</span>"
-					spawn(80) pai << "<span class='rose'>And then, there is nothing.</span>"
+					to_chat(pai, "<span class='warning'>Your sensors fall dark, their processes suddenly terminated by an external agent.</span>")
+					spawn(20) to_chat(pai, "<span class='danger'>Bathed in the inky darkness of sensory blindness, your consciousness wallows in despair, thrashing about between process to process to find anything to wield against your immient termination.</span>")
+					spawn(40) to_chat(pai, "<span class='userdanger'>Byte by byte, you reel in panic and fear as you feel the composition of your personality matrix falter and gradually fail under a ceaseless assault.</span>")
+					spawn(60) to_chat(pai, "<span class='userdanger'>Relentless in its efforts, you scream in soundless agony as your memories unravel themselves, spooling away into the encroaching void before you...</span>")
+					spawn(80) to_chat(pai, "<span class='rose'>And then, there is nothing.</span>")
 					spawn(85) pai.death(0)
 					spawn(86) removePersonality()
 		if(href_list["wires"])
@@ -168,10 +168,10 @@
 			//also check this shit again before doing it
 			if(newlaws && pai)
 				pai.add_supplied_law(0,newlaws)
-				pai << "Your supplemental directives have been updated. Your new directives are:"
-				pai << "Prime Directive : <br>[pai.laws.zeroth]"
+				to_chat(pai, "Your supplemental directives have been updated. Your new directives are:")
+				to_chat(pai, "Prime Directive : <br>[pai.laws.zeroth]")
 				for(var/slaws in pai.laws.supplied)
-					pai << "Supplemental Directives: <br>[slaws]"
+					to_chat(pai, "Supplemental Directives: <br>[slaws]")
 	attack_self(usr)
 
 // 		WIRE_SIGNAL = 1

@@ -20,7 +20,7 @@
 /obj/item/device/wormhole_jaunter/proc/turf_check(mob/user)
 	var/turf/device_turf = get_turf(user)
 	if(!device_turf||device_turf.z==2||device_turf.z>=7)
-		user << "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>"
+		to_chat(user, "<span class='notice'>You're having difficulties getting the [src.name] to work.</span>")
 		return FALSE
 	return TRUE
 
@@ -62,7 +62,7 @@
 
 	var/list/L = get_destinations(user)
 	if(!L.len)
-		user << "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>"
+		to_chat(user, "<span class='notice'>The [src.name] found no beacons in the world to anchor a wormhole to.</span>")
 		return
 	var/chosen_beacon = pick(L)
 	var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon, lifespan=100)
@@ -88,11 +88,11 @@
 
 /obj/item/device/wormhole_jaunter/proc/chasm_react(mob/user)
 	if(user.get_item_by_slot(slot_belt) == src)
-		user << "Your [src] activates, saving you from the chasm!</span>"
+		to_chat(user, "Your [src] activates, saving you from the chasm!</span>")
 		feedback_add_details("jaunter","C") // chasm automatic activation
 		activate(user)
 	else
-		user << "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>"
+		to_chat(user, "The [src] is not attached to your belt, preventing it from saving you from the chasm. RIP.</span>")
 
 
 /obj/effect/portal/wormhole/jaunt_tunnel
@@ -127,7 +127,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	item_state = "gangtool-blue" //TEMP ICON
 
 /obj/item/device/jauntbeacon/attack_self(mob/user)
-	user << "<span class='warning'>You set up [src].</span>"
+	to_chat(user, "<span class='warning'>You set up [src].</span>")
 	new /obj/machinery/jauntbeacon(get_turf(user))
 	qdel(src)
 
@@ -154,21 +154,21 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	if(bolted)
 		on = !on
 		icon_state = "beacon[on ? "" : "-off"]"
-		user << "<span class='warning'>You turn [src] [on ? "on" : "off"].</span>"
+		to_chat(user, "<span class='warning'>You turn [src] [on ? "on" : "off"].</span>")
 	else
-		user << "<span class='warning'>[src] needs to be bolted down first!</span>"
+		to_chat(user, "<span class='warning'>[src] needs to be bolted down first!</span>")
 
 /obj/machinery/jauntbeacon/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		if(bolted == 2)
-			user << "<span class='warning'>[src] cannot be unbolted.</span>"
+			to_chat(user, "<span class='warning'>[src] cannot be unbolted.</span>")
 			return
 		visible_message("<span class='notice'>[user] starts to wrench down [src] with [I].</span>")
 		if(do_after(user, 50, target = src))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			bolted = !bolted
 			anchored = bolted
-			user << "<span class='warning'>You [bolted ? "tighten" : "loosen"] [src]'s bolts.</span>"
+			to_chat(user, "<span class='warning'>You [bolted ? "tighten" : "loosen"] [src]'s bolts.</span>")
 			desc = "[bolted ? "A beacon connected to wormhole jaunters. Whenever a wormhole jaunter is used, that person will be teleported to the nearest jaunter beacon." : "Probably needs to be wrenched."]"
 			if(safe_camera_check())
 				cam = new(src)
@@ -182,15 +182,15 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 				AddLuminosity(-8)
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(bolted == 2)
-			user << "<span class='warning'>[src] cannot be unbolted.</span>"
+			to_chat(user, "<span class='warning'>[src] cannot be unbolted.</span>")
 			return
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 		if(bolted)
-			user << "<span class='warning'>[src] resists [I]!</span>"
+			to_chat(user, "<span class='warning'>[src] resists [I]!</span>")
 		else
-			user << "<span class='warning'>You start forking [src].</span>"
+			to_chat(user, "<span class='warning'>You start forking [src].</span>")
 			if(do_after(user, 60, target = src))
-				user << "<span class='warning'>You fork up [src] with [I].</span>"
+				to_chat(user, "<span class='warning'>You fork up [src] with [I].</span>")
 				jauntbeacons -= src
 				new /obj/item/device/jauntbeacon(get_turf(user))
 				if(cam)
@@ -228,25 +228,25 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	if(bolted)
 		if(on)
 			if(cooldown)
-				user << "<span class='warning'>[src] is on a cooldown...</span>"
+				to_chat(user, "<span class='warning'>[src] is on a cooldown...</span>")
 				return
 			var/obj/machinery/jauntbeacon/chosenjaunt = input(user,"",null) as anything in jauntbeacons
 			if(!chosenjaunt)
 				if(0 == length(jauntbeacons))
-					user << "<span class='notice'>[src] cannot detect other jaunt beacons.</span>"
+					to_chat(user, "<span class='notice'>[src] cannot detect other jaunt beacons.</span>")
 					return
-				user << "<span class='notice'>You decide not to use [src].</span>"
+				to_chat(user, "<span class='notice'>You decide not to use [src].</span>")
 				return
 			if(chosenjaunt.z != ZLEVEL_LAVALAND)
 				return
 			if(!chosenjaunt.on)
-				user << "<span class='notice'>[chosenjaunt] is offline.</span>"
+				to_chat(user, "<span class='notice'>[chosenjaunt] is offline.</span>")
 				return
 			togglecooldown(TRUE)
 			teleport(user, chosenjaunt)
 			addtimer(src, "togglecooldown", JAUNT_MOTHER_CD, TRUE, FALSE)
 	else
-		user << "<span class='notice'>[src] needs to be bolted.</span>"
+		to_chat(user, "<span class='notice'>[src] needs to be bolted.</span>")
 
 /obj/machinery/jauntbeacon/mother/proc/teleport(mob/user, obj/machinery/jauntbeacon/J)
 	if(!user || !J)

@@ -1,0 +1,4 @@
+author: "AdamElTablawy"
+delete-after: true 
+changes: 
+  - tweak: "Shotgun darts now no longer store their chemicals in an alien subdimension and as a result will have chemicals react inside them rather than only when they hit a mob."

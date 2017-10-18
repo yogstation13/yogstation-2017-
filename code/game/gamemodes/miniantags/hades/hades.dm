@@ -69,7 +69,7 @@
 	name = chosen
 	real_name = chosen
 
-	world << "<span class='warning'><font size=6>A [name] has entered your reality. Kneel before them.</font></span>"
+	to_chat(world, "<span class='warning'><font size=6>A [name] has entered your reality. Kneel before them.</font></span>")
 	world << 'sound/effects/pope_entry.ogg'
 
 	Appear()
@@ -115,14 +115,14 @@
 	if(world.time > lastsinPerson + sinPersonTime)
 		if(prob(fakesinPersonChance))
 			lastsinPerson = world.time
-			world << "<span class='warning'><font size=4>[pick(sinPersonsayings)]</font></span>"
+			to_chat(world, "<span class='warning'><font size=4>[pick(sinPersonsayings)]</font></span>")
 			//SUE ME
 			var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',\
 						'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',\
 						'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
 						'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',\
 						'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
-			world << pick(creepyasssounds)
+			to_chat(world, pick(creepyasssounds))
 		else
 			lastsinPerson = world.time
 			var/mob/living/carbon/human/sinPerson = pick(living_mob_list)
@@ -248,12 +248,12 @@
 			if(H)
 				if(pride_direction == FALSE)
 					user.reagents.trans_to(H, user.reagents.total_volume, 1, 1, 0)
-					user << "Your pride reflects on [H]."
-					H << "You feel insecure, taking on [user]'s burden."
+					to_chat(user, "Your pride reflects on [H].")
+					to_chat(H, "You feel insecure, taking on [user]'s burden.")
 				else if(pride_direction == 1)
 					H.reagents.trans_to(user, H.reagents.total_volume, 1, 1, 0)
-					H << "Your pride reflects on [user]."
-					user << "You feel insecure, taking on [H]'s burden."
+					to_chat(H, "Your pride reflects on [user].")
+					to_chat(user, "You feel insecure, taking on [H]'s burden.")
 
 /obj/item/lovestone
 	name = "Stone of Lust"
@@ -281,7 +281,7 @@
 					cast.throw_at_fast(user,10,1)
 			else if(lust_direction == 1)
 				var/mob/living/carbon/human/H = user
-				H << "As you hold the stone, your heart feels heavy and you struggle to breath."
+				to_chat(H, "As you hold the stone, your heart feels heavy and you struggle to breath.")
 				H.reagents.add_reagent("initropidril",50)
 	else
-		user << "The stone lays inert. It is still recharging."
+		to_chat(user, "The stone lays inert. It is still recharging.")

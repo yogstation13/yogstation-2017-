@@ -220,7 +220,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				dat += "<A href='?src=\ref[src];switchscreen=8'>8. Access the Forbidden Lore Vault</A><BR>"
 			if(src.arcanecheckout)
 				new /obj/item/weapon/tome(src.loc)
-				user << "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>"
+				to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>")
 				user.visible_message("[user] stares at the blank screen for a few moments, his expression frozen in fear. When he finally awakens from it, he looks a lot older.", 2)
 				src.arcanecheckout = 0
 			if(src.clearprintqueue)
@@ -346,7 +346,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
-		user << "[scanner]'s associated machine has been set to [src]."
+		to_chat(user, "[scanner]'s associated machine has been set to [src].")
 		audible_message("[src] lets out a low, short blip.")
 	else
 		return ..()
@@ -445,7 +445,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 						var/sqlcategory = sanitizeSQL(upload_category)
 						var/DBQuery/query = dbcon.NewQuery("INSERT INTO [format_table_name("library")] (author, title, content, category, ckey, datetime) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[usr.ckey]', Now())")
 						if(!query.Execute())
-							usr << query.ErrorMsg()
+							to_chat(usr, query.ErrorMsg())
 						else
 							log_game("[usr.name]/[usr.key] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs")
 							alert("Upload Complete. Uploaded title will be unavailable for printing for a short period")
@@ -483,19 +483,19 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	if(istype(W, /obj/item/weapon/wrench))
 		if(!anchored)
 			if(!istype(loc, /turf/open/floor))
-				user << "<span class='warning'>A floor must be present to secure the scanner control interface!</span>"
+				to_chat(user, "<span class='warning'>A floor must be present to secure the scanner control interface!</span>")
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-				user << "<span class='notice'>You start securing the scanner control interface...</span>"
+				to_chat(user, "<span class='notice'>You start securing the scanner control interface...</span>")
 				do_after(user, 20/W.toolspeed, target = src)
 				anchored = 1
-				user << "<span class='notice'>You secure the scanner control interface.</span>"
+				to_chat(user, "<span class='notice'>You secure the scanner control interface.</span>")
 		else
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			user << "<span class='notice'>You start unsecuring the scanner control interface...</span>"
+			to_chat(user, "<span class='notice'>You start unsecuring the scanner control interface...</span>")
 			if (do_after(user, 20/W.toolspeed, target = src))
 				anchored = 0
-				user << "<span class='notice'>You unsecure the scanner control interface.</span>"
+				to_chat(user, "<span class='notice'>You unsecure the scanner control interface.</span>")
 	else if(istype(W, /obj/item/weapon/book))
 		if(!user.drop_item())
 			return
@@ -505,7 +505,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 
 /obj/machinery/libraryscanner/attack_hand(mob/user)
 	if(!anchored)
-		user << "<span class='warning'>You cannot use scanner control interface while it's unsecured!</span>"
+		to_chat(user, "<span class='warning'>You cannot use scanner control interface while it's unsecured!</span>")
 		return 0
 	usr.set_machine(src)
 	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
@@ -568,7 +568,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	if(stat)
 		return
 	if(busy)
-		user << "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>"
+		to_chat(user, "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>")
 		return
 	if(!user.drop_item())
 		return

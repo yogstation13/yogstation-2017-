@@ -1,0 +1,5 @@
+author: "nichlas0010"
+delete-after: true 
+changes: 
+  - tweak: "watermelons now contain water"
+  - tweak: "watermelons now contain half the nutriment"
