@@ -14,6 +14,7 @@
 	var/volume = 100
 
 	var/running_bob_anim = FALSE
+	var/timer_id
 
 	var/efficiency = 1
 	var/sleep_factor = 750
@@ -180,6 +181,11 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
 		on = FALSE
+		running_bob_anim = FALSE
+		// TODO: Update Yog's timer system and remove this filty hack
+		if(timer_id)
+			deltimer(timer_id)
+			timer_id = null
 		playsound(loc, 'sound/machines/windowdoor.ogg', 50, 1)
 		..()
 		if(beaker)
@@ -286,6 +292,12 @@
 		if("power")
 			if(on)
 				on = FALSE
+				running_bob_anim = FALSE
+				// TODO: Update Yog's timer system and remove this filty hack
+				// This prevents multiple bobanimations being queued by turning it on/off quickly
+				if(timer_id)
+					deltimer(timer_id)
+					timer_id = null
 			else if(!state_open)
 				on = TRUE
 			. = TRUE
