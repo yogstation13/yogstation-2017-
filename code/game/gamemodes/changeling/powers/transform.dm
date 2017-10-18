@@ -14,7 +14,7 @@
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
 		flags &= ~NODROP
-		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You absorb [src] into your body.</span>")
 		user.put_in_active_hand(src)
 		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 		user.drop_item()
@@ -26,7 +26,7 @@
 /obj/item/clothing/under/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
 		flags &= ~NODROP
-		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You absorb [src] into your body.</span>")
 		user.put_in_active_hand(src)
 		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 		user.drop_item()
@@ -39,7 +39,7 @@
 /obj/item/clothing/suit/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
 		flags &= ~NODROP
-		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You absorb [src] into your body.</span>")
 		user.put_in_active_hand(src)
 		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 		user.drop_item()
@@ -51,7 +51,7 @@
 /obj/item/clothing/head/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
 		flags &= ~NODROP
-		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You absorb [src] into your body.</span>")
 		user.put_in_active_hand(src)
 		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 		user.drop_item()
@@ -63,7 +63,7 @@
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
 		flags &= ~NODROP
-		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You absorb [src] into your body.</span>")
 		user.put_in_active_hand(src)
 		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 		user.drop_item()
@@ -75,7 +75,7 @@
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
 		flags &= ~NODROP
-		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You absorb [src] into your body.</span>")
 		user.put_in_active_hand(src)
 		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 		user.drop_item()
@@ -87,7 +87,7 @@
 /obj/item/clothing/mask/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
 		flags &= ~NODROP
-		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You absorb [src] into your body.</span>")
 		user.put_in_active_hand(src)
 		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 		user.drop_item()
@@ -100,7 +100,7 @@
 /obj/item/changeling/attack_hand(mob/user)
 	if(loc == user && user.mind && user.mind.changeling)
 		flags &= ~NODROP
-		user << "<span class='notice'>You absorb [src] into your body.</span>"
+		to_chat(user, "<span class='notice'>You absorb [src] into your body.</span>")
 		user.put_in_active_hand(src)
 		user.visible_message("<span class='warning'>[src] crumbles into flakes of... something.</span>", , 3)
 		user.drop_item()

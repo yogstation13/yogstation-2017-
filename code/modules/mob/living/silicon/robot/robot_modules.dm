@@ -228,7 +228,7 @@
 
 /obj/item/weapon/robot_module/security/on_pick(mob/living/silicon/robot/R)
 	..()
-	R << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
+	to_chat(R, "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>")
 	R.status_flags -= CANPUSH
 
 /obj/item/weapon/robot_module/security/New()
@@ -258,7 +258,7 @@
 
 /obj/item/weapon/robot_module/peacekeeper/on_pick(mob/living/silicon/robot/R)
 	..()
-	R << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
+	to_chat(R, "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>")
 	R.status_flags -= CANPUSH
 
 /obj/item/weapon/robot_module/peacekeeper/New()

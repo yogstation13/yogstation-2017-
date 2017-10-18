@@ -23,23 +23,23 @@
 /obj/item/station_charter/attack_self(mob/living/user)
 	..()
 	if(used)
-		user << "The station has already been named."
+		to_chat(user, "The station has already been named.")
 		return
 	if(cooldown > world.time)
-		user << "<span class='notice'>The charter is recharging. You can still use it afterwards.</span>"
+		to_chat(user, "<span class='notice'>The charter is recharging. You can still use it afterwards.</span>")
 		return
 
 	cooldown = world.time + cooldownLEN // six seconds sounds fine, right?
 	if(!cooldownbonus)
 		var/admins_number = admins.len
 		if(!admins_number)
-			user << "You hear something crackle in your ears for a moment before a voice speaks. \"Central Command is currently inactive, please check in again later before attempting to change the station's name.\""
+			to_chat(user, "You hear something crackle in your ears for a moment before a voice speaks. \"Central Command is currently inactive, please check in again later before attempting to change the station's name.\"")
 			expire_date += 1200 // 2 more minutes
 			cooldownbonus = TRUE
 			return
 
 	if(world.time > expire_date) //5 minutes from arrival + whatever
-		user << "The crew has already settled into the shift. It probably wouldn't be good to rename the station right now."
+		to_chat(user, "The crew has already settled into the shift. It probably wouldn't be good to rename the station right now.")
 		return
 
 	used = TRUE
@@ -47,13 +47,12 @@
 	var/new_name = stripped_input(user, "What do you want to name [station_name()]? Keep in mind particularly terrible names may attract the attention of your employers.")
 	if(new_name)
 		pending_name = new_name
-		user << "You hear something crackle in your ears for a moment before a voice speaks.  \"Thank you for getting in touch with Central Command, one of our advisers will be with you shortly. You will now be put on hold. Message ends.\""
+		to_chat(user, "You hear something crackle in your ears for a moment before a voice speaks.  \"Thank you for getting in touch with Central Command, one of our advisers will be with you shortly. You will now be put on hold. Message ends.\"")
 		playsound(src,'sound/items/smoothelevator.ogg',40,1)
-
 		for(var/client/X in admins)
 			if(X.prefs.toggles & SOUND_ADMINHELP)
 				X << 'sound/effects/adminhelp.ogg'
-			X << ("<b><span class='notice'>[user.real_name] ([user.ckey]) is changing the station's name to [pending_name]. (<a href='byond://?src=\ref[src];admin=\ref[X];bearer=\ref[user];choice=approve'>Approve</a> | <a href='byond://?src=\ref[src];admin=\ref[X];choice=deny'>Deny</a>)</span></b>")
+			to_chat(X, "<b><span class='notice'>[user.real_name] ([user.ckey]) is changing the station's name to [pending_name]. (<a href='byond://?src=\ref[src];admin=\ref[X];bearer=\ref[user];choice=approve'>Approve</a> | <a href='byond://?src=\ref[src];admin=\ref[X];choice=deny'>Deny</a>)</span></b>")
 		log_game("[user.ckey] has attempted to change the station's name to [pending_name].")
 		scripter = user
 	else
@@ -67,10 +66,10 @@
 		switch(href_list["choice"])
 			if("approve")
 				if(admin_controlled)
-					admin << "A decision has already been made."
+					to_chat(admin, "A decision has already been made.")
 					return
 				if(admin.ckey == bearer.ckey || admin.key == bearer.key)
-					admin << "You cannot approve your own station name."
+					to_chat(admin, "You cannot approve your own station name.")
 					log_admin("[admin] has attempted to approve their own station name: [pending_name]")
 					message_admins("[admin] has attempted to approve their own station name: [pending_name]")
 					return
@@ -86,7 +85,7 @@
 
 			if("deny")
 				if(admin_controlled)
-					admin << "A decision has already been made."
+					to_chat(admin, "A decision has already been made.")
 					return
 				message_admins("[admin] has denied [scripter.ckey]'s new station name: [pending_name]")
 				log_admin("[admin] has denied [scripter.ckey]'s new station name: [pending_name]")

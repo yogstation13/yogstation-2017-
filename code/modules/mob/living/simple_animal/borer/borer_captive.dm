@@ -6,7 +6,7 @@
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			src << "\red You cannot speak in IC (muted)."
+			to_chat(src, "\red You cannot speak in IC (muted).")
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
@@ -21,14 +21,14 @@
 			return say_dead(message)
 
 		var/mob/living/simple_animal/borer/B = src.loc
-		src << "You whisper silently, \"[message]\""
-		B.victim << "The captive mind of [src] whispers, \"[message]\""
+		to_chat(src, "You whisper silently, \"[message]\"")
+		to_chat(B.victim, "The captive mind of [src] whispers, \"[message]\"")
 
 		for (var/mob/M in player_list)
 			if (istype(M, /mob/new_player))
 				continue
 			else if(M.stat == 2 &&  M.client.prefs.toggles & CHAT_GHOSTEARS)
-				M << "The captive mind of [src] whispers, \"[message]\""
+				to_chat(M, "The captive mind of [src] whispers, \"[message]\"")
 
 /mob/living/captive_brain/emote(var/message)
 	return
@@ -43,19 +43,19 @@
 		return
 
 	if(client.prefs.afreeze)
-		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		to_chat(src, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return
 
 
-	src << "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 10 seconds).</span>"
-	B.victim << "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>"
+	to_chat(src, "<span class='danger'>You begin doggedly resisting the parasite's control (this will take approximately 10 seconds).</span>")
+	to_chat(B.victim, "<span class='danger'>You feel the captive mind of [src] begin to resist your control.</span>")
 
 	spawn(150)
 		if(!B || !B.controlling) return
 
 		B.victim.adjustBrainLoss(rand(5,10))
-		src << "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>"
-		B.victim << "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>"
+		to_chat(src, "<span class='danger'>With an immense exertion of will, you regain control of your body!</span>")
+		to_chat(B.victim, "<span class='danger'>You feel control of the host brain ripped from your grasp, and retract your probosci before the wild neural impulses can damage you.</span>")
 		B.detatch()
 		verbs -= /mob/living/carbon/proc/release_control
 		verbs -= /mob/living/carbon/proc/spawn_larvae
