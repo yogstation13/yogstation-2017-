@@ -301,12 +301,14 @@
 			else if(!state_open)
 				on = TRUE
 			. = TRUE
+			update_icon()
 		if("door")
 			if(state_open)
 				close_machine()
 			else
 				open_machine()
 			. = TRUE
+			update_icon()
 		if("autoeject")
 			autoeject = !autoeject
 			. = TRUE
@@ -317,7 +319,6 @@
 					usr.put_in_hands(beaker)
 				beaker = null
 				. = TRUE
-	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
 	return //we don't see the pipe network while inside cryo.
