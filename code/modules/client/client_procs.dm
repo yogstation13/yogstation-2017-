@@ -99,6 +99,13 @@
 			return prefs.process_link(usr,href_list)
 		if("vars")
 			return view_var_Topic(href,href_list,hsrc)
+		if("chat")
+			return chatOutput.Topic(href, href_list)
+
+	switch(href_list["action"])
+		if("openLink")
+			src << link(href_list["link"])
+
 
 	..()	//redirect to hsrc.Topic()
 
@@ -240,6 +247,8 @@ var/next_external_rsc = 0
 
 	. = ..()	//calls mob.Login()
 
+	chatOutput.start() // Starts the chat
+
 	if (byond_version < config.client_error_version)		//Out of date client.
 		to_chat(src, "<span class='danger'><b>Your version of byond is too old:</b></span>")
 		to_chat(src, config.client_error_message)
@@ -345,6 +354,7 @@ var/next_external_rsc = 0
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
+	winset(src, null, "reset=true")
 
 //////////////
 //DISCONNECT//
@@ -490,7 +500,7 @@ var/next_external_rsc = 0
 		)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+		getFilesSlow(src, SSasset.preload, register_asset = FALSE)
 
 /client/proc/check_randomizer()
 	. = FALSE
@@ -538,7 +548,7 @@ var/next_external_rsc = 0
 
 			var/url = winget(src, null, "url")
 			//special javascript to make them reconnect under a new window.
-			src << browse("<a id='link' href=byond://[url]>byond://[url]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
+			src << browse("<a id='link' href=byond://[url]>byond://[url]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1;window=redirect")
 			winset(src, "reconnectbutton", "is-disable=true") //reconnect keeps the same cid in the randomizer, they could use this button to fake it.
 			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
 

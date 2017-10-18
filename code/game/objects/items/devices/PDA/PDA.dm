@@ -788,11 +788,11 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	if (!silent)
 		if(exempt) //re-using exempt from my watches / phones to make an appropriate ringtone
 			playsound(loc, 'sound/machines/vibrate.ogg', 50, 1)
-			audible_message("\icon[src] *[ttone]*", null, 3)
+			audible_message("[icon2html(src, viewers(src))] *[ttone]*", null, 3)
 
 		else
 			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-			audible_message("\icon[src] *[ttone]*", null, 3)
+			audible_message("[icon2html(src, viewers(src))] *[ttone]*", null, 3)
 	//Search for holder of the PDA.
 	var/mob/living/L = null
 	if(loc && isliving(loc))
@@ -802,7 +802,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		L = get(src, /mob/living/silicon)
 
 	if(L && L.stat != UNCONSCIOUS)
-		to_chat(L, "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
+		to_chat(L, "[icon2html(src, L)] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
 
 	overlays.Cut()
 	overlays += image(icon, icon_alert)

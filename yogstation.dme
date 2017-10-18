@@ -1240,6 +1240,8 @@
 #include "code\modules\golem\golem.dm"
 #include "code\modules\golem\golem_spawners.dm"
 #include "code\modules\golem\golem_types.dm"
+#include "code\modules\goonchat\browserOutput.dm"
+#include "code\modules\goonchat\jsErrorHandler.dm"
 #include "code\modules\holiday\easter.dm"
 #include "code\modules\holiday\holidays.dm"
 #include "code\modules\holodeck\area_copy.dm"

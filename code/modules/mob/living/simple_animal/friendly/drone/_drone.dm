@@ -143,35 +143,35 @@
 
 
 /mob/living/simple_animal/drone/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <b>[src]</b>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <b>[src]</b>!\n"
 
 	//Left hand items
 	if(l_hand && !(l_hand.flags&ABSTRACT))
 		if(l_hand.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[l_hand] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in its left hand!</span>\n"
+			msg += "<span class='warning'>It is holding [icon2html(l_hand, user)] [l_hand.gender==PLURAL?"some":"a"] blood-stained [l_hand.name] in its left hand!</span>\n"
 		else
-			msg += "It is holding \icon[l_hand] \a [l_hand] in its left hand.\n"
+			msg += "It is holding [icon2html(l_hand, user)] \a [l_hand] in its left hand.\n"
 
 	//Right hand items
 	if(r_hand && !(r_hand.flags&ABSTRACT))
 		if(r_hand.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[r_hand] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in its right hand!</span>\n"
+			msg += "<span class='warning'>It is holding [icon2html(r_hand, user)] [r_hand.gender==PLURAL?"some":"a"] blood-stained [r_hand.name] in its right hand!</span>\n"
 		else
-			msg += "It is holding \icon[r_hand] \a [r_hand] in its right hand.\n"
+			msg += "It is holding [icon2html(r_hand, user)] \a [r_hand] in its right hand.\n"
 
 	//Internal storage
 	if(internal_storage && !(internal_storage.flags&ABSTRACT))
 		if(internal_storage.blood_DNA)
-			msg += "<span class='warning'>It is holding \icon[internal_storage] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
+			msg += "<span class='warning'>It is holding [icon2html(internal_storage, user)] [internal_storage.gender==PLURAL?"some":"a"] blood-stained [internal_storage.name] in its internal storage!</span>\n"
 		else
-			msg += "It is holding \icon[internal_storage] \a [internal_storage] in its internal storage.\n"
+			msg += "It is holding [icon2html(internal_storage, user)] \a [internal_storage] in its internal storage.\n"
 
 	//Cosmetic hat - provides no function other than looks
 	if(head && !(head.flags&ABSTRACT))
 		if(head.blood_DNA)
-			msg += "<span class='warning'>It is wearing \icon[head] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on its head!</span>\n"
+			msg += "<span class='warning'>It is wearing [icon2html(head, user)] [head.gender==PLURAL?"some":"a"] blood-stained [head.name] on its head!</span>\n"
 		else
-			msg += "It is wearing \icon[head] \a [head] on its head.\n"
+			msg += "It is wearing [icon2html(head, user)] \a [head] on its head.\n"
 
 	//Braindead
 	if(!client && stat != DEAD)

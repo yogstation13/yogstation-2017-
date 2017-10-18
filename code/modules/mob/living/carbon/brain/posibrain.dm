@@ -126,7 +126,7 @@ var/global/posibrain_notif_cooldown = 0
 		to_chat(usr, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
+	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, usr)] \a <EM>[src]</EM>!\n[desc]\n"
 	msg += "<span class='warning'>"
 
 	if(brainmob && brainmob.key)

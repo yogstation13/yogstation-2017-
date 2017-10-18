@@ -293,7 +293,7 @@
 			if(S.flags & ABSTRACT)
 				. += "an unidentifiable footprint"
 			else
-				. += "some <B>[initial(S.name)]</B> \icon[S]\n"
+				. += "some <B>[initial(S.name)]</B> [icon2html(S, viewers(user.loc))]\n"
 
 	to_chat(user, .)
 
