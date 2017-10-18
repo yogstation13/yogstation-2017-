@@ -74,7 +74,7 @@
 		msg += "</span>"
 	msg += "*---------*</span>"
 
-	user << msg
+	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
@@ -88,7 +88,7 @@
 							   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 			else
 				if(src != M)
-					M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
+					to_chat(M, "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>")
 		else //if they aren't on our team, attack!
 			..()
 	else if(src != M)
@@ -103,7 +103,7 @@
 /mob/living/simple_animal/construct/examine(mob/user)
 	. = ..()
 	if((iscultist(user) || iswizard(user)) && (!src.key || !src.client))
-		user << "<span class='danger'>You can tell that they've lost all concious awareness and have become as engaging as a blank wall.</span>"
+		to_chat(user, "<span class='danger'>You can tell that they've lost all concious awareness and have become as engaging as a blank wall.</span>")
 
 
 /////////////////Juggernaut///////////////
@@ -264,7 +264,7 @@
 		visible_message("<span class='danger'>[src] repairs some of its own dents.</span>", \
 					"<span class='cult'>You repair some of your own dents, leaving you at <b>[health]/[maxHealth]</b> health.</span>")
 	else
-		src << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
+		to_chat(src, "<span class='cult'>You cannot repair your own dents, as you have none!</span>")
 
 /////////////////////////////Non-cult Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder/noncult

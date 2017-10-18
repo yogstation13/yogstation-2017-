@@ -19,7 +19,7 @@
 			emote(pick("moan", "cry"))
 			if(prob(10))
 				flash_color(src, color = "#FF0000", time = 5)
-				src << "<span class='genesisred'>THE PAIN!</span>" // todo: pain system. ;)
+				to_chat(src, "<span class='genesisred'>THE PAIN!</span>" )
 
 
 var/const/NO_SLIP_WHEN_WALKING = 1

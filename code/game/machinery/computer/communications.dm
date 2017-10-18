@@ -51,7 +51,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		return
 	if(z_lock) //Can only be used on SS13 unless z_lock is changed..
 		if(z != ZLEVEL_STATION)
-			usr << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
+			to_chat(usr, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 			return
 	usr.set_machine(src)
 
@@ -106,17 +106,17 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 								feedback_inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
 				else:
-					usr << "<span class='warning'>You are not authorized to do this!</span>"
+					to_chat(usr, "<span class='warning'>You are not authorized to do this!</span>")
 					tmp_alertlevel = 0
 				state = STATE_DEFAULT
 			else
-				usr << "<span class='warning'>You need to swipe your ID!</span>"
+				to_chat(usr, "<span class='warning'>You need to swipe your ID!</span>")
 
 		if("announce")
 			if(src.authenticated==2 && !message_cooldown)
 				make_announcement(usr)
 			else if (src.authenticated==2 && message_cooldown)
-				usr << "Intercomms recharging. Please stand by."
+				to_chat(usr, "Intercomms recharging. Please stand by.")
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
@@ -205,13 +205,13 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("MessageCentcomm")
 			if(src.authenticated==2)
 				if(CM.cooldownLeft())
-					usr << "Arrays recycling.  Please stand by."
+					to_chat(usr, "Arrays recycling.  Please stand by.")
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
-				usr << "Message transmitted."
+				to_chat(usr, "Message transmitted.")
 				log_say("[key_name(usr)] has made a Centcom announcement: [input]")
 				CM.nextAllowedTime = world.time + 600
 
@@ -220,31 +220,31 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if("MessageSyndicate")
 			if((src.authenticated==2) && (src.emagged))
 				if(CM.cooldownLeft())
-					usr << "Arrays recycling.  Please stand by."
+					to_chat(usr, "Arrays recycling.  Please stand by.")
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
-				usr << "Message transmitted."
+				to_chat(usr, "Message transmitted.")
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				CM.nextAllowedTime = world.time + 600
 
 		if("RestoreBackup")
-			usr << "Backup routing data restored!"
+			to_chat(usr, "Backup routing data restored!")
 			src.emagged = 0
 			src.updateDialog()
 
 		if("nukerequest") //When there's no other way
 			if(src.authenticated==2)
 				if(CM.cooldownLeft())
-					usr << "Arrays recycling. Please stand by."
+					to_chat(usr, "Arrays recycling. Please stand by.")
 					return
 				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self Destruct Code Request.","")
 				if(!input || !(usr in view(1,src)))
 					return
 				Nuke_request(input, usr)
-				usr << "Request sent."
+				to_chat(usr, "Request sent.")
 				log_say("[key_name(usr)] has requested the nuclear codes from Centcomm")
 				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/AI/commandreport.ogg')
 				CM.nextAllowedTime = world.time + 600
@@ -334,14 +334,14 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		src.emagged = 1
 		if(authenticated == 1)
 			authenticated = 2
-		user << "<span class='notice'>You scramble the communication routing circuits.</span>"
+		to_chat(user, "<span class='notice'>You scramble the communication routing circuits.</span>")
 
 /obj/machinery/computer/communications/attack_hand(mob/user)
 	if(..())
 		return
 	if(z_lock)
 		if (src.z != ZLEVEL_STATION)
-			user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
+			to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 			return
 
 	user.set_machine(src)

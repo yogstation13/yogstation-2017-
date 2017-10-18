@@ -66,7 +66,7 @@
 	updateParts()
 	if(user)
 		user.put_in_active_hand(KPOLD)
-		user << "<span class='notice'>You switch the [KPOLD.name] out with the [KP.name].</span>"
+		to_chat(user, "<span class='notice'>You switch the [KPOLD.name] out with the [KP.name].</span>")
 	KPOLD.detach(src,user)
 	KP.attach(src,user)
 	empty()
@@ -468,7 +468,7 @@
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
-		loc << "<span class='warning'>[src] silently charges up.<span>"
+		to_chat(loc, "<span class='warning'>[src] silently charges up.<span>")
 	overheat = FALSE
 	update_icon()
 

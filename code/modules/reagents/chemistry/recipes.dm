@@ -76,9 +76,9 @@ var/list/specialcritters = list(/mob/living/simple_animal/borer,/obj/item/device
 								O.show_message(text("<span class='notice'>You get a vague feeling that something is missing.</span>"), 1)  //Alert bystanders that their borer is braindead
 						else
 							B.transfer_personality(pick(candidates))
-							B << "<span class='warning'>You realize that you are self aware!</span>"
-							B << "<span class='userdanger'>You owe the person who gave you life a great debt.</span>"
-							B << "<span class='userdanger'>Serve your creator, and help them accomplish their goals at all costs.</span>"
+							to_chat(B, "<span class='warning'>You realize that you are self aware!</span>")
+							to_chat(B, "<span class='userdanger'>You owe the person who gave you life a great debt.</span>")
+							to_chat(B, "<span class='userdanger'>Serve your creator, and help them accomplish their goals at all costs.</span>")
 
 					if(/obj/item/device/unactivated_swarmer)
 						var/obj/item/device/unactivated_swarmer/U = new(get_turf(holder.my_atom))
