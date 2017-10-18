@@ -99,7 +99,7 @@
 /obj/item/weapon/melee/energy/sword/bananium/attackby(obj/item/weapon/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/melee/energy/sword/bananium/))
-		user << "You slap the two swords together. Sadly, they do not seem to fit."
+		to_chat(user, "You slap the two swords together. Sadly, they do not seem to fit.")
 		playsound(src, 'sound/misc/sadtrombone.ogg', 50)
 /*
 //not dealing with this at the moment.
@@ -168,7 +168,7 @@
 	..()
 	playsound(get_turf(src), 'sound/weapons/armbomb.ogg', 60, 1)
 	if(iscarbon(loc))
-		loc << "\The [src] begins to beep."
+		to_chat(loc, "\The [src] begins to beep.")
 		var/mob/living/carbon/C = loc
 		C.throw_mode_on()
 	spawn(det_time)

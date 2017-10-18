@@ -126,7 +126,7 @@
 	/obj/item/toy/foamblade,
 	/obj/item/toy/toy_mech/melee/ripley,
 	/obj/item/toy/toy_mech/honk,
-	/obj/item/toy/carpplushie,
+	/obj/item/toy/plushie/carpplushie,
 	/obj/item/toy/redbutton,
 	/obj/item/clothing/head/collectable/rabbitears)
 	new won(where)
@@ -135,7 +135,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/attack_self(mob/user)
 	..()
 	if(containsPrize)
-		user << "<span class='notice'>You unwrap the [src] and find a prize inside!</span>"
+		to_chat(user, "<span class='notice'>You unwrap the [src] and find a prize inside!</span>")
 		dispensePrize(get_turf(user))
 		containsPrize = FALSE
 		qdel(src)

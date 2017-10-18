@@ -44,10 +44,10 @@
 		var/mob/living/carbon/C = target
 		if(C.stat == DEAD)
 			if(XENO_HOST in C.status_flags)
-				src << "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>"
+				to_chat(src, "<span class='userdanger'>A foreign presence repels us from this body. Perhaps we should try to infest another?</span>")
 				return
 			Infect(target)
-			src << "<span class='userdanger'>With our egg laid, our death approaches rapidly...</span>"
+			to_chat(src, "<span class='userdanger'>With our egg laid, our death approaches rapidly...</span>")
 			spawn(100)
 				death()
 			return

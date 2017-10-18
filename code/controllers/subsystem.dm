@@ -131,7 +131,7 @@
 /datum/subsystem/proc/Initialize(start_timeofday)
 	var/time = (world.timeofday - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] seconds!"
-	world << "<span class='boldannounce'>[msg]</span>"
+	to_chat(world, "<span class='boldannounce'>[msg]</span>")
 	return time
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.

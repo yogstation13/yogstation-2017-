@@ -86,17 +86,17 @@
 		return
 
 	if(length(genesis) > 55)
-		user << "<span class='alert'>That message is too long! Genesis cannot deliever that!</span>"
+		to_chat(user, "<span class='alert'>That message is too long! Genesis cannot deliever that!</span>")
 		return
 
 	message = genesis
-	user << "<span class='alert'>Genesis will now deliever the message: [genesis]</span>"
+	to_chat(user, "<span class='alert'>Genesis will now deliever the message: [genesis]</span>")
 
 
 /obj/item/weapon/nullrod/genesis/attack(mob/M, mob/living/carbon/human/user)
 	if(cooldown > world.time - 25)
 		if(user.a_intent == HELP)
-			user << "Genesis is not ready."
+			to_chat(user, "Genesis is not ready.")
 			return
 		..()
 		return
@@ -109,21 +109,21 @@
 	switch (user.a_intent)
 		if(HARM)
 			M << 'sound/weapons/sear.ogg'
-			M << "<span class='genesisred'>[message]</span><br>"
+			to_chat(M, "<span class='genesisred'>[message]</span><br>")
 			..()
 
 		if(DISARM || GRAB)
-			M << "<span class='genesisred'>[message]</span><br>"
+			to_chat(M, "<span class='genesisred'>[message]</span><br>")
 			if(!M.jitteriness)
 				M.Jitter(15)
 
 		if(HELP)
 			M << 'sound/effects/pray.ogg'
-			M << "<span class='genesisgreen'>[message]</span><br>"
+			to_chat(M, "<span class='genesisgreen'>[message]</span><br>")
 
 	log_game("[user] has sent a genesis message to [M] stating: [message]")
 	cooldown = world.time
-	user << "Message delivered."
+	to_chat(user, "Message delivered.")
 
 
 
@@ -306,7 +306,7 @@
 	if(possessed)
 		return
 
-	user << "You attempt to wake the spirit of the blade..."
+	to_chat(user, "You attempt to wake the spirit of the blade...")
 
 	possessed = TRUE
 
@@ -327,12 +327,12 @@
 			S.real_name = input
 			S.name = input
 	else
-		user << "The blade is dormant. Maybe you can try again later."
+		to_chat(user, "The blade is dormant. Maybe you can try again later.")
 		possessed = FALSE
 
 /obj/item/weapon/nullrod/scythe/talking/Destroy()
 	for(var/mob/living/simple_animal/shade/S in contents)
-		S << "You were destroyed!"
+		to_chat(S, "You were destroyed!")
 		qdel(S)
 	return ..()
 
@@ -421,7 +421,7 @@
 		return
 	if(user.mind && (user.mind.assigned_role != "Chaplain"))
 		return
-	user << "You are blessed by Carp-Sie. Wild space carp will no longer attack you."
+	to_chat(user, "You are blessed by Carp-Sie. Wild space carp will no longer attack you.")
 	user.faction |= "carp"
 	used_blessing = TRUE
 

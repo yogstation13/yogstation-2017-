@@ -62,7 +62,7 @@
 		var/throwtarget = get_edge_target_turf(src, boot_dir)
 		M.Weaken(2)
 		M.throw_at_fast(throwtarget, 5, 1,src)
-		M << "<span class='notice'>No climbing on the bar please.</span>"
+		to_chat(M, "<span class='notice'>No climbing on the bar please.</span>")
 	else
 		. = ..()
 

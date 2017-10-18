@@ -35,7 +35,7 @@
 		if(!user.unEquip(W))
 			return
 		W.loc = src
-		user << "<span class='notice'>You put [W] into [src].</span>"
+		to_chat(user, "<span class='notice'>You put [W] into [src].</span>")
 		update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
 		var/n_name = stripped_input(user, "What would you like to label the folder?", "Folder Labelling", null, MAX_NAME_LEN)

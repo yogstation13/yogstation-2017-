@@ -160,7 +160,7 @@ EMAGGED FUNCTIONS - TODO
 				conf_access = null
 
 /obj/item/weapon/rtd/proc/toggle_gas_enrichment(mob/living/L)
-	L << "Higher settings use more synthesized gas."
+	to_chat(L, "Higher settings use more synthesized gas.")
 	var/enrich = input(user, "Select oxygen injection amount.") as anything in list ("NONE", "Standard", "Slightly Enriched", "Highly Enriched", "Half-Half O2-N2", "75%", "Full O2")
 	switch(enrich)
 		if("NONE")
@@ -273,8 +273,8 @@ EMAGGED FUNCTIONS - TODO
 
 /obj/item/weapon/rtd/examine(mob/user)
 	..()
-	user << "<span class='boldnotice'>Its matter indicator reads [matter]/[maxmatter] units left.</span>"
-	user << "<span class='boldnotice'>Its gas indicator reads [gas]/[maxgas].</span>"
+	to_chat(user, "<span class='boldnotice'>Its matter indicator reads [matter]/[maxmatter] units left.</span>")
+	to_chat(user, "<span class='boldnotice'>Its gas indicator reads [gas]/[maxgas].</span>")
 
 /obj/item/weapon/rtd/Destroy()
 	qdel(spark_system)
@@ -305,11 +305,11 @@ EMAGGED FUNCTIONS - TODO
 					A++
 				else
 					break
-		user << "<span class='notice'>Loaded [A] pieces of iron ore. The RTD now has [matter]/[maxmatter] matter left.</span>"
+		to_chat(user, "<span class='notice'>Loaded [A] pieces of iron ore. The RTD now has [matter]/[maxmatter] matter left.</span>")
 	if(istype(W, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/R = W
 		if((matter + R.ammoamt) > maxmatter)
-			user << "<span class='warning'>The RTD can't hold any more matter-units!</span>"
+			to_chat(user, "<span class='warning'>The RTD can't hold any more matter-units!</span>")
 			return
 		if(!user.unEquip(W))
 			return
@@ -319,7 +319,7 @@ EMAGGED FUNCTIONS - TODO
 		loaded = 1
 	else if(istype(W, /obj/item/weapon/ore/iron))
 		if((matter + ironoreworth) > maxmatter)
-			user << "<span class='warning'>The RTD can't hold any more matter-units!</span>"
+			to_chat(user, "<span class='warning'>The RTD can't hold any more matter-units!</span>")
 			return
 		if(!user.unEquip(W))
 			return
@@ -332,7 +332,7 @@ EMAGGED FUNCTIONS - TODO
 	else if(istype(W, /obj/item/stack/sheet/plasteel))
 		loaded = loadwithsheets(W, plasteelmultiplier*sheetmultiplier, user)
 	if(loaded)
-		user << "<span class='notice'>The RTD now holds [matter]/[maxmatter] matter-units.</span>"
+		to_chat(user, "<span class='notice'>The RTD now holds [matter]/[maxmatter] matter-units.</span>")
 	else
 		return ..()
 
@@ -343,15 +343,15 @@ EMAGGED FUNCTIONS - TODO
 			S.use(maxsheets)
 			matter += value*maxsheets
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			user << "<span class='notice'>You insert [maxsheets] [S.name] sheets into the RTD. </span>"
+			to_chat(user, "<span class='notice'>You insert [maxsheets] [S.name] sheets into the RTD. </span>")
 		else
 			matter += value*(S.amount)
 			user.unEquip()
 			S.use(S.amount)
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-			user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the RTD. </span>"
+			to_chat(user, "<span class='notice'>You insert [S.amount] [S.name] sheets into the RTD. </span>")
 		return 1
-	user << "<span class='warning'>You can't insert any more [S.name] sheets into the RTD!"
+	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into the RTD!")
 	return 0
 
 /obj/item/weapon/rtd/attack_self(mob/user)
@@ -362,19 +362,19 @@ EMAGGED FUNCTIONS - TODO
 		mode = 1
 	switch(mode)
 		if(1)
-			user << "<span class='notice'>The Rapid Terraforming Device is now converting natural ground to plating. Ranged matter projection activated.</span>"
+			to_chat(user, "<span class='notice'>The Rapid Terraforming Device is now converting natural ground to plating. Ranged matter projection activated.</span>")
 		if(2)
-			user << "<span class='notice'>The Rapid Terraforming Device is now building catwalks over lava and chasms. Ranged matter projection activated.</span>"
+			to_chat(user, "<span class='notice'>The Rapid Terraforming Device is now building catwalks over lava and chasms. Ranged matter projection activated.</span>")
 		if(3)
-			user << "<span class='notice'>The Rapid Terraforming Device is now building airlocks.</span>"
+			to_chat(user, "<span class='notice'>The Rapid Terraforming Device is now building airlocks.</span>")
 		if(4)
-			user << "<span class='notice'>The Rapid Terraforming Device is now changing rock to walls.</span>"
+			to_chat(user, "<span class='notice'>The Rapid Terraforming Device is now changing rock to walls.</span>")
 		if(5)
-			user << "<span class='notice'>The Rapid Terraforming Device is now building airtight membranes.</span>"
+			to_chat(user, "<span class='notice'>The Rapid Terraforming Device is now building airtight membranes.</span>")
 		if(6)
-			user << "<span class='notice'>The Rapid Terraforming Device is now removing constructions.</span>"
+			to_chat(user, "<span class='notice'>The Rapid Terraforming Device is now removing constructions.</span>")
 		if(7)
-			user << "<span class='notice'>The Rapid Terraforming Device is now pressurizing with compressed air.</span>"
+			to_chat(user, "<span class='notice'>The Rapid Terraforming Device is now pressurizing with compressed air.</span>")
 
 	if(prob(50))
 		src.spark_system.start()
@@ -385,11 +385,11 @@ EMAGGED FUNCTIONS - TODO
 	electrocute_check(30, user)
 
 /obj/item/weapon/rtd/emag_act(mob/user)
-	user << "<span class='warning'>You silently short out the sector lock and pressure safeties on the [src]!</span>"
+	to_chat(user, "<span class='warning'>You silently short out the sector lock and pressure safeties on the [src]!</span>")
 
 /obj/item/weapon/rtd/afterattack(atom/A, mob/user, proximity)
 	if((user.z == 1) && zlock)
-		user << "<span class='warning'>This device can not be used in the station!</span>"
+		to_chat(user, "<span class='warning'>This device can not be used in the station!</span>")
 		return 0
 	if(!proximity && mode > 2)
 		return 0
@@ -407,7 +407,7 @@ EMAGGED FUNCTIONS - TODO
 			if(isminingturf(A))
 				var/turf/open/space/S = A
 				if(useResource(floorcost, user))
-					user << "<span class='notice'>You start to fabricate plating over the rocky ground...</span>"
+					to_chat(user, "<span class='notice'>You start to fabricate plating over the rocky ground...</span>")
 					activate(user)
 					S.ChangeTurf(/turf/open/floor/plating)
 					return 1
@@ -417,7 +417,7 @@ EMAGGED FUNCTIONS - TODO
 		if(2)
 			if(islavaturf(A))
 				if(useResource(catwalkcost, user))
-					user << "<span class='notice'>You start to fabricate a catwalk over the lava...</span>"
+					to_chat(user, "<span class='notice'>You start to fabricate a catwalk over the lava...</span>")
 					activate(user)
 					new /obj/structure/lattice/catwalk/lava(get_turf(A))
 					return 1
@@ -433,7 +433,7 @@ EMAGGED FUNCTIONS - TODO
 							break
 
 					if(door_check)
-						user << "<span class='notice'>You start building airlock...</span>"
+						to_chat(user, "<span class='notice'>You start building airlock...</span>")
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, airlockdelay, target = A))
 							if(!useResource(airlockcost, user)) return 0
@@ -459,7 +459,7 @@ EMAGGED FUNCTIONS - TODO
 							return 1
 						return 0
 					else
-						user << "<span class='warning'>There is another door here!</span>"
+						to_chat(user, "<span class='warning'>There is another door here!</span>")
 						return 0
 				return 0
 			return 0
@@ -467,7 +467,7 @@ EMAGGED FUNCTIONS - TODO
 			if(istype(A, /turf/closed/mineral))
 				var/turf/closed/mineral/M = A
 				if(checkResource(wallcost, user))
-					user << "<span class='notice'>You start converting the [A] to a metal wall...</span>"
+					to_chat(user, "<span class='notice'>You start converting the [A] to a metal wall...</span>")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					activate(user)
 					if(do_after(user, walldelay, target = M))
@@ -479,12 +479,12 @@ EMAGGED FUNCTIONS - TODO
 			if(istype(A, /turf/open/floor/plating))
 				if(checkResource(membranecost, user))
 					var/turf/open/floor/F = A
-					user << "<span class='notice'>You start fabricating an airtight membrane...</span>"
+					to_chat(user, "<span class='notice'>You start fabricating an airtight membrane...</span>")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					activate(user)
 					for(var/obj/O in F.contents)
 						if(istype(O, /obj/structure/destructible/airwall))
-							user << "<span class='notice'>There is already an inflated membrane wall here!</span>"
+							to_chat(user, "<span class='notice'>There is already an inflated membrane wall here!</span>")
 							return 0
 					if(do_after(user, membranedelay, target = F))
 						if(useResource(membranecost, user))
@@ -494,21 +494,21 @@ EMAGGED FUNCTIONS - TODO
 		if(6)
 			if(istype(A, /obj/structure/lattice/catwalk))
 				activate(user)
-				user << "<span class='warning'>You start disintegrating the catwalk...</span>"
+				to_chat(user, "<span class='warning'>You start disintegrating the catwalk...</span>")
 				if(do_after(user, removedelay, target = A))
 					qdel(A)
 					return 1
 			return 0
 		if(7)
 			if(gas < gas_use)
-				user << "<span class='notice'>Not enough gas stored! Wait a while for internal compressors to regenerate enough gas...</span>"
+				to_chat(user, "<span class='notice'>Not enough gas stored! Wait a while for internal compressors to regenerate enough gas...</span>")
 				return 0
 			if(istype(A, /turf/open/floor/plating))
 				var/turf/open/floor/F = A
 				if((F.air.return_pressure() > 4.5*ONE_ATMOSPHERE) && safety)
-					user << "<span class='warning'>Danger! Air pressure too high to inject any more compressed air with safety interlocks active!</span>"
+					to_chat(user, "<span class='warning'>Danger! Air pressure too high to inject any more compressed air with safety interlocks active!</span>")
 					return 0
-				user << "<span class='notice'>You blast a jet of compressed airmix onto [F] with your terraforming device!</span>"
+				to_chat(user, "<span class='notice'>You blast a jet of compressed airmix onto [F] with your terraforming device!</span>")
 				var/datum/gas_mixture/OUT = new /datum/gas_mixture
 				OUT.assert_gas("o2")
 				OUT.assert_gas("n2")
@@ -519,13 +519,13 @@ EMAGGED FUNCTIONS - TODO
 				gas = (gas - gas_use)
 			return 0
 		else
-			user << "ERROR: RAPID_TERRAFORMING_DEVICE in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin."
+			to_chat(user, "ERROR: RAPID_TERRAFORMING_DEVICE in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin.")
 			return 0
 
 /obj/item/weapon/rtd/proc/useResource(amount, mob/user)
 	if(matter < amount)
 		if(user)
-			user << NO_AMMO_MESSAGE
+			to_chat(user, NO_AMMO_MESSAGE)
 		return 0
 	matter -= amount
 	desc = "An rtd. It currently holds [matter]/[maxmatter] matter-units."
@@ -534,7 +534,7 @@ EMAGGED FUNCTIONS - TODO
 /obj/item/weapon/rtd/proc/checkResource(amount, mob/user)
 	. = matter >= amount
 	if(!. && user)
-		user << NO_AMMO_MESSAGE
+		to_chat(user, NO_AMMO_MESSAGE)
 	return .
 
 /obj/item/weapon/rtd/proc/detonate_pulse()
@@ -557,11 +557,11 @@ EMAGGED FUNCTIONS - TODO
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
-			user << NO_AMMO_MESSAGE
+			to_chat(user, NO_AMMO_MESSAGE)
 		return 0
 	. = borgy.cell.use(amount * 50)
 	if(!. && user)
-		user << NO_AMMO_MESSAGE
+		to_chat(user, NO_AMMO_MESSAGE)
 	return .
 
 /obj/item/weapon/rtd/borg/checkResource(amount, mob/user)
@@ -570,11 +570,11 @@ EMAGGED FUNCTIONS - TODO
 	var/mob/living/silicon/robot/borgy = user
 	if(!borgy.cell)
 		if(user)
-			user << NO_AMMO_MESSAGE
+			to_chat(user, NO_AMMO_MESSAGE)
 		return 0
 	. = borgy.cell.charge >= (amount * 72)
 	if(!. && user)
-		user << NO_AMMO_MESSAGE
+		to_chat(user, NO_AMMO_MESSAGE)
 	return .
 
 /datum/action/item_action/rtd

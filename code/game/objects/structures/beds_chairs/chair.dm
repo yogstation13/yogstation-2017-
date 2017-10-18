@@ -92,14 +92,14 @@
 			return
 		var/obj/item/whoopee/whoo = locate() in src
 		if(whoo)
-			user << "<span class='warning'>There's already a cushion over this seat!</span>"
+			to_chat(user, "<span class='warning'>There's already a cushion over this seat!</span>")
 			return
-		user << "<span class='warning'>You softly place [W] ontop of [src].</span>"
+		to_chat(user, "<span class='warning'>You softly place [W] ontop of [src].</span>")
 		desc = "[desc]. There seems to be [W] sitting on top already."
 		if(user.drop_item())
 			W.forceMove(src)
 		else
-			user << "<span class='warning'>Seems like [W] is stuck to your hand.</span>"
+			to_chat(user, "<span class='warning'>Seems like [W] is stuck to your hand.</span>")
 	else
 		return ..()
 
@@ -154,7 +154,7 @@
 /obj/structure/chair/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -256,7 +256,7 @@
 		if(!item_chair || !ishuman(usr) || has_buckled_mobs() || src.flags & NODECONSTRUCT)
 			return
 		if(usr.incapacitated())
-			usr << "<span class='warning'>You can't do that right now!</span>"
+			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)
@@ -300,10 +300,10 @@
 /obj/item/chair/proc/plant(mob/user)
 	for(var/obj/A in get_turf(loc))
 		if(istype(A,/obj/structure/chair))
-			user << "<span class='danger'>There is already a chair here.</span>"
+			to_chat(user, "<span class='danger'>There is already a chair here.</span>")
 			return
 		if(A.density && !(A.flags & ON_BORDER))
-			user << "<span class='danger'>There is already something here.</span>"
+			to_chat(user, "<span class='danger'>There is already something here.</span>")
 			return
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")

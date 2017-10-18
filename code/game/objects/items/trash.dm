@@ -81,9 +81,9 @@
 	if(user.mind)
 		if(user.mind.assigned_role == "Santa")
 			if(assigned)
-				user << "<span class='warning'>[src] hwas assigned to [src].</span>"
+				to_chat(user, "<span class='warning'>[src] hwas assigned to [src].</span>")
 				return
-			user << "<span class='warning'>Who do you want to assign this too?</span>"
+			to_chat(user, "<span class='warning'>Who do you want to assign this too?</span>")
 			var/naughty = reject_bad_name(stripped_input(user, "Assign someone to the naughty list.", "Naughty Inscription", name),1)
 			if(!naughty)
 				return
@@ -96,7 +96,7 @@
 					naughty_list += M
 
 			if(!accepted)
-				user << "<span class='warning'>You either have the wrong person, or you've spelled their name wrong. Effect cancelled.</span>"
+				to_chat(user, "<span class='warning'>You either have the wrong person, or you've spelled their name wrong. Effect cancelled.</span>")
 				return
 
-			user << "<span class='warning'>You have successfully added [naughty] to the naughty list.</span>"
+			to_chat(user, "<span class='warning'>You have successfully added [naughty] to the naughty list.</span>")

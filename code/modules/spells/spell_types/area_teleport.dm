@@ -65,7 +65,7 @@
 			P = P.pulledby
 			telees += 1
 			if(telees >= max_telees)
-				target << "<span class='notice'>Spell overload detected. Please remove the unnecessary plebs before casting.</span>"
+				to_chat(target, "<span class='notice'>Spell overload detected. Please remove the unnecessary plebs before casting.</span>")
 				revert_cast()
 				return
 		while(P.pulling)
@@ -77,7 +77,7 @@
 			P = P.pulling
 			telees += 1
 			if(telees >= max_telees)
-				target << "<span class='notice'>Spell overload detected. Please remove the unnecessary plebs before casting.</span>"
+				to_chat(target, "<span class='notice'>Spell overload detected. Please remove the unnecessary plebs before casting.</span>")
 				revert_cast()
 				return
 		var/list/tempL = L
