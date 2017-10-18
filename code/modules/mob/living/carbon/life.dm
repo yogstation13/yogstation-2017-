@@ -21,6 +21,7 @@
 
 	//Updates the number of stored chemicals for powers
 	handle_changeling()
+	handle_vampire()
 
 ///////////////
 // BREATHING //
@@ -226,6 +227,14 @@
 		else
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
+
+/mob/living/carbon/proc/handle_vampire()
+	if(mind && hud_used && hud_used.vampblooddisplay)
+		if(mind.vampire)
+			hud_used.vampblooddisplay.invisibility = 0
+			hud_used.vampblooddisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(mind.vampire.bloodcount)]</font></div>"
+		else
+			hud_used.vampblooddisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)

@@ -254,7 +254,7 @@
 							if("butterfly")
 								new_mob = new /mob/living/simple_animal/butterfly(M.loc)
 							if("bat")
-								new_mob = new /mob/living/simple_animal/hostile/retaliate/bat(M.loc)
+								new_mob = new /mob/living/simple_animal/hostile/bat(M.loc)
 							if("goat")
 								new_mob = new /mob/living/simple_animal/hostile/retaliate/goat(M.loc)
 							if("mushroom")

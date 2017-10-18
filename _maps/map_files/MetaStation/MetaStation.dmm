@@ -4384,7 +4384,7 @@
 /area/security/hos)
 "ahg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/mob/living/simple_animal/hostile/retaliate/bat{
+/mob/living/simple_animal/hostile/bat{
 	desc = "A fierce companion for any person of power, this spider has been carefully trained by NanoTrasen specialists. Its beady, staring eyes send shivers down your spine";
 	emote_hear = list("chitters");
 	faction = list("spiders");
@@ -97147,11 +97147,11 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "cZg" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f6";
 	dir = 2
@@ -97237,11 +97237,11 @@
 	},
 /area/shuttle/transport)
 "cZt" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 4
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f5";
 	dir = 2
