@@ -39,18 +39,18 @@
 	if(!target) return
 	if(get_dist(user, target) > range) return
 	if(!laser || !cap)
-		user << "<span class='warning'>[src] is missing some parts!</span>"
+		to_chat(user, "<span class='warning'>[src] is missing some parts!</span>")
 		return
 
 	if(istype(target, /obj/effect/dummy/hologram))
 		qdel(target)
-		user << "<span class='notice'>You remove the hologram.</span>"
+		to_chat(user, "<span class='notice'>You remove the hologram.</span>")
 		return
 
 	for(var/T in allow_scanning_these)
 		if(istype(target, T))
 			playsound(get_turf(src), 'sound/weapons/flash.ogg', 50, 1, -6)
-			user << "<span class='notice'>Scanned [target].</span>"
+			to_chat(user, "<span class='notice'>Scanned [target].</span>")
 			var/obj/temp = new/obj()
 			temp.appearance = target.appearance
 			temp.layer = initial(target.layer) // scanning things in your inventory
@@ -62,17 +62,17 @@
 		if(target in view(range, user))
 			create_hologram(user, target)
 	else
-		user << "<span class='warning'>You cannot scan that!</span>"
+		to_chat(user, "<span class='warning'>You cannot scan that!</span>")
 
 /obj/item/device/holoprojector/proc/create_hologram(mob/user, turf/open/target)
 	if(!current_item)
-		user << "<span class='warning'>You have not scanned anything to replicate yet!</span>"
+		to_chat(user, "<span class='warning'>You have not scanned anything to replicate yet!</span>")
 		return
 
 	if(holograms.len >= max_holograms)
 		qdel(holograms[1])
 
-	user << "<span class='notice'>You create a fake [current_item.name].</span>"
+	to_chat(user, "<span class='notice'>You create a fake [current_item.name].</span>")
 	playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 1, -6)
 	new /obj/effect/dummy/hologram(target, src)
 
@@ -88,18 +88,18 @@
 			replaced_parts = TRUE
 		if(replaced_parts)
 			replaced_parts = FALSE
-			user << "<span class='notice'>You pop out the parts from [src].</span>"
+			to_chat(user, "<span class='notice'>You pop out the parts from [src].</span>")
 			for(var/obj/effect/dummy/hologram/H in holograms)
 				qdel(H)
 		else
-			user << "<span class='warning'>[src] does not have any parts installed!</span>"
+			to_chat(user, "<span class='warning'>[src] does not have any parts installed!</span>")
 
 	else if(istype(I, /obj/item/weapon/stock_parts/micro_laser) && !laser)
 		if(!user.unEquip(I))
 			return
 		laser = I
 		I.loc = src
-		user << "<span class='notice'>You insert [laser.name] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [laser.name] into [src].</span>")
 
 		switch(laser.rating)
 			if(1)
@@ -118,12 +118,12 @@
 			return
 		cap = I
 		I.loc = src
-		user << "<span class='notice'>You insert [cap.name] into [src].</span>"
+		to_chat(user, "<span class='notice'>You insert [cap.name] into [src].</span>")
 
 		max_holograms = 8*cap.rating
 
 /obj/item/device/holoprojector/attack_self(mob/user)
-	user << "<span class='notice'>You disable the projector.</span>"
+	to_chat(user, "<span class='notice'>You disable the projector.</span>")
 	for(var/obj/effect/dummy/hologram/H in holograms)
 		qdel(H)
 
@@ -153,23 +153,23 @@
 	return ..()
 
 /obj/effect/dummy/hologram/attackby(obj/item/W, mob/user)
-	user << "<span class='danger'>[W] passes right through [src]!</span>"
+	to_chat(user, "<span class='danger'>[W] passes right through [src]!</span>")
 	qdel(src)
 
 /obj/effect/dummy/hologram/attack_hand(mob/user)
-	user << "<span class='danger'>Your hand passes right through [src]!</span>"
+	to_chat(user, "<span class='danger'>Your hand passes right through [src]!</span>")
 	qdel(src)
 
 /obj/effect/dummy/hologram/attack_animal(mob/user)
-	user << "<span class='danger'>Your appendage passes right through [src]!</span>"
+	to_chat(user, "<span class='danger'>Your appendage passes right through [src]!</span>")
 	qdel(src)
 
 /obj/effect/dummy/hologram/attack_slime(mob/user)
-	user << "<span class='danger'>Your blubber passes right through [src]!</span>"
+	to_chat(user, "<span class='danger'>Your blubber passes right through [src]!</span>")
 	qdel(src)
 
 /obj/effect/dummy/hologram/attack_alien(mob/user)
-	user << "<span class='danger'>Your claws pass right through [src]!</span>"
+	to_chat(user, "<span class='danger'>Your claws pass right through [src]!</span>")
 	qdel(src)
 
 /obj/effect/dummy/hologram/ex_act(S, T)
@@ -181,7 +181,7 @@
 
 /obj/effect/dummy/hologram/CtrlClick(mob/user)
 	if(get_dist(src, user) > 1) return
-	user << "<span class='danger'>You pass through [src] as you try to grab it!</span>"
+	to_chat(user, "<span class='danger'>You pass through [src] as you try to grab it!</span>")
 	qdel(src)
 
 /obj/item/device/holoprojector/debug
