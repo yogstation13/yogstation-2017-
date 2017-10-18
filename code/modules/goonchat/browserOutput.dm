@@ -2,7 +2,8 @@
 For the main html chat area
 *********************************/
 
-var/global/savefile/iconCache = new("data/iconCache.sav")
+//Precaching a bunch of shit
+GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/iconCache.sav")) //Cache of icons for the browser output
 
 //On client, created on login
 /datum/chatOutput
@@ -12,6 +13,7 @@ var/global/savefile/iconCache = new("data/iconCache.sav")
 	var/cookieSent   = FALSE // Has the client sent a cookie for analysis
 	var/broken       = FALSE
 	var/list/connectionHistory //Contains the connection history passed from chat cookie
+	var/adminMusicVolume = 100 //This is for the Play Global Sound verb
 
 /datum/chatOutput/New(client/C)
 	owner = C
@@ -78,6 +80,9 @@ var/global/savefile/iconCache = new("data/iconCache.sav")
 		if("analyzeClientData")
 			data = analyzeClientData(arglist(params))
 
+		if("setMusicVolume")
+			data = setMusicVolume(arglist(params))
+
 	if(data)
 		ehjax_send(data = data)
 
@@ -99,7 +104,7 @@ var/global/savefile/iconCache = new("data/iconCache.sav")
 	sendClientData()
 
 	//do not convert to to_chat()
-	owner << "<span class=\"userdanger\">If you can see this, update byond.</span>"
+	SEND_TEXT(owner, "<span class=\"userdanger\">If you can see this, update byond.</span>")
 
 	pingLoop()
 
@@ -118,6 +123,16 @@ var/global/savefile/iconCache = new("data/iconCache.sav")
 	if(islist(data))
 		data = json_encode(data)
 	C << output("[data]", "[window]:ehjaxCallback")
+
+/datum/chatOutput/proc/sendMusic(music, pitch)
+	var/list/music_data = list("adminMusic" = url_encode(url_encode(music)))
+	if(pitch)
+		music_data["musicRate"] = pitch
+	ehjax_send(data = music_data)
+
+/datum/chatOutput/proc/setMusicVolume(volume = "")
+	if(volume)
+		adminMusicVolume = Clamp(text2num(volume), 0, 100)
 
 //Sends client connection details to the chat to handle and save
 /datum/chatOutput/proc/sendClientData()
@@ -151,7 +166,7 @@ var/global/savefile/iconCache = new("data/iconCache.sav")
 			if (found.len > 0)
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
-				log_admin("[key_name(owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
+				log_admin_private("[key_name(owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 
 	cookieSent = TRUE
 
@@ -161,7 +176,7 @@ var/global/savefile/iconCache = new("data/iconCache.sav")
 
 //Called by js client on js error
 /datum/chatOutput/proc/debug(error)
-	log_game("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
+	log_world("\[[time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]\] Client: [(src.owner.key ? src.owner.key : src.owner)] triggered JS error: [error]")
 
 //Global chat procs
 
@@ -202,7 +217,7 @@ var/global/savefile/iconCache = new("data/iconCache.sav")
 			continue
 
 		//Send it to the old style output window.
-		C << original_message
+		SEND_TEXT(C, original_message)
 
 		if(!C.chatOutput || C.chatOutput.broken) // A player who hasn't updated his skin file.
 			continue
