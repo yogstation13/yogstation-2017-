@@ -107,7 +107,7 @@
 /obj/machinery/computer/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/I)
 	if(circuit && !(flags & NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		user << "<span class='notice'>You start to disconnect the monitor...</span>"
+		to_chat(user, "<span class='notice'>You start to disconnect the monitor...</span>")
 		if(do_after(user, 20/I.toolspeed, target = src))
 			deconstruction()
 			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
@@ -118,13 +118,13 @@
 			for (var/obj/C in src)
 				C.loc = src.loc
 			if ((stat & BROKEN) || computer_health != initial(src.computer_health))
-				user << "<span class='notice'>The broken glass falls out.</span>"
+				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				new /obj/item/weapon/shard(src.loc)
 				new /obj/item/weapon/shard(src.loc)
 				A.state = 3
 				A.icon_state = "3"
 			else
-				user << "<span class='notice'>You disconnect the monitor.</span>"
+				to_chat(user, "<span class='notice'>You disconnect the monitor.</span>")
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
@@ -140,7 +140,7 @@
 		if(!W.isOn())
 			return ..()
 		else if(computer_health == initial(src.computer_health)) //This doesn't like |'s for some reason
-			user << "<span class='notice'>No point in welding a pristine looking computer.</span>"
+			to_chat(user, "<span class='notice'>No point in welding a pristine looking computer.</span>")
 			return 0
 		else if(!computer_health)
 			return 0

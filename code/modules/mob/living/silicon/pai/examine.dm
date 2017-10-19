@@ -4,7 +4,7 @@
 
 	if(!usr || !src)	return
 	if((usr.stat) && !istype(usr,/mob/dead/observer) )
-		usr << "<span class='notice'>Something is there but you can't see it.</span>"
+		to_chat(usr, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
 
 	var/msg = "<span class='info'>*---------*\nThis is \icon<b>[src][name], <i>a personal AI unit</i>!</b>"
@@ -26,4 +26,4 @@
 		if(DEAD)			msg += "\n<span class='deadsay'>An ominous red ring glowers out from its shattered display screen.</span>"
 	msg += "\n*---------*</span>"
 
-	usr << msg
+	to_chat(usr, msg)

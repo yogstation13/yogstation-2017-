@@ -13,7 +13,7 @@
 	if(!msg)	return
 	if(!mob)	return						//this doesn't happen
 	if(src.prefs.muted & MUTE_MENTORHELP)
-		src << "<font color='red'>You are unable to use mentorhelp (muted).</font>"
+		to_chat(src, "<font color='red'>You are unable to use mentorhelp (muted).</font>")
 		return
 	var/show_char = config.mentors_mobname_only
 	var/mentor_msg = "<span class='mentornotice'><b><font color='#3280ff'>MENTORHELP:</b> <b>[key_name_mentor(src, 1, 0, 1, show_char)]</b>:</font> [msg]</span>"
@@ -21,13 +21,13 @@
 
 	for(var/client/X in mentors)
 		X << 'sound/items/bikehorn.ogg'
-		X << mentor_msg
+		to_chat(X, mentor_msg)
 
 	for(var/client/A in admins)
 		A << 'sound/items/bikehorn.ogg'
-		A << mentor_msg
+		to_chat(A, mentor_msg)
 
-	src << "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>"
+	to_chat(src, "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>")
 	return
 
 /proc/get_mentor_counts()

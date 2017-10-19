@@ -104,8 +104,7 @@ Shaft Miner
 		var/obj/item/clothing/under/U = H.w_uniform
 		var/obj/item/clothing/tie/medic/M = new(get_turf(H))
 		U.attachTie(M)
-		H << "<span class='notice'>You have a camera attached to your jumpsuit that allows the mining medic \
-			to monitor you. Whether you keep it on or not is up to you.</span>"
+		to_chat(H, "<span class='notice'>You have a camera attached to your jumpsuit that allows the mining medic to monitor you. Whether you keep it on or not is up to you.</span>")
 /*
 Bartender
 */

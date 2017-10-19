@@ -442,7 +442,7 @@
 "iz" = (/obj/machinery/door/window/westright,/turf/open/floor/plasteel/purple,/area/awaymission/research/interior/genetics)
 "iA" = (/turf/open/floor/plasteel/freezer,/area/awaymission/research/interior/bathroom)
 "iB" = (/obj/machinery/door/airlock{name = "Stall"},/turf/open/floor/plasteel/freezer,/area/awaymission/research/interior/bathroom)
-"iC" = (/obj/structure/toilet{icon_state = "toilet00"; dir = 8},/obj/effect/landmark{name = "awaystart"},/obj/machinery/light/small{dir = 4},/turf/open/floor/plasteel/freezer,/area/awaymission/research/interior/bathroom)
+"iC" = (/obj/machinery/disposal/bin/toilet{icon_state = "toilet00"; dir = 8},/obj/effect/landmark{name = "awaystart"},/obj/machinery/light/small{dir = 4},/turf/open/floor/plasteel/freezer,/area/awaymission/research/interior/bathroom)
 "iD" = (/turf/closed/wall,/area/awaymission/research/interior)
 "iE" = (/obj/machinery/light{dir = 4},/turf/open/floor/plasteel/whitegreen/side{tag = "icon-whitegreen (WEST)"; icon_state = "whitegreen"; dir = 8},/area/awaymission/research/interior)
 "iF" = (/obj/machinery/power/apc{dir = 1; name = "Security APC"; pixel_y = 24},/obj/structure/cable{d2 = 8; icon_state = "0-8"},/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"},/turf/open/floor/plating,/area/awaymission/research/interior/security)

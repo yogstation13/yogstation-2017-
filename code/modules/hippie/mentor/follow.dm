@@ -25,8 +25,8 @@
 	usr.client.mob.notransform = TRUE
 	src.verbs += /client/proc/mentor_unfollow
 
-	admins << "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is now following <EM>[key_name(M)]</span>"
-	usr << "<span class='info'>You are now following [M]. Click the \"Stop Following\" button in the Mentor tab to stop.</span>"
+	to_chat(admins, "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is now following <EM>[key_name(M)]</span>")
+	to_chat(usr, "<span class='info'>You are now following [M]. Click the \"Stop Following\" button in the Mentor tab to stop.</span>")
 	log_mentor("[key_name(usr)] began following [key_name(M)]")
 
 
@@ -52,8 +52,8 @@
 		following = holder.following
 
 
-	admins << "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is no longer following <EM>[key_name(following)]</span>"
-	usr << "<span class='info'>You are no longer following [following].</span>"
+	to_chat(admins, "<span class='mentor'><span class='prefix'>MENTOR:</span> <EM>[key_name(usr)]</EM> is no longer following <EM>[key_name(following)]</span>")
+	to_chat(usr, "<span class='info'>You are no longer following [following].</span>")
 	log_mentor("[key_name(usr)] stopped following [key_name(following)]")
 
 	following = null

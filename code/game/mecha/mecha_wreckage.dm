@@ -25,9 +25,9 @@
 					user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
 					welder_salvage -= type
 				else
-					user << "<span class='warning'>You fail to salvage anything valuable from [src]!</span>"
+					to_chat(user, "<span class='warning'>You fail to salvage anything valuable from [src]!</span>")
 		else
-			user << "<span class='warning'>You don't see anything that can be cut off with [I]!</span>"
+			to_chat(user, "<span class='warning'>You don't see anything that can be cut off with [I]!</span>")
 			return
 
 	else if(istype(I, /obj/item/weapon/wirecutters))
@@ -38,9 +38,9 @@
 				user.visible_message("[user] cuts [N] from [src].", "<span class='notice'>You cut [N] from [src].</span>")
 				wirecutters_salvage -= type
 			else
-				user << "<span class='warning'>You fail to salvage anything valuable from [src]!</span>"
+				to_chat(user, "<span class='warning'>You fail to salvage anything valuable from [src]!</span>")
 		else
-			user << "<span class='warning'>You don't see anything that can be snipped off with [I]!</span>"
+			to_chat(user, "<span class='warning'>You don't see anything that can be snipped off with [I]!</span>")
 
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(crowbar_salvage && crowbar_salvage.len)
@@ -51,7 +51,7 @@
 				user.visible_message("[user] pries [S] from [src].", "<span class='notice'>You pry [S] from [src].</span>")
 			return
 		else
-			user << "<span class='warning'>You don't see anything that can be pried with [I]!</span>"
+			to_chat(user, "<span class='warning'>You don't see anything that can be pried with [I]!</span>")
 
 	else
 		return ..()

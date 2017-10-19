@@ -65,7 +65,7 @@
 		dismember_chance = initial(dismember_chance)
 		alpha = initial(alpha)
 		if(!forced)
-			src << "<span class='danger'><B>You exit stealth.</span></B>"
+			to_chat(src, "<span class='danger'><B>You exit stealth.</span></B>")
 		else
 			visible_message("<span class='danger'>\The [src] suddenly appears!</span>")
 			stealthcooldown = world.time + initial(stealthcooldown) //we were forced out of stealth and go on cooldown
@@ -82,11 +82,11 @@
 		alpha = 15
 		pass_flags |= (PASSTABLE | PASSMOB)
 		if(!forced)
-			src << "<span class='danger'><B>You enter stealth, empowering your next attack.</span></B>"
+			to_chat(src, "<span class='danger'><B>You enter stealth, empowering your next attack.</span></B>")
 		updatestealthalert()
 		toggle = TRUE
 	else if(!forced)
-		src << "<span class='danger'><B>You cannot yet enter stealth, wait another [max(round((stealthcooldown - world.time)*0.1, 0.1), 0)] seconds!</span></B>"
+		to_chat(src, "<span class='danger'><B>You cannot yet enter stealth, wait another [max(round((stealthcooldown - world.time)*0.1, 0.1), 0)] seconds!</span></B>")
 
 /mob/living/simple_animal/hostile/guardian/assassin/proc/updatestealthalert()
 	if(stealthcooldown <= world.time)
