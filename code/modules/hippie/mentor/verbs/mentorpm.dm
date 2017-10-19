@@ -3,7 +3,7 @@
 	set category = "Mentor"
 	set name = "Mentor PM"
 	if(!holder)
-		src << "<font color='red'>Error: Mentor-PM-Panel: Only Mentors may use this command.</font>"
+		to_chat(src, "<font color='red'>Error: Mentor-PM-Panel: Only Mentors may use this command.</font>")
 		return
 	var/list/client/targets[0]
 	for(var/client/T)
