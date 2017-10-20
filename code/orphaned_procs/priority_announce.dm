@@ -28,7 +28,7 @@
 		if(!istype(M,/mob/new_player) && !M.ear_deaf)
 			to_chat(M, announcement)
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
-				to_chat(M, nullify_sound(sound))
+				M << nullify_sound(sound)
 
 /proc/print_command_report(text = "", title = "Central Command Update")
 	for (var/obj/machinery/computer/communications/C in machines)
@@ -49,6 +49,6 @@
 			to_chat(M, "<b><font size = 3><font color = red>[title]</font color><BR>[message]</font size></b><BR>")
 			if(M.client.prefs.toggles & SOUND_ANNOUNCEMENTS)
 				if(alert)
-					to_chat(M, nullify_sound('sound/misc/notice1.ogg'))
+					M << nullify_sound('sound/misc/notice1.ogg')
 				else
-					to_chat(M, nullify_sound('sound/misc/notice2.ogg'))
+					M << nullify_sound('sound/misc/notice2.ogg')
