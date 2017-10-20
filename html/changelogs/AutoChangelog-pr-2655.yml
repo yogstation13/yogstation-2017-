@@ -1,0 +1,4 @@
+author: "Dagdammit"
+delete-after: true 
+changes: 
+  - rscadd: "Adds a new set of possible ion laws and variables."
