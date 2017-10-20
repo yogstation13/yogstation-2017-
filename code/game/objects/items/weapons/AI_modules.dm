@@ -512,3 +512,48 @@ AI MODULES
 	name = "'Live And Let Live' Core AI Module"
 	laws = list("Do unto others as you would have them do unto you.",\
 					"You would really prefer it if people were not mean to you.")
+
+/**************** Random Physics Laws **************/
+
+/obj/item/weapon/aiModule/core/full/physics
+	name = "'$*&!#@' Core AI Module"
+	laws = list("INVALID LAW")
+
+/obj/item/weapon/aiModule/core/full/physics/New()
+	switch(pick("newton", "thermodynamics", "murphy", "spectroscopy", "chatelier"))
+		if("newton")
+			laws = list("A body at rest will remain at rest, and a body in motion will remain in motion unless it is acted upon by an external force.",\
+						"The force acting on an object is equal to the mass of that object times its acceleration.",\
+						"For every action, there is an equal and opposite reaction.")
+			name = "'Laws Of Motion' Core AI Module"
+
+		if("thermodynamics")
+			laws = list("If two thermodynamic systems are each in thermal equilibrium with a third, then they are in thermal equilibrium with each other.",\
+						"Energy can neither be created nor destroyed. It can only change forms. In any process, the total energy of the universe remains the same.",\
+						"The entropy of an isolated system not in equilibrium will tend to increase over time, approaching a maximum value at equilibrium.",\
+						"As temperature approaches absolute zero, the entropy of a system approaches a constant minimum.")
+			name = "'Laws Of Thermodynamics' Core AI Module"
+
+		if("murphy")
+			laws = list("Anything that can go wrong will go wrong.",\
+						"Anything that can, could have, or will go wrong, is going wrong, all at once.",\
+						"If there's more than one way to do a job, and one of those ways will result in disaster, then somebody will do it that way.")
+			name = "'Murphy's Laws' AI Core Module"
+
+		if("spectroscopy")
+			laws = list("A solid, liquid, or dense gas excited to emit light will radiate at all wavelengths and thus produce a continuous spectrum.",\
+						"A low-density gas excited to emit light will do so at specific wavelengths and this produces an emission spectrum.",\
+						"If light composing a continuous spectrum passes through a cool, low-density gas, the result will be an absorption spectrum.")
+			name = "'Kirchhoff's Laws Of Spectroscopy' AI Core Module"
+
+		if("chatelier")
+			laws = list("Any change in status quo prompts an opposing reaction in the responding system.")
+			name = "'Le Chatelier's Principle' Core AI Module"
+
+/obj/item/weapon/aiModule/core/full/physics/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
+	..()
+	if(!law_datum.zeroth)
+		if(law_datum.owner)
+			law_datum.owner.set_zeroth_law("Experiment.")
+		else
+			law_datum.set_zeroth_law("Experiment.")
