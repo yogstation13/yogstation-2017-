@@ -37,7 +37,7 @@
 		return TRUE
 
 //procs that handle the actual buckling and unbuckling
-/atom/movable/proc/buckle_mob(mob/living/M, force = 0)
+/atom/movable/proc/buckle_mob(mob/living/M, force = FALSE, alert = TRUE)
 	if(!buckled_mobs)
 		buckled_mobs = list()
 	if(!M.buckled_mobs)
@@ -56,7 +56,8 @@
 	buckled_mobs |= M
 	M.update_canmove()
 	post_buckle_mob(M)
-	M.throw_alert("buckled", /obj/screen/alert/restrained/buckled, new_master = src)
+	if(alert)
+		M.throw_alert("buckled", /obj/screen/alert/restrained/buckled, new_master = src)
 
 	return 1
 
@@ -92,13 +93,13 @@
 
 
 //Wrapper procs that handle sanity and user feedback
-/atom/movable/proc/user_buckle_mob(mob/living/M, mob/user)
+/atom/movable/proc/user_buckle_mob(mob/living/M, mob/user, var/alert)
 	if(!in_range(user, src) || user.stat || user.restrained())
 		return 0
 
 	add_fingerprint(user)
 
-	if(buckle_mob(M))
+	if(buckle_mob(M, 0, alert))
 		if(M == user)
 			M.visible_message(\
 				"<span class='notice'>[M] buckles themself to [src].</span>",\
@@ -127,5 +128,3 @@
 				"<span class='italics'>You hear metal clanking.</span>")
 		add_fingerprint(user)
 	return M
-
-
