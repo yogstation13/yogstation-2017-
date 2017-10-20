@@ -246,6 +246,14 @@ var/global/normal_ooc_colour = OOC_COLOR
 /client/verb/fix_chat()
 	set name = "Fix chat"
 	set category = "OOC"
+	if(chatOutput && chatOutput.disabled)
+		var/action = alert(src, "Goonchat seems to be disabled, do you wish to enable it?", "", "Yes", "No")
+		if(action == "Yes")
+			prefs.goonchat = TRUE
+			prefs.save_preferences()
+			chatOutput.disabled = FALSE
+			chatOutput.showChat()
+			return
 	if (!chatOutput || !istype(chatOutput))
 		var/action = alert(src, "Invalid Chat Output data found!\nRecreate data?", "Wot?", "Recreate Chat Output data", "Cancel")
 		if (action != "Recreate Chat Output data")
@@ -266,7 +274,6 @@ var/global/normal_ooc_colour = OOC_COLOR
 					winset(src, "output", "is-visible=true;is-disabled=false")
 					winset(src, "browseroutput", "is-visible=false")
 				log_game("GOONCHAT: [key_name(src)] Failed to fix their goonchat window after recreating the chatOutput and forcing a load()")
-
 	else if (chatOutput.loaded)
 		var/action = alert(src, "ChatOutput seems to be loaded\nDo you want me to force a reload, wiping the chat log or just refresh the chat window because it broke/went away?", "Hmmm", "Force Reload", "Refresh", "Cancel")
 		switch (action)

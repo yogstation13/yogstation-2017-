@@ -12,6 +12,7 @@ var/global/savefile/iconCache = new("data/iconCache.sav") //Cache of icons for t
 	var/list/messageQueue //If they haven't loaded chat, this is where messages will go until they do
 	var/cookieSent   = FALSE // Has the client sent a cookie for analysis
 	var/broken       = FALSE
+	var/disabled	= FALSE
 	var/list/connectionHistory //Contains the connection history passed from chat cookie
 	var/adminMusicVolume = 100 //This is for the Play Global Sound verb
 
@@ -104,13 +105,18 @@ var/global/savefile/iconCache = new("data/iconCache.sav") //Cache of icons for t
 	sendClientData()
 
 	//do not convert to to_chat()
-	owner << "<span class=\"userdanger\">If you can see this, update byond.</span>"
+	if(!disabled)
+		owner << "<span class=\"userdanger\">If you can see this, goonchat failed to load. Try doing Fix-Chat, updating BYOND, or updating Internet Explorer.</span>"
 
 	pingLoop()
 
 /datum/chatOutput/proc/showChat()
-	winset(owner, "output", "is-visible=false")
-	winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
+	if(!disabled)
+		winset(owner, "output", "is-visible=false")
+		winset(owner, "browseroutput", "is-disabled=false;is-visible=true")
+	else
+		winset(owner, "output", "is-visible=true")
+		winset(owner, "browseroutput", "is-disabled=true;is-visible=false")
 
 /datum/chatOutput/proc/pingLoop()
 	set waitfor = FALSE

@@ -356,8 +356,6 @@ var/next_external_rsc = 0
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
 
-	winset(src, null, "reset=true")
-
 //////////////
 //DISCONNECT//
 //////////////
