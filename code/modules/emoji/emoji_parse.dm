@@ -1,6 +1,5 @@
 var/list/emojis
 
-
 /proc/emoji_parse(text)
 	. = text
 	if(!config.emojis)
