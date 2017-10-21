@@ -245,12 +245,12 @@
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if (src.bullets < 1)
-			user.show_message("\red *click* *click*", 2)
+			user.show_message("<font color='red'>*click* *click*</font>", 2)
 			return
 		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 		src.bullets--
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red <B>[] fires the [src] at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+			O.show_message(text("<font color='red'><B>[] fires the [src] at []!</B></font>", user, target), 1, "<font color='red'>You hear a gunshot</font>", 2)
 
 /obj/item/toy/toyflaregun
 	name = "toy flare gun"
@@ -269,12 +269,12 @@
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if (src.bullets < 1)
-			user.show_message("\red *click* *click*", 2)
+			user.show_message("<font color='red'>*click* *click*</font>", 2)
 			return
 		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 		src.bullets--
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red <B>[] fires the [src] at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+			O.show_message(text("<font color='red'><B>[] fires the [src] at []!</B></font>", user, target), 1, "<font color='red'>You hear a gunshot</font>", 2)
 
 
 /*
@@ -451,7 +451,7 @@
 		s.set_up(3, 1, src)
 		s.start()
 		new /obj/effect/decal/cleanable/ash(src.loc)
-		src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
+		src.visible_message("<font color='red'>The [src.name] explodes!</font>","<font color='red'>You hear a snap!</font>")
 		playsound(src, 'sound/effects/snap.ogg', 50, 1)
 		qdel(src)
 

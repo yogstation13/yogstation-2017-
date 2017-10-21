@@ -569,6 +569,6 @@ mob/verb/makePAI(var/turf/t in view())
 	else
 		resting = !resting
 		icon_state = resting ? "[chassis]_rest" : "[chassis]"
-		to_chat(src, "\blue You are now [resting ? "resting" : "getting up"]")
+		to_chat(src, "<font color='blue'>You are now [resting ? "resting" : "getting up"]</font>")
 
 	canmove = !resting
