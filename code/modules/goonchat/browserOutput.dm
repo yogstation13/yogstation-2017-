@@ -214,6 +214,9 @@ var/global/savefile/iconCache = new("data/iconCache.sav") //Cache of icons for t
 	message = replacetext(message, "\proper", "")
 	message = replacetext(message, "\n", "<br>")
 	message = replacetext(message, "\t", "[TAB][TAB]")
+	message = replacetext(message, "’", "`")
+	message = replacetext(message, "“", "\"") //that probably looks like a box in Dream Maker, but it's some shitty unicode quote.
+	message = replacetext(message, "”", "\"") //yet another shitty unicode quote
 
 	for(var/I in targets)
 		//Grab us a client if possible
