@@ -30,7 +30,7 @@
 	..()
 	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
 	if(charging)
-		to_chat(user, "Current charge: [round(charging.percent(), 1)]%")
+		to_chat(user, "Current charge: [round(charging.percent(), 1)]%.")
 
 /obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))

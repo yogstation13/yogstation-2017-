@@ -184,14 +184,14 @@
 
 /mob/camera/blob/verb/relocate_core()
 	set category = "Blob"
-	set name = "Relocate Core (80)"
+	set name = "Relocate Core (50)"
 	set desc = "Swaps the locations of your core and the selected node."
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
 	if(!B)
 		to_chat(src, "<span class='warning'>You must be on a blob node!</span>")
 		return
-	if(!can_buy(80))
+	if(!can_buy(50))
 		return
 	var/turf/old_turf = blob_core.loc
 	blob_core.loc = T

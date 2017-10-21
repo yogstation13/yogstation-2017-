@@ -524,15 +524,11 @@
 /obj/item/toy/crayon/spraycan/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	if(is_capped || !actually_paints)
-		user.visible_message("<span class='suicide'>[user] shakes up the \
-			[src] with a rattle and lifts it to their mouth, but nothing \
-			happens!</span>")
+		user.visible_message("<span class='suicide'>[user] shakes up the [src] with a rattle and lifts it to their mouth, but nothing happens!</span>")
 		user.say("MEDIOCRE!!")
 		return SHAME
 	else
-		user.visible_message("<span class='suicide'>[user] shakes up the \
-			[src] with a rattle and lifts it to their mouth, spraying \
-			paint across their teeth!</span>")
+		user.visible_message("<span class='suicide'>[user] shakes up the [src] with a rattle and lifts it to their mouth, spraying paint across their teeth!</span>")
 		user.say("WITNESS ME!!")
 		if(pre_noise || post_noise)
 			playsound(loc, 'sound/effects/spray.ogg', 5, 1, 5)
@@ -563,7 +559,7 @@
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()
 	if(charges_left)
-		to_chat(user, "It has [charges_left] uses left.")
+		to_chat(user, "It has [charges_left] use\s left.")
 	else
 		to_chat(user, "It is empty.")
 

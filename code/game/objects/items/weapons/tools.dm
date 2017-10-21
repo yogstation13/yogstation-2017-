@@ -49,7 +49,7 @@
 
 /obj/item/weapon/wrench/medical
 	name = "medical wrench"
-	desc = "A medical wrench with common(medical?) uses. Can be found in your hand."
+	desc = "A medical wrench with common (medical?) uses. Can be found in your hand."
 	icon_state = "wrench_medical"
 	force = 2 //MEDICAL
 	throwforce = 4

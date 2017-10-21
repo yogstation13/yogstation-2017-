@@ -88,7 +88,7 @@
 /obj/item/weapon/gun/examine(mob/user)
 	..()
 	if(pin)
-		to_chat(user, "It has [pin] installed.")
+		to_chat(user, "It has \a [pin] installed.")
 	else
 		to_chat(user, "It doesn't have a firing pin installed, and won't fire.")
 	if(unique_reskin && !current_skin)
@@ -206,8 +206,8 @@ obj/item/weapon/gun/proc/newshot()
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
 	add_fingerprint(user)
-	user.gunfiring += "\[[time_stamp()]\]fired [src]"
-	log_attack("\[[time_stamp()]\] [user]/[user.ckey] fired [src]")
+	user.gunfiring += "\[[time_stamp()]\]fired [chambered.projectile_type] from [src]"
+	log_attack("[user]/[user.ckey] fired [chambered.projectile_type] from [src]")
 
 	if(semicd)
 		return

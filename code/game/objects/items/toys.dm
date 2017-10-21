@@ -230,7 +230,7 @@
 
 /obj/item/toy/toyglock
 	name = "toy glock"
-	desc = "Oh, looks just like the real thing, but its only a toy."
+	desc = "Oh, looks just like the real thing, but it's only a toy."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "toyglock"
 	item_state = "toyglock"
