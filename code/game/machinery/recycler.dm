@@ -110,7 +110,7 @@ var/const/SAFETY_COOLDOWN = 100
 
 /obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
 	var/list/to_eat
-	if(istype(AM0, /obj/item))
+	if(istype(AM0, /obj))
 		to_eat = AM0.GetAllContents()
 	else
 		to_eat = list(AM0)
@@ -124,7 +124,7 @@ var/const/SAFETY_COOLDOWN = 100
 				crush_living(AM)
 			else
 				emergency_stop(AM)
-		else if(istype(AM, /obj/item))
+		else if(istype(AM, /obj))
 			recycle_item(AM)
 			items_recycled++
 		else
@@ -134,7 +134,7 @@ var/const/SAFETY_COOLDOWN = 100
 	if(items_recycled && sound)
 		playsound(src.loc, item_recycle_sound, 50, 1)
 
-/obj/machinery/recycler/proc/recycle_item(obj/item/I)
+/obj/machinery/recycler/proc/recycle_item(obj/I)
 	I.loc = src.loc
 
 	var/material_amount = materials.get_item_material_amount(I)
@@ -150,7 +150,6 @@ var/const/SAFETY_COOLDOWN = 100
 	playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	safety_mode = TRUE
 	update_icon()
-	L.loc = src.loc
 	addtimer(src, "reboot", SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()

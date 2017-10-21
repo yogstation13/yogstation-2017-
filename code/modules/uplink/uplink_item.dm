@@ -1072,6 +1072,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 	//restricted_roles = list("Assistant")
 
+/datum/uplink_item/role_restricted/rct
+	name = "Rapid Crate Teleporter"
+	desc = "Have something, or someone to get rid off? Put them in a closet, close door, and all your troubles go away to space, or to wherever you set the location to."
+	item = /obj/item/weapon/rct
+	cost = 8
+	exclude_modes = list(/datum/game_mode/nuclear)
+	restricted_roles = list("Quartermaster", "Cargo Technician")
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
