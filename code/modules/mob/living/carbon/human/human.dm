@@ -813,7 +813,7 @@
 					status += "numb"
 				if(status == "")
 					status = "OK"
-				to_chat(src, "\t [status == "OK" ? "<font color=blue>" : "<font color=red>"] Your [LB.name] is [status].</font>")
+				to_chat(src, "\t [status == "OK" ? "<font color='blue'>" : "<font color='red'>"] Your [LB.name] is [status].</font>")
 
 				for(var/obj/item/I in LB.embedded_objects)
 					to_chat(src, "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'><font color=red>There is \a [I] embedded in your [LB.name]!</font></a>")
