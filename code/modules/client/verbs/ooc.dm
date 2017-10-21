@@ -73,9 +73,9 @@
 	if(prefs.unlock_content && (prefs.toggles & MEMBER_PUBLIC))
 		keyname = "<font color='[prefs.ooccolor ? prefs.ooccolor : normal_ooc_colour]'>"
 		if(prefs.unlock_content & 1)
-			keyname += "<img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=blag>"
+			keyname += icon2html('icons/member_content.dmi', world, "blag")
 		if(prefs.unlock_content & 2)
-			keyname += "<img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=yogdon>"
+			keyname += icon2html('icons/member_content.dmi', world, "yogdon")
 
 	keyname += "[key]"
 	webhook_send_ooc(key, msg)
