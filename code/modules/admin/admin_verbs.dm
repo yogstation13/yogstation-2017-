@@ -90,6 +90,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/reset_idconsole_msg,
 	/client/proc/lock_idconsole,
 	/client/proc/fix_air,
+	/client/proc/admin_pick_random_player
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -120,8 +121,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/toggle_nuke,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
-	/client/proc/polymorph_all,
-	/client/proc/admin_pick_random_player
+	/client/proc/polymorph_all
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
