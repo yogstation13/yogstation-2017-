@@ -79,6 +79,8 @@
 		var/obj/item/O = locate(href_list["retrieve"])
 		if(!usr.canUseTopic(src))
 			return
+		if(!O in src.contents)
+			return
 		if(ishuman(usr))
 			if(!usr.get_active_hand())
 				usr.put_in_hands(O)
