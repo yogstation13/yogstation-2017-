@@ -69,12 +69,16 @@ var/datum/subsystem/ticker/ticker
 				'sound/ambience/title1.ogg',
 				'sound/ambience/title3.ogg',
 				'sound/ambience/title-clown.ogg',
-				'sound/ambience/title-getlucky.ogg',
+				'sound/ambience/title-bepoptank.ogg',
+				'sound/ambience/title-bepoprush.ogg',
+				'sound/ambience/title-xcom.ogg',
 				'sound/ambience/title-halflife.ogg',
+				'sound/ambience/title-systemshock.ogg',
 				'sound/ambience/title-lanius.ogg',
 				'sound/ambience/title-mars.ogg',
 				'sound/ambience/title-musique.ogg',
 				'sound/ambience/title-plasmaattack.ogg',
+				'sound/ambience/title-dontstopme.ogg',
 				'sound/ambience/title-mrbluesky.ogg'))
 
 	if(SSevent.holidays && SSevent.holidays[APRIL_FOOLS])
