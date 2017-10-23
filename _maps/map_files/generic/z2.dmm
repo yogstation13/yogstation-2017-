@@ -3506,7 +3506,10 @@
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
 "ly" = (
-/obj/structure/table/wood/bar,
+/obj/structure/table/wood,
+/obj/item/weapon/claymore,
+/obj/item/weapon/sleeping_carp_scroll,
+/obj/item/weapon/mop,
 /turf/open/floor/plasteel/grimy,
 /area/centcom/control)
 "lz" = (
@@ -6873,6 +6876,106 @@
 /obj/effect/vortex_end,
 /turf/open/floor/plasteel/cult,
 /area/centcom/vortex)
+"YF" = (
+/obj/structure/table/wood,
+/obj/item/weapon/chrono_eraser,
+/obj/item/weapon/twohanded/mjollnir,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YG" = (
+/obj/structure/table/wood,
+/obj/item/weapon/cookiesynth,
+/obj/item/weapon/wingpotion,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YH" = (
+/obj/structure/table/wood,
+/obj/item/weapon/dice/d20/fate,
+/obj/item/weapon/sord,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YI" = (
+/obj/structure/table/wood,
+/obj/item/weapon/dragons_blood,
+/obj/item/weapon/minigunpack,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YJ" = (
+/obj/structure/table/wood,
+/obj/item/weapon/grenade/spawnergrenade/manhacks,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YK" = (
+/obj/structure/table/wood,
+/obj/item/weapon/grenade/clusterbuster/syndieminibomb,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YL" = (
+/obj/structure/table/wood,
+/obj/item/weapon/gun/energy/gravity_gun,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YM" = (
+/obj/structure/table/wood,
+/obj/item/weapon/gun/energy/laser/instakill/red,
+/obj/item/weapon/orion_ship,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YN" = (
+/obj/structure/table/wood,
+/obj/item/weapon/gun/energy/laser/captain/scattershot,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YO" = (
+/obj/structure/table/wood,
+/obj/item/weapon/gun/energy/pulse/destroyer,
+/obj/item/weapon/melee/touch_attack/disintegrate,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YP" = (
+/obj/structure/table/wood,
+/obj/item/weapon/gun/energy/temperature,
+/obj/item/weapon/pen/edagger,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YQ" = (
+/obj/structure/table/wood,
+/obj/item/weapon/gun/magic/wand/death,
+/obj/item/weapon/gun/magic/wand/fireball,
+/obj/item/weapon/gun/magic/wand/polymorph,
+/obj/item/weapon/gun/magic/wand/resurrection,
+/obj/item/weapon/gun/magic/staff/chaos,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YR" = (
+/obj/structure/table/wood,
+/obj/item/weapon/gun/medbeam,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YS" = (
+/obj/structure/table/wood,
+/obj/item/weapon/hand_tele,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YT" = (
+/obj/structure/table/wood,
+/obj/item/weapon/katana/energy,
+/obj/item/weapon/spellbook,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YU" = (
+/obj/structure/table/wood,
+/obj/item/weapon/lava_staff,
+/obj/item/weapon/melee/supermatter_sword,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
+"YV" = (
+/obj/structure/table/wood,
+/obj/item/weapon/melee/arm_blade,
+/obj/item/weapon/melee/energy/sword,
+/obj/item/weapon/twohanded/dualsaber/red,
+/turf/open/floor/plasteel/grimy,
+/area/centcom/control)
 "YW" = (
 /obj/item/weapon/twohanded/ctf/blue,
 /turf/open/floor/plasteel/circuit/gcircuit/animated,
@@ -40704,11 +40807,11 @@ lx
 im
 im
 im
+lx
 im
 im
 im
 lx
-im
 im
 im
 im
@@ -40960,13 +41063,13 @@ lo
 ly
 lQ
 im
-im
-im
-im
 mt
-ly
+YK
 lQ
 im
+mt
+YQ
+lQ
 im
 im
 im
@@ -41214,16 +41317,16 @@ im
 im
 im
 lo
-ly
+YF
 lQ
-im
-im
-im
 im
 mt
-ly
+YL
 lQ
 im
+mt
+YR
+lQ
 im
 im
 im
@@ -41471,16 +41574,16 @@ im
 im
 im
 lo
-kT
+YG
 lQ
-im
-im
-im
 im
 mt
-kT
+YM
 lQ
 im
+mt
+YS
+lQ
 im
 im
 im
@@ -41728,16 +41831,16 @@ im
 im
 im
 lo
-kT
+YH
 lQ
-im
-im
-im
 im
 mt
-kT
+YN
 lQ
 im
+mt
+YT
+lQ
 im
 im
 im
@@ -41985,16 +42088,16 @@ im
 im
 im
 lo
-ly
+YI
 lQ
-im
-im
-im
 im
 mt
-ly
+YO
 lQ
 im
+mt
+YU
+lQ
 im
 im
 im
@@ -42242,16 +42345,16 @@ im
 im
 im
 lo
-ly
+YJ
 lQ
-im
-im
-im
 im
 mt
-ly
+YP
 lQ
 im
+mt
+YV
+lQ
 im
 im
 im
@@ -42503,11 +42606,11 @@ lz
 im
 im
 im
+lz
 im
 im
 im
 lz
-im
 im
 im
 im
@@ -44044,9 +44147,9 @@ lq
 lB
 lR
 mc
-mi
-mp
-mi
+mc
+mc
+mc
 mc
 mz
 lB
