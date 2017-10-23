@@ -76,8 +76,10 @@
 
 /obj/structure/guncase/Topic(href, href_list)
 	if(href_list["retrieve"])
-		var/obj/item/O = locate(href_list["retrieve"])
+		var/obj/item/O = locate(href_list["retrieve"]) in src
 		if(!usr.canUseTopic(src))
+			return
+		if(!O)
 			return
 		if(ishuman(usr))
 			if(!usr.get_active_hand())
