@@ -65,8 +65,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
-	login_music = pick(list('sound/ambience/title2.ogg',
-				'sound/ambience/title1.ogg',
+	login_music = pick(list('sound/ambience/title1.ogg',
 				'sound/ambience/title3.ogg',
 				'sound/ambience/title-clown.ogg',
 				'sound/ambience/title-bepoptank.ogg',
