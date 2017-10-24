@@ -75,7 +75,6 @@
 	admin_notes = "Brig is replaced by anchored greentext book surrounded by \
 		lavaland chasms, stationside door has been removed to prevent \
 		accidental dropping."
-	credit_cost = 8000
 
 /datum/map_template/shuttle/emergency/cramped
 	suffix = "cramped"
@@ -158,7 +157,6 @@
 	admin_notes = "If the crew can solve the puzzle, they will wake the \
 	wabbajack statue. It will likely not end well. There's a reason it's \
 	boarded up. Maybe they should have just left it alone."
-	credit_cost = 15000
 
 /datum/map_template/shuttle/emergency/yogstation
 	suffix = "yogstation"
