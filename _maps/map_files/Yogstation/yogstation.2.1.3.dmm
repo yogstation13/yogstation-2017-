@@ -69730,6 +69730,25 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zst" = (
+/obj/structure/lattice,
+/obj/machinery/door/poddoor/preopen{
+	id = "atmos";
+	name = "atmos blast door"
+	},
+/turf/open/space,
+/area/space)
+"Zsu" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/door/poddoor/preopen{
+	id = "atmos";
+	name = "atmos blast door"
+	},
+/turf/open/floor/plating,
+/area/atmos/pipes{
+	name = "Atmospherics Distribution"
+	})
 "Zsv" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector{
 	on = 1
@@ -70049,10 +70068,6 @@
 /area/atmos)
 "Zte" = (
 /obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "atmos";
-	name = "atmos blast door"
-	},
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -70318,6 +70333,7 @@
 /area/atmos)
 "ZtE" = (
 /obj/machinery/atmospherics/components/binary/pump{
+	adminlog = 1;
 	dir = 8;
 	name = "Air to External";
 	on = 1
@@ -72181,6 +72197,10 @@
 /turf/open/floor/plating,
 /area/maintenance/asmaint)
 "ZwU" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "atmos";
+	name = "atmos blast door"
+	},
 /turf/open/floor/plating,
 /area/atmos/pipes{
 	name = "Atmospherics Distribution"
@@ -72195,6 +72215,10 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
+/obj/machinery/door/poddoor/preopen{
+	id = "atmos";
+	name = "atmos blast door"
+	},
 /turf/open/floor/plating,
 /area/atmos/pipes{
 	name = "Atmospherics Distribution"
@@ -103359,7 +103383,7 @@ bVa
 Zth
 bTK
 bTW
-bWg
+bXC
 caa
 ccl
 cdw
@@ -104639,11 +104663,11 @@ bON
 ckU
 bRj
 bSo
-bWg
+bXC
 Zte
 bWn
-bWg
-bWg
+bXC
+bXC
 ZtC
 ZtN
 ZtN
@@ -106451,7 +106475,7 @@ Zuz
 bRr
 cgx
 aaA
-aaA
+Zst
 bZZ
 aaA
 ZvD
@@ -106463,7 +106487,7 @@ aaA
 cjy
 aaA
 Zwd
-aaA
+Zst
 aaA
 aaa
 cvr
@@ -106979,7 +107003,7 @@ Zwx
 ZwC
 ZwI
 ZwN
-Zuo
+Zsu
 aaa
 aaa
 cxg
@@ -107236,7 +107260,7 @@ cir
 cir
 csP
 ZwO
-Zuo
+Zsu
 aaA
 aaA
 cxg
@@ -108521,7 +108545,7 @@ Zwy
 ZwE
 ZwK
 ZwR
-Zuo
+Zsu
 Zxa
 aaA
 aaa
@@ -109021,7 +109045,7 @@ cev
 ZsW
 ZuV
 aaA
-aaA
+Zst
 cjy
 aaA
 ZvJ
@@ -109033,7 +109057,7 @@ aaA
 Zwq
 aaA
 Zwd
-aaA
+Zst
 aaA
 aaa
 Zxa
