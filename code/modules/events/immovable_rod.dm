@@ -86,9 +86,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/turf/open/floor/T = get_turf(K)
 	M.forceMove(T)
 
-	qdel(src)
-	qdel(K)
-
 	M.visible_message("<span class='danger'>[M] suplexes \the [src] into [K]!</span>","<span class='userdanger'>You suplex \the [src] into [K]!</span>")
 	var/obj/structure/festivus/P = new(T)
 	P.desc = "During this year's Feats of Strength the Research Director was able to suplex this passing immovable rod into a planter."
@@ -98,3 +95,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	for(var/mob/bystander in urange(10, src))
 		if(!bystander.stat)
 			shake_camera(bystander, 3, 2)
+
+	qdel(src)
+	qdel(K)
