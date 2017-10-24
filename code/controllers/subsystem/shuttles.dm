@@ -34,6 +34,8 @@ var/datum/subsystem/shuttle/SSshuttle
 
 	var/datum/round_event/shuttle_loan/shuttle_loan
 
+	var/shuttle_purchased = FALSE //If the station has purchased a replacement escape shuttle this round
+
 	var/list/cooldown_ids = list()
 
 
@@ -253,4 +255,3 @@ var/datum/subsystem/shuttle/SSshuttle
 	centcom_message = SSshuttle.centcom_message
 	ordernum = SSshuttle.ordernum
 	points = SSshuttle.points
-

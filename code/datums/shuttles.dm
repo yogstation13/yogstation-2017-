@@ -8,6 +8,8 @@
 	var/description
 	var/admin_notes
 
+	var/credit_cost = INFINITY
+
 /datum/map_template/shuttle/New()
 	shuttle_id = "[port_id]_[suffix]"
 	mappath = "[prefix][shuttle_id].dmm"
@@ -49,6 +51,7 @@
 		small gambling table."
 	admin_notes = "Bardrone should be controlled by a player, either admin \
 		or ghost, has modified drone laws, can speak human and see normally."
+	credit_cost = 5000
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
@@ -72,6 +75,7 @@
 	admin_notes = "Brig is replaced by anchored greentext book surrounded by \
 		lavaland chasms, stationside door has been removed to prevent \
 		accidental dropping."
+	credit_cost = 8000
 
 /datum/map_template/shuttle/emergency/cramped
 	suffix = "cramped"
@@ -90,10 +94,12 @@
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
 	name = "Meta emergency shuttle"
+	credit_cost = 4000
 
 /datum/map_template/shuttle/emergency/mini
 	suffix = "mini"
 	name = "Mini emergency shuttle"
+	credit_cost = 1000
 
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
@@ -138,6 +144,7 @@
 	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) \
 	is a shuttle used at other less known nanotrasen facilities \
 	and has a more open inside for larger crowds."
+	credit_cost = 3000
 
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"
@@ -151,6 +158,7 @@
 	admin_notes = "If the crew can solve the puzzle, they will wake the \
 	wabbajack statue. It will likely not end well. There's a reason it's \
 	boarded up. Maybe they should have just left it alone."
+	credit_cost = 15000
 
 /datum/map_template/shuttle/emergency/yogstation
 	suffix = "yogstation"
