@@ -91,6 +91,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	P.desc = "During this year's Feats of Strength the Research Director was able to suplex this passing immovable rod into a planter."
 	if(istype(T))
 		T.broken = 1
+		T.update_icon()
 	playsound(T, "explosion", 100)
 	for(var/mob/bystander in urange(10, src))
 		if(!bystander.stat)
