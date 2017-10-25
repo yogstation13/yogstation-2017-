@@ -341,7 +341,11 @@ What a mess.*/
 						authenticated = scan.registered_name
 						rank = scan.assignment
 						screen = 1
+
 //RECORD FUNCTIONS
+		if(!check_auth())
+			return
+		switch(href_list["choice"])
 			if("Record Maintenance")
 				screen = 2
 				active1 = null
@@ -743,6 +747,12 @@ What a mess.*/
 	add_fingerprint(usr)
 	updateUsrDialog()
 	return
+
+/obj/machinery/computer/secure_data/proc/check_auth()
+	if(!authenticated)
+		message_admins("EXPLOIT: [usr] attempted to interact with [src] without being logged in.")
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/secure_data/proc/get_photo(mob/user)
 	var/obj/item/weapon/photo/P = null

@@ -215,6 +215,10 @@
 	return 0
 
 /mob/living/silicon/Topic(href, href_list)
+	if(usr && (usr != src))
+		message_admins("EXPLOIT: [usr] attempted to force [src] to state laws.")
+		return
+
 	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb --NeoFite
 		var/L = text2num(href_list["lawc"])
 		switch(lawcheck[L+1])
