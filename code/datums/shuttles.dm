@@ -42,6 +42,7 @@
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
 	name = "Asteroid emergency shuttle"
+	credit_cost = 20000
 
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
@@ -51,7 +52,7 @@
 		small gambling table."
 	admin_notes = "Bardrone should be controlled by a player, either admin \
 		or ghost, has modified drone laws, can speak human and see normally."
-	credit_cost = 5000
+	credit_cost = 25000
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
@@ -93,12 +94,12 @@
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
 	name = "Meta emergency shuttle"
-	credit_cost = 4000
+	credit_cost = 15000
 
 /datum/map_template/shuttle/emergency/mini
 	suffix = "mini"
 	name = "Mini emergency shuttle"
-	credit_cost = 1000
+	credit_cost = 10000
 
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
@@ -143,7 +144,7 @@
 	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) \
 	is a shuttle used at other less known nanotrasen facilities \
 	and has a more open inside for larger crowds."
-	credit_cost = 3000
+	credit_cost = 12500
 
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"

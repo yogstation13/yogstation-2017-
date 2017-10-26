@@ -195,6 +195,9 @@
 
 	. = ..()
 
+/obj/docking_port/mobile/emergency/canDock(obj/docking_port/stationary/S)
+	return FALSE //If the emergency shuttle can't move, the whole game breaks, so it will force itself to land even if it has to crush a few departments in the process
+
 /obj/docking_port/mobile/emergency/timeLeft(divisor)
 	if(divisor <= 0)
 		divisor = 10
