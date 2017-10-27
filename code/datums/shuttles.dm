@@ -164,6 +164,12 @@
 	name = "The Undying Classic"
 	description = "The old and faithful Yogstation shuttle."
 
+/datum/map_template/shuttle/emergency/pubby
+	suffix = "pubby"
+	name = "Puppy Station Emergency Shuttle"
+	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
+	credit_cost = 7500
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
