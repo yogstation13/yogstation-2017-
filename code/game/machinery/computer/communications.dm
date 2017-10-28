@@ -127,13 +127,15 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				var/list/shuttles = flatten_list(shuttle_templates)
 				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
 				if(S && istype(S))
-					if(SSshuttle.shuttle_purchased)
+					if((SSshuttle.shuttle_purchased && !src.emagged) || SSshuttle.emag_shuttle_purchased)
 						usr << "A replacement shuttle has already been purchased."
 					else
 						if(SSshuttle.points >= S.credit_cost)
 							var/obj/machinery/shuttle_manipulator/M  = locate() in machines
 							if(M)
 								SSshuttle.shuttle_purchased = TRUE
+								if(src.emagged)
+									SSshuttle.emag_shuttle_purchased = TRUE
 								M.unload_preview()
 								M.load_template(S)
 								M.existing_shuttle = SSshuttle.emergency
@@ -485,6 +487,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			dat += "Budget: [SSshuttle.points] Credits.<BR>"
 			for(var/shuttle_id in shuttle_templates)
 				var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+				if(!src.emagged && S.emag_buy)
+					continue
 				if(S.credit_cost < INFINITY)
 					dat += "[S.name] | [S.credit_cost] Credits<BR>"
 					dat += "[S.description]<BR>"

@@ -9,6 +9,7 @@
 	var/admin_notes
 
 	var/credit_cost = INFINITY
+	var/emag_buy = FALSE
 
 /datum/map_template/shuttle/New()
 	shuttle_id = "[port_id]_[suffix]"
@@ -76,6 +77,8 @@
 	admin_notes = "Brig is replaced by anchored greentext book surrounded by \
 		lavaland chasms, stationside door has been removed to prevent \
 		accidental dropping."
+	emag_buy = TRUE
+	credit_cost = 15000
 
 /datum/map_template/shuttle/emergency/cramped
 	suffix = "cramped"
@@ -137,6 +140,8 @@
 		I cannot tell you; it's space confidential. \
 		Aw, come space on. Why not? \
 		No, I can't. Anyway, how is your space roleplay life?"
+	emag_buy = TRUE
+	credit_cost = 5000
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
@@ -158,6 +163,8 @@
 	admin_notes = "If the crew can solve the puzzle, they will wake the \
 	wabbajack statue. It will likely not end well. There's a reason it's \
 	boarded up. Maybe they should have just left it alone."
+	emag_buy = TRUE
+	credit_cost = 7500
 
 /datum/map_template/shuttle/emergency/yogstation
 	suffix = "yogstation"
