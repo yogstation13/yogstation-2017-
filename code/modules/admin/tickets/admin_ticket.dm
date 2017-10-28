@@ -42,10 +42,10 @@ var/ticket_counter_visible_to_everyone = 0
 	return "[isAdminComment() ? "COMMENT - " : ""][istype(user, /client) ? key_name_params(user, 0, 1, null, parent) : user] - [text]"
 
 /datum/ticket_log/proc/fix_apostrophes()
-	return replacetext(text, "&#39;", "'")
+	return replacetext(replacetext(text, "&#39;", "'"), "&#34;", "\"")
 
 /datum/ticket_log/proc/fix_apostrophes_admin()
-	return replacetext(text_admin, "&#39;", "'")
+	return replacetext(replacetext(text_admin, "&#39;", "'"), "&#34;", "\"")
 
 /datum/admin_ticket
 	var/ticket_id
