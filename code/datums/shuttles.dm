@@ -170,6 +170,12 @@
 	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
 	credit_cost = 7500
 
+/datum/map_template/shuttle/emergency/delta
+	suffix = "delta"
+	name = "Delta Station Emergency Shuttle"
+	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
+	credit_cost = 12500
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
