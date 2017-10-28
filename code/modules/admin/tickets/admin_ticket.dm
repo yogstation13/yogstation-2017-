@@ -41,10 +41,10 @@ var/ticket_counter_visible_to_everyone = 0
 /datum/ticket_log/proc/toLogString()
 	return "[isAdminComment() ? "COMMENT - " : ""][istype(user, /client) ? key_name_params(user, 0, 1, null, parent) : user] - [text]"
 
-/datum/ticket_log/proc/unfuck_apostrophes()
+/datum/ticket_log/proc/fix_apostrophes()
 	return replacetext(text, "&#39;", "'")
 
-/datum/ticket_log/proc/unfuck_apostrophes_admin()
+/datum/ticket_log/proc/fix_apostrophes_admin()
 	return replacetext(text_admin, "&#39;", "'")
 
 /datum/admin_ticket
