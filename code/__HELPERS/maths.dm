@@ -165,3 +165,9 @@ var/gaussian_next
 		gaussian_next = R2 * working
 	return (mean + stddev * R1)
 #undef ACCURACY
+
+/proc/floor(num)
+	return num - num%1
+
+/proc/round_precision(number, prec)
+	return floor(number * 10**prec + 0.5) / 10**prec
