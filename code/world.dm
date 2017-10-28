@@ -162,10 +162,9 @@ var/last_irc_status = 0
 	else if("adminwho" in input)
 		var/msg = "Current Admins:\n"
 		for(var/client/C in admins)
-			msg += "\t[C] is a [C.holder.rank]"
-			if(C.is_afk())
-				msg += " (AFK)"
-			msg += "\n"
+			if(!C.holder.fakekey)
+				msg += "\t[C] is a [C.holder.rank]"
+				msg += "\n"
 		return msg
 
 	else if(copytext(T,1,9) == "announce")
