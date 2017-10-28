@@ -168,6 +168,3 @@ var/gaussian_next
 
 /proc/floor(num)
 	return num - num%1
-
-/proc/round_precision(number, prec)
-	return floor(number * 10**prec + 0.5) / 10**prec

@@ -19,7 +19,8 @@ var/datum/subsystem/weather/SSweather
 		if(W.aesthetic)
 			continue
 		for(var/mob/living/L in mob_list)
-			W.impact_if_possible(L)
+			if(W.can_impact(L))
+				W.impact(L)
 	for(var/Z in eligible_zlevels)
 		var/list/possible_weather_for_this_z = list()
 		for(var/V in existing_weather)

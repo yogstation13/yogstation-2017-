@@ -144,7 +144,7 @@ var/const/INJECT = 5 //injection
 	var/trans_data = null
 	for(var/reagent in reagent_list)
 		var/datum/reagent/T = reagent
-		var/transfer_amount = round_precision(T.volume * part, 3)
+		var/transfer_amount = round(T.volume * part, 0.001)
 		if(preserve_data)
 			trans_data = copy_data(T)
 		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
@@ -190,7 +190,7 @@ var/const/INJECT = 5 //injection
 	var/datum/reagents/R = target.reagents
 	if(src.get_reagent_amount(reagent)<amount)
 		amount = src.get_reagent_amount(reagent)
-	amount = round_precision(min(amount, R.maximum_volume-R.total_volume), 3)
+	amount = round(min(amount, R.maximum_volume-R.total_volume), 0.001)
 	var/trans_data = null
 	for (var/datum/reagent/current_reagent in src.reagent_list)
 		if(current_reagent.id == reagent)
@@ -527,7 +527,7 @@ var/const/INJECT = 5 //injection
 		var/datum/reagent/R = A
 		if (R.id == reagent)
 			R.volume += amount
-			R.volume = round_precision(R.volume, 3)
+			R.volume = round(R.volume, 0.001)
 			update_total()
 			my_atom.on_reagent_change()
 			R.on_merge(data)
@@ -576,7 +576,7 @@ var/const/INJECT = 5 //injection
 		var/datum/reagent/R = A
 		if (R.id == reagent)
 			R.volume -= amount
-			R.volume = round_precision(R.volume, 3)
+			R.volume = round(R.volume, 0.001)
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
