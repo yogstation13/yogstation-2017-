@@ -1,0 +1,4 @@
+author: "nichlas0010"
+delete-after: true 
+changes: 
+  - bugfix: "Stealthmins are no longer shown on discord"
