@@ -50308,7 +50308,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/computer/camera_advanced/xenobio,
+/obj/structure/table/glass,
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
