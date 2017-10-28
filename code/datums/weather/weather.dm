@@ -125,6 +125,10 @@
 /datum/weather/proc/impact(mob/living/L) //What effect does this weather have on the hapless mob?
 	return
 
+/datum/weather/proc/impact_if_possible(mob/living/L)
+	if(can_impact(L))
+		impact(L)
+
 /datum/weather/proc/update_areas()
 	for(var/V in impacted_areas)
 		var/area/N = V
