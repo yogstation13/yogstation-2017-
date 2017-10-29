@@ -183,6 +183,14 @@
 	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
 	credit_cost = 12500
 
+/datum/map_template/shuttle/emergency/scrapheap
+	suffix = "scrapheap"
+	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
+	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean to heavily on the exterior windows, they are fragile."
+	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight."
+	emag_buy = TRUE
+	credit_cost = 2500
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
