@@ -141,7 +141,10 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 								M.existing_shuttle = SSshuttle.emergency
 								M.action_load(S)
 								SSshuttle.points -= S.credit_cost
-								minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
+								if(!src.emagged)
+									minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
+								else
+									minor_announce("Unknown has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
 								message_admins("[key_name_admin(usr)] purchased [S.name].")
 								feedback_add_details("shuttle_manipulator", S.name)
 							else
