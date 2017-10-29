@@ -94,6 +94,13 @@
 	admin_notes = "Due to origin as a solo piloted secure vessel, has an \
 		active GPS onboard labeled STV5."
 
+/datum/map_template/shuttle/emergency/dept
+	suffix = "dept"
+	name = "emergency shuttle (department)"
+	description = "Features include: areas for each department, and a small bar."
+	admin_notes = "Designed to reduce chaos. Each dept requires dept access."
+	credit_cost = 7500
+
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
 	name = "Meta emergency shuttle"
