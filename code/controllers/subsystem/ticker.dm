@@ -73,7 +73,6 @@ var/datum/subsystem/ticker/ticker
 				'sound/ambience/title-bepoprush.ogg',
 				'sound/ambience/title-xcom.ogg',
 				'sound/ambience/title-halflife.ogg',
-				'sound/ambience/title-systemshock.ogg',
 				'sound/ambience/title-lanius.ogg',
 				'sound/ambience/title-mars.ogg',
 				'sound/ambience/title-musique.ogg',
