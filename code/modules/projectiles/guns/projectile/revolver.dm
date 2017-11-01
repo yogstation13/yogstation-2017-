@@ -373,3 +373,17 @@
 		new /obj/item/stack/cable_coil(get_turf(src), 10)
 		slung = 0
 		update_icon()
+
+
+// ZIP GUN //
+
+/obj/item/weapon/gun/projectile/revolver/doublebarrel/zipgun
+	name = "pen"
+	desc = "whatever the pen says. maybe visibly different this time"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "pen"
+	item_state = "pen"
+	slot_flags = SLOT_BELT | SLOT_EARS
+	w_class = 1
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/zipgun
+	suppressed = 1

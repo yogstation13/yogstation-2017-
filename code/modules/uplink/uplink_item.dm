@@ -629,6 +629,11 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/stealthy_weapons/zipgun
+	name = "Zipgun"
+	desc = "A small, single shot pistol disguised as a regular pen. While everyone around can hear the  gunshot, it won't alert others who shot it."
+	cost = 4
+
 // Stealth Items
 /datum/uplink_item/stealthy_tools
 	category = "Stealth and Camouflage Items"

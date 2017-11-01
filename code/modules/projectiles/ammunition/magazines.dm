@@ -76,6 +76,12 @@
 	caliber = "n762"
 	max_ammo = 7
 
+/obj/item/ammo_box/magazine/internal/shot/zipgun
+	name = "zipgun internal magazine"
+	ammo_type = /obj/item/ammo_casing/a357
+	caliber = "357"
+	max_ammo = 1
+
 // Shotgun internal mags
 /obj/item/ammo_box/magazine/internal/shot
 	name = "shotgun internal magazine"
@@ -121,8 +127,6 @@
 	name = "riot shotgun internal magazine"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
 	max_ammo = 6
-
-
 
 
 /obj/item/ammo_box/magazine/internal/grenadelauncher
