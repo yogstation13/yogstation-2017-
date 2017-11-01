@@ -20,10 +20,10 @@
 /obj/item/weapon/gun/energy/temperature/New()
 	..()
 	update_icon()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/gun/energy/temperature/Destroy()
-	SSobj.processing -= src
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/gun/energy/temperature/newshot()
@@ -40,8 +40,7 @@
 /obj/item/weapon/gun/energy/temperature/attackby(obj/item/weapon/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/weapon/card/emag) && !emagged)
 		emagged = 1
-		user << "<span class='caution'>You double the gun's temperature cap ! Targets hit by searing beams will burst into flames !</span>"
-		desc = "A gun that changes the body temperature of its targets. Its temperature cap has been hacked"
+		user << "<span class='caution'>You unlock the weapons temperature cap. Targets hit with searing blasts will burst into flames.</span>"
 
 /obj/item/weapon/gun/energy/temperature/Topic(href, href_list)
 	if (..())
