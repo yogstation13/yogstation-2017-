@@ -29,7 +29,7 @@
 "aC" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aD" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aE" = (/obj/structure/table,/obj/item/weapon/crowbar,/obj/item/weapon/extinguisher,/obj/machinery/recharger,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"aF" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile/emergency{dheight = 0; dir = 4; dwidth = 10; height = 13; name = "Asteroid emergency shuttle"; timid = 1; width = 28},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"aF" = (/obj/docking_port/mobile/emergency{dheight = 2; dir = 4; dwidth = 10; height = 13; name = "Asteroid emergency shuttle"; timid = 1; width = 28},/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
 "aG" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aH" = (/obj/structure/chair{dir = 4},/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aI" = (/obj/structure/chair{dir = 8},/obj/structure/extinguisher_cabinet{pixel_x = 30},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
@@ -77,15 +77,15 @@ abarasaraeatabauafafavawab
 abababacahacabacaiacababab
 aaababaxafafafafafaxababaa
 aaaaabayafazazazafaAabaaaa
-acacabaBafaCacaDafaEabaaaa
-aFafafafafaCacaDafaGabaaaa
-acacabaHafaCacaDafaIabaaaa
+aaaaabaBafaCacaDafaEabaaaa
+aaaaaFafafaCacaDafaGabaaaa
+aaaaabaHafaCacaDafaIabaaaa
 aaaaacaDafaCacaDafaCacaaaa
 aaaaacaDafafafafafaCacaaaa
 aaaaacaDafaCacaDafaCacaaaa
-acacabaHafaCacaDafaJabaaaa
-aKafafafafaCacaDafaGabaaaa
-acacabaLafaCacaDafaBabaaaa
+aaaaabaHafaCacaDafaJabaaaa
+aaaaaKafafaCacaDafaGabaaaa
+aaaaabaLafaCacaDafaBabaaaa
 aaaaabaAafaMaMaMafaNabaaaa
 aaababaOafafafafafafababaa
 abababaPababaQababaRababab
