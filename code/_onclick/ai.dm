@@ -184,8 +184,9 @@
 
 /* APC */
 /obj/machinery/power/apc/AICtrlClick() // turns off/on APCs.
-	toggle_breaker()
-	add_fingerprint(usr)
+	if(can_use(usr))
+		toggle_breaker()
+		add_fingerprint(usr)
 
 /* AI Turrets */
 /obj/machinery/turretid/AIAltClick() //toggles lethal on turrets
