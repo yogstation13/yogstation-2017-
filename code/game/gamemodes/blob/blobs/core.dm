@@ -92,9 +92,7 @@
 	var/list/candidates = list()
 
 	if(!new_overmind)
-		for(var/mob/dead/observer/O in player_list)
-			if(O.client && !O.client.is_afk() && (ROLE_BLOB in O.client.prefs.be_special))
-				candidates += O
+		candidates = get_candidates(ROLE_BLOB)
 		if(candidates.len)
 			C = pick(candidates)
 	else

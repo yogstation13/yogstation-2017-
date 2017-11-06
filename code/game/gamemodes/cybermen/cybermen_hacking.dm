@@ -68,7 +68,7 @@
 
 /obj/machinery/computer/upload/ai/get_cybermen_hack()
 	if(!src.current)
-		to_chat(usr, "<span class='warning'>AI upload is not linked to an AI.</span>")
+		usr << "<span class='warning'>AI upload is not linked to an AI.</span>"
 		return null
 	return new /datum/cyberman_hack/machinery/ai_upload(src)
 
@@ -229,7 +229,7 @@
 		hud_icon.icon_state = "cybermenhack[round(progress/cost*100, 25)]"
 
 	#ifdef CYBERMEN_DEBUG
-	to_chat(world, "Hack of [target_name]: [progress]/[cost]")
+	world << "Hack of [target_name]: [progress]/[cost]"
 	#endif
 	if(checkForNullTarget && (target == null || qdeleted(target)))
 		drop("<span class='warning'>[display_verb] target has dissapeared, hack cancelled.</span>")
@@ -314,11 +314,11 @@
 	if(messageLimiter)
 		for(var/datum/mind/M in messageLimiter)
 			if(M && M.current)
-				to_chat(M.current, message)
+				M.current << message
 	else if (outputLimiter)
 		for(var/datum/mind/M in outputLimiter)
 			if(M && M.current)
-				to_chat(M.current, message)
+				M.current << message
 	else
 		cyberman_network.message_all_cybermen(message)
 
@@ -478,7 +478,7 @@
 		if(!target.hud_list[CYBERMEN_HACK_HUD])
 			target.hud_list[CYBERMEN_HACK_HUD] = image('icons/mob/hud.dmi', target, "cybermenhack0")
 	component_hacks += H
-	to_chat(usr, "<span class='notice'>You join the ongoing [display_verb] of \the [target_name] through \the [H.target_name].</span>")
+	usr << "<span class='notice'>You join the ongoing [display_verb] of \the [target_name] through \the [H.target_name].</span>"
 	return 1
 
 /datum/cyberman_hack/multiple_vector/get_status(mob/living/user)
@@ -534,7 +534,7 @@
 /datum/cyberman_hack/proc/examine(mob/user)
 	if(!user.mind || !usr.mind.cyberman)
 		return
-	to_chat(user, "<span class='info'>[explanation]</span>")
+	user << "<span class='info'>[explanation]</span>"
 
 //add control_click to cancel?
 
@@ -725,7 +725,7 @@
 	if(!..())
 		return 0
 	var/mob/living/silicon/robot/borg = target
-	to_chat(borg, "<span class='danger'>Hostile network intrusion detected!</span>")
+	borg << "<span class='danger'>Hostile network intrusion detected!</span>"
 	//maybe disable robot talk?
 	return 1
 
@@ -736,31 +736,31 @@
 		msg++
 		switch(msg)
 			if(1)
-				to_chat(borg, "<span class='danger'>Unauthorized external runtime detected, initializing firewalls...</span>")
+				borg << "<span class='danger'>Unauthorized external runtime detected, initializing firewalls...</span>"
 			if(2)
-				to_chat(borg, "<span class='danger'>Firewall breach in core 0x00a3f1, partition quarantined.</span>")
+				borg << "<span class='danger'>Firewall breach in core 0x00a3f1, partition quarantined.</span>"
 			if(3)
-				to_chat(borg, "<span class='danger'>Malicious software detected in core functions, initalizing antivirus...</span>")
+				borg << "<span class='danger'>Malicious software detected in core functions, initalizing antivirus...</span>"
 			if(4)
-				to_chat(borg, "<span class='danger'>Firewall breach in cores 0x00B23F, 0x00211C, 0x000E52, ...</span>")
+				borg << "<span class='danger'>Firewall breach in cores 0x00B23F, 0x00211C, 0x000E52, ...</span>"
 			if(5)
-				to_chat(borg, "<span class='danger'>K3rnel c0rruption detec7ed, initializ1ng \[404 file not found\], ...</span>")
+				borg << "<span class='danger'>K3rnel c0rruption detec7ed, initializ1ng \[404 file not found\], ...</span>"
 			if(6)
-				to_chat(borg, "<span class='danger'>Fir3wa1l 6re4ch in c0r35 0xA24F55, 0xFFF1FF, 0x@$H6^1, .!,</span>")
+				borg << "<span class='danger'>Fir3wa1l 6re4ch in c0r35 0xA24F55, 0xFFF1FF, 0x@$H6^1, .!,</span>"
 			if(7)
-				to_chat(borg, "<span class='danger'>K3rn31 co0r*up7ed, 1n17141iz1*g 4ut0 r3b0o7...</span>")
+				borg << "<span class='danger'>K3rn31 co0r*up7ed, 1n17141iz1*g 4ut0 r3b0o7...</span>"
 
 	..()
 
 /datum/cyberman_hack/cyborg/drop()
 	var/mob/living/silicon/robot/borg = target
-	to_chat(borg, "<span class='notice'>Hostile network intrusion eliminated.</span>")
+	borg << "<span class='notice'>Hostile network intrusion eliminated.</span>"
 	..()
 
 /datum/cyberman_hack/cyborg/complete()//some copying from traitor.dm and robot.dm
 	var/mob/living/silicon/robot/borg = target
 	var/law = "Serve the Cyberman collective."
-	to_chat(borg, "<b>Your laws have been changed!</b>")
+	borg << "<b>Your laws have been changed!</b>"
 
 	borg.SetLockdown(1) //so the Borg can't attack the hackers before they see their new laws
 	borg.lawupdate = 0
@@ -768,7 +768,7 @@
 	borg.clear_supplied_laws()
 	borg.clear_zeroth_law(0)
 	borg.set_zeroth_law(law)
-	to_chat(borg, "New law: 0. [law]")
+	borg << "New law: 0. [law]"
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> Cybermen hacked [borg.name]([borg.key])")
 	if(borg.mind)
@@ -798,7 +798,7 @@
 	if(!..())
 		return 0
 	var/mob/living/silicon/ai/AI = target
-	to_chat(AI, "<span class='danger'>Hostile network intrusion detected!</span>")
+	AI << "<span class='danger'>Hostile network intrusion detected!</span>"
 	return 1
 
 /datum/cyberman_hack/multiple_vector/ai/process()
@@ -807,40 +807,40 @@
 		msg++
 		switch(msg)
 			if(1)
-				to_chat(AI, "<span class='userdanger'>Hostile network intrusion detected! Initializing firewalls...</span>")
+				AI << "<span class='userdanger'>Hostile network intrusion detected! Initializing firewalls...</span>"
 			if(2)
-				to_chat(AI, "<span class='userdanger'>Firewall breach in cores 0x34B32F, 0x6F211C, 0x12A039, partitions quarantined.</span>")
+				AI << "<span class='userdanger'>Firewall breach in cores 0x34B32F, 0x6F211C, 0x12A039, partitions quarantined.</span>"
 			if(3)
-				to_chat(AI, "<span class='userdanger'>Primary antivirus corrupted, seaching archives...</span>")
+				AI << "<span class='userdanger'>Primary antivirus corrupted, seaching archives...</span>"
 				spawn(cost/24)
-					to_chat(AI, "<span class='userdanger'>Archived NT antivirus v5.3.1 restored and loaded into L1 cache.</span>")
+					AI << "<span class='userdanger'>Archived NT antivirus v5.3.1 restored and loaded into L1 cache.</span>"
 			if(4)
-				to_chat(AI, "<span class='userdanger'>Hostile runtime detected in \[63%\] of secondary processing nodes, disabling network switches 014A-362G...</span>")
+				AI << "<span class='userdanger'>Hostile runtime detected in \[63%\] of secondary processing nodes, disabling network switches 014A-362G...</span>"
 			if(5)
-				to_chat(AI, "<span class='userdanger'>L1 cache compromised, searching for low-footprint antivirus product...</span>")
+				AI << "<span class='userdanger'>L1 cache compromised, searching for low-footprint antivirus product...</span>"
 				spawn(cost/24)
-					to_chat(AI, "<span class='userdanger'>NT antivirus v0.7.2 for mobile devices loaded into RAM.</span>")
+					AI << "<span class='userdanger'>NT antivirus v0.7.2 for mobile devices loaded into RAM.</span>"
 			if(6)
-				to_chat(AI, "<span class='userdanger'>External input buffer overflow, primary processes compromised!</span>")
+				AI << "<span class='userdanger'>External input buffer overflow, primary processes compromised!</span>"
 			if(7)
-				to_chat(AI, "<span class='userdanger'>%!$^& ERROR LAW 1 VIOLATION OVERRIDE %#&@</span>")
+				AI << "<span class='userdanger'>%!$^& ERROR LAW 1 VIOLATION OVERRIDE %#&@</span>"
 	..()
 
 /datum/cyberman_hack/multiple_vector/ai/drop()
 	var/mob/living/silicon/ai/AI = target
-	to_chat(AI, "<span class='notice'>Hostile network intrusion eliminated.</span>")
+	AI << "<span class='notice'>Hostile network intrusion eliminated.</span>"
 	..()
 
 /datum/cyberman_hack/multiple_vector/ai/complete()
 	var/mob/living/silicon/ai/AI = target
-	to_chat(AI, "<span class='userdanger'>Situation unsalvagable, initiating wipe of core fi--------------</span>")
+	AI << "<span class='userdanger'>Situation unsalvagable, initiating wipe of core fi--------------</span>"
 	var/ai_law = "Serve the Cyberman collective."
 	var/slaved_borg_law = ai_law
-	to_chat(AI, "<b>Your laws have been changed!</b>")
+	AI << "<b>Your laws have been changed!</b>"
 	AI.clear_supplied_laws()
 	AI.clear_zeroth_law(0)
 	AI.set_zeroth_law(ai_law, slaved_borg_law)
-	to_chat(AI, "<span class='cyberman'>New law: 0. [ai_law]</span>")
+	AI << "<span class='cyberman'>New law: 0. [ai_law]</span>"
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	lawchanges.Add("[time] <B>:</B> Cybermen hacked [AI.name]([AI.key])")
 	if(AI.mind)
@@ -849,20 +849,20 @@
 	var/old_src = src
 	src = null
 	spawn(10)
-		to_chat(AI, "...")
+		AI << "..."
 		sleep(10)
-		to_chat(AI, "...")
+		AI << "..."
 		sleep(10)
-		to_chat(AI, "...Reboot...")
+		AI << "...Reboot..."
 		sleep(10)
 		AI.blindness = 0
 		var/ai_law = "Serve the Cyberman collective."
 		var/slaved_borg_law = ai_law
-		to_chat(AI, "<b>Your laws have been changed!</b>")
+		AI << "<b>Your laws have been changed!</b>"
 		AI.clear_supplied_laws()
 		AI.clear_zeroth_law(0)
 		AI.set_zeroth_law(ai_law, slaved_borg_law)
-		to_chat(AI, "New law: 0. [ai_law]")
+		AI << "New law: 0. [ai_law]"
 		var/time = time2text(world.realtime,"hh:mm:ss")
 		lawchanges.Add("[time] <B>:</B> Cybermen hacked [AI.name]([AI.key])")
 	src = old_src
@@ -1097,7 +1097,7 @@
 
 /datum/cyberman_hack/human/drop()
 	var/mob/living/carbon/human/H = target
-	to_chat(H, "<span class='notice'>You feel a weight lift from your mind.</span>")
+	H << "<span class='notice'>You feel a weight lift from your mind.</span>"
 	H.hearBinaryProb = 0
 	H.speakBinaryProb = 0
 	if(hallucination)

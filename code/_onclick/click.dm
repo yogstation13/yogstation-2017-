@@ -54,7 +54,7 @@
 	next_click = world.time + 1
 
 	if(client.prefs.afreeze)
-		to_chat(client, "<span class='userdanger'>You are frozen by an administrator.</span>")
+		client << "<span class='userdanger'>You are frozen by an administrator.</span>"
 		return
 
 	if(client.click_intercept)
@@ -433,5 +433,5 @@
 		return allowed_id
 
 	if(!allowed_id)
-		to_chat(src, "<span class='warning'>ERROR: Invalid Access. Permissions restrained.</span>")
+		src << "<span class='warning'>ERROR: Invalid Access. Permissions restrained.</span>"
 		return 0

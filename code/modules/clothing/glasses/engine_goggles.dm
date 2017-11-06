@@ -19,13 +19,13 @@
 		vision_flags = 0
 		darkness_view = 2
 		invis_view = SEE_INVISIBLE_LIVING
-		to_chat(user, "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>")
+		user << "<span class='notice'>You toggle the goggles' scanning mode to \[T-Ray].</span>"
 	else
 		STOP_PROCESSING(SSobj, src)
 		vision_flags = SEE_TURFS
 		darkness_view = 1
 		invis_view = SEE_INVISIBLE_MINIMUM
-		to_chat(loc, "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>")
+		loc << "<span class='notice'>You toggle the goggles' scanning mode to \[Meson].</span>"
 		invis_update()
 
 	if(ishuman(user))
@@ -122,10 +122,10 @@
 
 	if(on)
 		START_PROCESSING(SSobj, src)
-		to_chat(user, "<span class='notice'>You turn the goggles on.</span>")
+		user << "<span class='notice'>You turn the goggles on.</span>"
 	else
 		STOP_PROCESSING(SSobj, src)
-		to_chat(user, "<span class='notice'>You turn the goggles off.</span>")
+		user << "<span class='notice'>You turn the goggles off.</span>"
 		invis_update()
 
 	update_icon()

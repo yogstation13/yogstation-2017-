@@ -13,23 +13,23 @@
 
 /obj/machinery/wish_granter/attack_hand(mob/living/carbon/user)
 	if(charges <= 0)
-		to_chat(user, "The Wish Granter lies silent.")
+		user << "The Wish Granter lies silent."
 		return
 
 	else if(!ishuman(user))
-		to_chat(user, "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's.")
+		user << "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's."
 		return
 
 	else if(is_special_character(user))
-		to_chat(user, "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away.")
+		user << "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away."
 
 	else if (!insisting)
-		to_chat(user, "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?")
+		user << "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?"
 		insisting++
 
 	else
-		to_chat(user, "You speak.  [pick("I want the station to disappear","Humanity is corrupt, mankind must be destroyed","I want to be rich", "I want to rule the world","I want immortality.")].  The Wish Granter answers.")
-		to_chat(user, "Your head pounds for a moment, before your vision clears.  You are the avatar of the Wish Granter, and your power is LIMITLESS!  And it's all yours.  You need to make sure no one can take it from you.  No one can know, first.")
+		user << "You speak.  [pick("I want the station to disappear","Humanity is corrupt, mankind must be destroyed","I want to be rich", "I want to rule the world","I want immortality.")].  The Wish Granter answers."
+		user << "Your head pounds for a moment, before your vision clears.  You are the avatar of the Wish Granter, and your power is LIMITLESS!  And it's all yours.  You need to make sure no one can take it from you.  No one can know, first."
 
 		charges--
 		insisting = 0
@@ -48,9 +48,9 @@
 
 		var/obj_count = 1
 		for(var/datum/objective/OBJ in user.mind.objectives)
-			to_chat(user, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
+			user << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
 			obj_count++
 
-		to_chat(user, "You have a very bad feeling about this.")
+		user << "You have a very bad feeling about this."
 
 	return

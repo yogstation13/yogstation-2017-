@@ -16,12 +16,12 @@
 	if(!msg)
 		return
 	var/rendered = "<font color='[god.side]'><span class='game say'><i>Prophet [owner]:</i> <span class='message'>[msg]</span></span>"
-	to_chat(god, rendered)
-	to_chat(owner, rendered)
+	god << rendered
+	owner << rendered
 	for(var/mob/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, owner)
-			to_chat(M, "[link] [rendered]")
+			M << "[link] [rendered]"
 
 /datum/action/innate/godspeak/Destroy()
 	god = null

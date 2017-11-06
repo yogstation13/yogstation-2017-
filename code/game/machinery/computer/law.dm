@@ -11,15 +11,15 @@
 		if(src.stat & (NOPOWER|BROKEN|MAINT))
 			return
 		if(!current)
-			to_chat(user, "<span class='caution'>You haven't selected anything to transmit laws to!</span>")
+			user << "<span class='caution'>You haven't selected anything to transmit laws to!</span>"
 			return
 		if(!can_upload_to(current))
-			to_chat(user, "<span class='caution'>Upload failed!</span> Check to make sure [current.name] is functioning properly.")
+			user << "<span class='caution'>Upload failed!</span> Check to make sure [current.name] is functioning properly."
 			current = null
 			return
 		var/turf/currentloc = get_turf(current)
 		if(currentloc && user.z != currentloc.z)
-			to_chat(user, "<span class='caution'>Upload failed!</span> Unable to establish a connection to [current.name]. You're too far away!")
+			user << "<span class='caution'>Upload failed!</span> Unable to establish a connection to [current.name]. You're too far away!"
 			current = null
 			return
 		M.install(current.laws, user)
@@ -43,9 +43,9 @@
 	src.current = select_active_ai(user)
 
 	if (!src.current)
-		to_chat(user, "<span class='caution'>No active AIs detected!</span>")
+		user << "<span class='caution'>No active AIs detected!</span>"
 	else
-		to_chat(user, "[src.current.name] selected for law changes.")
+		user << "[src.current.name] selected for law changes."
 
 /obj/machinery/computer/upload/ai/can_upload_to(mob/living/silicon/ai/A)
 	if(!A || !isAI(A))
@@ -67,9 +67,9 @@
 	src.current = select_active_free_borg(user)
 
 	if(!src.current)
-		to_chat(user, "<span class='caution'>No active unslaved cyborgs detected!</span>")
+		user << "<span class='caution'>No active unslaved cyborgs detected!</span>"
 	else
-		to_chat(user, "[src.current.name] selected for law changes.")
+		user << "[src.current.name] selected for law changes."
 
 /obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
 	if(!B || !isrobot(B))

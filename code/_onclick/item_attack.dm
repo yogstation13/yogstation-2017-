@@ -15,7 +15,7 @@
 	if(user.a_intent == "harm" && stat == DEAD && butcher_results) //can we butcher it?
 		var/sharpness = I.is_sharp()
 		if(sharpness)
-			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
+			user << "<span class='notice'>You begin to butcher [src]...</span>"
 			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 			if(do_mob(user, src, 80/sharpness))
 				harvest(user)

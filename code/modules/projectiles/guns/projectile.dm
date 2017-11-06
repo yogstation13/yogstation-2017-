@@ -60,20 +60,20 @@
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
-			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
+			user << "<span class='notice'>You load a new magazine into \the [src].</span>"
 			chamber_round()
 			A.update_icon()
 			update_icon()
 			return 1
 		else if (magazine)
-			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
+			user << "<span class='notice'>There's already a magazine in \the [src].</span>"
 	if(istype(A, /obj/item/weapon/suppressor))
 		var/obj/item/weapon/suppressor/S = A
 		if(can_suppress)
 			if(!suppressed)
 				if(!user.unEquip(A))
 					return
-				to_chat(user, "<span class='notice'>You screw [S] onto [src].</span>")
+				user << "<span class='notice'>You screw [S] onto [src].</span>"
 				suppressed = A
 				S.oldsound = fire_sound
 				S.initial_w_class = w_class
@@ -83,10 +83,10 @@
 				update_icon()
 				return
 			else
-				to_chat(user, "<span class='warning'>[src] already has a suppressor!</span>")
+				user << "<span class='warning'>[src] already has a suppressor!</span>"
 				return
 		else
-			to_chat(user, "<span class='warning'>You can't seem to figure out how to fit [S] on [src]!</span>")
+			user << "<span class='warning'>You can't seem to figure out how to fit [S] on [src]!</span>"
 			return
 	return 0
 
@@ -97,7 +97,7 @@
 			if(user.l_hand != src && user.r_hand != src)
 				..()
 				return
-			to_chat(user, "<span class='notice'>You unscrew [suppressed] from [src].</span>")
+			user << "<span class='notice'>You unscrew [suppressed] from [src].</span>"
 			user.put_in_hands(suppressed)
 			fire_sound = S.oldsound
 			w_class = S.initial_w_class
@@ -113,21 +113,21 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
-		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src].</span>")
+		user << "<span class='notice'>You pull the magazine out of \the [src].</span>"
 	else if(chambered)
 		AC.loc = get_turf(src)
 		AC.SpinAnimation(10, 1)
 		chambered = null
-		to_chat(user, "<span class='notice'>You unload the round from \the [src]'s chamber.</span>")
+		user << "<span class='notice'>You unload the round from \the [src]'s chamber.</span>"
 	else
-		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
+		user << "<span class='notice'>There's no magazine in \the [src].</span>"
 	update_icon()
 	return
 
 
 /obj/item/weapon/gun/projectile/examine(mob/user)
 	..()
-	to_chat(user, "Has [get_ammo()] round\s remaining.")
+	user << "Has [get_ammo()] round\s remaining."
 
 /obj/item/weapon/gun/projectile/proc/get_ammo(countchambered = 1)
 	var/boolets = 0 //mature var names for mature people
@@ -157,7 +157,7 @@
 
 /obj/item/weapon/gun/projectile/proc/sawoff(mob/user)
 	if(sawn_state == SAWN_OFF)
-		to_chat(user, "<span class='warning'>\The [src] is already shortened!</span>")
+		user << "<span class='warning'>\The [src] is already shortened!</span>"
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message("[user] begins to shorten \the [src].", "<span class='notice'>You begin to shorten \the [src]...</span>")

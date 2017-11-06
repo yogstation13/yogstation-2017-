@@ -35,10 +35,10 @@
 	var/my_message = "<span class='cultitalic'><b>[(ishuman(user) ? "Acolyte" : "Construct")] [user]:</b> [message]</span>"
 	for(var/mob/M in mob_list)
 		if(iscultist(M))
-			to_chat(M, my_message)
+			M << my_message
 		else if(M in dead_mob_list)
 			var/link = FOLLOW_LINK(M, user)
-			to_chat(M, "[link] [my_message]")
+			M << "[link] [my_message]"
 
 	log_say("[user.real_name]/[user.key] : [message]", "NAR-SIE")
 

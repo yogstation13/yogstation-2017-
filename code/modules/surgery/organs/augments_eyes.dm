@@ -24,7 +24,7 @@
 			HMN.eye_color = eye_color
 			HMN.regenerate_icons()
 		if(aug_message && !special)
-			to_chat(owner, "<span class='notice'>[aug_message]</span>")
+			owner << "<span class='notice'>[aug_message]</span>"
 
 		owner.update_sight()
 		return 1
@@ -43,7 +43,7 @@
 	if(severity > 1)
 		if(prob(10 * severity))
 			return
-	to_chat(owner, "<span class='warning'>Static obfuscates your vision!</span>")
+	owner << "<span class='warning'>Static obfuscates your vision!</span>"
 	owner.flash_eyes(visual = 1)
 
 /obj/item/organ/cyberimp/eyes/xray

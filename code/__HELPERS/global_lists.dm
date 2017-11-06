@@ -62,7 +62,7 @@
 			var/list/L = chemical_reactions_list[reaction]
 			for(var/t in L)
 				. += "    has: [t]\n"
-	to_chat(world, .)
+	world << .
 */
 
 //creates every subtype of prototype (excluding prototype) and adds it to list L.

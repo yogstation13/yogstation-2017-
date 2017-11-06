@@ -53,7 +53,7 @@
 	if(istype(loc, /turf))
 		var/turf/T = loc
 		if(T.intact)
-			to_chat(user, "<span class='warning'>You must first expose the power terminal!</span>")
+			user << "<span class='warning'>You must first expose the power terminal!</span>"
 			return
 
 		if(master && master.can_terminal_dismantle())
@@ -71,7 +71,7 @@
 					var/obj/item/stack/cable_coil/CC = new /obj/item/stack/cable_coil(src, 10)
 					CC.item_color = wiring_color
 					CC.update_icon()
-					to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
+					user << "<span class='notice'>You cut the cables and dismantle the power terminal.</span>"
 					qdel(src)
 
 

@@ -35,11 +35,11 @@
 	qdel(src)*/
 
 /obj/item/seeds/kudzu/attack_self(mob/user)
-	to_chat(user, "Nothing happens.")
+	user << "Nothing happens."
 	/*if(istype(user.loc,/turf/open/space))
 		return
 	var/turf/T = get_turf(src)
-	to_chat(user, "<span class='notice'>You start planting the kudzu...</span>")
+	user << "<span class='notice'>You start planting the kudzu...</span>"
 	for(var/client/admeme in admins)
 		if(admeme.prefs.toggles & SOUND_ADMINHELP)
 			admeme << 'sound/effects/adminhelp.ogg'
@@ -47,9 +47,9 @@
 	if(do_after(user, 100, target=src))
 		if(admin_approved)
 			plant(user, T)
-			to_chat(user, "<span class='notice'>You plant the kudzu. You monster.</span>")
+			user << "<span class='notice'>You plant the kudzu. You monster.</span>"
 		else
-			to_chat(user, "<span class='warning'>The seeds don't seem to be in the mood right now!</span>")
+			user << "<span class='warning'>The seeds don't seem to be in the mood right now!</span>"
 
 /obj/item/seeds/kudzu/Topic(href, list/href_list)
 	if(..())

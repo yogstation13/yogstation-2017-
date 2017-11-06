@@ -538,7 +538,7 @@
 	for(var/obj/item/bodypart/L in H.bodyparts)
 		if(L.status == ORGAN_ROBOTIC)
 			if(!informed)
-				to_chat(H, "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>")
+				H << "<span class='userdanger'>You feel a sharp pain as your robotic limbs overload.</span>"
 				informed = 1
 			switch(severity)
 				if(1)
@@ -613,7 +613,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if( !(I.slot_flags & SLOT_BELT) )
 				return
@@ -653,7 +653,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if( !(I.slot_flags & SLOT_ID) )
 				return 0
@@ -665,7 +665,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return
@@ -678,7 +678,7 @@
 				return 0
 			if(!H.w_uniform && !nojumpsuit)
 				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>")
+					H << "<span class='warning'>You need a jumpsuit before you can attach this [I.name]!</span>"
 				return 0
 			if(I.slot_flags & SLOT_DENYPOCKET)
 				return 0
@@ -692,7 +692,7 @@
 				return 0
 			if(!H.wear_suit)
 				if(!disable_warning)
-					to_chat(H, "<span class='warning'>You need a suit before you can attach this [I.name]!</span>")
+					H << "<span class='warning'>You need a suit before you can attach this [I.name]!</span>"
 				return 0
 			if(istype(H.wear_suit, /obj/item/clothing/suit))
 				var/obj/item/clothing/suit/S = H.wear_suit
@@ -764,13 +764,13 @@
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(H.disabilities & FAT)
 		if(H.overeatduration < 100)
-			to_chat(H, "<span class='notice'>You feel fit again!</span>")
+			H << "<span class='notice'>You feel fit again!</span>"
 			H.disabilities &= ~FAT
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 	else
 		if(H.overeatduration > 500)
-			to_chat(H, "<span class='danger'>You suddenly feel blubbery!</span>")
+			H << "<span class='danger'>You suddenly feel blubbery!</span>"
 			H.disabilities |= FAT
 			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
@@ -802,15 +802,15 @@
 		H.metabolism_efficiency = 1
 	else if(H.nutrition > NUTRITION_LEVEL_FED && H.satiety > 80)
 		if(H.metabolism_efficiency != 1.25)
-			to_chat(H, "<span class='notice'>You feel vigorous.</span>")
+			H << "<span class='notice'>You feel vigorous.</span>"
 			H.metabolism_efficiency = 1.25
 	else if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		if(H.metabolism_efficiency != 0.8)
-			to_chat(H, "<span class='notice'>You feel sluggish.</span>")
+			H << "<span class='notice'>You feel sluggish.</span>"
 		H.metabolism_efficiency = 0.8
 	else
 		if(H.metabolism_efficiency == 1.25)
-			to_chat(H, "<span class='notice'>You no longer feel vigorous.</span>")
+			H << "<span class='notice'>You no longer feel vigorous.</span>"
 		H.metabolism_efficiency = 1
 
 	switch(H.nutrition)
@@ -868,7 +868,7 @@
 		if(H.radiation)
 			if (H.radiation > radiation_faint_threshhold)
 				H.Weaken(10)
-				to_chat(H, "<span class='danger'>You feel weak.</span>")
+				H << "<span class='danger'>You feel weak.</span>"
 				H.emote("collapse")
 
 			switch(H.radiation)
@@ -876,11 +876,11 @@
 				if(50 to 75)
 					if(prob(radiation_effect_mod*5))
 						H.Weaken(3)
-						to_chat(H, "<span class='danger'>You feel weak.</span>")
+						H << "<span class='danger'>You feel weak.</span>"
 						H.emote("collapse")
 					if(prob(radiation_effect_mod*15))
 						if(!( H.hair_style == "Shaved") || !(H.hair_style == "Bald") || (HAIR in specflags))
-							to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...<span>")
+							H << "<span class='danger'>Your hair starts to fall out in clumps...<span>"
 							spawn(50)
 								H.facial_hair_style = "Shaved"
 								H.hair_style = "Bald"
@@ -888,7 +888,7 @@
 
 				if(75 to 100)
 					if(prob(radiation_effect_mod*1))
-						to_chat(H, "<span class='danger'>You mutate!</span>")
+						H << "<span class='danger'>You mutate!</span>"
 						randmutb(H)
 						H.emote("gasp")
 						H.domutcheck()
@@ -1005,9 +1005,11 @@
 				if(we_breathe && we_lung)
 					M.do_cpr(H)
 				else if(we_breathe && !we_lung)
-					to_chat(M, "<span class='warning'>You have no lungs to breathe with, so cannot peform CPR.</span>")
+					M << "<span class='warning'>You have no lungs to breathe \
+						with, so cannot peform CPR.</span>"
 				else
-					to_chat(M, "<span class='notice'>You do not breathe, so cannot perform CPR.</span>")
+					M << "<span class='notice'>You do not breathe, so \
+						cannot perform CPR.</span>"
 
 		if("grab")
 			if(attacker_style && attacker_style.grab_act(M,H))

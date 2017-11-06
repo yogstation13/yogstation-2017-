@@ -1,6 +1,6 @@
 /proc/add_note(target_ckey, notetext, timestamp, adminckey, logged = 1, server)
 	if(!dbcon.IsConnected())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	if(!target_ckey)
 		var/new_ckey = ckey(stripped_input(usr,"Who would you like to add a note for?","Enter a ckey",null))
@@ -48,7 +48,7 @@
 	var/notetext
 	var/adminckey
 	if(!dbcon.IsConnected())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	if(!note_id)
 		return
@@ -73,7 +73,7 @@
 
 /proc/edit_note(note_id)
 	if(!dbcon.IsConnected())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	if(!note_id)
 		return
@@ -203,7 +203,7 @@
 /*alternatively this proc can be run once to pass through every note and attempt to convert it before deleting the file, if done then AUTOCONVERT_NOTES should be turned off
 this proc can take several minutes to execute fully if converting and cause DD to hang if converting a lot of notes; it's not advised to do so while a server is live
 /proc/mass_convert_notes()
-	to_chat(world, "Beginning mass note conversion")
+	world << "Beginning mass note conversion"
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)
 		log_game("Error: Cannot access [NOTESFILE]")
@@ -211,7 +211,7 @@ this proc can take several minutes to execute fully if converting and cause DD t
 	notesfile.cd = "/"
 	for(var/ckey in notesfile.dir)
 		convert_notes_sql(ckey)
-	to_chat(world, "Deleting NOTESFILE")
+	world << "Deleting NOTESFILE"
 	fdel(NOTESFILE)
-	to_chat(world, "Finished mass note conversion, remember to turn off AUTOCONVERT_NOTES")*/
+	world << "Finished mass note conversion, remember to turn off AUTOCONVERT_NOTES"*/
 #undef NOTESFILE

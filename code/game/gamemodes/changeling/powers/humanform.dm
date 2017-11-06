@@ -23,7 +23,7 @@
 		return
 	if(!user || user.notransform)
 		return 0
-	to_chat(user, "<span class='notice'>We transform our appearance.</span>")
+	user << "<span class='notice'>We transform our appearance.</span>"
 
 	changeling.purchasedpowers -= src
 

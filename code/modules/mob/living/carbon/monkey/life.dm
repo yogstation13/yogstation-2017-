@@ -23,7 +23,7 @@
 	if (radiation)
 		if (radiation > 100)
 			Weaken(10)
-			to_chat(src, "<span class='danger'>You feel weak.</span>")
+			src << "<span class='danger'>You feel weak.</span>"
 			emote("collapse")
 
 		switch(radiation)
@@ -31,12 +31,12 @@
 			if(50 to 75)
 				if(prob(5))
 					Weaken(3)
-					to_chat(src, "<span class='danger'>You feel weak.</span>")
+					src << "<span class='danger'>You feel weak.</span>"
 					emote("collapse")
 
 			if(75 to 100)
 				if(prob(1))
-					to_chat(src, "<span class='danger'>You mutate!</span>")
+					src << "<span class='danger'>You mutate!</span>"
 					randmutb(src)
 					emote("gasp")
 					domutcheck()

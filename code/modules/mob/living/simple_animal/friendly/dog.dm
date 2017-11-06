@@ -79,10 +79,10 @@
 		//helmet and armor = 100% protection
 		if( istype(inventory_head,/obj/item/clothing/head/helmet) && istype(inventory_back,/obj/item/clothing/suit/armor) )
 			if( O.force )
-				to_chat(user, "<span class='warning'>[src] is wearing too much armor! You can't cause \him any damage.</span>")
+				user << "<span class='warning'>[src] is wearing too much armor! You can't cause \him any damage.</span>"
 				visible_message("<span class='danger'>[user] hits [src] with [O], however [src] is too armored.</span>")
 			else
-				to_chat(user, "<span class='warning'>[src] is wearing too much armor! You can't reach \his skin.<span>")
+				user << "<span class='warning'>[src] is wearing too much armor! You can't reach \his skin.<span>"
 				visible_message("[user] gently taps [src] with [O].")
 			if(health>0 && prob(15))
 				emote("me", 1, "looks at [user] with [pick("an amused","an annoyed","a confused","a resentful", "a happy", "an excited")] expression.")
@@ -90,10 +90,10 @@
 
 	if (istype(O, /obj/item/weapon/razor))
 		if (shaved)
-			to_chat(user, "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>")
+			user << "<span class='warning'>You can't shave this corgi, it's already been shaved!</span>"
 			return
 		if (nofur)
-			to_chat(user, "<span class='warning'> You can't shave this corgi, it doesn't have a fur coat!</span>")
+			user << "<span class='warning'> You can't shave this corgi, it doesn't have a fur coat!</span>"
 			return
 		user.visible_message("[user] starts to shave [src] using \the [O].", "<span class='notice'>You start to shave [src] using \the [O]...</span>")
 		if(do_after(user, 50, target = src))
@@ -128,7 +128,7 @@
 					update_corgi_fluff()
 					regenerate_icons()
 				else
-					to_chat(usr, "<span class='danger'>There is nothing to remove from its [remove_from].</span>")
+					usr << "<span class='danger'>There is nothing to remove from its [remove_from].</span>"
 					return
 			if("back")
 				if(inventory_back)
@@ -137,7 +137,7 @@
 					update_corgi_fluff()
 					regenerate_icons()
 				else
-					to_chat(usr, "<span class='danger'>There is nothing to remove from its [remove_from].</span>")
+					usr << "<span class='danger'>There is nothing to remove from its [remove_from].</span>"
 					return
 
 		show_inv(usr)
@@ -155,7 +155,7 @@
 
 			if("back")
 				if(inventory_back)
-					to_chat(usr, "<span class='warning'>It's already wearing something!</span>")
+					usr << "<span class='warning'>It's already wearing something!</span>"
 					return
 				else
 					var/obj/item/item_to_add = usr.get_active_hand()
@@ -165,7 +165,7 @@
 						return
 
 					if(!usr.drop_item())
-						to_chat(usr, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>")
+						usr << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s back!</span>"
 						return
 
 					if(istype(item_to_add,/obj/item/weapon/grenade/plastic)) // last thing he ever wears, I guess
@@ -178,7 +178,7 @@
 						allowed = TRUE
 
 					if(!allowed)
-						to_chat(usr, "<span class='warning'>You set [item_to_add] on [src]'s back, but it falls off!</span>")
+						usr << "<span class='warning'>You set [item_to_add] on [src]'s back, but it falls off!</span>"
 						item_to_add.loc = loc
 						if(prob(25))
 							step_rand(item_to_add)
@@ -210,14 +210,14 @@
 
 	if(inventory_head)
 		if(user)
-			to_chat(user, "<span class='warning'>You can't put more than one hat on [src]!</span>")
+			user << "<span class='warning'>You can't put more than one hat on [src]!</span>"
 		return
 	if(!item_to_add)
 		user.visible_message("[user] pets [src].","<span class='notice'>You rest your hand on [src]'s head for a moment.</span>")
 		return
 
 	if(user && !user.drop_item())
-		to_chat(user, "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>")
+		user << "<span class='warning'>\The [item_to_add] is stuck to your hand, you cannot put it on [src]'s head!</span>"
 		return 0
 
 	var/valid = FALSE
@@ -228,7 +228,7 @@
 
 	if(valid)
 		if(health <= 0)
-			to_chat(user, "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on \him.</span>")
+			user << "<span class ='notice'>There is merely a dull, lifeless look in [real_name]'s eyes as you put the [item_to_add] on \him.</span>"
 		else if(user)
 			user.visible_message("[user] puts [item_to_add] on [real_name]'s head.  [src] looks at [user] and barks once.",
 				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.</span>",
@@ -238,7 +238,7 @@
 		update_corgi_fluff()
 		regenerate_icons()
 	else
-		to_chat(user, "<span class='warning'>You set [item_to_add] on [src]'s head, but it falls off!</span>")
+		user << "<span class='warning'>You set [item_to_add] on [src]'s head, but it falls off!</span>"
 		item_to_add.loc = loc
 		if(prob(25))
 			step_rand(item_to_add)
@@ -458,7 +458,7 @@
 //puppies cannot wear anything.
 /mob/living/simple_animal/pet/dog/corgi/puppy/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		to_chat(usr, "<span class='warning'>You can't fit this on [src]!</span>")
+		usr << "<span class='warning'>You can't fit this on [src]!</span>"
 		return
 	..()
 
@@ -498,7 +498,7 @@
 //Lisa already has a cute bow!
 /mob/living/simple_animal/pet/dog/corgi/Lisa/Topic(href, href_list)
 	if(href_list["remove_inv"] || href_list["add_inv"])
-		to_chat(usr, "<span class='danger'>[src] already has a cute bow!</span>")
+		usr << "<span class='danger'>[src] already has a cute bow!</span>"
 		return
 	..()
 

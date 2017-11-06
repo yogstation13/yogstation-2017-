@@ -71,12 +71,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!procname)
 		return
 	if(targetselected && !hascall(target,procname))
-		to_chat(usr, "<font color='red'>Error: callproc(): target has no such call [procname].</font>")
+		usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
 		return
 	else
 		var/procpath = text2path(procname)
 		if (!procpath)
-			to_chat(usr, "<font color='red'>Error: callproc(): proc [procname] does not exist. (Did you forget the /proc/ part?)</font>")
+			usr << "<font color='red'>Error: callproc(): proc [procname] does not exist. (Did you forget the /proc/ part?)</font>"
 			return
 	var/list/lst = get_callproc_args()
 	if(!lst)
@@ -84,7 +84,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	if(targetselected)
 		if(!target)
-			to_chat(usr, "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>")
+			usr << "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>"
 			return
 		log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
@@ -96,7 +96,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 	. = get_callproc_returnval(returnval, procname)
 	if(.)
-		to_chat(usr, .)
+		usr << .
 	feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/callproc_datum(A as null|area|mob|obj|turf)
@@ -111,14 +111,14 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!procname)
 		return
 	if(!hascall(A,procname))
-		to_chat(usr, "<span class='warning'>Error: callproc_datum(): target has no such call [procname].</span>")
+		usr << "<span class='warning'>Error: callproc_datum(): target has no such call [procname].</span>"
 		return
 	var/list/lst = get_callproc_args()
 	if(!lst)
 		return
 
 	if(!A || !IsValidSrc(A))
-		to_chat(usr, "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>")
+		usr << "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>"
 		return
 	log_admin("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 	message_admins("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
@@ -127,7 +127,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/returnval = call(A,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 	. = get_callproc_returnval(returnval,procname)
 	if(.)
-		to_chat(usr, .)
+		usr << .
 
 
 
@@ -231,7 +231,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(id in hardcoded_gases || env_gases[id][MOLES])
 			t+= "[env_gases[id][GAS_META][META_GAS_NAME]] : [env_gases[id][MOLES]]\n"
 
-	to_chat(usr, t)
+	usr << t
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in mob_list)
@@ -555,33 +555,33 @@ var/global/list/g_fancy_list_of_types = null
 	var/list/areas_without_intercom = areas_all - areas_with_intercom
 	var/list/areas_without_camera = areas_all - areas_with_camera
 
-	to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
+	world << "<b>AREAS WITHOUT AN APC:</b>"
 	for(var/areatype in areas_without_APC)
-		to_chat(world, "* [areatype]")
+		world << "* [areatype]"
 
-	to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
+	world << "<b>AREAS WITHOUT AN AIR ALARM:</b>"
 	for(var/areatype in areas_without_air_alarm)
-		to_chat(world, "* [areatype]")
+		world << "* [areatype]"
 
-	to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
+	world << "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>"
 	for(var/areatype in areas_without_RC)
-		to_chat(world, "* [areatype]")
+		world << "* [areatype]"
 
-	to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
+	world << "<b>AREAS WITHOUT ANY LIGHTS:</b>"
 	for(var/areatype in areas_without_light)
-		to_chat(world, "* [areatype]")
+		world << "* [areatype]"
 
-	to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
+	world << "<b>AREAS WITHOUT A LIGHT SWITCH:</b>"
 	for(var/areatype in areas_without_LS)
-		to_chat(world, "* [areatype]")
+		world << "* [areatype]"
 
-	to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
+	world << "<b>AREAS WITHOUT ANY INTERCOMS:</b>"
 	for(var/areatype in areas_without_intercom)
-		to_chat(world, "* [areatype]")
+		world << "* [areatype]"
 
-	to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
+	world << "<b>AREAS WITHOUT ANY CAMERAS:</b>"
 	for(var/areatype in areas_without_camera)
-		to_chat(world, "* [areatype]")
+		world << "* [areatype]"
 
 /client/proc/cmd_admin_dress(mob/living/carbon/human/M in mob_list)
 	set category = "Fun"
@@ -713,19 +713,19 @@ var/global/list/g_fancy_list_of_types = null
 
 	switch(input("Which list?") as anything in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
 		if("Players")
-			to_chat(usr, jointext(player_list,","))
+			usr << jointext(player_list,",")
 		if("Admins")
-			to_chat(usr, jointext(admins,","))
+			usr << jointext(admins,",")
 		if("Mobs")
-			to_chat(usr, jointext(mob_list,","))
+			usr << jointext(mob_list,",")
 		if("Living Mobs")
-			to_chat(usr, jointext(living_mob_list,","))
+			usr << jointext(living_mob_list,",")
 		if("Dead Mobs")
-			to_chat(usr, jointext(dead_mob_list,","))
+			usr << jointext(dead_mob_list,",")
 		if("Clients")
-			to_chat(usr, jointext(clients,","))
+			usr << jointext(clients,",")
 		if("Joined Clients")
-			to_chat(usr, jointext(joined_player_list,","))
+			usr << jointext(joined_player_list,",")
 
 /client/proc/cmd_display_del_log()
 	set category = "Debug"

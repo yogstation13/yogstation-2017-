@@ -135,7 +135,7 @@
 	if(istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		panel_open = !panel_open
-		to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
+		user << "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>"
 		update_icon()
 		return
 
@@ -156,18 +156,18 @@
 					var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil()
 					coil.amount = 5
 					coil.loc = user.loc
-					to_chat(user, "<span class='notice'>You cut the wires from \the [src].</span>")
+					user << "<span class='notice'>You cut the wires from \the [src].</span>"
 					update_icon()
 					return
 			if(1)
 				if(istype(W, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/coil = W
 					if(coil.get_amount() < 5)
-						to_chat(user, "<span class='warning'>You need more cable for this!</span>")
+						user << "<span class='warning'>You need more cable for this!</span>"
 					else
 						coil.use(5)
 						buildstage = 2
-						to_chat(user, "<span class='notice'>You wire \the [src].</span>")
+						user << "<span class='notice'>You wire \the [src].</span>"
 						update_icon()
 					return
 
@@ -178,16 +178,16 @@
 					if(do_after(user, 20/W.toolspeed, target = src))
 						if(buildstage == 1)
 							if(stat & BROKEN)
-								to_chat(user, "<span class='notice'>You remove the destroyed circuit.</span>")
+								user << "<span class='notice'>You remove the destroyed circuit.</span>"
 							else
-								to_chat(user, "<span class='notice'>You pry out the circuit.</span>")
+								user << "<span class='notice'>You pry out the circuit.</span>"
 								new /obj/item/weapon/electronics/firealarm(user.loc)
 							buildstage = 0
 							update_icon()
 					return
 			if(0)
 				if(istype(W, /obj/item/weapon/electronics/firealarm))
-					to_chat(user, "<span class='notice'>You insert the circuit.</span>")
+					user << "<span class='notice'>You insert the circuit.</span>"
 					qdel(W)
 					buildstage = 1
 					update_icon()

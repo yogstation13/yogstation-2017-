@@ -238,7 +238,7 @@
 /obj/effect/blob/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/device/analyzer))
 		user.changeNext_move(CLICK_CD_MELEE)
-		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
+		user << "<b>The analyzer beeps once, then reports:</b><br>"
 		user << 'sound/machines/ping.ogg'
 		chemeffectreport(user)
 		typereport(user)
@@ -247,16 +247,16 @@
 
 /obj/effect/blob/proc/chemeffectreport(mob/user)
 	if(overmind)
-		to_chat(user, "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>")
-		to_chat(user, "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>")
-		to_chat(user, "<b>Material Properties:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdesceffect]</span><br>")
+		user << "<b>Material: <font color=\"[overmind.blob_reagent_datum.color]\">[overmind.blob_reagent_datum.name]</font><span class='notice'>.</span></b>"
+		user << "<b>Material Effects:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdescdamage]</span>"
+		user << "<b>Material Properties:</b> <span class='notice'>[overmind.blob_reagent_datum.analyzerdesceffect]</span><br>"
 	else
-		to_chat(user, "<b>No Material Detected!</b><br>")
+		user << "<b>No Material Detected!</b><br>"
 
 /obj/effect/blob/proc/typereport(mob/user)
-	to_chat(user, "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>")
-	to_chat(user, "<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>")
-	to_chat(user, "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
+	user << "<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>"
+	user << "<b>Health:</b> <span class='notice'>[health]/[maxhealth]</span>"
+	user << "<b>Effects:</b> <span class='notice'>[scannerreport()]</span>"
 
 /obj/effect/blob/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -319,11 +319,11 @@
 	..()
 	var/datum/atom_hud/hud_to_check = huds[DATA_HUD_MEDICAL_ADVANCED]
 	if(user.research_scanner || (user in hud_to_check.hudusers))
-		to_chat(user, "<b>Your HUD displays an extensive report...</b><br>")
+		user << "<b>Your HUD displays an extensive report...</b><br>"
 		chemeffectreport(user)
 		typereport(user)
 	else
-		to_chat(user, "It seems to be made of [get_chem_name()].")
+		user << "It seems to be made of [get_chem_name()]."
 
 /obj/effect/blob/proc/scannerreport()
 	return "A generic blob. Looks like someone forgot to override this proc, adminhelp this."

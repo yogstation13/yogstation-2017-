@@ -13,12 +13,12 @@
 
 /obj/item/weapon/implant/zombie/activate()
 	var/mob/living/carbon/H = imp_in
-	to_chat(H, "You hear a soft whirr as your implant discharges it's toxins into you.")
+	H << "You hear a soft whirr as your implant discharges it's toxins into you."
 	reagents.trans_to(H, reagents.total_volume)
 	if(uses == 2)
 		uses--
 	else
-		to_chat(H, "You feel something slip away from you.")
+		H << "You feel something slip away from you."
 		qdel(src)
 
 /obj/item/weapon/implant/zombie/get_data()

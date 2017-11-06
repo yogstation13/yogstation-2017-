@@ -39,19 +39,19 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		switch(aggressiveness)
 			if(1)
-				to_chat(user, "<span class='notice'>You set the restrictor to the middle position.</span>")
+				user << "<span class='notice'>You set the restrictor to the middle position.</span>"
 				aggressiveness = 2
 			if(2)
-				to_chat(user, "<span class='notice'>You set the restrictor to the last position.</span>")
+				user << "<span class='notice'>You set the restrictor to the last position.</span>"
 				aggressiveness = 3
 			if(3)
-				to_chat(user, "<span class='notice'>You set the restrictor to the first position.</span>")
+				user << "<span class='notice'>You set the restrictor to the first position.</span>"
 				aggressiveness = 1
 			if(4)
-				to_chat(user, "<span class='danger'>You adjust the restrictor but nothing happens, probably because its broken.</span>")
+				user << "<span class='danger'>You adjust the restrictor but nothing happens, probably because its broken.</span>"
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(aggressiveness != 4)
-			to_chat(user, "<span class='danger'>You broke the restrictor!</span>")
+			user << "<span class='danger'>You broke the restrictor!</span>"
 			aggressiveness = 4
 	else
 		..()
@@ -74,7 +74,7 @@
 	if(!can_use(usr))
 		return
 	if(broken_hailer)
-		to_chat(usr, "<span class='warning'>\The [src]'s hailing system is broken.</span>")
+		usr << "<span class='warning'>\The [src]'s hailing system is broken.</span>"
 		return
 
 	var/phrase = 0	//selects which phrase to use
@@ -89,12 +89,12 @@
 
 		switch(recent_uses)
 			if(3)
-				to_chat(usr, "<span class='warning'>\The [src] is starting to heat up.</span>")
+				usr << "<span class='warning'>\The [src] is starting to heat up.</span>"
 			if(4)
-				to_chat(usr, "<span class='userdanger'>\The [src] is heating up dangerously from overuse!</span>")
+				usr << "<span class='userdanger'>\The [src] is heating up dangerously from overuse!</span>"
 			if(5) //overload
 				broken_hailer = 1
-				to_chat(usr, "<span class='userdanger'>\The [src]'s power modulator overloads and breaks.</span>")
+				usr << "<span class='userdanger'>\The [src]'s power modulator overloads and breaks.</span>"
 				return
 
 		switch(aggressiveness)		// checks if the user has unlocked the restricted phrases

@@ -25,9 +25,9 @@
 /obj/item/weapon/vending_refill/examine(mob/user)
 	..()
 	if(charges[1] > 0)
-		to_chat(user, "It can restock [charges[1]+charges[2]+charges[3]] item(s).")
+		user << "It can restock [charges[1]+charges[2]+charges[3]] item(s)."
 	else
-		to_chat(user, "It's empty!")
+		user << "It's empty!"
 
 //NOTE I decided to go for about 1/3 of a machine's capacity
 

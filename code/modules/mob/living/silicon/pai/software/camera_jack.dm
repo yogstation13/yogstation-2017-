@@ -20,5 +20,5 @@
 	dat += "<font color=#55FF55>Connected</font> <br>"
 
 	if(!istype(machine, /obj/machinery/camera))
-		to_chat(src, "DERP")
+		src << "DERP"
 	return dat

@@ -308,7 +308,7 @@
 				W.loc = src
 				src.cube = W
 				src.cube.loc = W.loc
-				to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
+				user << "<span class='notice'>You insert [W] into [src].</span>"
 				src.updateUsrDialog()
 				return
 
@@ -318,7 +318,7 @@
 					return ..()
 				W.loc = src
 				src.case = W
-				to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
+				user << "<span class='notice'>You insert [W] into [src].</span>"
 				src.updateUsrDialog()
 				return
 

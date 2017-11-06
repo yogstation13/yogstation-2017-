@@ -29,10 +29,10 @@ LINEN BINS
 	user.drop_item()
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
-		to_chat(user, "<span class='notice'>You cover yourself with [src].</span>")
+		user << "<span class='notice'>You cover yourself with [src].</span>"
 	else
 		layer = initial(layer)
-		to_chat(user, "<span class='notice'>You smooth [src] out beneath you.</span>")
+		user << "<span class='notice'>You smooth [src] out beneath you.</span>"
 	add_fingerprint(user)
 	return
 
@@ -42,7 +42,7 @@ LINEN BINS
 		transfer_fingerprints_to(C)
 		C.add_fingerprint(user)
 		qdel(src)
-		to_chat(user, "<span class='notice'>You tear [src] up.</span>")
+		user << "<span class='notice'>You tear [src] up.</span>"
 	else
 		return ..()
 
@@ -158,7 +158,7 @@ LINEN BINS
 
 /obj/item/weapon/bedsheet/syndie
 	name = "syndicate bedsheet"
-	desc = "It has a syndicate emblem and emanates an aura of evil."
+	desc = "It has a syndicate emblem and it has an aura of evil."
 	icon_state = "sheetsyndie"
 	item_color = "syndie"
 
@@ -208,11 +208,11 @@ LINEN BINS
 /obj/structure/bedsheetbin/examine(mob/user)
 	..()
 	if(amount < 1)
-		to_chat(user, "There are no bed sheets in the bin.")
+		user << "There are no bed sheets in the bin."
 	else if(amount == 1)
-		to_chat(user, "There is one bed sheet in the bin.")
+		user << "There is one bed sheet in the bin."
 	else
-		to_chat(user, "There are [amount] bed sheets in the bin.")
+		user << "There are [amount] bed sheets in the bin."
 
 
 /obj/structure/bedsheetbin/update_icon()
@@ -242,15 +242,15 @@ LINEN BINS
 		I.loc = src
 		sheets.Add(I)
 		amount++
-		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+		user << "<span class='notice'>You put [I] in [src].</span>"
 		update_icon()
 	else if(amount && !hidden && I.w_class < 4)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
 		if(!user.drop_item())
-			to_chat(user, "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>")
+			user << "<span class='warning'>\The [I] is stuck to your hand, you cannot hide it among the sheets!</span>"
 			return
 		I.loc = src
 		hidden = I
-		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
+		user << "<span class='notice'>You hide [I] among the sheets.</span>"
 
 
 
@@ -274,12 +274,12 @@ LINEN BINS
 
 		B.loc = user.loc
 		user.put_in_hands(B)
-		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
+		user << "<span class='notice'>You take [B] out of [src].</span>"
 		update_icon()
 
 		if(hidden)
 			hidden.loc = user.loc
-			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
+			user << "<span class='notice'>[hidden] falls out of [B]!</span>"
 			hidden = null
 
 
@@ -297,7 +297,7 @@ LINEN BINS
 			B = new /obj/item/weapon/bedsheet(loc)
 
 		B.loc = loc
-		to_chat(user, "<span class='notice'>You telekinetically remove [B] from [src].</span>")
+		user << "<span class='notice'>You telekinetically remove [B] from [src].</span>"
 		update_icon()
 
 		if(hidden)

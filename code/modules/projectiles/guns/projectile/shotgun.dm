@@ -17,7 +17,7 @@
 		return
 	var/num_loaded = magazine.attackby(A, user, params, 1)
 	if(num_loaded)
-		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
+		user << "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>"
 		playsound(user, 'sound/weapons/shotguninsert.ogg', 60, 1)
 		A.update_icon()
 		update_icon()
@@ -71,7 +71,7 @@
 /obj/item/weapon/gun/projectile/shotgun/examine(mob/user)
 	..()
 	if (chambered)
-		to_chat(user, "A [chambered.BB ? "live" : "spent"] one is in the chamber.")
+		user << "A [chambered.BB ? "live" : "spent"] one is in the chamber."
 
 /obj/item/weapon/gun/projectile/shotgun/lethal
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/lethal
@@ -119,13 +119,13 @@
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction/attackby(obj/item/A, mob/user, params)
 	if(!bolt_open)
-		to_chat(user, "<span class='notice'>The bolt is closed!</span>")
+		user << "<span class='notice'>The bolt is closed!</span>"
 		return
 	. = ..()
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction/examine(mob/user)
 	..()
-	to_chat(user, "The bolt is [bolt_open ? "open" : "closed"].")
+	user << "The bolt is [bolt_open ? "open" : "closed"]."
 
 
 /obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted
@@ -200,9 +200,9 @@
 	alternate_magazine = current_mag
 	toggled = !toggled
 	if(toggled)
-		to_chat(user, "You switch to tube B.")
+		user << "You switch to tube B."
 	else
-		to_chat(user, "You switch to tube A.")
+		user << "You switch to tube A."
 
 /obj/item/weapon/gun/projectile/shotgun/automatic/dual_tube/AltClick(mob/living/user)
 	if(user.incapacitated() || !Adjacent(user) || !istype(user))

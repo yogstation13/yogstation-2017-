@@ -128,7 +128,7 @@ Pipelines + Other Objects -> Pipe network
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
 			if (level==1 && isturf(T) && T.intact)
-				to_chat(user, "<span class='warning'>You must remove the plating first!</span>")
+				user << "<span class='warning'>You must remove the plating first!</span>"
 				return 1
 			var/datum/gas_mixture/int_air = return_air()
 			var/datum/gas_mixture/env_air = loc.return_air()
@@ -138,9 +138,9 @@ Pipelines + Other Objects -> Pipe network
 			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
+			user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
 			if (internal_pressure > 2*ONE_ATMOSPHERE)
-				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
+				user << "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>"
 				unsafe_wrenching = TRUE //Oh dear oh dear
 
 			if (do_after(user, 20/W.toolspeed, target = src) && !qdeleted(src))

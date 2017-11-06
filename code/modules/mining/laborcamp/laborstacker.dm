@@ -67,7 +67,7 @@
 /obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
 	if(!emagged)
 		emagged = 1
-		to_chat(user, "<span class='warning'>PZZTTPFFFT</span>")
+		user << "<span class='warning'>PZZTTPFFFT</span>"
 
 
 
@@ -83,7 +83,7 @@
 			if(href_list["choice"] == "claim")
 				inserted_id.points += machine.points
 				machine.points = 0
-				to_chat(src, "Points transferred.")
+				src << "Points transferred."
 		else if(href_list["choice"] == "insert")
 			var/obj/item/weapon/card/id/prisoner/I = usr.get_active_hand()
 			if(istype(I))
@@ -91,23 +91,23 @@
 					return
 				I.loc = src
 				inserted_id = I
-			else to_chat(usr, "<span class='warning'>Invalid ID.</span>")
+			else usr << "<span class='warning'>Invalid ID.</span>"
 		if(check_auth()) //Sanity check against hef spoofs
 			if(href_list["choice"] == "station")
 				if(!alone_in_area(get_area(src), usr))
-					to_chat(usr, "<span class='warning'>Prisoners are only allowed to be released while alone.</span>")
+					usr << "<span class='warning'>Prisoners are only allowed to be released while alone.</span>"
 				else
 					switch(SSshuttle.moveShuttle("laborcamp","laborcamp_home"))
 						if(1)
-							to_chat(usr, "<span class='notice'>Shuttle not found</span>")
+							usr << "<span class='notice'>Shuttle not found</span>"
 						if(2)
-							to_chat(usr, "<span class='notice'>Shuttle already at station</span>")
+							usr << "<span class='notice'>Shuttle already at station</span>"
 						if(3)
-							to_chat(usr, "<span class='notice'>No permission to dock could be granted.</span>")
+							usr << "<span class='notice'>No permission to dock could be granted.</span>"
 						else
 							Radio.set_frequency(SEC_FREQ)
 							Radio.talk_into(src, "[inserted_id.registered_name] has returned to the station. Minerals and Prisoner ID card ready for retrieval.", SEC_FREQ)
-							to_chat(usr, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
+							usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
 
 			if(href_list["choice"] == "release")
 				if(alone_in_area(get_area(loc), usr))
@@ -116,9 +116,9 @@
 						if(release_door && release_door.density)
 							release_door.open()
 					else
-						to_chat(usr, "<span class='warning'>Prisoners can only be released while docked with the station.</span>")
+						usr << "<span class='warning'>Prisoners can only be released while docked with the station.</span>"
 				else
-					to_chat(usr, "<span class='warning'>Prisoners are only allowed to be released while alone.</span>")
+					usr << "<span class='warning'>Prisoners are only allowed to be released while alone.</span>"
 
 		src.updateUsrDialog()
 	return
@@ -164,11 +164,11 @@
 	if(istype(I, /obj/item/weapon/card/id))
 		if(istype(I, /obj/item/weapon/card/id/prisoner))
 			var/obj/item/weapon/card/id/prisoner/prisoner_id = I
-			to_chat(user, "<span class='notice'><B>ID: [prisoner_id.registered_name]</B></span>")
-			to_chat(user, "<span class='notice'>Points Collected:[prisoner_id.points]</span>")
-			to_chat(user, "<span class='notice'>Point Quota: [prisoner_id.goal]</span>")
-			to_chat(user, "<span class='notice'>Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.</span>")
+			user << "<span class='notice'><B>ID: [prisoner_id.registered_name]</B></span>"
+			user << "<span class='notice'>Points Collected:[prisoner_id.points]</span>"
+			user << "<span class='notice'>Point Quota: [prisoner_id.goal]</span>"
+			user << "<span class='notice'>Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.</span>"
 		else
-			to_chat(user, "<span class='warning'>Error: Invalid ID</span>")
+			user << "<span class='warning'>Error: Invalid ID</span>"
 	else
 		return ..()

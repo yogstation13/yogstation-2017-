@@ -39,13 +39,13 @@
 			if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				if(do_after(user, 20/I.toolspeed, target = src))
-					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
+					user << "<span class='notice'>You wrench the frame into place.</span>"
 					anchored = 1
 					state = 1
 			if(istype(I, /obj/item/weapon/crowbar))
 				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 				if(do_after(user, 20/I.toolspeed, target = src))
-					to_chat(user, "<span class='notice'>You pry the frame apart.</span>")
+					user << "<span class='notice'>You pry the frame apart.</span>"
 					new /obj/item/stack/sheet/mineral/wood(loc, 4)
 					qdel(src)
 
@@ -54,12 +54,12 @@
 				var/obj/item/stack/sheet/mineral/wood/W = I
 				if(W.get_amount() >= 2)
 					W.use(2)
-					to_chat(user, "<span class='notice'>You add a shelf.</span>")
+					user << "<span class='notice'>You add a shelf.</span>"
 					state = 2
 					icon_state = "book-0"
 			if(istype(I, /obj/item/weapon/wrench))
 				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-				to_chat(user, "<span class='notice'>You unwrench the frame.</span>")
+				user << "<span class='notice'>You unwrench the frame.</span>"
 				anchored = 0
 				state = 0
 
@@ -74,7 +74,7 @@
 				for(var/obj/item/T in B.contents)
 					if(istype(T, /obj/item/weapon/book) || istype(T, /obj/item/weapon/spellbook))
 						B.remove_from_storage(T, src)
-				to_chat(user, "<span class='notice'>You empty \the [I] into \the [src].</span>")
+				user << "<span class='notice'>You empty \the [I] into \the [src].</span>"
 				update_icon()
 			else if(istype(I, /obj/item/weapon/pen))
 				var/newname = stripped_input(user, "What would you like to title this bookshelf?")
@@ -84,10 +84,10 @@
 					name = ("bookcase ([sanitize(newname)])")
 			else if(istype(I, /obj/item/weapon/crowbar))
 				if(contents.len)
-					to_chat(user, "<span class='warning'>You need to remove the books first!</span>")
+					user << "<span class='warning'>You need to remove the books first!</span>"
 				else
 					playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
-					to_chat(user, "<span class='notice'>You pry the shelf out.</span>")
+					user << "<span class='notice'>You pry the shelf out.</span>"
 					new /obj/item/stack/sheet/mineral/wood(loc, 2)
 					state = 1
 					icon_state = "bookempty"
@@ -180,14 +180,14 @@
 		return
 	playsound(loc, 'sound/effects/page_flip.ogg', 50, 1, -1)
 	if(ismonkey(user))
-		to_chat(user, "<span class='notice'>You skim through the book but can't comprehend any of it.</span>")
+		user << "<span class='notice'>You skim through the book but can't comprehend any of it.</span>"
 		return
 	if(dat)
 		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[title]\" and begins reading intently.")
 		onclose(user, "book")
 	else
-		to_chat(user, "<span class='notice'>This book is completely blank!</span>")
+		user << "<span class='notice'>This book is completely blank!</span>"
 
 
 /obj/item/weapon/book/attackby(obj/item/I, mob/user, params)
@@ -195,17 +195,17 @@
 		if(is_blind(user))
 			return
 		if(unique)
-			to_chat(user, "<span class='warning'>These pages don't seem to take the ink well! Looks like you can't modify it.</span>")
+			user << "<span class='warning'>These pages don't seem to take the ink well! Looks like you can't modify it.</span>"
 			return
 		var/choice = input("What would you like to change?") as anything in list("Title", "Contents", "Author", "Cancel")
 		switch(choice)
 			if("Title")
 				var/newtitle = reject_bad_text(stripped_input(usr, "Write a new title:"))
 				if (length(newtitle) > 20)
-					to_chat(usr, "That title won't fit on the cover!")
+					usr << "That title won't fit on the cover!"
 					return
 				if(!newtitle)
-					to_chat(usr, "That title is invalid.")
+					usr << "That title is invalid."
 					return
 				else
 					name = newtitle
@@ -213,14 +213,14 @@
 			if("Contents")
 				var/content = stripped_input(usr, "Write your book's contents (HTML NOT allowed):","","",8192)
 				if(!content)
-					to_chat(usr, "The content is invalid.")
+					usr << "The content is invalid."
 					return
 				else
 					dat += content
 			if("Author")
 				var/newauthor = stripped_input(usr, "Write the author's name:")
 				if(!newauthor)
-					to_chat(usr, "The name is invalid.")
+					usr << "The name is invalid."
 					return
 				else
 					author = newauthor
@@ -230,37 +230,37 @@
 	else if(istype(I, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = I
 		if(!scanner.computer)
-			to_chat(user, "[I]'s screen flashes: 'No associated computer found!'")
+			user << "[I]'s screen flashes: 'No associated computer found!'"
 		else
 			switch(scanner.mode)
 				if(0)
 					scanner.book = src
-					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer.'")
+					user << "[I]'s screen flashes: 'Book stored in buffer.'"
 				if(1)
 					scanner.book = src
 					scanner.computer.buffer_book = name
-					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'")
+					user << "[I]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'"
 				if(2)
 					scanner.book = src
 					for(var/datum/borrowbook/b in scanner.computer.checkouts)
 						if(b.bookname == name)
 							scanner.computer.checkouts.Remove(b)
-							to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Book has been checked in.'")
+							user << "[I]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"
 							return
-					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'")
+					user << "[I]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"
 				if(3)
 					scanner.book = src
 					for(var/obj/item/weapon/book in scanner.computer.inventory)
 						if(book == src)
-							to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'")
+							user << "[I]'s screen flashes: 'Book stored in buffer. Title already present in inventory, aborting to avoid duplicate entry.'"
 							return
 					scanner.computer.inventory.Add(src)
-					to_chat(user, "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
+					user << "[I]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"
 
 	else if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/wirecutters))
-		to_chat(user, "<span class='notice'>You begin to carve out [title]...</span>")
+		user << "<span class='notice'>You begin to carve out [title]...</span>"
 		if(do_after(user, 30, target = src))
-			to_chat(user, "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>")
+			user << "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>"
 			var/obj/item/weapon/storage/book/B = new
 			B.name = src.name
 			B.title = src.title
@@ -296,7 +296,7 @@
 	mode += 1
 	if(mode > 3)
 		mode = 0
-	to_chat(user, "[src] Status Display:")
+	user << "[src] Status Display:"
 	var/modedesc
 	switch(mode)
 		if(0)
@@ -309,9 +309,9 @@
 			modedesc = "Scan book to local buffer, attempt to add book to general inventory."
 		else
 			modedesc = "ERROR"
-	to_chat(user, " - Mode [mode] : [modedesc]")
+	user << " - Mode [mode] : [modedesc]"
 	if(computer)
-		to_chat(user, "<font color=green>Computer has been associated with this unit.</font>")
+		user << "<font color=green>Computer has been associated with this unit.</font>"
 	else
-		to_chat(user, "<font color=red>No associated computer found. Only local scans will function properly.</font>")
-	to_chat(user, "\n")
+		user << "<font color=red>No associated computer found. Only local scans will function properly.</font>"
+	user << "\n"

@@ -205,17 +205,17 @@
 	if(istype(W, /obj/item/weapon/reagent_containers/glass))
 		. = 1 //no afterattack
 		if(locked)
-			to_chat(user, "<span class='warning'>You cannot insert a beaker because the panel is locked!</span>")
+			user << "<span class='warning'>You cannot insert a beaker because the panel is locked!</span>"
 			return
 		if(!isnull(reagent_glass))
-			to_chat(user, "<span class='warning'>There is already a beaker loaded!</span>")
+			user << "<span class='warning'>There is already a beaker loaded!</span>"
 			return
 		if(!user.drop_item())
 			return
 
 		W.loc = src
 		reagent_glass = W
-		to_chat(user, "<span class='notice'>You insert [W].</span>")
+		user << "<span class='notice'>You insert [W].</span>"
 		show_controls(user)
 
 	else
@@ -229,7 +229,7 @@
 	if(emagged == 2)
 		declare_crit = 0
 		if(user)
-			to_chat(user, "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>")
+			user << "<span class='notice'>You short out [src]'s reagent synthesis circuits.</span>"
 		audible_message("<span class='danger'>[src] buzzes oddly!</span>")
 		flick("medibot_spark", src)
 		if(user)

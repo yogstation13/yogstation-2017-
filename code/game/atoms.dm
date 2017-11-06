@@ -180,26 +180,26 @@
 			f_name = "a "
 		f_name += "<span class='danger'>blood-stained</span> [name]!"
 
-	to_chat(user, "\icon[src] That's [f_name]")
+	user << "\icon[src] That's [f_name]"
 
 	if(desc)
-		to_chat(user, desc)
+		user << desc
 	// *****RM
-	//to_chat(user, "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]")
+	//user << "[name]: Dn:[density] dir:[dir] cont:[contents] icon:[icon] is:[icon_state] loc:[loc]"
 
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
-		to_chat(user, "It contains:")
+		user << "It contains:"
 		if(reagents.reagent_list.len)
 			if(user.can_see_reagents()) //Show each individual reagent
 				for(var/datum/reagent/R in reagents.reagent_list)
-					to_chat(user, "[R.volume] units of [R.name]")
+					user << "[R.volume] units of [R.name]"
 			else //Otherwise, just show the total volume
 				var/total_volume = 0
 				for(var/datum/reagent/R in reagents.reagent_list)
 					total_volume += R.volume
-				to_chat(user, "[total_volume] units of various reagents")
+				user << "[total_volume] units of various reagents"
 		else
-			to_chat(user, "Nothing.")
+			user << "Nothing."
 
 /atom/proc/relaymove()
 	return
@@ -349,7 +349,7 @@ var/list/blood_splatter_icons = list()
 		cur_y = y_arr.Find(src.z)
 		if(cur_y)
 			break
-//	to_chat(world, "X = [cur_x]; Y = [cur_y]")
+//	world << "X = [cur_x]; Y = [cur_y]"
 	if(cur_x && cur_y)
 		return list("x"=cur_x,"y"=cur_y)
 	else

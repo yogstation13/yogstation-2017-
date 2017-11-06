@@ -34,9 +34,9 @@
 /obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
 	if(contents.len == 1)
-		to_chat(user, "There is one [src.icon_type] left.")
+		user << "There is one [src.icon_type] left."
 	else
-		to_chat(user, "There are [contents.len <= 0 ? "no" : "[src.contents.len]"] [src.icon_type]s left.")
+		user << "There are [contents.len <= 0 ? "no" : "[src.contents.len]"] [src.icon_type]s left."
 
 /*
  * Donut Box
@@ -55,17 +55,17 @@
 /obj/item/weapon/storage/fancy/donut_box/attack_self(mob/user)
 	..()
 	if(contents.len)
-		to_chat(user, "<span class='warning'>You can't fold this box with items still inside!</span>")
+		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
 	var/obj/item/I = unfold()
 	if(I)
 		user.put_in_hands(I)
-		to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
+		user << "<span class='notice'>You fold [src] flat.</span>"
 
 /obj/item/weapon/storage/fancy/donut_box/attack_self_tk(mob/user)
 	if(contents.len)
-		to_chat(user, "<span class='warning'>You can't fold this box with items still inside!</span>")
+		user << "<span class='warning'>You can't fold this box with items still inside!</span>"
 	if(unfold())
-		to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
+		user << "<span class='notice'>You fold [src] flat.</span>"
 
 /obj/item/weapon/storage/fancy/donut_box/proc/unfold()
 	if(!foldable || contents.len || !ispath(foldable))
@@ -163,11 +163,11 @@
 			remove_from_storage(W, M)
 			M.equip_to_slot_if_possible(W, slot_wear_mask)
 			contents -= W
-			to_chat(user, "<span class='notice'>You take a [icon_type] out of the pack.</span>")
+			user << "<span class='notice'>You take a [icon_type] out of the pack.</span>"
 		else
 			..()
 	else
-		to_chat(user, "<span class='notice'>There are no [icon_type]s left in the pack.</span>")
+		user << "<span class='notice'>There are no [icon_type]s left in the pack.</span>"
 
 /obj/item/weapon/storage/fancy/cigarettes/dromedaryco
 	name = "DromedaryCo"

@@ -115,11 +115,11 @@ var/hsboxspawn = 1
 			if("hsbtobj")
 				if(!admin) return
 				if(hsboxspawn)
-					to_chat(world, "<span class='boldannounce'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>")
+					world << "<span class='boldannounce'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>"
 					hsboxspawn = 0
 					return
 				else
-					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black[usr.key] has enabled object spawning!</b>")
+					world << "<span class='boldnotice'>Sandbox:</span> <b>\black[usr.key] has enabled object spawning!</b>"
 					hsboxspawn = 1
 					return
 			//
@@ -128,10 +128,10 @@ var/hsboxspawn = 1
 			if("hsbtac")
 				if(!admin) return
 				if(config.sandbox_autoclose)
-					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
+					world << "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>"
 					config.sandbox_autoclose = 0
 				else
-					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>")
+					world << "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>"
 					config.sandbox_autoclose = 1
 				return
 			//
@@ -276,7 +276,7 @@ var/hsboxspawn = 1
 
 				var/typepath = text2path(href_list["path"])
 				if(!typepath)
-					to_chat(usr, "Bad path: \"[href_list["path"]]\"")
+					usr << "Bad path: \"[href_list["path"]]\""
 					return
 				new typepath(usr.loc)
 
@@ -288,7 +288,7 @@ var/hsboxspawn = 1
 			if("hsbspawn")
 				var/typepath = text2path(href_list["path"])
 				if(!typepath)
-					to_chat(usr, "Bad path: \"[href_list["path"]]\"")
+					usr << "Bad path: \"[href_list["path"]]\""
 					return
 				new typepath(usr.loc)
 

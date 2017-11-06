@@ -2,7 +2,7 @@
 	set category = "Server"
 	set name = "Toggle Panic Bunker"
 	if (!config.sql_enabled)
-		to_chat(usr, "<span class='adminnotice'>The Database is not enabled!</span>")
+		usr << "<span class='adminnotice'>The Database is not enabled!</span>"
 		return
 
 	config.panic_bunker = (!config.panic_bunker)

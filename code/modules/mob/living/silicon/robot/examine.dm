@@ -48,6 +48,6 @@
 			msg += "<span class='deadsay'>It looks like its system is corrupted and requires a reset.</span>\n"
 	msg += "*---------*</span>"
 
-	to_chat(user, msg)
+	user << msg
 
 	..()

@@ -22,37 +22,37 @@ Also, you never added distance checking after target is selected. I've went ahea
 */
 /obj/effect/proc_holder/spell/targeted/mind_transfer/cast(list/targets, mob/user = usr, distanceoverride)
 	if(!targets.len)
-		to_chat(user, "<span class='warning'>No mind found!</span>")
+		user << "<span class='warning'>No mind found!</span>"
 		return
 
 	if(targets.len > 1)
-		to_chat(user, "<span class='warning'>Too many minds! You're not a hive damnit!</span>")
+		user << "<span class='warning'>Too many minds! You're not a hive damnit!</span>"//Whaa...aat?
 		return
 
 	var/mob/living/target = targets[1]
 
 	if(!(target in oview(range)) && !distanceoverride)//If they are not in overview after selection. Do note that !() is necessary for in to work because ! takes precedence over it.
-		to_chat(user, "<span class='warning'>They are too far away!</span>")
+		user << "<span class='warning'>They are too far away!</span>"
 		return
 
 	if(istype(target, /mob/living/simple_animal/hostile/megafauna))
-		to_chat(user, "<span class='warning'>This creature is too powerful to control!</span>")
+		user << "<span class='warning'>This creature is too powerful to control!</span>"
 		return
 
 	if(target.stat == DEAD)
-		to_chat(user, "<span class='warning'>You don't particularly want to be dead!</span>")
+		user << "<span class='warning'>You don't particularly want to be dead!</span>"
 		return
 
 	if(!target.key || !target.mind)
-		to_chat(user, "<span class='warning'>They appear to be catatonic! Not even magic can affect their vacant mind.</span>")
+		user << "<span class='warning'>They appear to be catatonic! Not even magic can affect their vacant mind.</span>"
 		return
 
 	if(user.suiciding)
-		to_chat(user, "<span class='warning'>You're killing yourself! You can't concentrate enough to do this!</span>")
+		user << "<span class='warning'>You're killing yourself! You can't concentrate enough to do this!</span>"
 		return
 
 	if((target.mind.special_role in protected_roles) || cmptext(copytext(target.key,1,2),"@"))
-		to_chat(user, "<span class='warning'>Their mind is resisting your spell!</span>")
+		user << "<span class='warning'>Their mind is resisting your spell!</span>"
 		return
 
 	var/mob/living/victim = target//The target of the spell whos body will be transferred to.

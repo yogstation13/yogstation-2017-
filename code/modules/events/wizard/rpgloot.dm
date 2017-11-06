@@ -48,7 +48,7 @@
 		return
 	var/quality = target.force - initial(target.force)
 	if(quality > 9 && prob((quality - 9)*10))
-		to_chat(user, "<span class='danger'>[target] catches fire!</span>")
+		user << "<span class='danger'>[target] catches fire!</span>"
 		if(target.burn_state == -1)
 			target.burn_state = 0
 		target.fire_act()
@@ -58,5 +58,5 @@
 	target.throwforce	+= 1
 	for(var/value in target.armor)
 		target.armor[value] += 1
-	to_chat(user, "<span class='notice'>[target] glows blue and seems vaguely \"better\"!</span>")
+	user << "<span class='notice'>[target] glows blue and seems vaguely \"better\"!</span>"
 	qdel(src)

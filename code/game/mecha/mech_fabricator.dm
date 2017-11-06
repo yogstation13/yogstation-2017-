@@ -431,26 +431,26 @@
 
 	if(istype(W, /obj/item/stack/sheet))
 		if(panel_open)
-			to_chat(user, "<span class='warning'>You can't load [src] while it's opened!</span>")
+			user << "<span class='warning'>You can't load [src] while it's opened!</span>"
 			return 1
 		if(being_built)
-			to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
+			user << "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>"
 			return 1
 
 		var/material_amount = materials.get_item_material_amount(W)
 		if(!material_amount)
-			to_chat(user, "<span class='warning'>This object does not contain sufficient amounts of materials to be accepted by [src].</span>")
+			user << "<span class='warning'>This object does not contain sufficient amounts of materials to be accepted by [src].</span>"
 			return 1
 		if(!materials.has_space(material_amount))
-			to_chat(user, "<span class='warning'>\The [src] is full. Please remove some materials from [src] in order to insert more.</span>")
+			user << "<span class='warning'>\The [src] is full. Please remove some materials from [src] in order to insert more.</span>"
 			return 1
 		if(!user.unEquip(W))
-			to_chat(user, "<span class='warning'>\The [W] is stuck to you and cannot be placed into [src].</span>")
+			user << "<span class='warning'>\The [W] is stuck to you and cannot be placed into [src].</span>"
 			return 1
 
 		var/inserted = materials.insert_item(W)
 		if(inserted)
-			to_chat(user, "<span class='notice'>You insert [inserted] sheet\s into [src].</span>")
+			user << "<span class='notice'>You insert [inserted] sheet\s into [src].</span>"
 			if(W && W.materials.len)
 				var/mat_overlay = "fab-load-[material2name(W.materials[1])]"
 				overlays += mat_overlay

@@ -120,20 +120,20 @@
 		if(!is_insertion_ready(user))
 			return
 		if(!checkCircumstances(O))
-			to_chat(user, "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>")
+			user << "<span class='warning'>The [O] is not yet valid for the [src] and must be completed!</span>"
 			return
 		if(!O.origin_tech)
-			to_chat(user, "<span class='warning'>This doesn't seem to have a tech origin!</span>")
+			user << "<span class='warning'>This doesn't seem to have a tech origin!</span>"
 			return
 		var/list/temp_tech = ConvertReqString2List(O.origin_tech)
 		if (temp_tech.len == 0)
-			to_chat(user, "<span class='warning'>You cannot experiment on this item!</span>")
+			user << "<span class='warning'>You cannot experiment on this item!</span>"
 			return
 		if(!user.drop_item())
 			return
 		loaded_item = O
 		O.loc = src
-		to_chat(user, "<span class='notice'>You add the [O.name] to the machine.</span>")
+		user << "<span class='notice'>You add the [O.name] to the machine.</span>"
 		flick("h_lathe_load", src)
 
 
@@ -484,7 +484,7 @@
 		if(globalMalf > 36 && globalMalf < 50)
 			visible_message("<span class='warning'>Experimentor draws the life essence of those nearby!</span>")
 			for(var/mob/living/m in view(4,src))
-				to_chat(m, "<span class='danger'>You feel your flesh being torn from you, mists of blood drifting to [src]!</span>")
+				m << "<span class='danger'>You feel your flesh being torn from you, mists of blood drifting to [src]!</span>"
 				m.apply_damage(50,"brute","chest")
 				investigate_log("Experimentor has taken 50 brute a blood sacrifice from [m]", "experimentor")
 		if(globalMalf > 51 && globalMalf < 75)
@@ -528,15 +528,15 @@
 		src.updateUsrDialog()
 	else
 		if(recentlyExperimented)
-			to_chat(usr, "<span class='warning'>[src] has been used too recently!</span>")
+			usr << "<span class='warning'>[src] has been used too recently!</span>"
 			return
 		else if(!loaded_item)
 			updateUsrDialog() //Set the interface to unloaded mode
-			to_chat(usr, "<span class='warning'>[src] is not currently loaded!</span>")
+			usr << "<span class='warning'>[src] is not currently loaded!</span>"
 			return
 		else if(!process || process != loaded_item) //Interface exploit protection (such as hrefs or swapping items with interface set to old item)
 			updateUsrDialog() //Refresh interface to update interface hrefs
-			to_chat(usr, "<span class='danger'>Interface failure detected in [src]. Please try again.</span>")
+			usr << "<span class='danger'>Interface failure detected in [src]. Please try again.</span>"
 			return
 		var/dotype
 		if(text2num(scantype) == SCANTYPE_DISCOVER)
@@ -607,7 +607,7 @@
 /obj/item/weapon/relic/attack_self(mob/user)
 	if(revealed)
 		if(cooldown)
-			to_chat(user, "<span class='warning'>[src] does not react!</span>")
+			user << "<span class='warning'>[src] does not react!</span>"
 			return
 		else if(src.loc == user)
 			cooldown = TRUE
@@ -615,7 +615,7 @@
 			spawn(cooldownMax)
 				cooldown = FALSE
 	else
-		to_chat(user, "<span class='notice'>You aren't quite sure what to do with this, yet.</span>")
+		user << "<span class='notice'>You aren't quite sure what to do with this, yet.</span>"
 
 //////////////// RELIC PROCS /////////////////////////////
 
@@ -646,7 +646,7 @@
 /obj/item/weapon/relic/proc/petSpray(mob/user)
 	var/message = "<span class='danger'>[src] begans to shake, and in the distance the sound of rampaging animals arises!</span>"
 	visible_message(message)
-	to_chat(user, message)
+	user << message
 	var/animals = rand(1,25)
 	var/counter
 	var/list/valid_animals = list(/mob/living/simple_animal/parrot,/mob/living/simple_animal/butterfly,/mob/living/simple_animal/pet/cat,/mob/living/simple_animal/pet/dog/corgi,/mob/living/simple_animal/crab,/mob/living/simple_animal/pet/fox,/mob/living/simple_animal/hostile/lizard,/mob/living/simple_animal/mouse,/mob/living/simple_animal/pet/dog/pug,/mob/living/simple_animal/hostile/bear,/mob/living/simple_animal/hostile/poison/bees,/mob/living/simple_animal/hostile/carp)
@@ -655,7 +655,7 @@
 		new mobType(get_turf(src))
 	warn_admins(user, "Mass Mob Spawn")
 	if(prob(60))
-		to_chat(user, "<span class='warning'>[src] falls apart!</span>")
+		user << "<span class='warning'>[src] falls apart!</span>"
 		qdel(src)
 
 /obj/item/weapon/relic/proc/rapidDupe(mob/user)
@@ -680,7 +680,7 @@
 	warn_admins(user, "Rapid duplicator", 0)
 
 /obj/item/weapon/relic/proc/explode(mob/user)
-	to_chat(user, "<span class='danger'>[src] begins to heat up!</span>")
+	user << "<span class='danger'>[src] begins to heat up!</span>"
 	spawn(rand(35,100))
 		if(src.loc == user)
 			visible_message("<span class='notice'>The [src]'s top opens, releasing a powerful blast!</span>")
@@ -689,7 +689,7 @@
 			qdel(src) //Comment this line to produce a light grenade (the bomb that keeps on exploding when used)!!
 
 /obj/item/weapon/relic/proc/teleport(mob/user)
-	to_chat(user, "<span class='notice'>The [src] begins to vibrate!</span>")
+	user << "<span class='notice'>The [src] begins to vibrate!</span>"
 	spawn(rand(10,30))
 		var/turf/userturf = get_turf(user)
 		if(src.loc == user && userturf.z != ZLEVEL_CENTCOM) //Because Nuke Ops bringing this back on their shuttle, then looting the ERT area is 2fun4you!
