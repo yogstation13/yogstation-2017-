@@ -1,14 +1,20 @@
+#define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
+
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
-	icon_state = "cell-off"
+	icon_state = "pod-off"
 	density = 1
 	anchored = 1
+
 
 	var/on = FALSE
 	state_open = FALSE
 	var/autoeject = FALSE
 	var/volume = 100
+
+	var/running_bob_anim = FALSE
+	var/timer_id
 
 	var/efficiency = 1
 	var/sleep_factor = 750
@@ -54,17 +60,56 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_icon()
-	if(panel_open)
-		icon_state = "cell-o"
-	else if(state_open)
-		icon_state = "cell-open"
-	else if(on && is_operational())
-		if(occupant)
-			icon_state = "cell-occupied"
+	cut_overlays()
+
+	if(state_open)
+		icon_state = "pod-open"
+	else if(occupant)
+		var/image/occupant_overlay
+
+		if(ismonkey(occupant)) // Monkey
+			occupant_overlay = image(CRYOMOBS, "monkey")
+
+		else if(isalienadult(occupant))
+
+			if(isalienroyal(occupant)) // Queen and prae
+				occupant_overlay = image(CRYOMOBS, "alienq")
+
+			else if(isalienhunter(occupant)) // Hunter
+				occupant_overlay = image(CRYOMOBS, "alienh")
+
+			else if(isaliensentinel(occupant)) // Sentinel
+				occupant_overlay = image(CRYOMOBS, "aliens")
+
+			else // Drone (or any other alien that isn't any of the above)
+				occupant_overlay = image(CRYOMOBS, "aliend")
+
+		else if(ishuman(occupant) || islarva(occupant) || (isanimal(occupant) && !ismegafauna(occupant))) // Mobs that are smaller than cryotube
+			occupant_overlay = image(occupant.icon, occupant.icon_state)
+			occupant_overlay.overlays = occupant.overlays.Copy()
+		else // Anything else
+			occupant_overlay = image(CRYOMOBS, "generic")
+
+		occupant_overlay.dir = SOUTH
+		occupant_overlay.pixel_y = 22
+
+		if(on && !running_bob_anim && is_operational())
+			icon_state = "pod-on"
+			running_bob_anim = TRUE
+			run_bob_anim(TRUE, occupant_overlay)
 		else
-			icon_state = "cell-on"
+			icon_state = "pod-off"
+			add_overlay(occupant_overlay)
+			add_overlay("cover-off")
+	else if(on && is_operational())
+		icon_state = "pod-on"
+		add_overlay("cover-on")
 	else
-		icon_state = "cell-off"
+		icon_state = "pod-off"
+		add_overlay("cover-off")
+
+	if(panel_open)
+		add_overlay("pod-panel")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
@@ -136,6 +181,11 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
 		on = FALSE
+		running_bob_anim = FALSE
+		// TODO: Update Yog's timer system and remove this filty hack
+		if(timer_id)
+			deltimer(timer_id)
+			timer_id = null
 		playsound(loc, 'sound/machines/windowdoor.ogg', 50, 1)
 		..()
 		if(beaker)
@@ -148,7 +198,7 @@
 		return occupant
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/user)
-	user << "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>"
+	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300))
 		if(occupant == user) // Check they're still here.
@@ -158,11 +208,11 @@
 	..()
 	if(occupant)
 		if(on)
-			user << "Someone's inside [src]!"
+			to_chat(user, "Someone's inside [src]!")
 		else
-			user << "You can barely make out a form floating in [src]."
+			to_chat(user, "You can barely make out a form floating in [src].")
 	else
-		user << "[src] seems empty."
+		to_chat(user, "[src] seems empty.")
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !user.IsAdvancedToolUser())
@@ -175,7 +225,7 @@
 		if(!user.drop_item())
 			return
 		if(beaker)
-			user << "<span class='warning'>A beaker is already loaded into [src]!</span>"
+			to_chat(user, "<span class='warning'>A beaker is already loaded into [src]!</span>")
 			return
 		beaker = I
 		I.loc = src
@@ -242,24 +292,33 @@
 		if("power")
 			if(on)
 				on = FALSE
+				running_bob_anim = FALSE
+				// TODO: Update Yog's timer system and remove this filty hack
+				// This prevents multiple bobanimations being queued by turning it on/off quickly
+				if(timer_id)
+					deltimer(timer_id)
+					timer_id = null
 			else if(!state_open)
 				on = TRUE
 			. = TRUE
+			update_icon()
 		if("door")
 			if(state_open)
 				close_machine()
 			else
 				open_machine()
 			. = TRUE
+			update_icon()
 		if("autoeject")
 			autoeject = !autoeject
 			. = TRUE
 		if("ejectbeaker")
 			if(beaker)
-				beaker.loc = loc
+				beaker.forceMove(loc)
+				if(get_dist(src, usr) <= 1 && !issilicon(usr))
+					usr.put_in_hands(beaker)
 				beaker = null
 				. = TRUE
-	update_icon()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
 	return //we don't see the pipe network while inside cryo.
@@ -272,3 +331,21 @@
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_see_pipes()
 	return 0 //you can't see the pipe network when inside a cryo cell.
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/proc/run_bob_anim(anim_up, image/occupant_overlay)
+	if(!on || !occupant || !is_operational())
+		running_bob_anim = FALSE
+		return
+	cut_overlays()
+	if(occupant_overlay.pixel_y != 23) // Same effect as occupant_overlay.pixel_y == 22 || occupant_overlay.pixel_y == 24
+		anim_up = occupant_overlay.pixel_y == 22 // Same effect as if(occupant_overlay.pixel_y == 22) anim_up = TRUE ; if(occupant_overlay.pixel_y == 24) anim_up = FALSE
+	if(anim_up)
+		occupant_overlay.pixel_y++
+	else
+		occupant_overlay.pixel_y--
+	add_overlay(occupant_overlay)
+	add_overlay("cover-on")
+	// TODO: Update our timer system and change this to TIMER_UNIQUE
+	timer_id = addtimer(src, "run_bob_anim", 7, TIMER_NORMAL, anim_up, occupant_overlay) //hey yog your addtimer system sucks. sincerely, a /tg/coder.
+
+#undef CRYOMOBS

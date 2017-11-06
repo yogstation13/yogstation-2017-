@@ -22,15 +22,15 @@
 
 /obj/effect/proc_holder/spell/self/remove_skull/cast(mob/living/carbon/human/user)
 	if(!ispredator(user))
-		user << "<span class='danger'>You're too weak!</span>"
+		to_chat(user, "<span class='danger'>You're too weak!</span>")
 		qdel(user)
 		return
 
 	if(!user.pulling || !iscarbon(user.pulling))
-		user << "<span class='warning'>You must hold the target in a head-lock to remove their skull!</span>"
+		to_chat(user, "<span class='warning'>You must hold the target in a head-lock to remove their skull!</span>")
 		return
 	if(user.grab_state <= GRAB_NECK)
-		user << "<span class='warning'>You have to carry a tighter grip on the target to remove their skull!</span>"
+		to_chat(user, "<span class='warning'>You have to carry a tighter grip on the target to remove their skull!</span>")
 		return
 
 	var/mob/living/carbon/ptarget = user.pulling
@@ -38,14 +38,14 @@
 	visible_message("<span class='danger'>[user] has plunged their sharp, dagger-like fingers into [ptarget]'s eyes!</span>", \
 		"<span class='danger'>You plunge your sharp, dagger-like fingers into [ptarget]'s eyes!</span>")
 	if(!iszombie(ptarget))
-		ptarget << "<span class='danger'>OH GOD!!! THE PAIN!</span>"
+		to_chat(ptarget, "<span class='danger'>OH GOD!!! THE PAIN!</span>")
 		ptarget.adjust_eye_damage(50)
 		ptarget.blind_eyes(1)
 		ptarget.Weaken(20)
 	if(do_after(user, 200, target = ptarget))
 		ptarget.visible_message("<span class='danger'>[user] furthers his grip around [ptarget]'s skull!</span>",\
 			"<span class='danger'>You can feel fingers wrapping around the inside of your skull!</span>")
-		user << "<span class='danger'>Now it's time to collect your trophy...</span>"
+		to_chat(user, "<span class='danger'>Now it's time to collect your trophy...</span>")
 		ptarget.Weaken(10)
 		if(do_after(user, 50, target = ptarget))
 			if(ptarget.stat != DEAD)

@@ -3,7 +3,7 @@
 /proc/summon_guns(mob/user, survivor_probability)
 
 	if(user)
-		user << "<B>You summoned guns!</B>"
+		to_chat(user, "<B>You summoned guns!</B>")
 		message_admins("[key_name_admin(user, 1)] summoned guns!")
 		log_game("[key_name(user)] summoned guns!")
 
@@ -21,7 +21,7 @@
 			survive.owner = H.mind
 			H.mind.objectives += survive
 			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a survivalist, and trusts no one!</font>"
-			H << "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>"
+			to_chat(H, "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>")
 			H.mind.show_memory()
 
 		var/randomizeguns = pick(gunslist)
@@ -117,7 +117,7 @@
 /proc/summon_magic(mob/user, antag_probability)
 
 	if(user) //in this case either someone holding a spellbook or a badmin
-		user << "<B>You summoned magic!</B>"
+		to_chat(user, "<B>You summoned magic!</B>")
 		message_admins("[key_name_admin(user, 1)] summoned magic!")
 		log_game("[key_name(user)] summoned magic!")
 
@@ -136,7 +136,7 @@
 			H.mind.objectives += obj
 			H.mind.special_role = "adept"
 			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into an adept, and trusts no one!</font>"
-			H << "<B>You are an adept! Collect magical artifacts and defeat all other adepts on the station, marked by the yellow and red hud icon, and perhaps a space wizard will take you as an apprentice.</B>"
+			to_chat(H, "<B>You are an adept! Collect magical artifacts and defeat all other adepts on the station, marked by the yellow and red hud icon, and perhaps a space wizard will take you as an apprentice.</B>")
 			H.mind.show_memory()
 
 		var/randomizemagic 			= pick(magiclist)
@@ -184,7 +184,7 @@
 				new /obj/item/weapon/scrying(get_turf(H))
 				if (!(H.dna.check_mutation(XRAY)))
 					H.dna.add_mutation(XRAY)
-					H << "<span class='notice'>The walls suddenly disappear.</span>"
+					to_chat(H, "<span class='notice'>The walls suddenly disappear.</span>")
 			if("voodoo")
 				new /obj/item/voodoo(get_turf(H))
 			if("special")
@@ -202,7 +202,7 @@
 						new /obj/item/weapon/gun/magic/staff/chaos(get_turf(H))
 					if("necromantic")
 						new /obj/item/device/necromantic_stone(get_turf(H))
-				H << "<span class='notice'>You suddenly feel lucky.</span>"
+				to_chat(H, "<span class='notice'>You suddenly feel lucky.</span>")
 		playsound(get_turf(H),'sound/magic/Summon_Magic.ogg', 50, 1)
 
 /proc/summonevents()

@@ -5,7 +5,7 @@
 
 /obj/effect/decal/cleanable/blood/old
 	name = "dried blood"
-	desc = "Looks like it's been here a while.  Eew."
+	desc = "Looks like it's been here a while. Ew."
 	bloodiness = 0
 
 /obj/effect/decal/cleanable/blood/old/New()

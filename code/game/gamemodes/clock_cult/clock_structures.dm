@@ -101,7 +101,7 @@
 			if(25 to 0)
 				other_message = "It's falling apart"
 				heavily_damaged = TRUE
-		user << "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>"
+		to_chat(user, "<span class='[heavily_damaged ? "alloy":"brass"]'>[can_see_clockwork ? "[servant_message]":"[other_message]"][heavily_damaged ? "!":"."]</span>")
 
 /obj/structure/clockwork/bullet_act(obj/item/projectile/P)
 	. = ..()
@@ -183,7 +183,7 @@
 	if(istype(I, /obj/item/clockwork/component))
 		var/obj/item/clockwork/component/C = I
 		clockwork_component_cache[C.component_id]++
-		user << "<span class='notice'>You add [C] to [src].</span>"
+		to_chat(user, "<span class='notice'>You add [C] to [src].</span>")
 		user.drop_item()
 		qdel(C)
 		return 1
@@ -200,7 +200,7 @@
 			if("Specific Type")
 				component_type = get_component_id(input(user, "Choose a component type.", name) as null|anything in list("Belligerent Eye", "Vanguard Cogwheel", "Guvax Capacitor", "Replicant Alloy", "Hierophant Ansible"))
 				if(!component_type)
-					user << "<span class='heavy_brass'>\"Indecisive, are you?\"</span>\n<span class='warning'>You decide not to place this daemon within the cache just yet.</span>"
+					to_chat(user, "<span class='heavy_brass'>\"Indecisive, are you?\"</span>\n<span class='warning'>You decide not to place this daemon within the cache just yet.</span>")
 					return 0
 		if(!user || !user.canUseTopic(src) || !user.canUseTopic(I))
 			return 0
@@ -219,7 +219,7 @@
 	if(!is_servant_of_ratvar(user))
 		return 0
 	if(!clockwork_component_cache["replicant_alloy"])
-		user << "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>"
+		to_chat(user, "<span class='warning'>There is no Replicant Alloy in the global component cache!</span>")
 		return 0
 	clockwork_component_cache["replicant_alloy"]--
 	var/obj/item/clockwork/component/replicant_alloy/A = new(get_turf(src))
@@ -230,11 +230,11 @@
 /obj/structure/clockwork/cache/examine(mob/user)
 	..()
 	if(!active)
-		user << "<span class='warning'>It looks inactive.</span>"
+		to_chat(user, "<span class='warning'>It looks inactive.</span>")
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<b>Stored components:</b>"
+		to_chat(user, "<b>Stored components:</b>")
 		for(var/i in clockwork_component_cache)
-			user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[clockwork_component_cache[i]]</b></span>"
+			to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[clockwork_component_cache[i]]</b></span>")
 
 
 /obj/structure/clockwork/ocular_warden //Ocular warden: Low-damage, low-range turret. Deals constant damage to whoever it makes eye contact with.
@@ -264,7 +264,7 @@
 
 /obj/structure/clockwork/ocular_warden/examine(mob/user)
 	..()
-	user << "[target ? "It's fixated on [target]" : "Its gaze is wandering aimlessly"]."
+	to_chat(user, "[target ? "It's fixated on [target]" : "Its gaze is wandering aimlessly"].")
 
 /obj/structure/clockwork/ocular_warden/process()
 	if(ratvar_awakens && (damage_per_tick == initial(damage_per_tick) || sight_range == initial(sight_range))) //Massive buff if Ratvar has returned
@@ -298,7 +298,7 @@
 		return 0
 	target = pick(possible_targets)
 	visible_message("<span class='warning'>[src] swivels to face [target]!</span>")
-	target << "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>"
+	to_chat(target, "<span class='heavy_brass'>\"I SEE YOU!\"</span>\n<span class='userdanger'>[src]'s gaze [ratvar_awakens ? "melts you alive" : "burns you"]!</span>")
 	return 1
 
 /obj/structure/clockwork/ocular_warden/proc/lose_target()
@@ -325,10 +325,10 @@
 			return 0
 		var/obj/item/device/mmi/posibrain/soul_vessel/S = I
 		if(!S.brainmob)
-			user << "<span class='warning'>[S] hasn't trapped a spirit! Turn it on first.</span>"
+			to_chat(user, "<span class='warning'>[S] hasn't trapped a spirit! Turn it on first.</span>")
 			return 0
 		if(S.brainmob && (!S.brainmob.client || !S.brainmob.mind))
-			user << "<span class='warning'>[S]'s trapped spirit appears inactive!</span>"
+			to_chat(user, "<span class='warning'>[S]'s trapped spirit appears inactive!</span>")
 			return 0
 		user.visible_message("<span class='notice'>[user] places [S] in [src], where it fuses to the shell.</span>", "<span class='brass'>You place [S] in [src], fusing it to the shell.</span>")
 		var/mob/living/simple_animal/A = new mobtype(get_turf(src))
@@ -379,7 +379,7 @@
 
 /obj/structure/clockwork/wall_gear/examine(mob/user)
 	..()
-	user << "<span class='notice'>[src] is [anchored ? "secured to the floor":"mobile, and not secured"].</span>"
+	to_chat(user, "<span class='notice'>[src] is [anchored ? "secured to the floor":"mobile, and not secured"].</span>")
 
 ///////////////////////
 // CLOCKWORK EFFECTS //
@@ -489,7 +489,7 @@
 /obj/effect/clockwork/spatial_gateway/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='brass'>It has [uses] uses remaining.</span>"
+		to_chat(user, "<span class='brass'>It has [uses] uses remaining.</span>")
 
 /obj/effect/clockwork/spatial_gateway/attack_ghost(mob/user)
 	if(linked_gateway)
@@ -520,7 +520,7 @@
 		qdel(src)
 		return 1
 	if(istype(I, /obj/item/clockwork/slab))
-		user << "<span class='heavy_brass'>\"I don't think you want to drop your slab into that\".\n\"If you really want to, try throwing it.\"</span>"
+		to_chat(user, "<span class='heavy_brass'>\"I don't think you want to drop your slab into that\".\n\"If you really want to, try throwing it.\"</span>")
 		return 1
 	if(user.drop_item() && uses)
 		user.visible_message("<span class='warning'>[user] drops [I] into [src]!</span>", "<span class='danger'>You drop [I] into [src]!</span>")
@@ -556,7 +556,7 @@
 		return 0
 	if(isliving(A))
 		var/mob/living/user = A
-		user << "<span class='warning'><b>You pass through [src] and appear elsewhere!</b></span>"
+		to_chat(user, "<span class='warning'><b>You pass through [src] and appear elsewhere!</b></span>")
 	linked_gateway.visible_message("<span class='warning'>A shape appears in [linked_gateway] before emerging!</span>")
 	playsound(src, 'sound/effects/EMPulse.ogg', 50, 1)
 	playsound(linked_gateway, 'sound/effects/EMPulse.ogg', 50, 1)
@@ -709,7 +709,7 @@
 		if(!is_servant_of_ratvar(M) && M != L)
 			M.flash_eyes()
 	if(iscultist(L))
-		L << "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>"
+		to_chat(L, "<span class='heavy_brass'>\"Watch your step, wretch.\"</span>")
 		L.adjustBruteLoss(10)
 		L.Weaken(7)
 	L.visible_message("<span class='warning'>[src] appears around [L] in a burst of light!</span>", \
@@ -759,7 +759,7 @@
 		return 0
 	post_channel(L)
 	if(is_eligible_servant(L))
-		L << "<span class='heavy_brass'>\"You belong to me now.\"</span>"
+		to_chat(L, "<span class='heavy_brass'>\"You belong to me now.\"</span>")
 	add_servant_of_ratvar(L)
 	L.Weaken(3) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
 	L.Stun(3)
@@ -770,12 +770,12 @@
 	for(var/M in mob_list)
 		if(isobserver(M))
 			var/link = FOLLOW_LINK(M, L)
-			M <<  "[link] <span class='heavy_brass'>[message] [L.real_name]!</span>"
+			to_chat(M,  "[link] <span class='heavy_brass'>[message] [L.real_name]!</span>")
 		else if(is_servant_of_ratvar(M))
 			if(M == L)
-				M << "<span class='heavy_brass'>[message] you!</span>"
+				to_chat(M, "<span class='heavy_brass'>[message] you!</span>")
 			else
-				M << "<span class='heavy_brass'>[message] [L.real_name]!</span>"
+				to_chat(M, "<span class='heavy_brass'>[message] [L.real_name]!</span>")
 	if(delete_on_finish)
 		qdel(src)
 	else
@@ -818,11 +818,11 @@
 /obj/effect/clockwork/sigil/transmission/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[power_charge]W</b> of power.</span>"
+		to_chat(user, "<span class='[power_charge ? "brass":"alloy"]'>It is storing <b>[power_charge]W</b> of power.</span>")
 
 /obj/effect/clockwork/sigil/transmission/sigil_effects(mob/living/L)
 	if(power_charge)
-		L << "<span class='brass'>You feel a slight, static shock.</span>"
+		to_chat(L, "<span class='brass'>You feel a slight, static shock.</span>")
 	return 1
 
 /obj/effect/clockwork/sigil/transmission/New()
@@ -853,8 +853,8 @@
 /obj/effect/clockwork/sigil/vitality/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing <b>[ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>"
-		user << "<span class='inathneq_small'>It requires at least <b>[base_revive_cost]</b> units of vitality to revive dead servants, in addition to any damage the servant has.</span>"
+		to_chat(user, "<span class='[vitality ? "inathneq_small":"alloy"]'>It is storing <b>[ratvar_awakens ? "INFINITE":"[vitality]"]</b> units of vitality.</span>")
+		to_chat(user, "<span class='inathneq_small'>It requires at least <b>[base_revive_cost]</b> units of vitality to revive dead servants, in addition to any damage the servant has.</span>")
 
 /obj/effect/clockwork/sigil/vitality/sigil_effects(mob/living/L)
 	if((is_servant_of_ratvar(L) && L.suiciding) || sigil_active)
@@ -877,7 +877,7 @@
 				animate(V, alpha = 0, transform = matrix()*2, time = 8)
 				playsound(L, 'sound/magic/WandODeath.ogg', 50, 1)
 				L.visible_message("<span class='warning'>[L] collapses in on themself as [src] flares bright blue!</span>")
-				L << "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>"
+				to_chat(L, "<span class='inathneq_large'>\"[text2ratvar("Your life will not be wasted.")]\"</span>")
 				for(var/obj/item/W in L)
 					L.unEquip(W)
 				L.dust()
