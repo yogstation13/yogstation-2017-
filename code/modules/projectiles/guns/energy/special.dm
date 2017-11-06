@@ -110,7 +110,7 @@
 	if(!suppressed)
 		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
-		loc << "<span class='warning'>[src] silently charges up.<span>"
+		to_chat(loc, "<span class='warning'>[src] silently charges up.<span>")
 	overheat = FALSE
 	update_icon()
 
@@ -157,11 +157,11 @@
 		var/obj/item/stack/sheet/S = A
 		S.use(1)
 		power_supply.give(1000)
-		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else if(istype(A, /obj/item/weapon/ore/plasma))
 		qdel(A)
 		power_supply.give(500)
-		user << "<span class='notice'>You insert [A] in [src], recharging it.</span>"
+		to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 	else
 		..()
 
@@ -260,7 +260,7 @@
 /obj/item/weapon/gun/energy/printer/examine(mob/user)
 	..()
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	user << "Has [round(power_supply.charge/shot.e_cost)] round\s in it's replication chamber."
+	to_chat(user, "Has [round(power_supply.charge/shot.e_cost)] round\s in it's replication chamber.")
 
 /obj/item/weapon/gun/energy/printer/ui_action_click(mob/user, actiontype)
 	if(actiontype == /datum/action/item_action/toggle_firemode/trimode)
@@ -275,9 +275,9 @@
 	burst_size = burst_size_options[burst_mode]
 
 	if(burst_size_options[burst_mode] == 1)
-		usr << "<span class='notice'>You switch to semi-automatic.</span>"
+		to_chat(usr, "<span class='notice'>You switch to semi-automatic.</span>")
 	else
-		usr << "<span class='notice'>You switch to [burst_size_options[burst_mode]]-rnd burst.</span>"
+		to_chat(usr, "<span class='notice'>You switch to [burst_size_options[burst_mode]]-rnd burst.</span>")
 	return
 
 /datum/action/item_action/toggle_firemode/trimode

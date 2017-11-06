@@ -1,0 +1,4 @@
+author: "  SpaceManiac"
+delete-after: true 
+changes: 
+  - bugfix: "AI eye camera static is now correctly positioned on Lavaland."

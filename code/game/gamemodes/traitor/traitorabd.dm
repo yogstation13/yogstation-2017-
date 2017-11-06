@@ -15,8 +15,8 @@
 
 
 /datum/game_mode/traitor/traitorabd/announce()
-	world << "<B>The current game mode is - Traitor + Abduction!</B>"
-	world << "There are alien creatures on the station along with some syndicate operatives out for their own gain! Do not let the abductors or the traitors succeed!"
+	to_chat(world, "<B>The current game mode is - Traitor + Abduction!</B>")
+	to_chat(world, "There are alien creatures on the station along with some syndicate operatives out for their own gain! Do not let the abductors or the traitors succeed!")
 
 /datum/game_mode/traitor/traitorabd/can_start()
 	if(!..())
@@ -183,13 +183,13 @@
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
 
-	abductor.current << "<span class='notice'>You are an agent of [team_name]!</span>"
-	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
-	abductor.current << "<span class='notice'>Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve.</span>"
+	to_chat(abductor.current, "<span class='notice'>You are an agent of [team_name]!</span>")
+	to_chat(abductor.current, "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>")
+	to_chat(abductor.current, "<span class='notice'>Use your stealth technology and equipment to incapacitate humans for your scientist to retrieve.</span>")
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in abductor.objectives)
-		abductor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(abductor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	return
 
@@ -197,13 +197,13 @@
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
 
-	abductor.current << "<span class='notice'>You are a scientist of [team_name]!</span>"
-	abductor.current << "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>"
-	abductor.current << "<span class='notice'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>"
+	to_chat(abductor.current, "<span class='notice'>You are a scientist of [team_name]!</span>")
+	to_chat(abductor.current, "<span class='notice'>With the help of your teammate, kidnap and experiment on station crew members!</span>")
+	to_chat(abductor.current, "<span class='notice'>Use your tool and ship consoles to support the agent and retrieve human specimens.</span>")
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in abductor.objectives)
-		abductor.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(abductor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	return
 
@@ -275,9 +275,9 @@
 		var/datum/objective/objective = team_objectives[team_number]
 		var/team_name = team_names[team_number]
 		if(console.experiment.points >= objective.target_amount)
-			world << "<span class='greenannounce'>[team_name] team fullfilled its mission!</span>"
+			to_chat(world, "<span class='greenannounce'>[team_name] team fullfilled its mission!</span>")
 		else
-			world << "<span class='boldannounce'>[team_name] team failed its mission.</span>"
+			to_chat(world, "<span class='boldannounce'>[team_name] team failed its mission.</span>")
 	..()
 	return 1
 
@@ -295,5 +295,5 @@
 				text += printplayer(abductee_mind)
 				text += printobjectives(abductee_mind)
 	text += "<br>"
-	world << text
+	to_chat(world, text)
 

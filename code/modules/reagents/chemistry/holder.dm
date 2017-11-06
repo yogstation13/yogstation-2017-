@@ -144,7 +144,7 @@ var/const/INJECT = 5 //injection
 	var/trans_data = null
 	for(var/reagent in reagent_list)
 		var/datum/reagent/T = reagent
-		var/transfer_amount = T.volume * part
+		var/transfer_amount = round(T.volume * part, 0.001)
 		if(preserve_data)
 			trans_data = copy_data(T)
 		R.add_reagent(T.id, transfer_amount * multiplier, trans_data, chem_temp, no_react = 1) //we only handle reaction after every reagent has been transfered.
@@ -190,7 +190,7 @@ var/const/INJECT = 5 //injection
 	var/datum/reagents/R = target.reagents
 	if(src.get_reagent_amount(reagent)<amount)
 		amount = src.get_reagent_amount(reagent)
-	amount = min(amount, R.maximum_volume-R.total_volume)
+	amount = round(min(amount, R.maximum_volume-R.total_volume), 0.001)
 	var/trans_data = null
 	for (var/datum/reagent/current_reagent in src.reagent_list)
 		if(current_reagent.id == reagent)
@@ -286,7 +286,7 @@ var/const/INJECT = 5 //injection
 						if(30 to 40)
 							need_mob_update += R.addiction_act_stage4(C)
 						if(40 to INFINITY)
-							C << "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>"
+							to_chat(C, "<span class='notice'>You feel like you've gotten over your need for [R.name].</span>")
 							addiction_list.Remove(R)
 		addiction_tick++
 	if(C && need_mob_update) //some of the metabolized reagents had effects on the mob that requires some updates.
@@ -398,14 +398,14 @@ var/const/INJECT = 5 //injection
 						if(C.mix_sound)
 							playsound(get_turf(my_atom), C.mix_sound, 80, 1)
 						for(var/mob/M in seen)
-							M << "<span class='notice'>\icon[my_atom] [C.mix_message]</span>"
+							to_chat(M, "<span class='notice'>\icon[my_atom] [C.mix_message]</span>")
 
 					if(istype(my_atom, /obj/item/slime_extract))
 						var/obj/item/slime_extract/ME2 = my_atom
 						ME2.Uses--
 						if(ME2.Uses <= 0) // give the notification that the slime core is dead
 							for(var/mob/M in seen)
-								M << "<span class='notice'>\icon[my_atom] \The [my_atom]'s power is consumed in the reaction.</span>"
+								to_chat(M, "<span class='notice'>\icon[my_atom] \The [my_atom]'s power is consumed in the reaction.</span>")
 								ME2.name = "used slime extract"
 								ME2.desc = "This extract has been used up."
 
@@ -527,6 +527,7 @@ var/const/INJECT = 5 //injection
 		var/datum/reagent/R = A
 		if (R.id == reagent)
 			R.volume += amount
+			R.volume = round(R.volume, 0.001)
 			update_total()
 			my_atom.on_reagent_change()
 			R.on_merge(data)
@@ -575,6 +576,7 @@ var/const/INJECT = 5 //injection
 		var/datum/reagent/R = A
 		if (R.id == reagent)
 			R.volume -= amount
+			R.volume = round(R.volume, 0.001)
 			update_total()
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
@@ -640,14 +642,14 @@ var/const/INJECT = 5 //injection
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
-			//world << "proffering a data-carrying reagent ([reagent_id])"
+			//to_chat(world, "proffering a data-carrying reagent ([reagent_id])")
 			return R.data
 
 /datum/reagents/proc/set_data(reagent_id, new_data)
 	for(var/reagent in reagent_list)
 		var/datum/reagent/R = reagent
 		if(R.id == reagent_id)
-			//world << "reagent data set ([reagent_id])"
+			//to_chat(world, "reagent data set ([reagent_id])")
 			R.data = new_data
 
 /datum/reagents/proc/copy_data(datum/reagent/current_reagent)
@@ -683,5 +685,5 @@ var/const/INJECT = 5 //injection
 /atom/proc/create_reagents(max_vol)
 	if(reagents)
 		qdel(reagents)
-	reagents = new/datum/reagents(max_vol)
+	reagents = new /datum/reagents(max_vol)
 	reagents.my_atom = src

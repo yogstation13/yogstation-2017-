@@ -14,13 +14,13 @@
 	return
 
 /obj/effect/proc_holder/changeling/sting/proc/set_sting(mob/user)
-	user << "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>"
+	to_chat(user, "<span class='notice'>We prepare our sting, use alt+click or middle mouse button on target to sting them.</span>")
 	user.mind.changeling.chosen_sting = src
 	user.hud_used.lingstingdisplay.icon_state = sting_icon
 	user.hud_used.lingstingdisplay.invisibility = 0
 
 /obj/effect/proc_holder/changeling/sting/proc/unset_sting(mob/user)
-	user << "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>"
+	to_chat(user, "<span class='warning'>We retract our sting, we can't sting anyone for now.</span>")
 	user.mind.changeling.chosen_sting = null
 	user.hud_used.lingstingdisplay.icon_state = null
 	user.hud_used.lingstingdisplay.invisibility = INVISIBILITY_ABSTRACT
@@ -33,7 +33,7 @@
 	if(!..())
 		return
 	if(!user.mind.changeling.chosen_sting)
-		user << "We haven't prepared our sting yet!"
+		to_chat(user, "We haven't prepared our sting yet!")
 	if(!iscarbon(target))
 		return
 	if(!isturf(user.loc))
@@ -47,16 +47,16 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user //it only works with H for some reason
 		if(isabomination(H))
-			user << "<span class='warning'>We cannot do this whilst transformed. Revert first.</span>"
+			to_chat(user, "<span class='warning'>We cannot do this whilst transformed. Revert first.</span>")
 			return
 	return 1
 
 /obj/effect/proc_holder/changeling/sting/sting_feedback(mob/user, mob/target)
 	if(!target)
 		return
-	user << "<span class='notice'>We stealthily sting [target.name].</span>"
+	to_chat(user, "<span class='notice'>We stealthily sting [target.name].</span>")
 	if(target.mind && target.mind.changeling)
-		target << "<span class='warning'>You feel a tiny prick.</span>"
+		to_chat(target, "<span class='warning'>You feel a tiny prick.</span>")
 	return 1
 
 
@@ -79,7 +79,7 @@
 	if(!selected_dna)
 		return
 	if(NOTRANSSTING in selected_dna.dna.species.specflags)
-		user << "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!"
+		to_chat(user, "<span class = 'notice'>That DNA is not compatible with changeling retrovirus!")
 		return
 	..()
 
@@ -87,7 +87,7 @@
 	if(!..())
 		return
 	if((target.disabilities & HUSK) || !target.has_dna())
-		user << "<span class='warning'>Our sting appears ineffective against its DNA.</span>"
+		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA.</span>")
 		return 0
 	return 1
 
@@ -95,7 +95,7 @@
 	add_logs(user, target, "stung", "transformation sting", " new identity is [selected_dna.dna.real_name]")
 	var/datum/dna/NewDNA = selected_dna.dna
 	if(ismonkey(target))
-		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
+		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
 
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -126,7 +126,7 @@
 	if(!..())
 		return
 	if((target.disabilities & HUSK) || !target.has_dna())
-		user << "<span class='warning'>Our sting appears ineffective against its DNA. Perhaps we should try something with DNA.</span>"
+		to_chat(user, "<span class='warning'>Our sting appears ineffective against its DNA. Perhaps we should try something with DNA.</span>")
 		return 0
 	return 1
 
@@ -134,11 +134,11 @@
 	add_logs(user, target, "stung", object="armblade sting")
 
 	if(!target.drop_item())
-		user << "<span class='warning'>The [target.get_active_hand()] is stuck to their hand, you cannot grow an armblade over it!</span>"
+		to_chat(user, "<span class='warning'>The [target.get_active_hand()] is stuck to their hand, you cannot grow an armblade over it!</span>")
 		return
 
 	if(ismonkey(target))
-		user << "<span class='notice'>Our genes cry out as we sting [target.name]!</span>"
+		to_chat(user, "<span class='notice'>Our genes cry out as we sting [target.name]!</span>")
 
 	var/obj/item/weapon/melee/arm_blade/blade = new(target,1)
 	target.put_in_hands(blade)
@@ -178,7 +178,7 @@
 	if((user.mind.changeling.has_dna(target.dna)))
 		user.mind.changeling.remove_profile(target)
 		user.mind.changeling.profilecount--
-		user << "<span class='notice'>We refresh our DNA information on [target]!</span>"
+		to_chat(user, "<span class='notice'>We refresh our DNA information on [target]!</span>")
 	var/protect = 0 //Should the system be prevented from automatically replacing this DNA?
 	for(var/datum/objective/escape/escape_with_identity/ewi in user.mind.objectives)
 		if(ewi.target == target.mind)
@@ -213,7 +213,7 @@
 
 /obj/effect/proc_holder/changeling/sting/blind/sting_action(mob/user, mob/living/carbon/target)
 	add_logs(user, target, "stung", "blind sting")
-	target << "<span class='danger'>Your eyes burn horrifically!</span>"
+	to_chat(target, "<span class='danger'>Your eyes burn horrifically!</span>")
 	target.become_nearsighted()
 	target.blind_eyes(20)
 	target.blur_eyes(40)

@@ -132,12 +132,12 @@
 /obj/item/device/cubiclecooler/examine(mob/user)
 	..()
 	if(idle)
-		user << "[idlemsg]"
+		to_chat(user, "[idlemsg]")
 	if(chrgmsg)
-		user << "[chrgmsg]"
+		to_chat(user, "[chrgmsg]")
 
 /obj/item/device/cubiclecooler/attack_hand(mob/user)
-	user << "<span class='warning'>It won't budge!</span>"
+	to_chat(user, "<span class='warning'>It won't budge!</span>")
 	return
 
 /obj/item/device/cubiclecooler/attackby(obj/item/I, mob/user, params)
@@ -148,49 +148,49 @@
 
 		if((5 in ID.access))
 			if(!idle)
-				usr << "<span class='notice'>You manually deactivate the cooler!</span>"
+				to_chat(usr, "<span class='notice'>You manually deactivate the cooler!</span>")
 				idleize()
 				return
 
 			if(!ccell)
-				usr << "<span class='danger'>There isn't a cell inside of the cooler!</span>"
+				to_chat(usr, "<span class='danger'>There isn't a cell inside of the cooler!</span>")
 				return
 
 			if(!ccell.charge)
-				usr << "span class='danger'>The cell inside of the cooler has ran out of power.</span>"
+				to_chat(usr, "span class='danger'>The cell inside of the cooler has ran out of power.</span>")
 				idleize()
 				return
 
-			usr << "<span class='notice'>You slide your ID in and out of the cooler, reactivating it.</span>"
+			to_chat(usr, "<span class='notice'>You slide your ID in and out of the cooler, reactivating it.</span>")
 			idle = !idle
 			process()
 
 		else
-			usr << "<span class='alert'>You do not have required levels to operate on the cooler.</span>"
+			to_chat(usr, "<span class='alert'>You do not have required levels to operate on the cooler.</span>")
 
 
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(ccell)
 			ccell.loc = get_turf(src.loc)
 			ccell = null
-			user << "<span class='notice'>You remove the cell from [src].</span>"
+			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
 			return
 		else
-			user << "<span class='danger'>There isn't a cell inside of the freezer</span>"
+			to_chat(user, "<span class='danger'>There isn't a cell inside of the freezer</span>")
 
 	else if(istype(I, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = I
 		if(ccell)
-			user << "<span class='notice'>[src] already has a cell.</span>"
+			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 		else
 			if(C.maxcharge < 1500) // number values. gross, how forced.
-				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
+				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
 				return
 			if(!user.unEquip(I))
 				return
 			I.loc = src
 			ccell = I
-			user << "<span class='notice'>You install a cell in [src].</span>"
+			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
 
 			if(!ccell.charge && !idlemsg)
 				idlemsg = "The [src] appears to be in an idle state."

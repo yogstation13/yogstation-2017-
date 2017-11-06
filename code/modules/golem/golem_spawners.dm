@@ -13,15 +13,15 @@
 		var/species = getGolemType(I)
 		if(species)
 			if(O.use(10))
-				user << "You finish up the golem shell with ten sheets of [O]."
+				to_chat(user, "You finish up the golem shell with ten sheets of [O].")
 				var/obj/effect/mob_spawn/human/golem/H = new(get_turf(src))
 				H.mob_species = species
 				qdel(src)
 				return
 			else
-				user << "You need at least ten sheets to finish a golem."
+				to_chat(user, "You need at least ten sheets to finish a golem.")
 				return
-	user << "You can't build a golem out of this kind of material."
+	to_chat(user, "You can't build a golem out of this kind of material.")
 
 /obj/item/weapon/disk/design_disk/golem_shell
 	name = "Golem Creation Disk"
@@ -99,7 +99,7 @@
 
 /obj/effect/mob_spawn/human/golem/free/special(mob/living/new_spawn)
 	..()
-	new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
+	to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked.")
 
 /obj/effect/mob_spawn/human/golem/free/adamantine
 	name = "dust-caked golem shell"
@@ -173,7 +173,7 @@
 
 	G.mind.enslaved_to = user
 	if(golem_becomes_antag)
-		G << "<span class='userdanger'>Despite your servitude to another cause, your true master remains [user.real_name]. This will never change unless your master's body is destroyed.</span>"
+		to_chat(G, "<span class='userdanger'>Despite your servitude to another cause, your true master remains [user.real_name]. This will never change unless your master's body is destroyed.</span>")
 	if(user.mind.special_role)
 		message_admins("[key_name_admin(G)](<A HREF='?_src_=holder;adminmoreinfo=\ref[G]'>?</A>) has been summoned by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>), an antagonist.")
 	log_game("[key_name(G)] was made a golem by [key_name(user)].")
@@ -227,7 +227,7 @@
 		ghost = O
 		break
 	if(!ghost)
-		user << "<span class='warning'>The rune fizzles uselessly! There is no spirit nearby.</span>"
+		to_chat(user, "<span class='warning'>The rune fizzles uselessly! There is no spirit nearby.</span>")
 		return
 	var/mob/living/carbon/human/G = new /mob/living/carbon/human
 	G.set_species(/datum/species/golem/adamantine)
@@ -238,7 +238,7 @@
 	G.dna.species.auto_equip(G)
 	G.loc = src.loc
 	G.key = ghost.key
-	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
+	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost.")
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
 
 	var/golem_becomes_antag = FALSE
@@ -266,7 +266,7 @@
 
 	G.mind.enslaved_to = user
 	if(golem_becomes_antag)
-		G << "<span class='userdanger'>Despite your servitude to another cause, your true master remains [user.real_name]. This will never change unless your master's body is destroyed.</span>"
+		to_chat(G, "<span class='userdanger'>Despite your servitude to another cause, your true master remains [user.real_name]. This will never change unless your master's body is destroyed.</span>")
 	if(user.mind.special_role)
 		message_admins("[key_name_admin(G)](<A HREF='?_src_=holder;adminmoreinfo=\ref[G]'>?</A>) has been summoned by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>), an antagonist.")
 	log_game("[key_name(G)] was made a golem by [key_name(user)].")

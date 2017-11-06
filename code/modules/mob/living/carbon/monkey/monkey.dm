@@ -278,7 +278,7 @@
 			wear_mask.acid_act(acidpwr)
 			update_inv_wear_mask()
 		else
-			src << "<span class='warning'>Your mask protects you from the acid.</span>"
+			to_chat(src, "<span class='warning'>Your mask protects you from the acid.</span>")
 		return
 
 	take_organ_damage(min(6*toxpwr, acid_volume * acidpwr/10))

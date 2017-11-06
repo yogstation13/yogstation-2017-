@@ -97,7 +97,7 @@
 			if(L == src)
 				continue
 			S.production_time = world.time + SLAB_PRODUCTION_TIME
-		L << "<span class='warning'>Your slab clunks as it produces a new component.</span>"
+		to_chat(L, "<span class='warning'>Your slab clunks as it produces a new component.</span>")
 
 /obj/item/clockwork/slab/ui_action_click(mob/user, actiontype)
 	switch(actiontype)
@@ -112,7 +112,7 @@
 				convert.invoker = user
 				convert.run_scripture()
 			else
-				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
+				to_chat(user, "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>")
 		if(/datum/action/item_action/clock/vanguard)
 			/*if(!nonhuman_usable && !ishuman(user))
 				return*/
@@ -122,7 +122,7 @@
 				antistun.invoker = user
 				antistun.run_scripture()
 			else
-				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
+				to_chat(user, "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>")
 
 /obj/item/clockwork/slab/attack(mob/living/target, mob/living/carbon/human/user)
 	if(is_servant_of_ratvar(user) && is_servant_of_ratvar(target))
@@ -138,7 +138,7 @@
 					targetslab = S
 		if(targetslab)
 			if(targetslab == src)
-				user << "<span class='heavy_brass'>\"You can't transfer components into your own slab, idiot.\"</span>"
+				to_chat(user, "<span class='heavy_brass'>\"You can't transfer components into your own slab, idiot.\"</span>")
 			else
 				for(var/i in stored_components)
 					targetslab.stored_components[i] += stored_components[i]
@@ -146,7 +146,7 @@
 				user.visible_message("<span class='notice'>[user] empties [src] into [target]'s [targetslab.name].</span>", \
 				"<span class='notice'>You transfer your slab's components into [target]'s [targetslab.name].</span>")
 		else
-			user << "<span class='warning'>[target] has no slabs to transfer components to.</span>"
+			to_chat(user, "<span class='warning'>[target] has no slabs to transfer components to.</span>")
 	else
 		return ..()
 
@@ -172,7 +172,7 @@
 
 /obj/item/clockwork/slab/attack_self(mob/living/user)
 	if(iscultist(user))
-		user << "<span class='heavy_brass'>\"You reek of blood. You've got a lot of nerve to even look at that slab.\"</span>"
+		to_chat(user, "<span class='heavy_brass'>\"You reek of blood. You've got a lot of nerve to even look at that slab.\"</span>")
 		user.visible_message("<span class='warning'>A sizzling sound comes from [user]'s hands!</span>", "<span class='userdanger'>[src] suddenly grows extremely hot in your hands!</span>")
 		playsound(get_turf(user), 'sound/weapons/sear.ogg', 50, 1)
 		user.drop_item()
@@ -181,15 +181,15 @@
 		user.apply_damage(5, BURN, "r_arm")
 		return 0
 	if(!is_servant_of_ratvar(user))
-		user << "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>"
+		to_chat(user, "<span class='warning'>The information on [src]'s display shifts rapidly. After a moment, your head begins to pound, and you tear your eyes away.</span>")
 		user.confused += 5
 		user.dizziness += 5
 		return 0
 	if(busy)
-		user << "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>"
+		to_chat(user, "<span class='warning'>[src] refuses to work, displaying the message: \"[busy]!\"</span>")
 		return 0
 	/*if(!nonhuman_usable && !ishuman(user))
-		user << "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>"
+		to_chat(user, "<span class='nezbere'>[src] hums fitfully in your hands, but doesn't seem to do anything...</span>")
 		return 0*/
 	access_display(user)
 
@@ -202,7 +202,7 @@
 	switch(action)
 		if("Recital")
 			if(user.get_active_hand() != src)
-				user << "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>"
+				to_chat(user, "<span class='warning'>You need to hold the slab in your active hand to recite scripture!</span>")
 				return
 			recite_scripture(user)
 		if("Recollection")
@@ -225,7 +225,7 @@
 	switch(scripture_tier)
 		if(SCRIPTURE_DRIVER,SCRIPTURE_SCRIPT,SCRIPTURE_APPLICATION,SCRIPTURE_REVENANT,SCRIPTURE_JUDGEMENT); //; for the empty if
 		else
-			user << "<span class='warning'>That section of scripture is still locked!</span>"
+			to_chat(user, "<span class='warning'>That section of scripture is still locked!</span>")
 			return 0
 	for(var/S in subtypesof(/datum/clockwork_scripture))
 		var/datum/clockwork_scripture/C = S
@@ -244,7 +244,7 @@
 		return 0
 	tiers_of_scripture = scripture_unlock_check()
 	if(!ratvar_awakens && !no_cost && !tiers_of_scripture[scripture_to_recite.tier])
-		user << "<span class='warning'>That scripture is no longer unlocked, and cannot be recited!</span>"
+		to_chat(user, "<span class='warning'>That scripture is no longer unlocked, and cannot be recited!</span>")
 		return 0
 	scripture_to_recite.slab = src
 	scripture_to_recite.invoker = user
@@ -395,17 +395,17 @@
 /obj/item/clockwork/slab/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "Use the <span class='brass'>Hierophant Network</span> action button to communicate with other servants."
-		user << "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components.<br>"
-		user << "Attacking a slab, a fellow Servant with a slab, or a cache with this slab will transfer this slab's components into that slab's components, their slab's components, or the global cache, respectively."
+		to_chat(user, "Use the <span class='brass'>Hierophant Network</span> action button to communicate with other servants.")
+		to_chat(user, "Clockwork slabs will only generate components if held by a human or if inside a storage item held by a human, and when generating a component will prevent all other slabs held from generating components.<br>")
+		to_chat(user, "Attacking a slab, a fellow Servant with a slab, or a cache with this slab will transfer this slab's components into that slab's components, their slab's components, or the global cache, respectively.")
 		if(clockwork_caches)
-			user << "<b>Stored components (with global cache):</b>"
+			to_chat(user, "<b>Stored components (with global cache):</b>")
 			for(var/i in stored_components)
-				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[stored_components[i]]</b> (<b>[stored_components[i] + clockwork_component_cache[i]]</b>)</span>"
+				to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[stored_components[i]]</b> (<b>[stored_components[i] + clockwork_component_cache[i]]</b>)</span>")
 		else
-			user << "<b>Stored components:</b>"
+			to_chat(user, "<b>Stored components:</b>")
 			for(var/i in stored_components)
-				user << "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[stored_components[i]]</b></span>"
+				to_chat(user, "<span class='[get_component_span(i)]_small'><i>[get_component_name(i)]s:</i> <b>[stored_components[i]]</b></span>")
 
 /obj/item/clockwork/slab/proc/show_hierophant(mob/living/user)
 	var/message = stripped_input(user, "Enter a message to send to your fellow servants.", "Hierophant")
@@ -430,11 +430,11 @@
 	if(slot != slot_glasses)
 		return
 	if(user.disabilities & BLIND)
-		user << "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>" //Ratvar with the sick burns yo
+		to_chat(user, "<span class='heavy_brass'>\"You're blind, idiot. Stop embarassing yourself.\"</span>" )
 		return
 	if(iscultist(user)) //Cultists instantly go blind
-		user << "<span class='heavy_brass'>\"It looks like Nar-Sie's dogs really don't value their eyes.\"</span>"
-		user << "<span class='userdanger'>Your eyes explode with horrific pain!</span>"
+		to_chat(user, "<span class='heavy_brass'>\"It looks like Nar-Sie's dogs really don't value their eyes.\"</span>")
+		to_chat(user, "<span class='userdanger'>Your eyes explode with horrific pain!</span>")
 		user.emote("scream")
 		user.become_blind()
 		user.adjust_blurriness(30)
@@ -442,10 +442,10 @@
 		return
 	if(is_servant_of_ratvar(user))
 		tint = 0
-		user << "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>"
+		to_chat(user, "<span class='heavy_brass'>As you put on the spectacles, all is revealed to you.[ratvar_awakens ? "" : " Your eyes begin to itch - you cannot do this for long."]</span>")
 	else
 		tint = 3
-		user << "<span class='heavy_brass'>You put on the spectacles, but you can't see through the glass.</span>"
+		to_chat(user, "<span class='heavy_brass'>You put on the spectacles, but you can't see through the glass.</span>")
 
 /obj/item/clothing/glasses/wraith_spectacles/New()
 	..()
@@ -467,12 +467,12 @@
 			H.adjust_blurriness(2)
 		if(H.eye_damage >= 30)
 			if(H.become_nearsighted())
-				H << "<span class='warning'><b>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</b></span>"
+				to_chat(H, "<span class='warning'><b>Your vision doubles, then trebles. Darkness begins to close in. You can't keep this up!</b></span>")
 		if(H.eye_damage >= 45)
 			if(H.become_blind())
-				H << "<span class='userdanger'>A piercing white light floods your vision. Suddenly, all goes dark!</span>"
+				to_chat(H, "<span class='userdanger'>A piercing white light floods your vision. Suddenly, all goes dark!</span>")
 		if(prob(15))
-			H << "<span class='warning'>Your eyes continue to burn.</span>"
+			to_chat(H, "<span class='warning'>Your eyes continue to burn.</span>")
 
 /obj/item/clothing/glasses/judicial_visor //Judicial visor: Grants the ability to smite an area and stun the unfaithful nearby every thirty seconds.
 	name = "judicial visor"
@@ -504,8 +504,8 @@
 	else
 		update_status(FALSE)
 	if(iscultist(user)) //Cultists spontaneously combust
-		user << "<span class='heavy_brass'>\"Consider yourself judged, whelp.\"</span>"
-		user << "<span class='userdanger'>You suddenly catch fire!</span>"
+		to_chat(user, "<span class='heavy_brass'>\"Consider yourself judged, whelp.\"</span>")
+		to_chat(user, "<span class='userdanger'>You suddenly catch fire!</span>")
 		user.adjust_fire_stacks(5)
 		user.IgniteMob()
 	return 1
@@ -518,11 +518,11 @@
 			flame = null
 		else if(iscarbon(user) && active)
 			if(recharging)
-				user << "<span class='warning'>[src] is still gathering power!</span>"
+				to_chat(user, "<span class='warning'>[src] is still gathering power!</span>")
 				return 0
 			var/mob/living/carbon/C = user
 			if(C.l_hand && C.r_hand)
-				C << "<span class='warning'>You require a free hand to utilize [src]'s power!</span>"
+				to_chat(C, "<span class='warning'>You require a free hand to utilize [src]'s power!</span>")
 				return 0
 			C.visible_message("<span class='warning'>[C]'s hand is enveloped in violet flames!<span>", "<span class='brass'><i>You harness [src]'s power. <b>Direct it at a tile at any range</b> to unleash it, or use the action button again to dispel it.</i></span>")
 			var/turf/T = get_turf(C)
@@ -548,10 +548,10 @@
 	L.update_inv_glasses()
 	switch(active)
 		if(TRUE)
-			L << "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
-			<span class='heavy_brass'>Judicial visor active. Use the action button to gain the ability to smite the unworthy.</span>"
+			to_chat(L, "<span class='notice'>As you put on [src], its lens begins to glow, information flashing before your eyes.</span>\n\
+			<span class='heavy_brass'>Judicial visor active. Use the action button to gain the ability to smite the unworthy.</span>")
 		if(FALSE)
-			L << "<span class='notice'>As you take off [src], its lens darkens once more.</span>"
+			to_chat(L, "<span class='notice'>As you take off [src], its lens darkens once more.</span>")
 	return 1
 
 /obj/item/clothing/glasses/judicial_visor/proc/recharge_visor(mob/living/user)
@@ -559,7 +559,7 @@
 		return 0
 	recharging = FALSE
 	if(src == user.get_item_by_slot(slot_glasses))
-		user << "<span class='brass'>Your [name] hums. It is ready.</span>"
+		to_chat(user, "<span class='brass'>Your [name] hums. It is ready.</span>")
 	else
 		active = FALSE
 	icon_state = "judicial_visor_[active]"
@@ -582,9 +582,9 @@
 
 /obj/item/weapon/ratvars_flame/examine(mob/user)
 	..()
-	user << "<span class='brass'>Use <b>harm intent</b> to direct the flame to a location.</span>"
+	to_chat(user, "<span class='brass'>Use <b>harm intent</b> to direct the flame to a location.</span>")
 	if(prob(10) && examined)
-		user << "<span class='heavy_brass'>\"Don't stand around looking at your hands, go forth with Neovgre's judgement!\"</span>"
+		to_chat(user, "<span class='heavy_brass'>\"Don't stand around looking at your hands, go forth with Neovgre's judgement!\"</span>")
 		examined = FALSE
 	else
 		examined = TRUE
@@ -626,14 +626,14 @@
 	..()
 	if(slot == slot_head && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
-			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
+			to_chat(user, "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>")
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their head!</span>", "<span class='warning'>The helmet flickers off your head, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(20, 1, 1, 0, 1)
 		else
-			user << "<span class='heavy_brass'>\"Do you have a hole in your head? You're about to.\"</span>"
-			user << "<span class='userdanger'>The helmet tries to drive a spike through your head as you scramble to remove it!</span>"
+			to_chat(user, "<span class='heavy_brass'>\"Do you have a hole in your head? You're about to.\"</span>")
+			to_chat(user, "<span class='userdanger'>The helmet tries to drive a spike through your head as you scramble to remove it!</span>")
 			user.emote("scream")
 			user.apply_damage(30, BRUTE, "head")
 			user.adjustBrainLoss(30)
@@ -663,14 +663,14 @@
 	..()
 	if(slot == slot_wear_suit && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
-			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
+			to_chat(user, "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>")
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their body!</span>", "<span class='warning'>The curiass flickers off your body, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(20, 1, 1, 0, 1)
 		else
-			user << "<span class='heavy_brass'>\"I think this armor is too hot for you to handle.\"</span>"
-			user << "<span class='userdanger'>The curiass emits a burst of flame as you scramble to get it off!</span>"
+			to_chat(user, "<span class='heavy_brass'>\"I think this armor is too hot for you to handle.\"</span>")
+			to_chat(user, "<span class='userdanger'>The curiass emits a burst of flame as you scramble to get it off!</span>")
 			user.emote("scream")
 			user.apply_damage(15, BURN, "chest")
 			user.adjust_fire_stacks(2)
@@ -701,14 +701,14 @@
 	..()
 	if(slot == slot_gloves && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
-			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
+			to_chat(user, "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>")
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their arms!</span>", "<span class='warning'>The gauntlets flicker off your arms, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(10, 1, 1, 0, 1)
 		else
-			user << "<span class='heavy_brass'>\"Did you like having arms?\"</span>"
-			user << "<span class='userdanger'>The gauntlets suddenly squeeze tight, crushing your arms before you manage to get them off!</span>"
+			to_chat(user, "<span class='heavy_brass'>\"Did you like having arms?\"</span>")
+			to_chat(user, "<span class='userdanger'>The gauntlets suddenly squeeze tight, crushing your arms before you manage to get them off!</span>")
 			user.emote("scream")
 			user.apply_damage(7, BRUTE, "l_arm")
 			user.apply_damage(7, BRUTE, "r_arm")
@@ -733,14 +733,14 @@
 	..()
 	if(slot == slot_shoes && !is_servant_of_ratvar(user))
 		if(!iscultist(user))
-			user << "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>"
+			to_chat(user, "<span class='heavy_brass'>\"Now now, this is for my servants, not you.\"</span>")
 			user.visible_message("<span class='warning'>As [user] puts [src] on, it flickers off their feet!</span>", "<span class='warning'>The treads flicker off your feet, leaving only nausea!</span>")
 			if(iscarbon(user))
 				var/mob/living/carbon/C = user
 				C.vomit(10, 1, 1, 0, 1)
 		else
-			user << "<span class='heavy_brass'>\"Let's see if you can dance with these.\"</span>"
-			user << "<span class='userdanger'>The treads turn searing hot as you scramble to get them off!</span>"
+			to_chat(user, "<span class='heavy_brass'>\"Let's see if you can dance with these.\"</span>")
+			to_chat(user, "<span class='userdanger'>The treads turn searing hot as you scramble to get them off!</span>")
 			user.emote("scream")
 			user.apply_damage(7, BURN, "l_leg")
 			user.apply_damage(7, BURN, "r_leg")
@@ -779,17 +779,17 @@
 /obj/item/clockwork/ratvarian_spear/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user) || isobserver(user))
-		user << "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and stunning.</span>"
-		user << "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target.</span>"
+		to_chat(user, "<span class='brass'>Stabbing a human you are pulling or have grabbed with the spear will impale them, doing massive damage and stunning.</span>")
+		to_chat(user, "<span class='brass'>Throwing the spear will do massive damage, break the spear, and stun the target.</span>")
 
 /obj/item/clockwork/ratvarian_spear/attack(mob/living/target, mob/living/carbon/human/user)
 	var/impaling = FALSE
 	if(attack_cooldown > world.time)
-		user << "<span class='warning'>You can't attack right now, wait [max(round((attack_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
+		to_chat(user, "<span class='warning'>You can't attack right now, wait [max(round((attack_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>")
 		return
 	if(user.pulling && ishuman(user.pulling) && user.pulling == target)
 		if(impale_cooldown > world.time)
-			user << "<span class='warning'>You can't impale [target] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>"
+			to_chat(user, "<span class='warning'>You can't impale [target] yet, wait [max(round((impale_cooldown - world.time)*0.1, 0.1), 0)] seconds!</span>")
 		else
 			impaling = TRUE
 			attack_verb = list("impaled")
@@ -816,7 +816,7 @@
 	else if(iscultist(target) || isconstruct(target)) //Cultists take extra fire damage
 		var/mob/living/M = target
 		if(M.stat != DEAD)
-			M << "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>"
+			to_chat(M, "<span class='userdanger'>Your body flares with agony at [src]'s presence!</span>")
 			M.adjustFireLoss(10, 1, DAMAGE_MAGIC)
 	attack_verb = list("stabbed", "poked", "slashed")
 	update_force()
@@ -826,7 +826,7 @@
 		if(target)
 			PoolOrNew(/obj/effect/overlay/temp/bloodsplatter, list(get_turf(target), get_dir(user, target)))
 			target.Stun(2)
-			user << "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>"
+			to_chat(user, "<span class='brass'>You prepare to remove your ratvarian spear from [target]...</span>")
 			var/remove_verb = pick("pull", "yank", "drag")
 			if(do_after(user, 10, 1, target))
 				var/turf/T = get_turf(target)
@@ -837,7 +837,7 @@
 					user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear from [target]!</span>")
 				else
 					user.visible_message("<span class='warning'>[user] kicks [target] off of [src]!</span>", "<span class='warning'>You kick [target] off of [src]!</span>")
-					target << "<span class='userdanger'>You scream in pain as you're kicked off of [src]!</span>"
+					to_chat(target, "<span class='userdanger'>You scream in pain as you're kicked off of [src]!</span>")
 					target.emote("scream")
 					step(target, get_dir(user, target))
 					T = get_turf(target)
@@ -848,7 +848,7 @@
 			else if(target) //it's a do_after, we gotta check again to make sure they didn't get deleted
 				user.visible_message("<span class='warning'>[user] [remove_verb]s [src] out of [target]!</span>", "<span class='warning'>You [remove_verb] your spear from [target]!</span>")
 				if(target.stat == CONSCIOUS)
-					target << "<span class='userdanger'>You scream in pain as [src] is suddenly [remove_verb]ed out of you!</span>"
+					to_chat(target, "<span class='userdanger'>You scream in pain as [src] is suddenly [remove_verb]ed out of you!</span>")
 					target.emote("scream")
 				flash_color(target, flash_color="#911414", flash_time=4)
 
@@ -914,7 +914,7 @@
 
 /obj/item/device/mmi/posibrain/soul_vessel/attack_self(mob/living/user)
 	if(!is_servant_of_ratvar(user))
-		user << "<span class='warning'>You fiddle around with [src], to no avail.</span>"
+		to_chat(user, "<span class='warning'>You fiddle around with [src], to no avail.</span>")
 		return 0
 	..()
 
@@ -922,32 +922,32 @@
 	if(!is_servant_of_ratvar(user) || !ishuman(target) || used || (brainmob && brainmob.key))
 		..()
 	if(is_servant_of_ratvar(target))
-		user << "<span class='heavy_alloy'>\"It would be more wise to revive your allies, friend.\"</span>"
+		to_chat(user, "<span class='heavy_alloy'>\"It would be more wise to revive your allies, friend.\"</span>")
 		return
 	var/mob/living/carbon/human/H = target
 	var/obj/item/bodypart/head/HE = H.get_bodypart("head")
 	var/obj/item/organ/brain/B = H.getorgan(/obj/item/organ/brain)
 	if(!HE)
-		user << "<span class='warning'>[H] has no head, and thus no mind!</span>"
+		to_chat(user, "<span class='warning'>[H] has no head, and thus no mind!</span>")
 		return
 	if(H.stat == CONSCIOUS)
-		user << "<span class='warning'>[H] must be dead or unconscious to claim their mind!</span>"
+		to_chat(user, "<span class='warning'>[H] must be dead or unconscious to claim their mind!</span>")
 		return
 	if(H.head)
 		var/obj/item/I = H.head
 		if(I.flags_inv & HIDEHAIR)
-			user << "<span class='warning'>[H]'s head is covered, remove [H.head] first!</span>"
+			to_chat(user, "<span class='warning'>[H]'s head is covered, remove [H.head] first!</span>")
 			return
 	if(H.wear_mask)
 		var/obj/item/I = H.wear_mask
 		if(I.flags_inv & HIDEHAIR)
-			user << "<span class='warning'>[H]'s head is covered, remove [H.wear_mask] first!</span>"
+			to_chat(user, "<span class='warning'>[H]'s head is covered, remove [H.wear_mask] first!</span>")
 			return
 	if(!B)
-		user << "<span class='warning'>[H] has no brain, and thus no mind to claim!</span>"
+		to_chat(user, "<span class='warning'>[H] has no brain, and thus no mind to claim!</span>")
 		return
 	if(!H.key)
-		user << "<span class='warning'>[H] has no mind to claim!</span>"
+		to_chat(user, "<span class='warning'>[H] has no mind to claim!</span>")
 		return
 	playsound(H, 'sound/misc/splort.ogg', 60, 1, -1)
 	playsound(H, 'sound/magic/clockwork/anima_fragment_attack.ogg', 40, 1, -1)
@@ -1040,15 +1040,15 @@
 /obj/item/clockwork/component/pickup(mob/living/user)
 	..()
 	if(iscultist(user) || (user.mind && user.mind.assigned_role == "Chaplain"))
-		user << "<span class='[message_span]'>[cultist_message]</span>"
+		to_chat(user, "<span class='[message_span]'>[cultist_message]</span>")
 	if(is_servant_of_ratvar(user) && prob(20))
 		var/pickedmessage = pick(servant_of_ratvar_messages)
-		user << "<span class='[message_span]'>[servant_of_ratvar_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>"
+		to_chat(user, "<span class='[message_span]'>[servant_of_ratvar_messages[pickedmessage] ? "[text2ratvar(pickedmessage)]" : pickedmessage]</span>")
 
 /obj/item/clockwork/component/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user))
-		user << "<span class='[message_span]'>You should put this in a slab or cache immediately.</span>"
+		to_chat(user, "<span class='[message_span]'>You should put this in a slab or cache immediately.</span>")
 
 /obj/item/clockwork/component/belligerent_eye
 	name = "belligerent eye"
@@ -1119,7 +1119,7 @@
 /obj/item/clockwork/component/replicant_alloy/examine(mob/user)
 	..()
 	if(is_servant_of_ratvar(user))
-		user << "<span class='alloy'>Can be used to fuel Clockwork Proselytizers and Mending Motors.</span>"
+		to_chat(user, "<span class='alloy'>Can be used to fuel Clockwork Proselytizers and Mending Motors.</span>")
 
 /obj/item/clockwork/component/replicant_alloy/smashed_anima_fragment
 	name = "smashed anima fragment"
