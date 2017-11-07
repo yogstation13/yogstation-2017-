@@ -155,9 +155,9 @@
 
 		for(var/i = 0, i<numCultists, i++)
 			H = pick(candidates)
-			H << "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. You hear the whooshing steam and clanking cogs of a billion billion machines, and all at once \
+			to_chat(H, "<span class='heavy_brass'>The world before you suddenly glows a brilliant yellow. You hear the whooshing steam and clanking cogs of a billion billion machines, and all at once \
 			you see the truth. Ratvar, the Clockwork Justiciar, lies derelict and forgotten in an unseen realm, and he has selected you as one of his harbringers. You are now a servant of \
-			Ratvar, and you will bring him back.</span>"
+			Ratvar, and you will bring him back.</span>")
 			add_servant_of_ratvar(H, TRUE)
 			ticker.mode.equip_servant(H)
 			candidates.Remove(H)
@@ -287,14 +287,14 @@
 			Commando.mind.objectives += missionobj
 
 			//Greet the commando
-			Commando << "<B><font size=3 color=red>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>"
+			to_chat(Commando, "<B><font size=3 color=red>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>")
 			var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
 			if(numagents == 1) //If Squad Leader
 				missiondesc += " Lead your squad to ensure the completion of the mission. Board the shuttle when your team is ready."
 			else
 				missiondesc += " Follow orders given to you by your squad leader."
 			missiondesc += "<BR><B>Your Mission</B>: [mission]"
-			Commando << missiondesc
+			to_chat(Commando, missiondesc)
 
 			if(config.enforce_human_authority)
 				Commando.set_species(/datum/species/human)
@@ -370,8 +370,8 @@
 			newmob.set_species(/datum/species/human)
 
 		//Greet the official
-		newmob << "<B><font size=3 color=red>You are a Centcom Official.</font></B>"
-		newmob << "<BR>Central Command is sending you to [station_name()] with the task: [mission]"
+		to_chat(newmob, "<B><font size=3 color=red>You are a Centcom Official.</font></B>")
+		to_chat(newmob, "<BR>Central Command is sending you to [station_name()] with the task: [mission]")
 
 		//Logging and cleanup
 		message_admins("Centcom Official [key_name_admin(newmob)] has spawned with the task: [mission]")
@@ -467,14 +467,14 @@
 			ERTOperative.mind.objectives += missionobj
 
 			//Greet the commando
-			ERTOperative << "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>"
+			to_chat(ERTOperative, "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>")
 			var/missiondesc = "Your squad is being sent on a Code [alert] mission to [station_name()] by Nanotrasen's Security Division."
 			if(numagents == 1) //If Squad Leader
 				missiondesc += " Lead your squad to ensure the completion of the mission. Avoid civilian casualites when possible. Board the shuttle when your team is ready."
 			else
 				missiondesc += " Follow orders given to you by your commander. Avoid civilian casualites when possible."
 			missiondesc += "<BR><B>Your Mission</B>: [mission]"
-			ERTOperative << missiondesc
+			to_chat(ERTOperative, missiondesc)
 
 			if(config.enforce_human_authority)
 				ERTOperative.set_species(/datum/species/human)
@@ -517,8 +517,8 @@
 		H = pick(candidates)
 		ticker.mode.shadows += H.mind
 		H.mind.special_role = "shadowling"
-		H << "<span class='shadowling'><b><i>Something stirs in the space between worlds. A red light floods your mind, and suddenly you understand. Your human disguise has served you well, but it \
-		is time you cast it away. You are a shadowling, and you are to ascend at all costs.</b></i></span>"
+		to_chat(H, "<span class='shadowling'><b><i>Something stirs in the space between worlds. A red light floods your mind, and suddenly you understand. Your human disguise has served you well, but it \
+		is time you cast it away. You are a shadowling, and you are to ascend at all costs.</b></i></span>")
 		ticker.mode.finalize_shadowling(H.mind)
 		message_admins("[H] has been made into a shadowling.")
 		candidates.Remove(H)

@@ -4,10 +4,7 @@
 
 /obj/machinery/droneDispenser //Most customizable machine 2015
 	name = "drone shell dispenser"
-	desc = "A hefty machine that, when supplied with metal and glass, \
-		will periodically create a drone shell. \
-		Does not need to be manually operated."
-
+	desc = "A hefty machine that, when supplied with metal and glass, will periodically create drone shells. Does not need to be manually operated."
 	icon = 'icons/obj/machines/droneDispenser.dmi'
 	icon_state = "on"
 	anchored = 1
@@ -46,8 +43,7 @@
 	var/begin_create_message = "whirs to life!"
 	var/end_create_message = "dispenses a drone shell."
 	var/recharge_message = "pings."
-	var/recharging_text = "It is whirring and clicking. \
-		It seems to be recharging."
+	var/recharging_text = "It is whirring and clicking. It seems to be recharging."
 
 	var/break_message = "lets out a tinny alarm before falling dark."
 	var/break_sound = 'sound/machines/warning-buzzer.ogg'
@@ -83,18 +79,14 @@
 
 /obj/machinery/droneDispenser/syndrone/badass //Please forgive me
 	name = "badass syndrone shell dispenser"
-	desc = "A suspicious machine that will create Syndicate \
-		exterminator drones when supplied with metal and glass. \
-		Disgusting. This one seems ominous."
+	desc = "A suspicious machine that will create Syndicate exterminator drones when supplied with metal and glass. Disgusting. This one seems ominous."
 	dispense_type = /obj/item/drone_shell/syndrone/badass
 	end_create_message = "dispenses a ominous suspicious drone shell."
 
 // I don't need your forgiveness, this is awesome.
 /obj/machinery/droneDispenser/snowflake
 	name = "snowflake drone shell dispenser"
-	desc = "A hefty machine that, when supplied with metal and glass, \
-		will periodically create a snowflake drone shell. \
-		Does not need to be manually operated."
+	desc = "A hefty machine that, when supplied with metal and glass, will periodically create a snowflake drone shell. Does not need to be manually operated."
 	dispense_type = /obj/item/drone_shell/snowflake
 	end_create_message = "dispenses a snowflake drone shell."
 	// Those holoprojectors aren't cheap
@@ -110,8 +102,7 @@
 // This one requires no materials and creates basic hivebots
 /obj/machinery/droneDispenser/hivebot
 	name = "hivebot fabricator"
-	desc = "A large, bulky machine that whirs with activity, \
-		steam hissing from vents in its sides."
+	desc = "A large, bulky machine that whirs with activity, steam hissing from vents in its sides."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "hivebot_fab"
 	icon_off = "hivebot_fab"
@@ -124,14 +115,13 @@
 	cooldownTime = 10 //Only 1 second - hivebots are extremely weak
 	dispense_type = /mob/living/simple_animal/hostile/hivebot
 	begin_create_message = "closes and begins fabricating something within."
-	end_create_message = "slams open, revealing out a hivebot!"
+	end_create_message = "slams open, revealing a hivebot!"
 	recharge_sound = null
 	recharge_message = null
 
 /obj/machinery/droneDispenser/swarmer
 	name = "swarmer fabricator"
-	desc = "An alien machine of unknown origin. \
-		It whirs and hums with green-blue light, the air above it shimmering."
+	desc = "An alien machine of unknown origin. It whirs and hums with green-blue light, the air above it shimmering."
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "toffcenter"
 	icon_off = "toffcenter"
@@ -143,10 +133,8 @@
 	cooldownTime = 300 //30 seconds
 	maximum_idle = 0 // Swarmers have no restraint
 	dispense_type = /obj/item/device/unactivated_swarmer
-	begin_create_message = "hums softly as an interface appears above it, \
-		scrolling by at unreadable speed."
-	end_create_message = "materializes a strange shell, which drops to the \
-		ground."
+	begin_create_message = "hums softly as an interface appears above it, scrolling by at unreadable speed."
+	end_create_message = "materializes a strange shell, which drops to the ground."
 	recharging_text = "Its lights are slowly increasing in brightness."
 	work_sound = 'sound/effects/EMPulse.ogg'
 	create_sound = 'sound/effects/phasein.ogg'
@@ -156,16 +144,13 @@
 /obj/machinery/droneDispenser/examine(mob/user)
 	..()
 	if((mode == DRONE_RECHARGING) && !stat && recharging_text)
-		user << "<span class='warning'>[recharging_text]</span>"
+		to_chat(user, "<span class='warning'>[recharging_text]</span>")
 	if(stat & BROKEN)
-		user << "<span class='warning'>[src] is smoking and steadily buzzing. \
-			It seems to be broken.</span>"
+		to_chat(user, "<span class='warning'>[src] is smoking and steadily buzzing. It seems to be broken.</span>")
 	if(metal_cost)
-		user << "<span class='notice'>It has [materials.amount(MAT_METAL)] \
-			units of metal stored.</span>"
+		to_chat(user, "<span class='notice'>It has [materials.amount(MAT_METAL)] units of metal stored.</span>")
 	if(glass_cost)
-		user << "<span class='notice'>It has [materials.amount(MAT_GLASS)] \
-			units of glass stored.</span>"
+		to_chat(user, "<span class='notice'>It has [materials.amount(MAT_GLASS)] units of glass stored.</span>")
 
 /obj/machinery/droneDispenser/power_change()
 	..()
@@ -193,8 +178,7 @@
 			if(maximum_idle && (count_shells() >= maximum_idle))
 				return // then do nothing; check again next tick
 			if(begin_create_message)
-				visible_message("<span class='notice'>\
-					[src] [begin_create_message]</span>")
+				visible_message("<span class='notice'>[src] [begin_create_message]</span>")
 			if(work_sound)
 				playsound(src, work_sound, 50, 1)
 			mode = DRONE_PRODUCTION
@@ -211,8 +195,7 @@
 			if(create_sound)
 				playsound(src, create_sound, 50, 1)
 			if(end_create_message)
-				visible_message("<span class='notice'>[src] \
-					[end_create_message]</span>")
+				visible_message("<span class='notice'>[src] [end_create_message]</span>")
 
 			mode = DRONE_RECHARGING
 			timer = world.time + cooldownTime
@@ -249,27 +232,23 @@
 		if(!O.materials[MAT_METAL] && !O.materials[MAT_GLASS])
 			return ..()
 		if(!metal_cost && !glass_cost)
-			user << "<span class='warning'>There isn't a place \
-				to insert [O]!</span>"
+			to_chat(user, "<span class='warning'>There isn't a place to insert [O]!</span>")
 			return
 		var/obj/item/stack/sheets = O
 		if(!user.canUnEquip(sheets))
-			user << "<span class='warning'>[O] is stuck to your hand, \
-				you can't get it off!</span>"
+			to_chat(user, "<span class='warning'>[O] is stuck to your hand, you can't get it off!</span>")
 			return
 
 		var/used = materials.insert_stack(sheets, sheets.amount)
 
 		if(used)
-			user << "<span class='notice'>You insert [used] \
-				sheet[used > 1 ? "s" : ""] into [src].</span>"
+			to_chat(user, "<span class='notice'>You insert [used] sheet[used > 1 ? "s" : ""] into [src].</span>")
 		else
-			user << "<span class='warning'>The [src] isn't accepting the \
-				[sheets].</span>"
+			to_chat(user, "<span class='warning'>The [src] isn't accepting the [sheets].</span>")
 
 	else if(istype(O, /obj/item/weapon/weldingtool))
 		if(!(stat & BROKEN))
-			user << "<span class='warning'>[src] doesn't need repairs.</span>"
+			to_chat(user, "<span class='warning'>[src] doesn't need repairs.</span>")
 			return
 
 		var/obj/item/weapon/weldingtool/WT = O
@@ -278,16 +257,13 @@
 			return
 
 		if(WT.get_fuel() < 1)
-			user << "<span class='warning'>You need more fuel to \
-				complete this task!</span>"
+			to_chat(user, "<span class='warning'>You need more fuel to complete this task!</span>")
 			return
 
 		playsound(src, 'sound/items/Welder.ogg', 50, 1)
 		user.visible_message(
-			"<span class='notice'>[user] begins patching up \
-				[src] with [WT].</span>",
-			"<span class='notice'>You begin restoring the \
-				damage to [src]...</span>")
+			"<span class='notice'>[user] begins patching up [src] with [WT].</span>",
+			"<span class='notice'>You begin restoring the damage to [src]...</span>")
 
 		if(!do_after(user, 40/O.toolspeed, target = src))
 			return
@@ -301,11 +277,11 @@
 		stat &= ~BROKEN
 		health = max_health
 		update_icon()
-		
+
 	else if(istype(O, /obj/item/weapon/crowbar))
 		materials.retrieve_all()
 		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-		user << "<span class='notice'>You retrieve the materials from [src].</span>"
+		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
 	else
 		return ..()
 
@@ -327,8 +303,7 @@
 	health = max(health - damage, 0)
 	if(!health && !(stat & BROKEN))
 		if(break_message)
-			audible_message("<span class='warning'>[src] \
-				[break_message]</span>")
+			audible_message("<span class='warning'>[src] [break_message]</span>")
 		if(break_sound)
 			playsound(src, break_sound, 50, 1)
 		stat |= BROKEN

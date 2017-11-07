@@ -19,7 +19,7 @@
 "as" = (/obj/structure/dresser{density = 0; pixel_x = 0; pixel_y = 18},/turf/open/floor/wood{baseturf = /turf/open/floor/plating/beach/sand},/area/awaymission/beach)
 "at" = (/turf/open/floor/wood{baseturf = /turf/open/floor/plating/beach/sand},/area/awaymission/beach)
 "au" = (/obj/machinery/computer/security/telescreen/entertainment{pixel_y = 32},/turf/open/floor/wood{baseturf = /turf/open/floor/plating/beach/sand},/area/awaymission/beach)
-"av" = (/obj/structure/toilet{pixel_y = 8},/turf/open/floor/plasteel/sandy,/area/awaymission/beach)
+"av" = (/obj/machinery/disposal/bin/toilet{pixel_y = 8},/turf/open/floor/plasteel/sandy,/area/awaymission/beach)
 "aw" = (/obj/structure/closet/secure_closet/personal/cabinet,/turf/open/floor/wood{baseturf = /turf/open/floor/plating/beach/sand},/area/awaymission/beach)
 "ax" = (/obj/item/weapon/bedsheet/rainbow,/obj/structure/bed,/obj/machinery/button/door{id = "loveshack"; name = "love shack lock"; normaldoorcontrol = 1; pixel_x = 24; specialfunctions = 4},/turf/open/floor/wood{baseturf = /turf/open/floor/plating/beach/sand},/area/awaymission/beach)
 "ay" = (/obj/effect/overlay/palmtree_r,/obj/effect/overlay/coconut,/turf/open/floor/plating/beach/sand,/area/awaymission/beach)

@@ -26,7 +26,7 @@
 	addtimer(src, "explain_traits", 10, , C)
 
 /datum/species/golem/proc/explain_traits(mob/living/carbon/C)
-	C << "<span class='notice'>[traits]</span>"
+	to_chat(C, "<span class='notice'>[traits]</span>")
 
 /datum/species/golem/random
 	name = "Random Golem"

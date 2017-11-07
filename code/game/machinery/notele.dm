@@ -7,16 +7,16 @@
 
 /obj/machinery/notele/attack_hand(mob/user)
 	activated = !activated
-	user << "<span class='warning'>You turn [src] [activated ? "on" : "off"].</span>"
+	to_chat(user, "<span class='warning'>You turn [src] [activated ? "on" : "off"].</span>")
 
 	if(activated)
 		var/area/A = get_area(src)
 		if(A.outdoors)
-			user << "<span class='warning'>[src] does not work in the outdoors!</span>"
+			to_chat(user, "<span class='warning'>[src] does not work in the outdoors!</span>")
 			return
 
 		if(A.noteleport)
-			user << "<span class='warning'>This area cannot be manipulated by [src]!</span>"
+			to_chat(user, "<span class='warning'>This area cannot be manipulated by [src]!</span>")
 			activated = FALSE
 			return
 
@@ -30,7 +30,7 @@
 		playsound(loc, 'sound/effects/bamf.ogg', 50, 1)
 		overlays -= o
 		o = null
-		user << "<span class='warning'>You deactivate [src].</span>"
+		to_chat(user, "<span class='warning'>You deactivate [src].</span>")
 
 		var/area/A = get_area(src)
 		if(A.noteleport)

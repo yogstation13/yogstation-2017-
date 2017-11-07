@@ -554,7 +554,7 @@
 		PoolOrNew(/obj/effect/overlay/temp/revenant, get_turf(M))
 		var/points = rand(8, 13)
 		O.add_points(points)
-		O << "<span class='notice'>Gained [points] resources from the death of [M].</span>"
+		to_chat(O, "<span class='notice'>Gained [points] resources from the death of [M].</span>")
 		M.death()
 	if(M.reagents)
 		M.reagents.add_reagent("frostoil", 0.3*reac_volume)
@@ -699,4 +699,4 @@
 	if(message_living && !issilicon(M))
 		totalmessage += message_living
 	totalmessage += "!"
-	M << "<span class='userdanger'>[totalmessage]</span>"
+	to_chat(M, "<span class='userdanger'>[totalmessage]</span>")

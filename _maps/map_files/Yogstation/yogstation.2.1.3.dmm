@@ -2108,7 +2108,7 @@
 	pixel_y = 3
 	},
 /obj/item/weapon/storage/firstaid/brute,
-/obj/item/weapon/storage/firstaid/regular{
+/obj/item/weapon/storage/firstaid/toxin{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -30399,7 +30399,7 @@
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bjy" = (
-/obj/machinery/computer/slot_machine,
+/obj/machinery/vending/clothing,
 /turf/open/floor/wood,
 /area/bridge/meeting_room)
 "bjz" = (
@@ -36538,7 +36538,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/obj/machinery/vending/clothing,
+/obj/machinery/vending/cart,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads)
 "bvy" = (
@@ -69282,39 +69282,31 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "ZxK" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible{
-	adminlog = 1;
-	dir = 4
-	},
-/turf/open/space,
-/area/space)
-"ZxL" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor4"
 	},
 /area/shuttle/syndicate)
-"ZxM" = (
+"ZxL" = (
 /turf/closed/wall/r_wall,
 /area/security/Permabrig)
-"ZxN" = (
+"ZxM" = (
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/Permabrig)
-"ZxO" = (
+"ZxN" = (
 /turf/closed/wall,
 /area/security/Permabrig)
-"ZxP" = (
+"ZxO" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/closed/wall,
 /area/security/Permabrig)
-"ZxQ" = (
+"ZxP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall,
 /area/security/Permabrig)
-"ZxR" = (
+"ZxQ" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -69338,7 +69330,7 @@
 	dir = 1
 	},
 /area/security/Permabrig)
-"ZxS" = (
+"ZxR" = (
 /obj/machinery/door/airlock/glass_security{
 	name = "Isolation Cell";
 	req_access_txt = "2"
@@ -69347,7 +69339,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/Permabrig)
-"ZxT" = (
+"ZxS" = (
 /obj/structure/closet{
 	name = "Evidence Closet"
 	},
@@ -69355,13 +69347,13 @@
 	icon_state = "freezerfloor"
 	},
 /area/security/Cells)
-"ZxU" = (
+"ZxT" = (
 /turf/closed/wall,
 /area/security/Cells)
-"ZxV" = (
+"ZxU" = (
 /turf/closed/wall/r_wall,
 /area/security/Cells)
-"ZxW" = (
+"ZxV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -69371,34 +69363,34 @@
 	},
 /turf/closed/wall,
 /area/crew_quarters/toilet)
-"ZxX" = (
+"ZxW" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"ZxY" = (
+"ZxX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"ZxZ" = (
+"ZxY" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "bluecorner"
 	},
 /area/hallway/primary/central)
-"Zya" = (
+"ZxZ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
-"Zyb" = (
+"Zya" = (
 /obj/structure/disposalpipe/junction{
 	tag = "icon-pipe-j2 (NORTH)";
 	icon_state = "pipe-j2";
@@ -69406,19 +69398,19 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
-"Zyc" = (
+"Zyb" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
-"Zyd" = (
+"Zyc" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/ashtray,
 /turf/open/floor/plasteel{
 	icon_state = "bar"
 	},
 /area/crew_quarters/bar)
-"Zye" = (
+"Zyd" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -69426,7 +69418,7 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
-"Zyf" = (
+"Zye" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -69435,7 +69427,7 @@
 	icon_state = "freezerfloor"
 	},
 /area/crew_quarters/locker/locker_toilet)
-"Zyg" = (
+"Zyf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -69443,6 +69435,14 @@
 	icon_state = "freezerfloor"
 	},
 /area/crew_quarters/locker/locker_toilet)
+"Zyg" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	adminlog = 1;
+	dir = 4
+	},
+/turf/open/space,
+/area/space)
 "Zyh" = (
 /obj/effect/landmark/maintroom{
 	template_names = list("Detective","Greytide","Kitchen")
@@ -80362,7 +80362,7 @@ aaa
 aaa
 aaa
 aah
-ZxL
+ZxK
 aaq
 aak
 aag
@@ -86599,11 +86599,11 @@ aXZ
 aZS
 bbw
 bcS
-Zyf
+Zye
 bfq
 bgs
 bhN
-Zyg
+Zyf
 bkJ
 bmg
 bnM
@@ -86850,9 +86850,9 @@ aPq
 aQM
 aSd
 aTD
-Zyc
+Zyb
 aWI
-Zye
+Zyd
 aZT
 bbx
 bcT
@@ -87106,7 +87106,7 @@ aMv
 aPr
 aQM
 aSe
-Zya
+ZxZ
 aVd
 aWJ
 aYb
@@ -87363,7 +87363,7 @@ aMv
 aPs
 aQM
 aSf
-Zya
+ZxZ
 aVe
 aWK
 aYa
@@ -87620,7 +87620,7 @@ aMv
 aPp
 aQN
 aSc
-Zya
+ZxZ
 aVf
 aWL
 aYc
@@ -87877,7 +87877,7 @@ aMv
 aPt
 aQO
 aSg
-Zyb
+Zya
 aVg
 aWM
 aYd
@@ -90663,7 +90663,7 @@ aaa
 aaa
 aaa
 aaa
-ZxM
+ZxL
 aaa
 aaa
 aaa
@@ -91177,7 +91177,7 @@ aaa
 aaa
 afq
 afQ
-ZxN
+ZxM
 ahv
 aim
 aaa
@@ -91431,13 +91431,13 @@ aaa
 aaa
 aaA
 aaa
-ZxM
+ZxL
 afr
 afR
 agI
 ahw
 ain
-ZxM
+ZxL
 aaa
 aaa
 aaA
@@ -91691,7 +91691,7 @@ aaa
 aaa
 afq
 afS
-ZxN
+ZxM
 ahx
 aim
 aaa
@@ -91948,7 +91948,7 @@ aaa
 aaa
 afs
 afT
-ZxS
+ZxR
 ahy
 aio
 aaa
@@ -94251,16 +94251,16 @@ aaa
 aaA
 aaa
 aaa
-ZxM
+ZxL
 abB
 abZ
 acC
 ada
-ZxO
+ZxN
 ael
 aeP
+ZxP
 ZxQ
-ZxR
 agP
 ahG
 aiq
@@ -94507,15 +94507,15 @@ aaA
 aaA
 aaA
 aaa
+ZxL
+ZxL
 ZxM
 ZxM
-ZxN
-ZxN
 acD
-ZxN
+ZxM
 adJ
-ZxN
-ZxN
+ZxM
+ZxM
 afu
 agc
 agO
@@ -94770,7 +94770,7 @@ abC
 aca
 acE
 adb
-ZxO
+ZxN
 aem
 aeQ
 adI
@@ -94787,7 +94787,7 @@ amc
 amP
 anF
 aop
-ZxV
+ZxU
 apu
 apR
 apV
@@ -95017,18 +95017,18 @@ aaa
 aaa
 aaa
 aaa
-ZxM
-ZxM
+ZxL
+ZxL
 aaR
-ZxM
-ZxM
+ZxL
+ZxL
 abu
-ZxN
-ZxN
+ZxM
+ZxM
 acF
 adc
-ZxP
-ZxP
+ZxO
+ZxO
 aeR
 adK
 age
@@ -95044,7 +95044,7 @@ amd
 amQ
 anG
 aoq
-ZxV
+ZxU
 apv
 apS
 apV
@@ -95274,17 +95274,17 @@ aaa
 aaa
 aaA
 aaA
-ZxM
+ZxL
 aaJ
 aaS
 abd
-ZxM
+ZxL
 abv
-ZxN
+ZxM
 acc
 acG
 add
-ZxO
+ZxN
 aen
 aeS
 adM
@@ -95300,8 +95300,8 @@ aiq
 ame
 amR
 anF
-ZxT
-ZxV
+ZxS
+ZxU
 apw
 apS
 apV
@@ -95542,8 +95542,8 @@ acd
 acH
 ade
 adL
-ZxN
-ZxN
+ZxM
+ZxM
 afv
 agf
 agQ
@@ -95557,8 +95557,8 @@ alw
 amf
 amS
 anH
+ZxT
 ZxU
-ZxV
 alM
 apT
 apV
@@ -95788,17 +95788,17 @@ aaa
 aaa
 aaa
 aaA
-ZxM
+ZxL
 aaL
-ZxN
+ZxM
 abf
 abm
-ZxN
+ZxM
 abE
 ace
 acI
 abf
-ZxO
+ZxN
 aeo
 aeT
 adK
@@ -96055,9 +96055,9 @@ abF
 acf
 acJ
 adf
-ZxQ
-ZxQ
-ZxQ
+ZxP
+ZxP
+ZxP
 adM
 agh
 agP
@@ -96302,17 +96302,17 @@ aaa
 aaa
 aaa
 aaa
-ZxM
+ZxL
 aaM
 aaW
 abh
+ZxL
 ZxM
-ZxN
-ZxN
-ZxN
+ZxM
+ZxM
 acK
 adg
-ZxO
+ZxN
 aep
 aeU
 adM
@@ -96559,11 +96559,11 @@ aaa
 aaa
 aaa
 aaa
-ZxM
-ZxM
+ZxL
+ZxL
 aaX
-ZxM
-ZxM
+ZxL
+ZxL
 abw
 abG
 acg
@@ -96585,8 +96585,8 @@ alA
 amj
 amW
 anL
-ZxU
-ZxU
+ZxT
+ZxT
 apz
 apU
 apV
@@ -96824,9 +96824,9 @@ aaG
 abx
 abH
 ach
+ZxM
+ZxM
 ZxN
-ZxN
-ZxO
 aer
 aeT
 adK
@@ -97077,15 +97077,15 @@ aaa
 aaA
 aaA
 aaA
-ZxM
-ZxM
-ZxM
-ZxM
+ZxL
+ZxL
+ZxL
+ZxL
 acM
 adi
-ZxO
-ZxO
-ZxO
+ZxN
+ZxN
+ZxN
 adI
 agk
 agT
@@ -97337,7 +97337,7 @@ aaA
 aaA
 aaa
 aaa
-ZxM
+ZxL
 acN
 adj
 adO
@@ -97613,8 +97613,8 @@ alE
 amn
 ana
 anL
-ZxU
-ZxU
+ZxT
+ZxT
 apz
 apT
 apV
@@ -100980,7 +100980,7 @@ aIu
 aKb
 aLq
 aNd
-ZxX
+ZxW
 aPH
 aJQ
 aaa
@@ -102259,19 +102259,19 @@ aAD
 aAE
 aCM
 aBO
-ZxW
+ZxV
 aGZ
 aIw
 aBO
 aAE
 aJU
-ZxY
+ZxX
 bpZ
-ZxZ
-ZxZ
-ZxZ
-ZxZ
-ZxZ
+ZxY
+ZxY
+ZxY
+ZxY
+ZxY
 aYW
 baE
 bca
@@ -104876,19 +104876,19 @@ bQj
 bDw
 bSE
 aaA
-ZxK
+Zyg
 aaA
 bXQ
 aaA
-ZxK
+Zyg
 aaA
 bXQ
 aaA
-ZxK
+Zyg
 aaA
 bXQ
 aaA
-ZxK
+Zyg
 aaA
 bXQ
 aaA
@@ -105612,7 +105612,7 @@ aRm
 aSM
 aUl
 aVQ
-Zyd
+Zyc
 aXl
 baG
 bch
