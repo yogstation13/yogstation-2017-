@@ -16,7 +16,7 @@
 	if(changeling.absorbedcount < 1)
 		user << "<span class='warning'>We require one absorbed lifeform to be able to do this.</span>"
 		return
-	if(changeling.chem_charges < 20)//no spamming it with 5 chems, you won't get anything done anyway
+	if(changeling.chem_charges < 45)//no spamming it with 5 chems, you won't get anything done anyway
 		user << "<span class='warning'>We require sufficient chemicals to use this ability.</span>"
 		return
 	if(user.health < 35)//amount of health that makes you revert
@@ -50,10 +50,9 @@
 			sleep(30)
 
 			playsound(user.loc, 'sound/effects/creepyshriek.ogg', 100, 1, extrarange = 30)
-			user.visible_message("<span class='warning'><b>[user] lets out an abhorrent screech as their height suddenly increases, their body parts splitting and deforming horribly!</span>")
-			user <<"<span class='notice'>You are a shambling abomination! You are amazingly powerful and have new abilities, but you cannot use any other changeling abilities and lose chemicals quickly. Remember, taking too much damage or running out of chemicals will revert you and leave you vulnerable. Check the 'Abomination' spell tab to use your abilities. Remember, you can maintain this form by using your 'Devour' ability whilst grabbing a humanoid to devour them and gain chemicals!</span>"
-			user <<"<span class='notice'>You are amazingly powerful and have new abilities, but you cannot use any other changeling abilities and lose chemicals quickly.</span>"
-			user <<"<span class='notice'>Remember, taking too much damage or running out of chemicals will revert you and leave you vulnerable.</span>"
+			user.visible_message("<span class='warning'><b>[user] lets out an abhorrent screech as their body parts split and deform horribly!</span>")
+			user <<"<span class='notice'>You are a shambling abomination! You are amazingly powerful and have new abilities, but you cannot use any other changeling abilities and lose chemicals quickly.</span>"
+			user <<"<span class='notice'>Taking too much damage or running out of chemicals will revert you and leave you vulnerable.</span>"
 			user <<"<span class='notice'>Check the 'Abomination' spell tab to use your abilities. The 'Devour' ability will allow you to eat a grabbed humanoid and gain chemicals from them!</span>"
 			H.restore_blood()
 			H.remove_all_embedded_objects()
