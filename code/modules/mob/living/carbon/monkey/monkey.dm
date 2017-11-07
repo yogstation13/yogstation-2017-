@@ -91,6 +91,15 @@
 			grabbedby(M)
 		if("harm")
 			M.do_attack_animation(src)
+
+			if(isabomination(M))
+				visible_message("<span class='danger'>[M] tears into [name]!</span>")
+				adjustBruteLoss(40)
+				playsound(loc, "bladeslice", 25, 1, -1)
+				add_logs(M, src, "attacked")
+				updatehealth()
+				return
+
 			if (prob(75))
 				visible_message("<span class='danger'>[M] has punched [name]!</span>", \
 						"<span class='userdanger'>[M] has punched [name]!</span>")
