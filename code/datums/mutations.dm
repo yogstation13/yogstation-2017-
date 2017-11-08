@@ -128,7 +128,17 @@
 		return
 	owner.SetParalysis(0)
 	owner.status_flags -= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
-	owner.update_body_parts()
+	if(!iswizard(owner)) // so it won't affect Mutate
+		if(istype(owner.w_uniform, /obj/item/clothing/under))
+			var/obj/item/clothing/under/U = owner.w_uniform
+			U.teardown(owner)
+		if(istype(owner.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/S = owner.wear_suit
+			if(owner.canUnEquip(S))
+				owner.unEquip(S)
+		owner.undershirt = "Nude"
+		owner.dna.species.no_equip = list(slot_wear_suit, slot_w_uniform)
+	owner.update_body()
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
 	return target.attack_hulk(owner)
@@ -142,6 +152,7 @@
 	if(..())
 		return
 	owner.status_flags |= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
+	owner.dna.species.no_equip = list()
 	owner.update_body_parts()
 
 /datum/mutation/human/hulk/say_mod(message)
