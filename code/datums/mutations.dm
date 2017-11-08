@@ -128,7 +128,7 @@
 		return
 	owner.SetParalysis(0)
 	owner.status_flags -= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
-	if(!iswizard(owner)) // so it won't affect Mutate
+	if(!owner.mind.CheckSpell(/obj/effect/proc_holder/spell/targeted/genetic/mutate)) // so it won't affect Mutate
 		if(istype(owner.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = owner.w_uniform
 			U.teardown(owner)
