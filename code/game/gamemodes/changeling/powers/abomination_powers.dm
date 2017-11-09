@@ -188,5 +188,5 @@
 			if(H.dna && H.dna.mutations)
 				HM.force_lose(H)
 			changeling.reverting = 1
-			changeling.geneticdamage += 10
+			changeling.geneticdamage += 5
 

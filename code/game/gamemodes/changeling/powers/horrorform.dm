@@ -128,6 +128,7 @@
 	say_mod = "gasps"
 	sexes = 0
 	roundstart = 0
+	speedmod = 1
 
 /obj/item/clothing/suit/space/abomination
 	name = "fleshy hide"
@@ -135,7 +136,7 @@
 	icon_state = "golem"
 	item_state = "golem"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list(melee = 80, bullet = 35, laser = 35,energy = 100, bomb = 30, bio = 100, rad = 0)
+	armor = list(melee = 80, bullet = 45, laser = 35,energy = 100, bomb = 30, bio = 100, rad = 0)
 	slowdown = 0
 	unacidable = 1
 	burn_state = -1
@@ -167,7 +168,7 @@
 	item_state = "golem"
 	desc = "Hardened resin of some sort."
 	flags = ABSTRACT | NODROP
-	armor = list(melee = 80, bullet = 35, laser = 30,energy = 100, bomb = 30, bio = 100, rad = 0)
+	armor = list(melee = 80, bullet = 45, laser = 30,energy = 100, bomb = 30, bio = 100, rad = 0)
 	unacidable = 1
 	burn_state = -1
 	flags_cover = null
@@ -205,6 +206,7 @@
 	return
 
 /datum/species/abomination/spec_life(mob/living/carbon/human/user)
+	user.adjustStaminaLoss(-40)
 	if(user.health < 100 && prob(40))
 		var/mob/living/carbon/human/H = user
 		H.adjustBruteLoss(-4)
@@ -213,7 +215,6 @@
 		H.adjustToxLoss(-10)
 		if(prob(25))
 			H.visible_message("<span class='warning'>[H]'s skin shifts around itself, some of its wounds vanishing.</span>")
-	H.adjustStaminaLoss(-40)
 
 	var/datum/changeling/changeling = user.mind.changeling
 	if(user.health < 35)
@@ -224,20 +225,19 @@
 		if(H.dna && H.dna.mutations)
 			HM.force_lose(H)
 		changeling.reverting = 1
-		changeling.geneticdamage += 30
+		changeling.geneticdamage += 15
 		user.Weaken(15)
 		user.apply_damage(30, CLONE)
 
 	if(changeling.chem_charges == 0)
 		user.visible_message("<span class='warning'>[user] suddenly shrinks back down to a normal size.</span>")
-		to_chat(user, "<span class='notice'>You ran out of chemicals before you could revert properly, disfiguring you!</span>")
+		to_chat(user, "<span class='notice'>You ran out of chemicals before you could revert properly!</span>")
 		var/mob/living/carbon/human/H = user
 		var/datum/mutation/human/HM = mutations_list[HULK]
 		if(H.dna && H.dna.mutations)
 			HM.force_lose(H)
 		changeling.reverting = 1
-		changeling.geneticdamage += 10
-		user.Weaken(5)
+		changeling.geneticdamage += 5
 
 
 	if(changeling.reverting == 1)
