@@ -135,7 +135,7 @@
 	icon_state = "golem"
 	item_state = "golem"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list(melee = 80, bullet = 50, laser = 70,energy = 100, bomb = 30, bio = 100, rad = 0)
+	armor = list(melee = 80, bullet = 35, laser = 35,energy = 100, bomb = 30, bio = 100, rad = 0)
 	slowdown = 0
 	unacidable = 1
 	burn_state = -1
@@ -156,7 +156,7 @@
 	icon_state = "golem"
 	item_state = "golem"
 	flags = ABSTRACT | NODROP
-	armor = list(melee = 30, bullet = 20, laser = 30, energy = 50, bomb = 20, bio = 50, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
 	unacidable = 1
 	burn_state = -1
 	flags_cover = null
@@ -167,7 +167,7 @@
 	item_state = "golem"
 	desc = "Hardened resin of some sort."
 	flags = ABSTRACT | NODROP
-	armor = list(melee = 50, bullet = 25, laser = 40,energy = 50, bomb = 10, bio = 50, rad = 0)
+	armor = list(melee = 80, bullet = 35, laser = 30,energy = 100, bomb = 30, bio = 100, rad = 0)
 	unacidable = 1
 	burn_state = -1
 	flags_cover = null
