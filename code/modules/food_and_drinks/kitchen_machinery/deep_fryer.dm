@@ -73,9 +73,7 @@ insert ascii eagle on american flag background here
 	return
 
 /obj/machinery/deepfryer/attack_tk(mob/user)
-	if(!Adjacent(user))
-		return
-	..()
+	return
 
 /obj/machinery/deepfryer/attack_hand(mob/user)
 	if(frying)
