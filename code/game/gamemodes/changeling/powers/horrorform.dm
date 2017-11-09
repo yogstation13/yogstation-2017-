@@ -211,9 +211,9 @@
 		H.adjustFireLoss(-4)
 		H.adjustOxyLoss(-10)
 		H.adjustToxLoss(-10)
-		H.adjustStaminaLoss(-10)
 		if(prob(25))
 			H.visible_message("<span class='warning'>[H]'s skin shifts around itself, some of its wounds vanishing.</span>")
+	H.adjustStaminaLoss(-40)
 
 	var/datum/changeling/changeling = user.mind.changeling
 	if(user.health < 35)
