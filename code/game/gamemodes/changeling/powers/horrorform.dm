@@ -115,9 +115,6 @@
 	sexes = 0
 	speedmod = 3
 	armor = 0//has horror armor instead
-	punchdamagelow = 30
-	punchdamagehigh = 30
-	punchstunthreshold = 30 //100 % chance
 	no_equip = list(slot_w_uniform, slot_back, slot_ears)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -162,7 +159,7 @@
 	armor = list(melee = 30, bullet = 20, laser = 30, energy = 50, bomb = 20, bio = 50, rad = 0)
 	unacidable = 1
 	burn_state = -1
-	flags_cover = MASKCOVERSEYES
+	flags_cover = null
 
 /obj/item/clothing/head/helmet/space/abomination
 	name = "hardened membrane"
@@ -173,7 +170,7 @@
 	armor = list(melee = 50, bullet = 25, laser = 40,energy = 50, bomb = 10, bio = 50, rad = 0)
 	unacidable = 1
 	burn_state = -1
-	flags_cover = HEADCOVERSEYES
+	flags_cover = null
 
 /obj/item/clothing/gloves/abomination
 	name = "hardened membrane"
