@@ -16,6 +16,7 @@
 			shred_clothing()
 	med_hud_set_health()
 	med_hud_set_status()
+	hulk_mutation_check()
 
 
 //These procs fetch a cumulative total damage from all bodyparts

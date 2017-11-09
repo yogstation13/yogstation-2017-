@@ -113,15 +113,24 @@
 /datum/mutation/human/proc/get_spans()
 	return list()
 
+/datum/mutation/human/hulk_state
+
+	name = "Hulk Rage"
+	quality = POSITIVE
+	get_chance = 10
+	lowest_value = 256 * 14
+	text_gain_indication = "<span class='notice'>You suddenly feel very angry</span>"
+	species_allowed = list("human","abomination") //no skeleton/lizard hulk
+	health_req = 25
+
 /datum/mutation/human/hulk
 
 	name = "Hulk"
 	quality = POSITIVE
-	get_chance = 10
-	lowest_value = 256 * 14
-	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
+	dna_block = NON_SCANNABLE
+	text_gain_indication = "<span class='notice'>HULK SMASH AND BASH!</span>"
 	species_allowed = list("human","abomination") //no skeleton/lizard hulk
-	health_req = 25
+	health_req = 1
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -138,6 +147,7 @@
 				owner.unEquip(S)
 		owner.undershirt = "Nude"
 		owner.dna.species.no_equip.Add(slot_wear_suit, slot_w_uniform)
+		owner.say("PUNY HUMANS!!")
 	owner.update_body()
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)

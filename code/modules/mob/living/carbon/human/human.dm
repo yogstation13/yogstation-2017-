@@ -1121,3 +1121,10 @@
 		if(!(NOCRIT in status_flags))
 			return TRUE
 	return FALSE
+
+/mob/living/carbon/human/proc/hulk_mutation_check()
+	if(dna.check_mutation(HULK_STATE) && stat == CONSCIOUS && health <=65)
+		dna.add_mutation(HULK)
+	else
+		if(dna.check_mutation(HULK) && !mind.CheckSpell(/obj/effect/proc_holder/spell/targeted/genetic/mutate))
+			dna.remove_mutation(HULK)

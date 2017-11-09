@@ -1,6 +1,7 @@
 
 //Defines copying names of mutations in all cases, make sure to change this if you change mutation's name
 #define HULK		"Hulk"
+#define HULK_STATE	"Hulk Rage"
 #define XRAY		"X Ray Vision"
 #define COLDRES		"Cold Resistance"
 #define TK			"Telekinesis"

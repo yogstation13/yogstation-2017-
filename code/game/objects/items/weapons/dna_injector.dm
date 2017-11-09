@@ -91,9 +91,9 @@
 	remove_mutations_static = list(HULK)
 
 /obj/item/weapon/dnainjector/hulkmut
-	name = "\improper DNA injector (Hulk)"
-	desc = "This will make you big and strong, but give you a bad skin condition."
-	add_mutations_static = list(HULK)
+	name = "\improper DNA injector (Hulk Rage)"
+	desc = "Makes you angry. Then you become RAGE"
+	add_mutations_static = list(HULK_STATE)
 
 /obj/item/weapon/dnainjector/xraymut
 	name = "\improper DNA injector (Xray)"
