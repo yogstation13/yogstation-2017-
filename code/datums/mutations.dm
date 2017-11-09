@@ -137,7 +137,7 @@
 			if(owner.canUnEquip(S))
 				owner.unEquip(S)
 		owner.undershirt = "Nude"
-		owner.dna.species.no_equip = list(slot_wear_suit, slot_w_uniform)
+		owner.dna.species.no_equip.Add(slot_wear_suit, slot_w_uniform)
 	owner.update_body()
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
@@ -152,7 +152,7 @@
 	if(..())
 		return
 	owner.status_flags |= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
-	owner.dna.species.no_equip = list()
+	owner.dna.species.no_equip.Remove(slot_wear_suit, slot_w_uniform)
 	owner.update_body_parts()
 
 /datum/mutation/human/hulk/say_mod(message)
