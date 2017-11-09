@@ -22,29 +22,29 @@
 "av" = (/obj/item/device/radio/intercom{freerange = 0; frequency = 1459; name = "Station Intercom (General)"; pixel_x = 0; pixel_y = -30},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
 "aw" = (/obj/structure/table,/obj/item/weapon/hemostat,/obj/item/weapon/retractor,/obj/item/weapon/scalpel,/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
 "ax" = (/obj/structure/bed/roller,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"ay" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"ay" = (/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "az" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aA" = (/obj/structure/closet,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aB" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/storage/firstaid/regular,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aC" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aD" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aE" = (/obj/structure/table,/obj/item/weapon/crowbar,/obj/item/weapon/extinguisher,/obj/machinery/recharger,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"aF" = (/obj/docking_port/mobile/emergency{dheight = 2; dir = 4; dwidth = 10; height = 13; name = "Asteroid emergency shuttle"; timid = 1; width = 28},/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
-"aG" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"aH" = (/obj/structure/chair{dir = 4},/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"aI" = (/obj/structure/chair{dir = 8},/obj/structure/extinguisher_cabinet{pixel_x = 30},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"aJ" = (/obj/structure/chair{dir = 8},/obj/item/device/radio/intercom{freerange = 0; frequency = 1459; name = "Station Intercom (General)"; pixel_x = 29},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"aK" = (/obj/structure/table,/obj/item/weapon/crowbar,/obj/item/weapon/extinguisher,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"aL" = (/obj/structure/chair,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"aM" = (/obj/structure/closet/emcloset,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"aN" = (/obj/structure/extinguisher_cabinet{pixel_x = -30},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
-"aO" = (/obj/machinery/door/airlock/glass_mining{name = "Emergency Shuttle Storage"},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
-"aP" = (/obj/machinery/door/airlock/glass_command{name = "Emergency Shuttle Cockpit"; req_access_txt = "19"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"aQ" = (/obj/machinery/door/airlock{name = "Emergency Shuttle Restroom"},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
-"aR" = (/obj/machinery/recharge_station,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
-"aS" = (/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
-"aT" = (/obj/item/device/radio/intercom{freerange = 0; frequency = 1459; name = "Station Intercom (General)"; pixel_x = -30},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"aU" = (/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aF" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile/emergency{dheight = 0; dir = 4; dwidth = 10; height = 13; name = "Asteroid emergency shuttle"; timid = 1; width = 28},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"aG" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"aH" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aI" = (/obj/structure/chair{dir = 4},/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aJ" = (/obj/structure/chair{dir = 8},/obj/structure/extinguisher_cabinet{pixel_x = 30},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aK" = (/obj/structure/chair{dir = 8},/obj/item/device/radio/intercom{freerange = 0; frequency = 1459; name = "Station Intercom (General)"; pixel_x = 29},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aL" = (/obj/structure/table,/obj/item/weapon/crowbar,/obj/item/weapon/extinguisher,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aM" = (/obj/structure/chair,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aN" = (/obj/structure/closet/emcloset,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aO" = (/obj/structure/extinguisher_cabinet{pixel_x = -30},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"aP" = (/obj/machinery/door/airlock/glass_mining{name = "Emergency Shuttle Storage"},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"aQ" = (/obj/machinery/door/airlock/glass_command{name = "Emergency Shuttle Cockpit"; req_access_txt = "19"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aR" = (/obj/machinery/door/airlock{name = "Emergency Shuttle Restroom"},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"aS" = (/obj/machinery/recharge_station,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"aT" = (/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
+"aU" = (/obj/item/device/radio/intercom{freerange = 0; frequency = 1459; name = "Station Intercom (General)"; pixel_x = -30},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aV" = (/obj/structure/extinguisher_cabinet{pixel_x = 30},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "aW" = (/obj/machinery/disposal/bin/toilet{dir = 8},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
 "aX" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
@@ -75,24 +75,24 @@ apaeaeaeaeaeacafafafafaqac
 abarasaraeatabauafafavawab
 abababacahacabacaiacababab
 aaababaxafafafafafaxababaa
-aaaaayafafazazazafaAabaaaa
-aaaaabaBafaCacaDafaEabaaaa
-aaaaaFafafaCacaDafaGabaaaa
-aaaaabaHafaCacaDafaIabaaaa
+aaaaabayafazazazafaAabaaaa
+abacabaBafaCacaDafaEabaaaa
+aFafaGafafaCacaDafaHabaaaa
+abacabaIafaCacaDafaJabaaaa
 aaaaacaDafaCacaDafaCacaaaa
 aaaaacaDafafafafafaCacaaaa
 aaaaacaDafaCacaDafaCacaaaa
-aaaaabaHafaCacaDafaJabaaaa
-aaaaayafafaCacaDafaGabaaaa
-aaaaabaKafaCacaDafaBabaaaa
-aaaaayafafaLaLaLafaMabaaaa
-aaababaNafafafafafafababaa
-abababaOababaPababaQababab
-acaRaSaSabaTaUaVabafaQaWac
-aXaSaSaSabaYaZbaabafababab
-acbbaSbcabbdbebfabalaQaWac
+abacabaIafaCacaDafaKabaaaa
+aGafaGafafaCacaDafaHabaaaa
+abacabaLafaCacaDafaBabaaaa
+aaaaabayafaMaMaMafaNabaaaa
+aaababaOafafafafafafababaa
+abababaPababaQababaRababab
+acaSaTaTabaUayaVabafaRaWac
+aXaTaTaTabaYaZbaabafababab
+acbbaTbcabbdbebfabalaRaWac
 abababbgabbhbibjabbkababab
-abblabababaUaUaUabababblab
-abbmabblabbnaUboabblabbmab
+abblabababayayayabababblab
+abbmabblabbnayboabblabbmab
 aaaaabbmabacacacabbmabaaaa
 "}
