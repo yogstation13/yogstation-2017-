@@ -1123,8 +1123,16 @@
 	return FALSE
 
 /mob/living/carbon/human/proc/hulk_mutation_check()
-	if(dna.check_mutation(HULK_STATE) && stat == CONSCIOUS && health <=65)
-		dna.add_mutation(HULK)
-	else
-		if(dna.check_mutation(HULK) && !mind.CheckSpell(/obj/effect/proc_holder/spell/targeted/genetic/mutate))
+	if(dna.check_mutation(HULK))
+		var/M = dna.check_mutation(HULK)
+		var/datum/mutation/human/hulk/HM = dna.mutations[M]
+		if(HM.health_based && health > 65)
 			dna.remove_mutation(HULK)
+		else
+			return
+	else
+		if(dna.check_mutation(HULK_STATE) && stat == CONSCIOUS && health <=65)
+			dna.add_mutation(HULK)
+			var/M = dna.check_mutation(HULK)
+			var/datum/mutation/human/hulk/HM = dna.mutations[M]
+			HM.health_based = TRUE

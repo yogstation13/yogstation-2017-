@@ -88,12 +88,17 @@
 /obj/item/weapon/dnainjector/antihulk
 	name = "\improper DNA injector (Anti-Hulk)"
 	desc = "Cures green skin."
-	remove_mutations_static = list(HULK)
+	remove_mutations_static = list(HULK_STATE, HULK)
+
+/obj/item/weapon/dnainjector/hulkstatemut
+	name = "\improper DNA injector (Hulk State)"
+	desc = "This will make you big and strong if you get hurt, but give you a bad skin condition."
+	add_mutations_static = list(HULK_STATE)
 
 /obj/item/weapon/dnainjector/hulkmut
-	name = "\improper DNA injector (Hulk Rage)"
-	desc = "Makes you angry. Then you become RAGE"
-	add_mutations_static = list(HULK_STATE)
+	name = "\improper DNA injector (Hulk)"
+	desc = "This will make you big and strong permanently, but give you a bad skin condition."
+	add_mutations_static = list(HULK)
 
 /obj/item/weapon/dnainjector/xraymut
 	name = "\improper DNA injector (Xray)"

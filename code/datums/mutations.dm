@@ -119,7 +119,7 @@
 	quality = POSITIVE
 	get_chance = 10
 	lowest_value = 256 * 14
-	text_gain_indication = "<span class='notice'>You suddenly feel very angry</span>"
+	text_gain_indication = "<span class='notice'>You suddenly feel very angry.</span>"
 	species_allowed = list("human","abomination") //no skeleton/lizard hulk
 	health_req = 25
 
@@ -128,9 +128,10 @@
 	name = "Hulk"
 	quality = POSITIVE
 	dna_block = NON_SCANNABLE
-	text_gain_indication = "<span class='notice'>HULK SMASH AND BASH!</span>"
+	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 	species_allowed = list("human","abomination") //no skeleton/lizard hulk
 	health_req = 1
+	var/health_based = FALSE
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -140,7 +141,8 @@
 	if(!owner.mind.CheckSpell(/obj/effect/proc_holder/spell/targeted/genetic/mutate)) // so it won't affect Mutate
 		if(istype(owner.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = owner.w_uniform
-			U.teardown(owner)
+			if(owner.canUnEquip(U))
+				U.teardown(owner)
 		if(istype(owner.wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/S = owner.wear_suit
 			if(owner.canUnEquip(S))
@@ -164,6 +166,7 @@
 	owner.status_flags |= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
 	owner.dna.species.no_equip.Remove(slot_wear_suit, slot_w_uniform)
 	owner.update_body_parts()
+	owner.hulk_mutation_check()
 
 /datum/mutation/human/hulk/say_mod(message)
 	if(message)
