@@ -131,14 +131,14 @@
 	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
 	species_allowed = list("human","abomination") //no skeleton/lizard hulk
 	health_req = 1
-	var/health_based = FALSE
+	var/health_based = 0
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
 	owner.SetParalysis(0)
 	owner.status_flags -= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
-	if(!owner.mind.CheckSpell(/obj/effect/proc_holder/spell/targeted/genetic/mutate)) // so it won't affect Mutate
+	if(!owner.mind.CheckSpell(/obj/effect/proc_holder/spell/targeted/genetic/mutate) && owner.dna.check_mutation(HULK_STATE)) // so it won't affect Wizard's Mutate. Ensures Hulk given by Devils, Wishgranters, Ling Abomination, etc. will be like old hulk
 		if(istype(owner.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = owner.w_uniform
 			if(owner.canUnEquip(U))
@@ -147,6 +147,7 @@
 			var/obj/item/clothing/suit/S = owner.wear_suit
 			if(owner.canUnEquip(S))
 				owner.unEquip(S)
+		owner.adjustBrainLoss(90)
 		owner.undershirt = "Nude"
 		owner.dna.species.no_equip.Add(slot_wear_suit, slot_w_uniform)
 		owner.say("PUNY HUMANS!!")
@@ -164,9 +165,11 @@
 	if(..())
 		return
 	owner.status_flags |= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
-	owner.dna.species.no_equip.Remove(slot_wear_suit, slot_w_uniform)
 	owner.update_body_parts()
-	owner.hulk_mutation_check()
+	if(owner.dna.check_mutation(HULK_STATE))
+		owner.adjustBrainLoss(-90)
+		owner.dna.species.no_equip.Remove(slot_wear_suit, slot_w_uniform)
+		owner.hulk_mutation_check()
 
 /datum/mutation/human/hulk/say_mod(message)
 	if(message)

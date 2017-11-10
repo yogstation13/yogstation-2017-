@@ -1135,4 +1135,4 @@
 			dna.add_mutation(HULK)
 			var/M = dna.check_mutation(HULK)
 			var/datum/mutation/human/hulk/HM = dna.mutations[M]
-			HM.health_based = TRUE
+			HM.health_based = 1
