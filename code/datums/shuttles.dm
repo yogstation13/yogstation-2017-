@@ -138,6 +138,11 @@
 		without protective goggles. Emitters spawn powered on, expect \
 		admin notices, they are harmless."
 
+/datum/map_template/shuttle/emergency/tauceti
+	suffix = "tauceti"
+	name = "Tau Ceti Escape Shuttle"
+	credit_cost = 12500
+
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
 	suffix = "imfedupwiththisworld"
 	name = "Oh, Hi Daniel"
