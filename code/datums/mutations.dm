@@ -139,6 +139,8 @@
 	owner.SetParalysis(0)
 	owner.status_flags -= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
 	if(!owner.mind.CheckSpell(/obj/effect/proc_holder/spell/targeted/genetic/mutate) && owner.dna.check_mutation(HULK_STATE)) // so it won't affect Wizard's Mutate. Ensures Hulk given by Devils, Wishgranters, Ling Abomination, etc. will be like old hulk
+		owner.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/hulk(null))
+		owner.status_flags |= IGNORESLOWDOWN
 		if(istype(owner.w_uniform, /obj/item/clothing/under))
 			var/obj/item/clothing/under/U = owner.w_uniform
 			if(owner.canUnEquip(U))
@@ -166,7 +168,9 @@
 		return
 	owner.status_flags |= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
 	owner.update_body_parts()
+	owner.mind.RemoveSpell(/obj/effect/proc_holder/spell/aoe_turf/repulse/hulk)
 	if(owner.dna.check_mutation(HULK_STATE))
+		owner.status_flags -= IGNORESLOWDOWN
 		owner.adjustBrainLoss(-90)
 		owner.dna.species.no_equip.Remove(slot_wear_suit, slot_w_uniform)
 		owner.hulk_mutation_check()
