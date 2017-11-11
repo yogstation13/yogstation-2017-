@@ -93,21 +93,21 @@
 			++loaded
 			add_seed(G)
 		if (loaded)
-			to_chat(user, "<span class='notice'>You put the seeds from \the [O.name] into [src].</span>")
+			user << "<span class='notice'>You put the seeds from \the [O.name] into [src].</span>"
 		else
-			to_chat(user, "<span class='notice'>There are no seeds in \the [O.name].</span>")
+			user << "<span class='notice'>There are no seeds in \the [O.name].</span>"
 		return
 
 	else if(seedify(O,-1, src, user))
-		to_chat(user, "<span class='notice'>You extract some seeds.</span>")
+		user << "<span class='notice'>You extract some seeds.</span>"
 		return
 	else if (istype(O,/obj/item/seeds))
 		if(add_seed(O))
-			to_chat(user, "<span class='notice'>You add [O] to [src.name].</span>")
+			user << "<span class='notice'>You add [O] to [src.name].</span>"
 			updateUsrDialog()
 		return
 	else if(user.a_intent != "harm")
-		to_chat(user, "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>")
+		user << "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>"
 	else
 		return ..()
 
@@ -188,7 +188,7 @@
 
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
 	if(contents.len >= 999)
-		to_chat(usr, "<span class='notice'>\The [src] is full.</span>")
+		usr << "<span class='notice'>\The [src] is full.</span>"
 		return 0
 
 	if(istype(O.loc,/mob))

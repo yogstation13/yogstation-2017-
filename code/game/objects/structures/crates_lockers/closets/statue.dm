@@ -75,7 +75,7 @@
 			for(var/mob/M in contents)
 				S.mind.transfer_to(M)
 				M.Weaken(5)
-				to_chat(M, "<span class='notice'>You slowly come back to your senses. You are in control of yourself again!</span>")
+				M << "<span class='notice'>You slowly come back to your senses. You are in control of yourself again!</span>"
 				break
 		qdel(S)
 

@@ -29,7 +29,7 @@
 	is_anyone_home = TRUE
 	sleep(50)
 	if(boss)
-		to_chat(user, "<span class='notice'>There's no response.</span>")
+		user << "<span class='notice'>There's no response.</span>"
 		is_anyone_home = FALSE
 		return 0
 	boss = TRUE
@@ -45,7 +45,7 @@
 	log_game("[key_name(user)] summoned Legion.")
 	for(var/mob/M in player_list)
 		if(M.z == z)
-			to_chat(M, "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has come.</span>")
+			M << "<span class='userdanger'>Discordant whispers flood your mind in a thousand voices. Each one speaks your name, over and over. Something horrible has come.</span>"
 			M << 'sound/creatures/legion_spawn.ogg'
 			if(M.client)
 				flash_color(M, color = "#FF0000", time = 50)

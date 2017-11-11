@@ -26,7 +26,7 @@
 		charges--
 		user.visible_message("<span class='boldannounce'>[src] hums with power as [user] deals a blow to [activate_descriptor] itself!</span>")
 	else
-		to_chat(user, "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>")
+		user << "<span class='danger'>The unearthly energies that powered the blade are now dormant.</span>"
 
 /obj/effect/rend
 	name = "tear in the fabric of reality"
@@ -117,7 +117,7 @@
 	hitsound = 'sound/items/welder2.ogg'
 
 /obj/item/weapon/scrying/attack_self(mob/user)
-	to_chat(user, "<span class='notice'>You can see...everything!</span>")
+	user << "<span class='notice'>You can see...everything!</span>"
 	visible_message("<span class='danger'>[user] stares into [src], their eyes glazing over.</span>")
 	user.ghostize(1)
 	return
@@ -147,23 +147,23 @@
 		return
 
 	if(M.stat == CONSCIOUS)
-		to_chat(user, "<span class='warning'>Kill or maim the victim first!</span>")
+		user << "<span class='warning'>Kill or maim the victim first!</span>"
 		return
 
 	if(!M.mind || !M.client)
-		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
+		user << "<span class='warning'>There is no soul connected to this body...</span>"
 		return
 
 	check_spooky()//clean out/refresh the list
 	if(spooky_scaries.len >= max_spookies && !unlimited)
-		to_chat(user, "<span class='warning'>This artifact can only affect [max_spookies] thralls at a time!</span>")
+		user << "<span class='warning'>This artifact can only affect [max_spookies] thralls at a time!</span>"
 		return
 
 	M.set_species(/datum/species/skeleton, icon_update=0)
 	M.revive(full_heal = 1, admin_revive = 1)
 	spooky_scaries |= M
-	to_chat(M, "<span class='userdanger'>You have been revived by <B>[user]!</B></span>")
-	to_chat(M, "<span class='userdanger'>They are your master now, assist them even if it costs you your new life!</span>")
+	M << "<span class='userdanger'>You have been revived by <B>[user]!</B></span>"
+	M << "<span class='userdanger'>They are your master now, assist them even if it costs you your new life!</span>"
 
 	equip_roman_skeleton(M)
 
@@ -246,7 +246,7 @@ var/global/list/multiverse = list()
 
 /obj/item/weapon/multisword/attack_self(mob/user)
 	if(user.mind.special_role == "apprentice")
-		to_chat(user, "<span class='warning'>You know better than to touch your teacher's stuff.</span>")
+		user << "<span class='warning'>You know better than to touch your teacher's stuff.</span>"
 		return
 	if(cooldown < world.time)
 		var/faction_check = 0
@@ -258,24 +258,24 @@ var/global/list/multiverse = list()
 			faction = list("[user.real_name]")
 			assigned = "[user.real_name]"
 			user.faction = list("[user.real_name]")
-			to_chat(user, "You bind the sword to yourself. You can now use it to summon help.")
+			user << "You bind the sword to yourself. You can now use it to summon help."
 			if(!usr.mind.special_role)
 				if(prob(30))
-					to_chat(user, "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>")
+					user << "<span class='warning'><B>With your new found power you could easily conquer the station!</B></span>"
 					var/datum/objective/hijackclone/hijack_objective = new /datum/objective/hijackclone
 					hijack_objective.owner = usr.mind
 					usr.mind.objectives += hijack_objective
 					hijack_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
-					to_chat(usr, "<B>Objective #[1]</B>: [hijack_objective.explanation_text]")
+					usr << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
 					ticker.mode.traitors += usr.mind
 					usr.mind.special_role = "[usr.real_name] Prime"
 					evil = TRUE
 				else
-					to_chat(user, "<span class='warning'><B>With your new found power you could easily defend the station!</B></span>")
+					user << "<span class='warning'><B>With your new found power you could easily defend the station!</B></span>"
 					var/datum/objective/survive/new_objective = new /datum/objective/survive
 					new_objective.owner = usr.mind
 					new_objective.explanation_text = "Survive, and help defend the innocent from the mobs of multiverse clones."
-					to_chat(usr, "<B>Objective #[1]</B>: [new_objective.explanation_text]")
+					usr << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 					usr.mind.objectives += new_objective
 					ticker.mode.traitors += usr.mind
 					usr.mind.special_role = "[usr.real_name] Prime"
@@ -285,16 +285,16 @@ var/global/list/multiverse = list()
 			if(candidates.len)
 				var/client/C = pick(candidates)
 				spawn_copy(C, get_turf(user.loc), user)
-				to_chat(user, "<span class='warning'><B>The sword flashes, and you find yourself face to face with...you!</B></span>")
+				user << "<span class='warning'><B>The sword flashes, and you find yourself face to face with...you!</B></span>"
 				cooldown = world.time + 400
 				for(var/obj/item/weapon/multisword/M in multiverse)
 					if(M.assigned == assigned)
 						M.cooldown = cooldown
 
 			else
-				to_chat(user, "You fail to summon any copies of yourself. Perhaps you should try again in a bit.")
+				user << "You fail to summon any copies of yourself. Perhaps you should try again in a bit."
 	else
-		to_chat(user, "<span class='warning'><B>[src] is recharging! Keep in mind it shares a cooldown with the swords wielded by your copies.</span>")
+		user << "<span class='warning'><B>[src] is recharging! Keep in mind it shares a cooldown with the swords wielded by your copies.</span>"
 
 
 /obj/item/weapon/multisword/proc/spawn_copy(var/client/C, var/turf/T)
@@ -302,7 +302,7 @@ var/global/list/multiverse = list()
 	C.prefs.copy_to(M, icon_updates=0)
 	M.key = C.key
 	M.mind.name = usr.real_name
-	to_chat(M, "<B>You are an alternate version of [usr.real_name] from another universe! Help them accomplish their goals at all costs.</B>")
+	M << "<B>You are an alternate version of [usr.real_name] from another universe! Help them accomplish their goals at all costs.</B>"
 	M.real_name = usr.real_name
 	M.name = usr.real_name
 	M.faction = list("[usr.real_name]")
@@ -324,7 +324,7 @@ var/global/list/multiverse = list()
 		hijack_objective.owner = M.mind
 		M.mind.objectives += hijack_objective
 		hijack_objective.explanation_text = "Ensure only [usr.real_name] and their copies are on the shuttle!"
-		to_chat(M, "<B>Objective #[1]</B>: [hijack_objective.explanation_text]")
+		M << "<B>Objective #[1]</B>: [hijack_objective.explanation_text]"
 		M.mind.special_role = "multiverse traveller"
 		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] hijack.")
 	else
@@ -333,7 +333,7 @@ var/global/list/multiverse = list()
 		new_objective.target = usr.mind
 		new_objective.explanation_text = "Protect [usr.real_name], your copy, and help them defend the innocent from the mobs of multiverse clones."
 		M.mind.objectives += new_objective
-		to_chat(M, "<B>Objective #[1]</B>: [new_objective.explanation_text]")
+		M << "<B>Objective #[1]</B>: [new_objective.explanation_text]"
 		M.mind.special_role = "multiverse traveller"
 		log_game("[M.key] was made a multiverse traveller with the objective to help [usr.real_name] protect the station.")
 
@@ -506,15 +506,15 @@ var/global/list/multiverse = list()
 /obj/item/voodoo/attackby(obj/item/I, mob/user, params)
 	if(target && cooldown < world.time)
 		if(I.is_hot())
-			to_chat(target, "<span class='userdanger'>You suddenly feel very hot</span>")
+			target << "<span class='userdanger'>You suddenly feel very hot</span>"
 			target.bodytemperature += 50
 			GiveHint(target)
 		else if(is_pointed(I))
-			to_chat(target, "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>")
+			target << "<span class='userdanger'>You feel a stabbing pain in [parse_zone(user.zone_selected)]!</span>"
 			target.Weaken(2)
 			GiveHint(target)
 		else if(istype(I,/obj/item/device/assembly/bikehorn))
-			to_chat(target, "<span class='userdanger'>HONK</span>")
+			target << "<span class='userdanger'>HONK</span>"
 			target << 'sound/items/AirHorn.ogg'
 			target.adjustEarDamage(0,3)
 			GiveHint(target)
@@ -526,7 +526,7 @@ var/global/list/multiverse = list()
 			user.drop_item()
 			I.loc = src
 			link = I
-			to_chat(user, "You attach [I] to the doll.")
+			user << "You attach [I] to the doll."
 			update_targets()
 
 /obj/item/voodoo/check_eye(mob/user)
@@ -543,7 +543,7 @@ var/global/list/multiverse = list()
 		if(link)
 			target = null
 			link.loc = get_turf(src)
-			to_chat(user, "<span class='notice'>You remove the [link] from the doll.</span>")
+			user << "<span class='notice'>You remove the [link] from the doll.</span>"
 			link = null
 			update_targets()
 			return
@@ -561,7 +561,7 @@ var/global/list/multiverse = list()
 					user.reset_perspective(null)
 					user.unset_machine()
 			if("r_leg","l_leg")
-				to_chat(user, "<span class='notice'>You move the doll's legs around.</span>")
+				user << "<span class='notice'>You move the doll's legs around.</span>"
 				var/turf/T = get_step(target,pick(cardinal))
 				target.Move(T)
 			if("r_arm","l_arm")
@@ -576,9 +576,9 @@ var/global/list/multiverse = list()
 					target.ClickOn(T)
 					GiveHint(target)
 			if("head")
-				to_chat(user, "<span class='notice'>You smack the doll's head with your hand.</span>")
+				user << "<span class='notice'>You smack the doll's head with your hand.</span>"
 				target.Dizzy(10)
-				to_chat(target, "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>")
+				target << "<span class='warning'>You suddenly feel as if your head was hit with a hammer!</span>"
 				GiveHint(target,user)
 		cooldown = world.time + cooldown_time
 
@@ -593,10 +593,10 @@ var/global/list/multiverse = list()
 /obj/item/voodoo/proc/GiveHint(mob/victim,force=0)
 	if(prob(50) || force)
 		var/way = dir2text(get_dir(victim,get_turf(src)))
-		to_chat(victim, "<span class='notice'>You feel a dark presence from [way]</span>")
+		victim << "<span class='notice'>You feel a dark presence from [way]</span>"
 	if(prob(20) || force)
 		var/area/A = get_area(src)
-		to_chat(victim, "<span class='notice'>You feel a dark presence from [A.name]</span>")
+		victim << "<span class='notice'>You feel a dark presence from [A.name]</span>"
 
 /obj/item/voodoo/fire_act()
 	if(target)
@@ -644,7 +644,7 @@ var/global/list/multiverse = list()
 /obj/item/weapon/wabbajack/attack_self(mob/user)
 	var/T_loc = get_turf(src)
 	if(z == ZLEVEL_CENTCOM)
-		to_chat(user, "<span class='notice'>The wabbajack does not wake here.</span>")
+		user << "<span class='notice'>The wabbajack does not wake here.</span>"
 		return
 	new /obj/machinery/power/emitter/energycannon/magical(T_loc)
 	var/obj/structure/table/abductor/wabbajack/left/L = new/obj/structure/table/abductor/wabbajack/left(T_loc)

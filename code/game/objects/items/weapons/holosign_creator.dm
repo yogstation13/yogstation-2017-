@@ -24,12 +24,12 @@
 		var/turf/T = get_turf(target)
 		var/obj/effect/overlay/holograph/H = locate(holosign_type) in T
 		if(H)
-			to_chat(user, "<span class='notice'>You use [src] to deactivate [H].</span>")
+			user << "<span class='notice'>You use [src] to deactivate [H].</span>"
 			qdel(H)
 		else
 			if(!is_blocked_turf(T)) //can't put holograms on a tile that has dense stuff
 				if(holocreator_busy)
-					to_chat(user, "<span class='notice'>[src] is busy creating a hologram.</span>")
+					user << "<span class='notice'>[src] is busy creating a hologram.</span>"
 					return
 				if(signs.len < max_signs)
 					playsound(src.loc, 'sound/machines/click.ogg', 20, 1)
@@ -44,9 +44,9 @@
 						if(is_blocked_turf(T)) //don't try to sneak dense stuff on our tile during the wait.
 							return
 					H = new holosign_type(get_turf(target), src)
-					to_chat(user, "<span class='notice'>You create \a [H] with [src].</span>")
+					user << "<span class='notice'>You create \a [H] with [src].</span>"
 				else
-					to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
+					user << "<span class='notice'>[src] is projecting at max capacity!</span>"
 
 /obj/item/weapon/holosign_creator/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -55,7 +55,7 @@
 	if(signs.len)
 		for(var/H in signs)
 			qdel(H)
-		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
+		user << "<span class='notice'>You clear all active holograms.</span>"
 
 
 /obj/item/weapon/holosign_creator/security
@@ -108,11 +108,11 @@
 			if(signs.len)
 				for(var/H in signs)
 					qdel(H)
-				to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
+				user << "<span class='notice'>You clear all active holograms.</span>"
 	if(signs.len)
 		for(var/H in signs)
 			qdel(H)
-		to_chat(user, "<span class='notice'>You clear all active holograms.</span>")
+		user << "<span class='notice'>You clear all active holograms.</span>"
 
 /obj/effect/overlay/holograph
 	icon = 'icons/effects/effects.dmi'

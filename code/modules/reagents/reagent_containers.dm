@@ -34,7 +34,7 @@
 					amount_per_transfer_from_this = possible_transfer_amounts[i+1]
 				else
 					amount_per_transfer_from_this = possible_transfer_amounts[1]
-				to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
+				user << "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>"
 				return
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
@@ -63,7 +63,7 @@
 		covered = "mask"
 	if(covered)
 		var/who = (isnull(user) || eater == user) ? "your" : "their"
-		to_chat(user, "<span class='warning'>You have to remove [who] [covered] first!</span>")
+		user << "<span class='warning'>You have to remove [who] [covered] first!</span>"
 		return 0
 	return 1
 

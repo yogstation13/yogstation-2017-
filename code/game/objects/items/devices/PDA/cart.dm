@@ -1024,19 +1024,19 @@
 						if("Yes" == alert(usr, "Delete all software?", "Delete Software", "Yes", "No"))
 							for(var/V in active_software)
 								qdel(V)
-							to_chat(usr, "<span class='warning'>All software deleted.</span>")
+							usr << "<span class='warning'>All software deleted.</span>"
 					else if(target == "all_malware")
 						if("Yes" == alert(usr, "Delete all malware?", "Delete Malware", "Yes", "No"))
 							for(var/datum/software/malware/M in active_software)
 								qdel(M)
-							to_chat(usr, "<span class='warning'>All malware deleted.</span>")
+							usr << "<span class='warning'>All malware deleted.</span>"
 					else
 						var/datum/software/S = locate(target)
 						if(istype(S))
 							qdel(S)
-							to_chat(usr, "<span class='warning'>Software deleted.</span>")
+							usr << "<span class='warning'>Software deleted.</span>"
 						else
-							to_chat(usr, "<span class='warning'>Error: software has already been deleted.</span>")
+							usr << "<span class='warning'>Error: software has already been deleted.</span>"
 				pda.Topic(null,list("choice"=num2text(mode)))
 
 	//Bot control section! Viciously ripped from radios for being laggy and terrible.

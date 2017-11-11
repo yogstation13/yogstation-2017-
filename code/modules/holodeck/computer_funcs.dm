@@ -52,7 +52,7 @@
 			if(world.time < (last_change + 15))//To prevent super-spam clicking, reduced process size and annoyance -Sieve
 				return
 			if(get_dist(usr,src) <= 3)
-				to_chat(usr, "<span class='warning'>ERROR. Recalibrating projection apparatus.</span>")
+				usr << "<span class='warning'>ERROR. Recalibrating projection apparatus.</span>"
 				return
 
 	last_change = world.time

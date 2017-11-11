@@ -79,13 +79,13 @@
 			if(user.get_item_by_slot(slot_back) == src)
 				ui_action_click()
 			else
-				to_chat(user, "<span class='warning'>Put the defibrillator on your back first!</span>")
+				user << "<span class='warning'>Put the defibrillator on your back first!</span>"
 
 		else if(slot_flags == SLOT_BELT)
 			if(user.get_item_by_slot(slot_belt) == src)
 				ui_action_click()
 			else
-				to_chat(user, "<span class='warning'>Strap the defibrillator's belt on first!</span>")
+				user << "<span class='warning'>Strap the defibrillator's belt on first!</span>"
 		return
 	..()
 
@@ -116,16 +116,16 @@
 	else if(istype(W, /obj/item/weapon/stock_parts/cell))
 		var/obj/item/weapon/stock_parts/cell/C = W
 		if(bcell)
-			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
+			user << "<span class='notice'>[src] already has a cell.</span>"
 		else
 			if(C.maxcharge < paddles.revivecost)
-				to_chat(user, "<span class='notice'>[src] requires a higher capacity cell.</span>")
+				user << "<span class='notice'>[src] requires a higher capacity cell.</span>"
 				return
 			if(!user.unEquip(W))
 				return
 			W.loc = src
 			bcell = W
-			to_chat(user, "<span class='notice'>You install a cell in [src].</span>")
+			user << "<span class='notice'>You install a cell in [src].</span>"
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
@@ -133,7 +133,7 @@
 			bcell.updateicon()
 			bcell.loc = get_turf(src.loc)
 			bcell = null
-			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
+			user << "<span class='notice'>You remove the cell from [src].</span>"
 			update_icon()
 	else
 		return ..()
@@ -141,10 +141,10 @@
 /obj/item/weapon/defibrillator/emag_act(mob/user)
 	if(safety)
 		safety = 0
-		to_chat(user, "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer.")
+		user << "<span class='warning'>You silently disable [src]'s safety protocols with the cryptographic sequencer."
 	else
 		safety = 1
-		to_chat(user, "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer.")
+		user << "<span class='notice'>You silently enable [src]'s safety protocols with the cryptographic sequencer."
 
 /obj/item/weapon/defibrillator/emp_act(severity)
 	if(bcell)
@@ -170,7 +170,7 @@
 		//Detach the paddles into the user's hands
 		if(!usr.put_in_hands(paddles))
 			on = 0
-			to_chat(user, "<span class='warning'>You need a free hand to hold the paddles!</span>")
+			user << "<span class='warning'>You need a free hand to hold the paddles!</span>"
 			update_icon()
 			return
 		paddles.loc = user
@@ -337,7 +337,7 @@
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
 		if(istype(O))
 			O.unwield()
-		to_chat(user, "<span class='notice'>The paddles snap back into the main unit.</span>")
+		user << "<span class='notice'>The paddles snap back into the main unit.</span>"
 		defib.on = 0
 		loc = defib
 		defib.update_icon()
@@ -364,21 +364,21 @@
 		return
 	if(!wielded)
 		if(isrobot(user))
-			to_chat(user, "<span class='warning'>You must activate the paddles in your active module before you can use them on someone!</span>")
+			user << "<span class='warning'>You must activate the paddles in your active module before you can use them on someone!</span>"
 		else
-			to_chat(user, "<span class='warning'>You need to wield the paddles in both hands before you can use them on someone!</span>")
+			user << "<span class='warning'>You need to wield the paddles in both hands before you can use them on someone!</span>"
 		return
 	if(cooldown)
 		if(req_defib)
-			to_chat(user, "<span class='warning'>[defib] is recharging!</span>")
+			user << "<span class='warning'>[defib] is recharging!</span>"
 		else
-			to_chat(user, "<span class='warning'>[src] are recharging!</span>")
+			user << "<span class='warning'>[src] are recharging!</span>"
 		return
 	if(!ishuman(M))
 		if(req_defib)
-			to_chat(user, "<span class='warning'>The instructions on [defib] don't mention how to revive that...</span>")
+			user << "<span class='warning'>The instructions on [defib] don't mention how to revive that...</span>"
 		else
-			to_chat(user, "<span class='warning'>You aren't sure how to revive that...</span>")
+			user << "<span class='warning'>You aren't sure how to revive that...</span>"
 		return
 	var/mob/living/carbon/human/H = M
 
@@ -408,7 +408,8 @@
 		return
 
 	if(user.zone_selected != "chest")
-		to_chat(user, "<span class='warning'>You need to target your patient's chest with [src]!</span>")
+		user << "<span class='warning'>You need to target your patient's \
+			chest with [src]!</span>"
 		return
 	if(user.a_intent == "harm")
 		if(req_defib && defib.safety)
@@ -434,7 +435,7 @@
 					update_icon()
 					return
 				if(M && M.stat == DEAD)
-					to_chat(user, "<span class='warning'>[M] is dead.</span>")
+					user << "<span class='warning'>[M] is dead.</span>"
 					playsound(get_turf(src), 'sound/machines/defib_failed.ogg', 50, 0)
 					busy = 0
 					update_icon()

@@ -27,11 +27,11 @@
 			return
 
 		if(!mineralType)
-			to_chat(user, "<span class='warning'>You can not reform this!</span>")
+			user << "<span class='warning'>You can not reform this!</span>"
 			return
 
 		if(get_amount() < 4)
-			to_chat(user, "<span class='warning'>You need at least four tiles to do this!</span>")
+			user << "<span class='warning'>You need at least four tiles to do this!</span>"
 			return
 
 		if(WT.remove_fuel(0,user))

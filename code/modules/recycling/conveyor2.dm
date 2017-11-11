@@ -120,7 +120,7 @@
 			var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
 			C.id = id
 			transfer_fingerprints_to(C)
-		to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
+		user << "<span class='notice'>You remove the conveyor belt.</span>"
 		qdel(src)
 
 	else if(istype(I, /obj/item/weapon/wrench))
@@ -128,7 +128,7 @@
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			dir = turn(dir,-45)
 			update_move_direction()
-			to_chat(user, "<span class='notice'>You rotate [src].</span>")
+			user << "<span class='notice'>You rotate [src].</span>"
 
 	else if(user.a_intent != "harm")
 		if(user.drop_item())
@@ -270,7 +270,7 @@
 		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id
 		transfer_fingerprints_to(C)
-		to_chat(user, "<span class='notice'>You deattach the conveyor switch.</span>")
+		user << "<span class='notice'>You deattach the conveyor switch.</span>"
 		qdel(src)
 
 /obj/machinery/conveyor_switch/oneway
@@ -292,7 +292,7 @@
 /obj/item/conveyor_construct/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/conveyor_switch_construct))
-		to_chat(user, "<span class='notice'>You link the switch to the conveyor belt assembly.</span>")
+		user << "<span class='notice'>You link the switch to the conveyor belt assembly.</span>"
 		var/obj/item/conveyor_switch_construct/C = I
 		id = C.id
 
@@ -301,7 +301,7 @@
 		return
 	var/cdir = get_dir(A, user)
 	if(A == user.loc)
-		to_chat(user, "<span class='notice'>You cannot place a conveyor belt under yourself.</span>")
+		user << "<span class='notice'>You cannot place a conveyor belt under yourself.</span>"
 		return
 	var/obj/machinery/conveyor/C = new/obj/machinery/conveyor(A,cdir)
 	C.id = id
@@ -329,7 +329,7 @@
 			found = 1
 			break
 	if(!found)
-		to_chat(user, "\icon[src]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>")
+		user << "\icon[src]<span class=notice>The conveyor switch did not detect any linked conveyor belts in range.</span>"
 		return
 	var/obj/machinery/conveyor_switch/NC = new/obj/machinery/conveyor_switch(A, id)
 	transfer_fingerprints_to(NC)

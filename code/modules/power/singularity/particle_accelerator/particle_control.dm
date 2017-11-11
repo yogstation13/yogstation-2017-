@@ -88,7 +88,7 @@
 		return
 
 	if(!interface_control)
-		to_chat(usr, "<span class='error'>ERROR: Request timed out. Check wire contacts.</span>")
+		usr << "<span class='error'>ERROR: Request timed out. Check wire contacts.</span>"
 		return
 
 	if(href_list["close"])
@@ -269,11 +269,11 @@
 	..()
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
-			to_chat(user, "Looks like it's not attached to the flooring")
+			user << "Looks like it's not attached to the flooring"
 		if(PA_CONSTRUCTION_UNWIRED)
-			to_chat(user, "It is missing some cables")
+			user << "It is missing some cables"
 		if(PA_CONSTRUCTION_PANEL_OPEN)
-			to_chat(user, "The panel is open")
+			user << "The panel is open"
 
 
 /obj/machinery/particle_accelerator/control_box/attackby(obj/item/W, mob/user, params)

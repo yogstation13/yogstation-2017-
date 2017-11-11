@@ -88,12 +88,12 @@
 			C.throw_at(user, 3, 10)
 			if(prob(10))
 				balance = max(balance - SPIN_PRICE, 0)
-			to_chat(user, "<span class='warning'>[src] spits your coin back out!</span>")
+			user << "<span class='warning'>[src] spits your coin back out!</span>"
 
 		else
 			if(!user.drop_item())
 				return
-			to_chat(user, "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>")
+			user << "<span class='notice'>You insert a [C.cmineral] coin into [src]'s slot!</span>"
 			balance += C.value
 			qdel(C)
 	else
@@ -204,14 +204,14 @@
 
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)
 	if(stat & NOPOWER)
-		to_chat(user, "<span class='warning'>The slot machine has no power!</span>")
+		user << "<span class='warning'>The slot machine has no power!</span>"
 	if(stat & BROKEN)
-		to_chat(user, "<span class='warning'>The slot machine is broken!</span>")
+		user << "<span class='warning'>The slot machine is broken!</span>"
 	if(working)
-		to_chat(user, "<span class='warning'>You need to wait until the machine stops spinning before you can play again!</span>")
+		user << "<span class='warning'>You need to wait until the machine stops spinning before you can play again!</span>"
 		return 0
 	if(balance < SPIN_PRICE)
-		to_chat(user, "<span class='warning'>Insufficient money to play!</span>")
+		user << "<span class='warning'>Insufficient money to play!</span>"
 		return 0
 	return 1
 
@@ -252,12 +252,12 @@
 		give_money(SMALL_PRIZE)
 
 	else if(linelength == 3)
-		to_chat(user, "<span class='notice'>You win three free games!</span>")
+		user << "<span class='notice'>You win three free games!</span>"
 		balance += SPIN_PRICE * 4
 		money = max(money - SPIN_PRICE * 4, money)
 
 	else
-		to_chat(user, "<span class='warning'>No luck!</span>")
+		user << "<span class='warning'>No luck!</span>"
 
 /obj/machinery/computer/slot_machine/proc/get_lines()
 	var/amountthesame

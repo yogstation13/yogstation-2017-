@@ -32,7 +32,7 @@
 			return
 		W.loc = src
 		toppaper = W
-		to_chat(user, "<span class='notice'>You clip the paper onto \the [src].</span>")
+		user << "<span class='notice'>You clip the paper onto \the [src].</span>"
 		update_icon()
 	else if(toppaper)
 		toppaper.attackby(usr.get_active_hand(), usr)
@@ -81,7 +81,7 @@
 						return
 					W.loc = src
 					haspen = W
-					to_chat(usr, "<span class='notice'>You slot [W] into [src].</span>")
+					usr << "<span class='notice'>You slot [W] into [src].</span>"
 
 		if(href_list["write"])
 			var/obj/item/P = locate(href_list["write"])
@@ -111,7 +111,7 @@
 			var/obj/item/P = locate(href_list["top"])
 			if(istype(P) && P.loc == src)
 				toppaper = P
-				to_chat(usr, "<span class='notice'>You move [P.name] to the top.</span>")
+				usr << "<span class='notice'>You move [P.name] to the top.</span>"
 
 		//Update everything
 		attack_self(usr)

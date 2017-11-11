@@ -19,7 +19,7 @@
 /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='notice'>You must dedicate yourself to silence first.</span>")
+			usr << "<span class='notice'>You must dedicate yourself to silence first.</span>"
 			return
 		invocation = "<B>[usr.real_name]</B> looks as if a wall is in front of them."
 	else
@@ -49,7 +49,7 @@
 	var/mob/living/carbon/human/H = usr
 	if(H.mind.miming) // so if you're here to make a vow, you won't be bothered
 		if(world.time < 15000 && !(usr.mind.special_role)) // 25 minutes
-			to_chat(usr, "<span class='warning'>It's too early into the shift to do this! Play your part!")
+			usr << "<span class='warning'>It's too early into the shift to do this! Play your part!"
 			return
 	if(H.mind.miming)
 		still_recharging_msg = "<span class='warning'>You can't break your vow of silence that fast!</span>"
@@ -61,9 +61,9 @@
 	for(var/mob/living/carbon/human/H in targets)
 		H.mind.miming=!H.mind.miming
 		if(H.mind.miming)
-			to_chat(H, "<span class='notice'>You make a vow of silence.</span>")
+			H << "<span class='notice'>You make a vow of silence.</span>"
 		else
-			to_chat(H, "<span class='notice'>You break your vow of silence.</span>")
+			H << "<span class='notice'>You break your vow of silence.</span>"
 
 /obj/effect/proc_holder/spell/targeted/touch/mime
 	name = "Invisible Touch"
@@ -84,7 +84,7 @@
 /obj/effect/proc_holder/spell/targeted/touch/mime/Click()
 	if(usr && usr.mind)
 		if(!usr.mind.miming)
-			to_chat(usr, "<span class='notice'>You don't remember how to perform this... It probably takes dedication.</span>")
+			usr << "<span class='notice'>You don't remember how to perform this... It probably takes dedication.</span>"
 			return
 	..()
 

@@ -38,4 +38,4 @@
 
 /obj/item/device/pipe_painter/examine()
 	..()
-	to_chat(usr, "It is set to [mode].")
+	usr << "It is set to [mode]."

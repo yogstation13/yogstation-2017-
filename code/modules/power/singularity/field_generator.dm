@@ -64,7 +64,7 @@ field_generator power level display
 	if(state == FG_WELDED)
 		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
 			if(active >= FG_CHARGING)
-				to_chat(user, "<span class='warning'>You are unable to turn off the [name] once it is online!</span>")
+				user << "<span class='warning'>You are unable to turn off the [name] once it is online!</span>"
 				return 1
 			else
 				user.visible_message("[user.name] turns on the [name].", \
@@ -76,12 +76,12 @@ field_generator power level display
 
 				add_fingerprint(user)
 	else
-		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>")
+		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
 
 
 /obj/machinery/field/generator/attackby(obj/item/W, mob/user, params)
 	if(active)
-		to_chat(user, "<span class='warning'>The [src] needs to be off!</span>")
+		user << "<span class='warning'>The [src] needs to be off!</span>"
 		return
 	else if(istype(W, /obj/item/weapon/wrench))
 		switch(state)
@@ -101,13 +101,13 @@ field_generator power level display
 					"<span class='italics'>You hear ratchet.</span>")
 				anchored = 0
 			if(FG_WELDED)
-				to_chat(user, "<span class='warning'>The [name] needs to be unwelded from the floor!</span>")
+				user << "<span class='warning'>The [name] needs to be unwelded from the floor!</span>"
 
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		switch(state)
 			if(FG_UNSECURED)
-				to_chat(user, "<span class='warning'>The [name] needs to be wrenched to the floor!</span>")
+				user << "<span class='warning'>The [name] needs to be wrenched to the floor!</span>"
 
 			if(FG_SECURED)
 				if (WT.remove_fuel(0,user))
@@ -118,7 +118,7 @@ field_generator power level display
 					if (do_after(user,20/W.toolspeed, target = src))
 						if(!src || !WT.isOn()) return
 						state = FG_WELDED
-						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
+						user << "<span class='notice'>You weld the field generator to the floor.</span>"
 
 			if(FG_WELDED)
 				if (WT.remove_fuel(0,user))
@@ -129,7 +129,7 @@ field_generator power level display
 					if (do_after(user,20/W.toolspeed, target = src))
 						if(!src || !WT.isOn()) return
 						state = FG_SECURED
-						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
+						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
 
 	else
 		return ..()

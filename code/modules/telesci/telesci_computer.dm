@@ -27,7 +27,7 @@
 	return ..()
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
-	to_chat(user, "<span class='warning'>You are too primitive to use this computer!</span>")
+	user << "<span class='warning'>You are too primitive to use this computer!</span>"
 	return
 
 /obj/machinery/computer/telescience/attackby(obj/item/W, mob/user, params)
@@ -46,7 +46,7 @@
 			offset_x = 0
 			offset_y = 0
 			M.buffer = null
-			to_chat(user, "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>")
+			user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
 	else
 		return ..()
 

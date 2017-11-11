@@ -40,7 +40,7 @@
 
 		last_pressure_delta = pressure_delta
 
-		//to_chat(world, "pressure_delta = [pressure_delta]; transfer_moles = [transfer_moles];")
+		//world << "pressure_delta = [pressure_delta]; transfer_moles = [transfer_moles];"
 
 		//Actually transfer the gas
 		var/datum/gas_mixture/removed = air2.remove(transfer_moles)

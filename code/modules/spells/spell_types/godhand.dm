@@ -22,7 +22,7 @@
 	if(!iscarbon(user)) //Look ma, no hands
 		return
 	if(user.lying || user.handcuffed)
-		to_chat(user, "<span class='warning'>You can't reach out!</span>")
+		user << "<span class='warning'>You can't reach out!</span>"
 		return
 	..()
 
@@ -76,7 +76,7 @@
 	if(!proximity || target == user || !isliving(target) || !iscarbon(user) || user.lying || user.handcuffed) //getting hard after touching yourself would also be bad
 		return
 	if(user.lying || user.handcuffed)
-		to_chat(user, "<span class='warning'>You can't reach out!</span>")
+		user << "<span class='warning'>You can't reach out!</span>"
 		return
 	var/mob/living/M = target
 	M.Stun(2)
@@ -145,27 +145,27 @@
 	if(user.lying || user.handcuffed)
 		return
 	if(!uses)
-		to_chat(user, "<span class='warning'>Whatever was attached to your hand has faded away. All of it's charges extinguished.</span>")
+		user << "<span class='warning'>Whatever was attached to your hand has faded away. All of it's charges extinguished.</span>"
 		qdel(src)
 		return
 	if(useblacklist)
 		if(target in blacklist)
-			to_chat(user, "<span class='warning'>[target] is too dangerous to mess with!</span>")
+			user << "<span class='warning'>[target] is too dangerous to mess with!</span>"
 			return
 	if(iscarbon(target))
 		if(target == user)
 			if(user.job == "Mime")
 				if(uses < MAX_INVIS_TOUCH_USES)
-					to_chat(user, "<span class='warning'>You've got to have more charges than that!</span>")
+					user << "<span class='warning'>You've got to have more charges than that!</span>"
 					return
 				uses = 0 // we sacrifice all of our uses!
 				animate(user, alpha = initial(user.alpha), time = 80)
 				addtimer(src, "reverttarget", 85, FALSE, target)
 
 			else
-				to_chat(user, "<span class='warning'>You have to be a mime to use this trick!</span>")
+				user << "<span class='warning'>You have to be a mime to use this trick!</span>"
 		else
-			to_chat(user, "<span class='warning'>It doesn't work on other people!</span>")
+			user << "<span class='warning'>It doesn't work on other people!</span>"
 
 	if(isobj(target))
 		if(istype(target, /obj/structure/chair))
@@ -178,12 +178,12 @@
 				things += target
 			return
 		if((target in things))
-			to_chat(user, "<span class='warning'>You can't use this on the same thing more than once!</span>")
+			user << "<span class='warning'>You can't use this on the same thing more than once!</span>"
 			return
 		if(!target.alpha)
 			return
 		things += target
-		to_chat(user, "<span class='warning'>You poke [target] extinguishing one of your charges.</span>")
+		user << "<span class='warning'>You poke [target] extinguishing one of your charges.</span>"
 		uses--
 		animate(target, alpha = 0, time = 5)
 		addtimer(src, "reverttarget",80, FALSE, target)

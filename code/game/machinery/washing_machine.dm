@@ -14,7 +14,7 @@
 
 /obj/machinery/washing_machine/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Alt-click it to start a wash cycle.</span>")
+	user << "<span class='notice'>Alt-click it to start a wash cycle.</span>"
 
 /obj/machinery/washing_machine/AltClick(mob/user)
 	if(!user.canUseTopic(src))
@@ -24,11 +24,11 @@
 		return
 
 	if(state_open)
-		to_chat(user, "<span class='notice'>Close the door first</span>")
+		user << "<span class='notice'>Close the door first</span>"
 		return
 
 	if(bloody_mess)
-		to_chat(user, "<span class='warning'>[src] must be cleaned up first.</span>")
+		user << "<span class='warning'>[src] must be cleaned up first.</span>"
 		return
 
 	if(has_corgi)
@@ -196,19 +196,19 @@
 	else if(user.a_intent != "harm")
 
 		if (!state_open)
-			to_chat(user, "<span class='warning'>Open the door first!</span>")
+			user << "<span class='warning'>Open the door first!</span>"
 			return 1
 
 		if(bloody_mess)
-			to_chat(user, "<span class='warning'>[src] must be cleaned up first.</span>")
+			user << "<span class='warning'>[src] must be cleaned up first.</span>"
 			return 1
 
 		if(contents.len >= max_wash_capacity)
-			to_chat(user, "<span class='warning'>The washing machine is full!</span>")
+			user << "<span class='warning'>The washing machine is full!</span>"
 			return 1
 
 		if(!user.unEquip(W))
-			to_chat(user, "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
+			user << "<span class='warning'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>"
 			return 1
 
 		if(istype(W,/obj/item/toy/crayon) || istype(W,/obj/item/weapon/stamp))
@@ -221,7 +221,7 @@
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
 	if(busy)
-		to_chat(user, "<span class='warning'>[src] is busy.</span>")
+		user << "<span class='warning'>[src] is busy.</span>"
 		return
 
 	if(user.pulling && user.a_intent == "grab" && isliving(user.pulling))

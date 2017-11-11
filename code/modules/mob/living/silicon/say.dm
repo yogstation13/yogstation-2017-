@@ -14,9 +14,9 @@
 		if(M.binarycheck())
 			if(istype(M, /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='?src=\ref[M];track=[html_encode(name)]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
-				to_chat(M, renderedAI)
+				M << renderedAI
 			else
-				to_chat(M, rendered)
+				M << rendered
 		if(isobserver(M))
 			var/following = src
 			// If the AI talks on binary chat, we still want to follow
@@ -25,7 +25,7 @@
 				var/mob/living/silicon/ai/ai = src
 				following = ai.eyeobj
 			var/link = FOLLOW_LINK(M, following)
-			to_chat(M, "[link] [rendered]")
+			M << "[link] [rendered]"
 
 /mob/living/silicon/robot/robot_talk(message)
 	..()

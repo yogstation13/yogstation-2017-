@@ -144,11 +144,11 @@
 
 /obj/item/toy/toy_mech/attack_self(mob/user)
 	if(needs_reset)
-		to_chat(user, "<span class='notice'>You press the reset button on [src].</span>")
+		user << "<span class='notice'>You press the reset button on [src].</span>"
 		reset()
 		return
 	if(!cooldown)
-		to_chat(user, "<span class='notice'>You play with [src].</span>")
+		user << "<span class='notice'>You play with [src].</span>"
 		cooldown = 1
 		spawn(30) cooldown = 0
 		if (!quiet)
@@ -159,7 +159,7 @@
 /obj/item/toy/toy_mech/attack_hand(mob/user)
 	if(loc == user)
 		if(!cooldown)
-			to_chat(user, "<span class='notice'>You play with [src].</span>")
+			user << "<span class='notice'>You play with [src].</span>"
 			cooldown = 1
 			spawn(30)
 				cooldown = 0
@@ -178,12 +178,12 @@
 			remote.mecha.remote = null
 		remote.mecha = src
 		remote.update_dialogue()
-		to_chat(user, "<span class='notice'>Remote linked to [src].</span>")
+		user << "<span class='notice'>Remote linked to [src].</span>"
 		return 1
 
 /obj/item/toy/toy_mech/examine(mob/user)
 	..()
-	to_chat(user, "The armor meter reads [health] / [maxhealth]")
+	user << "The armor meter reads [health] / [maxhealth]"
 
 /obj/item/toy/toy_mech/proc/mech_can_attack()
 	if(!on)
@@ -719,7 +719,7 @@
 /obj/item/toy/toy_mech/fireripley/examine(mob/user)
 	..()
 	if(extinguisher)
-		to_chat(user, "The water meter reads [round(extinguisher.reagents.total_volume)] / [extinguisher.max_water]")
+		user << "The water meter reads [round(extinguisher.reagents.total_volume)] / [extinguisher.max_water]"
 
 /obj/item/weapon/extinguisher/mini/toy_mech
 	name = "toy mech extinguisher"

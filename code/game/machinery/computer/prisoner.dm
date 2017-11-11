@@ -100,7 +100,7 @@
 						return
 					I.loc = src
 					inserted_id = I
-				else to_chat(usr, "<span class='danger'>No valid ID.</span>")
+				else usr << "<span class='danger'>No valid ID.</span>"
 			else if(inserted_id)
 				switch(href_list["id"])
 					if("eject")
@@ -132,7 +132,7 @@
 			if(src.allowed(usr))
 				screen = !screen
 			else
-				to_chat(usr, "Unauthorized Access.")
+				usr << "Unauthorized Access."
 
 		else if(href_list["warn"])
 			var/warning = stripped_input(usr,"Message:","Enter your message here!","")
@@ -140,7 +140,7 @@
 			var/obj/item/weapon/implant/I = locate(href_list["warn"])
 			if((I)&&(I.imp_in))
 				var/mob/living/carbon/R = I.imp_in
-				to_chat(R, "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>")
+				R << "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>"
 				log_say("[usr]/[usr.ckey] sent an implant message to [R]/[R.ckey]: '[warning]'")
 
 		src.add_fingerprint(usr)

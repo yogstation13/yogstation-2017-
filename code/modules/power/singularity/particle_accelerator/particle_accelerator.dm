@@ -37,13 +37,13 @@
 
 	switch(construction_state)
 		if(PA_CONSTRUCTION_UNSECURED)
-			to_chat(user, "Looks like it's not attached to the flooring")
+			user << "Looks like it's not attached to the flooring"
 		if(PA_CONSTRUCTION_UNWIRED)
-			to_chat(user, "It is missing some cables")
+			user << "It is missing some cables"
 		if(PA_CONSTRUCTION_PANEL_OPEN)
-			to_chat(user, "The panel is open")
+			user << "The panel is open"
 
-	to_chat(user, "<span class='notice'>Alt-click to rotate it clockwise.</span>")
+	user << "<span class='notice'>Alt-click to rotate it clockwise.</span>"
 
 /obj/structure/particle_accelerator/Destroy()
 	construction_state = PA_CONSTRUCTION_UNSECURED
@@ -61,7 +61,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	if (anchored)
-		to_chat(usr, "It is fastened to the floor!")
+		usr << "It is fastened to the floor!"
 		return 0
 	dir = turn(dir, -90)
 	return 1
@@ -69,7 +69,7 @@
 /obj/structure/particle_accelerator/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
+		user << "<span class='warning'>You can't do that right now!</span>"
 		return
 	if(!in_range(src, user))
 		return
@@ -84,7 +84,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	if (anchored)
-		to_chat(usr, "It is fastened to the floor!")
+		usr << "It is fastened to the floor!"
 		return 0
 	dir = turn(dir, 90)
 	return 1

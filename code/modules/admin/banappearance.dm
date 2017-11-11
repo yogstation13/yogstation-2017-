@@ -32,7 +32,7 @@ DEBUG
 	set name = "list all appearances"
 
 	for(var/s in appearance_keylist)
-		to_chat(world, s)
+		world << s
 
 /mob/verb/reload_appearances()
 	set name = "reload appearances"

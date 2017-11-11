@@ -7,15 +7,15 @@
 
 /obj/item/weapon/paper/talisman/examine(mob/user)
 	if(iscultist(user) || user.stat == DEAD)
-		to_chat(user, "<b>Name:</b> [cultist_name]")
-		to_chat(user, "<b>Effect:</b> [cultist_desc]")
-		to_chat(user, "<b>Uses Remaining:</b> [uses]")
+		user << "<b>Name:</b> [cultist_name]"
+		user << "<b>Effect:</b> [cultist_desc]"
+		user << "<b>Uses Remaining:</b> [uses]"
 	else
-		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
+		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 
 /obj/item/weapon/paper/talisman/attack_self(mob/living/user)
 	if(!iscultist(user))
-		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
+		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 		return
 	if(invoke(user))
 		uses--
@@ -27,7 +27,7 @@
 	. = successfuluse
 	if(user.z != ZLEVEL_STATION && user.z != ZLEVEL_CENTCOM)
 		successfuluse = 0
-		to_chat(user, "<span class='cultitalic'>[src] fizzles. It's too far away from Nar'Sie's strength.</span>")
+		user << "<span class='cultitalic'>[src] fizzles. It's too far away from Nar'Sie's strength.</span>"
 	if(successfuluse) //if the calling whatever says we succeed, do the fancy stuff
 		if(invocation)
 			user.whisper(invocation)
@@ -42,7 +42,7 @@
 	invocation = "Ra'sha yoka!"
 
 /obj/item/weapon/paper/talisman/malformed/invoke(mob/living/user, successfuluse = 1)
-	to_chat(user, "<span class='cultitalic'>You feel a pain in your head. The Geometer is displeased.</span>")
+	user << "<span class='cultitalic'>You feel a pain in your head. The Geometer is displeased.</span>"
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.apply_damage(10, BRUTE, "head")
@@ -138,12 +138,12 @@
 		potential_runes[resultkey] = T
 
 	if(!potential_runes.len)
-		to_chat(user, "<span class='warning'>There are no valid runes to teleport to!</span>")
+		user << "<span class='warning'>There are no valid runes to teleport to!</span>"
 		log_game("Teleport talisman failed - no other teleport runes")
 		return ..(user, 0)
 
 	if(user.z > ZLEVEL_SPACEMAX)
-		to_chat(user, "<span class='cultitalic'>You are not in the right dimension!</span>")
+		user << "<span class='cultitalic'>You are not in the right dimension!</span>"
 		log_game("Teleport talisman failed - user in away mission")
 		return ..(user, 0)
 
@@ -238,9 +238,9 @@
 	if(successfuluse) //if we're forced to be successful(we normally aren't) then do the normal stuff
 		return ..()
 	if(iscultist(user))
-		to_chat(user, "<span class='warning'>To use this talisman, attack the target directly.</span>")
+		user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
 	else
-		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
+		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 	return 0
 
 /obj/item/weapon/paper/talisman/stun/attack(mob/living/target, mob/living/user, successfuluse = 1)
@@ -310,12 +310,12 @@
 
 /obj/item/weapon/paper/talisman/horror/attack(mob/living/target, mob/living/user)
 	if(iscultist(user))
-		to_chat(user, "<span class='cultitalic'>You disturb [target] with visons of the end!</span>")
+		user << "<span class='cultitalic'>You disturb [target] with visons of the end!</span>"
 		if(iscarbon(target))
 			var/mob/living/carbon/H = target
 			H.reagents.add_reagent("mindbreaker", 25)
 			if(is_servant_of_ratvar(target))
-				to_chat(target, "<span class='userdanger'>You see a brief but horrible vision of Ratvar, rusted and scrapped, being torn apart.</span>")
+				target << "<span class='userdanger'>You see a brief but horrible vision of Ratvar, rusted and scrapped, being torn apart.</span>"
 				target.emote("scream")
 				target.confused = max(0, target.confused + 3)
 				target.flash_eyes()
@@ -331,14 +331,14 @@
 
 /obj/item/weapon/paper/talisman/construction/attack_self(mob/living/user)
 	if(iscultist(user))
-		to_chat(user, "<span class='warning'>To use this talisman, place it upon a stack of metal sheets, plasteel, or reinforced glass.</span>")
+		user << "<span class='warning'>To use this talisman, place it upon a stack of metal sheets, plasteel, or reinforced glass.</span>"
 	else
-		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
+		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 
 
 /obj/item/weapon/paper/talisman/construction/attack(obj/M,mob/living/user)
 	if(iscultist(user))
-		to_chat(user, "<span class='cultitalic'>This talisman will only work on metal, plasteel, and reinforced glass!</span>")
+		user << "<span class='cultitalic'>This talisman will only work on metal, plasteel, and reinforced glass!</span>"
 		log_game("Construct talisman failed - not a valid target")
 
 /obj/item/weapon/paper/talisman/construction/afterattack(obj/item/stack/sheet/target, mob/user, proximity_flag, click_parameters)
@@ -348,7 +348,7 @@
 			var/turf/T = get_turf(target)
 			if(target.use(25))
 				new /obj/structure/constructshell(T)
-				to_chat(user, "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>")
+				user << "<span class='warning'>The talisman clings to the metal and twists it into a construct shell!</span>"
 				user << sound('sound/effects/magic.ogg',0,1,25)
 				qdel(src)
 		if(istype(target, /obj/item/stack/sheet/plasteel))
@@ -356,7 +356,7 @@
 			var/turf/T = get_turf(target)
 			new /obj/item/stack/sheet/runed_metal(T,quantity)
 			target.use(quantity)
-			to_chat(user, "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>")
+			user << "<span class='warning'>The talisman clings to the plasteel, transforming it into runed metal!</span>"
 			user << sound('sound/effects/magic.ogg',0,1,25)
 			qdel(src)
 		if(istype(target, /obj/item/stack/sheet/rglass))
@@ -367,7 +367,7 @@
 				user << sound('sound/effects/magic.ogg',0,1,25)
 				qdel(src)
 		else
-			to_chat(user, "<span class='warning'>The talisman must be used on metal, plasteel, or reinforced glass!</span>")
+			user << "<span class='warning'>The talisman must be used on metal, plasteel, or reinforced glass!</span>"
 
 
 //Talisman of Shackling: Applies special cuffs directly from the talisman
@@ -382,9 +382,9 @@
 	if(successfuluse) //if we're forced to be successful(we normally aren't) then do the normal stuff
 		return ..()
 	if(iscultist(user))
-		to_chat(user, "<span class='warning'>To use this talisman, attack the target directly.</span>")
+		user << "<span class='warning'>To use this talisman, attack the target directly.</span>"
 	else
-		to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
+		user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 	return 0
 
 /obj/item/weapon/paper/talisman/shackle/attack(mob/living/carbon/target, mob/living/user)
@@ -406,15 +406,15 @@
 			if(!C.handcuffed)
 				C.handcuffed = new /obj/item/weapon/restraints/handcuffs/energy/cult/used(C)
 				C.update_handcuffed()
-				to_chat(user, "<span class='notice'>You shackle [C].</span>")
+				user << "<span class='notice'>You shackle [C].</span>"
 				add_logs(user, C, "handcuffed")
 				uses--
 			else
-				to_chat(user, "<span class='warning'>[C] is already bound.</span>")
+				user << "<span class='warning'>[C] is already bound.</span>"
 		else
-			to_chat(user, "<span class='warning'>You fail to shackle [C].</span>")
+			user << "<span class='warning'>You fail to shackle [C].</span>"
 	else
-		to_chat(user, "<span class='warning'>[C] is already bound.</span>")
+		user << "<span class='warning'>[C] is already bound.</span>"
 	if(uses <= 0)
 		user.drop_item()
 		qdel(src)

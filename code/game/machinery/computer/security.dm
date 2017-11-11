@@ -31,9 +31,9 @@
 				return
 			O.loc = src
 			scan = O
-			to_chat(user, "<span class='notice'>You insert [O].</span>")
+			user << "<span class='notice'>You insert [O].</span>"
 		else
-			to_chat(user, "<span class='warning'>There's already an ID card in the console.</span>")
+			user << "<span class='warning'>There's already an ID card in the console.</span>"
 	else
 		return ..()
 
@@ -42,7 +42,7 @@
 	if(..())
 		return
 	if(src.z > 6)
-		to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
+		user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
 		return
 	var/dat
 

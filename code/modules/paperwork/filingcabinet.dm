@@ -46,7 +46,7 @@
 	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/documents))
 		if(!user.drop_item())
 			return
-		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
+		user << "<span class='notice'>You put [P] in [src].</span>"
 		P.loc = src
 		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
@@ -55,16 +55,16 @@
 	else if(istype(P, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
-		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>")
+		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
 	else if(user.a_intent != "harm")
-		to_chat(user, "<span class='warning'>You can't put [P] in [src]!</span>")
+		user << "<span class='warning'>You can't put [P] in [src]!</span>"
 	else
 		return ..()
 
 
 /obj/structure/filingcabinet/attack_hand(mob/user)
 	if(contents.len <= 0)
-		to_chat(user, "<span class='notice'>[src] is empty.</span>")
+		user << "<span class='notice'>[src] is empty.</span>"
 		return
 
 	user.set_machine(src)
@@ -89,9 +89,9 @@
 			I.loc = loc
 			if(prob(25))
 				step_rand(I)
-			to_chat(user, "<span class='notice'>You pull \a [I] out of [src] at random.</span>")
+			user << "<span class='notice'>You pull \a [I] out of [src] at random.</span>"
 			return
-	to_chat(user, "<span class='notice'>You find nothing in [src].</span>")
+	user << "<span class='notice'>You find nothing in [src].</span>"
 
 /obj/structure/filingcabinet/Topic(href, href_list)
 	if(href_list["retrieve"])
@@ -212,17 +212,17 @@ var/list/employmentCabinets = list()
 		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
 		cooldown = 0
 	else
-		to_chat(user, "<span class='warning'>The [src] is jammed, give it a few seconds.</span>")
+		user << "<span class='warning'>The [src] is jammed, give it a few seconds.</span>"
 
 
 
 
 /obj/structure/filingcabinet/employment/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/wrench))
-		to_chat(user, "<span class='notice'>You begin to [anchored ? "wrench" : "unwrench"] [src].</span>")
+		user << "<span class='notice'>You begin to [anchored ? "wrench" : "unwrench"] [src].</span>"
 		if (do_after(user,300,user))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = !anchored
-			to_chat(user, "<span class='notice'>You successfully [anchored ? "wrench" : "unwrench"] [src].</span>")
+			user << "<span class='notice'>You successfully [anchored ? "wrench" : "unwrench"] [src].</span>"
 	else
 		return ..()

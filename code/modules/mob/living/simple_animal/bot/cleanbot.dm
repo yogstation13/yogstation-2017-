@@ -66,14 +66,14 @@
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(bot_core.allowed(user) && !open && !emagged)
 			locked = !locked
-			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>")
+			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] \the [src] behaviour controls.</span>"
 		else
 			if(emagged)
-				to_chat(user, "<span class='warning'>ERROR</span>")
+				user << "<span class='warning'>ERROR</span>"
 			if(open)
-				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
+				user << "<span class='warning'>Please close the access panel before locking it.</span>"
 			else
-				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
+				user << "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>"
 	else
 		return ..()
 
@@ -81,7 +81,7 @@
 	..()
 	if(emagged == 2)
 		if(user)
-			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
+			user << "<span class='danger'>[src] buzzes and beeps.</span>"
 
 /mob/living/simple_animal/bot/cleanbot/process_scan(atom/A)
 	if(iscarbon(A))

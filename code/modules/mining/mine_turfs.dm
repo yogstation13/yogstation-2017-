@@ -356,7 +356,7 @@
 /turf/closed/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)
 
 	if (!user.IsAdvancedToolUser())
-		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return
 
 	if (istype(P, /obj/item/weapon/pickaxe))
@@ -367,12 +367,12 @@
 		if(last_act+P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
-		to_chat(user, "<span class='notice'>You start picking...</span>")
+		user << "<span class='notice'>You start picking...</span>"
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed, target = src))
 			if(istype(src, /turf/closed/mineral))
-				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
+				user << "<span class='notice'>You finish cutting into the rock.</span>"
 				gets_drilled(user)
 				feedback_add_details("pick_used_mining","[P.type]")
 	return
@@ -395,10 +395,10 @@
 	..()
 
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/M)
-	to_chat(M, "<span class='notice'>You start digging into the rock...</span>")
+	M << "<span class='notice'>You start digging into the rock...</span>"
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1)
 	if(do_after(M,40, target = src))
-		to_chat(M, "<span class='notice'>You tunnel into the rock.</span>")
+		M << "<span class='notice'>You tunnel into the rock.</span>"
 		gets_drilled(M)
 
 /turf/closed/mineral/Bumped(AM as mob|obj)
@@ -513,15 +513,15 @@
 			return
 
 		if (dug)
-			to_chat(user, "<span class='warning'>This area has already been dug!</span>")
+			user << "<span class='warning'>This area has already been dug!</span>"
 			return
 
-		to_chat(user, "<span class='notice'>You start digging...</span>")
+		user << "<span class='notice'>You start digging...</span>"
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 
 		if(do_after(user, digging_speed, target = src))
 			if(istype(src, /turf/open/floor/plating/asteroid))
-				to_chat(user, "<span class='notice'>You dig a hole.</span>")
+				user << "<span class='notice'>You dig a hole.</span>"
 				gets_dug()
 				feedback_add_details("pick_used_mining","[W.type]")
 

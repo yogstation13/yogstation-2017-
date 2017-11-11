@@ -56,7 +56,7 @@
 
 	if(istype(src, /obj/item/weapon/paper/talisman)) //Talismans cannot be read
 		if(!iscultist(user) && !user.stat)
-			to_chat(user, "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>")
+			user << "<span class='danger'>There are indecipherable images scrawled on the paper in what looks to be... <i>blood?</i></span>"
 			return
 	if(in_range(user, src) || isobserver(user))
 		if(user.is_literate())
@@ -66,7 +66,7 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[stars(info)]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			onclose(user, "[name]")
 	else
-		to_chat(user, "<span class='notice'>It is too far away.</span>")
+		user << "<span class='notice'>It is too far away.</span>"
 
 
 /obj/item/weapon/paper/verb/rename()
@@ -79,7 +79,7 @@
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		if(H.disabilities & CLUMSY && prob(25))
-			to_chat(H, "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>")
+			H << "<span class='warning'>You cut yourself on the paper! Ahhhh! Ahhhhh!</span>"
 			H.damageoverlaytemp = 9001
 			H.update_damage_hud()
 			return
@@ -256,10 +256,10 @@
 			user << browse("<HTML><HEAD><TITLE>[name]</TITLE></HEAD><BODY>[info_links]<HR>[stamps]</BODY></HTML>", "window=[name]")
 			return
 		else
-			to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
+			user << "<span class='notice'>You don't know how to read or write.</span>"
 			return
 		if(istype(src, /obj/item/weapon/paper/talisman/))
-			to_chat(user, "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>")
+			user << "<span class='warning'>[P]'s ink fades away shortly after it is written.</span>"
 			return
 
 	else if(istype(P, /obj/item/weapon/stamp))
@@ -279,7 +279,7 @@
 		stamped += P.type
 		overlays += stampoverlay
 
-		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp.</span>")
+		user << "<span class='notice'>You stamp the paper with your rubber stamp.</span>"
 
 	if(P.is_hot())
 		if(user.disabilities & CLUMSY && prob(10))

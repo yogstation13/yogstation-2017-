@@ -51,10 +51,10 @@
 
 /obj/structure/bodycontainer/attack_hand(mob/user)
 	if(locked)
-		to_chat(user, "<span class='danger'>It's locked.</span>")
+		user << "<span class='danger'>It's locked.</span>"
 		return
 	if(!connected)
-		to_chat(user, "That doesn't appear to have a tray.")
+		user << "That doesn't appear to have a tray."
 		return
 	if(connected.loc == src)
 		open()
@@ -81,7 +81,7 @@
 	open()
 
 /obj/structure/bodycontainer/relay_container_resist(mob/living/user, obj/O)
-	to_chat(user, "<span class='notice'>You slam yourself into the side of [O].</span>")
+	user << "<span class='notice'>You slam yourself into the side of [O].</span>"
 	container_resist()
 
 /obj/structure/bodycontainer/proc/open()
@@ -215,10 +215,10 @@ var/global/list/crematoriums = new/list()
 			if (M.stat != DEAD)
 				M.emote("scream")
 			if(user)
-				user.attack_log += "\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
-				log_attack("[user]/[user.ckey] cremated [M]/[M.ckey]")
+				user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
+				log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
 			else
-				log_attack("UNKNOWN cremated [M]/[M.ckey]")
+				log_attack("\[[time_stamp()]\] <b>UNKNOWN</b> cremated <b>[M]/[M.ckey]</b>")
 			M.death(1)
 			if(M) //some animals get automatically deleted on death.
 				M.ghostize()
@@ -263,7 +263,7 @@ var/global/list/crematoriums = new/list()
 		connected.close()
 		add_fingerprint(user)
 	else
-		to_chat(user, "<span class='warning'>That's not connected to anything!</span>")
+		user << "<span class='warning'>That's not connected to anything!</span>"
 
 /obj/structure/tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user)
 	if(!istype(O, /atom/movable) || O.anchored || !Adjacent(user) || !user.Adjacent(O) || O.loc == user)

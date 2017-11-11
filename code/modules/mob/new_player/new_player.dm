@@ -192,11 +192,11 @@
 			observer.started_as_observer = 1
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
-			to_chat(src, "<span class='notice'>Now teleporting.</span>")
+			src << "<span class='notice'>Now teleporting.</span>"
 			if (O)
 				observer.loc = O.loc
 			else
-				to_chat(src, "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>")
+				src << "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>"
 			observer.key = key
 			observer.client = client
 			observer.set_ghost_appearance()
@@ -232,13 +232,13 @@
 				client.prefs.save_preferences()
 			src << browse(null, "window=disclaimer")
 			if(joining_forbidden)
-				to_chat(src, "Please spend this round observing the game to familiarise yourself with the map, rules, and general playstyle.")
+				src << "Please spend this round observing the game to familiarise yourself with the map, rules, and general playstyle."
 			new_player_panel();
 		return
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
+			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
 			return
 
 		if(href_list["late_join"] == "override")
@@ -246,16 +246,16 @@
 			return
 
 		if(ticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums)))
-			to_chat(usr, "<span class='danger'>[config.hard_popcap_message]</span>")
+			usr << "<span class='danger'>[config.hard_popcap_message]</span>"
 
 			var/queue_position = ticker.queued_players.Find(usr)
 			if(queue_position == 1)
-				to_chat(usr, "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>")
+				usr << "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>"
 			else if(queue_position)
-				to_chat(usr, "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>")
+				usr << "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>"
 			else
 				ticker.queued_players += usr
-				to_chat(usr, "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>")
+				usr << "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>"
 			return
 		LateChoices()
 
@@ -265,12 +265,12 @@
 	if(href_list["SelectedJob"])
 
 		if(!enter_allowed)
-			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
 			return
 
 		if(ticker.queued_players.len && !(ckey(key) in admin_datums))
 			if((living_player_count() >= relevant_cap) || (src != ticker.queued_players[1]))
-				to_chat(usr, "<span class='warning'>Server is full.</span>")
+				usr << "<span class='warning'>Server is full.</span>"
 				return
 
 		AttemptLateSpawn(href_list["SelectedJob"])
@@ -301,21 +301,21 @@
 			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
 				if(vote_on_poll(pollid, optionid))
-					to_chat(usr, "<span class='notice'>Vote successful.</span>")
+					usr << "<span class='notice'>Vote successful.</span>"
 				else
-					to_chat(usr, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
+					usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
 			if(POLLTYPE_TEXT)
 				var/replytext = href_list["replytext"]
 				if(log_text_poll_reply(pollid, replytext))
-					to_chat(usr, "<span class='notice'>Feedback logging successful.</span>")
+					usr << "<span class='notice'>Feedback logging successful.</span>"
 				else
-					to_chat(usr, "<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>")
+					usr << "<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>"
 			if(POLLTYPE_RATING)
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
-					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
+					usr << "The option ID difference is too big. Please contact administration or the database admin."
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
@@ -329,15 +329,15 @@
 								return
 
 						if(!vote_on_numval_poll(pollid, optionid, rating))
-							to_chat(usr, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
+							usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
 							return
-				to_chat(usr, "<span class='notice'>Vote successful.</span>")
+				usr << "<span class='notice'>Vote successful.</span>"
 			if(POLLTYPE_MULTI)
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
-					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
+					usr << "The option ID difference is too big. Please contact administration or the database admin."
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
@@ -347,16 +347,16 @@
 							if(0)
 								continue
 							if(1)
-								to_chat(usr, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
+								usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
 								return
 							if(2)
-								to_chat(usr, "<span class='danger'>Maximum replies reached.</span>")
+								usr << "<span class='danger'>Maximum replies reached.</span>"
 								break
-				to_chat(usr, "<span class='notice'>Vote successful.</span>")
+				usr << "<span class='notice'>Vote successful.</span>"
 
 /mob/new_player/proc/AttemptLateSpawn(rank)
 	if(!SSjob.IsJobAvailable(rank, src))
-		to_chat(src, alert("[rank] is not available. Please try another."))
+		src << alert("[rank] is not available. Please try another.")
 		return 0
 
 	//Remove the player from the join queue if he was in one and reset the timer

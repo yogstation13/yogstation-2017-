@@ -49,18 +49,18 @@
 		else
 			full = TRUE
 	else if(user.a_intent != "harm")
-		to_chat(user, "<span class='notice'>[I] does not fit into [src].</span>")
+		user << "<span class='notice'>[I] does not fit into [src].</span>"
 		return
 	else
 		return ..()
 	if(full)
-		to_chat(user, "<span class='notice'>[src] can't hold anymore of [I].</span>")
+		user << "<span class='notice'>[src] can't hold anymore of [I].</span>"
 		return
 
 	if(!user.drop_item())
 		return
 	I.loc = src
-	to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+	user << "<span class='notice'>You put [I] in [src].</span>"
 	update_icon()
 
 /obj/structure/tank_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \

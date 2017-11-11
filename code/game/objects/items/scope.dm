@@ -62,7 +62,7 @@
 
 /obj/item/scope/security/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>You can adjust this item by using CTRL+click to increase the zoom range, and ALT+click to decrease it.</span>")
+	user << "<span class='notice'>You can adjust this item by using CTRL+click to increase the zoom range, and ALT+click to decrease it.</span>"
 
 /obj/item/scope/security/CtrlClick()
 	if(!Adjacent(usr))
@@ -73,9 +73,9 @@
 	if(increase)
 		zoom(owner, FALSE)
 		zoom_amt++
-		to_chat(usr, "<span class='warning'>You push the dial on [src] forward increasing the zoom range to [zoom_amt]</span>")
+		usr << "<span class='warning'>You push the dial on [src] forward increasing the zoom range to [zoom_amt]</span>"
 	else
-		to_chat(usr, "<span class='warning'>You cannot adjust this anyway further.</span>")
+		usr << "<span class='warning'>You cannot adjust this anyway further.</span>"
 
 /obj/item/scope/security/AltClick()
 	if(!Adjacent(usr))
@@ -86,9 +86,9 @@
 	if(decrease)
 		zoom(owner, FALSE)
 		zoom_amt--
-		to_chat(usr, "<span class='warning'>You pull the dial on [src] backwards decreasing the zoom range to [zoom_amt]</span>")
+		usr << "<span class='warning'>You pull the dial on [src] backwards decreasing the zoom range to [zoom_amt]</span>"
 	else
-		to_chat(usr, "<span class='warning'>You cannot adjust this any further.</span>")
+		usr << "<span class='warning'>You cannot adjust this any further.</span>"
 
 
 /obj/item/scope/security/proc/CheckLength(type) // grabbing whether we can adjust the max or min. make sure they don't touch cap.

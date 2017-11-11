@@ -56,14 +56,14 @@
 	if(istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER))
 		. = 1 //no afterattack
 		if(beaker)
-			to_chat(user, "<span class='warning'>A beaker is already loaded into the machine!</span>")
+			user << "<span class='warning'>A beaker is already loaded into the machine!</span>"
 			return
 
 		if(!user.drop_item())
 			return
 		beaker = I
 		I.loc = src
-		to_chat(user, "<span class='notice'>You add the beaker to the machine.</span>")
+		user << "<span class='notice'>You add the beaker to the machine.</span>"
 		icon_state = "mixer1b"
 		return
 	return ..()

@@ -19,7 +19,7 @@
 
 /obj/item/weapon/gun/magic/wand/examine(mob/user)
 	..()
-	to_chat(user, "Has [charges] charge\s remaining.")
+	user << "Has [charges] charge\s remaining."
 
 /obj/item/weapon/gun/magic/wand/update_icon()
 	icon_state = "[initial(icon_state)][charges ? "" : "-drained"]"
@@ -37,7 +37,7 @@
 		if(no_den_usage)
 			var/area/A = get_area(user)
 			if(istype(A, /area/wizard_station))
-				to_chat(user, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>")
+				user << "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>"
 				return
 			else
 				no_den_usage = 0
@@ -68,7 +68,7 @@
 /obj/item/weapon/gun/magic/wand/death/zap_self(mob/living/user)
 	var/message ="<span class='warning'>You irradiate yourself with pure energy! "
 	message += pick("Do not pass go. Do not collect 200 zorkmids.</span>","You feel more confident in your spell casting skills.</span>","You Die...</span>","Do you want your possessions identified?</span>")
-	to_chat(user, message)
+	user << message
 	user.adjustOxyLoss(500, 1, DAMAGE_MAGIC)
 	charges--
 	..()
@@ -90,7 +90,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.regenerate_limbs()
-	to_chat(user, "<span class='notice'>You feel great!</span>")
+	user << "<span class='notice'>You feel great!</span>"
 	charges--
 	..()
 
@@ -146,7 +146,7 @@
 	no_den_usage = 1
 
 /obj/item/weapon/gun/magic/wand/door/zap_self(mob/living/user)
-	to_chat(user, "<span class='notice'>You feel vaguely more open with your feelings.</span>")
+	user << "<span class='notice'>You feel vaguely more open with your feelings.</span>"
 	charges--
 	..()
 

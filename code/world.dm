@@ -162,9 +162,10 @@ var/last_irc_status = 0
 	else if("adminwho" in input)
 		var/msg = "Current Admins:\n"
 		for(var/client/C in admins)
-			if(!C.holder.fakekey)
-				msg += "\t[C] is a [C.holder.rank]"
-				msg += "\n"
+			msg += "\t[C] is a [C.holder.rank]"
+			if(C.is_afk())
+				msg += " (AFK)"
+			msg += "\n"
 		return msg
 
 	else if(copytext(T,1,9) == "announce")
@@ -174,7 +175,7 @@ var/last_irc_status = 0
 #define CHAT_PULLR	64 //defined in preferences.dm, but not available here at compilation time
 			for(var/client/C in clients)
 				if(C.prefs && (C.prefs.chat_toggles & CHAT_PULLR))
-					to_chat(C, "<span class='announce'>PR: [input["announce"]]</span>")
+					C << "<span class='announce'>PR: [input["announce"]]</span>"
 #undef CHAT_PULLR
 	else if (copytext(T,1,5) == "asay")
 		//var/input[] = params2list(T)
@@ -183,7 +184,7 @@ var/last_irc_status = 0
 				return "Bad Key"
 			else
 				var/msg = "<span class='adminobserver'><span class='prefix'>DISCORD ADMIN:</span> <EM>[input["admin"]]</EM>: <span class='message'>[input["asay"]]</span></span>"
-				to_chat(admins, msg)
+				admins << msg
 	else if (copytext(T,1,4) == "ooc")
 		//var/input[] = params2list(T)
 		if(global.comms_allowed)
@@ -192,7 +193,7 @@ var/last_irc_status = 0
 			else
 				for(var/client/C in clients)
 					//if(C.prefs.chat_toggles & CHAT_OOC) // Discord OOC should bypass preferences.
-					to_chat(C, "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>DISCORD OOC:</span> <EM>[input["admin"]]:</EM> <span class='message'>[input["ooc"]]</span></span></font>")
+					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>DISCORD OOC:</span> <EM>[input["admin"]]:</EM> <span class='message'>[input["ooc"]]</span></span></font>"
 	else if (copytext(T,1,7) == "reboot")
 		//var/input[] = params2list(T)
 		if(global.comms_allowed)
@@ -234,8 +235,8 @@ var/last_irc_status = 0
 							var/datum/ticket_log/log_item = null
 							log_item = new /datum/ticket_log(ticket, input["admin"], input["response"], 0)
 							ticket.log += log_item
-							to_chat(ticket.owner, "<span class='ticket-header-recieved'>-- Administrator private message --</span>")
-							to_chat(ticket.owner, "<span class='ticket-text-received'>-- [input["admin"]] -> [key_name_params(ticket.owner, 0, 0, null, src)]: [log_item.text]</span>")
+							ticket.owner << "<span class='ticket-header-recieved'>-- Administrator private message --</span>"
+							ticket.owner << "<span class='ticket-text-received'>-- [input["admin"]] -> [key_name_params(ticket.owner, 0, 0, null, src)]: [log_item.text]</span>"
 				return msg
 
 
@@ -244,7 +245,7 @@ var/last_irc_status = 0
 		if (usr)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
-		to_chat(world, "<span class='boldannounce'>Rebooting World immediately due to host request</span>")
+		world << "<span class='boldannounce'>Rebooting World immediately due to host request</span>"
 		ticker.server_reboot_in_progress = 1
 		return ..(1)
 	var/delay
@@ -253,20 +254,20 @@ var/last_irc_status = 0
 	else
 		delay = config.round_end_countdown * 10
 	if(ticker.delay_end)
-		to_chat(world, "<span class='boldannounce'>An admin has delayed the round end.</span>")
+		world << "<span class='boldannounce'>An admin has delayed the round end.</span>"
 		return
-	to_chat(world, "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>")
+	world << "<span class='boldannounce'>Rebooting World in [delay/10] [delay > 10 ? "seconds" : "second"]. [reason]</span>"
 	webhook_send_roundstatus("endgame")
 	ticker.server_reboot_in_progress = 1
 	if(blackbox)
 		blackbox.save_all_data_to_sql()
 	sleep(delay)
 	if(ticker.delay_end)
-		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
+		world << "<span class='boldannounce'>Reboot was cancelled by an admin.</span>"
 		ticker.server_reboot_in_progress = 0
 		return
 	if(mapchanging)
-		to_chat(world, "<span class='boldannounce'>Map change operation detected, delaying reboot.</span>")
+		world << "<span class='boldannounce'>Map change operation detected, delaying reboot.</span>"
 		rebootingpendingmapchange = 1
 		spawn(1200)
 			if(mapchanging)
@@ -544,7 +545,7 @@ var/failed_db_connections = 0
 	message_admins("Randomly rotating map to [VM.name]([VM.friendlyname])")
 	. = changemap(VM)
 	if (. == 0)
-		to_chat(world, "<span class='boldannounce'>Map rotation has chosen [VM.friendlyname] for next round!</span>")
+		world << "<span class='boldannounce'>Map rotation has chosen [VM.friendlyname] for next round!</span>"
 
 var/datum/votablemap/nextmap
 var/mapchanging = 0

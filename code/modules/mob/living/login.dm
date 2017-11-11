@@ -15,8 +15,8 @@
 
 	//Vents
 	if(ventcrawler)
-		to_chat(src, "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>")
+		src << "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>"
 
 	if(ranged_ability)
 		client.click_intercept = ranged_ability
-		to_chat(src, "<span class='notice'>You currently have <b>[ranged_ability.name]</b> active!</span>")
+		src << "<span class='notice'>You currently have <b>[ranged_ability.name]</b> active!</span>"

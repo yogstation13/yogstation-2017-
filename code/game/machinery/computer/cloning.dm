@@ -80,7 +80,7 @@
 				return
 			W.loc = src
 			src.diskette = W
-			to_chat(user, "<span class='notice'>You insert [W].</span>")
+			user << "<span class='notice'>You insert [W].</span>"
 			src.updateUsrDialog()
 			return
 	else

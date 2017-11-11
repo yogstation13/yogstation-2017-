@@ -28,20 +28,20 @@
 			if(G.pin && (force_replace || G.pin.pin_removeable))
 				G.pin.loc = get_turf(G)
 				G.pin.gun_remove(user)
-				to_chat(user, "<span class ='notice'>You remove [G]'s old pin.</span>")
+				user << "<span class ='notice'>You remove [G]'s old pin.</span>"
 
 			if(!G.pin)
 				if(!user.unEquip(src))
 					return
 				gun_insert(user, G)
-				to_chat(user, "<span class ='notice'>You insert [src] into [G].</span>")
+				user << "<span class ='notice'>You insert [src] into [G].</span>"
 			else
-				to_chat(user, "<span class ='notice'>This firearm already has a firing pin installed.</span>")
+				user << "<span class ='notice'>This firearm already has a firing pin installed.</span>"
 
 /obj/item/device/firing_pin/emag_act(mob/user)
 	if(!emagged)
 		emagged = 1
-		to_chat(user, "<span class='notice'>You override the authentication mechanism.</span>")
+		user << "<span class='notice'>You override the authentication mechanism.</span>"
 
 /obj/item/device/firing_pin/proc/gun_insert(mob/living/user, obj/item/weapon/gun/G)
 	gun = G
@@ -61,7 +61,7 @@
 	user.show_message(fail_message, 1)
 	if(selfdestruct)
 		user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", 1)
-		to_chat(user, "<span class='userdanger'>[gun] explodes!</span>")
+		user << "<span class='userdanger'>[gun] explodes!</span>"
 		explosion(get_turf(gun), -1, 0, 2, 3)
 		if(gun)
 			qdel(gun)
@@ -163,7 +163,7 @@
 		var/mob/living/carbon/M = target
 		if(M.dna && M.dna.unique_enzymes)
 			unique_enzymes = M.dna.unique_enzymes
-			to_chat(user, "<span class='notice'>DNA-LOCK SET.</span>")
+			user << "<span class='notice'>DNA-LOCK SET.</span>"
 
 /obj/item/device/firing_pin/dna/pin_auth(mob/living/carbon/user)
 	if(istype(user) && user.dna && user.dna.unique_enzymes)
@@ -176,7 +176,7 @@
 	if(!unique_enzymes)
 		if(istype(user) && user.dna && user.dna.unique_enzymes)
 			unique_enzymes = user.dna.unique_enzymes
-			to_chat(user, "<span class='notice'>DNA-LOCK SET.</span>")
+			user << "<span class='notice'>DNA-LOCK SET.</span>"
 	else
 		..()
 
@@ -198,7 +198,7 @@
 		var/mob/living/carbon/human/M = user
 		if(istype(M.wear_suit, suit_requirement))
 			return 1
-	to_chat(user, "<span class='warning'>You need to be wearing [tagcolor] laser tag armor!</span>")
+	user << "<span class='warning'>You need to be wearing [tagcolor] laser tag armor!</span>"
 	return 0
 
 /obj/item/device/firing_pin/tag/red

@@ -221,7 +221,7 @@
 		if(anchored)	//you can't turn a turret on/off if it's not anchored/secured
 			on = !on	//toggle on/off
 		else
-			to_chat(usr, "<span class='notice'>It has to be secured first!</span>")
+			usr << "<span class='notice'>It has to be secured first!</span>"
 
 		updateUsrDialog()
 		return
@@ -266,10 +266,10 @@
 		if(istype(I, /obj/item/weapon/crowbar))
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
-			to_chat(user, "<span class='notice'>You begin prying the metal coverings off...</span>")
+			user << "<span class='notice'>You begin prying the metal coverings off...</span>"
 			if(do_after(user, 20/I.toolspeed, target = src))
 				if(prob(70))
-					to_chat(user, "<span class='notice'>You remove the turret and salvage some components.</span>")
+					user << "<span class='notice'>You remove the turret and salvage some components.</span>"
 					if(installation)
 						var/obj/item/weapon/gun/energy/Gun = new installation(loc)
 						Gun.power_supply.charge = gun_charge
@@ -280,7 +280,7 @@
 					if(prob(50))
 						new /obj/item/device/assembly/prox_sensor(loc)
 				else
-					to_chat(user, "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>")
+					user << "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>"
 				qdel(src)
 
 	else if((istype(I, /obj/item/weapon/wrench)) && (!on))
@@ -290,13 +290,13 @@
 			anchored = 1
 			invisibility = INVISIBILITY_OBSERVER
 			icon_state = "[base_icon_state][off_state]"
-			to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
+			user << "<span class='notice'>You secure the exterior bolts on the turret.</span>"
 			if(has_cover)
 				cover = new /obj/machinery/porta_turret_cover(loc) //create a new turret. While this is handled in process(), this is to workaround a bug where the turret becomes invisible for a split second
 				cover.parent_turret = src //make the cover's parent src
 		else if(anchored)
 			anchored = 0
-			to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
+			user << "<span class='notice'>You unsecure the exterior bolts on the turret.</span>"
 			icon_state = "turretCover"
 			invisibility = 0
 			qdel(cover) //deletes the cover, and the turret instance itself becomes its own cover.
@@ -305,13 +305,13 @@
 		//Behavior lock/unlock mangement
 		if(allowed(user))
 			locked = !locked
-			to_chat(user, "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>")
+			user << "<span class='notice'>Controls are now [locked ? "locked" : "unlocked"].</span>"
 		else
-			to_chat(user, "<span class='notice'>Access denied.</span>")
+			user << "<span class='notice'>Access denied.</span>"
 	else if(istype(I,/obj/item/device/multitool) && !locked)
 		var/obj/item/device/multitool/M = I
 		M.buffer = src
-		to_chat(user, "<span class='notice'>You add [src] to multitool buffer.</span>")
+		user << "<span class='notice'>You add [src] to multitool buffer.</span>"
 	else
 		return ..()
 
@@ -323,7 +323,7 @@
 
 /obj/machinery/porta_turret/emag_act(mob/user)
 	if(!emagged)
-		to_chat(user, "<span class='warning'>You short out [src]'s threat assessment circuits.</span>")
+		user << "<span class='warning'>You short out [src]'s threat assessment circuits.</span>"
 		visible_message("[src] hums oddly...")
 		emagged = 1
 		active_state = "Laser"
@@ -736,7 +736,7 @@
 		var/obj/item/device/multitool/M = I
 		if(M.buffer && istype(M.buffer,/obj/machinery/porta_turret))
 			turrets |= M.buffer
-			to_chat(user, "You link \the [M.buffer] with \the [src]")
+			user << "You link \the [M.buffer] with \the [src]"
 			return
 
 	if (istype(user, /mob/living/silicon))
@@ -745,11 +745,11 @@
 	if( get_dist(src, user) == 0 )		// trying to unlock the interface
 		if (src.allowed(usr))
 			if(emagged)
-				to_chat(user, "<span class='notice'>The turret control is unresponsive.</span>")
+				user << "<span class='notice'>The turret control is unresponsive.</span>"
 				return
 
 			locked = !locked
-			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>")
+			user << "<span class='notice'>You [ locked ? "lock" : "unlock"] the panel.</span>"
 			if (locked)
 				if (user.machine==src)
 					user.unset_machine()
@@ -758,11 +758,11 @@
 				if (user.machine==src)
 					src.attack_hand(user)
 		else
-			to_chat(user, "<span class='warning'>Access denied.</span>")
+			user << "<span class='warning'>Access denied.</span>"
 
 /obj/machinery/turretid/emag_act(mob/user)
 	if(!emagged)
-		to_chat(user, "<span class='danger'>You short out the turret controls' access analysis module.</span>")
+		user << "<span class='danger'>You short out the turret controls' access analysis module.</span>"
 		emagged = 1
 		locked = 0
 		if(user && user.machine==src)
@@ -772,12 +772,12 @@
 	if(!ailock || IsAdminGhost(user))
 		return attack_hand(user)
 	else
-		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
+		user << "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>"
 
 /obj/machinery/turretid/attack_hand(mob/user as mob)
 	if ( get_dist(src, user) > 0 )
 		if ( !(issilicon(user) || IsAdminGhost(user)) )
-			to_chat(user, "<span class='notice'>You are too far away.</span>")
+			user << "<span class='notice'>You are too far away.</span>"
 			user.unset_machine()
 			user << browse(null, "window=turretid")
 			return
@@ -787,7 +787,7 @@
 	if (istype(loc, /turf))
 		loc = loc:loc
 	if (!istype(loc, /area))
-		to_chat(user, text("Turret badly positioned - loc.loc is [].", loc))
+		user << text("Turret badly positioned - loc.loc is [].", loc)
 		return
 	var/area/area = loc
 	var/t = ""
@@ -812,7 +812,7 @@
 		return
 	if (src.locked)
 		if (!(istype(usr, /mob/living/silicon) || IsAdminGhost(usr)))
-			to_chat(usr, "Control panel is locked!")
+			usr << "Control panel is locked!"
 			return
 	if (href_list["toggleOn"])
 		toggle_on()
