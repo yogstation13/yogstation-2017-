@@ -237,10 +237,10 @@
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if (is_plant_analyzer(O))
-		to_chat(user, "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>")
+		user << "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>"
 		var/text = get_analyzer_text()
 		if(text)
-			to_chat(user, "<span class='notice'>[text]</span>")
+			user << "<span class='notice'>[text]</span>"
 
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
@@ -263,11 +263,11 @@
 		for(var/i in 1 to seed.growthstages)
 			if("[seed.icon_grow][i]" in states)
 				continue
-			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!")
+			world << "[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!"
 
 		if(!(seed.icon_dead in states))
-			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!")
+			world << "[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!"
 
 		if(seed.icon_harvest) // mushrooms have no grown sprites, same for items with no product
 			if(!(seed.icon_harvest in states))
-				to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!")
+				world << "[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!"

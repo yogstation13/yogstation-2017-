@@ -368,12 +368,12 @@
 		if(can_be_deconstructed(user))
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				to_chat(user, "<span class='notice'>You start slicing the disposal pipe...</span>")
+				user << "<span class='notice'>You start slicing the disposal pipe...</span>"
 				// check if anything changed over 2 seconds
 				if(do_after(user,30, target = src))
 					if(!src || !W.isOn()) return
 					Deconstruct()
-					to_chat(user, "<span class='notice'>You slice the disposal pipe.</span>")
+					user << "<span class='notice'>You slice the disposal pipe.</span>"
 	else
 		return ..()
 
@@ -480,11 +480,11 @@
 /obj/structure/disposalpipe/sortjunction/examine(mob/user)
 	..()
 	if(sortTypes.len>0)
-		to_chat(user, "It is tagged with the following tags:")
+		user << "It is tagged with the following tags:"
 		for(var/t in sortTypes)
-			to_chat(user, TAGGERLOCATIONS[t])
+			user << TAGGERLOCATIONS[t]
 	else
-		to_chat(user, "It has no sorting tags set.")
+		user << "It has no sorting tags set."
 
 
 /obj/structure/disposalpipe/sortjunction/proc/updatedir()
@@ -524,10 +524,10 @@
 		if(O.currTag > 0)// Tag set
 			if(O.currTag in sortTypes)
 				sortTypes -= O.currTag
-				to_chat(user, "<span class='notice'>Removed \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
+				user << "<span class='notice'>Removed \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>"
 			else
 				sortTypes |= O.currTag
-				to_chat(user, "<span class='notice'>Added \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>")
+				user << "<span class='notice'>Added \"[TAGGERLOCATIONS[O.currTag]]\" filter.</span>"
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 	else
 		return ..()
@@ -640,7 +640,7 @@
 
 /obj/structure/disposalpipe/trunk/can_be_deconstructed(mob/user)
 	if(linked)
-		to_chat(user, "<span class='warning'>You need to deconstruct disposal machinery above this pipe!</span>")
+		user << "<span class='warning'>You need to deconstruct disposal machinery above this pipe!</span>"
 	else
 		. = 1
 
@@ -754,20 +754,20 @@
 		if(mode==0)
 			mode=1
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			to_chat(user, "<span class='notice'>You remove the screws around the power connection.</span>")
+			user << "<span class='notice'>You remove the screws around the power connection.</span>"
 		else if(mode==1)
 			mode=0
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			to_chat(user, "<span class='notice'>You attach the screws around the power connection.</span>")
+			user << "<span class='notice'>You attach the screws around the power connection.</span>"
 
 	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
+			user << "<span class='notice'>You start slicing the floorweld off \the [src]...</span>"
 			if(do_after(user,20/I.toolspeed, target = src))
 				if(!src || !W.isOn()) return
-				to_chat(user, "<span class='notice'>You slice the floorweld off \the [src].</span>")
+				user << "<span class='notice'>You slice the floorweld off \the [src].</span>"
 				stored.loc = loc
 				src.transfer_fingerprints_to(stored)
 				stored.update_icon()

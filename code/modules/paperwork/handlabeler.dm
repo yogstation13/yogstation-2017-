@@ -42,19 +42,19 @@
 		return
 
 	if(!labels_left)
-		to_chat(user, "<span class='warning'>No labels left!</span>")
+		user << "<span class='warning'>No labels left!</span>"
 		return
 	if(!label || !length(label))
-		to_chat(user, "<span class='warning'>No text set!</span>")
+		user << "<span class='warning'>No text set!</span>"
 		return
 	if(length(A.name) + length(label) > 64)
-		to_chat(user, "<span class='warning'>Label too big!</span>")
+		user << "<span class='warning'>Label too big!</span>"
 		return
 	if(ishuman(A))
-		to_chat(user, "<span class='warning'>You can't label humans!</span>")
+		user << "<span class='warning'>You can't label humans!</span>"
 		return
 	if(issilicon(A))
-		to_chat(user, "<span class='warning'>You can't label cyborgs!</span>")
+		user << "<span class='warning'>You can't label cyborgs!</span>"
 		return
 
 	user.visible_message("[user] labels [A] as [label].", \
@@ -69,28 +69,28 @@
 
 /obj/item/weapon/hand_labeler/attack_self(mob/user)
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You don't have the dexterity to use [src]!</span>")
+		user << "<span class='warning'>You don't have the dexterity to use [src]!</span>"
 		return
 	mode = !mode
 	icon_state = "labeler[mode]"
 	if(mode)
-		to_chat(user, "<span class='notice'>You turn on [src].</span>")
+		user << "<span class='notice'>You turn on [src].</span>"
 		//Now let them chose the text.
 		var/str = reject_bad_text(stripped_input(user,"Label text?","Set label",""))
 		if(!str || !length(str))
-			to_chat(user, "<span class='warning'>Invalid text!</span>")
+			user << "<span class='warning'>Invalid text!</span>"
 			return
 		label = str
-		to_chat(user, "<span class='notice'>You set the text to '[str]'.</span>")
+		user << "<span class='notice'>You set the text to '[str]'.</span>"
 	else
-		to_chat(user, "<span class='notice'>You turn off [src].</span>")
+		user << "<span class='notice'>You turn off [src].</span>"
 
 /obj/item/weapon/hand_labeler/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
 		if(!user.unEquip(I))
 			return
-		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+		user << "<span class='notice'>You insert [I] into [src].</span>"
 		qdel(I)
 		labels_left = initial(labels_left)
 		return

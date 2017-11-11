@@ -30,7 +30,7 @@
 
 /obj/item/device/assault_pod/attack_self(mob/living/user)
 	if(console.target_set)
-		to_chat(user, "<span class='warning'>Landing zone already set.</span>")
+		user << "<span class='warning'>Landing zone already set.</span>"
 		return
 	console.attack_hand(user)
 
@@ -43,7 +43,6 @@
 	x_offset = 0
 	y_offset = 3
 	rotate_action = null
-	space_turfs_only = FALSE
 	var/target_set = FALSE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate_pod/check_eye(mob/user)
@@ -77,6 +76,6 @@
 /obj/machinery/computer/shuttle/syndicate/drop_pod/Topic(href, href_list)
 	if(href_list["move"])
 		if(z != ZLEVEL_CENTCOM)
-			to_chat(usr, "<span class='warning'>Pods are one way!</span>")
+			usr << "<span class='warning'>Pods are one way!</span>"
 			return 0
 	..()

@@ -7,7 +7,7 @@
 	if(!src.mob)
 		return
 	if(prefs.muted & MUTE_DEADCHAT)
-		to_chat(src, "<span class='danger'>You cannot send DSAY messages (muted).</span>")
+		src << "<span class='danger'>You cannot send DSAY messages (muted).</span>"
 		return
 
 	if (src.handle_spam_prevention(msg,MUTE_DEADCHAT))

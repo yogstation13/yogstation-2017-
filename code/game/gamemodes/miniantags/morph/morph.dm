@@ -47,7 +47,7 @@
 	if(morphed)
 		form.examine(user) // Refactor examine to return desc so it's static? Not sure if worth it
 		if(get_dist(user,src)<=3)
-			to_chat(user, "<span class='warning'>It doesn't look quite right...</span>")
+			user << "<span class='warning'>It doesn't look quite right...</span>"
 	else
 		..()
 	return
@@ -90,7 +90,7 @@
 		if(istype(A) && allowed(A))
 			assume(A)
 	else
-		to_chat(src, "<span class='warning'>Your chameleon skin is still repairing itself!</span>")
+		src << "<span class='warning'>Your chameleon skin is still repairing itself!</span>"
 		..()
 
 /mob/living/simple_animal/hostile/morph/proc/assume(atom/movable/target)
@@ -223,7 +223,7 @@
 	player_mind.assigned_role = "Morph"
 	player_mind.special_role = "Morph"
 	ticker.mode.traitors |= player_mind
-	to_chat(S, S.playstyle_string)
+	S << S.playstyle_string
 	S << 'sound/magic/Mutate.ogg'
 	message_admins("[selected.key] has been made into morph by an event.")
 	log_game("[selected.key] was spawned as a morph by an event.")

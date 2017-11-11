@@ -5,7 +5,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 		return
 
 	if(potentialRandomZlevels && potentialRandomZlevels.len)
-		to_chat(world, "<span class='boldannounce'>Loading away mission...</span>")
+		world << "<span class='boldannounce'>Loading away mission...</span>"
 
 		var/map = pick(potentialRandomZlevels)
 		var/file = file(map)
@@ -21,11 +21,11 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 				continue
 			awaydestinations.Add(L)
 
-		to_chat(world, "<span class='boldannounce'>Away mission loaded.</span>")
+		world << "<span class='boldannounce'>Away mission loaded.</span>"
 
 		SortAreas() //To add recently loaded areas
 	else
-		to_chat(world, "<span class='boldannounce'>No away missions found.</span>")
+		world << "<span class='boldannounce'>No away missions found.</span>"
 		return
 
 
@@ -66,7 +66,7 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 	var/overall_sanity = 100
 	var/list/ruins = potentialRuins.Copy()
 
-	to_chat(world, "<span class='boldannounce'>Loading ruins...</span>")
+	world << "<span class='boldannounce'>Loading ruins...</span>"
 
 	while(ruins.len && budget > 0 && overall_sanity > 0)
 		// Pick a ruin

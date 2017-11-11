@@ -32,7 +32,7 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/C = W
 		if (C.use(5))
-			to_chat(user, "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>")
+			user << "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>"
 			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
 			pocell.maxcharge = seed.potency * 20
 
@@ -49,7 +49,7 @@
 			qdel(src)
 			return
 		else
-			to_chat(user, "<span class='warning'>You need five lengths of cable to make a potato battery!</span>")
+			user << "<span class='warning'>You need five lengths of cable to make a potato battery!</span>"
 			return
 
 // Sweet Potato

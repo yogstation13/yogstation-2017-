@@ -52,7 +52,7 @@
 		msg += "[line]\n"
 
 	msg += "<b>Total Players: [length(Lines)]</b>"
-	to_chat(src, msg)
+	src << msg
 
 /client/proc/adminwhotoggle()
 	set category = "Admin"
@@ -96,5 +96,5 @@
 		for(var/client/C in admins)
 			if(!C.holder.fakekey)
 				msg += "\t[C] is a [C.holder.rank]\n"
-	to_chat(src, msg)
+	src << msg
 

@@ -30,19 +30,19 @@
 /obj/machinery/dominator/examine(mob/user)
 	..()
 	if(stat & BROKEN)
-		to_chat(user, "<span class='danger'>It looks completely busted.</span>")
+		user << "<span class='danger'>It looks completely busted.</span>"
 		return
 
 	var/time
 	if(gang && isnum(gang.dom_timer))
 		time = max(gang.dom_timer, 0)
 		if(time > 0)
-			to_chat(user, "<span class='notice'>Hostile Takeover in progress. Estimated [time] seconds remain.</span>")
+			user << "<span class='notice'>Hostile Takeover in progress. Estimated [time] seconds remain.</span>"
 		else
-			to_chat(user, "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>")
+			user << "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>"
 	else
-		to_chat(user, "<span class='notice'>System on standby.</span>")
-	to_chat(user, "<span class='danger'>System Integrity: [round((health/maxhealth)*100,1)]%</span>")
+		user << "<span class='notice'>System on standby.</span>"
+	user << "<span class='danger'>System Integrity: [round((health/maxhealth)*100,1)]%</span>"
 
 /obj/machinery/dominator/process()
 	..()
@@ -174,11 +174,11 @@
 		return
 
 	if(isnum(tempgang.dom_timer))
-		to_chat(user, "<span class='warning'>Error: Hostile Takeover is already in progress.</span>")
+		user << "<span class='warning'>Error: Hostile Takeover is already in progress.</span>"
 		return
 
 	if(!tempgang.dom_attempts)
-		to_chat(user, "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>")
+		user << "<span class='warning'>Error: Unable to breach station network. Firewall has logged our signature and is blocking all further attempts.</span>"
 		return
 
 	var/time = round(get_domination_time(tempgang)/60,0.1)

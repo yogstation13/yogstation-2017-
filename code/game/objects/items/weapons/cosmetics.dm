@@ -33,7 +33,7 @@
 
 /obj/item/weapon/lipstick/attack_self(mob/user)
 	overlays.Cut()
-	to_chat(user, "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>")
+	user << "<span class='notice'>You twist \the [src] [open ? "closed" : "open"].</span>"
 	open = !open
 	if(open)
 		var/image/colored = image("icon"='icons/obj/items.dmi', "icon_state"="lipstick_uncap_color")
@@ -53,10 +53,10 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.is_mouth_covered())
-			to_chat(user, "<span class='warning'>Remove [ H == user ? "your" : "their" ] mask!</span>")
+			user << "<span class='warning'>Remove [ H == user ? "your" : "their" ] mask!</span>"
 			return
 		if(H.lip_style)	//if they already have lipstick on
-			to_chat(user, "<span class='warning'>You need to wipe off the old lipstick first!</span>")
+			user << "<span class='warning'>You need to wipe off the old lipstick first!</span>"
 			return
 		if(H == user)
 			user.visible_message("<span class='notice'>[user] does their lips with \the [src].</span>", \
@@ -74,7 +74,7 @@
 				H.lip_color = colour
 				H.update_body()
 	else
-		to_chat(user, "<span class='warning'>Where are the lips on that?</span>")
+		user << "<span class='warning'>Where are the lips on that?</span>"
 
 //you can wipe off lipstick with paper!
 /obj/item/weapon/paper/attack(mob/M, mob/user)
@@ -85,7 +85,7 @@
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H == user)
-				to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
+				user << "<span class='notice'>You wipe off the lipstick with [src].</span>"
 				H.lip_style = null
 				H.update_body()
 			else
@@ -125,13 +125,13 @@
 		var/location = user.zone_selected
 		if(location == "mouth")
 			if(!(FACEHAIR in H.dna.species.specflags))
-				to_chat(user, "<span class='warning'>There is no facial hair to shave!</span>")
+				user << "<span class='warning'>There is no facial hair to shave!</span>"
 				return
 			if(!get_location_accessible(H, location))
-				to_chat(user, "<span class='warning'>The mask is in the way!</span>")
+				user << "<span class='warning'>The mask is in the way!</span>"
 				return
 			if(H.facial_hair_style == "Shaved")
-				to_chat(user, "<span class='warning'>Already clean-shaven!</span>")
+				user << "<span class='warning'>Already clean-shaven!</span>"
 				return
 
 			if(H == user) //shaving yourself
@@ -153,13 +153,13 @@
 
 		else if(location == "head")
 			if(!(HAIR in H.dna.species.specflags))
-				to_chat(user, "<span class='warning'>There is no hair to shave!</span>")
+				user << "<span class='warning'>There is no hair to shave!</span>"
 				return
 			if(!get_location_accessible(H, location))
-				to_chat(user, "<span class='warning'>The headgear is in the way!</span>")
+				user << "<span class='warning'>The headgear is in the way!</span>"
 				return
 			if(H.hair_style == "Bald" || H.hair_style == "Balding Hair" || H.hair_style == "Skinhead")
-				to_chat(user, "<span class='warning'>There is not enough hair left to shave!</span>")
+				user << "<span class='warning'>There is not enough hair left to shave!</span>"
 				return
 
 			if(H == user) //shaving yourself

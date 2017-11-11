@@ -166,6 +166,6 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/C = user
 		if(C.shoes == src && src.chained == 1)
-			to_chat(user, "<span class='warning'>You need help taking these off!</span>")
+			user << "<span class='warning'>You need help taking these off!</span>"
 			return
 	..()

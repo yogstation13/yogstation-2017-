@@ -27,7 +27,7 @@
 	if(!istype(C))
 		return
 	if((user.disabilities & CLUMSY) && prob(50))
-		to_chat(user, "<span class='warning'>Uh... how do those things work?!</span>")
+		user << "<span class='warning'>Uh... how do those things work?!</span>"
 		if(can_cuff(user))
 			apply_cuffs(user,user)
 		else
@@ -44,7 +44,7 @@
 			if(!can_cuff(C, user))
 				return
 			apply_cuffs(C,user)
-			to_chat(user, "<span class='notice'>You handcuff [C].</span>")
+			user << "<span class='notice'>You handcuff [C].</span>"
 			playsound(loc, 'sound/weapons/handcuffs_finish.ogg', 30, 1, -2)
 			if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
 				feedback_add_details("handcuffs","C")
@@ -53,7 +53,7 @@
 
 			add_logs(user, C, "handcuffed")
 		else
-			to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
+			user << "<span class='warning'>You fail to handcuff [C]!</span>"
 
 /obj/item/weapon/restraints/handcuffs/proc/can_cuff(mob/living/carbon/target, mob/living/user)
 	if(!istype(target))
@@ -68,7 +68,7 @@
 		return FALSE
 	if(target.get_num_arms() < 2)
 		if(user)
-			to_chat(user, "<span class='warning'>[target] doesn't have two hands...</span>")
+			user << "<span class='warning'>[target] doesn't have two hands...</span>"
 		return FALSE
 	return TRUE
 
@@ -113,7 +113,7 @@
 /obj/item/weapon/restraints/handcuffs/cable/can_cuff(mob/living/carbon/target, mob/user)
 	if(wirestorage && (wirestorage.energy < 1))
 		if(user)
-			to_chat(user, "<span class='warning'>You need at least 1 ziptie to restrain [target]!</span>")
+			user << "<span class='warning'>You need at least 1 ziptie to restrain [target]!</span>"
 		return FALSE
 	return ..(target, user)
 
@@ -157,22 +157,22 @@
 			if(!remove_item_from_storage(user))
 				user.unEquip(src)
 			user.put_in_hands(W)
-			to_chat(user, "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>")
+			user << "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>"
 			qdel(src)
 		else
-			to_chat(user, "<span class='warning'>You need one rod to make a wired rod!</span>")
+			user << "<span class='warning'>You need one rod to make a wired rod!</span>"
 			return
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
 		if(M.amount < 6)
-			to_chat(user, "<span class='warning'>You need at least six metal sheets to make good enough weights!</span>")
+			user << "<span class='warning'>You need at least six metal sheets to make good enough weights!</span>"
 			return
-		to_chat(user, "<span class='notice'>You begin to apply [I] to [src]...</span>")
+		user << "<span class='notice'>You begin to apply [I] to [src]...</span>"
 		if(do_after(user, 35, target = src))
 			var/obj/item/weapon/restraints/legcuffs/bola/S = new /obj/item/weapon/restraints/legcuffs/bola
 			M.use(6)
 			user.put_in_hands(S)
-			to_chat(user, "<span class='notice'>You make some weights out of [I] and tie them to [src].</span>")
+			user << "<span class='notice'>You make some weights out of [I] and tie them to [src].</span>"
 			if(!remove_item_from_storage(user))
 				user.unEquip(src)
 			qdel(src)
@@ -241,7 +241,7 @@
 	if(ishuman(user) && !user.stat && !user.restrained())
 		armed = !armed
 		icon_state = "[initial(icon_state)][armed]"
-		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
+		user << "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>"
 
 /obj/item/weapon/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
 	if(armed && isturf(src.loc))
@@ -315,7 +315,7 @@
 		src.loc = C
 		C.update_inv_legcuffed()
 		feedback_add_details("handcuffs","B")
-		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")
+		C << "<span class='userdanger'>\The [src] ensnares you!</span>"
 		C.Weaken(weaken)
 
 /obj/item/weapon/restraints/legcuffs/bola/tactical//traitor variant

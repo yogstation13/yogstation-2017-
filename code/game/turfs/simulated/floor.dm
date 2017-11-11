@@ -147,12 +147,12 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		if(broken || burnt)
 			broken = 0
 			burnt = 0
-			to_chat(user, "<span class='danger'>You remove the broken plating.</span>")
+			user << "<span class='danger'>You remove the broken plating.</span>"
 		else
 			if(istype(src, /turf/open/floor/wood))
-				to_chat(user, "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>")
+				user << "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>"
 			else
-				to_chat(user, "<span class='danger'>You remove the floor tile.</span>")
+				user << "<span class='danger'>You remove the floor tile.</span>"
 				builtin_tile.loc = src
 		make_plating()
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)

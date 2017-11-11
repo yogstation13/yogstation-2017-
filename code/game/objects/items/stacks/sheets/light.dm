@@ -30,9 +30,9 @@
 		if (M.use(1))
 			use(1)
 			var/obj/item/stack/tile/light/L = new (user.loc)
-			to_chat(user, "<span class='notice'>You make a light tile.</span>")
+			user << "<span class='notice'>You make a light tile.</span>"
 			L.add_fingerprint(user)
 		else
-			to_chat(user, "<span class='warning'>You need one metal sheet to finish the light tile!</span>")
+			user << "<span class='warning'>You need one metal sheet to finish the light tile!</span>"
 	else
 		return ..()

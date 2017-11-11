@@ -18,10 +18,10 @@
 	if(istype(I, /obj/item/weapon/kitchen/rollingpin))
 		if(isturf(loc))
 			new /obj/item/weapon/reagent_containers/food/snacks/flatdough(loc)
-			to_chat(user, "<span class='notice'>You flatten [src].</span>")
+			user << "<span class='notice'>You flatten [src].</span>"
 			qdel(src)
 		else
-			to_chat(user, "<span class='warning'>You need to put [src] on a surface to roll it out!</span>")
+			user << "<span class='warning'>You need to put [src] on a surface to roll it out!</span>"
 	else
 		..()
 
@@ -85,10 +85,10 @@
 	if(istype(I, /obj/item/weapon/kitchen/rollingpin))
 		if(isturf(loc))
 			new /obj/item/weapon/reagent_containers/food/snacks/piedough(loc)
-			to_chat(user, "<span class='notice'>You flatten [src].</span>")
+			user << "<span class='notice'>You flatten [src].</span>"
 			qdel(src)
 		else
-			to_chat(user, "<span class='warning'>You need to put [src] on a surface to roll it out!</span>")
+			user << "<span class='warning'>You need to put [src] on a surface to roll it out!</span>"
 	else
 		..()
 

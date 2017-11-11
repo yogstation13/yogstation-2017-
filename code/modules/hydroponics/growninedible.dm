@@ -39,7 +39,7 @@
 		if(seed)
 			msg += seed.get_analyzer_text()
 		msg += "</span>"
-		to_chat(usr, msg)
+		usr << msg
 		return
 
 /obj/item/weapon/grown/proc/add_juice()

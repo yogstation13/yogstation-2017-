@@ -132,7 +132,7 @@
 
 /obj/machinery/telecomms/server/proc/compile(mob/user)
 	if(jobban_isbanned(user, "ntsl"))
-		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
+		usr << "<span class='warning'>You are banned from using NTSL.</span>"
 		return
 	if(Compiler)
 		admin_log(user)
@@ -201,7 +201,7 @@
 		return
 	if(encryptionkey)
 		if(user)
-			to_chat(user, "<span class='notice'>\The [src] already contains an encryption key.</span>")
+			user << "<span class='notice'>\The [src] already contains an encryption key.</span>"
 	if(istype(key))
 		if(!user || user.unEquip(key))
 			encryptionkey = key
@@ -209,10 +209,10 @@
 			if(encryptionkey.encryption_keys.len)
 				encryption = encryptionkey.encryption_keys[1]
 			if(user)
-				to_chat(user, "<span class='notice'>You insert [key] into [src].</span>")
+				user << "<span class='notice'>You insert [key] into [src].</span>"
 		else
 			if(user)
-				to_chat(user, "<span class='notice'>\The [key] is stuck to your hand!</span>")
+				user << "<span class='notice'>\The [key] is stuck to your hand!</span>"
 	else
 
 /obj/machinery/telecomms/server/TelemonitorInfo()

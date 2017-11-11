@@ -71,9 +71,9 @@
 
 		P.loc = user.loc
 		user.put_in_hands(P)
-		to_chat(user, "<span class='notice'>You take [P] out of \the [src].</span>")
+		user << "<span class='notice'>You take [P] out of \the [src].</span>"
 	else
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		user << "<span class='warning'>[src] is empty!</span>"
 
 	add_fingerprint(user)
 
@@ -84,7 +84,7 @@
 		if(!user.unEquip(P))
 			return
 		P.loc = src
-		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
+		user << "<span class='notice'>You put [P] in [src].</span>"
 		papers.Add(P)
 		amount++
 		update_icon()
@@ -94,9 +94,9 @@
 /obj/item/weapon/paper_bin/examine(mob/user)
 	..()
 	if(amount)
-		to_chat(user, "It contains " + (amount > 1 ? "[amount] papers" : " one paper")+".")
+		user << "It contains " + (amount > 1 ? "[amount] papers" : " one paper")+"."
 	else
-		to_chat(user, "It doesn't contain anything.")
+		user << "It doesn't contain anything."
 
 
 /obj/item/weapon/paper_bin/update_icon()

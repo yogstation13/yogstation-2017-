@@ -15,16 +15,16 @@
 		var/weight
 		if(!last_cached_weight)
 			if(!q.Execute())
-				to_chat(src, "An error occured, try again later.")
+				src << "An error occured, try again later."
 				return
 			weight = text2num(q.item[1])
 			last_cached_weight = weight
 		else
 			weight = last_cached_weight //Only query database once per player, cached weight is updated at round start
-		to_chat(src, "Your current antagonist weight is [max(min(weight,400),25)]/400.")
+		src << "Your current antagonist weight is [max(min(weight,400),25)]/400."
 		if(!last_cached_total_weight)
 			if(!q_total.Execute())
-				to_chat(src, "Could not fetch statistics.")
+				src << "Could not fetch statistics."
 				return
 
 		var/total = 0
@@ -37,12 +37,12 @@
 
 		var/nextantag = round(100/((weight/total)*280))
 
-		to_chat(src, "You account for [(weight/total)*100]% of the antagonist weight on the server right now.")
-		to_chat(src, "You will likely be an antagonist within the next [nextantag] [nextantag > 1 ? "rounds" : "round"]." )
+		src << "You account for [(weight/total)*100]% of the antagonist weight on the server right now."
+		src << "You will likely be an antagonist within the next [nextantag] [nextantag > 1 ? "rounds" : "round"]." //5.6 being the average number of antagonists in a round
 		//as determined by about 5 seconds of shitty math on a napkin
-		to_chat(src, "(Some statistics are cached for performance purposes, and may be slightly inaccurate.)")
+		src << "(Some statistics are cached for performance purposes, and may be slightly inaccurate.)"
 	else
-		to_chat(src, "No database connection detected!")
+		src << "No database connection detected!"
 */
 
 //Also uncomment code\modules\client\client_procs line 284

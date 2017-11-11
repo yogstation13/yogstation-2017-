@@ -80,7 +80,7 @@
 		if(O.opened)
 			return
 		if(!O.density) //can't wrap non dense closets (e.g. body bags)
-			to_chat(user, "<span class='warning'>You can't wrap this!</span>")
+			user << "<span class='warning'>You can't wrap this!</span>"
 			return
 		if(use(3))
 			var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(O.loc))
@@ -90,10 +90,10 @@
 			P.add_fingerprint(user)
 			O.add_fingerprint(user)
 		else
-			to_chat(user, "<span class='warning'>You need more paper!</span>")
+			user << "<span class='warning'>You need more paper!</span>"
 			return
 	else
-		to_chat(user, "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
+		user << "<span class='warning'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>"
 		return
 
 	playsound(src, 'sound/effects/paper_wrap.ogg', 50, 1)

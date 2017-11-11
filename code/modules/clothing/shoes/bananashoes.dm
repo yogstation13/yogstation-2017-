@@ -26,48 +26,48 @@
 			on = !on
 			flags &= ~NOSLIP
 			update_icon()
-			to_chat(loc, "<span class='warning'>You ran out of bananium!</span>")
+			loc << "<span class='warning'>You ran out of bananium!</span>"
 	else
 		..()
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user)
 	var/sheet_amount = bananium.retrieve_all()
 	if(sheet_amount)
-		to_chat(user, "<span class='notice'>You retrieve [sheet_amount] sheets of bananium from the prototype shoes.</span>")
+		user << "<span class='notice'>You retrieve [sheet_amount] sheets of bananium from the prototype shoes.</span>"
 	else
-		to_chat(user, "<span class='notice'>You cannot retrieve any bananium from the prototype shoes.</span>")
+		user << "<span class='notice'>You cannot retrieve any bananium from the prototype shoes.</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attackby(obj/item/O, mob/user, params)
 	if(!bananium.get_item_material_amount(O))
-		to_chat(user, "<span class='notice'>This item has no bananium!</span>")
+		user << "<span class='notice'>This item has no bananium!</span>"
 		return
 	if(!user.unEquip(O))
-		to_chat(user, "<span class='notice'>You can't drop [O]!</span>")
+		user << "<span class='notice'>You can't drop [O]!</span>"
 		return
 
 	var/bananium_amount = bananium.insert_item(O)
 	if(bananium_amount)
-		to_chat(user, "<span class='notice'>You insert [O] into the prototype shoes.</span>")
+		user << "<span class='notice'>You insert [O] into the prototype shoes.</span>"
 		qdel(O)
 	else
-		to_chat(user, "<span class='notice'>You are unable to insert more bananium!</span>")
+		user << "<span class='notice'>You are unable to insert more bananium!</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/examine(mob/user)
 	..()
 	var/ban_amt = bananium.amount(MAT_BANANIUM)
-	to_chat(user, "<span class='notice'>The shoes are [on ? "enabled" : "disabled"]. There is [ban_amt ? ban_amt : "no"] bananium left.</span>")
+	user << "<span class='notice'>The shoes are [on ? "enabled" : "disabled"]. There is [ban_amt ? ban_amt : "no"] bananium left.</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
 	if(bananium.amount(MAT_BANANIUM))
 		on = !on
 		update_icon()
-		to_chat(user, "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>")
+		user << "<span class='notice'>You [on ? "activate" : "deactivate"] the prototype shoes.</span>"
 		if(on)
 			flags |= NOSLIP
 		else
 			flags &= ~NOSLIP
 	else
-		to_chat(user, "<span class='warning'>You need bananium to turn the prototype shoes on!</span>")
+		user << "<span class='warning'>You need bananium to turn the prototype shoes on!</span>"
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/update_icon()
 	if(on)

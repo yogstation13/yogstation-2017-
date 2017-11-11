@@ -179,10 +179,10 @@
 
 /obj/machinery/shieldgen/attack_hand(mob/user)
 	if(locked)
-		to_chat(user, "<span class='warning'>The machine is locked, you are unable to use it!</span>")
+		user << "<span class='warning'>The machine is locked, you are unable to use it!</span>"
 		return
 	if(panel_open)
-		to_chat(user, "<span class='warning'>The panel must be closed before operating this machine!</span>")
+		user << "<span class='warning'>The panel must be closed before operating this machine!</span>"
 		return
 
 	if (active)
@@ -197,7 +197,7 @@
 				"<span class='italics'>You hear heavy droning.</span>")
 			shields_up()
 		else
-			to_chat(user, "<span class='warning'>The device must first be secured to the floor!</span>")
+			user << "<span class='warning'>The device must first be secured to the floor!</span>"
 	return
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user, params)
@@ -205,46 +205,46 @@
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		panel_open = !panel_open
 		if(panel_open)
-			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
+			user << "<span class='notice'>You open the panel and expose the wiring.</span>"
 		else
-			to_chat(user, "<span class='notice'>You close the panel.</span>")
+			user << "<span class='notice'>You close the panel.</span>"
 	else if(istype(W, /obj/item/stack/cable_coil) && (stat & BROKEN) && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need one length of cable to repair [src]!</span>")
+			user << "<span class='warning'>You need one length of cable to repair [src]!</span>"
 			return
-		to_chat(user, "<span class='notice'>You begin to replace the wires...</span>")
+		user << "<span class='notice'>You begin to replace the wires...</span>"
 		if(do_after(user, 30, target = src))
 			if(coil.get_amount() < 1)
 				return
 			coil.use(1)
 			health = max_health
 			stat &= ~BROKEN
-			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
+			user << "<span class='notice'>You repair \the [src].</span>"
 			update_icon()
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(locked)
-			to_chat(user, "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>")
+			user << "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>"
 			return
 		if(!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			to_chat(user, "<span class='notice'>You secure \the [src] to the floor!</span>")
+			user << "<span class='notice'>You secure \the [src] to the floor!</span>"
 			anchored = 1
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
-			to_chat(user, "<span class='notice'>You unsecure \the [src] from the floor!</span>")
+			user << "<span class='notice'>You unsecure \the [src] from the floor!</span>"
 			if(active)
-				to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
+				user << "<span class='notice'>\The [src] shuts off!</span>"
 				shields_down()
 			anchored = 0
 
 	else if(W.GetID())
 		if(allowed(user))
 			locked = !locked
-			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
+			user << "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>"
 		else
-			to_chat(user, "<span class='danger'>Access denied.</span>")
+			user << "<span class='danger'>Access denied.</span>"
 
 	else
 		return ..()
@@ -311,13 +311,13 @@
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
 	if(!anchored)
-		to_chat(user, "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>")
+		user << "<span class='warning'>\The [src] needs to be firmly secured to the floor first!</span>"
 		return 1
 	if(locked && !istype(user, /mob/living/silicon))
-		to_chat(user, "<span class='warning'>The controls are locked!</span>")
+		user << "<span class='warning'>The controls are locked!</span>"
 		return 1
 	if(power != 1)
-		to_chat(user, "<span class='warning'>\The [src] needs to be powered by wire underneath!</span>")
+		user << "<span class='warning'>\The [src] needs to be powered by wire underneath!</span>"
 		return 1
 
 	if(active >= 1)
@@ -413,27 +413,27 @@
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
-			to_chat(user, "<span class='warning'>Turn off the field generator first!</span>")
+			user << "<span class='warning'>Turn off the field generator first!</span>"
 			return
 
 		else if(!anchored && !isinspace()) //Can't fasten this thing in space
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			to_chat(user, "<span class='notice'>You secure the external reinforcing bolts to the floor.</span>")
+			user << "<span class='notice'>You secure the external reinforcing bolts to the floor.</span>"
 			anchored = 1
 			return
 
 		else //You can unfasten it tough, if you somehow manage to fasten it.
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			to_chat(user, "<span class='notice'>You undo the external reinforcing bolts.</span>")
+			user << "<span class='notice'>You undo the external reinforcing bolts.</span>"
 			anchored = 0
 			return
 
 	if(W.GetID())
 		if (allowed(user))
 			locked = !locked
-			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
+			user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>"
 		else
-			to_chat(user, "<span class='danger'>Access denied.</span>")
+			user << "<span class='danger'>Access denied.</span>"
 
 	else
 		add_fingerprint(user)

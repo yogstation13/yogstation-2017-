@@ -11,7 +11,7 @@
 	var/inview = 1
 
 	if(!energyKatana)
-		to_chat(H, "<span class='warning'>Could not locate Energy Katana!</span>")
+		H << "<span class='warning'>Could not locate Energy Katana!</span>"
 		return
 
 	if(energyKatana in H)

@@ -53,28 +53,28 @@
 	if(!ishuman(user) && !ismonkey(user)) //typecast everything from mob to carbon from this point onwards
 		return 0
 	if(req_human && !ishuman(user))
-		to_chat(user, "<span class='warning'>We cannot do that in this form!</span>")
+		user << "<span class='warning'>We cannot do that in this form!</span>"
 		return 0
 	var/datum/changeling/c = user.mind.changeling
 	if(c.chem_charges<chemical_cost)
-		to_chat(user, "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>")
+		user << "<span class='warning'>We require at least [chemical_cost] unit\s of chemicals to do that!</span>"
 		return 0
 	if(c.profilecount<req_dna)
-		to_chat(user, "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>")
+		user << "<span class='warning'>We require at least [req_dna] sample\s of compatible DNA.</span>"
 		return 0
 	if(req_stat < user.stat)
-		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
+		user << "<span class='warning'>We are incapacitated.</span>"
 		return 0
 	if((FAKEDEATH in user.status_flags) && name != "Regenerate")
-		to_chat(user, "<span class='warning'>We are incapacitated.</span>")
+		user << "<span class='warning'>We are incapacitated.</span>"
 		return 0
 	if(c.geneticdamage > max_genetic_damage)
-		to_chat(user, "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>")
+		user << "<span class='warning'>Our genomes are still reassembling. We need time to recover first.</span>"
 		return 0
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(isabomination(H))
-			to_chat(user, "<span class='warning'>We cannot do this whilst transformed. Revert first.</span>")
+			user << "<span class='warning'>We cannot do this whilst transformed. Revert first.</span>"
 			return 0
 	return 1
 

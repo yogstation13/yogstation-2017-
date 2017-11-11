@@ -25,7 +25,7 @@
 	else if(actiontype == /datum/action/item_action/jetpack_stabilization)
 		if(on)
 			stabilizers = !stabilizers
-			to_chat(user, "<span class='notice'>You turn the jetpack stabilization [stabilizers ? "on" : "off"].</span>")
+			user << "<span class='notice'>You turn the jetpack stabilization [stabilizers ? "on" : "off"].</span>"
 	else
 		toggle_internals(user)
 
@@ -36,10 +36,10 @@
 
 	if(!on)
 		turn_on()
-		to_chat(user, "<span class='notice'>You turn the jetpack on.</span>")
+		user << "<span class='notice'>You turn the jetpack on.</span>"
 	else
 		turn_off()
-		to_chat(user, "<span class='notice'>You turn the jetpack off.</span>")
+		user << "<span class='notice'>You turn the jetpack off.</span>"
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
@@ -126,7 +126,7 @@
 /obj/item/weapon/tank/jetpack/suit/cycle(mob/user)
 	var/mob/living/carbon/human/H = user
 	if(!istype(H.s_store, /obj/item/weapon/tank/internals))
-		to_chat(user, "<span class='warning'>You need a tank in your suit storage!</span>")
+		user << "<span class='warning'>You need a tank in your suit storage!</span>"
 		return
 	..()
 

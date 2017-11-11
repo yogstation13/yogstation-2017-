@@ -28,11 +28,11 @@
 /obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user, params)
 	if(istype(G, /obj/item/weapon/wrench))
 		if(charging)
-			to_chat(user, "<span class='notice'>Remove the charging item first!</span>")
+			user << "<span class='notice'>Remove the charging item first!</span>"
 			return
 		anchored = !anchored
 		power_change()
-		to_chat(user, "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>")
+		user << "<span class='notice'>You [anchored ? "attached" : "detached"] [src].</span>"
 		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 		return
 
@@ -44,13 +44,13 @@
 			//Checks to make sure he's not in space doing it, and that the area got proper power.
 			var/area/a = get_area(src)
 			if(!isarea(a) || a.power_equip == 0)
-				to_chat(user, "<span class='notice'>[src] blinks red as you try to insert [G].</span>")
+				user << "<span class='notice'>[src] blinks red as you try to insert [G].</span>"
 				return 1
 
 			if (istype(G, /obj/item/weapon/gun/energy))
 				var/obj/item/weapon/gun/energy/gun = G
 				if(!gun.can_charge)
-					to_chat(user, "<span class='notice'>Your gun has no external power connector.</span>")
+					user << "<span class='notice'>Your gun has no external power connector.</span>"
 					return 1
 
 			if(!user.drop_item())
@@ -60,7 +60,7 @@
 			use_power = 2
 			update_icon()
 		else
-			to_chat(user, "<span class='notice'>[src] isn't connected to anything!</span>")
+			user << "<span class='notice'>[src] isn't connected to anything!</span>"
 		return 1
 
 	if(anchored && !charging)

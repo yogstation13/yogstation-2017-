@@ -107,7 +107,7 @@ Sorry Giacom. Please don't be mad :(
 		var/mob/living/L = M
 		if(L.pulledby && L.pulledby != src && L.restrained())
 			if(!(world.time % 5))
-				to_chat(src, "<span class='warning'>[L] is restrained, you cannot push past.</span>")
+				src << "<span class='warning'>[L] is restrained, you cannot push past.</span>"
 			return 1
 
 		if(L.pulling)
@@ -115,7 +115,7 @@ Sorry Giacom. Please don't be mad :(
 				var/mob/P = L.pulling
 				if(P.restrained())
 					if(!(world.time % 5))
-						to_chat(src, "<span class='warning'>[L] is restraining [P], you cannot push past.</span>")
+						src << "<span class='warning'>[L] is restraining [P], you cannot push past.</span>"
 					return 1
 
 	if(moving_diagonally)//no mob swap during diagonal moves.
@@ -221,7 +221,7 @@ Sorry Giacom. Please don't be mad :(
 		src.adjustOxyLoss(src.health - config.health_threshold_dead)
 		updatehealth()
 		if(!whispered)
-			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
+			src << "<span class='notice'>You have given up life and succumbed to death.</span>"
 		death()
 
 /mob/living/proc/InCritical()
@@ -261,7 +261,7 @@ Sorry Giacom. Please don't be mad :(
 		if(actual < desired)
 			temperature = desired
 //	if(istype(src, /mob/living/carbon/human))
-//		to_chat(world, "[src] ~ [src.bodytemperature] ~ [temperature]")
+//		world << "[src] ~ [src.bodytemperature] ~ [temperature]"
 	return temperature
 
 
@@ -400,7 +400,7 @@ Sorry Giacom. Please don't be mad :(
 	set category = "IC"
 
 	if(sleeping)
-		to_chat(src, "<span class='notice'>You are already sleeping.</span>")
+		src << "<span class='notice'>You are already sleeping.</span>"
 		return
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
@@ -414,7 +414,7 @@ Sorry Giacom. Please don't be mad :(
 	set category = "IC"
 
 	resting = !resting
-	to_chat(src, "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>")
+	src << "<span class='notice'>You are now [resting ? "resting" : "getting up"].</span>"
 	update_canmove()
 
 //Recursive function to find everything a mob is holding.
@@ -558,11 +558,11 @@ Sorry Giacom. Please don't be mad :(
 
 	if(config.allow_Metadata)
 		if(client)
-			to_chat(src, "[src]'s Metainfo:<br>[client.prefs.metadata]")
+			src << "[src]'s Metainfo:<br>[client.prefs.metadata]"
 		else
-			to_chat(src, "[src] does not have any stored infomation!")
+			src << "[src] does not have any stored infomation!"
 	else
-		to_chat(src, "OOC Metadata is not supported by this server!")
+		src << "OOC Metadata is not supported by this server!"
 
 	return
 
@@ -754,7 +754,7 @@ Sorry Giacom. Please don't be mad :(
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
 /mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
 	if(what.flags & NODROP)
-		to_chat(src, "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>")
+		src << "<span class='warning'>You can't remove \the [what.name], it appears to be stuck!</span>"
 		return
 	who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
 					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
@@ -768,11 +768,11 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
 	what = src.get_active_hand()
 	if(what && (what.flags & NODROP))
-		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
+		src << "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>"
 		return
 	if(what)
 		if(!what.mob_can_equip(who, src, where, 1))
-			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
+			src << "<span class='warning'>\The [what.name] doesn't fit in that place!</span>"
 			return
 		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
 		if(do_mob(src, who, what.put_on_delay))
@@ -794,7 +794,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/narsie_act()
 	if(is_servant_of_ratvar(src) && !stat)
-		to_chat(src, "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>")
+		src << "<span class='userdanger'>You resist Nar-Sie's influence... but not all of it. <i>Run!</i></span>"
 		adjustBruteLoss(35, 1, DAMAGE_MAGIC)
 		if(src && reagents)
 			reagents.add_reagent("heparin", 5)
@@ -809,7 +809,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/ratvar_act()
 	if(!add_servant_of_ratvar(src) && !is_servant_of_ratvar(src))
-		to_chat(src, "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>")
+		src << "<span class='userdanger'>A blinding light boils you alive! <i>Run!</i></span>"
 		adjustFireLoss(35, 1, DAMAGE_MAGIC)
 		if(src)
 			adjust_fire_stacks(1)
@@ -959,11 +959,11 @@ Sorry Giacom. Please don't be mad :(
 		if(be_close && in_range(M, src))
 			return 1
 	else
-		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 	return
 /mob/living/proc/can_use_guns(var/obj/item/weapon/gun/G)
 	if (G.trigger_guard != TRIGGER_GUARD_ALLOW_ALL && !IsAdvancedToolUser())
-		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
 		return 0
 	return 1
 
@@ -974,7 +974,7 @@ Sorry Giacom. Please don't be mad :(
 	if(staminaloss)
 		var/total_health = (health - staminaloss)
 		if(total_health <= config.health_threshold_crit && !stat)
-			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
+			src << "<span class='notice'>You're too exhausted to keep going...</span>"
 			Weaken(5)
 			setStaminaLoss(health - 2)
 	update_health_hud()
@@ -1024,7 +1024,8 @@ Sorry Giacom. Please don't be mad :(
 		var/mob/living/simple_animal/hostile/guardian/G = para
 		G.summoner = new_mob
 		G.Recall()
-		to_chat(G, "<span class='holoparasite'>Your summoner has changed form to [new_mob]!</span>")
+		G << "<span class='holoparasite'>Your summoner has changed \
+			form to [new_mob]!</span>"
 
 /mob/living/proc/flying()
 	if(ishuman(src))

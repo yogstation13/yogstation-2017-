@@ -37,21 +37,21 @@ insert ascii eagle on american flag background here
 /obj/machinery/deepfryer/examine(mob/user)
 	..()
 	if(!reagents.total_volume && user.job == "Cook")
-		to_chat(user, "You need to refill [src] with nutriment.")
+		user << "You need to refill [src] with nutriment."
 	if(frying)
-		to_chat(usr, "You can make out \a [frying] in the oil.")
+		usr << "You can make out [frying] in the oil."
 
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(!reagents.total_volume)
-		to_chat(user, "There's nothing to fry with in [src]!")
+		user << "There's nothing to fry with in [src]!"
 		return
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
-		to_chat(user, "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>")
+		user << "<span class='userdanger'>Your cooking skills are not up to the legendary Doublefry technique.</span>"
 		return
 	else
 		if(user.drop_item() && !frying)
-			to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
+			user << "<span class='notice'>You put [I] into [src].</span>"
 			frying = I
 			frying.forceMove(src)
 			icon_state = "fryer_on"
@@ -73,7 +73,7 @@ insert ascii eagle on american flag background here
 /obj/machinery/deepfryer/attack_hand(mob/user)
 	if(frying)
 		if(frying.loc == src)
-			to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
+			user << "<span class='notice'>You eject [frying] from [src].</span>"
 			var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/S = new(get_turf(src))
 			if(istype(frying, /obj/item/weapon/reagent_containers/))
 				var/obj/item/weapon/reagent_containers/food = frying
@@ -82,7 +82,6 @@ insert ascii eagle on american flag background here
 			S.overlays = frying.overlays
 			S.icon_state = frying.icon_state
 			S.desc = frying.desc
-			S.w_class = frying.w_class
 			reagents.trans_to(S, 2*(cook_time/15))
 			switch(cook_time)
 				if(0 to 15)
@@ -112,7 +111,7 @@ insert ascii eagle on american flag background here
 			return
 	else if(user.pulling && user.a_intent == "grab" && iscarbon(user.pulling) && reagents.total_volume)
 		if(user.grab_state < GRAB_AGGRESSIVE)
-			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
+			user << "<span class='warning'>You need a better grip to do that!</span>"
 			return
 		var/mob/living/carbon/C = user.pulling
 		user.visible_message("<span class = 'danger'>[user] dunks [C]'s face in [src]!</span>")

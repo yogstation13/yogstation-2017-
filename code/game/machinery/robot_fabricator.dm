@@ -28,11 +28,11 @@
 					if (O:amount < 1)
 						qdel(O)
 
-					to_chat(user, "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>")
+					user << "<span class='notice'>You insert [count] metal sheet\s into \the [src].</span>"
 					src.overlays -= "fab-load-metal"
 					updateDialog()
 		else
-			to_chat(user, "\The [src] is full.")
+			user << "\The [src] is full."
 	else
 		return ..()
 

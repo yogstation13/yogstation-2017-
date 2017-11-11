@@ -23,7 +23,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	set name = "Edit Ticker Variables"
 
 	if (ticker == null)
-		to_chat(src, "Game hasn't started yet.")
+		src << "Game hasn't started yet."
 	else
 		src.modify_variables(ticker)
 		feedback_add_details("admin_verb","ETV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -168,7 +168,7 @@ var/list/VVckey_edit = list("key", "ckey")
 	if(!check_rights(R_VAREDIT))
 		return
 	if(!istype(L,/list))
-		to_chat(src, "Not a List.")
+		src << "Not a List."
 
 	if(L.len > 1000)
 		var/confirm = alert(src, "The list you're trying to edit is very long, continuing may crash the server.", "Warning", "Continue", "Abort")
@@ -180,7 +180,7 @@ var/list/VVckey_edit = list("key", "ckey")
 		var/a = L[1]
 		if(istext(a) && L[a] != null)
 			assoc = 1 //This is pretty weak test but i can't think of anything else
-			to_chat(usr, "List appears to be associative.")
+			usr << "List appears to be associative."
 
 	var/list/names = null
 	if(!assoc)
@@ -219,43 +219,43 @@ var/list/VVckey_edit = list("key", "ckey")
 			return
 
 	if(isnull(variable))
-		to_chat(usr, "Unable to determine variable type.")
+		usr << "Unable to determine variable type."
 
 	else if(isnum(variable))
-		to_chat(usr, "Variable appears to be <b>NUM</b>.")
+		usr << "Variable appears to be <b>NUM</b>."
 		default = "num"
 		dir = 1
 
 	else if(istext(variable))
-		to_chat(usr, "Variable appears to be <b>TEXT</b>.")
+		usr << "Variable appears to be <b>TEXT</b>."
 		default = "text"
 
 	else if(isloc(variable))
-		to_chat(usr, "Variable appears to be <b>REFERENCE</b>.")
+		usr << "Variable appears to be <b>REFERENCE</b>."
 		default = "reference"
 
 	else if(isicon(variable))
-		to_chat(usr, "Variable appears to be <b>ICON</b>.")
+		usr << "Variable appears to be <b>ICON</b>."
 		variable = "\icon[variable]"
 		default = "icon"
 
 	else if(istype(variable,/atom) || istype(variable,/datum))
-		to_chat(usr, "Variable appears to be <b>TYPE</b>.")
+		usr << "Variable appears to be <b>TYPE</b>."
 		default = "type"
 
 	else if(istype(variable,/list))
-		to_chat(usr, "Variable appears to be <b>LIST</b>.")
+		usr << "Variable appears to be <b>LIST</b>."
 		default = "list"
 
 	else if(istype(variable,/client))
-		to_chat(usr, "Variable appears to be <b>CLIENT</b>.")
+		usr << "Variable appears to be <b>CLIENT</b>."
 		default = "cancel"
 
 	else
-		to_chat(usr, "Variable appears to be <b>FILE</b>.")
+		usr << "Variable appears to be <b>FILE</b>."
 		default = "file"
 
-	to_chat(usr, "Variable contains: [variable]")
+	usr << "Variable contains: [variable]"
 	if(dir)
 		switch(variable)
 			if(1)
@@ -278,7 +278,7 @@ var/list/VVckey_edit = list("key", "ckey")
 				dir = null
 
 		if(dir)
-			to_chat(usr, "If a direction, direction is: [dir]")
+			usr << "If a direction, direction is: [dir]"
 
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
@@ -414,11 +414,11 @@ var/list/VVckey_edit = list("key", "ckey")
 		return
 
 	if(is_type_in_list(O, forbidden_varedit_object_types))
-		to_chat(usr, "<span class='danger'>It is forbidden to edit this object's variables.</span>")
+		usr << "<span class='danger'>It is forbidden to edit this object's variables.</span>"
 		return
 
 	if(istype(O, /client) && (param_var_name == "ckey" || param_var_name == "key"))
-		to_chat(usr, "<span class='danger'>You cannot edit ckeys on client objects.</span>")
+		usr << "<span class='danger'>You cannot edit ckeys on client objects.</span>"
 		return
 
 	var/class
@@ -427,7 +427,7 @@ var/list/VVckey_edit = list("key", "ckey")
 
 	if(param_var_name)
 		if(!param_var_name in O.vars)
-			to_chat(src, "A variable with this name ([param_var_name]) doesn't exist in this atom ([O])")
+			src << "A variable with this name ([param_var_name]) doesn't exist in this atom ([O])"
 			return
 
 		if(param_var_name in VVlocked)
@@ -446,41 +446,41 @@ var/list/VVckey_edit = list("key", "ckey")
 
 		if(autodetect_class)
 			if(isnull(var_value))
-				to_chat(usr, "Unable to determine variable type.")
+				usr << "Unable to determine variable type."
 				class = null
 				autodetect_class = null
 			else if(isnum(var_value))
-				to_chat(usr, "Variable appears to be <b>NUM</b>.")
+				usr << "Variable appears to be <b>NUM</b>."
 				class = "num"
 				dir = 1
 
 			else if(istext(var_value))
-				to_chat(usr, "Variable appears to be <b>TEXT</b>.")
+				usr << "Variable appears to be <b>TEXT</b>."
 				class = "text"
 
 			else if(isloc(var_value))
-				to_chat(usr, "Variable appears to be <b>REFERENCE</b>.")
+				usr << "Variable appears to be <b>REFERENCE</b>."
 				class = "reference"
 
 			else if(isicon(var_value))
-				to_chat(usr, "Variable appears to be <b>ICON</b>.")
+				usr << "Variable appears to be <b>ICON</b>."
 				var_value = "\icon[var_value]"
 				class = "icon"
 
 			else if(istype(var_value,/atom) || istype(var_value,/datum))
-				to_chat(usr, "Variable appears to be <b>TYPE</b>.")
+				usr << "Variable appears to be <b>TYPE</b>."
 				class = "type"
 
 			else if(istype(var_value,/list))
-				to_chat(usr, "Variable appears to be <b>LIST</b>.")
+				usr << "Variable appears to be <b>LIST</b>."
 				class = "list"
 
 			else if(istype(var_value,/client))
-				to_chat(usr, "Variable appears to be <b>CLIENT</b>.")
+				usr << "Variable appears to be <b>CLIENT</b>."
 				class = "cancel"
 
 			else
-				to_chat(usr, "Variable appears to be <b>FILE</b>.")
+				usr << "Variable appears to be <b>FILE</b>."
 				class = "file"
 
 	else
@@ -511,43 +511,43 @@ var/list/VVckey_edit = list("key", "ckey")
 		var/dir
 		var/default
 		if(isnull(var_value))
-			to_chat(usr, "Unable to determine variable type.")
+			usr << "Unable to determine variable type."
 
 		else if(isnum(var_value))
-			to_chat(usr, "Variable appears to be <b>NUM</b>.")
+			usr << "Variable appears to be <b>NUM</b>."
 			default = "num"
 			dir = 1
 
 		else if(istext(var_value))
-			to_chat(usr, "Variable appears to be <b>TEXT</b>.")
+			usr << "Variable appears to be <b>TEXT</b>."
 			default = "text"
 
 		else if(isloc(var_value))
-			to_chat(usr, "Variable appears to be <b>REFERENCE</b>.")
+			usr << "Variable appears to be <b>REFERENCE</b>."
 			default = "reference"
 
 		else if(isicon(var_value))
-			to_chat(usr, "Variable appears to be <b>ICON</b>.")
+			usr << "Variable appears to be <b>ICON</b>."
 			var_value = "\icon[var_value]"
 			default = "icon"
 
 		else if(istype(var_value,/atom) || istype(var_value,/datum))
-			to_chat(usr, "Variable appears to be <b>TYPE</b>.")
+			usr << "Variable appears to be <b>TYPE</b>."
 			default = "type"
 
 		else if(istype(var_value,/list))
-			to_chat(usr, "Variable appears to be <b>LIST</b>.")
+			usr << "Variable appears to be <b>LIST</b>."
 			default = "list"
 
 		else if(istype(var_value,/client))
-			to_chat(usr, "Variable appears to be <b>CLIENT</b>.")
+			usr << "Variable appears to be <b>CLIENT</b>."
 			default = "cancel"
 
 		else
-			to_chat(usr, "Variable appears to be <b>FILE</b>.")
+			usr << "Variable appears to be <b>FILE</b>."
 			default = "file"
 
-		to_chat(usr, "Variable contains: [var_value]")
+		usr << "Variable contains: [var_value]"
 		if(dir)
 			switch(var_value)
 				if(1)
@@ -569,7 +569,7 @@ var/list/VVckey_edit = list("key", "ckey")
 				else
 					dir = null
 			if(dir)
-				to_chat(usr, "If a direction, direction is: [dir]")
+				usr << "If a direction, direction is: [dir]"
 
 		if(src.holder && src.holder.marked_datum)
 			class = input("What kind of variable?","Variable Type",default) as null|anything in list("text",

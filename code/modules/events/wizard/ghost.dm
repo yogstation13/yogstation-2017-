@@ -8,7 +8,7 @@
 /datum/round_event/wizard/ghost/start()
 	for(var/mob/dead/observer/G in player_list)
 		G.invisibility = 0
-		to_chat(G, "You suddenly feel extremely obvious...")
+		G << "You suddenly feel extremely obvious..."
 
 
 //--//
@@ -24,4 +24,4 @@
 	for(var/mob/dead/observer/G in player_list)
 		G.verbs += /mob/dead/observer/verb/boo
 		G.verbs += /mob/dead/observer/verb/possess
-		to_chat(G, "You suddenly feel a welling of new spooky powers...")
+		G << "You suddenly feel a welling of new spooky powers..."

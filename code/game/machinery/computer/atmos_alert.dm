@@ -44,11 +44,11 @@
 		if("clear")
 			var/zone = params["zone"]
 			if(zone in priority_alarms)
-				to_chat(usr, "Priority alarm for [zone] cleared.")
+				usr << "Priority alarm for [zone] cleared."
 				priority_alarms -= zone
 				. = TRUE
 			if(zone in minor_alarms)
-				to_chat(usr, "Minor alarm for [zone] cleared.")
+				usr << "Minor alarm for [zone] cleared."
 				minor_alarms -= zone
 				. = TRUE
 	update_icon()

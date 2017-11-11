@@ -36,12 +36,12 @@
 					features = bloodSample.data["features"]
 					factions = bloodSample.data["factions"]
 					W.reagents.clear_reagents()
-					to_chat(user, "<span class='notice'>You inject the contents of the syringe into the seeds.</span>")
+					user << "<span class='notice'>You inject the contents of the syringe into the seeds.</span>"
 					contains_sample = 1
 				else
-					to_chat(user, "<span class='warning'>The seeds reject the sample!</span>")
+					user << "<span class='warning'>The seeds reject the sample!</span>"
 		else
-			to_chat(user, "<span class='warning'>The seeds already contain a genetic sample!</span>")
+			user << "<span class='warning'>The seeds already contain a genetic sample!</span>"
 	..()
 
 /obj/item/seeds/replicapod/get_analyzer_text()

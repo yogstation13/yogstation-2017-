@@ -113,4 +113,4 @@
 
 
 		if(message)
-			to_chat(L, message)
+			L << message

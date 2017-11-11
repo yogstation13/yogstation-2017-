@@ -159,16 +159,16 @@
 		if (!destroyed)
 			var/obj/item/stack/ST = W
 			if (ST.get_amount() < 2)
-				to_chat(user, "<span class='warning'>You need at least two sheets of glass for that!</span>")
+				user << "<span class='warning'>You need at least two sheets of glass for that!</span>"
 				return
 			var/dir_to_set = SOUTHWEST
 			if(!anchored)
-				to_chat(user, "<span class='warning'>[src] needs to be fastened to the floor first!</span>")
+				user << "<span class='warning'>[src] needs to be fastened to the floor first!</span>"
 				return
 			for(var/obj/structure/window/WINDOW in loc)
-				to_chat(user, "<span class='warning'>There is already a window there!</span>")
+				user << "<span class='warning'>There is already a window there!</span>"
 				return
-			to_chat(user, "<span class='notice'>You start placing the window...</span>")
+			user << "<span class='notice'>You start placing the window...</span>"
 			if(do_after(user,20, target = src))
 				if(!src.loc || !anchored) //Grille destroyed or unanchored while waiting
 					return
@@ -184,7 +184,7 @@
 				WD.anchored = 0
 				WD.state = 0
 				ST.use(2)
-				to_chat(user, "<span class='notice'>You place [WD] on [src].</span>")
+				user << "<span class='notice'>You place [WD] on [src].</span>"
 			return
 //window placing end
 

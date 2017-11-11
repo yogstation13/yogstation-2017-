@@ -84,27 +84,27 @@
 	return
 
 /datum/reagent/proc/overdose_start(mob/living/M)
-	to_chat(M, "<span class='userdanger'>You feel like you took too much of [name]!</span>")
+	M << "<span class='userdanger'>You feel like you took too much of [name]!</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage1(mob/living/M)
 	if(prob(30))
-		to_chat(M, "<span class='notice'>You feel like some [name] right about now.</span>")
+		M << "<span class='notice'>You feel like some [name] right about now.</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage2(mob/living/M)
 	if(prob(30))
-		to_chat(M, "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>")
+		M << "<span class='notice'>You feel like you need [name]. You just can't get enough.</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage3(mob/living/M)
 	if(prob(30))
-		to_chat(M, "<span class='danger'>You have an intense craving for [name].</span>")
+		M << "<span class='danger'>You have an intense craving for [name].</span>"
 	return
 
 /datum/reagent/proc/addiction_act_stage4(mob/living/M)
 	if(prob(30))
-		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
+		M << "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>"
 	return
 
 /proc/pretty_string_from_reagent_list(var/list/reagent_list)

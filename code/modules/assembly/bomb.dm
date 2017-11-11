@@ -30,7 +30,7 @@
 		return
 	if(istype(W, /obj/item/weapon/wrench) && !status)	//This is basically bomb assembly code inverted. apparently it works.
 
-		to_chat(user, "<span class='notice'>You disassemble [src].</span>")
+		user << "<span class='notice'>You disassemble [src].</span>"
 
 		bombassembly.loc = user.loc
 		bombassembly.master = null
@@ -47,11 +47,11 @@
 			status = 1
 			bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
 			message_admins("[key_name_admin(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]")
-			to_chat(user, "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>")
+			user << "<span class='notice'>A pressure hole has been bored to [bombtank] valve. \The [bombtank] can now be ignited.</span>"
 		else
 			status = 0
 			bombers += "[key_name(user)] unwelded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
-			to_chat(user, "<span class='notice'>The hole has been closed.</span>")
+			user << "<span class='notice'>The hole has been closed.</span>"
 	add_fingerprint(user)
 	..()
 

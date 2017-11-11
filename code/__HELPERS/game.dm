@@ -415,16 +415,16 @@
 			G << 'sound/misc/notice2.ogg' //Alerting them to their consideration
 			switch(askuser(G,Question,"Please answer in [poll_time/10] seconds!","Yes","No","Never", StealFocus=0, Timeout=poll_time))
 				if(1)
-					to_chat(G, "<span class='notice'>Choice registered: Yes.</span>")
+					G << "<span class='notice'>Choice registered: Yes.</span>"
 					if((world.time-time_passed)>poll_time)
-						to_chat(G, "<span class='danger'>Sorry, you were too late for the consideration!</span>")
+						G << "<span class='danger'>Sorry, you were too late for the consideration!</span>"
 						G << 'sound/machines/buzz-sigh.ogg'
 					else
 						candidates += G
 				if(2)
-					to_chat(G, "<span class='danger'>Choice registered: No.</span>")
+					G << "<span class='danger'>Choice registered: No.</span>"
 				if(3)
-					to_chat(G, "<span class='danger'>Choice registered: Never.</span>")
+					G << "<span class='danger'>Choice registered: Never.</span>"
 					if(M && G.client)
 						G.client.rejectedRoles += M.type
 	sleep(poll_time)

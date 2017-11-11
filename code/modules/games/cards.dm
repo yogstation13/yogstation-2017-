@@ -143,7 +143,7 @@
 	if(cards.len == 1 && istype(O, /obj/item/weapon/pen))
 		var/datum/playingcard/P = cards[1]
 		if(!blank)
-			to_chat(user, "You cannot write on that card.")
+			user << "You cannot write on that card."
 			return
 		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", null, 50)
 		if(!cardtext)

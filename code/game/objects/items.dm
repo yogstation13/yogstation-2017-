@@ -225,7 +225,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	else
 		pronoun = "It is"
 
-	to_chat(user, "[pronoun] a [size] item." )
+	user << "[pronoun] a [size] item." //e.g. They are a small item. or It is a bulky item.
 
 	if(user.research_scanner) //Mob has a research scanner active.
 		var/msg = "*--------* <BR>"
@@ -246,7 +246,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		else
 			msg += "<span class='danger'>No extractable materials detected.</span><BR>"
 		msg += "*--------*"
-		to_chat(user, msg)
+		user << msg
 
 
 /obj/item/attack_self(mob/user)
@@ -278,9 +278,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		if(istype(H))
 			if(H.gloves && (H.gloves.max_heat_protection_temperature > 360))
 				extinguish()
-				to_chat(user, "<span class='notice'>You put out the fire on [src].</span>")
+				user << "<span class='notice'>You put out the fire on [src].</span>"
 			else
-				to_chat(user, "<span class='warning'>You burn your hand on [src]!</span>")
+				user << "<span class='warning'>You burn your hand on [src]!</span>"
 				var/obj/item/bodypart/affecting = H.get_bodypart("[user.hand ? "l" : "r" ]_arm")
 				if(affecting && affecting.take_damage( 0, 5 ))		// 5 burn damage
 					H.update_damage_overlays(0)
@@ -331,7 +331,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(!A.has_fine_manipulation)
 		if(src in A.contents) // To stop Aliens having items stuck in their pockets
 			A.unEquip(src)
-		to_chat(user, "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>")
+		user << "<span class='warning'>Your claws aren't capable of such fine manipulation!</span>"
 		return
 	attack_paw(A)
 
@@ -371,33 +371,33 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 						success = 1
 						S.handle_item_insertion(I, 1)	//The 1 stops the "You put the [src] into [S]" insertion message from being displayed.
 					if(success && !failure)
-						to_chat(user, "<span class='notice'>You put everything [S.preposition] [S].</span>")
+						user << "<span class='notice'>You put everything [S.preposition] [S].</span>"
 					else if(success)
-						to_chat(user, "<span class='notice'>You put some things [S.preposition] [S].</span>")
+						user << "<span class='notice'>You put some things [S.preposition] [S].</span>"
 					else
-						to_chat(user, "<span class='warning'>You fail to pick anything up with [S]!</span>")
+						user << "<span class='warning'>You fail to pick anything up with [S]!</span>"
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
 
 	if(ismodule(W))
 		if(!module_holder)
-			to_chat(user, "<span class='warning'>This equipment doesn't support modules.</span>")
+			user << "<span class='warning'>This equipment doesn't support modules.</span>"
 			return
 		var/obj/item/module/module = W
 		var/return_value = module_holder.install(module, user)
 		if(return_value != 1) //1 if success, otherwise message
-			to_chat(user, "<span class='warning'>[return_value]</span>")
+			user << "<span class='warning'>[return_value]</span>"
 		else
-			to_chat(user, "<span class='notice'>You successfully install \the [module.name] into [src].")
+			user << "<span class='notice'>You successfully install \the [module.name] into [src]."
 
 	if(ismodholder(W))
 		if(module_holder)
-			to_chat(user, "<span class='notice'>There's already a module holder installed!</span>")
+			user << "<span class='notice'>There's already a module holder installed!</span>"
 			return
 		var/obj/item/module_holder/holder = W
 		if(holder.install_holder(src, user))
-			to_chat(user, "<span class='notice>You install the module holder into [src].</span>")
+			user << "<span class='notice>You install the module holder into [src].</span>"
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
@@ -505,25 +505,25 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 			(H.wear_mask && H.wear_mask.flags_cover & MASKCOVERSEYES) || \
 			(H.glasses && H.glasses.flags_cover & GLASSESCOVERSEYES))
 			// you can't stab someone in the eyes wearing a mask!
-			to_chat(user, "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>")
+			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
 			return
 		if(PROTECTEDEYES in H.dna.species.specflags)
-			to_chat(user, "<span class='danger'>This person's eyes are too strong to be gouged out!</span>")
+			user << "<span class='danger'>This person's eyes are too strong to be gouged out!</span>"
 			return
 
 	if(ismonkey(M))
 		var/mob/living/carbon/monkey/Mo = M
 		if(Mo.wear_mask && Mo.wear_mask.flags_cover & MASKCOVERSEYES)
 			// you can't stab someone in the eyes wearing a mask!
-			to_chat(user, "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>")
+			user << "<span class='danger'>You're going to need to remove that mask/helmet/glasses first!</span>"
 			return
 
 	if(isalien(M))//Aliens don't have eyes./N     slimes also don't have eyes!
-		to_chat(user, "<span class='warning'>You cannot locate any eyes on this creature!</span>")
+		user << "<span class='warning'>You cannot locate any eyes on this creature!</span>"
 		return
 
 	if(isbrain(M))
-		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
+		user << "<span class='danger'>You cannot locate any organic eyes on this brain!</span>"
 		return
 
 	src.add_fingerprint(user)
@@ -554,20 +554,20 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	if(M.eye_damage >= 10)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
-			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
+			M << "<span class='danger'>Your eyes start to bleed profusely!</span>"
 		if(!(M.disabilities & (NEARSIGHT | BLIND)))
 			if(M.become_nearsighted())
-				to_chat(M, "<span class='danger'>You become nearsighted!</span>")
+				M << "<span class='danger'>You become nearsighted!</span>"
 		if(prob(50))
 			if(M.stat != DEAD)
 				if(M.drop_item())
-					to_chat(M, "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>")
+					M << "<span class='danger'>You drop what you're holding and clutch at your eyes!</span>"
 			M.adjust_blurriness(10)
 			M.Paralyse(1)
 			M.Weaken(2)
 		if (prob(M.eye_damage - 10 + 1))
 			if(M.become_blind())
-				to_chat(M, "<span class='danger'>You go blind!</span>")
+				M << "<span class='danger'>You go blind!</span>"
 
 /obj/item/clean_blood()
 	. = ..()

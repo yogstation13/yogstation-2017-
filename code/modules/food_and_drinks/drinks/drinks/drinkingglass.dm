@@ -643,9 +643,9 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/egg/E = I
 		if(reagents)
 			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, "<span class='notice'>[src] is full.</span>")
+				user << "<span class='notice'>[src] is full.</span>"
 			else
-				to_chat(user, "<span class='notice'>You break [E] in [src].</span>")
+				user << "<span class='notice'>You break [E] in [src].</span>"
 				reagents.add_reagent("eggyolk", 5)
 				qdel(E)
 			return

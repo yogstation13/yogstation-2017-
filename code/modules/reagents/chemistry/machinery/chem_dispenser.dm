@@ -75,9 +75,9 @@
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
 	if(emagged)
-		to_chat(user, "<span class='warning'>\The [src] has no functional safeties to emag.</span>")
+		user << "<span class='warning'>\The [src] has no functional safeties to emag.</span>"
 		return
-	to_chat(user, "<span class='notice'>You short out \the [src]'s safeties.</span>")
+	user << "<span class='notice'>You short out \the [src]'s safeties.</span>"
 	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
 	emagged = 1
 
@@ -173,7 +173,7 @@
 		var/obj/item/weapon/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
-			to_chat(user, "<span class='warning'>A container is already loaded into the machine!</span>")
+			user << "<span class='warning'>A container is already loaded into the machine!</span>"
 			return
 
 		if(!user.drop_item()) // Can't let go?
@@ -181,14 +181,14 @@
 
 		beaker = B
 		beaker.loc = src
-		to_chat(user, "<span class='notice'>You add \the [B] to the machine.</span>")
+		user << "<span class='notice'>You add \the [B] to the machine.</span>"
 
 		if(!icon_beaker)
 			icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
 		icon_beaker.pixel_x = rand(-10,5)
 		overlays += icon_beaker
 	else if(user.a_intent != "harm" && !istype(I, /obj/item/weapon/card/emag))
-		to_chat(user, "<span class='warning'>You can't load \the [I] into the machine!</span>")
+		user << "<span class='warning'>You can't load \the [I] into the machine!</span>"
 	else
 		return ..()
 

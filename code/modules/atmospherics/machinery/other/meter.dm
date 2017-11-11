@@ -89,13 +89,13 @@
 
 /obj/machinery/meter/examine(mob/user)
 	..()
-	to_chat(user, status())
+	user << status()
 
 
 /obj/machinery/meter/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
+		user << "<span class='notice'>You begin to unfasten \the [src]...</span>"
 		if (do_after(user, 40/W.toolspeed, target = src))
 			user.visible_message( \
 				"[user] unfastens \the [src].", \
@@ -117,7 +117,7 @@
 	if(stat & (NOPOWER|BROKEN))
 		return 1
 	else
-		to_chat(usr, status())
+		usr << status()
 		return 1
 
 /obj/machinery/meter/singularity_pull(S, current_size)
