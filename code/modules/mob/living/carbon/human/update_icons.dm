@@ -576,7 +576,7 @@ var/global/list/limb_icon_cache = list()
 /mob/living/carbon/human/proc/generate_icon_render_key()
 	. = "[dna.species.limbs_id]"
 
-	if(dna.check_mutation(HULK))
+	if(dna.check_mutation(HULK) || dna.check_mutation(ACTIVE_HULK))
 		. += "-coloured-hulk"
 	else if(dna.species.use_skintones)
 		. += "-coloured-[skin_tone]"

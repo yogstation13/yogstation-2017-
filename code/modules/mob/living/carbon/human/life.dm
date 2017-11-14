@@ -85,7 +85,7 @@
 			if(prob(25))
 				emote("drool")
 			else
-				if(!dna.check_mutation(HULK))
+				if(!dna.check_mutation(ACTIVE_HULK))
 					say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
 				else
 					say(pick_list_replacements(BRAIN_DAMAGE_FILE, "hulk"))

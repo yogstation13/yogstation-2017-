@@ -899,7 +899,7 @@
 	staticOverlays["animal"] = staticOverlay
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
-	if(dna && dna.check_mutation(HULK))
+	if(dna && (dna.check_mutation(HULK) || dna.check_mutation(ACTIVE_HULK)))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		if(..(I, cuff_break = FAST_CUFFBREAK))
 			unEquip(I)
@@ -1122,17 +1122,23 @@
 			return TRUE
 	return FALSE
 
-/mob/living/carbon/human/proc/hulk_mutation_check()
-	if(dna.check_mutation(HULK))
-		var/M = dna.check_mutation(HULK)
-		var/datum/mutation/human/hulk/HM = dna.mutations[M]
-		if(HM.health_based && health > 65)
-			dna.remove_mutation(HULK)
-		else
+/mob/living/carbon/human/proc/hulk_health_check(oldhealth)
+	if(dna.check_mutation(ACTIVE_HULK))
+		if(health < config.health_threshold_crit)
+			dna.remove_mutation(ACTIVE_HULK)
 			return
+		if(health < oldhealth)
+			adjustStaminaLoss(-1.5 * (oldhealth - health))
 	else
-		if(dna.check_mutation(HULK_STATE) && stat == CONSCIOUS && health <=65)
-			dna.add_mutation(HULK)
-			var/M = dna.check_mutation(HULK)
-			var/datum/mutation/human/hulk/HM = dna.mutations[M]
-			HM.health_based = 1
+		if(!dna.check_mutation(HULK) && dna.check_mutation(GENETICS_HULK) && stat == CONSCIOUS && oldhealth >= health + 10)
+			dna.add_mutation(ACTIVE_HULK)
+
+/mob/living/carbon/human/proc/hulk_stamina_check()
+	if(dna.check_mutation(ACTIVE_HULK))
+		if(staminaloss >= 90)
+			dna.remove_mutation(ACTIVE_HULK)
+			to_chat(src, "<span class='notice'>You have calm down enough to become human again.</span>")
+			Weaken(6)
+		return 1
+	else
+		return 0
