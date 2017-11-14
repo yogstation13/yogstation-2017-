@@ -192,7 +192,7 @@
 	if(data >= 75)	// 30 units, 135 seconds
 		if (!M.confused)
 			M.confused = 1
-		M.confused = min(M.dizziness+3, 15)
+		M.confused = min(M.confused+3, 15)
 		if(iscultist(M) || is_handofgod_cultist(M) || is_handofgod_prophet(M) || is_servant_of_ratvar(M))
 			if(iscultist(M))
 				ticker.mode.remove_cultist(M.mind, 1, 1)
