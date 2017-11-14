@@ -173,6 +173,7 @@
 	owner.dna.species.burnmod = 0.7
 	owner.dna.species.coldmod = 0.7
 	owner.dna.species.heatmod = 0.7
+	owner.dna.species.staminamod = 0.3
 	owner.update_body()
 
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
@@ -206,6 +207,7 @@
 	owner.dna.species.burnmod = 1
 	owner.dna.species.coldmod = 1
 	owner.dna.species.heatmod = 1
+	owner.dna.species.staminamod = 1
 	owner.update_body_parts()
 
 /datum/mutation/human/hulk/say_mod(message)
