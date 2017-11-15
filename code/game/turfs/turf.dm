@@ -17,6 +17,7 @@
 
 	var/image/obscured	//camerachunks
 
+	var/list/decals
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
 	var/unacidable = FALSE
@@ -322,3 +323,10 @@
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)
+
+/turf/proc/add_decal(decal,group)
+	LAZYINITLIST(decals)
+	if(!decals[group])
+		decals[group] = list()
+	decals[group] += decal
+	add_overlay(decals[group])
