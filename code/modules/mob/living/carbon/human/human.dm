@@ -1135,6 +1135,9 @@
 
 /mob/living/carbon/human/proc/hulk_stamina_check()
 	if(dna.check_mutation(ACTIVE_HULK))
+		if(staminaloss < 60 && prob(1))
+			confused = 7
+			say("HULK SMASH!!")
 		if(staminaloss >= 90)
 			dna.remove_mutation(ACTIVE_HULK)
 			to_chat(src, "<span class='notice'>You have calm down enough to become human again.</span>")
@@ -1142,3 +1145,9 @@
 		return 1
 	else
 		return 0
+
+/mob/living/carbon/human/Bump(atom/movable/AM)
+	..()
+	if(dna.check_mutation(ACTIVE_HULK) && confused && (world.time - last_bumped) > 15)
+		Bumped(AM)
+		return AM.attack_hulk(src)

@@ -168,7 +168,7 @@
 	owner.undershirt = "Nude"
 	owner.dna.species.no_equip.Add(slot_wear_suit, slot_w_uniform)
 	owner.say("PUNY HUMANS!!")
-	owner.dna.species.stamina_recover_normal -= 5
+	owner.dna.species.stamina_recover_normal -= 6
 	owner.dna.species.staminamod = 0.3
 	owner.update_body()
 
@@ -176,8 +176,12 @@
 	return target.attack_hulk(owner)
 
 /datum/mutation/human/active_hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
-	owner.adjustStaminaLoss(-1)
+	if(prob(3))
+		owner.jitteriness = 10
+	owner.adjustStaminaLoss(-0.5)
 	return target.attack_hulk(owner)
+
+
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
 	if(owner.health < 0)
@@ -198,7 +202,7 @@
 	owner.status_flags -= IGNORESLOWDOWN
 	owner.adjustBrainLoss(-90)
 	owner.dna.species.no_equip.Remove(slot_wear_suit, slot_w_uniform)
-	owner.dna.species.stamina_recover_normal += 5
+	owner.dna.species.stamina_recover_normal += 6
 	owner.dna.species.staminamod = 1
 	owner.update_body_parts()
 
