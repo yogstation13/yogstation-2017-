@@ -169,10 +169,6 @@
 	owner.dna.species.no_equip.Add(slot_wear_suit, slot_w_uniform)
 	owner.say("PUNY HUMANS!!")
 	owner.dna.species.stamina_recover_normal -= 5
-	owner.dna.species.brutemod = 0.7
-	owner.dna.species.burnmod = 0.7
-	owner.dna.species.coldmod = 0.7
-	owner.dna.species.heatmod = 0.7
 	owner.dna.species.staminamod = 0.3
 	owner.update_body()
 
@@ -203,10 +199,6 @@
 	owner.adjustBrainLoss(-90)
 	owner.dna.species.no_equip.Remove(slot_wear_suit, slot_w_uniform)
 	owner.dna.species.stamina_recover_normal += 5
-	owner.dna.species.brutemod = 1
-	owner.dna.species.burnmod = 1
-	owner.dna.species.coldmod = 1
-	owner.dna.species.heatmod = 1
 	owner.dna.species.staminamod = 1
 	owner.update_body_parts()
 
