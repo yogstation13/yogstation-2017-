@@ -367,7 +367,7 @@
 	cooldown_min = 150
 	invocation = "HULK SMASH!!"
 	action_icon_state = "green_hand"
-	action_background_icon_state = "bg_default_on"
+	action_background_icon_state = "bg_default"
 	animation = 0
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/hulk/cast(list/targets,mob/user = usr)
