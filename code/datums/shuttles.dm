@@ -203,6 +203,13 @@
 	emag_buy = TRUE
 	credit_cost = 2500
 
+/datum/map_template/shuttle/emergency/nukeops
+	suffix = "nukeops"
+	name = "Syndicate Boarding Shuttle"
+	description = "A shuttle usually used by syndicate boarding parties, comes prepackaged with guns, explosives and hardsuits."
+	emag_buy = TRUE
+	credit_cost = 20000
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
