@@ -1,6 +1,0 @@
-author: " McDonald072"
-delete-after: true 
-changes: 
-  - bugfix: "You can no longer hide in lockers to evade ash/radstorms."
-  - bugfix: "Fixed reagents sometimes reaching precision levels that shouldn't be possible."
-  - bugfix: "Constructs no longer fail to create shells and shards while inside walls."
