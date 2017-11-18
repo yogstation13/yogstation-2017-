@@ -175,8 +175,9 @@
 	..()
 	update_icon()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
-	container_resist(user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/living/user)
+	if(user.last_special <= world.time)
+		container_resist(user)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
@@ -197,7 +198,8 @@
 		..(user)
 		return occupant
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/user)
+/obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/living/user)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
 	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300))
