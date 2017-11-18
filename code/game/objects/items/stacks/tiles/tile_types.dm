@@ -100,6 +100,9 @@
 	icon_state = "tile-carpet"
 	turf_type = /turf/open/floor/carpet
 	burn_state = FLAMMABLE
+	
+/obj/item/stack/tile/carpet/fifty
+	amount = 50
 
 
 /obj/item/stack/tile/fakespace
