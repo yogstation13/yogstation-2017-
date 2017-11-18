@@ -56,7 +56,6 @@
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
 	"3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals."
 	var/no_living_interaction = TRUE
-	var/light_on = 0
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
@@ -276,9 +275,6 @@
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?
 	return 1
-
-/mob/living/simple_animal/drone/proc/fix_light()
-	light_on = 0
 
 /mob/living/simple_animal/drone/ClickOn(var/atom/A, var/params)
 	if(no_living_interaction && !isdrone(A) && (isliving(A) || istype(A, /obj/effect/blob)) )
