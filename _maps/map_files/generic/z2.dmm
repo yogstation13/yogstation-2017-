@@ -3597,9 +3597,9 @@
 /area/centcom/control)
 "lF" = (
 /obj/docking_port/stationary{
-	dheight = 50;
+	dheight = 0;
 	dir = 4;
-	dwidth = 50;
+	dwidth = 25;
 	height = 50;
 	id = "emergency_away";
 	name = "Centcom Emergency Shuttle Dock";
