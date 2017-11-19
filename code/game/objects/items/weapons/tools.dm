@@ -47,6 +47,15 @@
 	icon_state = "wrench_brass"
 	toolspeed = 2
 
+/obj/item/weapon/wrench/security
+	name = "security wrench"
+	desc = "A security wrench with common(security?) uses. Can be found lying in the brig."
+	icon_state = "wrench_security"
+	force = 6 //SECURITY
+	throwforce = 8
+	origin_tech = "materials=1;engineering=1"
+	attack_verb = list("wrenched", "shitcuritied", "abused", "harmbatoned", "jabbed", "tapped",)
+
 /obj/item/weapon/wrench/medical
 	name = "medical wrench"
 	desc = "A medical wrench with common (medical?) uses. Can be found in your hand."
@@ -55,6 +64,7 @@
 	throwforce = 4
 	origin_tech = "materials=1;engineering=1;biotech=3"
 	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed")
+
 
 /obj/item/weapon/wrench/medical/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take \his soul. It looks like \he's trying to commit suicide.</span>")

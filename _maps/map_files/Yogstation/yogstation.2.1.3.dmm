@@ -1842,12 +1842,12 @@
 "adE" = (
 /obj/structure/table,
 /obj/item/weapon/screwdriver,
-/obj/item/weapon/wrench,
 /obj/item/clothing/head/helmet,
 /obj/item/device/assembly/signaler,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
+/obj/item/weapon/wrench/security,
 /turf/open/floor/plasteel,
 /area/security/transfer)
 "adF" = (
@@ -3902,13 +3902,13 @@
 	},
 /area/ai_monitored/security/armory)
 "agW" = (
-/obj/item/weapon/storage/toolbox/mechanical,
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 4;
 	icon_state = "1-4";
 	tag = "90Curve"
 	},
+/obj/item/weapon/storage/toolbox/security,
 /turf/open/floor/plasteel{
 	dir = 10;
 	icon_state = "warning"
@@ -69281,6 +69281,10 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"ZxJ" = (
+/obj/structure/extinguisher_cabinet,
+/turf/closed/wall,
+/area/security/prison)
 "ZxK" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
 /turf/open/floor/plasteel/shuttle{
@@ -93488,7 +93492,7 @@ abA
 adG
 abb
 adI
-adI
+ZxJ
 afY
 agM
 ahD
