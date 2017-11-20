@@ -114,11 +114,11 @@
 	set desc = "Remember the martial techniques of the Slipping Carp clan."
 	set category = "Slipping Carp"
 
-	to_chat(user, "<b><i>You retreat inward and recall the teachings of the Slipping Carp...</i></b>\n\
-	<span class='notice'>Mop (Harm): Deal more damage than normal and ignore armor.</span>\n\
-	<span class='notice'>Mop (Grab): Instantly grab the target aggressively.</span>\n\
-	<span class='notice'>Mop (Disarm): Attempt to knock the weapon out of your opponent's hands and fling it away.</span>\n\
-	<span class='notice'>Mop (Floor, Non-Help): Instantly wet the floor and slip any person standing on it. Mop must be wet.</span>")
+	to_chat(usr, "<b><i>You retreat inward and recall the teachings of the Slipping Carp...</i></b>\n\
+	<span class='notice'>Mop (Harm): Deal more damage than normal and ignore armor.\n\
+	Mop (Grab): Instantly grab the target aggressively.\n\
+	Mop (Disarm): Attempt to knock the weapon out of your opponent's hands and fling it away.\n\
+	Mop (Floor, Non-Help): Instantly wet the floor and slip any person standing on it. Mop must be wet.</span>")
 
 /obj/item/weapon/martial_arts_scroll/slipping_carp_scroll
 	name = "mysterious scroll"
