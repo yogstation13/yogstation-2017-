@@ -75,7 +75,7 @@
 	if(changeling.chosen_sting)
 		unset_sting(user)
 		return
-	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA")
+	selected_dna = changeling.select_dna("Select the target DNA: ", "Target DNA", drop_flesh_disguise = FALSE)
 	if(!selected_dna)
 		return
 	if(NOTRANSSTING in selected_dna.dna.species.specflags)
