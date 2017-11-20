@@ -53,7 +53,7 @@ DEBUG
 	else
 		if(!establish_db_connection())
 			world.log << "Database connection failed. Reverting to the legacy ban system."
-			diary << "Database connection failed. Reverting to the legacy ban system."
+			log_server("APPEARANCE BAN: Database connection failed. Reverting to the legacy ban system.")
 			config.ban_legacy_system = 1
 			appearance_loadbanfile()
 			return

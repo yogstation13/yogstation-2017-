@@ -215,7 +215,7 @@
 	if(resolved)
 		if(!establish_db_connection())
 			world.log << "Admin ticket database connection failure."
-			diary << "Admin ticket database connection failure."
+			log_server("Admin ticket database connection failure.")
 			return
 
 		var/DBQuery/query = dbcon.NewQuery("SELECT id FROM [format_table_name("admin_tickets")] WHERE round_id = [yog_round_number] AND ticket_id = [ticket_id]")

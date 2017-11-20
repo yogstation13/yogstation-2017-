@@ -222,7 +222,7 @@
 
 		if(M.config_tag)
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
-				diary << "Adding game mode [M.name] ([M.config_tag]) to configuration."
+				log_server("Adding game mode [M.name] ([M.config_tag]) to configuration.")
 				modes += M.config_tag
 				mode_names[M.config_tag] = M.name
 				probabilities[M.config_tag] = M.probability
@@ -444,7 +444,7 @@
 					config.check_randomizer = 1
 
 				else
-					diary << "Unknown setting in configuration: '[name]'"
+					log_server("Unknown setting in configuration: '[name]'")
 
 		else if(type == "game_options")
 			switch(name)
@@ -509,13 +509,13 @@
 					if(mode_name in config.modes)
 						config.continuous[mode_name] = 1
 					else
-						diary << "Unknown continuous configuration definition: [mode_name]."
+						log_server("Unknown continuous configuration definition: [mode_name].")
 				if("midround_antag")
 					var/mode_name = lowertext(value)
 					if(mode_name in config.modes)
 						config.midround_antag[mode_name] = 1
 					else
-						diary << "Unknown midround antagonist configuration definition: [mode_name]."
+						log_server("Unknown midround antagonist configuration definition: [mode_name].")
 				if("midround_antag_time_check")
 					config.midround_antag_time_check = text2num(value)
 				if("midround_antag_life_check")
@@ -547,9 +547,9 @@
 						if(prob_name in config.modes)
 							config.probabilities[prob_name] = text2num(prob_value)
 						else
-							diary << "Unknown game mode probability configuration definition: [prob_name]."
+							log_server("Unknown game mode probability configuration definition: [prob_name].")
 					else
-						diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
+						log_server("Incorrect probability configuration definition: [prob_name]  [prob_value].")
 
 				if("protect_roles_from_antagonist")
 					config.protect_roles_from_antagonist	= 1
@@ -632,7 +632,7 @@
 					MAX_EX_FLASH_RANGE = BombCap
 					MAX_EX_FLAME_RANGE = BombCap
 				else
-					diary << "Unknown setting in configuration: '[name]'"
+					log_server("Unknown setting in configuration: '[name]'")
 		else if(type == "discord")
 			discord_channels[name] = value
 
@@ -690,7 +690,7 @@
 				config.maplist[currentmap.name] = currentmap
 				currentmap = null
 			else
-				diary << "Unknown command in map vote config: '[command]'"
+				log_server("Unknown command in map vote config: '[command]'")
 
 
 /datum/configuration/proc/loadsql(filename)
@@ -734,7 +734,7 @@
 			if("feedback_tableprefix")
 				sqlfdbktableprefix = value
 			else
-				diary << "Unknown setting in configuration: '[name]'"
+				log_server("Unknown setting in configuration: '[name]'")
 
 /datum/configuration/proc/pick_mode(mode_name)
 	// I wish I didn't have to instance the game modes in order to look up

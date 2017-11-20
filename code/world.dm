@@ -26,11 +26,11 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
-	admindiary = file("data/logs/[date_string] Admin.log")
-	diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
-	diary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
-	diaryofmeanpeople << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
-	admindiary << "\n\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n---------------------"
+	//admindiary = file("data/logs/[date_string] Admin.log")
+	//diaryofmeanpeople = file("data/logs/[date_string] Attack.log")
+	//diary << "\[NEW ROUND]Starting up. [time2text(world.timeofday, "hh:mm.ss")]\n"
+	//diaryofmeanpeople << "\[NEW ROUND]Starting up. [time2text(world.timeofday, "hh:mm.ss")]\n"
+	//admindiary << "\[NEW ROUND]Starting up. [time2text(world.timeofday, "hh:mm.ss")]\n"
 	changelog_hash = md5('html/changelog.html')					//used for telling if the changelog has changed recently
 
 	var/roundfile = file("data/roundcount.txt")
@@ -41,6 +41,8 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 		yog_round_number++
 	fdel(roundfile)
 	text2file(num2text(yog_round_number), roundfile)
+
+	log_server("Starting new round.")
 
 	make_datum_references_lists()	//initialises global lists for referencing frequently used datums (so that we only ever do it once)
 
@@ -103,7 +105,7 @@ var/last_irc_status = 0
 
 /world/Topic(T, addr, master, key)
 	if(config && config.log_world_topic)
-		diary << "TOPIC: \"[T]\", from:[addr], master:[master], key:[key]"
+		log_server("TOPIC: \"[T]\", from:[addr], master:[master], key:[key]")
 
 	var/list/input = params2list(T)
 	var/key_valid = (global.comms_allowed && input["key"] == global.comms_key)
@@ -349,7 +351,7 @@ var/inerror = 0
 	if(Lines.len)
 		if(Lines[1])
 			master_mode = Lines[1]
-			diary << "Saved mode is '[master_mode]'"
+			log_server("Saved mode is '[master_mode]'")
 
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
@@ -390,7 +392,7 @@ var/list/donators = list()
 		establish_db_connection()
 		if(!dbcon.IsConnected())
 			world.log << "Failed to connect to database in load_donators(). Reverting to legacy system."
-			diary << "Failed to connect to database in load_donators(). Reverting to legacy system."
+			log_server("Failed to connect to database in load_donators(). Reverting to legacy system.")
 			config.donator_legacy_system = 1
 			load_donators()
 			return
