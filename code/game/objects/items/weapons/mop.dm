@@ -38,7 +38,7 @@
 		return
 
 	if(reagents.total_volume < 1)
-		user << "<span class='warning'>Your [name] is dry!</span>"
+		to_chat(user, "<span class='warning'>Your [name] is dry!</span>")
 		return
 
 	if(is_cleanable(A))
@@ -50,7 +50,7 @@
 		if(!do_after(user, mopspeed, target = H))
 			return
 		if(reagents.total_volume < 1)
-			user << "<span class='warning'>Your [name] is dry!</span>"
+			to_chat(user, "<span class='warning'>Your [name] is dry!</span>")
 			return
 		user.visible_message("<span class=notice>[user] finishes cleaning [H] with [src].</span>", "<span class='notice'>You finish cleaning [H] with [src].</span>")
 		if(reagents_do_clean())
@@ -64,16 +64,16 @@
 		if(!do_after(user, mopspeed, target = T))
 			return
 		if(reagents.total_volume < 1)
-			user << "<span class='warning'>Your [name] is dry!</span>"
+			to_chat(user, "<span class='warning'>Your [name] is dry!</span>")
 			return
-		user << "<span class='notice'>You finish mopping.</span>"
+		to_chat(user, "<span class='notice'>You finish mopping.</span>")
 		clean_turf(T)
 	else if(user.a_intent != "harm")
 		A.visible_message("[user] starts to wipe down [A] with [src]!", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
 		if(!do_after(user,mopspeed, target = A))
 			return
 		if(reagents.total_volume < 1)
-			user << "<span class='warning'>Your [name] is dry!</span>"
+			to_chat(user, "<span class='warning'>Your [name] is dry!</span>")
 			return
 		user.visible_message("[user] finishes wiping off the [A]!", "<span class='notice'>You finish wiping off the [A].</span>")
 		if(reagents_do_clean())
@@ -141,7 +141,7 @@
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj,src)
-	user << "<span class='notice'>You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position.</span>"
+	to_chat(user, "<span class='notice'>You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position.</span>")
 	playsound(user, 'sound/machines/click.ogg', 30, 1)
 
 /obj/item/weapon/mop/advanced/process()
@@ -150,7 +150,7 @@
 
 /obj/item/weapon/mop/advanced/examine(mob/user)
 	..()
-	user << "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>"
+	to_chat(user, "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>")
 
 /obj/item/weapon/mop/advanced/Destroy()
 	if(refill_enabled)

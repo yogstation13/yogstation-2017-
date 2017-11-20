@@ -50,6 +50,7 @@
 		"mine_salve",
 		"toxin"
 	)
+	var/list/special_transfer_amounts = list(1)
 
 /obj/machinery/chem_dispenser/New()
 	..()
@@ -74,9 +75,9 @@
 
 /obj/machinery/chem_dispenser/emag_act(mob/user)
 	if(emagged)
-		user << "<span class='warning'>\The [src] has no functional safeties to emag.</span>"
+		to_chat(user, "<span class='warning'>\The [src] has no functional safeties to emag.</span>")
 		return
-	user << "<span class='notice'>You short out \the [src]'s safeties.</span>"
+	to_chat(user, "<span class='notice'>You short out \the [src]'s safeties.</span>")
 	dispensable_reagents |= emagged_reagents//add the emagged reagents to the dispensable ones
 	emagged = 1
 
@@ -113,7 +114,7 @@
 	if (beaker)
 		data["beakerCurrentVolume"] = beakerCurrentVolume
 		data["beakerMaxVolume"] = beaker.volume
-		data["beakerTransferAmounts"] = beaker.possible_transfer_amounts
+		data["beakerTransferAmounts"] = (special_transfer_amounts | beaker.possible_transfer_amounts)
 	else
 		data["beakerCurrentVolume"] = null
 		data["beakerMaxVolume"] = null
@@ -133,7 +134,7 @@
 	switch(action)
 		if("amount")
 			var/target = text2num(params["target"])
-			if(target in beaker.possible_transfer_amounts)
+			if(target in (special_transfer_amounts | beaker.possible_transfer_amounts))
 				amount = target
 				. = TRUE
 		if("dispense")
@@ -150,7 +151,7 @@
 				. = TRUE
 		if("remove")
 			var/amount = text2num(params["amount"])
-			if(beaker && amount in beaker.possible_transfer_amounts)
+			if(beaker && (amount in (special_transfer_amounts | beaker.possible_transfer_amounts)) )
 				beaker.reagents.remove_all(amount)
 				. = TRUE
 		if("eject")
@@ -172,7 +173,7 @@
 		var/obj/item/weapon/reagent_containers/B = I
 		. = 1 //no afterattack
 		if(beaker)
-			user << "<span class='warning'>A container is already loaded into the machine!</span>"
+			to_chat(user, "<span class='warning'>A container is already loaded into the machine!</span>")
 			return
 
 		if(!user.drop_item()) // Can't let go?
@@ -180,14 +181,14 @@
 
 		beaker = B
 		beaker.loc = src
-		user << "<span class='notice'>You add \the [B] to the machine.</span>"
+		to_chat(user, "<span class='notice'>You add \the [B] to the machine.</span>")
 
 		if(!icon_beaker)
 			icon_beaker = image('icons/obj/chemical.dmi', src, "disp_beaker") //randomize beaker overlay position.
 		icon_beaker.pixel_x = rand(-10,5)
 		overlays += icon_beaker
 	else if(user.a_intent != "harm" && !istype(I, /obj/item/weapon/card/emag))
-		user << "<span class='warning'>You can't load \the [I] into the machine!</span>"
+		to_chat(user, "<span class='warning'>You can't load \the [I] into the machine!</span>")
 	else
 		return ..()
 

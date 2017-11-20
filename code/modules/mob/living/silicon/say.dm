@@ -3,7 +3,7 @@
 	return ..() | SPAN_ROBOT
 
 /mob/living/proc/robot_talk(message)
-	log_say("[key_name(src)] : [message]")
+	log_say("[key_name(src)] : [message]", "BINARY")
 	var/desig = "Default Cyborg" //ezmode for taters
 	if(istype(src, /mob/living/silicon))
 		var/mob/living/silicon/S = src
@@ -14,9 +14,9 @@
 		if(M.binarycheck())
 			if(istype(M, /mob/living/silicon/ai))
 				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='?src=\ref[M];track=[html_encode(name)]'><span class='name'>[name] ([desig])</span></a> <span class='message'>[message_a]</span></span></i>"
-				M << renderedAI
+				to_chat(M, renderedAI)
 			else
-				M << rendered
+				to_chat(M, rendered)
 		if(isobserver(M))
 			var/following = src
 			// If the AI talks on binary chat, we still want to follow
@@ -25,7 +25,7 @@
 				var/mob/living/silicon/ai/ai = src
 				following = ai.eyeobj
 			var/link = FOLLOW_LINK(M, following)
-			M << "[link] [rendered]"
+			to_chat(M, "[link] [rendered]")
 
 /mob/living/silicon/robot/robot_talk(message)
 	..()

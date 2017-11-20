@@ -25,9 +25,9 @@
 /obj/item/weapon/vending_refill/examine(mob/user)
 	..()
 	if(charges[1] > 0)
-		user << "It can restock [charges[1]+charges[2]+charges[3]] item(s)."
+		to_chat(user, "It can restock [charges[1]+charges[2]+charges[3]] item(s).")
 	else
-		user << "It's empty!"
+		to_chat(user, "It's empty!")
 
 //NOTE I decided to go for about 1/3 of a machine's capacity
 
@@ -69,5 +69,5 @@
 /obj/item/weapon/vending_refill/clothing
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
-	charges = list(42, 2, 4)// of 98 standard, 6 contraband, 10 premium(?)
-	init_charges = list(42, 2, 4)
+	charges = list(55, 2, 4)// of 112 standard, 6 contraband, 10 premium(?)
+	init_charges = list(55, 2, 4)

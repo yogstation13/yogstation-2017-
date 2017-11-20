@@ -4,7 +4,6 @@
 	icon_state = "mining"
 	has_gravity = 1
 	always_unpowered = TRUE
-	dream_type = "legion"
 
 /area/lavaland/surface
 	name = "Lavaland"
@@ -31,4 +30,5 @@
 	outdoors = 1
 
 /area/lavaland/surface/outdoors/mapgen_protected
+	icon_state = "mapgen_protect"
 	mapgen_protected = 1

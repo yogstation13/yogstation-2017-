@@ -2,13 +2,12 @@
 	set category = "Special Verbs"
 	set name = "Dsay" //Gave this shit a shorter name so you only have to time out "dsay" rather than "dead say" to use it --NeoFite
 	set hidden = 1
-	if(!src.holder)
-		src << "Only administrators may use this command."
+	if(!check_rights(0))
 		return
 	if(!src.mob)
 		return
 	if(prefs.muted & MUTE_DEADCHAT)
-		src << "<span class='danger'>You cannot send DSAY messages (muted).</span>"
+		to_chat(src, "<span class='danger'>You cannot send DSAY messages (muted).</span>")
 		return
 
 	if (src.handle_spam_prevention(msg,MUTE_DEADCHAT))

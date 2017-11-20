@@ -86,7 +86,7 @@
 				return 0
 			if(C.m_intent=="walk" && (lube & NO_SLIP_WHEN_WALKING))
 				return 0
-		C << "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>"
+		to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 
 		C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
 		playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
@@ -108,8 +108,10 @@
 					C.spin(1,1)
 		return 1
 
-/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0) // 1 = Water, 2 = Lube, 3 = Ice, 4 = Permafrost, 5 = Slide
-	wet_time = max(wet_time+wet_time_to_add, min_wet_time)
+/turf/open/proc/MakeSlippery(wet_setting = TURF_WET_WATER, min_wet_time = 0, wet_time_to_add = 0, max_wet_time = INFINITY) // 1 = Water, 2 = Lube, 3 = Ice, 4 = Permafrost, 5 = Slide
+	if(wet_time >= max_wet_time)
+		return
+	wet_time = min(max_wet_time, max(wet_time+wet_time_to_add, min_wet_time))
 	if(wet >= wet_setting)
 		return
 	wet = wet_setting

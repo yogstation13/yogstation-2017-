@@ -96,7 +96,7 @@
 	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1, 1)
 	qdel(src)
 	return
-	
+
 /obj/machinery/power/supermatter_shard/process()
 	var/turf/L = loc
 
@@ -110,14 +110,14 @@
 		supermatter_pull()
 	else if(isspaceturf(L))// Stop processing this stuff if we've been ejected.
 		return
-	
+
 	if(grav_pulling)
 		supermatter_pull()
 
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
 		if((world.timeofday - lastwarning) / 10 >= WARNING_DELAY)
 			var/stability = num2text(round((damage / explosion_point) * 100))
-				
+
 			if(damage > emergency_point)
 				radio.talk_into(src, "[emergency_alert] Instability: [stability]%")
 				lastwarning = world.timeofday
@@ -253,7 +253,7 @@
 	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
 	for(var/mob/M in mob_list)
 		M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
-		M << "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>"
+		to_chat(M, "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>")
 	qdel(src)
 	return(gain)
 
@@ -278,11 +278,11 @@
 	if(Adjacent(user))
 		return attack_hand(user)
 	else
-		user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
+		to_chat(user, "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>")
 	return
 
 /obj/machinery/power/supermatter_shard/attack_ai(mob/user)
-	user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
+	to_chat(user, "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>")
 
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
 	if(!istype(user))

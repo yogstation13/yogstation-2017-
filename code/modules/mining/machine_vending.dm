@@ -26,12 +26,15 @@
 		new /datum/data/mining_equipment("Mining Hardsuit",		/obj/item/clothing/suit/space/hardsuit/mining/lavaland,		            2500, "Equipment"),
 		new /datum/data/mining_equipment("Jetpack Upgrade",		/obj/item/hardsuit_jetpack,	              								1000, "Equipment"),
 		new /datum/data/mining_equipment("Kinetic Accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,               	   		750, "Weapons"),
+		new /datum/data/mining_equipment("KA Super Grip", /obj/item/kinetic_part/grip/super,               	   		500, "Weapons"),
+		new /datum/data/mining_equipment("KA Super Barrel", /obj/item/kinetic_part/barrel/super,               	   		500, "Weapons"),
+		new /datum/data/mining_equipment("KA Super Charger", /obj/item/kinetic_part/charger/super,               	   		500, "Weapons"),
+		new /datum/data/mining_equipment("KA Super Barrel End", /obj/item/kinetic_part/barrel_end/super,               	   		500, "Weapons"),
 		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                    	   		750, "Weapons"),
 		new /datum/data/mining_equipment("Silver Pickaxe",		/obj/item/weapon/pickaxe/silver,				                  		750, "Weapons"),
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  		750, "Weapons"),
 		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              		1500, "Weapons"),
 		new /datum/data/mining_equipment("Plasma Cutter" ,		/obj/item/weapon/gun/energy/plasmacutter,								1500, "Weapons"),
-		new /datum/data/mining_equipment("Super Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator/super,			  		2000, "Weapons"),
 		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                   		500, "Mining Drone"),
 		new /datum/data/mining_equipment("Drone Melee Upgrade", /obj/item/device/mine_bot_upgrade,      			   			   		400, "Mining Drone"),
 		new /datum/data/mining_equipment("Drone Health Upgrade",/obj/item/device/mine_bot_upgrade/health,      			   	       		400, "Mining Drone"),
@@ -138,7 +141,7 @@
 					return
 				I.loc = src
 				inserted_id = I
-			else usr << "<span class='danger'>No valid ID.</span>"
+			else to_chat(usr, "<span class='danger'>No valid ID.</span>")
 	if(href_list["purchase"])
 		if(istype(inserted_id))
 			var/datum/data/mining_equipment/prize = locate(href_list["purchase"])
@@ -259,7 +262,6 @@
 		new /datum/data/mining_equipment("Diamond Pickaxe",		/obj/item/weapon/pickaxe/diamond,				                  		1500),
 		new /datum/data/mining_equipment("Super Resonator",     /obj/item/weapon/resonator/upgraded,                              		2000),
 		new /datum/data/mining_equipment("Plasma Cutter" ,		/obj/item/weapon/gun/energy/plasmacutter,								2500),
-		new /datum/data/mining_equipment("Super Accelerator",	/obj/item/weapon/gun/energy/kinetic_accelerator/super,			  		3000),
 		new /datum/data/mining_equipment("Point Transfer Card", /obj/item/weapon/card/mining_point_card,               			   		500),
 		new /datum/data/mining_equipment("Mining Drone",        /mob/living/simple_animal/hostile/mining_drone,                   		800),
 		new /datum/data/mining_equipment("Drone Melee Upgrade", /obj/item/device/mine_bot_upgrade,      			   			   		400),
@@ -325,12 +327,12 @@
 		if(points)
 			var/obj/item/weapon/card/id/C = I
 			C.mining_points += points
-			user << "<span class='info'>You transfer [points] points to [C].</span>"
+			to_chat(user, "<span class='info'>You transfer [points] points to [C].</span>")
 			points = 0
 		else
-			user << "<span class='info'>There's no points left on [src].</span>"
+			to_chat(user, "<span class='info'>There's no points left on [src].</span>")
 	..()
 
 /obj/item/weapon/card/mining_point_card/examine(mob/user)
 	..()
-	user << "There's [points] point\s on the card."
+	to_chat(user, "There's [points] point\s on the card.")

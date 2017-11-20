@@ -82,7 +82,7 @@
 /datum/objective/cybermen/explore/get_secret_documents/check_completion()
 	if(..())
 		return 1
-	for(var/obj/item/documents/nanotrasen/D in cyberman_network.cybermen_hacked_objects)
+	for(var/obj/item/documents/secret/nanotrasen/D in cyberman_network.cybermen_hacked_objects)
 		return 1
 	return 0
 
@@ -103,7 +103,7 @@
 	var/list/L = list()
 	for(var/V in get_all_accesses())
 		L[get_access_desc(V)] = V
-	var/access_name = input("Set custom required access:", user, 0) in L
+	var/access_name = input("Set custom required access:", user, 0) as anything in L
 	required_access = L[access_name]
 	explanation_text = "Aquire an ID with [get_access_desc(required_access)]-level access upload it to the cybermen network by hacking it."
 
@@ -137,7 +137,7 @@
 		if(survivor.loc.z == ZLEVEL_STATION && survivor.key)
 			humans_on_station++
 	#ifdef CYBERMEN_DEBUG
-	world << "Humans on station: [humans_on_station]"
+	to_chat(world, "Humans on station: [humans_on_station]")
 	#endif
 	if(humans_on_station > 3)//needs a somewhat sane lower limit
 		target_cybermen_num = min(target_cybermen_num, humans_on_station)
@@ -207,7 +207,7 @@
 	if(!L.len)
 		alert("No AI candidates", user)
 		return
-	var/ai_name = input("Set custom AI:", user, 0) in L
+	var/ai_name = input("Set custom AI:", user, 0) as anything in L
 	if(!ai_name)
 		return
 	var/the_ai = L[ai_name]
@@ -278,10 +278,10 @@
 	while(remaining)
 		var/candidate = pick(analyze_target_candidates)
 		#ifdef CYBERMEN_DEBUG
-		world << "Analysis Candidates:"
+		to_chat(world, "Analysis Candidates:")
 		for(var/curcandidate in analyze_target_candidates)
-			world << "  [curcandidate]"
-		world << "Selected: [candidate]"
+			to_chat(world, "  [curcandidate]")
+		to_chat(world, "Selected: [candidate]")
 		#endif
 		if(candidate)
 			descriptions += candidate
@@ -298,9 +298,9 @@
 		remaining--
 	check_completion()//takes care of explanation text.
 	#ifdef CYBERMEN_DEBUG
-	world << "Targets:"
+	to_chat(world, "Targets:")
 	for(var/cur in targets)
-		world << "  [cur]"
+		to_chat(world, "  [cur]")
 	#endif
 
 /datum/objective/cybermen/exploit/analyze_and_hack/is_valid()
@@ -336,11 +336,11 @@
 	descriptions = list()
 	targets = list()
 	for(var/i=0;i<num_analyze_targets;i++)
-		var/target_name = input("Select analysis target [i+1]:", user) in cyberman_network.cybermen_analyze_targets
+		var/target_name = input("Select analysis target [i+1]:", user) as anything in cyberman_network.cybermen_analyze_targets
 		descriptions += target_name
 		targets += cyberman_network.cybermen_analyze_targets[target_name]
 	for(var/i=0;i<num_hack_targets;i++)
-		var/target_name = input("Select hack target [i+1]:", user) in cyberman_network.cybermen_hack_targets
+		var/target_name = input("Select hack target [i+1]:", user) as anything in cyberman_network.cybermen_hack_targets
 		descriptions += target_name
 		targets += cyberman_network.cybermen_hack_targets[target_name]
 	check_completion()//takes care of explanation text.
@@ -403,12 +403,12 @@
 	var/cybermen_escaped = 0
 	for(var/mob/living/player in player_list)
 		#ifdef CYBERMEN_DEBUG
-		world << "Checking Player [player]"
-		world << "Mind: [player.mind]"
-		world << "Stat: [player.stat]"
-		world << "Human: [istype(player, /mob/living/carbon/human)]"
-		world << "Area: [get_area(player) == A]"
-		world << ""
+		to_chat(world, "Checking Player [player]")
+		to_chat(world, "Mind: [player.mind]")
+		to_chat(world, "Stat: [player.stat]")
+		to_chat(world, "Human: [istype(player, /mob/living/carbon/human)]")
+		to_chat(world, "Area: [get_area(player) == A]")
+		to_chat(world, "")
 		#endif
 		if(player.mind && player.stat != DEAD && istype(player, /mob/living/carbon/human) && get_area(player) == A)
 			if(player.mind && !ticker.mode.is_cyberman(player.mind))
@@ -458,7 +458,7 @@
 	name = "Custom"
 
 /datum/objective/cybermen/custom/admin_create_objective(mob/user = usr)
-	phase = input("Enter phase name:", user)
-	explanation_text = input("Enter objective text:", user)
+	phase = stripped_input(user, "Enter phase name:")
+	explanation_text = stripped_input(usr, "Enter objective text:", user)
 	win_upon_completion = alert("Cyberman victory upon completion?", user, "Yes", "No") == "Yes" ? 1 : 0
 	alert("Note that an admin must use \"Force Objective Completion\" in the Cyberman Panel to complete this objective and advance the game.", user, "Okay")

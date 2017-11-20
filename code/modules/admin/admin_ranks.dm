@@ -295,7 +295,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 	var/task = href_list["editrights"]
 	switch(task)
 		if("add")
-			var/new_ckey = ckey(input(usr,"New admin's ckey","Admin ckey", null) as text|null)
+			var/new_ckey = ckey(stripped_input(usr,"New admin's ckey","Admin ckey", null))
 			if(!new_ckey)
 				return
 			if(new_ckey in admin_datums)
@@ -341,7 +341,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 				if(null)
 					return
 				if("*New Rank*")
-					new_rank = ckeyEx(input("Please input a new rank", "New custom rank", null, null) as null|text)
+					new_rank = ckeyEx(stripped_input(usr, "Please input a new rank", "New custom rank", null, null))
 					if(!new_rank)
 						return
 
@@ -377,7 +377,7 @@ var/list/admin_ranks = list()								//list of all admin_rank datums
 			if(!D)
 				return	//they're not an admin!
 
-			var/keyword = input("Input permission keyword (one at a time):\ne.g. +BAN or -FUN or +/client/proc/someverb", "Permission toggle", null, null) as null|text
+			var/keyword = stripped_input(usr, "Input permission keyword (one at a time):\ne.g. +BAN or -FUN or +/client/proc/someverb", "Permission toggle", null, null)
 			if(!keyword)
 				return
 

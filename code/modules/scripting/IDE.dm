@@ -1,5 +1,8 @@
 /client/verb/tcssave()
 	set hidden = 1
+	if(jobban_isbanned(usr, "ntsl"))
+		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
+		return
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
 			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine
@@ -24,6 +27,9 @@
 
 /client/verb/tcscompile()
 	set hidden = 1
+	if(jobban_isbanned(usr, "ntsl"))
+		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
+		return
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
 			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine
@@ -45,8 +51,13 @@
 
 					if(compileerrors.len)
 						src << output("<b>Compile Errors</b>", "tcserror")
+						var/i = 1
 						for(var/scriptError/e in compileerrors)
-							src << output("<font color = red>\t>[e.message]</font color>", "tcserror")
+							if(i) //. Bold the first one, since it's probably important
+								src << output("<font color = red>\t><b>[e.message]</b></font color>", "tcserror")
+								i = 0
+							else
+								src << output("<font color = red>\t>[e.message]</font color>", "tcserror")
 						src << output("([compileerrors.len] errors)", "tcserror")
 
 						// Output compile errors to all other people viewing the code too
@@ -54,18 +65,26 @@
 							if(M.client)
 								M << output(null, "tcserror")
 								M << output("<b>Compile Errors</b>", "tcserror")
+								i = 1 //. Still using var/i from above
 								for(var/scriptError/e in compileerrors)
-									M << output("<font color = red>\t>[e.message]</font color>", "tcserror")
+									if(i)
+										M << output("<font color = red>\t><b>[e.message]</b></font color>", "tcserror")
+										i = 0
+									else
+										M << output("<font color = red>\t>[e.message]</font color>", "tcserror")
 								M << output("([compileerrors.len] errors)", "tcserror")
 
 
-					else
+					else // If no errors
 						src << output("<font color = blue>TCS compilation successful!</font color>", "tcserror")
+						src << output("Time of compile: [gameTimestamp("hh:mm:ss")]","tcserror")
+						//. ^ To make it obvious that it's done a new compile
 						src << output("(0 errors)", "tcserror")
 
 						for(var/mob/M in Machine.viewingcode)
 							if(M.client)
 								M << output("<font color = blue>TCS compilation successful!</font color>", "tcserror")
+								M << output("Time of compile: [gameTimestamp("hh:mm:ss")]","tcserror")
 								M << output("(0 errors)", "tcserror")
 
 			else
@@ -80,6 +99,9 @@
 
 /client/verb/tcsrun()
 	set hidden = 1
+	if(jobban_isbanned(usr, "ntsl"))
+		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
+		return
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
 			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine
@@ -116,6 +138,9 @@
 
 /client/verb/exittcs()
 	set hidden = 1
+	if(jobban_isbanned(usr, "ntsl"))
+		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
+		return
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
 			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine
@@ -128,6 +153,9 @@
 
 /client/verb/tcsrevert()
 	set hidden = 1
+	if(jobban_isbanned(usr, "ntsl"))
+		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
+		return
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
 			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine
@@ -157,6 +185,9 @@
 
 /client/verb/tcsclearmem()
 	set hidden = 1
+	if(jobban_isbanned(usr, "ntsl"))
+		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
+		return
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
 			var/obj/machinery/computer/telecomms/traffic/Machine = mob.machine

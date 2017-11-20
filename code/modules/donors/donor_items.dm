@@ -24,10 +24,10 @@ var/list/donor_start_items = list(\
 						/obj/item/clothing/head/collectable/kitty, \
 						/obj/item/clothing/head/collectable/rabbitears, \
 						/obj/item/clothing/head/collectable/wizard, \
-						/obj/item/clothing/head/collectible/wizard/red, \
-						/obj/item/clothing/head/collectible/wizard/yellow, \
-						/obj/item/clothing/head/collectible/wizard/black, \
-						/obj/item/clothing/head/collectible/wizard/marisa, \
+						/obj/item/clothing/head/collectable/wizard/red, \
+						/obj/item/clothing/head/collectable/wizard/yellow, \
+						/obj/item/clothing/head/collectable/wizard/black, \
+						/obj/item/clothing/head/collectable/wizard/marisa, \
 						/obj/item/clothing/head/collectable/hardhat, \
 						/obj/item/clothing/head/collectable/HoS, \
 						/obj/item/clothing/head/collectable/thunderdome, \

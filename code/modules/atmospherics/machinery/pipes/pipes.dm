@@ -1,6 +1,7 @@
 /obj/machinery/atmospherics/pipe
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/volume = 0
+	var/adminlog = 0
 
 	level = 1
 
@@ -74,6 +75,9 @@
 	parent = P
 
 /obj/machinery/atmospherics/pipe/Destroy()
+	if(adminlog == 1)
+		message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) DESTROYED A VERY IMPORTANT PIPE. <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>(JMP)</a> This alert will not show again for this device.") //[usr] DESTROYED A PROTECTED PIPE YOU FUCKING MORONS ~~JohnCena1469
+		log_admin("[usr] destroyed a protected pipe")
 	releaseAirToTurf()
 	qdel(air_temporary)
 	air_temporary = null

@@ -39,7 +39,7 @@
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/Shapeshift(mob/living/caster)
 	for(var/mob/living/M in caster)
 		if(GODMODE in M.status_flags)
-			caster << "<span class='warning'>You're already shapeshifted!</span>"
+			to_chat(caster, "<span class='warning'>You're already shapeshifted!</span>")
 			return
 
 	var/mob/living/shape = new shapeshift_type(caster.loc)
