@@ -15,6 +15,7 @@
 		for(var/obj/item/organ/I in internal_organs)
 			int_organs += I
 			I.Remove(src, 1)
+			I.loc = null //hide the organ in nullspace
 
 	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants-int_organs))
@@ -29,6 +30,8 @@
 	invisibility = INVISIBILITY_MAXIMUM
 
 	var/atom/movable/overlay/animation = new( loc )
+	animation.name = name
+	animation.desc = desc
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
@@ -86,6 +89,7 @@
 			qdel(I)
 
 		for(var/obj/item/organ/I in int_organs)
+			I.forceMove(O.loc) //if something fails in inserting the organ, it will be on the ground
 			I.Insert(O, 1)
 
 	//transfer mind and delete old mob
@@ -124,6 +128,7 @@
 		for(var/obj/item/organ/I in internal_organs)
 			int_organs += I
 			I.Remove(src, 1)
+			I.loc = null //hide the organ in nullspace
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
@@ -144,6 +149,8 @@
 	overlays.Cut()
 	invisibility = INVISIBILITY_MAXIMUM
 	var/atom/movable/overlay/animation = new( loc )
+	animation.name = name
+	animation.desc = desc
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
@@ -206,6 +213,7 @@
 			qdel(I)
 
 		for(var/obj/item/organ/I in int_organs)
+			I.forceMove(O.loc) //if something fails in inserting the organ, it will be on the ground
 			I.Insert(O, 1)
 
 	if(mind)
