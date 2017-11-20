@@ -118,7 +118,7 @@
  	Name = "Red"
  	Icon_State = "secborg-red"		//Probably a donor sprite.
  	eye_icon_state = "eyes-secborg-red"
- 	headlight_icon_state = "eyes-standard-light"
+ 	headlight_icon_state = "eyes-standard-lights"
  	modules = list(/obj/item/weapon/robot_module/security
 
 //Peacekeeper
