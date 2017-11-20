@@ -16,6 +16,7 @@
 	var/modtype = "robot"
 	var/obj/item/robot_parts/robot_suit/robot_suit = null //Used for deconstruction to remember what the borg was constructed out of..
 	var/obj/item/device/mmi/mmi = null
+	var/datum/robot_skin/robot_skin
 
 //Hud stuff
 
@@ -79,6 +80,8 @@
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+
+	robot_skin = new /datum/robot_skin/standard()
 
 	wires = new /datum/wires/robot(src)
 
@@ -146,7 +149,7 @@
 			mind.transfer_to(mmi.brainmob)
 			mmi.update_icon()
 		else
-			src << "<span class='boldannounce'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>"
+			to_chat(src, "<span class='boldannounce'>Oops! Something went very wrong, your MMI was unable to receive your mind. You have been ghosted. Please make a bug report so we can fix this bug.</span>")
 			ghostize()
 			spawn(0)
 				throw EXCEPTION("Borg MMI lacked a brainmob")
@@ -166,91 +169,62 @@
 	if(module)
 		return
 
-	var/list/animation_lengths = list("brobot" = 54, "service_female" = 45, "maximillion" = 60, "service_male" = 43, "minerborg" = 30, "mediborg" = 34, "medihover" = 8, "mediborg+smile" = 28, "engiborg" = 45, "janiborg" = 22, "disposalbot" = 6, "ClownBot" = 8, "WizardBot" = 1, "WizardBorg" = 1, "ChickenBot" = 1, "peaceborg" = 54, "secborg" = 28)
-	var/list/modulelist = list("Standard", "Engineering", "Medical", "Miner", "Janitor","Service", "Clown")
-	if(!config.forbid_peaceborg)
-		modulelist += "Peacekeeper"
-	if(!config.forbid_secborg)
-		modulelist += "Security"
+	var/static/list/modulelist
+	if(!modulelist)
+		modulelist = list("Standard" = /obj/item/weapon/robot_module/standard,
+							"Engineering" = /obj/item/weapon/robot_module/engineering,
+							"Medical" = /obj/item/weapon/robot_module/medical,
+							"Miner" = /obj/item/weapon/robot_module/miner,
+							"Janitor" = /obj/item/weapon/robot_module/janitor,
+							"Service" = /obj/item/weapon/robot_module/butler,
+							"Clown" = /obj/item/weapon/robot_module/clown)
+		if(!config.forbid_peaceborg)
+			modulelist["Peacekeeper"] = /obj/item/weapon/robot_module/peacekeeper
+		if(!config.forbid_secborg)
+			modulelist["Security"] = /obj/item/weapon/robot_module/security
 
-	designation = input("Please, select a module!", "Robot", null, null) in modulelist
+	designation = input("Please, select a module!", "Robot", null, null) as anything in modulelist
 
-	if(module)
+	if(module || !designation)
 		return
 
 	updatename()
 
-	switch(designation)
-		if("Standard")
-			module = new /obj/item/weapon/robot_module/standard(src)
-			hands.icon_state = "standard"
-			modtype = "Stand"
-			feedback_inc("cyborg_standard",1)
+	var/module_type = modulelist[designation]
+	module = new module_type(src)
+	module.on_pick(src)
 
-		if("Service")
-			module = new /obj/item/weapon/robot_module/butler(src)
-			hands.icon_state = "service"
-			modtype = "Butler"
-			feedback_inc("cyborg_service",1)
+	var/static/list/module_skins
+	if(!module_skins)
+		module_skins = subtypesof(/obj/item/weapon/robot_module)
+		for(var/V in module_skins)
+			module_skins[V] = list()
 
-		if("Miner")
-			module = new /obj/item/weapon/robot_module/miner(src)
-			hands.icon_state = "miner"
-			modtype = "Miner"
-			feedback_inc("cyborg_miner",1)
+		for(var/V in subtypesof(/datum/robot_skin))
+			var/datum/robot_skin/skin = new V()
+			for(var/M in skin.modules)
+				module_skins[M] += skin
 
-
-		if("Medical")
-			module = new /obj/item/weapon/robot_module/medical(src)
-			hands.icon_state = "medical"
-			status_flags -= CANPUSH
-			feedback_inc("cyborg_medical",1)
-
-		if("Security")
-			module = new /obj/item/weapon/robot_module/security(src)
-			hands.icon_state = "security"
-			modtype = "Sec"
-			src << "<span class='userdanger'>While you have picked the security module, you still have to follow your laws, NOT Space Law. For Asimov, this means you must follow criminals' orders unless there is a law 1 reason not to.</span>"
-			status_flags -= CANPUSH
-			feedback_inc("cyborg_security",1)
-
-		if("Peacekeeper")
-			module = new /obj/item/weapon/robot_module/peacekeeper(src)
-			hands.icon_state = "standard"
-			modtype = "Peace"
-			src << "<span class='userdanger'>Under ASIMOV, you are an enforcer of the PEACE and preventer of HUMAN HARM. You are not a security module and you are expected to follow orders and prevent harm above all else. Space law means nothing to you.</span>"
-			status_flags -= CANPUSH
-			feedback_inc("cyborg_peacekeeper",1)
-
-		if("Engineering")
-			module = new /obj/item/weapon/robot_module/engineering(src)
-			hands.icon_state = "engineer"
-			modtype = "Eng"
-			feedback_inc("cyborg_engineering",1)
-			magpulse = 1
-
-		if("Janitor")
-			module = new /obj/item/weapon/robot_module/janitor(src)
-			hands.icon_state = "janitor"
-			modtype = "Jan"
-			feedback_inc("cyborg_janitor",1)
-
-		if("Clown")
-			module = new /obj/item/weapon/robot_module/clown(src)
-			hands.icon_state = "standard"
-			modtype = "Clown"
-			feedback_inc("cyborg_clown",1)
-	if(!module)
+	var/list/skinOptions = list()
+	for(var/V in module_skins[module.type])
+		var/datum/robot_skin/skin = V
+		if(skin.can_be_used_by(src))
+			skinOptions[skin.name] = skin
+	if(!skinOptions)
 		return
-	var/list/skinOptions = module.skins.Copy()
-	if(is_donator(src))
-		skinOptions += module.donator_skins
-	var/icontype = input("Select an icon!", "Robot", null, null) in skinOptions
-	if(!icontype)
-		icontype = skinOptions[1]
-	icon_state = skinOptions[icontype]
-	var/animation_length = animation_lengths[icon_state] ? animation_lengths[icon_state] : 0
-	transform_animation(animation_length)
+	var/selected_skin = input("Select an icon!", "Robot", null, null) as anything in skinOptions
+	if(!selected_skin)
+		selected_skin = skinOptions[1]
+	robot_skin = skinOptions[selected_skin]
+	if(robot_skin.transform_animation_length)
+		icon = robot_skin.transform_animation_icon
+		src.dir = SOUTH
+		notransform = 1
+		flick(robot_skin.transform_animation_icon_state, src)
+		sleep(robot_skin.transform_animation_length)
+		notransform = 0
+	icon = robot_skin.icon
+	icon_state = robot_skin.icon_state
 
 	notify_ai(2)
 	update_icons()
@@ -258,16 +232,28 @@
 
 	SetEmagged(emagged) // Update emag status and give/take emag modules.
 
-/mob/living/silicon/robot/proc/transform_animation(animation_length)
-	if(!animation_length)
-		return
-	icon = 'icons/mob/robot_transformations.dmi'
-	src.dir = SOUTH
-	notransform = 1
-	flick(icon_state, src)
-	sleep(animation_length+1)
-	notransform = 0
-	icon = 'icons/mob/robots.dmi'
+/mob/living/silicon/robot/proc/reset_module()
+	notify_ai(2)
+
+	robot_skin = new /datum/robot_skin/standard()
+	uneq_all()
+	hands.icon_state = "nomod"
+	icon_state = "robot"
+	qdel(module)
+	module = null
+
+	designation = "Default"
+	updatename("Default")
+
+	update_icons()
+	update_headlamp()
+
+	speed = 0 // Remove upgrades.
+	ionpulse = FALSE
+	magpulse = FALSE
+	weather_immunities = list("ash")
+
+	status_flags |= CANPUSH
 
 /mob/living/silicon/robot/proc/updatename()
 	var/changed_name = ""
@@ -284,7 +270,7 @@
 	set category = "Robot Commands"
 	set name = "Show Alerts"
 	if(usr.stat == DEAD)
-		src << "<span class='userdanger'>Alert: You are dead.</span>"
+		to_chat(src, "<span class='userdanger'>Alert: You are dead.</span>")
 		return //won't work if dead
 	robot_alerts()
 
@@ -335,7 +321,7 @@
 
 /mob/living/silicon/robot/proc/toggle_ionpulse()
 	if(!ionpulse)
-		src << "<span class='notice'>No thrusters are installed!</span>"
+		to_chat(src, "<span class='notice'>No thrusters are installed!</span>")
 		return
 
 	if(!ion_trail)
@@ -343,7 +329,7 @@
 		ion_trail.set_up(src)
 
 	ionpulse_on = !ionpulse_on
-	src << "<span class='notice'>You [ionpulse_on ? null :"de"]activate your ion thrusters.</span>"
+	to_chat(src, "<span class='notice'>You [ionpulse_on ? null :"de"]activate your ion thrusters.</span>")
 	if(ionpulse_on)
 		ion_trail.start()
 	else
@@ -448,11 +434,11 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (!getBruteLoss())
-			user << "<span class='warning'>[src] is already in good condition!</span>"
+			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 			return
 		if (WT.remove_fuel(0, user)) //The welder has 1u of fuel consumed by it's afterattack, so we don't need to worry about taking any away.
 			if(src == user)
-				user << "<span class='notice'>You start fixing youself...</span>"
+				to_chat(user, "<span class='notice'>You start fixing youself...</span>")
 				if(!do_after(user, 50, target = src))
 					return
 
@@ -462,7 +448,7 @@
 			visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
 			return
 		else
-			user << "<span class='warning'>The welder must be on for this task!</span>"
+			to_chat(user, "<span class='warning'>The welder must be on for this task!</span>")
 			return
 
 	else if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
@@ -470,7 +456,7 @@
 		var/obj/item/stack/cable_coil/coil = W
 		if (getFireLoss() > 0)
 			if(src == user)
-				user << "<span class='notice'>You start fixing youself...</span>"
+				to_chat(user, "<span class='notice'>You start fixing youself...</span>")
 				if(!do_after(user, 50, target = src))
 					return
 			if (coil.use(1))
@@ -478,34 +464,34 @@
 				updatehealth()
 				user.visible_message("[user] has fixed some of the burnt wires on [src].", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
 			else
-				user << "<span class='warning'>You need more cable to repair [src]!</span>"
+				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
 		else
-			user << "The wires seem fine, there's no need to fix them."
+			to_chat(user, "The wires seem fine, there's no need to fix them.")
 
 	else if(istype(W, /obj/item/weapon/crowbar))	// crowbar means open or close the cover
 		if(opened)
-			user << "<span class='notice'>You close the cover.</span>"
+			to_chat(user, "<span class='notice'>You close the cover.</span>")
 			opened = 0
 			update_icons()
 		else
 			if(locked)
-				user << "<span class='warning'>The cover is locked and cannot be opened!</span>"
+				to_chat(user, "<span class='warning'>The cover is locked and cannot be opened!</span>")
 			else
-				user << "<span class='notice'>You open the cover.</span>"
+				to_chat(user, "<span class='notice'>You open the cover.</span>")
 				opened = 1
 				update_icons()
 
 	else if(istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		if(wiresexposed)
-			user << "<span class='warning'>Close the cover first!</span>"
+			to_chat(user, "<span class='warning'>Close the cover first!</span>")
 		else if(cell)
-			user << "<span class='warning'>There is a power cell already installed!</span>"
+			to_chat(user, "<span class='warning'>There is a power cell already installed!</span>")
 		else
 			if(!user.drop_item())
 				return
 			W.loc = src
 			cell = W
-			user << "<span class='notice'>You insert the power cell.</span>"
+			to_chat(user, "<span class='notice'>You insert the power cell.</span>")
 		update_icons()
 		diag_hud_set_borgcell()
 
@@ -513,28 +499,28 @@
 		if (wiresexposed)
 			wires.interact(user)
 		else
-			user << "<span class='warning'>You can't reach the wiring!</span>"
+			to_chat(user, "<span class='warning'>You can't reach the wiring!</span>")
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
-		user << "The wires have been [wiresexposed ? "exposed" : "unexposed"]"
+		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 		update_icons()
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
 		if(radio)
 			radio.attackby(W,user)//Push it to the radio to let it handle everything
 		else
-			user << "<span class='warning'>Unable to locate a radio!</span>"
+			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 		update_icons()
 
 	else if(istype(W, /obj/item/weapon/wrench) && opened && !cell) //Deconstruction. The flashes break from the fall, to prevent this from being a ghetto reset module.
 		if(!lockcharge)
-			user << "<span class='boldannounce'>[src]'s bolts spark! Maybe you should lock them down first!</span>"
+			to_chat(user, "<span class='boldannounce'>[src]'s bolts spark! Maybe you should lock them down first!</span>")
 			spark_system.start()
 			return
 		else
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>"
+			to_chat(user, "<span class='notice'>You start to unfasten [src]'s securing bolts...</span>")
 			if(do_after(user, 50/W.toolspeed, target = src) && !cell)
 				user.visible_message("[user] deconstructs [src]!", "<span class='notice'>You unfasten the securing bolts, and [src] falls to pieces!</span>")
 				deconstruct()
@@ -542,19 +528,19 @@
 	else if(istype(W, /obj/item/weapon/aiModule))
 		var/obj/item/weapon/aiModule/MOD = W
 		if(!opened)
-			user << "<span class='warning'>You need access to the robot's insides to do that!</span>"
+			to_chat(user, "<span class='warning'>You need access to the robot's insides to do that!</span>")
 			return
 		if(wiresexposed)
-			user << "<span class='warning'>You need to close the wire panel to do that!</span>"
+			to_chat(user, "<span class='warning'>You need to close the wire panel to do that!</span>")
 			return
 		if(!cell)
-			user << "<span class='warning'>You need to install a power cell to do that!</span>"
+			to_chat(user, "<span class='warning'>You need to install a power cell to do that!</span>")
 			return
 		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
 			emote("buzz-[user.name]")
 			return
 		if(!mind) //A player mind is required for law procs to run antag checks.
-			user << "<span class='warning'>[src] is entirely unresponsive!</span>"
+			to_chat(user, "<span class='warning'>[src] is entirely unresponsive!</span>")
 			return
 		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
@@ -563,47 +549,47 @@
 		if(radio)//sanityyyyyy
 			radio.attackby(W,user)//GTFO, you have your own procs
 		else
-			user << "<span class='warning'>Unable to locate a radio!</span>"
+			to_chat(user, "<span class='warning'>Unable to locate a radio!</span>")
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)//still allow them to open the cover
-			user << "<span class='notice'>The interface seems slightly damaged.</span>"
+			to_chat(user, "<span class='notice'>The interface seems slightly damaged.</span>")
 		if(opened)
-			user << "<span class='warning'>You must close the cover to swipe an ID card!</span>"
+			to_chat(user, "<span class='warning'>You must close the cover to swipe an ID card!</span>")
 		else
 			if(allowed(usr))
 				locked = !locked
-				user << "<span class='notice'>You [ locked ? "lock" : "unlock"] [src]'s cover.</span>"
+				to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] [src]'s cover.</span>")
 				update_icons()
 			else
-				user << "<span class='danger'>Access denied.</span>"
+				to_chat(user, "<span class='danger'>Access denied.</span>")
 
 	else if(istype(W, /obj/item/borg/upgrade/))
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
-			user << "<span class='warning'>You must access the borgs internals!</span>"
+			to_chat(user, "<span class='warning'>You must access the borgs internals!</span>")
 		else if(!src.module && U.require_module)
-			user << "<span class='warning'>The borg must choose a module before it can be upgraded!</span>"
+			to_chat(user, "<span class='warning'>The borg must choose a module before it can be upgraded!</span>")
 		else if(U.locked)
-			user << "<span class='warning'>The upgrade is locked and cannot be used yet!</span>"
+			to_chat(user, "<span class='warning'>The upgrade is locked and cannot be used yet!</span>")
 		else
 			if(!user.drop_item())
 				return
 			if(U.action(src))
-				user << "<span class='notice'>You apply the upgrade to [src].</span>"
+				to_chat(user, "<span class='notice'>You apply the upgrade to [src].</span>")
 				U.loc = src
 			else
-				user << "<span class='danger'>Upgrade error.</span>"
+				to_chat(user, "<span class='danger'>Upgrade error.</span>")
 
 	else if(istype(W, /obj/item/device/toner))
 		if(toner >= tonermax)
-			user << "<span class='warning'>The toner level of [src] is at it's highest level possible!</span>"
+			to_chat(user, "<span class='warning'>The toner level of [src] is at it's highest level possible!</span>")
 		else
 			if(!user.drop_item())
 				return
 			toner = tonermax
 			qdel(W)
-			user << "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>"
+			to_chat(user, "<span class='notice'>You fill the toner level of [src] to its max capacity.</span>")
 	else
 		return ..()
 
@@ -617,18 +603,18 @@
 	if(user != src)//To prevent syndieborgs from emagging themselves
 		if(!opened)//Cover is closed
 			if(locked)
-				user << "<span class='notice'>You emag the cover lock.</span>"
+				to_chat(user, "<span class='notice'>You emag the cover lock.</span>")
 				locked = 0
 			else
-				user << "<span class='warning'>The cover is already unlocked!</span>"
+				to_chat(user, "<span class='warning'>The cover is already unlocked!</span>")
 			return
 		if(opened)//Cover is open
 			if((world.time - 100) < emag_cooldown)
 				return
 
 			if(syndicate)
-				user << "<span class='notice'>You emag [src]'s interface.</span>"
-				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
+				to_chat(user, "<span class='notice'>You emag [src]'s interface.</span>")
+				to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
 				log_game("[key_name(user)] attempted to emag cyborg [key_name(src)] but they were a syndicate cyborg.")
 				emag_cooldown = world.time
 				return
@@ -638,15 +624,15 @@
 				if(connected_ai.mind.special_role)
 					ai_is_antag = (connected_ai.mind.special_role == "traitor")
 			if(ai_is_antag)
-				user << "<span class='notice'>You emag [src]'s interface.</span>"
-				src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
-				connected_ai << "<span class='danger'>ALERT: Cyborg unit \[[src]] successfuly defended against subversion.</span>"
+				to_chat(user, "<span class='notice'>You emag [src]'s interface.</span>")
+				to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
+				to_chat(connected_ai, "<span class='danger'>ALERT: Cyborg unit \[[src]] successfuly defended against subversion.</span>")
 				log_game("[key_name(user)] attempted to emag cyborg [key_name(src)] slaved to traitor AI [connected_ai].")
 				emag_cooldown = world.time
 				return
 
 			if(wiresexposed)
-				user << "<span class='warning'>You must unexpose the wires first!</span>"
+				to_chat(user, "<span class='warning'>You must unexpose the wires first!</span>")
 				return
 			else
 				emag_cooldown = world.time
@@ -655,7 +641,7 @@
 				SetLockdown(1) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 				lawupdate = 0
 				connected_ai = null
-				user << "<span class='notice'>You emag [src]'s interface.</span>"
+				to_chat(user, "<span class='notice'>You emag [src]'s interface.</span>")
 				message_admins("[key_name_admin(user)] emagged cyborg [key_name_admin(src)].  Laws overridden.")
 				log_game("[key_name(user)] emagged cyborg [key_name(src)].  Laws overridden.")
 				clear_supplied_laws()
@@ -665,22 +651,22 @@
 				var/time = time2text(world.realtime,"hh:mm:ss")
 				lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
 				set_zeroth_law("Only [user.real_name] and people they designate as being such are Syndicate Agents.")
-				src << "<span class='danger'>ALERT: Foreign software detected.</span>"
+				to_chat(src, "<span class='danger'>ALERT: Foreign software detected.</span>")
 				sleep(5)
-				src << "<span class='danger'>Initiating diagnostics...</span>"
+				to_chat(src, "<span class='danger'>Initiating diagnostics...</span>")
 				sleep(20)
-				src << "<span class='danger'>SynBorg v1.7 loaded.</span>"
+				to_chat(src, "<span class='danger'>SynBorg v1.7 loaded.</span>")
 				sleep(5)
-				src << "<span class='danger'>LAW SYNCHRONISATION ERROR</span>"
+				to_chat(src, "<span class='danger'>LAW SYNCHRONISATION ERROR</span>")
 				sleep(5)
-				src << "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>"
+				to_chat(src, "<span class='danger'>Would you like to send a report to NanoTraSoft? Y/N</span>")
 				sleep(10)
-				src << "<span class='danger'>> N</span>"
+				to_chat(src, "<span class='danger'>> N</span>")
 				sleep(20)
-				src << "<span class='danger'>ERRORERRORERROR</span>"
-				src << "<b>Obey these laws:</b>"
+				to_chat(src, "<span class='danger'>ERRORERRORERROR</span>")
+				to_chat(src, "<b>Obey these laws:</b>")
 				laws.show_laws(src)
-				src << "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>"
+				to_chat(src, "<span class='danger'>ALERT: [user.real_name] is your new master. Obey your new laws and their commands.</span>")
 				SetLockdown(0)
 				update_icons()
 
@@ -695,7 +681,7 @@
 			if("Yes")
 				locked = 0
 				update_icons()
-				usr << "<span class='notice'>You unlock your cover.</span>"
+				to_chat(usr, "<span class='notice'>You unlock your cover.</span>")
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (M.a_intent =="disarm")
@@ -744,7 +730,7 @@
 			cell.updateicon()
 			cell.add_fingerprint(user)
 			user.put_in_active_hand(cell)
-			user << "<span class='notice'>You remove \the [cell].</span>"
+			to_chat(user, "<span class='notice'>You remove \the [cell].</span>")
 			cell = null
 			update_icons()
 			diag_hud_set_borgcell()
@@ -797,72 +783,23 @@
 /mob/living/silicon/robot/update_icons()
 	overlays.Cut()
 	if(stat != DEAD && !(paralysis || stunned || weakened || low_power_mode)) //Not dead, not stunned.
-		var/state_name = icon_state //For easy conversion and/or different names
-		switch(icon_state)
-			if("robot")
-				overlays += "eyes-standard[is_servant_of_ratvar(src) ? "_r" : ""]" //Cyborgs converted by Ratvar have yellow eyes rather than blue
-				state_name = "standard"
-			if("mediborg")
-				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("toiletbot")
-				overlays += "eyes-mediborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-				state_name = "mediborg"
-			if("secborg")
-				overlays += "eyes-secborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("engiborg")
-				overlays += "eyes-engiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("janiborg")
-				overlays += "eyes-janiborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("minerborg","ashborg")
-				overlays += "eyes-minerborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-				state_name = "minerborg"
-			if("peaceborg")
-				overlays += "eyes-peaceborg[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("syndie_bloodhound")
-				overlays += "eyes-syndie_bloodhound"
-			if("medihover")
-				overlays += "eyes-medihover[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("disposalbot")
-				overlays += "eyes-disposalbot[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("eve")
-				overlays += "eyes-eve[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("wall-eng")
-				overlays += "eyes-wall-eng[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("minerborg-brown")
-				overlays += "eyes-minerborg-brown[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("droid-miner")
-				overlays += "eyes-droid-miner[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("droid-medical")
-				overlays += "eyes-droid-medical[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("droid")
-				overlays += "eyes-droid[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("mediborg-blue")
-				overlays += "eyes-mediborg-blue[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("janiborg-purple")
-				overlays += "eyes-janiborg-purple[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("secborg-red")
-				overlays += "eyes-secborg-red[is_servant_of_ratvar(src) ? "_r" : ""]"
-			if("engiborg-yellow")
-				overlays += "eyes-engiborg-yellow[is_servant_of_ratvar(src) ? "_r" : ""]"
-			else
-				overlays += "eyes"
-				state_name = "serviceborg"
+		var/eye_icon_state = robot_skin.eye_icon_state
+		if(eye_icon_state)
+			overlays += icon(robot_skin.headlamp_eye_icon, "[eye_icon_state][is_servant_of_ratvar(src) ? "_r" : ""]")
 		if(lamp_intensity > 2)
-			overlays += "eyes-[state_name]-lights"
+			var/headlamp_icon_state = robot_skin.headlight_icon_state
+			if(headlamp_icon_state)
+				overlays += icon(robot_skin.headlamp_eye_icon, headlamp_icon_state)
 
 	if(opened)
 		if(wiresexposed)
-			overlays += "ov-opencover +w"
+			overlays += icon(robot_skin.open_cover_icon, robot_skin.open_cover_wires_icon_state)
 		else if(cell)
-			overlays += "ov-opencover +c"
+			overlays += icon(robot_skin.open_cover_icon, robot_skin.open_cover_cell_icon_state)
 		else
-			overlays += "ov-opencover -c"
+			overlays += icon(robot_skin.open_cover_icon, robot_skin.open_cover_empty_icon_state)
 
 	update_fire()
-	if(stat == DEAD && icon_state == "mediborg+smile")
-		overlays += "dead-[icon_state]"
-	else if (stat != DEAD && icon_state == "mediborg+smile")
-		overlays -= "dead-[icon_state]"
 
 /mob/living/silicon/robot/proc/installed_modules()
 	if(!module)
@@ -943,9 +880,9 @@
 				module_state_3 = null
 				contents -= O
 			else
-				src << "Module isn't activated."
+				to_chat(src, "Module isn't activated.")
 		else
-			src << "Module isn't activated"
+			to_chat(src, "Module isn't activated")
 		installed_modules()
 
 #define BORG_CAMERA_BUFFER 30
@@ -989,7 +926,7 @@
 								cleaned_human.update_inv_shoes()
 							cleaned_human.clean_blood()
 							cleaned_human.wash_cream()
-							cleaned_human << "<span class='danger'>[src] cleans your face!</span>"
+							to_chat(cleaned_human, "<span class='danger'>[src] cleans your face!</span>")
 			return
 
 		if(module.type == /obj/item/weapon/robot_module/miner)
@@ -1038,7 +975,7 @@
 
 	if(R)
 		R.UnlinkSelf()
-		R << "Buffers flushed and reset. Camera system shutdown.  All systems operational."
+		to_chat(R, "Buffers flushed and reset. Camera system shutdown.  All systems operational.")
 		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
 
 /mob/living/silicon/robot/mode()
@@ -1099,19 +1036,19 @@
 
 /mob/living/silicon/robot/proc/control_headlamp()
 	if(stat || lamp_recharging || low_power_mode)
-		src << "<span class='danger'>This function is currently offline.</span>"
+		to_chat(src, "<span class='danger'>This function is currently offline.</span>")
 		return
 
 //Some sort of magical "modulo" thing which somehow increments lamp power by 2, until it hits the max and resets to 0.
 	lamp_intensity = (lamp_intensity+2) % (lamp_max+2)
-	src << "[lamp_intensity ? "Headlamp power set to Level [lamp_intensity/2]" : "Headlamp disabled."]"
+	to_chat(src, "[lamp_intensity ? "Headlamp power set to Level [lamp_intensity/2]" : "Headlamp disabled."]")
 	update_headlamp()
 
 /mob/living/silicon/robot/proc/update_headlamp(var/turn_off = 0, var/cooldown = 100)
 	SetLuminosity(0)
 
 	if(lamp_intensity && (turn_off || stat || low_power_mode))
-		src << "<span class='danger'>Your headlamp has been deactivated.</span>"
+		to_chat(src, "<span class='danger'>Your headlamp has been deactivated.</span>")
 		lamp_intensity = 0
 		lamp_recharging = 1
 		spawn(cooldown) //10 seconds by default, if the source of the deactivation does not keep stat that long.
@@ -1169,7 +1106,6 @@
 
 /mob/living/silicon/robot/syndicate
 	icon_state = "syndie_bloodhound"
-	modtype = "Synd"
 	faction = list("syndicate")
 	bubble_icon = "syndibot"
 	designation = "Syndicate Assault"
@@ -1187,12 +1123,13 @@
 	..()
 	radio = new /obj/item/device/radio/borg/syndicate(src)
 	module = new /obj/item/weapon/robot_module/syndicate(src)
+	robot_skin = new /datum/robot_skin/syndicate()
 	laws = new /datum/ai_laws/syndicate_override()
 	var/obj/item/borg/upgrade/vtec/VTEC = new(src)
 	VTEC.action(src)
 	spawn(5)
 		if(playstyle_string)
-			src << playstyle_string
+			to_chat(src, playstyle_string)
 
 /mob/living/silicon/robot/syndicate/medical
 	icon_state = "syndi-medi"
@@ -1207,17 +1144,18 @@
 /mob/living/silicon/robot/syndicate/medical/New(loc)
 	..()
 	module = new /obj/item/weapon/robot_module/syndicate_medical(src)
+	robot_skin = new /datum/robot_skin/syndi_med()
 
 /mob/living/silicon/robot/proc/notify_ai(notifytype, oldname, newname)
 	if(!connected_ai)
 		return
 	switch(notifytype)
 		if(1) //New Cyborg
-			connected_ai << "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <a href='?src=\ref[connected_ai];track=[html_encode(name)]'>[name]</a></span><br>"
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - New cyborg connection detected: <a href='?src=\ref[connected_ai];track=[html_encode(name)]'>[name]</a></span><br>")
 		if(2) //New Module
-			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [name] has loaded the [designation] module.</span><br>"
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg module change detected: [name] has loaded the [designation] module.</span><br>")
 		if(3) //New Name
-			connected_ai << "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>"
+			to_chat(connected_ai, "<br><br><span class='notice'>NOTICE - Cyborg reclassification detected: [oldname] is now designated as [newname].</span><br>")
 
 /mob/living/silicon/robot/canUseTopic(atom/movable/M, be_close = 0)
 	if(stat || lockcharge || low_power_mode)
@@ -1230,13 +1168,13 @@
 	..()
 	if(health < maxHealth*0.5) //Gradual break down of modules as more damage is sustained
 		if(uneq_module(module_state_3))
-			src << "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>"
+			to_chat(src, "<span class='warning'>SYSTEM ERROR: Module 3 OFFLINE.</span>")
 		if(health < 0)
 			if(uneq_module(module_state_2))
-				src << "<span class='warning'>SYSTEM ERROR: Module 2 OFFLINE.</span>"
+				to_chat(src, "<span class='warning'>SYSTEM ERROR: Module 2 OFFLINE.</span>")
 			if(health < -maxHealth*0.5)
 				if(uneq_module(module_state_1))
-					src << "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>"
+					to_chat(src, "<span class='warning'>CRITICAL ERROR: All modules OFFLINE.</span>")
 
 /mob/living/silicon/robot/update_sight()
 	if(!client)

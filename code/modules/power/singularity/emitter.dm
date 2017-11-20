@@ -14,6 +14,12 @@
 	idle_power_usage = 10
 	active_power_usage = 300
 
+	var/wires_exposed = FALSE
+	var/hackable = TRUE
+	var/can_activate = TRUE
+	var/can_deactivate = TRUE
+	var/can_fire = TRUE
+
 	var/active = 0
 	var/powered = 0
 	var/fire_delay = 100
@@ -24,12 +30,15 @@
 	var/state = 0
 	var/locked = 0
 
+
+
 	var/projectile_type = /obj/item/projectile/beam/emitter
 
 	var/projectile_sound = 'sound/weapons/emitter.ogg'
 
 /obj/machinery/power/emitter/New()
 	..()
+	wires = new /datum/wires/emitter(src)
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/emitter(null)
 	B.apply_default_parts(src)
 	RefreshParts()
@@ -66,7 +75,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	if (src.anchored)
-		usr << "<span class='warning'>It is fastened to the floor!</span>"
+		to_chat(usr, "<span class='warning'>It is fastened to the floor!</span>")
 		return 0
 	src.dir = turn(src.dir, 270)
 	return 1
@@ -74,7 +83,7 @@
 /obj/machinery/power/emitter/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -89,7 +98,7 @@
 /obj/machinery/power/emitter/Destroy()
 	if(ticker && ticker.current_state == GAME_STATE_PLAYING)
 		message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-		log_game("Emitter deleted at ([x],[y],[z])")
+		log_game("SINGULO: Emitter deleted at ([x],[y],[z])")
 		investigate_log("<font color='red'>deleted</font> at ([x],[y],[z])","singulo")
 	return ..()
 
@@ -104,26 +113,29 @@
 	src.add_fingerprint(user)
 	if(state == 2)
 		if(!powernet)
-			user << "<span class='warning'>The emitter isn't connected to a wire!</span>"
+			to_chat(user, "<span class='warning'>The emitter isn't connected to a wire!</span>")
 			return 1
 		if(!src.locked)
-			if(src.active==1)
+			var/pass = TRUE
+			if(src.active && can_deactivate)
 				src.active = 0
-				user << "<span class='notice'>You turn off \the [src].</span>"
+				to_chat(user, "<span class='notice'>You turn off \the [src].</span>")
 				message_admins("Emitter turned off by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
-				log_game("Emitter turned off by [key_name(user)] in ([x],[y],[z])")
+				log_game("SINGULO: Emitter turned off by [key_name(user)] in ([x],[y],[z])")
 				investigate_log("turned <font color='red'>off</font> by [key_name(user)]","singulo")
-			else
+				pass = FALSE
+			if(!src.active && can_activate && pass)
 				src.active = 1
-				user << "<span class='notice'>You turn on \the [src].</span>"
+				to_chat(user, "<span class='notice'>You turn on \the [src].</span>")
 				src.shot_number = 0
 				src.fire_delay = maximum_fire_delay
 				investigate_log("turned <font color='green'>on</font> by [key_name(user)]","singulo")
+				log_game("SINGULO: Emitter turned on by [key_name(user)] in ([x],[y],[z])")
 			update_icon()
 		else
-			user << "<span class='warning'>The controls are locked!</span>"
+			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 	else
-		user << "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>"
+		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first!</span>")
 		return 1
 
 
@@ -156,7 +168,6 @@
 				powered = 0
 				update_icon()
 				investigate_log("lost power and turned <font color='red'>off</font>","singulo")
-				log_game("Emitter lost power in ([x],[y],[z])")
 				message_admins("Emitter lost power in ([x],[y],[z] - <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 			return
 
@@ -168,6 +179,10 @@
 			src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
 			src.shot_number = 0
 
+
+		if(!can_fire)
+			visible_message("<span class='danger'>The [src.name] hums!</span>","<span class='userdanger'>You feel a vibration in the air.</span>")
+			return
 		var/obj/item/projectile/A = PoolOrNew(projectile_type,src.loc)
 
 		A.dir = src.dir
@@ -195,11 +210,22 @@
 		A.fire()
 
 
+
+/obj/machinery/power/emitter/proc/singleFire()
+	if(!active)
+		src.active = 1
+		src.shot_number = 0
+		src.fire_delay = maximum_fire_delay
+		update_icon()
+		spawn(50)
+			src.active = 0
+			update_icon()
+
 /obj/machinery/power/emitter/attackby(obj/item/W, mob/user, params)
 
 	if(istype(W, /obj/item/weapon/wrench))
 		if(active)
-			user << "<span class='warning'>Turn off \the [src] first!</span>"
+			to_chat(user, "<span class='warning'>Turn off \the [src] first!</span>")
 			return
 		switch(state)
 			if(0)
@@ -218,17 +244,17 @@
 					"<span class='italics'>You hear a ratchet.</span>")
 				src.anchored = 0
 			if(2)
-				user << "<span class='warning'>The [src.name] needs to be unwelded from the floor!</span>"
+				to_chat(user, "<span class='warning'>The [src.name] needs to be unwelded from the floor!</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(active)
-			user << "Turn off \the [src] first."
+			to_chat(user, "Turn off \the [src] first.")
 			return
 		switch(state)
 			if(0)
-				user << "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>"
+				to_chat(user, "<span class='warning'>The [src.name] needs to be wrenched to the floor!</span>")
 			if(1)
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
@@ -238,7 +264,7 @@
 					if (do_after(user,20/W.toolspeed, target = src))
 						if(!src || !WT.isOn()) return
 						state = 2
-						user << "<span class='notice'>You weld \the [src] to the floor.</span>"
+						to_chat(user, "<span class='notice'>You weld \the [src] to the floor.</span>")
 						connect_to_network()
 			if(2)
 				if (WT.remove_fuel(0,user))
@@ -249,25 +275,35 @@
 					if (do_after(user,20/W.toolspeed, target = src))
 						if(!src || !WT.isOn()) return
 						state = 1
-						user << "<span class='notice'>You cut \the [src] free from the floor.</span>"
+						to_chat(user, "<span class='notice'>You cut \the [src] free from the floor.</span>")
 						disconnect_from_network()
 		return
 
 	if(W.GetID())
 		if(emagged)
-			user << "<span class='warning'>The lock seems to be broken!</span>"
+			to_chat(user, "<span class='warning'>The lock seems to be broken!</span>")
 			return
 		if(allowed(user))
 			if(active)
 				locked = !locked
-				user << "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>"
+				to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
 			else
-				user << "<span class='warning'>The controls can only be locked when \the [src] is online!</span>"
+				to_chat(user, "<span class='warning'>The controls can only be locked when \the [src] is online!</span>")
 		else
-			user << "<span class='danger'>Access denied.</span>"
+			to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
 
+
+	if(is_wire_tool(W) && wires_exposed)
+		wires.interact(user)
+
 	if(default_deconstruction_screwdriver(user, "emitter_open", "emitter", W))
+		if(!hackable)
+			return
+		if(wires_exposed)
+			wires_exposed = FALSE
+		else
+			wires_exposed = TRUE
 		return
 
 	if(exchange_parts(user, W))

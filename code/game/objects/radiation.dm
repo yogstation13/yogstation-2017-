@@ -34,8 +34,13 @@
 	if(amount)
 		var/blocked = getarmor(null, "rad")
 
-		if(!silent)
-			src << "Your skin feels warm."
+		var/pass = 1
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.dna && H.dna.species && (RADIMMUNE in H.dna.species.specflags))
+				pass = 0
+		if(pass && (!silent && blocked != 100))
+			to_chat(src, "Your skin feels warm.")
 
 		apply_effect(amount, IRRADIATE, blocked)
 		for(var/obj/I in src) //Radiation is also applied to items held by the mob

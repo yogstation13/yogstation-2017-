@@ -10,6 +10,7 @@
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
 	var/relay_speech = FALSE
+	var/use_static = TRUE
 
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
@@ -21,7 +22,8 @@
 			return
 		T = get_turf(T)
 		loc = T
-		cameranet.visibility(src)
+		if(use_static)
+			cameranet.visibility(src)
 		if(ai.client)
 			ai.client.eye = src
 		update_parallax_contents()
@@ -37,6 +39,11 @@
 	if(ai)
 		return ai.client
 	return null
+
+/mob/camera/aiEye/proc/RemoveImages()
+	if(use_static)
+		for(var/datum/camerachunk/chunk in visibleCameraChunks)
+			chunk.remove(src)
 
 /mob/camera/aiEye/Destroy()
 	if(ai)
@@ -54,6 +61,11 @@
 
 // This will move the AIEye. It will also cause lights near the eye to light up, if toggled.
 // This is handled in the proc below this one.
+
+/mob/living/silicon/ai/special_move(newloc, direction)
+	if(client)
+		client.AIMove(newloc, direction, src)
+	return TRUE
 
 /client/proc/AIMove(n, direct, mob/living/silicon/ai/user)
 
@@ -92,7 +104,7 @@
 	if(src.eyeobj && src.loc)
 		src.eyeobj.loc = src.loc
 	else
-		src << "ERROR: Eyeobj not found. Creating new eye..."
+		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")
 		src.eyeobj = new(src.loc)
 		src.eyeobj.ai = src
 		src.eyeobj.name = "[src.name] (AI Eye)" // Give it a name
@@ -106,7 +118,7 @@
 	if(usr.stat == 2)
 		return //won't work if dead
 	acceleration = !acceleration
-	usr << "Camera acceleration has been toggled [acceleration ? "on" : "off"]."
+	to_chat(usr, "Camera acceleration has been toggled [acceleration ? "on" : "off"].")
 
 /mob/camera/aiEye/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	if(relay_speech && speaker && ai && !radio_freq && speaker != ai && near_camera(speaker))

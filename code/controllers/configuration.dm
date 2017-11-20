@@ -436,8 +436,10 @@
 					config.client_error_version = text2num(value)
 				if("client_error_message")
 					config.client_error_message = value
-				if("discord_token")
-					discord_token = value
+				if("webhook_address")
+					webhook_address = value
+				if("webhook_key")
+					webhook_key = value
 				if("check_randomizer")
 					config.check_randomizer = 1
 
@@ -748,7 +750,7 @@
 	var/list/datum/game_mode/runnable_modes = new
 	for(var/T in subtypesof(/datum/game_mode))
 		var/datum/game_mode/M = new T()
-		//world << "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]"
+		//to_chat(world, "DEBUG: [T], tag=[M.config_tag], prob=[probabilities[M.config_tag]]")
 		if(!(M.config_tag in modes))
 			qdel(M)
 			continue
@@ -757,7 +759,7 @@
 			continue
 		if(M.can_start())
 			runnable_modes[M] = probabilities[M.config_tag]
-			//world << "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]"
+			//to_chat(world, "DEBUG: runnable_mode\[[runnable_modes.len]\] = [M.config_tag]")
 	return runnable_modes
 
 /datum/configuration/proc/get_runnable_midround_modes(crew)

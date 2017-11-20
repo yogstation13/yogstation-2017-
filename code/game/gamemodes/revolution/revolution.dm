@@ -29,8 +29,8 @@
 //Announces the game type//
 ///////////////////////////
 /datum/game_mode/revolution/announce()
-	world << "<B>The current game mode is - Revolution!</B>"
-	world << "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, HoS, CE, RD and CMO. Convert other crewmembers (excluding the heads of staff, and security officers) to your cause by flashing them. Protect your leaders.<BR>\nPersonnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>"
+	to_chat(world, "<B>The current game mode is - Revolution!</B>")
+	to_chat(world, "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, HoS, CE, RD and CMO. Convert other crewmembers (excluding the heads of staff, and security officers) to your cause by flashing them. Protect your leaders.<BR>\nPersonnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>")
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -109,10 +109,10 @@
 	var/obj_count = 1
 	update_rev_icons_added(rev_mind)
 	if (you_are)
-		rev_mind.current << "<span class='userdanger'>You are a member of the revolutionaries' leadership!</span>"
+		to_chat(rev_mind.current, "<span class='userdanger'>You are a member of the revolutionaries' leadership!</span>")
 		explain_rev_hud(rev_mind.current)
 	for(var/datum/objective/objective in rev_mind.objectives)
-		rev_mind.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(rev_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		rev_mind.special_role = "Head Revolutionary"
 		obj_count++
 
@@ -125,7 +125,7 @@
 
 	if (mob.mind)
 		if (mob.mind.assigned_role == "Clown")
-			mob << "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself."
+			to_chat(mob, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 			mob.dna.remove_mutation(CLOWNMUT)
 
 
@@ -150,22 +150,22 @@
 	mob.update_icons()
 
 	if (!where2)
-		mob << "The Syndicate were unfortunately unable to get you a chameleon security HUD."
+		to_chat(mob, "The Syndicate were unfortunately unable to get you a chameleon security HUD.")
 	else
-		mob << "The chameleon security HUD in your [where2] will help you keep track of who is mindshield-implanted, and unable to be recruited."
+		to_chat(mob, "The chameleon security HUD in your [where2] will help you keep track of who is mindshield-implanted, and unable to be recruited.")
 
 	if (!where)
-		mob << "Unfortunately, due to budget cuts, the syndicate were unable to get you a conversion tool. Maybe try a prayer?"
+		to_chat(mob, "Unfortunately, due to budget cuts, the syndicate were unable to get you a conversion tool. Maybe try a prayer?")
 	else
-		mob << "The suspicious device in your [where] will help you to persuade the crew to join your cause."
+		to_chat(mob, "The suspicious device in your [where] will help you to persuade the crew to join your cause.")
 
 	if(!where3)
-		mob << "The Syndicate were unable to get you a hijack tool."
+		to_chat(mob, "The Syndicate were unable to get you a hijack tool.")
 	else
-		mob << "The hijack tool that resembles an implanter in your [where3] is designed to create a conversion tool out of NT's flash devices. It can be started by holding both items in your hand, and plugging the implanter into the flash."
+		to_chat(mob, "The hijack tool that resembles an implanter in your [where3] is designed to create a conversion tool out of NT's flash devices. It can be started by holding both items in your hand, and plugging the implanter into the flash.")
 
 	if(!where4)
-		mob << "The Syndicate were unable to supply you with a spraycan."
+		to_chat(mob, "The Syndicate were unable to supply you with a spraycan.")
 		return 1
 
 /////////////////////////////////
@@ -262,12 +262,12 @@
 			var/icon/I = V
 			I.Crop(23, 23, 32, 32)
 			I.Scale(32, 32)
-	M << "<span class='notice'>\icon[images[1]] Head Revolutionary: Protect them.<br>\
+	to_chat(M, "<span class='notice'>\icon[images[1]] Head Revolutionary: Protect them.<br>\
 								\icon[images[2]] Revolutionary: Assist them.<br>\
 								\icon[images[3]] Unknown: Take off their mask to expose their identity.<br>\
 								\icon[images[4]] Crewmember: Take them to a head revolutionary to convert them, if possible.<br>\
 								\icon[images[5]] Head of Staff: Kill them to win the revolution!\
-								</span>"
+								</span>")
 
 /datum/game_mode/proc/add_revolutionary(datum/mind/rev_mind)
 	if(rev_mind.assigned_role in command_positions)
@@ -283,7 +283,7 @@
 		carbon_mob.silent = max(carbon_mob.silent, 5)
 		carbon_mob.flash_eyes(1, 1)
 	rev_mind.current.Stun(5)
-	rev_mind.current << "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. Help them kill the heads to win the revolution!</FONT></span>"
+	to_chat(rev_mind.current, "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. Help them kill the heads to win the revolution!</FONT></span>")
 	explain_rev_hud(rev_mind.current)
 	rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has been converted to the revolution!</font>"
 	rev_mind.special_role = "Revolutionary"
@@ -306,20 +306,20 @@
 		rev_mind.current.attack_log += "\[[time_stamp()]\] <font color='red'>Has renounced the revolution!</font>"
 
 		if(beingborged)
-			rev_mind.current << "<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>"
+			to_chat(rev_mind.current, "<span class='danger'><FONT size = 3>The frame's firmware detects and deletes your neural reprogramming! You remember nothing[remove_head ? "." : " but the name of the one who flashed you."]</FONT></span>")
 			message_admins("[key_name_admin(rev_mind.current)] <A HREF='?_src_=holder;adminmoreinfo=\ref[rev_mind.current]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[rev_mind.current]'>FLW</A>) has been borged while being a [remove_head ? "leader" : " member"] of the revolution.")
 
 		else
 			rev_mind.current.Paralyse(5)
-			rev_mind.current << "<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>"
+			to_chat(rev_mind.current, "<span class='danger'><FONT size = 3>You have been brainwashed! You are no longer a revolutionary! Your memory is hazy from the time you were a rebel...the only thing you remember is the name of the one who brainwashed you...</FONT></span>")
 
 		update_rev_icons_removed(rev_mind)
 		for(var/mob/living/M in view(rev_mind.current))
 			if(beingborged)
-				M << "The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it."
+				to_chat(M, "The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.")
 
 			else
-				M << "[rev_mind.current] looks like they just remembered their real allegiance!"
+				to_chat(M, "[rev_mind.current] looks like they just remembered their real allegiance!")
 
 /////////////////////////////////////
 //Adds the rev hud to a new convert//
@@ -376,10 +376,10 @@
 /datum/game_mode/revolution/declare_completion()
 	if(finished == 1)
 		feedback_set_details("round_end_result","win - heads killed")
-		world << "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>"
+		to_chat(world, "<span class='redtext'>The heads of staff were killed or exiled! The revolutionaries win!</span>")
 	else if(finished == 2)
 		feedback_set_details("round_end_result","loss - rev heads killed")
-		world << "<span class='redtext'>The heads of staff managed to stop the revolution!</span>"
+		to_chat(world, "<span class='redtext'>The heads of staff managed to stop the revolution!</span>")
 	..()
 	return 1
 
@@ -395,19 +395,19 @@
 					if((survivor.mind in head_revolutionaries) || (survivor.mind in revolutionaries))
 						num_revs++
 		if(num_survivors)
-			world << "[TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" // % of loyal crew
+			to_chat(world, "[TAB]Command's Approval Rating: <B>[100 - round((num_revs/num_survivors)*100, 0.1)]%</B>" )
 		var/text = "<br><font size=3><b>The head revolutionaries were:</b></font>"
 		for(var/datum/mind/headrev in head_revolutionaries)
 			text += printplayer(headrev, 1)
 		text += "<br>"
-		world << text
+		to_chat(world, text)
 
 	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
 		var/text = "<br><font size=3><b>The revolutionaries were:</b></font>"
 		for(var/datum/mind/rev in revolutionaries)
 			text += printplayer(rev, 1)
 		text += "<br>"
-		world << text
+		to_chat(world, text)
 
 	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
 		var/text = "<br><font size=3><b>The heads of staff were:</b></font>"
@@ -418,7 +418,7 @@
 				text += "<span class='boldannounce'>Target</span>"
 			text += printplayer(head, 1)
 		text += "<br>"
-		world << text
+		to_chat(world, text)
 
 /obj/item/device/revtool
 	name = "Electronic Flashbulb Hijacker"

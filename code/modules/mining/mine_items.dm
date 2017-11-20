@@ -172,7 +172,7 @@
 
 /obj/item/weapon/emptysandbag/attackby(obj/item/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/ore/glass))
-		user << "<span class='notice'>You fill the sandbag.</span>"
+		to_chat(user, "<span class='notice'>You fill the sandbag.</span>")
 		var/obj/item/stack/sheet/mineral/sandbags/I = new /obj/item/stack/sheet/mineral/sandbags
 		user.unEquip(src)
 		user.put_in_hands(I)
@@ -197,6 +197,7 @@
 	icon_state = "away"
 	requires_power = 0
 	has_gravity = 1
+	valid_territory = 0
 
 /obj/item/weapon/survivalcapsule
 	name = "bluespace shelter capsule"
@@ -224,8 +225,8 @@
 /obj/item/weapon/survivalcapsule/examine(mob/user)
 	. = ..()
 	get_template()
-	user << "This capsule has the [template.name] stored."
-	user << template.description
+	to_chat(user, "This capsule has the [template.name] stored.")
+	to_chat(user, template.description)
 
 /obj/item/weapon/survivalcapsule/attack_self()
 	// Can't grab when capsule is New() because templates aren't loaded then
@@ -287,8 +288,8 @@
 /obj/item/weapon/sinew_tent/examine(mob/user)
 	. = ..()
 	get_template()
-	user << "This box has the [template.name] stored."
-	user << template.description
+	to_chat(user, "This box has the [template.name] stored.")
+	to_chat(user, template.description)
 
 /obj/item/weapon/sinew_tent/attack_self()
 	// Can't grab when capsule is New() because templates aren't loaded then
@@ -347,7 +348,7 @@
 /obj/item/device/barometer/proc/ping()
 	if(isliving(loc))
 		var/mob/living/L = loc
-		L << "<span class='notice'>[src] is ready!</span>"
+		to_chat(L, "<span class='notice'>[src] is ready!</span>")
 	playsound(get_turf(src), 'sound/machines/click.ogg', 100)
 
 /obj/item/device/barometer/attack_self(mob/user)
@@ -357,7 +358,7 @@
 
 	playsound(get_turf(src), 'sound/effects/pop.ogg', 100)
 	if(world.time < cooldown)
-		user << "<span class='warning'>[src] is prepraring itself.</span>"
+		to_chat(user, "<span class='warning'>[src] is prepraring itself.</span>")
 		return
 
 	//var/area/user_area = T.loc
@@ -371,21 +372,21 @@
 
 	if(ongoing_weather)
 		if((ongoing_weather.stage == MAIN_STAGE) || (ongoing_weather.stage == WIND_DOWN_STAGE))
-			user << "<span class='warning'>[src] can't trace anything while the storm is [ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]</span>"
+			to_chat(user, "<span class='warning'>[src] can't trace anything while the storm is [ongoing_weather.stage == MAIN_STAGE ? "already here!" : "winding down."]</span>")
 			return
 
 		var/time = butchertime((ongoing_weather.next_hit_time - world.time)/10)
-		user << "<span class='notice'>The next [ongoing_weather] will hit in [round(time)] seconds.</span>"
+		to_chat(user, "<span class='notice'>The next [ongoing_weather] will hit in [round(time)] seconds.</span>")
 		if(ongoing_weather.aesthetic)
-			user << "<span class='warning'>[src] says that the next storm will breeze on by.</span>"
+			to_chat(user, "<span class='warning'>[src] says that the next storm will breeze on by.</span>")
 	else
 		var/next_hit = SSweather.next_hit_by_zlevel["[T.z]"]
 		var/fixed = next_hit ? next_hit - world.time : -1
 		if(fixed < 0)
-			user << "<span class='warning'>[src] was unable to trace any weather patterns.</span>"
+			to_chat(user, "<span class='warning'>[src] was unable to trace any weather patterns.</span>")
 		else
 			fixed = butchertime(round(fixed / 10))
-			user << "<span class='warning'>A storm will land in approximately [fixed] seconds.</span>"
+			to_chat(user, "<span class='warning'>A storm will land in approximately [fixed] seconds.</span>")
 	cooldown = world.time + cooldown_time
 	addtimer(src, "ping", cooldown_time)
 
@@ -567,6 +568,9 @@
 	else
 		var/obj/item/device/instrument/guitar/G = new(src)
 		load(G)
+
+	new /obj/item/device/jauntbeacon(src)
+	new /obj/item/weapon/wrench(src)
 
 //Fans
 /obj/structure/fans

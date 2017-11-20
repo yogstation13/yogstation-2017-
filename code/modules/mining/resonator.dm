@@ -36,10 +36,10 @@
 /obj/item/weapon/resonator/attack_self(mob/user)
 	if(burst_time == 50)
 		burst_time = 30
-		user << "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>"
+		to_chat(user, "<span class='info'>You set the resonator's fields to detonate after 3 seconds.</span>")
 	else
 		burst_time = 50
-		user << "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>"
+		to_chat(user, "<span class='info'>You set the resonator's fields to detonate after 5 seconds.</span>")
 
 /obj/item/weapon/resonator/afterattack(atom/target, mob/user, proximity_flag)
 	if(proximity_flag)
@@ -82,11 +82,11 @@
 			if(creator)
 				for(var/mob/living/L in src.loc)
 					add_logs(creator, L, "used a resonator field on", "resonator")
-					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
+					to_chat(L, "<span class='danger'>The [src.name] ruptured with you in it!</span>")
 					L.adjustBruteLoss(resonance_damage)
 			else
 				for(var/mob/living/L in src.loc)
-					L << "<span class='danger'>The [src.name] ruptured with you in it!</span>"
+					to_chat(L, "<span class='danger'>The [src.name] ruptured with you in it!</span>")
 					L.adjustBruteLoss(resonance_damage)
 			qdel(src)
 

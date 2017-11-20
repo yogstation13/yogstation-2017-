@@ -101,6 +101,7 @@ var/list/preferences_datums = list()
 	var/purrbation = null
 
 	var/soundenv = TRUE
+	var/clientfps = 0
 
 /datum/preferences/New(client/C)
 	custom_names["ai"] = pick(ai_names)
@@ -422,6 +423,8 @@ var/list/preferences_datums = list()
 						p_map += " (No longer exists)"
 				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a>"
 
+			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a>"
+
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
 			dat += "<h2>Special Role Settings</h2>"
@@ -702,7 +705,7 @@ var/list/preferences_datums = list()
 		return
 
 	if (!isnum(desiredLvl))
-		user << "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>"
+		to_chat(user, "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>")
 		ShowChoices(user)
 		return
 
@@ -794,7 +797,7 @@ var/list/preferences_datums = list()
 			if(text2num(duration) > 0)
 				text += ". The ban is for [duration] minutes and expires on [expiration_time] (server time)"
 			text += ".</span>"
-			user << text
+			to_chat(user, text)
 		return
 	if(href_list["preference"] == "donor")
 		if(is_donator(user))
@@ -898,11 +901,11 @@ var/list/preferences_datums = list()
 							ghost_others = GHOST_OTHERS_SIMPLE
 
 				if("name")
-					var/new_name = reject_bad_name( input(user, "Choose your character's name:", "Character Preference")  as text|null )
+					var/new_name = name_input(user, "Choose your character's name:", "Character Preference")
 					if(new_name)
 						real_name = new_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("age")
 					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
@@ -910,7 +913,7 @@ var/list/preferences_datums = list()
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("metadata")
-					var/new_metadata = input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)  as message|null
+					var/new_metadata = stripped_multiline_input(user, "Enter any information you'd like others to see, such as Roleplay-preferences:", "Game Preference" , metadata)
 					if(new_metadata)
 						metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
 
@@ -1016,7 +1019,7 @@ var/list/preferences_datums = list()
 						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("tail_lizard")
 					var/new_tail
@@ -1088,46 +1091,46 @@ var/list/preferences_datums = list()
 						backbag = new_backbag
 
 				if("clown_name")
-					var/new_clown_name = reject_bad_name( input(user, "Choose your character's clown name:", "Character Preference")  as text|null )
+					var/new_clown_name = name_input(user, "Choose your character's clown name:", "Character Preference")
 					if(new_clown_name)
 						custom_names["clown"] = new_clown_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("mime_name")
-					var/new_mime_name = reject_bad_name( input(user, "Choose your character's mime name:", "Character Preference")  as text|null )
+					var/new_mime_name = name_input(user, "Choose your character's mime name:", "Character Preference")
 					if(new_mime_name)
 						custom_names["mime"] = new_mime_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("ai_name")
-					var/new_ai_name = reject_bad_name( input(user, "Choose your character's AI name:", "Character Preference")  as text|null, 1 )
+					var/new_ai_name = name_input(user, "Choose your character's AI name:", "Character Preference", null, TRUE)
 					if(new_ai_name)
 						custom_names["ai"] = new_ai_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>")
 
 				if("cyborg_name")
-					var/new_cyborg_name = reject_bad_name( input(user, "Choose your character's cyborg name:", "Character Preference")  as text|null, 1 )
+					var/new_cyborg_name = name_input(user, "Choose your character's cyborg name:", "Character Preference", null, 1 )
 					if(new_cyborg_name)
 						custom_names["cyborg"] = new_cyborg_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>")
 
 				if("religion_name")
-					var/new_religion_name = reject_bad_name( input(user, "Choose your character's religion:", "Character Preference")  as text|null )
+					var/new_religion_name = name_input(user, "Choose your character's religion:", "Character Preference")
 					if(new_religion_name)
 						custom_names["religion"] = new_religion_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("deity_name")
-					var/new_deity_name = reject_bad_name( input(user, "Choose your character's deity:", "Character Preference")  as text|null )
+					var/new_deity_name = name_input(user, "Choose your character's deity:", "Character Preference")
 					if(new_deity_name)
 						custom_names["deity"] = new_deity_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 				if ("preferred_map")
 					var/maplist = list()
 					var/default = "Default"
@@ -1143,7 +1146,17 @@ var/list/preferences_datums = list()
 					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
 					if (pickedmap)
 						preferred_map = maplist[pickedmap]
-
+				if("clientfps")
+					var/version_message
+					if(user.client && user.client.byond_version < 511)
+						version_message = "\nYou need to be using byond version 511 or later to take advantage of this feature, your version of [user.client.byond_version] is too low"
+					if(world.byond_version < 511)
+						version_message += "\nThis server does not currently support client side fps. You can set now for when it does."
+					var/desiredfps = input(user, "Choose your desired fps.[version_message]\n(0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
+					if(!isnull(desiredfps))
+						clientfps = desiredfps
+						if(world.byond_version >= 511 && user.client && user.client.byond_version >= 511)
+							user.client.vars["fps"] = clientfps
 
 		else
 			switch(href_list["preference"])

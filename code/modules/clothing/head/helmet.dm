@@ -63,7 +63,7 @@
 			flags_inv ^= visor_flags_inv
 			flags_cover ^= visor_flags_cover
 			icon_state = "[initial(icon_state)][up ? "up" : ""]"
-			user << "[up ? alt_toggle_message : toggle_message] \the [src]"
+			to_chat(user, "[up ? alt_toggle_message : toggle_message] \the [src]")
 
 			user.update_inv_head()
 			if(iscarbon(user))
@@ -256,7 +256,7 @@
 			if(!F)
 				if(!user.unEquip(S))
 					return
-				user << "<span class='notice'>You click [S] into place on [src].</span>"
+				to_chat(user, "<span class='notice'>You click [S] into place on [src].</span>")
 				if(S.on)
 					SetLuminosity(0)
 				F = S
@@ -272,7 +272,7 @@
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(F)
 			for(var/obj/item/device/flashlight/seclite/S in src)
-				user << "<span class='notice'>You unscrew the seclite from [src].</span>"
+				to_chat(user, "<span class='notice'>You unscrew the seclite from [src].</span>")
 				F = null
 				S.loc = get_turf(user)
 				update_helmlight(user)
@@ -298,9 +298,9 @@
 	if(user.incapacitated())
 		return
 	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>"
+		to_chat(user, "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>")
 	F.on = !F.on
-	user << "<span class='notice'>You toggle the helmetlight [F.on ? "on":"off"].</span>"
+	to_chat(user, "<span class='notice'>You toggle the helmetlight [F.on ? "on":"off"].</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_helmlight(user)
@@ -343,3 +343,19 @@
 		if(F.on)
 			user.AddLuminosity(-F.brightness_on)
 			SetLuminosity(F.brightness_on)
+
+/obj/item/clothing/head/helmet/laserproof
+	name = "reflector helmet"
+	desc = "A combat-efficient helmet which usually reflects energy based projectiles."
+	icon_state = "reflector"
+	item_state = "reflector"
+	flags_cover = HEADCOVERSEYES
+	armor = list(melee = 10, bullet = 10, laser = 80, energy = 80, bomb = 0, bio = 0, rad = 0)
+	dog_fashion = null
+	var/reflect_chance = 40
+
+/obj/item/clothing/head/helmet/laserproof/IsReflect(def_zone)
+	if(!(def_zone in list("head", "eyes")))
+		return 0
+	if (prob(reflect_chance))
+		return 1

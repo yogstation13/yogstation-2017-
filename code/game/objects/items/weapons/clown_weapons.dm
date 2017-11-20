@@ -13,11 +13,10 @@
 #define WHOOPEE_CD 1000
 
 /obj/item/whoopee // in the name of all that is holy DESTROY THIS THE MOMENT YOU SEE IT, CREW.
-	name = "whopee cushion"
-	desc = "If you're reading this than you've probably already been pranked."
-	icon = ""
-	icon_state = ""
-	item_state = ""
+	name = "whoopee cushion"
+	desc = "If you're reading this than the clown, or some other sinister fiend, probably pranked you."
+	icon_state = "whoopee"
+	item_state = "whoopee"
 	var/list/fnoises = list('sound/items/fnoise1.ogg', 'sound/items/fnoise2.ogg', 'sound/items/fnoise3.ogg', 'sound/items/fnoise4.ogg')
 	var/cooldown
 
@@ -100,7 +99,7 @@
 /obj/item/weapon/melee/energy/sword/bananium/attackby(obj/item/weapon/W, mob/living/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/melee/energy/sword/bananium/))
-		user << "You slap the two swords together. Sadly, they do not seem to fit."
+		to_chat(user, "You slap the two swords together. Sadly, they do not seem to fit.")
 		playsound(src, 'sound/misc/sadtrombone.ogg', 50)
 /*
 //not dealing with this at the moment.
@@ -169,7 +168,7 @@
 	..()
 	playsound(get_turf(src), 'sound/weapons/armbomb.ogg', 60, 1)
 	if(iscarbon(loc))
-		loc << "\The [src] begins to beep."
+		to_chat(loc, "\The [src] begins to beep.")
 		var/mob/living/carbon/C = loc
 		C.throw_mode_on()
 	spawn(det_time)

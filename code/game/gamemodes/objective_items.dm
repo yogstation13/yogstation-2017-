@@ -27,19 +27,13 @@
 	name = "a hand teleporter"
 	targetitem = /obj/item/weapon/hand_tele
 	difficulty = 5
-	excludefromjob = list("Captain")
+	excludefromjob = list("Captain", "Research Director")
 
 /datum/objective_item/steal/jetpack
 	name = "the Captain's jetpack"
 	targetitem = /obj/item/weapon/tank/jetpack/oxygen/captain
 	difficulty = 5
 	excludefromjob = list("Captain")
-
-/datum/objective_item/steal/magboots
-	name = "the chief engineer's advanced magnetic boots"
-	targetitem =  /obj/item/clothing/shoes/magboots/advance
-	difficulty = 5
-	excludefromjob = list("Chief Engineer")
 
 /datum/objective_item/steal/capmedal
 	name = "the medal of captaincy"
@@ -73,7 +67,7 @@
 
 /datum/objective_item/steal/documents
 	name = "any set of secret documents of any organization"
-	targetitem = /obj/item/documents //Any set of secret documents. Doesn't have to be NT's
+	targetitem = /obj/item/documents/secret //Any set of secret documents. Doesn't have to be NT's
 	difficulty = 5
 
 /datum/objective_item/steal/nuke_core
@@ -116,10 +110,19 @@
 	targetitem = /obj/item/device/aicard
 	difficulty = 20 //beyond the impossible
 
-/datum/objective_item/steal/functionalai/check_special_completion(obj/item/device/aicard/C)
-	for(var/mob/living/silicon/ai/A in C)
-		if(istype(A, /mob/living/silicon/ai) && A.stat != 2) //See if any AI's are alive inside that card.
-			return 1
+/datum/objective_item/steal/functionalai/check_special_completion(obj/item/I)
+	var/obj/item/device/aicard/C
+
+	if(istype(I, /obj/item/weapon/stock_parts/cell/potato))
+		var/obj/item/weapon/stock_parts/cell/potato/P = I
+		C = P.storage // storage is defined as an intellicard
+	else
+		C = I
+
+	if(istype(C, /obj/item/device/aicard))
+		for(var/mob/living/silicon/ai/A in C)
+			if(istype(A, /mob/living/silicon/ai) && A.stat != 2) //See if any AI's are alive inside that card.
+				return 1
 	return 0
 
 /datum/objective_item/steal/blueprints
@@ -138,6 +141,12 @@
 			return 1
 	return 0
 
+/datum/objective_item/steal/rapidengineeringdevice
+	name = "the rapid engineering device"
+	targetitem = /obj/item/weapon/rapid_engineering_device
+	difficulty = 10
+	excludefromjob = list("Chief Engineer")
+
 /datum/objective_item/steal/slime
 	name = "an unused sample of slime extract"
 	targetitem = /obj/item/slime_extract
@@ -152,12 +161,12 @@
 //Unique Objectives
 /datum/objective_item/unique/docs_red
 	name = "the \"Red\" secret documents"
-	targetitem = /obj/item/documents/syndicate/red
+	targetitem = /obj/item/documents/secret/syndicate/red
 	difficulty = 10
 
 /datum/objective_item/unique/docs_blue
 	name = "the \"Blue\" secret documents"
-	targetitem = /obj/item/documents/syndicate/blue
+	targetitem = /obj/item/documents/secret/syndicate/blue
 	difficulty = 10
 
 //Old ninja objectives.

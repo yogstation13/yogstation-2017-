@@ -31,6 +31,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	flags = GIRDERABLE
 	var/broken = 0
 	var/burnt = 0
+	var/placedby = null
 	var/floor_tile = null //tile that this floor drops
 	var/obj/item/stack/tile/builtin_tile = null //needed for performance reasons when the singularity rips off floor tiles
 	var/list/broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
@@ -146,12 +147,12 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		if(broken || burnt)
 			broken = 0
 			burnt = 0
-			user << "<span class='danger'>You remove the broken plating.</span>"
+			to_chat(user, "<span class='danger'>You remove the broken plating.</span>")
 		else
 			if(istype(src, /turf/open/floor/wood))
-				user << "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>"
+				to_chat(user, "<span class='danger'>You forcefully pry off the planks, destroying them in the process.</span>")
 			else
-				user << "<span class='danger'>You remove the floor tile.</span>"
+				to_chat(user, "<span class='danger'>You remove the floor tile.</span>")
 				builtin_tile.loc = src
 		make_plating()
 		playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
@@ -182,7 +183,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		ChangeTurf(/turf/open/floor/engine/cult)
 
 /turf/open/floor/attack_animal(mob/living/simple_animal/M)
-	if(istype(M,/mob/living/simple_animal/hostile/construct/builder)||istype(M,/mob/living/simple_animal/hostile/construct/harvester))//only cult things can interact with floors so far
+	if(istype(M,/mob/living/simple_animal/hostile/construct/builder))//only cult things can interact with floors so far
 		if(istype(src, /turf/open/floor/engine/cult))
 			return
 		src.ChangeTurf(/turf/open/floor/engine/cult)

@@ -38,8 +38,10 @@
 	var/obj/machinery/door/airlock/A = holder
 	switch(wire)
 		if(WIRE_POWER1, WIRE_POWER2) // Pulse to loose power.
+			A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled main power"
 			A.loseMainPower()
 		if(WIRE_BACKUP1, WIRE_BACKUP2) // Pulse to loose backup power.
+			A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled backup power"
 			A.loseBackupPower()
 		if(WIRE_OPEN) // Pulse to open door (only works not emagged and ID wire is cut or no access is required).
 			if(A.emagged)
@@ -52,10 +54,12 @@
 		if(WIRE_BOLTS) // Pulse to toggle bolts (but only raise if power is on).
 			if(!A.locked)
 				A.bolt()
+				A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] bolted"
 				A.audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null,  1)
 			else
 				if(A.hasPower())
 					A.unbolt()
+					A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] unbolted"
 					A.audible_message("<span class='italics'>You hear a click from the bottom of the door.</span>", null, 1)
 			A.update_icon()
 		if(WIRE_IDSCAN) // Pulse to disable emergency access and flash red lights.
@@ -67,7 +71,9 @@
 		if(WIRE_AI) // Pulse to disable WIRE_AI control for 10 ticks (follows same rules as cutting).
 			if(A.aiControlDisabled == 0)
 				A.aiControlDisabled = 1
+				A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled AI control"
 			else if(A.aiControlDisabled == -1)
+				A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled AI control"
 				A.aiControlDisabled = 2
 			spawn(10)
 				if(A)
@@ -78,7 +84,7 @@
 		if(WIRE_SHOCK) // Pulse to shock the door for 10 ticks.
 			if(!A.secondsElectrified)
 				A.secondsElectrified = 30
-				A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
+				A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] electrified"
 				add_logs(usr, A, "electrified")
 				spawn(10)
 					if(A)
@@ -89,11 +95,13 @@
 							sleep(10)
 		if(WIRE_SAFETY)
 			A.safe = !A.safe
+			A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled safeties"
 			if(!A.density)
 				A.close()
 		if(WIRE_TIMING)
 			A.normalspeed = !A.normalspeed
 		if(WIRE_LIGHT)
+			A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled bolt lights"
 			A.lights = !A.lights
 			A.update_icon()
 
@@ -102,31 +110,40 @@
 	switch(wire)
 		if(WIRE_POWER1, WIRE_POWER2) // Cut to loose power, repair all to gain power.
 			if(mend && !is_cut(WIRE_POWER1) && !is_cut(WIRE_POWER2))
+				A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] enabled main power"
 				A.regainMainPower()
 				A.shock(usr, 50)
 			else
+				A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled main power"
 				A.loseMainPower()
 				A.shock(usr, 50)
 		if(WIRE_BACKUP1, WIRE_BACKUP2) // Cut to loose backup power, repair all to gain backup power.
 			if(mend && !is_cut(WIRE_BACKUP1) && !is_cut(WIRE_BACKUP2))
+				A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] enabled backup power"
 				A.regainBackupPower()
 				A.shock(usr, 50)
 			else
+				A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled backup power"
 				A.loseBackupPower()
 				A.shock(usr, 50)
 		if(WIRE_BOLTS) // Cut to drop bolts, mend does nothing.
 			if(!mend)
+				A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] bolted"
 				A.bolt()
 		if(WIRE_AI) // Cut to disable WIRE_AI control, mend to re-enable.
 			if(mend)
 				if(A.aiControlDisabled == 1) // 0 = normal, 1 = locked out, 2 = overridden by WIRE_AI, -1 = previously overridden by WIRE_AI
+					A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] restored AI control"
 					A.aiControlDisabled = 0
 				else if(A.aiControlDisabled == 2)
+					A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled AI control"
 					A.aiControlDisabled = -1
 			else
 				if(A.aiControlDisabled == 0)
+					A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] disabled AI control"
 					A.aiControlDisabled = 1
 				else if(A.aiControlDisabled == -1)
+					A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] restored AI control"
 					A.aiControlDisabled = 2
 		if(WIRE_SHOCK) // Cut to shock the door, mend to unshock.
 			if(mend)
@@ -135,7 +152,7 @@
 			else
 				if(A.secondsElectrified != -1)
 					A.secondsElectrified = -1
-					A.shockedby += text("\[[time_stamp()]\][usr](ckey:[usr.ckey])")
+					A.actionstaken += "\[[time_stamp()]\][usr]/[usr.ckey] electrified"
 					add_logs(usr, A, "electrified")
 		if(WIRE_SAFETY) // Cut to disable safeties, mend to re-enable.
 			A.safe = mend

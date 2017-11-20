@@ -95,6 +95,7 @@ var/allowed_translateable_langs = ALL
 	interpreter.SetVar("$freq"   , 	signal.frequency)
 	interpreter.SetVar("$source" , 	signal.data["name"])
 	interpreter.SetVar("$uuid"   , 	signal.data["uuid"])
+	interpreter.SetVar("$sector" , 	signal.data["level"])
 	interpreter.SetVar("$job"    , 	signal.data["job"])
 	interpreter.SetVar("$sign"   ,	signal)
 	interpreter.SetVar("$pass"	 ,  !(signal.data["reject"])) // if the signal isn't rejected, pass = 1; if the signal IS rejected, pass = 0
@@ -236,6 +237,7 @@ var/allowed_translateable_langs = ALL
 		signal.data["realname"] = setname
 	signal.data["name"]			= setname
 	signal.data["uuid"]			= interpreter.GetCleanVar("$uuid", signal.data["uuid"])
+	signal.data["level"]		= interpreter.GetCleanVar("$sector", signal.data["level"])
 	signal.data["job"]			= interpreter.GetCleanVar("$job", signal.data["job"])
 	signal.data["reject"]		= !(interpreter.GetCleanVar("$pass")) // set reject to the opposite of $pass
 	signal.data["verb_say"]		= interpreter.GetCleanVar("$say")
@@ -255,6 +257,7 @@ var/allowed_translateable_langs = ALL
 /*  -- Actual language proc code --  */
 
 var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
+var/const/MAX_MEM_VARS	 = 500
 
 /datum/signal
 
@@ -267,6 +270,9 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 			return S.memory[address]
 
 		else
+			if(S.memory.len >= MAX_MEM_VARS)
+				if(!(address in S.memory))
+					return
 			S.memory[address] = value
 
 
@@ -363,6 +369,7 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 	newsign.data["vname"] = source
 	newsign.data["vmask"] = 0
 	newsign.data["level"] = data["level"]
+	newsign.data["broadcast_levels"] = data["broadcast_levels"]
 
 	newsign.sanitize_data()
 

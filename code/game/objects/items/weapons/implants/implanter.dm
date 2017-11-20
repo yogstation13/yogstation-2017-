@@ -10,7 +10,7 @@
 	origin_tech = "materials=2;biotech=3"
 	materials = list(MAT_METAL=600, MAT_GLASS=200)
 	var/obj/item/weapon/implant/imp = null
-	var/imptype = /obj/item/weapon/implant
+	var/imptype = null
 
 /obj/item/weapon/implanter/New()
 	..()
@@ -38,7 +38,7 @@
 			if(user && M && (get_turf(M) == T) && src && imp)
 				if(imp.implant(M, user))
 					if (M == user)
-						user << "<span class='notice'>You implant yourself.</span>"
+						to_chat(user, "<span class='notice'>You implant yourself.</span>")
 					else
 						M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you.</span>")
 					imp = null

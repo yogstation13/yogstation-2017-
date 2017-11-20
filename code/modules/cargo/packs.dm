@@ -122,20 +122,22 @@
 /datum/supply_pack/emergency/specialops
 	name = "Special Ops Supplies"
 	hidden = TRUE
-	cost = 2000
+	cost = 5000
 	contains = list(/obj/item/weapon/storage/box/emps,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/pen/sleepy,
-					/obj/item/weapon/grenade/chem_grenade/incendiary)
+					/obj/item/weapon/grenade/chem_grenade/incendiary,
+					/obj/item/weapon/grenade/chem_grenade/bioterrorfoam,
+					/obj/item/clothing/under/syndicate)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 
 /datum/supply_pack/emergency/syndicate
 	name = "NULL_ENTRY"
 	hidden = TRUE
-	cost = 14000
+	cost = 20000
 	contains = list(/obj/item/weapon/storage/box/syndicate)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
@@ -954,6 +956,17 @@
 					/obj/item/clothing/tie/petcollar)
 	crate_name = "fox crate"
 
+/datum/supply_pack/organic/critter/crabs
+	name = "Creb crate"
+	cost = 5000
+	contains = list(/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab,
+		/mob/living/simple_animal/crab)
+	crate_name = "Crab crate"
+
 /datum/supply_pack/organic/critter/butterfly
 	name = "Butterflies Crate"
 	contraband = TRUE
@@ -1126,6 +1139,12 @@
 	cost = 1000
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 	crate_name = "sandstone blocks crate"
+	
+/datum/supply_pack/materials/carpet50
+	name = "50 Carpet Sheets"
+	cost = 1000
+	contains = list(/obj/item/stack/tile/carpet/fifty)
+	crate_name = "carpet sheets crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
@@ -1273,7 +1292,7 @@
 					/obj/item/weapon/caution,
 					/obj/item/weapon/storage/bag/trash,
 					/obj/item/weapon/reagent_containers/spray/cleaner,
-					/obj/item/weapon/reagent_containers/glass/rag,
+					/obj/item/weapon/mop/rag,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner)
@@ -1282,7 +1301,7 @@
 /datum/supply_pack/misc/janitor/janicart
 	name = "Janitorial Cart and Galoshes Crate"
 	cost = 2000
-	contains = list(/obj/structure/janitorialcart,
+	contains = list(/obj/structure/mopbucket/janitorialcart,
 					/obj/item/clothing/shoes/galoshes)
 	crate_name = "janitorial cart crate"
 	crate_type = /obj/structure/closet/crate/large
@@ -1319,21 +1338,6 @@
 					/obj/item/clothing/head/helmet/space/plasmaman,
 					/obj/item/clothing/head/helmet/space/plasmaman)
 	crate_name = "plasmaman supply kit"
-
-/datum/supply_pack/misc/sneakers
-	name = "Crep Crate"
-	cost = 2000
-	contains = list(/obj/item/clothing/shoes/sneakers/nmd/collab,
-					/obj/item/clothing/shoes/sneakers/nmd,
-					/obj/item/clothing/shoes/sneakers/yeezy/black,
-					/obj/item/clothing/shoes/sneakers/yeezy/orange,
-					/obj/item/clothing/shoes/sneakers/yeezy,
-					/obj/item/clothing/shoes/sneakers/yeezy,
-					/obj/item/clothing/shoes/sneakers/yeezy,
-					/obj/item/clothing/shoes/sneakers/yeezy,
-					/obj/item/clothing/shoes/sneakers/yeezy/black,
-					/obj/item/clothing/shoes/sneakers/yeezy)
-	crate_name = "Sneaker Drop"
 
 
 /datum/supply_pack/misc/superb
@@ -1381,6 +1385,7 @@
 					/obj/item/clothing/suit/suspenders,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing,
 					/obj/item/weapon/storage/backpack/mime)
+
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/secure
 
@@ -1445,12 +1450,25 @@
 	                /obj/item/toy/talking/skeleton,
 	                /obj/item/toy/nuke,
 	                /obj/item/toy/minimeteor,
-	                /obj/item/toy/carpplushie,
 	                /obj/item/weapon/coin/antagtoken,
 	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
 	                /obj/item/toy/redbutton)
 	crate_name = "toy crate"
+
+/datum/supply_pack/misc/plushies
+	name = "Plushie Crate"
+	cost = 2000
+	contains = list(/obj/item/toy/plushie/carpplushie,
+									/obj/item/toy/plushie/bubbleplush,
+									/obj/item/toy/plushie/plushvar,
+									/obj/item/toy/plushie/narplush,
+									/obj/item/toy/plushie/Lizardplush,
+									/obj/item/toy/plushie/snakeplush,
+									/obj/item/toy/plushie/nukeplush,
+									/obj/item/toy/plushie/slimeplush,
+									/obj/item/toy/plushie/inorixplush)
+	crate_name = "plushie crate"
 
 /datum/supply_pack/misc/autodrobe
 	name = "Autodrobe Supply Crate"
@@ -1503,6 +1521,19 @@
 					/obj/item/weapon/gun/projectile/shotgun/toy,
 					/obj/item/weapon/gun/projectile/shotgun/toy)
 	crate_name = "foam force crate"
+
+/datum/supply_pack/misc/rubberpigeon
+	name = "Rubber Pigeon Crate"
+	cost = 1000
+	contains = list(/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon)
+	crate_name = "rubber pigeon crate"
 
 /datum/supply_pack/misc/foamforce/bonus
 	name = "Foam Force Pistols Crate"

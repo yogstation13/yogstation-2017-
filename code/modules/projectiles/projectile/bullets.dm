@@ -130,6 +130,7 @@
 	stun = 4
 
 /obj/item/projectile/bullet/honker
+	name = "ethereal honk"
 	damage = 0
 	weaken = 5
 	stun = 5
@@ -176,7 +177,7 @@
 /obj/item/projectile/bullet/dart/New()
 	..()
 	create_reagents(50)
-	reagents.set_reacting(FALSE)
+	reagents.set_reacting(TRUE)
 
 /obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = 0, hit_zone)
 	if(iscarbon(target))

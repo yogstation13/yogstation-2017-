@@ -554,7 +554,7 @@
 		PoolOrNew(/obj/effect/overlay/temp/revenant, get_turf(M))
 		var/points = rand(8, 13)
 		O.add_points(points)
-		O << "<span class='notice'>Gained [points] resources from the death of [M].</span>"
+		to_chat(O, "<span class='notice'>Gained [points] resources from the death of [M].</span>")
 		M.death()
 	if(M.reagents)
 		M.reagents.add_reagent("frostoil", 0.3*reac_volume)
@@ -656,9 +656,9 @@
 					if(setting_type)
 						var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, pull)))
 						var/throw_range = 5 - distance
-						X.throw_at_fast(throw_target, throw_range, 1)
+						X.throw_at(throw_target, throw_range, 1)
 					else
-						X.throw_at_fast(pull, distance, 1)
+						X.throw_at(pull, distance, 1)
 				else
 					spawn(0)
 						if(setting_type)
@@ -699,4 +699,4 @@
 	if(message_living && !issilicon(M))
 		totalmessage += message_living
 	totalmessage += "!"
-	M << "<span class='userdanger'>[totalmessage]</span>"
+	to_chat(M, "<span class='userdanger'>[totalmessage]</span>")

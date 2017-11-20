@@ -51,7 +51,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		return
 	if(z_lock) //Can only be used on SS13 unless z_lock is changed..
 		if(z != ZLEVEL_STATION)
-			usr << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
+			to_chat(usr, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 			return
 	usr.set_machine(src)
 
@@ -106,50 +106,53 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 								feedback_inc("alert_comms_blue",1)
 					tmp_alertlevel = 0
 				else:
-					usr << "<span class='warning'>You are not authorized to do this!</span>"
+					to_chat(usr, "<span class='warning'>You are not authorized to do this!</span>")
 					tmp_alertlevel = 0
 				state = STATE_DEFAULT
 			else
-				usr << "<span class='warning'>You need to swipe your ID!</span>"
+				to_chat(usr, "<span class='warning'>You need to swipe your ID!</span>")
 
 		if("announce")
-			if(src.authenticated==2 && !message_cooldown)
+			if(check_auth() && src.authenticated==2 && !message_cooldown)
 				make_announcement(usr)
 			else if (src.authenticated==2 && message_cooldown)
-				usr << "Intercomms recharging. Please stand by."
+				to_chat(usr, "Intercomms recharging. Please stand by.")
 
 		if("callshuttle")
 			src.state = STATE_DEFAULT
-			if(src.authenticated)
+			if(check_auth())
 				src.state = STATE_CALLSHUTTLE
 		if("callshuttle2")
-			if(src.authenticated)
+			if(check_auth())
 				SSshuttle.requestEvac(usr, href_list["call"])
 				if(SSshuttle.emergency.timer)
 					post_status("shuttle")
 			src.state = STATE_DEFAULT
 		if("cancelshuttle")
 			src.state = STATE_DEFAULT
-			if(src.authenticated)
+			if(check_auth())
 				src.state = STATE_CANCELSHUTTLE
 		if("cancelshuttle2")
-			if(src.authenticated)
+			if(check_auth())
 				SSshuttle.cancelEvac(usr)
 			src.state = STATE_DEFAULT
 		if("messagelist")
-			src.currmsg = 0
-			src.state = STATE_MESSAGELIST
+			if(check_auth())
+				src.currmsg = 0
+				src.state = STATE_MESSAGELIST
 		if("viewmessage")
-			src.state = STATE_VIEWMESSAGE
-			if (!src.currmsg)
-				if(href_list["message-num"])
-					src.currmsg = text2num(href_list["message-num"])
-				else
-					src.state = STATE_MESSAGELIST
+			if(check_auth())
+				src.state = STATE_VIEWMESSAGE
+				if (!src.currmsg)
+					if(href_list["message-num"])
+						src.currmsg = text2num(href_list["message-num"])
+					else
+						src.state = STATE_MESSAGELIST
 		if("delmessage")
-			src.state = (src.currmsg) ? STATE_DELMESSAGE : STATE_MESSAGELIST
+			if(check_auth())
+				src.state = (src.currmsg) ? STATE_DELMESSAGE : STATE_MESSAGELIST
 		if("delmessage2")
-			if(src.authenticated)
+			if(check_auth())
 				if(src.currmsg)
 					var/title = src.messagetitle[src.currmsg]
 					var/text  = src.messagetext[src.currmsg]
@@ -165,86 +168,95 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			src.state = STATE_STATUSDISPLAY
 
 		if("securitylevel")
-			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
-			if(!tmp_alertlevel) tmp_alertlevel = 0
-			state = STATE_CONFIRM_LEVEL
+			if(check_auth())
+				src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
+				if(!tmp_alertlevel) tmp_alertlevel = 0
+				state = STATE_CONFIRM_LEVEL
 		if("changeseclevel")
-			state = STATE_ALERT_LEVEL
+			if(check_auth())
+				state = STATE_ALERT_LEVEL
 
 		if("emergencyaccess")
-			state = STATE_TOGGLE_EMERGENCY
+			if(check_auth())
+				state = STATE_TOGGLE_EMERGENCY
 		if("enableemergency")
-			make_maint_all_access()
-			log_game("[key_name(usr)] enabled emergency maintenance access.")
-			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
-			src.state = STATE_DEFAULT
+			if(check_auth())
+				make_maint_all_access()
+				log_game("[key_name(usr)] enabled emergency maintenance access.")
+				message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
+				src.state = STATE_DEFAULT
 		if("disableemergency")
-			revoke_maint_all_access()
-			log_game("[key_name(usr)] disabled emergency maintenance access.")
-			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
-			src.state = STATE_DEFAULT
+			if(check_auth())
+				revoke_maint_all_access()
+				log_game("[key_name(usr)] disabled emergency maintenance access.")
+				message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
+				src.state = STATE_DEFAULT
 
 		// Status display stuff
 		if("setstat")
-			switch(href_list["statdisp"])
-				if("message")
-					post_status("message", stat_msg1, stat_msg2)
-				if("alert")
-					post_status("alert", href_list["alert"])
-				else
-					post_status(href_list["statdisp"])
+			if(check_auth())
+				switch(href_list["statdisp"])
+					if("message")
+						post_status("message", stat_msg1, stat_msg2)
+					if("alert")
+						post_status("alert", href_list["alert"])
+					else
+						post_status(href_list["statdisp"])
 
 		if("setmsg1")
-			stat_msg1 = reject_bad_text(input("Line 1", "Enter Message Text", stat_msg1) as text|null, 40)
-			src.updateDialog()
+			if(check_auth())
+				stat_msg1 = reject_bad_text(stripped_input(usr, "Line 1", "Enter Message Text", stat_msg1), 40)
+				src.updateDialog()
 		if("setmsg2")
-			stat_msg2 = reject_bad_text(input("Line 2", "Enter Message Text", stat_msg2) as text|null, 40)
-			src.updateDialog()
+			if(check_auth())
+				stat_msg2 = reject_bad_text(stripped_input(usr, "Line 2", "Enter Message Text", stat_msg2), 40)
+				src.updateDialog()
 
 		// OMG CENTCOM LETTERHEAD
 		if("MessageCentcomm")
-			if(src.authenticated==2)
+			if(check_auth() && src.authenticated==2)
 				if(CM.cooldownLeft())
-					usr << "Arrays recycling.  Please stand by."
+					to_chat(usr, "Arrays recycling.  Please stand by.")
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to Centcom via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response.", "Send a message to Centcomm.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
-				usr << "Message transmitted."
+				to_chat(usr, "Message transmitted.")
 				log_say("[key_name(usr)] has made a Centcom announcement: [input]")
 				CM.nextAllowedTime = world.time + 600
 
 
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
-			if((src.authenticated==2) && (src.emagged))
+			if((check_auth() && src.authenticated==2) && (src.emagged))
 				if(CM.cooldownLeft())
-					usr << "Arrays recycling.  Please stand by."
+					to_chat(usr, "Arrays recycling.  Please stand by.")
 					return
 				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING COORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response.", "Send a message to /??????/.", "")
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
-				usr << "Message transmitted."
+				to_chat(usr, "Message transmitted.")
 				log_say("[key_name(usr)] has made a Syndicate announcement: [input]")
 				CM.nextAllowedTime = world.time + 600
 
 		if("RestoreBackup")
-			usr << "Backup routing data restored!"
-			src.emagged = 0
-			src.updateDialog()
+			if(check_auth())
+				to_chat(usr, "Backup routing data restored!")
+				src.emagged = 0
+				src.updateDialog()
 
 		if("nukerequest") //When there's no other way
-			if(src.authenticated==2)
+			if(check_auth() && src.authenticated==2)
 				if(CM.cooldownLeft())
-					usr << "Arrays recycling. Please stand by."
+					to_chat(usr, "Arrays recycling. Please stand by.")
 					return
 				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self Destruct Code Request.","")
 				if(!input || !(usr in view(1,src)))
 					return
 				Nuke_request(input, usr)
-				usr << "Request sent."
+				to_chat(usr, "Request sent.")
 				log_say("[key_name(usr)] has requested the nuclear codes from Centcomm")
 				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/AI/commandreport.ogg')
 				CM.nextAllowedTime = world.time + 600
@@ -252,76 +264,102 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 		// AI interface
 		if("ai-main")
-			src.aicurrmsg = 0
-			src.aistate = STATE_DEFAULT
-		if("ai-callshuttle")
-			src.aistate = STATE_CALLSHUTTLE
-		if("ai-callshuttle2")
-			SSshuttle.requestEvac(usr, href_list["call"])
-			src.aistate = STATE_DEFAULT
-		if("ai-messagelist")
-			src.aicurrmsg = 0
-			src.aistate = STATE_MESSAGELIST
-		if("ai-viewmessage")
-			src.aistate = STATE_VIEWMESSAGE
-			if (!src.aicurrmsg)
-				if(href_list["message-num"])
-					src.aicurrmsg = text2num(href_list["message-num"])
-				else
-					src.aistate = STATE_MESSAGELIST
-		if("ai-delmessage")
-			src.aistate = (src.aicurrmsg) ? STATE_DELMESSAGE : STATE_MESSAGELIST
-		if("ai-delmessage2")
-			if(src.aicurrmsg)
-				var/title = src.messagetitle[src.aicurrmsg]
-				var/text  = src.messagetext[src.aicurrmsg]
-				src.messagetitle.Remove(title)
-				src.messagetext.Remove(text)
-				if(src.currmsg == src.aicurrmsg)
-					src.currmsg = 0
+			if(check_silicon())
 				src.aicurrmsg = 0
-			src.aistate = STATE_MESSAGELIST
+				src.aistate = STATE_DEFAULT
+		if("ai-callshuttle")
+			if(check_silicon())
+				src.aistate = STATE_CALLSHUTTLE
+		if("ai-callshuttle2")
+			if(check_silicon())
+				SSshuttle.requestEvac(usr, href_list["call"])
+				src.aistate = STATE_DEFAULT
+		if("ai-messagelist")
+			if(check_silicon())
+				src.aicurrmsg = 0
+				src.aistate = STATE_MESSAGELIST
+		if("ai-viewmessage")
+			if(check_silicon())
+				src.aistate = STATE_VIEWMESSAGE
+				if (!src.aicurrmsg)
+					if(href_list["message-num"])
+						src.aicurrmsg = text2num(href_list["message-num"])
+					else
+						src.aistate = STATE_MESSAGELIST
+		if("ai-delmessage")
+			if(check_silicon())
+				src.aistate = (src.aicurrmsg) ? STATE_DELMESSAGE : STATE_MESSAGELIST
+		if("ai-delmessage2")
+			if(check_silicon())
+				if(src.aicurrmsg)
+					var/title = src.messagetitle[src.aicurrmsg]
+					var/text  = src.messagetext[src.aicurrmsg]
+					src.messagetitle.Remove(title)
+					src.messagetext.Remove(text)
+					if(src.currmsg == src.aicurrmsg)
+						src.currmsg = 0
+					src.aicurrmsg = 0
+				src.aistate = STATE_MESSAGELIST
 		if("ai-status")
-			src.aistate = STATE_STATUSDISPLAY
+			if(check_silicon())
+				src.aistate = STATE_STATUSDISPLAY
 		if("ai-announce")
-			if(!ai_message_cooldown)
-				make_announcement(usr, 1)
+			if(check_silicon())
+				if(!ai_message_cooldown)
+					make_announcement(usr, 1)
 		if("ai-securitylevel")
-			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
-			if(!tmp_alertlevel) tmp_alertlevel = 0
-			var/old_level = security_level
-			if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
-			if(tmp_alertlevel < SEC_LEVEL_GREEN) tmp_alertlevel = SEC_LEVEL_GREEN
-			if(tmp_alertlevel > SEC_LEVEL_BLUE) tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
-			set_security_level(tmp_alertlevel)
-			if(security_level != old_level)
-				//Only notify the admins if an actual change happened
-				log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
-				message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
-				switch(security_level)
-					if(SEC_LEVEL_GREEN)
-						feedback_inc("alert_comms_green",1)
-					if(SEC_LEVEL_BLUE)
-						feedback_inc("alert_comms_blue",1)
-			tmp_alertlevel = 0
-			src.aistate = STATE_DEFAULT
+			if(check_silicon())
+				src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
+				if(!tmp_alertlevel) tmp_alertlevel = 0
+				var/old_level = security_level
+				if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
+				if(tmp_alertlevel < SEC_LEVEL_GREEN) tmp_alertlevel = SEC_LEVEL_GREEN
+				if(tmp_alertlevel > SEC_LEVEL_BLUE) tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
+				set_security_level(tmp_alertlevel)
+				if(security_level != old_level)
+					//Only notify the admins if an actual change happened
+					log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
+					message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
+					switch(security_level)
+						if(SEC_LEVEL_GREEN)
+							feedback_inc("alert_comms_green",1)
+						if(SEC_LEVEL_BLUE)
+							feedback_inc("alert_comms_blue",1)
+				tmp_alertlevel = 0
+				src.aistate = STATE_DEFAULT
 		if("ai-changeseclevel")
-			src.aistate = STATE_ALERT_LEVEL
+			if(check_silicon())
+				src.aistate = STATE_ALERT_LEVEL
 
 		if("ai-emergencyaccess")
-			src.aistate = STATE_TOGGLE_EMERGENCY
+			if(check_silicon())
+				src.aistate = STATE_TOGGLE_EMERGENCY
 		if("ai-enableemergency")
-			make_maint_all_access()
-			log_game("[key_name(usr)] enabled emergency maintenance access.")
-			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
-			src.aistate = STATE_DEFAULT
+			if(check_silicon())
+				make_maint_all_access()
+				log_game("[key_name(usr)] enabled emergency maintenance access.")
+				message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
+				src.aistate = STATE_DEFAULT
 		if("ai-disableemergency")
-			revoke_maint_all_access()
-			log_game("[key_name(usr)] disabled emergency maintenance access.")
-			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
-			src.aistate = STATE_DEFAULT
+			if(check_silicon())
+				revoke_maint_all_access()
+				log_game("[key_name(usr)] disabled emergency maintenance access.")
+				message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
+				src.aistate = STATE_DEFAULT
 
 	src.updateUsrDialog()
+
+/obj/machinery/computer/communications/proc/check_silicon()
+	if(!isaiorborg(usr))
+		message_admins("EXPLOIT: [usr] attempted to perform a silicon function on [src] without being a silicon.")
+		return FALSE
+	return TRUE
+
+/obj/machinery/computer/communications/proc/check_auth()
+	if(!src.authenticated)
+		message_admins("EXPLOIT: [usr] attempted to interact with [src] while not authenticated.")
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/communications/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
@@ -334,14 +372,14 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		src.emagged = 1
 		if(authenticated == 1)
 			authenticated = 2
-		user << "<span class='notice'>You scramble the communication routing circuits.</span>"
+		to_chat(user, "<span class='notice'>You scramble the communication routing circuits.</span>")
 
 /obj/machinery/computer/communications/attack_hand(mob/user)
 	if(..())
 		return
 	if(z_lock)
 		if (src.z != ZLEVEL_STATION)
-			user << "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!"
+			to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
 			return
 
 	user.set_machine(src)

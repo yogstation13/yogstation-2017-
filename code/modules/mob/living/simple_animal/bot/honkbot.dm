@@ -1,4 +1,3 @@
-//Floorbot assemblies
 /obj/item/weapon/honkbox
 	desc = "It's a medkit with a bikehorn crudely glued to the side. Why would someone make this?"
 	name = "bikehorn and medkit"
@@ -47,7 +46,7 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	environment_smash = 0
-	var/emagged = 0 //Allow drones to be emagged.
+	var/emagged = 0
 	attacktext = "honks"
 	projectiletype = /obj/item/projectile/clownblast
 	attack_sound = 'sound/items/bikehorn.ogg'
@@ -67,7 +66,7 @@
 
 	//Making a honkbox.
 	if(src.contents.len >= 1)
-		user << "<span class='notice'>You need to empty the [src] out first if you want to attach the bike horn.</span>"
+		to_chat(user, "<span class='notice'>You need to empty [src] out first if you want to attach the bike horn.</span>")
 		..()
 		return
 
@@ -75,7 +74,7 @@
 
 	qdel(S)
 	user.put_in_hands(A)
-	user << "<span class='notice'>You crudely attach the bikehorn to the side of the [src].</span>"
+	to_chat(user, "<span class='notice'>You crudely attach the bikehorn to the side of [src].</span>")
 	user.unEquip(src, 1)
 	qdel(src)
 
@@ -85,13 +84,13 @@
 		..()
 		return
 
-	//Making a honkbox steo 2
+	//Making a honkbox step 2
 
 	var/obj/item/weapon/honkbox_mask/A = new /obj/item/weapon/honkbox_mask
 
 	qdel(W)
 	user.put_in_hands(A)
-	user << "<span class='notice'>You crudely staple the mask to the top of the [src].</span>"
+	to_chat(user, "<span class='notice'>You crudely staple the mask to the top of [src].</span>")
 	user.unEquip(src, 1)
 	qdel(src)
 
@@ -110,7 +109,7 @@
 		if(isprox(W))
 			user.drop_item()
 			qdel(W)
-			user << "<span class='notice'>You complete the Honkbot! Beep boop.</span>"
+			to_chat(user, "<span class='notice'>You complete the Honkbot! Beep boop.</span>")
 			var/mob/living/simple_animal/hostile/honkbot/S = new /mob/living/simple_animal/hostile/honkbot/(user.loc)
 			S.name = src.created_name
 			user.unEquip(src, 1)
@@ -118,37 +117,40 @@
 
 /obj/item/projectile/clownblast
 	name = "honk"
-	icon_state = "banana"
+	icon_state = null
 	hitsound = 'sound/items/bikehorn.ogg'
 	damage = 0
-	damage_type = BURN
-	nodamage = 1
+	damage_type = STAMINA
+	nodamage = TRUE
 	flag = "energy"
 
 
 /obj/item/projectile/clownblast/syndicate
 	name = "loud honk"
 	icon_state = "banana"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	hitsound = 'sound/items/AirHorn.ogg'
-	damage = 0
-	damage_type = 1
 	stun = 6
 	weaken = 6
 	stutter = 6
 	jitter = 20
 	flag = "energy"
 
+/obj/item/projectile/clownblast/syndicate/New()
+	..()
+	SpinAnimation()
+
 /obj/item/projectile/clownblast/syndicate/on_hit(atom/target, blocked = 0)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjustEarDamage(0, 30)
-		M << "<font color='red' size='7'>HONK</font>"
+		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 
 
 /mob/living/simple_animal/hostile/honkbot/proc/Emag(mob/user as mob)
-	if(user) user << "<span class='notice'>The [src] honks excitedly!</span>"
+	if(user) to_chat(user, "<span class='notice'>[src] honks excitedly!</span>")
 	emagged = 2
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
@@ -168,13 +170,19 @@
 	if(last_honk <= 0)
 		last_honk = honk_rate
 		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
-		visible_message("<span>[src] honks his horn.</span>")
+		visible_message("<span>[src] honks its horn.</span>")
 	if(emagged == 2)
 		last_banana--
 		if(last_banana <= 0)
 			new /obj/item/weapon/grown/bananapeel(src.loc,100)
 			last_banana = banana_rate
 		projectiletype = /obj/item/projectile/clownblast/syndicate
+
+/mob/living/simple_animal/hostile/honkbot/AttackingSelf()
+	if(last_honk <= 0)
+		last_honk = honk_rate
+		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+		visible_message("<span>[src] honks its horn.</span>")
 
 /mob/living/simple_animal/hostile/honkbot/death(gibbed)
  	visible_message("<span class='danger'>[src] is destroyed!</span>")

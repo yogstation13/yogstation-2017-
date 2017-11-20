@@ -38,6 +38,8 @@
 	var/emergency_point = 500
 	var/emergency_alert = "CRYSTAL DELAMINATION IMMINENT."
 	var/explosion_point = 900
+	var/grav_pulling = 0
+	var/exploded = 0
 
 	var/emergency_issued = 0
 
@@ -72,16 +74,25 @@
 	radio = new(src)
 	radio.listening = 0
 	investigate_log("has been created.", "supermatter")
+	log_game("SINGULO: Supermatter Shard created at ([x],[y],[z])")
 
 
 /obj/machinery/power/supermatter_shard/Destroy()
+	log_game("SINGULO: Supermatter Shard destroyed.")
 	investigate_log("has been destroyed.", "supermatter")
 	qdel(radio)
 	poi_list -= src
 	. = ..()
 
-/obj/machinery/power/supermatter_shard/proc/explode()
+/obj/machinery/power/supermatter_shard/proc/prep_explode()
 	investigate_log("has exploded.", "supermatter")
+	log_game("SINGULO: Supermatter Shard exploded at ([x],[y],[z])")
+	grav_pulling = 1
+	exploded = 1
+
+	addtimer(src, "explode", 1500)
+
+/obj/machinery/power/supermatter_shard/proc/explode()
 	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1, 1)
 	qdel(src)
 	return
@@ -95,8 +106,13 @@
 	if(!istype(L)) 	//We are in a crate or somewhere that isn't turf, if we return to turf resume processing but for now.
 		return  //Yeah just stop.
 
-	if(istype(L, /turf/open/space))	// Stop processing this stuff if we've been ejected.
+	if(grav_pulling)
+		supermatter_pull()
+	else if(isspaceturf(L))// Stop processing this stuff if we've been ejected.
 		return
+
+	if(grav_pulling)
+		supermatter_pull()
 
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
 		if((world.timeofday - lastwarning) / 10 >= WARNING_DELAY)
@@ -127,7 +143,7 @@
 				var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(mob, src) + 1) )
 				mob.rad_act(rads)
 
-			explode()
+			prep_explode()
 
 	//Ok, get the air from the turf
 	var/datum/gas_mixture/env = L.return_air()
@@ -232,11 +248,12 @@
 /obj/machinery/power/supermatter_shard/singularity_act()
 	var/gain = 100
 	investigate_log("Supermatter shard consumed by singularity.","singulo")
+	log_game("SINGULO: Supermatter Shard has been consumed by a singularity.")
 	message_admins("Singularity has consumed a supermatter shard and can now become stage six.")
 	visible_message("<span class='userdanger'>[src] is consumed by the singularity!</span>")
 	for(var/mob/M in mob_list)
 		M << 'sound/effects/supermatter.ogg' //everyone goan know bout this
-		M << "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>"
+		to_chat(M, "<span class='boldannounce'>A horrible screeching fills your ears, and a wave of dread washes over you...</span>")
 	qdel(src)
 	return(gain)
 
@@ -261,11 +278,11 @@
 	if(Adjacent(user))
 		return attack_hand(user)
 	else
-		user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
+		to_chat(user, "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>")
 	return
 
 /obj/machinery/power/supermatter_shard/attack_ai(mob/user)
-	user << "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>"
+	to_chat(user, "<span class='warning'>You attempt to interface with the control circuits but find they are not connected to your network. Maybe in a future firmware update.</span>")
 
 /obj/machinery/power/supermatter_shard/attack_hand(mob/living/user)
 	if(!istype(user))
@@ -282,6 +299,14 @@
 	for(var/obj/machinery/power/rad_collector/R in rad_collectors)
 		if(get_dist(R, src) <= 15) // Better than using orange() every process
 			R.receive_pulse(power/10)
+	return
+
+/obj/machinery/power/supermatter_shard/proc/supermatter_pull()
+	//following is adapted from singulo code
+	// Let's just make this one loop.
+	for(var/atom/X in orange(15,src))
+		X.singularity_pull(src, STAGE_FIVE)
+
 	return
 
 /obj/machinery/power/supermatter_shard/attackby(obj/item/W, mob/living/user, params)
@@ -303,7 +328,7 @@
 		AM.visible_message("<span class='danger'>\The [AM] slams into \the [src] inducing a resonance... \his body starts to glow and catch flame before flashing into ash.</span>",\
 		"<span class='userdanger'>You slam into \the [src] as your ears are filled with unearthly ringing. Your last thought is \"Oh, fuck.\"</span>",\
 		"<span class='italics'>You hear an unearthly noise as a wave of heat washes over you.</span>")
-	else if(isobj(AM) && !istype(AM, /obj/effect))
+	else if(isobj(AM) && (!exploded) && !istype(AM, /obj/effect))
 		AM.visible_message("<span class='danger'>\The [AM] smacks into \the [src] and rapidly flashes to ash.</span>",\
 		"<span class='italics'>You hear a loud crack as you are washed with a wave of heat.</span>")
 	else
@@ -321,7 +346,7 @@
 		investigate_log("has consumed [key_name(user)].", "supermatter")
 		user.dust()
 		power += 200
-	else if(isobj(AM) && (!istype(AM, /obj/effect) || istype(AM, /obj/effect/blob)))
+	else if(isobj(AM) && (!exploded) && (!istype(AM, /obj/effect) || istype(AM, /obj/effect/blob)))
 		investigate_log("has consumed [AM].", "supermatter")
 		qdel(AM)
 

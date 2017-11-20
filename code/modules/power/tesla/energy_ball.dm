@@ -51,6 +51,24 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	return ..()
 
 /obj/singularity/energy_ball/process()
+	var/dist
+	if(!qdeleted(src))
+		for(var/obj/singularity/energy_ball/EB in range(1, src))
+			if(EB != src && !orbiting)
+				if(!(EB in src.orbiting_balls))
+					visible_message("<span class='warning'><b>[src]'s electrical field contacts [EB] and destabilizes!</b></span>")
+					for(var/mob/living/L in living_mob_list)
+						dist = get_dist(L,src)
+						if(dist <= 100)
+							L << 'sound/effects/supermatter.ogg'
+							L << 'sound/magic/lightningbolt.ogg'
+							to_chat(L, "<i>Your skin tingles as a wave of energy passes through the air.</i>")
+					empulse(loc, 10, 30)
+					explosion(loc, 5, 10, 20)
+					qdel(EB)
+					qdel(src)
+					return
+
 	if(!orbiting)
 		handle_energy()
 
@@ -61,7 +79,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		pixel_x = 0
 		pixel_y = 0
 
-		dir = tesla_zap(src, 7, TESLA_DEFAULT_POWER)
+		tesla_zap(src, 7, TESLA_DEFAULT_POWER)
 
 		pixel_x = -32
 		pixel_y = -32
@@ -76,14 +94,14 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 /obj/singularity/energy_ball/examine(mob/user)
 	..()
 	if(orbiting_balls.len)
-		user << "The amount of orbiting mini-balls is [orbiting_balls.len]."
+		to_chat(user, "The amount of orbiting mini-balls is [orbiting_balls.len].")
 
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
 	//we face the last thing we zapped, so this lets us favor that direction a bit
-	var/first_move = dir
+	var/move_bias = pick(alldirs)
 	for(var/i in 0 to move_amount)
-		var/move_dir = pick(alldirs + first_move) //give the first move direction a bit of favoring.
+		var/move_dir = pick(alldirs + move_bias) //ensures large-ball teslas don't just sit around 
 		if(target && prob(60))
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
@@ -262,5 +280,3 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 	else if(closest_structure)
 		closest_structure.tesla_act(power)
-
-

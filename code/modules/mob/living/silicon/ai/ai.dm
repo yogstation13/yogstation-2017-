@@ -14,7 +14,7 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai
 	name = "AI"
-	icon = 'icons/mob/AI.dmi'//
+	icon = 'icons/mob/AI.dmi'
 	icon_state = "ai"
 	anchored = 1
 	density = 1
@@ -43,6 +43,7 @@ var/list/ai_list = list()
 	var/mob/living/simple_animal/bot/Bot
 	var/tracking = 0 //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 	var/datum/effect_system/spark_spread/spark_system//So they can initialize sparks whenever/N
+	var/show_radio_jobs = TRUE
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -79,9 +80,12 @@ var/list/ai_list = list()
 	var/acceleration = 1
 
 	var/obj/machinery/camera/portable/builtInCamera
+	var/datum/ai_skin/skin
 
 /mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
 	..()
+	skin = new /datum/ai_skin/default()
+	skin.apply_to(src)
 	rename_self("ai")
 	name = real_name
 	anchored = 1
@@ -116,7 +120,8 @@ var/list/ai_list = list()
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
 		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall,\
-		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel)
+		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel,\
+		/mob/living/silicon/ai/proc/toggle_job_indicator)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -129,18 +134,18 @@ var/list/ai_list = list()
 				rename_self("ai")
 				if(mind.special_role)
 					mind.store_memory("As an AI, you must obey your silicon laws above all else. Your objectives will consider you to be dead.")
-					src << "<span class='userdanger'>You have been installed as an AI! </span>"
-					src << "<span class='danger'>You must obey your silicon laws above all else. Your objectives will consider you to be dead.</span>"
+					to_chat(src, "<span class='userdanger'>You have been installed as an AI! </span>")
+					to_chat(src, "<span class='danger'>You must obey your silicon laws above all else. Your objectives will consider you to be dead.</span>")
 
-			src << "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>"
-			src << "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>"
-			src << "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>"
-			src << "To use something, simply click on it."
-			src << "Use say :b to speak to your cyborgs through binary."
-			src << "For department channels, use the following say commands:"
-			src << ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science."
+			to_chat(src, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
+			to_chat(src, "<B>To look at other parts of the station, click on yourself to get a camera menu.</B>")
+			to_chat(src, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
+			to_chat(src, "To use something, simply click on it.")
+			to_chat(src, "Use say :b to speak to your cyborgs through binary.")
+			to_chat(src, "For department channels, use the following say commands:")
+			to_chat(src, ":o - AI Private, :c - Command, :s - Security, :e - Engineering, :u - Supply, :v - Service, :m - Medical, :n - Science.")
 			show_laws()
-			src << "<b>These laws may be changed by other players, or by you being the traitor.</b>"
+			to_chat(src, "<b>These laws may be changed by other players, or by you being the traitor.</b>")
 
 			job = "AI"
 	ai_list += src
@@ -166,83 +171,6 @@ var/list/ai_list = list()
 	qdel(eyeobj) // No AI, no Eye
 	eyeobj = null
 	return ..()
-
-
-/mob/living/silicon/ai/verb/pick_icon()
-	set category = "AI Commands"
-	set name = "Set AI Core Display"
-	if(stat || aiRestorePowerRoutine)
-		return
-
-		//if(icon_state == initial(icon_state))
-	var/icontype = input("Please, select a display!", "AI", null/*, null*/) in list("Clown", "Monochrome", "Blue", "Inverted", "Firewall", "Green", "Red", "Static", "Red October", "House", "Heartline", "Hades", "Helios", "President", "Syndicat Meow", "Alien", "Too Deep", "Triumvirate", "Triumvirate-M", "Text", "Matrix", "Dorf", "Bliss", "Not Malf", "Fuzzy", "Goon", "Database", "Glitchman", "Murica", "Nanotrasen", "Gentoo", "Blob")
-	if(icontype == "Clown")
-		icon_state = "ai-clown2"
-	else if(icontype == "Monochrome")
-		icon_state = "ai-mono"
-	else if(icontype == "Blue")
-		icon_state = "ai"
-	else if(icontype == "Inverted")
-		icon_state = "ai-u"
-	else if(icontype == "Firewall")
-		icon_state = "ai-magma"
-	else if(icontype == "Green")
-		icon_state = "ai-wierd"
-	else if(icontype == "Red")
-		icon_state = "ai-malf"
-	else if(icontype == "Static")
-		icon_state = "ai-static"
-	else if(icontype == "Red October")
-		icon_state = "ai-redoctober"
-	else if(icontype == "House")
-		icon_state = "ai-house"
-	else if(icontype == "Heartline")
-		icon_state = "ai-heartline"
-	else if(icontype == "Hades")
-		icon_state = "ai-hades"
-	else if(icontype == "Helios")
-		icon_state = "ai-helios"
-	else if(icontype == "President")
-		icon_state = "ai-pres"
-	else if(icontype == "Syndicat Meow")
-		icon_state = "ai-syndicatmeow"
-	else if(icontype == "Alien")
-		icon_state = "ai-alien"
-	else if(icontype == "Too Deep")
-		icon_state = "ai-toodeep"
-	else if(icontype == "Triumvirate")
-		icon_state = "ai-triumvirate"
-	else if(icontype == "Triumvirate-M")
-		icon_state = "ai-triumvirate-malf"
-	else if(icontype == "Text")
-		icon_state = "ai-text"
-	else if(icontype == "Matrix")
-		icon_state = "ai-matrix"
-	else if(icontype == "Dorf")
-		icon_state = "ai-dorf"
-	else if(icontype == "Bliss")
-		icon_state = "ai-bliss"
-	else if(icontype == "Not Malf")
-		icon_state = "ai-notmalf"
-	else if(icontype == "Fuzzy")
-		icon_state = "ai-fuzz"
-	else if(icontype == "Goon")
-		icon_state = "ai-goon"
-	else if(icontype == "Database")
-		icon_state = "ai-database"
-	else if(icontype == "Glitchman")
-		icon_state = "ai-glitchman"
-	else if(icontype == "Murica")
-		icon_state = "ai-murica"
-	else if(icontype == "Nanotrasen")
-		icon_state = "ai-nanotrasen"
-	else if(icontype == "Gentoo")
-		icon_state = "ai-gentoo"
-	else if(icontype == "Blob")
-		icon_state = "ai-blob"
-	//else
-			//usr <<"You can only change your display once!"
-			//return
 
 /mob/living/silicon/ai/Stat()
 	..()
@@ -314,10 +242,10 @@ var/list/ai_list = list()
 	if(istype(usr,/mob/living/silicon/ai))
 		var/mob/living/silicon/ai/AI = src
 		if(AI.control_disabled)
-			usr << "Wireless control is disabled!"
+			to_chat(usr, "Wireless control is disabled!")
 			return
 
-	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
+	var/reason = stripped_input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call")
 
 	if(trim(reason))
 		SSshuttle.requestEvac(src, reason)
@@ -341,8 +269,10 @@ var/list/ai_list = list()
 	if(stat == DEAD)
 		return //won't work if dead
 	anchored = !anchored // Toggles the anchor
-
-	src << "[anchored ? "<b>You are now anchored.</b>" : "<b>You are now unanchored.</b>"]"
+	if(skin.bolt_animation_icon)
+		flick(icon(skin.bolt_animation_icon, anchored ? skin.rebolt_animation_icon_state : skin.unbolt_animation_icon_state), src)
+	skin.apply_to(src)
+	to_chat(src, "[anchored ? "<b>You are now anchored.</b>" : "<b>You are now unanchored.</b>"]")
 	// the message in the [] will change depending whether or not the AI is anchored
 
 /mob/living/silicon/ai/update_canmove() //If the AI dies, mobs won't go through it anymore
@@ -424,7 +354,7 @@ var/list/ai_list = list()
 			if(H)
 				H.attack_ai(src) //may as well recycle
 			else
-				src << "<span class='notice'>Unable to locate the holopad.</span>"
+				to_chat(src, "<span class='notice'>Unable to locate the holopad.</span>")
 	if(href_list["track"])
 		var/string = href_list["track"]
 		trackable_mobs()
@@ -440,14 +370,14 @@ var/list/ai_list = list()
 		if(target.len)
 			ai_actual_track(pick(target))
 		else
-			src << "Target is not on or near any active cameras on the station."
+			to_chat(src, "Target is not on or near any active cameras on the station.")
 		return
 	if(href_list["callbot"]) //Command a bot to move to a selected location.
 		Bot = locate(href_list["callbot"]) in living_mob_list
 		if(!Bot || Bot.remote_disabled || src.control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
 		waypoint_mode = 1
-		src << "<span class='notice'>Set your waypoint by clicking on a valid location free of obstructions.</span>"
+		to_chat(src, "<span class='notice'>Set your waypoint by clicking on a valid location free of obstructions.</span>")
 		return
 	if(href_list["interface"]) //Remotely connect to a bot!
 		Bot = locate(href_list["interface"]) in living_mob_list
@@ -465,7 +395,7 @@ var/list/ai_list = list()
 			return
 		var/obj/mecha/M = locate(href_list["ai_take_control"])
 		if(controlled_mech)
-			src << "You are already loaded into an onboard computer!"
+			to_chat(src, "You are already loaded into an onboard computer!")
 			return
 		if(M)
 			M.transfer_ai(AI_MECH_HACK,src, usr) //Called om the mech itself.
@@ -478,7 +408,7 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if(!ticker || !ticker.mode)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 
 	..()
@@ -509,7 +439,7 @@ var/list/ai_list = list()
 		return //won't work if dead
 
 	if(control_disabled)
-		src << "Wireless communication is disabled."
+		to_chat(src, "Wireless communication is disabled.")
 		return
 	var/turf/ai_current_turf = get_turf(src)
 	var/ai_Zlevel = ai_current_turf.z
@@ -543,7 +473,7 @@ var/list/ai_list = list()
 	else if(cameranet && cameranet.checkTurfVis(turf_check))
 		call_bot(turf_check)
 	else
-		src << "<span class='danger'>Selected location is not visible.</span>"
+		to_chat(src, "<span class='danger'>Selected location is not visible.</span>")
 
 /mob/living/silicon/ai/proc/call_bot(turf/waypoint)
 
@@ -551,7 +481,7 @@ var/list/ai_list = list()
 		return
 
 	if(Bot.calling_ai && Bot.calling_ai != src) //Prevents an override if another AI is controlling this bot.
-		src << "<span class='danger'>Interface error. Unit is already in use.</span>"
+		to_chat(src, "<span class='danger'>Interface error. Unit is already in use.</span>")
 		return
 
 	Bot.call_bot(src, waypoint)
@@ -652,7 +582,7 @@ var/list/ai_list = list()
 			if(network in C.network)
 				U.eyeobj.setLoc(get_turf(C))
 				break
-	src << "<span class='notice'>Switched to [network] camera network.</span>"
+	to_chat(src, "<span class='notice'>Switched to [network] camera network.</span>")
 //End of code by Mord_Sith
 
 
@@ -669,7 +599,7 @@ var/list/ai_list = list()
 	if(stat == 2)
 		return //won't work if dead
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
-	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	var/emote = input("Please, select a status!", "AI Status", null, null) as anything in ai_emotions
 	for (var/obj/machinery/M in machines) //change status
 		if(istype(M, /obj/machinery/ai_status_display))
 			var/obj/machinery/ai_status_display/AISD = M
@@ -736,7 +666,7 @@ var/list/ai_list = list()
 
 	var/obj/machinery/power/apc/apc = src.loc
 	if(!istype(apc))
-		src << "<span class='notice'>You are already in your Main Core.</span>"
+		to_chat(src, "<span class='notice'>You are already in your Main Core.</span>")
 		return
 	apc.malfvacate()
 
@@ -747,7 +677,7 @@ var/list/ai_list = list()
 	camera_light_on = !camera_light_on
 
 	if (!camera_light_on)
-		src << "Camera lights deactivated."
+		to_chat(src, "Camera lights deactivated.")
 
 		for (var/obj/machinery/camera/C in lit_cameras)
 			C.SetLuminosity(0)
@@ -757,7 +687,7 @@ var/list/ai_list = list()
 
 	light_cameras()
 
-	src << "Camera lights activated."
+	to_chat(src, "Camera lights activated.")
 	return
 
 //AI_CAMERA_LUMINOSITY
@@ -790,9 +720,17 @@ var/list/ai_list = list()
 	if(stat == 2)
 		return //won't work if dead
 
-	src << "Accessing Subspace Transceiver control..."
+	to_chat(src, "Accessing Subspace Transceiver control...")
 	if (radio)
 		radio.interact(src)
+
+/mob/living/silicon/ai/proc/toggle_job_indicator()
+	set name = "Toggle Job Indicator"
+	set desc = "Toggle the automatic job display of radio messages"
+	set category = "AI Commands"
+
+	show_radio_jobs = !show_radio_jobs
+	to_chat(src, "<span class='notice'>Radio job display [show_radio_jobs ? "enabled" : "disabled"].</span>")
 
 /mob/living/silicon/ai/proc/set_syndie_radio()
 	if(radio)
@@ -815,7 +753,7 @@ var/list/ai_list = list()
 		return
 	if(interaction == AI_TRANS_TO_CARD)//The only possible interaction. Upload AI mob to a card.
 		if(!mind)
-			user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
+			to_chat(user, "<span class='warning'>No intelligence patterns detected.</span>"    )
 			return
 		new /obj/structure/AIcore/deactivated(loc)//Spawns a deactivated terminal at AI location.
 		ai_restore_power()//So the AI initially has power.
@@ -823,8 +761,9 @@ var/list/ai_list = list()
 		radio_enabled = 0 	//No talking on the built-in radio for you either!
 		loc = card//Throw AI into the card.
 		card.AI = src
-		src << "You have been downloaded to a mobile storage device. Remote device connection severed."
-		user << "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+		to_chat(src, "You have been downloaded to a mobile storage device. Remote device connection severed.")
+		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+		card.update_icon()
 
 /mob/living/silicon/ai/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0)
 	return // no eyes, no flashing
@@ -872,8 +811,8 @@ var/list/ai_list = list()
 
 
 /mob/living/silicon/ai/proc/add_malf_picker()
-	src << "In the top right corner of the screen you will find the Malfunctions tab, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices."
-	src << "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds."
+	to_chat(src, "In the top right corner of the screen you will find the Malfunctions tab, where you can purchase various abilities, from upgraded surveillance to station ending doomsday devices.")
+	to_chat(src, "You are also capable of hacking APCs, which grants you more points to spend on your Malfunction powers. The drawback is that a hacked APC will give you away if spotted by the crew. Hacking an APC takes 60 seconds.")
 	view_core() //A BYOND bug requires you to be viewing your core before your verbs update
 	verbs += /mob/living/silicon/ai/proc/choose_modules
 	malf_picker = new /datum/module_picker
@@ -908,5 +847,5 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/revive(full_heal = 0, admin_revive = 0)
 	if(..()) //successfully ressuscitated from death
-		icon_state = "ai"
+		skin.apply_to(src)
 		. = 1

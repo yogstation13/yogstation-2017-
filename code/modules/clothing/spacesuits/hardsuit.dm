@@ -15,7 +15,7 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/attack_self(mob/user)
 	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" //To prevent some lighting anomalities.
+		to_chat(user, "<span class='warning'>You cannot turn the light on while in this [user.loc]!</span>" )
 		return
 	on = !on
 	icon_state = "[basestate][on]-[item_color]"
@@ -171,25 +171,36 @@
 	//Mining hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/mining
 	name = "mining hardsuit helmet"
-	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters and ash storms. Has dual floodlights on the helmet."
+	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters. Has dual floodlights on the helmet."
 	icon_state = "hardsuit0-mining"
 	item_state = "mining_helm"
 	item_color = "mining"
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
 	brightness_on = 7
-	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 
 
 /obj/item/clothing/suit/space/hardsuit/mining
 	icon_state = "hardsuit-mining"
 	name = "mining hardsuit"
-	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters and ash storms."
+	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters."
 	item_state = "mining_hardsuit"
 	armor = list(melee = 30, bullet = 5, laser = 10, energy = 5, bomb = 50, bio = 100, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/internals,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining
+
+
+	//Lavaland Mining hardsuit
+/obj/item/clothing/head/helmet/space/hardsuit/mining/lavaland
+	name = "ashproof mining hardsuit helmet"
+	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating for wildlife encounters and high-temperature insulation for ash storms. Has dual floodlights on the helmet."
 	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 
+
+/obj/item/clothing/suit/space/hardsuit/mining/lavaland
+	name = "ashproof mining hardsuit"
+	desc = "A special suit that protects against hazardous, low pressure environments. Has reinforced plating for wildlife encounters and high-temperature insulation for ash storms."
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/mining/lavaland
+	max_heat_protection_temperature = FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT
 
 
 	//Syndicate hardsuit
@@ -217,11 +228,11 @@
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/attack_self(mob/user) //Toggle Helmet
 	if(!isturf(user.loc))
-		user << "<span class='warning'>You cannot toggle your helmet while in this [user.loc]!</span>" //To prevent some lighting anomalities.
+		to_chat(user, "<span class='warning'>You cannot toggle your helmet while in this [user.loc]!</span>" )
 		return
 	on = !on
 	if(on || force)
-		user << "<span class='notice'>You switch your hardsuit to EVA mode, sacrificing speed for space protection.</span>"
+		to_chat(user, "<span class='notice'>You switch your hardsuit to EVA mode, sacrificing speed for space protection.</span>")
 		name = initial(name)
 		desc = initial(desc)
 		user.AddLuminosity(brightness_on)
@@ -230,7 +241,7 @@
 		flags_inv |= visor_flags_inv
 		cold_protection |= HEAD
 	else
-		user << "<span class='notice'>You switch your hardsuit to combat mode and can now run at full speed.</span>"
+		to_chat(user, "<span class='notice'>You switch your hardsuit to combat mode and can now run at full speed.</span>")
 		name += " (combat)"
 		desc = alt_desc
 		user.AddLuminosity(-brightness_on)
@@ -403,7 +414,7 @@
 /obj/item/clothing/head/helmet/space/hardsuit/rd/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if(user.glasses && istype(user.glasses, /obj/item/clothing/glasses/hud/diagnostic))
-		user << ("<span class='warning'>Your [user.glasses] prevents you using [src]'s diagnostic visor HUD.</span>")
+		to_chat(user, ("<span class='warning'>Your [user.glasses] prevents you using [src]'s diagnostic visor HUD.</span>"))
 	else
 		onboard_hud_enabled = 1
 		var/datum/atom_hud/DHUD = huds[DATA_HUD_DIAGNOSTIC]

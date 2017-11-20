@@ -80,7 +80,7 @@
 		if(ear_damage < 100)
 			adjustEarDamage(-0.05,-1)
 
-	if (getBrainLoss() >= 60 && stat != DEAD)
+	if (getBrainLoss() >= 60 && stat == CONSCIOUS)
 		if (prob(3))
 			if(prob(25))
 				emote("drool")
@@ -295,7 +295,7 @@
 		for(var/obj/item/I in BP.embedded_objects)
 			if(prob(I.embedded_pain_chance))
 				BP.take_damage(I.w_class*I.embedded_pain_multiplier)
-				src << "<span class='userdanger'>\the [I] embedded in your [BP.name] hurts!</span>"
+				to_chat(src, "<span class='userdanger'>\the [I] embedded in your [BP.name] hurts!</span>")
 
 			if(prob(I.embedded_fall_chance))
 				BP.take_damage(I.w_class*I.embedded_fall_pain_multiplier)
@@ -383,19 +383,39 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(drunkenness >= 81)
 			adjustToxLoss(0.2)
 			if(prob(5) && !stat)
-				src << "<span class='warning'>Maybe you should lie down for a bit...</span>"
+				to_chat(src, "<span class='warning'>Maybe you should lie down for a bit...</span>")
 
 		if(drunkenness >= 91)
 			adjustBrainLoss(0.4)
 			if(prob(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && z == ZLEVEL_STATION) //QoL mainly
-					src << "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>"
+					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
 				else
-					src << "<span class='warning'>Just a quick nap...</span>"
+					to_chat(src, "<span class='warning'>Just a quick nap...</span>")
 					Sleeping(45)
 
 		if(drunkenness >= 101)
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
+
+	if(disgust)
+		var/pukeprob = 0.2 * disgust
+		if(disgust >= DISGUST_LEVEL_GROSS)
+			if(prob(25))
+				stuttering += 1
+				confused += 2
+			if(prob(10) && !stat)
+				to_chat(src, "<span class='warning'>You feel kind of iffy...</span>")
+			jitteriness = max(jitteriness - 3, 0)
+		if(disgust >= DISGUST_LEVEL_VERYGROSS)
+			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
+				confused += 2.5
+				stuttering += 1
+				vomit(10, 0, 1, 0, 1, 0, 4)
+			Dizzy(5)
+		if(disgust >= DISGUST_LEVEL_DISGUSTED)
+			if(prob(50))
+				blur_eyes(3) //We need to add more shit down here
+
 
 /mob/living/carbon/human/regenStamina()
 	if(dna && dna.species)

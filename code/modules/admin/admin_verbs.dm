@@ -27,7 +27,8 @@ var/list/admin_verbs_basic = list(
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/reload_donators,
 	/client/proc/user_stats,
-	/client/proc/stop_sounds
+	/client/proc/stop_sounds,
+	/client/proc/reset_all_tcs
 	)
 var/list/admin_verbs_admin = list(
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
@@ -82,11 +83,14 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
 	/client/proc/check_ruins,
+	/datum/admins/proc/locate_item,
 	/datum/admins/proc/borer_panel,
 	/client/proc/respawn_character,
 	/client/proc/rejuv_all,
 	/client/proc/reset_idconsole_msg,
-	/client/proc/lock_idconsole
+	/client/proc/lock_idconsole,
+	/client/proc/fix_air,
+	/client/proc/admin_pick_random_player
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -114,12 +118,10 @@ var/list/admin_verbs_fun = list(
 	/client/proc/forceEvent,
 	/client/proc/bluespace_artillery,
 	/client/proc/admin_change_sec_level,
-	/client/proc/reset_all_tcs,
 	/client/proc/toggle_nuke,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
-	/client/proc/polymorph_all,
-	/client/proc/admin_pick_random_player
+	/client/proc/polymorph_all
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -127,6 +129,7 @@ var/list/admin_verbs_spawn = list(
 	)
 var/list/admin_verbs_server = list(
 	/client/proc/lag_fixer,
+	/client/proc/remove_all_vines,
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/end_round,
@@ -138,7 +141,6 @@ var/list/admin_verbs_server = list(
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
 	/client/proc/toggle_random_events,
-	/client/proc/fix_air,
 #if SERVERTOOLS
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
@@ -171,6 +173,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/map_template_load,
 	/client/proc/map_template_upload,
 	/client/proc/check_ruins,
+	/datum/admins/proc/locate_item,
 	/datum/admins/proc/borer_panel
 	)
 var/list/admin_verbs_possess = list(
@@ -258,6 +261,7 @@ var/list/admin_verbs_hideable = list(
 	/datum/admins/proc/toggle_high_risk_item_notifications, /* Toggles notifying admins when objective items are destroyed or change z-levels */
 	/datum/admins/proc/toggle_ticket_counter_visibility,	/* toggles all players being able to see tickets remaining */
 	/client/proc/check_ruins,
+	/datum/admins/proc/locate_item,
 	/datum/admins/proc/borer_panel,
 	)
 
@@ -340,7 +344,7 @@ var/list/admin_verbs_hideable = list(
 	verbs.Remove(/client/proc/hide_most_verbs, admin_verbs_hideable)
 	verbs += /client/proc/show_verbs
 
-	src << "<span class='interface'>Most of your adminverbs have been hidden.</span>"
+	to_chat(src, "<span class='interface'>Most of your adminverbs have been hidden.</span>")
 	feedback_add_details("admin_verb","HMV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -354,7 +358,7 @@ var/list/admin_verbs_hideable = list(
 	verbs += /client/proc/show_verbs
 	verbs += /client/proc/dsay
 
-	src << "<span class='interface'>Almost all of your adminverbs have been hidden.</span>"
+	to_chat(src, "<span class='interface'>Almost all of your adminverbs have been hidden.</span>")
 	feedback_add_details("admin_verb","TAVVH") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
 
@@ -365,7 +369,7 @@ var/list/admin_verbs_hideable = list(
 	verbs -= /client/proc/show_verbs
 	add_admin_verbs()
 
-	src << "<span class='interface'>All of your adminverbs are now visible.</span>"
+	to_chat(src, "<span class='interface'>All of your adminverbs are now visible.</span>")
 	feedback_add_details("admin_verb","TAVVS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/admin_credits_get(mob/M as mob)
@@ -376,11 +380,11 @@ var/list/admin_verbs_hideable = list(
 		return
 
 	if(!get_client(M))
-		src << "Error: The mob requires a client"
+		to_chat(src, "Error: The mob requires a client")
 		return
 
 	log_admin("CREDITS [get_ckey(src)] accessed the credits count for [get_ckey(M)]")
-	src << "[get_ckey(M)] has [credits_reload_from_db(M)] credits"
+	to_chat(src, "[get_ckey(M)] has [credits_reload_from_db(M)] credits")
 
 /client/proc/admin_credits_list(var/total as num)
 	set category = "Special Verbs"
@@ -389,11 +393,11 @@ var/list/admin_verbs_hideable = list(
 	if(!holder)
 		return
 
-	src << "Top [total] players by credits:"
+	to_chat(src, "Top [total] players by credits:")
 
 	var/list/L = credits_top(total)
 	for(var/datum/credit/C in L)
-		src << " * [C.ckey] = [num2text(C.credits)]"
+		to_chat(src, " * [C.ckey] = [num2text(C.credits)]")
 
 /client/proc/admin_credits_spend(mob/M as mob, var/credits as num)
 	set category = "Special Verbs"
@@ -403,7 +407,7 @@ var/list/admin_verbs_hideable = list(
 		return
 
 	if(!get_client(M))
-		src << "Error: The mob requires a client"
+		to_chat(src, "Error: The mob requires a client")
 		return
 
 	var/result = credits_spend(M, credits)
@@ -411,10 +415,10 @@ var/list/admin_verbs_hideable = list(
 		var/msg = "CREDITS [get_ckey(src)] decreased the credits for [get_ckey(M)] by [credits]"
 		log_admin(msg)
 		for(var/client/X in admins)
-			X << "<span class='adminnotice'><b><font color=red>[msg]</font></b></span>"
-		src << "[get_ckey(M)] now has [result] credits ([credits] spent)"
+			to_chat(X, "<span class='adminnotice'><b><font color=red>[msg]</font></b></span>")
+		to_chat(src, "[get_ckey(M)] now has [result] credits ([credits] spent)")
 	else
-		src << "Error giving credits: [result]"
+		to_chat(src, "Error giving credits: [result]")
 
 /client/proc/admin_credits_earn(mob/M as mob, var/credits as num)
 	set category = "Special Verbs"
@@ -424,7 +428,7 @@ var/list/admin_verbs_hideable = list(
 		return
 
 	if(!get_client(M))
-		src << "Error: The mob requires a client"
+		to_chat(src, "Error: The mob requires a client")
 		return
 
 	var/result = credits_earn(M, credits)
@@ -432,10 +436,10 @@ var/list/admin_verbs_hideable = list(
 		var/msg = "CREDITS [get_ckey(src)] increased the credits for [get_ckey(M)] by [credits]"
 		log_admin(msg)
 		for(var/client/X in admins)
-			X << "<span class='adminnotice'><b><font color=red>[msg]</font></b></span>"
-		src << "[get_ckey(M)] now has [result] credits ([credits] received)"
+			to_chat(X, "<span class='adminnotice'><b><font color=red>[msg]</font></b></span>")
+		to_chat(src, "[get_ckey(M)] now has [result] credits ([credits] received)")
 	else
-		src << "Error giving credits: [result]"
+		to_chat(src, "Error giving credits: [result]")
 
 /client/proc/admin_credits_set(mob/M as mob, var/credits as num)
 	set category = "Special Verbs"
@@ -445,7 +449,7 @@ var/list/admin_verbs_hideable = list(
 		return
 
 	if(!get_client(M))
-		src << "Error: The mob requires a client"
+		to_chat(src, "Error: The mob requires a client")
 		return
 
 	var/result = credits_set(M, credits)
@@ -453,10 +457,10 @@ var/list/admin_verbs_hideable = list(
 		var/msg = "CREDITS [get_ckey(src)] set the credits for [get_ckey(M)] to [credits]"
 		log_admin(msg)
 		for(var/client/X in admins)
-			X << "<span class='adminnotice'><b><font color=red>[msg]</font></b></span>"
-		src << "[get_ckey(M)] now has [credits] credits"
+			to_chat(X, "<span class='adminnotice'><b><font color=red>[msg]</font></b></span>")
+		to_chat(src, "[get_ckey(M)] now has [credits] credits")
 	else
-		src << "Error giving credits: [result]"
+		to_chat(src, "Error giving credits: [result]")
 
 /client/proc/admin_ghost()
 	set category = "Admin"
@@ -476,7 +480,7 @@ var/list/admin_verbs_hideable = list(
 		log_admin("[key_name(usr)] has used aghost to return to their body.")
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else if(istype(mob,/mob/new_player))
-		src << "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>"
+		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>")
 	else
 		//ghostize
 		log_admin("[key_name(usr)] has used aghost to leave their body.")
@@ -495,10 +499,10 @@ var/list/admin_verbs_hideable = list(
 	if(holder && mob)
 		if(mob.invisibility == INVISIBILITY_OBSERVER)
 			mob.invisibility = initial(mob.invisibility)
-			mob << "<span class='boldannounce'>Invisimin off. Invisibility reset.</span>"
+			to_chat(mob, "<span class='boldannounce'>Invisimin off. Invisibility reset.</span>")
 		else
 			mob.invisibility = INVISIBILITY_OBSERVER
-			mob << "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>"
+			to_chat(mob, "<span class='adminnotice'><b>Invisimin on. You are now as invisible as a ghost.</b></span>")
 
 /client/proc/lag_fixer(var/fix in list("Cancel", "Toggle Air", "Low FPS", "Normal FPS", "High FPS"))
 	set name = "YogLag Fix"
@@ -512,7 +516,7 @@ var/list/admin_verbs_hideable = list(
 
 	if(fix == "Toggle Air")
 		SSair.can_fire = SSair.can_fire == 1 ? 0 : 1
-		src << "<span class='adminnotice'><b>Air has been [SSair.can_fire ? "started" : "stopped"].</b></span>"
+		to_chat(src, "<span class='adminnotice'><b>Air has been [SSair.can_fire ? "started" : "stopped"].</b></span>")
 		msg = "[key_name(src)] has [SSair.can_fire ? "started" : "stopped"] the air subsystem."
 	else if(fix == "Low FPS")
 		config.Tickcomp = 1
@@ -589,26 +593,26 @@ var/list/admin_verbs_hideable = list(
 				isInfected++
 			*/
 
-		src << "<span class='boldannounce'>Player statistics</span>"
-		src << "<b>Statuses</b>"
-		src << "¤ Lobby: [isLobby]\t\t([((isLobby / player_list.len) * 100)]%)"
-		src << "¤ Concious: [isConcious]\t\t([((isConcious / player_list.len) * 100)]%)"
-		src << "¤ Dead: [isDead]\t\t([((isDead / player_list.len) * 100)]%)"
-		src << "¤ Unconcious: [isUnconcious]\t([((isUnconcious / player_list.len) * 100)]%)"
-		src << "¤ Critical: [isCritical]\t\t([((isCritical / player_list.len) * 100)]%)"
-		src << "<b>Disabilities</b>"
-		src << "¤ Blind: [isBlind]\t\t([((isBlind / player_list.len) * 100)]%)"
-		src << "¤ Mute: [isMute]\t\t([((isMute / player_list.len) * 100)]%)"
-		src << "¤ Deaf: [isDeaf]\t\t([((isDeaf / player_list.len) * 100)]%)"
-		src << "¤ Near Sighted: [isNearsighted]\t([((isNearsighted / player_list.len) * 100)]%)"
-		src << "¤ Fat: [isFat]\t\t([((isFat / player_list.len) * 100)]%)"
-		src << "¤ Husk: [isHusk]\t\t([((isHusk / player_list.len) * 100)]%)"
-		src << "¤ No Clone: [isNoClone]\t\t([((isNoClone / player_list.len) * 100)]%)"
-		src << "¤ Clumsy: [isClumsy]\t\t([((isClumsy / player_list.len) * 100)]%)"
-		src << "<b>Game Modes</b>"
-		src << "¤ Zombie: [isZombie]\t\t([((isZombie / player_list.len) * 100)]%)"
-		src << "¤ Rage Infected: [isInfected]\t([((isInfected / player_list.len) * 100)]%)"
-		src << " "
+		to_chat(src, "<span class='boldannounce'>Player statistics</span>")
+		to_chat(src, "<b>Statuses</b>")
+		to_chat(src, "¤ Lobby: [isLobby]\t\t([((isLobby / player_list.len) * 100)]%)")
+		to_chat(src, "¤ Concious: [isConcious]\t\t([((isConcious / player_list.len) * 100)]%)")
+		to_chat(src, "¤ Dead: [isDead]\t\t([((isDead / player_list.len) * 100)]%)")
+		to_chat(src, "¤ Unconcious: [isUnconcious]\t([((isUnconcious / player_list.len) * 100)]%)")
+		to_chat(src, "¤ Critical: [isCritical]\t\t([((isCritical / player_list.len) * 100)]%)")
+		to_chat(src, "<b>Disabilities</b>")
+		to_chat(src, "¤ Blind: [isBlind]\t\t([((isBlind / player_list.len) * 100)]%)")
+		to_chat(src, "¤ Mute: [isMute]\t\t([((isMute / player_list.len) * 100)]%)")
+		to_chat(src, "¤ Deaf: [isDeaf]\t\t([((isDeaf / player_list.len) * 100)]%)")
+		to_chat(src, "¤ Near Sighted: [isNearsighted]\t([((isNearsighted / player_list.len) * 100)]%)")
+		to_chat(src, "¤ Fat: [isFat]\t\t([((isFat / player_list.len) * 100)]%)")
+		to_chat(src, "¤ Husk: [isHusk]\t\t([((isHusk / player_list.len) * 100)]%)")
+		to_chat(src, "¤ No Clone: [isNoClone]\t\t([((isNoClone / player_list.len) * 100)]%)")
+		to_chat(src, "¤ Clumsy: [isClumsy]\t\t([((isClumsy / player_list.len) * 100)]%)")
+		to_chat(src, "<b>Game Modes</b>")
+		to_chat(src, "¤ Zombie: [isZombie]\t\t([((isZombie / player_list.len) * 100)]%)")
+		to_chat(src, "¤ Rage Infected: [isInfected]\t([((isInfected / player_list.len) * 100)]%)")
+		to_chat(src, " ")
 
 	feedback_add_details("admin_verb","UST") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -689,7 +693,7 @@ var/list/admin_verbs_hideable = list(
 				mob.name = initial(mob.name)
 				mob.mouse_opacity = initial(mob.mouse_opacity)
 		else
-			var/new_key = ckeyEx(input("Enter your desired display name.", "Fake Key", key) as text|null)
+			var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key))
 			if(!new_key)
 				return
 			if(length(new_key) >= 26)
@@ -711,7 +715,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Cause an explosion of varying strength at your location."
 
 	var/list/choices = list("Small Bomb", "Medium Bomb", "Big Bomb", "Custom Bomb")
-	var/choice = input("What size explosion would you like to produce?") in choices
+	var/choice = input("What size explosion would you like to produce?") as anything in choices
 	var/turf/epicenter = mob.loc
 	switch(choice)
 		if(null)
@@ -778,7 +782,7 @@ var/list/admin_verbs_hideable = list(
 	set category = "Special Verbs"
 	set name = "OSay"
 	set desc = "Makes an object say something."
-	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
+	var/message = stripped_input(usr, "What do you want the message to be?", "Make Sound")
 	if(!message)
 		return
 	var/templanguages = O.languages_spoken
@@ -803,10 +807,10 @@ var/list/admin_verbs_hideable = list(
 	if(config)
 		if(config.log_hrefs)
 			config.log_hrefs = 0
-			src << "<b>Stopped logging hrefs</b>"
+			to_chat(src, "<b>Stopped logging hrefs</b>")
 		else
 			config.log_hrefs = 1
-			src << "<b>Started logging hrefs</b>"
+			to_chat(src, "<b>Started logging hrefs</b>")
 
 /client/proc/check_ai_laws()
 	set name = "Check AI Laws"
@@ -829,7 +833,7 @@ var/list/admin_verbs_hideable = list(
 	admin_datums -= ckey
 	verbs += /client/proc/readmin
 
-	src << "<span class='interface'>You are now a normal player.</span>"
+	to_chat(src, "<span class='interface'>You are now a normal player.</span>")
 	log_admin("[src] deadmined themself.")
 	message_admins("[src] deadmined themself.")
 	feedback_add_details("admin_verb","DAS")
@@ -847,7 +851,7 @@ var/list/admin_verbs_hideable = list(
 	deadmins -= ckey
 	verbs -= /client/proc/readmin
 
-	src << "<span class='interface'>You are now an admin.</span>"
+	to_chat(src, "<span class='interface'>You are now an admin.</span>")
 	message_admins("[src] re-adminned themselves.")
 	log_admin("[src] re-adminned themselves.")
 	feedback_add_details("admin_verb","RAS")
@@ -926,7 +930,7 @@ var/list/admin_verbs_hideable = list(
 		M.revive(full_heal = 1, admin_revive = 1)
 		revive_count++
 
-	world << "<b>The [fluff_adjective] admins have decided to [fluff_adverb] revive everyone. :)</b>"
+	to_chat(world, "<b>The [fluff_adjective] admins have decided to [fluff_adverb] revive everyone. :)</b>")
 	message_admins("[src] revived [revive_count] mobs.")
 	log_admin("[src] revived [revive_count] mobs.")
 
@@ -934,6 +938,8 @@ var/list/admin_verbs_hideable = list(
 	set name = "Check Ruins"
 	set category = "Debug"
 	set desc = "Check all loaded ruins."
+	if(!check_rights(R_ADMIN))
+		return
 	log_admin("[key_name(usr)] checked ruins.")
 	message_admins("[key_name_admin(usr)] checked ruins.")
 	var/dat = "<center><b>Ruins</b></center><br>"
@@ -942,7 +948,68 @@ var/list/admin_verbs_hideable = list(
 		dat += "<br>[L[1]]<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[L[2]];Y=[L[3]];Z=[L[4]]'> (JMP)</a>"
 	usr << browse(dat, "window=checkruin;size=350x500")
 
+/datum/admins/proc/locate_item(type_in as text)
+	set name = "Locate Atoms"
+	set category = "Debug"
+	set desc = "Locate all items of a particular type."
+	var/const/MAX_ITEMS = 500
+	if(!check_rights(R_ADMIN))
+		return
+	var/type = pick_closest_path(type_in)
+	if(!type)
+		return
 
+	var/strict = FALSE
+	type_in = alert("Strict type ([type]) or type and all subtypes?",,"Strict type", "Type and subtypes", "Cancel")
+	if(type_in == "Cancel")
+		return
+	else if(type_in == "Strict type")
+		strict = TRUE
+
+	var/range
+	type_in = alert("Locate in range or in world?",, "Range", "World", "Cancel")
+	if(type_in == "Cancel")
+		return
+	if(type_in == "Range")
+		if(!usr.loc)
+			return
+		var/range_in = input("Range?") as num
+		range = max(0, range_in)
+
+	log_admin("[key_name(usr)] located all atoms of type [type] in [isnull(range) ? "the world" : "in range [range] of [usr.x], [usr.y], [usr.z]"].")
+	message_admins("[key_name_admin(usr)] located atoms of type [type] in [isnull(range) ? "the world" : "in range [range] of [usr.x], [usr.y], [usr.z]"].")
+	var/list/items = list()
+	if(isnull(range))
+		for(var/V in world)
+			var/atom/A = V
+			if((strict && A.type == type) || (!strict && istype(A, type)) )
+				if(istype(A, /atom/movable))
+					items += "[A] [A.loc ? "<A HREF='?_src_=holder;adminplayerobservefollow=\ref[A]'>\[[A.x]\]\[[A.y]\]\[[A.z]\]</a>" : "\[NULL\]"]"
+				else
+					items += "[A] [A.loc ? "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>\[[A.x]\]\[[A.y]\]\[[A.z]\]</a>" : "\[NULL\]"]"
+				if(items.len > MAX_ITEMS)
+					break
+			CHECK_TICK
+	else
+		for(var/VV in RANGE_TURFS(range, usr))
+			var/turf/T = VV
+			for(var/V in T.GetAllContents())
+				var/atom/A = V
+				if((strict && A.type == type) || (!strict && istype(A, type)) )
+					if(istype(A, /atom/movable))
+						items += "[A] [A.loc ? "<A HREF='?_src_=holder;adminplayerobservefollow=\ref[A]'>\[[A.x]\]\[[A.y]\]\[[A.z]\]</a>" : "\[NULL\]"]"
+					else
+						items += "[A] [A.loc ? "<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[A.x];Y=[A.y];Z=[A.z]'>\[[A.x]\]\[[A.y]\]\[[A.z]\]</a>" : "\[NULL\]"]"
+					if(items.len > MAX_ITEMS)
+						break
+				CHECK_TICK
+			if(items.len > MAX_ITEMS)
+				break
+	if(items.len >= MAX_ITEMS)
+		items += "...(More than [MAX_ITEMS] items)"
+	else
+		items += "[items.len] items"
+	to_chat(usr, items.Join("<br>"))
 
 /client/proc/admin_pick_random_player()
 	set category = "Admin"
@@ -974,14 +1041,33 @@ var/list/admin_verbs_hideable = list(
 		player_pool += M
 
 	if (!player_pool.len)
-		src << "<span style=\"color:red\">Error: no valid mobs found via selected options.</span>"
+		to_chat(src, "<span style=\"color:red\">Error: no valid mobs found via selected options.</span>")
 		return
 
 	var/chosen_player = pick(player_pool)
-	src << "[chosen_player] Has been chosen"
+	to_chat(src, "[chosen_player] has been chosen")
 	holder.show_player_panel(chosen_player)
 
+/client/proc/remove_all_vines()
+	set category = "Admin"
+	set name = "Delete All Vines"
+	set desc = "Performs advanced magic to delete all vines in existence."
 
+	if(!holder)
+		return
 
+	SSobj.can_fire = 0 //So vines can't create more of themselves in their dying breath
+	CHECK_TICK
+	to_chat(src, "<span class='notice'>Erasing vines, this might lag for a bit...</span>")
+	for(var/obj/effect/spacevine/SV in world)
+		SV.mutations.Cut()
+		qdel(SV)
+	for(var/obj/structure/alien/resin/flower_bud_enemy/FBE in world)
+		qdel(FBE)
+	for(var/mob/living/simple_animal/hostile/venus_human_trap/VHT in world)
+		qdel(VHT)
+	SSobj.can_fire = 1
+	to_chat(src, "<span class='notice'>All vines have been deleted.</span>")
 
-
+	message_admins("[key_name_admin(usr)] has deleted all vines.")
+	log_admin("[key_name(usr)] has deleted all vines.")

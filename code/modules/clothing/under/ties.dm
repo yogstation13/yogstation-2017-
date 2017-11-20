@@ -95,19 +95,19 @@
 
 		if(M.wear_suit)
 			if((M.wear_suit.flags_inv & HIDEJUMPSUIT)) //Check if the jumpsuit is covered
-				user << "<span class='warning'>Medals can only be pinned on jumpsuits.</span>"
+				to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits.</span>")
 				return
 
 		if(M.w_uniform)
 			var/obj/item/clothing/under/U = M.w_uniform
 			if(U.attachTie(src, user, 0)) //Attach it, do not notify the user of the attachment
 				if(user == M)
-					user << "<span class='notice'>You attach [src] to [U].</span>"
+					to_chat(user, "<span class='notice'>You attach [src] to [U].</span>")
 				else
 					user.visible_message("[user] pins \the [src] on [M]'s chest.", \
 										 "<span class='notice'>You pin \the [src] on [M]'s chest.</span>")
 
-		else user << "<span class='warning'>Medals can only be pinned on jumpsuits!</span>"
+		else to_chat(user, "<span class='warning'>Medals can only be pinned on jumpsuits!</span>")
 	else ..()
 
 /obj/item/clothing/tie/medal/conduct
@@ -293,7 +293,7 @@
 	var/tagname = null
 
 /obj/item/clothing/tie/petcollar/attack_self(mob/user)
-	tagname = copytext(sanitize(input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot") as null|text),1,MAX_NAME_LEN)
+	tagname = stripped_input(user, "Would you like to change the name on the tag?", "Name your new pet", "Spot", MAX_NAME_LEN)
 	name = "[initial(name)] - [tagname]"
 
 //////////////
@@ -321,3 +321,25 @@
 	item_color = "talisman"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
 	armor = list(melee = 5, bullet = 5, laser = 5, energy = 5, bomb = 50, bio = 65, rad = 5) //Faith is the best armor. //This won't actually work because of accessories kill me with a fucking knife jesus christ I hate code
+
+/obj/item/clothing/tie/medic
+	name = "pinnable camera"
+	desc = "The medic SEES ALL. Not recommended to bring to the restroom."
+	icon_state = "camera"
+	item_color = "camera"
+	item_state = ""
+	icon = 'icons/obj/clothing/ties.dmi'
+	var/obj/machinery/camera/portable/cam
+
+/obj/item/clothing/tie/medic/New()
+	..()
+	cam = new(src)
+	cam.c_tag = "Miner ([rand(1,999)])"
+	cam.network = list("MEDIC")
+
+/obj/item/clothing/tie/medic/attack_self(mob/user)
+	var/newname = stripped_input(user, "Name your camera", "Save the Mining Medic Time", cam.c_tag, MAX_NAME_LEN)
+	if(newname)
+		cam.c_tag = newname
+	else
+		to_chat(user, "<span class='notice'>You chose not to name your camera.</span>")

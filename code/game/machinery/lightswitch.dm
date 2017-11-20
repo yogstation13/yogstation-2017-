@@ -38,13 +38,15 @@
 
 /obj/machinery/light_switch/examine(mob/user)
 	..()
-	user << "It is [on? "on" : "off"]."
+	to_chat(user, "It is [on? "on" : "off"].")
 
 
 /obj/machinery/light_switch/attack_paw(mob/user)
 	src.attack_hand(user)
 
 /obj/machinery/light_switch/attack_hand(mob/user)
+
+	playsound(src.loc, 'sound/effects/click.ogg', 50, 1, -1)
 
 	on = !on
 

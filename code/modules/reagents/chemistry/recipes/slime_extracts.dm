@@ -284,7 +284,7 @@
 			playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 			for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
 				M.bodytemperature -= 240
-				M << "<span class='notice'>You feel a chill!</span>"
+				to_chat(M, "<span class='notice'>You feel a chill!</span>")
 
 
 /datum/chemical_reaction/slimefireproof
@@ -375,7 +375,7 @@
 /datum/chemical_reaction/slimeglow/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
-	T.visible_message("<span class='danger'>The slime begins to emit a soft light. Squeezing it will cause it to grow brightly.</span>")
+	T.visible_message("<span class='danger'>The slime begins to emit a soft light. Squeezing it will cause it to glow brightly.</span>")
 	var/obj/item/device/flashlight/slime/F = new /obj/item/device/flashlight/slime
 	F.loc = get_turf(holder.my_atom)
 
@@ -554,6 +554,21 @@
 	var/obj/effect/golemrune/Z = new /obj/effect/golemrune
 	Z.loc = get_turf(holder.my_atom)
 	notify_ghosts("Golem rune created in [get_area(Z)].", 'sound/effects/ghost2.ogg', source = Z)
+
+//Golem
+/datum/chemical_reaction/customgolem
+	name = "Custom Golem"
+	id = "c_golem"
+	result = null
+	required_reagents = list("strange_reagent" = 5)
+	result_amount = 1
+	required_container = /obj/item/slime_extract/adamantine
+	required_other = 1
+
+/datum/chemical_reaction/customgolem/on_reaction(datum/reagents/holder)
+	feedback_add_details("slime_cores_used","[type]")
+	var/obj/effect/customgolemrune/Z = new /obj/effect/customgolemrune
+	Z.loc = get_turf(holder.my_atom)
 
 //Bluespace
 /datum/chemical_reaction/slimefloor2

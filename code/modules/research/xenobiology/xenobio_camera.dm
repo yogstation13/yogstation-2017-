@@ -16,7 +16,6 @@
 	name = "Slime management console"
 	desc = "A computer used for remotely handling slimes."
 	networks = list("SS13")
-	off_action = new/datum/action/innate/camera_off/xenobio
 	var/datum/action/innate/slime_place/slime_place_action = new
 	var/datum/action/innate/slime_pick_up/slime_up_action = new
 	var/datum/action/innate/feed_slime/feed_slime_action = new
@@ -38,23 +37,27 @@
 	eyeobj.icon_state = "camera_target"
 
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/carbon/user)
-	off_action.target = user
-	off_action.Grant(user)
+	..()
 
-	jump_action.target = user
-	jump_action.Grant(user)
+	if(slime_up_action)
+		slime_up_action.target = src
+		slime_up_action.Grant(user)
+		actions += slime_up_action
 
-	slime_up_action.target = src
-	slime_up_action.Grant(user)
+	if(slime_place_action)
+		slime_place_action.target = src
+		slime_place_action.Grant(user)
+		actions += slime_place_action
 
-	slime_place_action.target = src
-	slime_place_action.Grant(user)
+	if(feed_slime_action)
+		feed_slime_action.target = src
+		feed_slime_action.Grant(user)
+		actions += feed_slime_action
 
-	feed_slime_action.target = src
-	feed_slime_action.Grant(user)
-
-	monkey_recycle_action.target = src
-	monkey_recycle_action.Grant(user)
+	if(monkey_recycle_action)
+		monkey_recycle_action.target = src
+		monkey_recycle_action.Grant(user)
+		actions += monkey_recycle_action
 
 
 /obj/machinery/computer/camera_advanced/xenobio/attack_hand(mob/user)
@@ -65,7 +68,7 @@
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
 		monkeys++
-		user << "<span class='notice'>You feed [O] into [src]. It now has [monkeys] monkey cubes stored.</span>"
+		to_chat(user, "<span class='notice'>You feed [O] into [src]. It now has [monkeys] monkey cubes stored.</span>")
 		user.drop_item()
 		qdel(O)
 		return
@@ -78,32 +81,9 @@
 				monkeys++
 				qdel(G)
 		if (loaded)
-			user << "<span class='notice'>You fill [src] with the monkey cubes stored in [O]. [src] now has [monkeys] monkey cubes stored.</span>"
+			to_chat(user, "<span class='notice'>You fill [src] with the monkey cubes stored in [O]. [src] now has [monkeys] monkey cubes stored.</span>")
 		return
 	..()
-
-/datum/action/innate/camera_off/xenobio/Activate()
-	if(!target || !ishuman(target))
-		return
-	var/mob/living/carbon/C = target
-	var/mob/camera/aiEye/remote/xenobio/remote_eye = C.remote_control
-	var/obj/machinery/computer/camera_advanced/xenobio/origin = remote_eye.origin
-	origin.current_user = null
-	origin.jump_action.Remove(C)
-	origin.slime_place_action.Remove(C)
-	origin.slime_up_action.Remove(C)
-	origin.feed_slime_action.Remove(C)
-	origin.monkey_recycle_action.Remove(C)
-	//All of this stuff below could probably be a proc for all advanced cameras, only the action removal needs to be camera specific
-	remote_eye.eye_user = null
-	C.reset_perspective(null)
-	if(C.client)
-		C.client.images -= remote_eye.user_image
-		for(var/datum/camerachunk/chunk in remote_eye.visibleCameraChunks)
-			C.client.images -= chunk.obscured
-	C.remote_control = null
-	C.unset_machine()
-	src.Remove(C)
 
 
 /datum/action/innate/slime_place
@@ -123,7 +103,7 @@
 			S.visible_message("[S] warps in!")
 			X.stored_slimes -= S
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
 /datum/action/innate/slime_pick_up
 	name = "Pick up Slime"
@@ -147,7 +127,7 @@
 				S.loc = X
 				X.stored_slimes += S
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
 
 /datum/action/innate/feed_slime
@@ -166,9 +146,9 @@
 			var/mob/living/carbon/monkey/food = new /mob/living/carbon/monkey(remote_eye.loc)
 			food.LAssailant = C
 			X.monkeys --
-			owner << "[X] now has [X.monkeys] monkeys left."
+			to_chat(owner, "[X] now has [X.monkeys] monkeys left.")
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
 
 /datum/action/innate/monkey_recycle
@@ -189,7 +169,7 @@
 				X.monkeys = round(X.monkeys + 0.2,0.1)
 				qdel(M)
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
 
 ////////////////////////////////////////////////////
@@ -289,7 +269,7 @@
 			H.apply_effects(5, 5, 0, 0, 0, 5, 0, 0, 0, 0, 0)
 			playsound(H, 'sound/weapons/Genhit.ogg', 50, 1)
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
 /datum/action/innate/cuff
 	name = "Cuff"
@@ -304,7 +284,7 @@
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/human/H in remote_eye.loc)
 			if(!H.stunned)
-				owner << "<span class='notice'>Target must be stunned to cuff.</span>"
+				to_chat(owner, "<span class='notice'>Target must be stunned to cuff.</span>")
 				continue
 			if(!H.handcuffed)
 				playsound(H.loc, 'sound/weapons/cablecuff.ogg', 30, 1, -2)
@@ -312,7 +292,7 @@
 				H.update_handcuffed()
 				add_logs(C, H, "handcuffed with a security management console", src)
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
 /datum/action/innate/arrest
 	var/arrest_type
@@ -355,13 +335,13 @@
 			teleloc = S.loc
 
 	if(!teleloc)
-		owner << "<span class='notice'>No arrest location has been calibrated, please contact NT technical support.</span>"
+		to_chat(owner, "<span class='notice'>No arrest location has been calibrated, please contact NT technical support.</span>")
 		return
 
 	if(cameranet.checkTurfVis(remote_eye.loc))
 		for(var/mob/living/carbon/human/H in remote_eye.loc)
 			if(!H.handcuffed)
-				owner << "<span class='notice'>Target must be handcuffed to arrest.</span>"
+				to_chat(owner, "<span class='notice'>Target must be handcuffed to arrest.</span>")
 				continue
 			H.visible_message("[H] warps out!")
 			add_logs(C, H, "[arrest_type]ed with a security management console", src)
@@ -369,7 +349,7 @@
 			extra(C, H)
 			H.visible_message("[H] warps in!")
 	else
-		owner << "<span class='notice'>Target is not near a camera. Cannot proceed.</span>"
+		to_chat(owner, "<span class='notice'>Target is not near a camera. Cannot proceed.</span>")
 
 
 /obj/effect/landmark/sectele

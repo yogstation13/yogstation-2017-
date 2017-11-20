@@ -134,27 +134,30 @@ By design, d1 is the smallest direction and d2 is the highest
 		user.visible_message("[user] cuts the cable.", "<span class='notice'>You cut the cable.</span>")
 		stored.add_fingerprint(user)
 		investigate_log("was cut by [key_name(usr, usr.client)] in [user.loc.loc]","wires")
+		log_game("WIRES: Cable was cut by [key_name(usr, usr.client)] in [user.loc.loc]") // I know this will be excessive, but hey, we agreed on it.
 		Deconstruct()
 		return
 
 	else if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
-			user << "<span class='warning'>Not enough cable!</span>"
+			to_chat(user, "<span class='warning'>Not enough cable!</span>")
 			return
 		coil.cable_join(src, user)
 
 	else if(is_power_meter(W))
 		if(powernet && (powernet.avail > 0))		// is it powered?
-			user << "<span class='danger'>[powernet.avail]W in power network.</span>"
+			to_chat(user, "<span class='danger'>[powernet.avail]W in power network.</span>")
 		else
-			user << "<span class='danger'>The cable is not powered.</span>"
+			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
 		shock(user, 5, 0.2)
 
 	src.add_fingerprint(user)
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1)
+	if(!src.Adjacent(user))
+		return 0
 	if(!prob(prb))
 		return 0
 	if (electrocute_mob(user, powernet, src, siemens_coeff))
@@ -488,7 +491,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	cost = 1
 
 /obj/item/stack/cable_coil/cyborg/attack_self(mob/user)
-	var/cable_color = input(user,"Pick a cable color.","Cable Color") in list("red","yellow","green","blue","pink","orange","cyan","white")
+	var/cable_color = input(user,"Pick a cable color.","Cable Color") as anything in list("red","yellow","green","blue","pink","orange","cyan","white")
 	item_color = cable_color
 	update_icon()
 
@@ -573,15 +576,15 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 
 	if(!T.can_have_cabling())
-		user << "<span class='warning'>You can only lay cables on catwalks and plating!</span>"
+		to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
 		return
 
 	if(get_amount() < 1) // Out of cable
-		user << "<span class='warning'>There is no cable left!</span>"
+		to_chat(user, "<span class='warning'>There is no cable left!</span>")
 		return
 
 	if(get_dist(T,user) > 1) // Too far
-		user << "<span class='warning'>You can't lay cable at a place that far away!</span>"
+		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away!</span>")
 		return
 
 	else
@@ -594,7 +597,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		for(var/obj/structure/cable/LC in T)
 			if(LC.d2 == dirn && LC.d1 == 0)
-				user << "<span class='warning'>There's already a cable at that position!</span>"
+				to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
 				return
 
 		var/obj/structure/cable/C = get_new_cable(T)
@@ -635,7 +638,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		return
 
 	if(get_dist(C, user) > 1)		// make sure it's close enough
-		user << "<span class='warning'>You can't lay cable at a place that far away!</span>"
+		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away!</span>")
 		return
 
 
@@ -648,10 +651,10 @@ By design, d1 is the smallest direction and d2 is the highest
 	// one end of the clicked cable is pointing towards us
 	if(C.d1 == dirn || C.d2 == dirn)
 		if(!U.can_have_cabling())						//checking if it's a plating or catwalk
-			user << "<span class='warning'>You can only lay cables on catwalks and plating!</span>"
+			to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
 			return
 		if(U.intact)						//can't place a cable if it's a plating with a tile on it
-			user << "<span class='warning'>You can't lay cable there unless the floor tiles are removed!</span>"
+			to_chat(user, "<span class='warning'>You can't lay cable there unless the floor tiles are removed!</span>")
 			return
 		else
 			// cable is pointing at us, we're standing on an open tile
@@ -661,7 +664,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 			for(var/obj/structure/cable/LC in U)		// check to make sure there's not a cable there already
 				if(LC.d1 == fdirn || LC.d2 == fdirn)
-					user << "<span class='warning'>There's already a cable at that position!</span>"
+					to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
 					return
 
 			var/obj/structure/cable/NC = get_new_cable (U)
@@ -705,7 +708,7 @@ By design, d1 is the smallest direction and d2 is the highest
 			if(LC == C)			// skip the cable we're interacting with
 				continue
 			if((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no cable matches either direction
-				user << "<span class='warning'>There's already a cable at that position!</span>"
+				to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
 				return
 
 

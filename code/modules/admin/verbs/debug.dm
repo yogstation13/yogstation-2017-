@@ -67,16 +67,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			target = null
 			targetselected = 0
 
-	var/procname = input("Proc path, eg: /proc/fake_blood","Path:", null) as text|null
+	var/procname = stripped_input(usr, "Proc path, eg: /proc/fake_blood","Path:", null)
 	if(!procname)
 		return
 	if(targetselected && !hascall(target,procname))
-		usr << "<font color='red'>Error: callproc(): target has no such call [procname].</font>"
+		to_chat(usr, "<font color='red'>Error: callproc(): target has no such call [procname].</font>")
 		return
 	else
 		var/procpath = text2path(procname)
 		if (!procpath)
-			usr << "<font color='red'>Error: callproc(): proc [procname] does not exist. (Did you forget the /proc/ part?)</font>"
+			to_chat(usr, "<font color='red'>Error: callproc(): proc [procname] does not exist. (Did you forget the /proc/ part?)</font>")
 			return
 	var/list/lst = get_callproc_args()
 	if(!lst)
@@ -84,7 +84,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	if(targetselected)
 		if(!target)
-			usr << "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>"
+			to_chat(usr, "<font color='red'>Error: callproc(): owner of proc no longer exists.</font>")
 			return
 		log_admin("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 		message_admins("[key_name(src)] called [target]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
@@ -96,7 +96,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		returnval = call(procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 	. = get_callproc_returnval(returnval, procname)
 	if(.)
-		usr << .
+		to_chat(usr, .)
 	feedback_add_details("admin_verb","APC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/callproc_datum(A as null|area|mob|obj|turf)
@@ -107,18 +107,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!check_rights(R_DEBUG))
 		return
 
-	var/procname = input("Proc name, eg: fake_blood","Proc:", null) as text|null
+	var/procname = stripped_input(usr, "Proc name, eg: fake_blood","Proc:", null)
 	if(!procname)
 		return
 	if(!hascall(A,procname))
-		usr << "<span class='warning'>Error: callproc_datum(): target has no such call [procname].</span>"
+		to_chat(usr, "<span class='warning'>Error: callproc_datum(): target has no such call [procname].</span>")
 		return
 	var/list/lst = get_callproc_args()
 	if(!lst)
 		return
 
 	if(!A || !IsValidSrc(A))
-		usr << "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>"
+		to_chat(usr, "<span class='warning'>Error: callproc_datum(): owner of proc no longer exists.</span>")
 		return
 	log_admin("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
 	message_admins("[key_name(src)] called [A]'s [procname]() with [lst.len ? "the arguments [list2params(lst)]":"no arguments"].")
@@ -127,7 +127,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/returnval = call(A,procname)(arglist(lst)) // Pass the lst as an argument list to the proc
 	. = get_callproc_returnval(returnval,procname)
 	if(.)
-		usr << .
+		to_chat(usr, .)
 
 
 
@@ -145,23 +145,23 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/class = null
 		// Make a list with each index containing one variable, to be given to the proc
 		if(src.holder && src.holder.marked_datum)
-			class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","Marked datum ([holder.marked_datum.type])","CANCEL")
+			class = input("What kind of variable?","Variable Type") as anything in list("text","num","type","reference","mob reference","icon","file","client","mob's area","Marked datum ([holder.marked_datum.type])","CANCEL")
 			if(holder.marked_datum && class == "Marked datum ([holder.marked_datum.type])")
 				class = "Marked datum"
 		else
-			class = input("What kind of variable?","Variable Type") in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
+			class = input("What kind of variable?","Variable Type") as anything in list("text","num","type","reference","mob reference","icon","file","client","mob's area","CANCEL")
 		switch(class)
 			if("CANCEL")
 				return null
 
 			if("text")
-				lst += input("Enter new text:","Text",null) as text
+				lst += stripped_input(usr, "Enter new text:","Text",null)
 
 			if("num")
 				lst += input("Enter new number:","Num",0) as num
 
 			if("type")
-				lst += input("Enter type:","Type") in typesof(/obj,/mob,/area,/turf)
+				lst += input("Enter type:","Type") as anything in typesof(/obj,/mob,/area,/turf)
 
 			if("reference")
 				lst += input("Select reference:","Reference",src) as mob|obj|turf|area in world
@@ -231,7 +231,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(id in hardcoded_gases || env_gases[id][MOLES])
 			t+= "[env_gases[id][GAS_META][META_GAS_NAME]] : [env_gases[id][MOLES]]\n"
 
-	usr << t
+	to_chat(usr, t)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in mob_list)
@@ -314,7 +314,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/mob/C in mob_list)
 		if(C.key)
 			available.Add(C)
-	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") in available
+	var/mob/choice = input("Choose a player to play the pAI", "Spawn pAI") as anything in available
 	if(!choice)
 		return 0
 	if(!istype(choice, /mob/dead/observer))
@@ -323,7 +323,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return 0
 	var/obj/item/device/paicard/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
-	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text
+	pai.name = stripped_input(choice, "Enter your pAI name:", "pAI Name", "Personal AI")
 	pai.real_name = pai.name
 	pai.key = choice.key
 	card.setPersonality(pai)
@@ -555,33 +555,33 @@ var/global/list/g_fancy_list_of_types = null
 	var/list/areas_without_intercom = areas_all - areas_with_intercom
 	var/list/areas_without_camera = areas_all - areas_with_camera
 
-	world << "<b>AREAS WITHOUT AN APC:</b>"
+	to_chat(world, "<b>AREAS WITHOUT AN APC:</b>")
 	for(var/areatype in areas_without_APC)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT AN AIR ALARM:</b>"
+	to_chat(world, "<b>AREAS WITHOUT AN AIR ALARM:</b>")
 	for(var/areatype in areas_without_air_alarm)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>"
+	to_chat(world, "<b>AREAS WITHOUT A REQUEST CONSOLE:</b>")
 	for(var/areatype in areas_without_RC)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT ANY LIGHTS:</b>"
+	to_chat(world, "<b>AREAS WITHOUT ANY LIGHTS:</b>")
 	for(var/areatype in areas_without_light)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT A LIGHT SWITCH:</b>"
+	to_chat(world, "<b>AREAS WITHOUT A LIGHT SWITCH:</b>")
 	for(var/areatype in areas_without_LS)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT ANY INTERCOMS:</b>"
+	to_chat(world, "<b>AREAS WITHOUT ANY INTERCOMS:</b>")
 	for(var/areatype in areas_without_intercom)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
-	world << "<b>AREAS WITHOUT ANY CAMERAS:</b>"
+	to_chat(world, "<b>AREAS WITHOUT ANY CAMERAS:</b>")
 	for(var/areatype in areas_without_camera)
-		world << "* [areatype]"
+		to_chat(world, "* [areatype]")
 
 /client/proc/cmd_admin_dress(mob/living/carbon/human/M in mob_list)
 	set category = "Fun"
@@ -711,21 +711,21 @@ var/global/list/g_fancy_list_of_types = null
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
 
-	switch(input("Which list?") in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
+	switch(input("Which list?") as anything in list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
 		if("Players")
-			usr << jointext(player_list,",")
+			to_chat(usr, jointext(player_list,","))
 		if("Admins")
-			usr << jointext(admins,",")
+			to_chat(usr, jointext(admins,","))
 		if("Mobs")
-			usr << jointext(mob_list,",")
+			to_chat(usr, jointext(mob_list,","))
 		if("Living Mobs")
-			usr << jointext(living_mob_list,",")
+			to_chat(usr, jointext(living_mob_list,","))
 		if("Dead Mobs")
-			usr << jointext(dead_mob_list,",")
+			to_chat(usr, jointext(dead_mob_list,","))
 		if("Clients")
-			usr << jointext(clients,",")
+			to_chat(usr, jointext(clients,","))
 		if("Joined Clients")
-			usr << jointext(joined_player_list,",")
+			to_chat(usr, jointext(joined_player_list,","))
 
 /client/proc/cmd_display_del_log()
 	set category = "Debug"

@@ -13,6 +13,7 @@
 	var/quality
 	var/get_chance = 100
 	var/lowest_value = 256 * 8
+	var/highest_force_lose_value = 256 * 8 - 1 //the lowest value this block will be when the mutation is forceremoved. This should always be lower than lowest_value.
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
 	var/list/visual_indicators = list()
@@ -34,7 +35,7 @@
 	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
 		return
 	var/before = copytext(se_string, 1, ((dna_block - 1) * DNA_BLOCK_SIZE) + 1)
-	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, lowest_value - 1), DNA_BLOCK_SIZE)
+	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, min(highest_force_lose_value, lowest_value - 1)), DNA_BLOCK_SIZE)
 	var/after = copytext(se_string, (dna_block * DNA_BLOCK_SIZE) + 1, 0)
 	return before + injection + after
 
@@ -66,7 +67,7 @@
 		return 1
 	owner.dna.mutations.Add(src)
 	if(text_gain_indication)
-		owner << text_gain_indication
+		to_chat(owner, text_gain_indication)
 	if(visual_indicators.len)
 		var/list/mut_overlay = list(get_visual_indicator(owner))
 		if(owner.overlays_standing[layer_used])
@@ -94,7 +95,7 @@
 /datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
 	if(owner && istype(owner) && (owner.dna.mutations.Remove(src)))
 		if(text_lose_indication && owner.stat != DEAD)
-			owner << text_lose_indication
+			to_chat(owner, text_lose_indication)
 		if(visual_indicators.len)
 			var/list/mut_overlay = list()
 			if(owner.overlays_standing[layer_used])
@@ -126,6 +127,7 @@
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
+	owner.SetParalysis(0)
 	owner.status_flags -= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
 	owner.update_body_parts()
 
@@ -135,7 +137,7 @@
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
 	if(owner.health < 0)
 		on_losing(owner)
-		owner << "<span class='danger'>You suddenly feel very weak.</span>"
+		to_chat(owner, "<span class='danger'>You suddenly feel very weak.</span>")
 
 /datum/mutation/human/hulk/on_losing(mob/living/carbon/human/owner)
 	if(..())
@@ -245,7 +247,7 @@
 	text_gain_indication = "<span class='danger'>You feel strange.</span>"
 
 /datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
-	owner << text_gain_indication
+	to_chat(owner, text_gain_indication)
 	var/mob/new_mob
 	if(prob(95))
 		if(prob(50))

@@ -102,7 +102,7 @@
 		if(M.client)
 			if(!M.client.prefs.soundenv)
 				S.environment = ROOM
-	src << S
+	to_chat(src, S)
 
 /mob/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
 	if(!client || ear_deaf > 0)
@@ -110,13 +110,13 @@
 	..()
 
 /mob/proc/stopLobbySound()
-	src << nullify_sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
+	to_chat(src, nullify_sound(null, repeat = 0, wait = 0, volume = 85, channel = 1))
 
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)
 		return
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
-		src << nullify_sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
+		to_chat(src, nullify_sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) )
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
@@ -147,7 +147,15 @@
 			if ("gunshot")
 				soundin = pick('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
 			if ("ricochet")
-				soundin = pick(	'sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg','sound/weapons/effects/ric3.ogg','sound/weapons/effects/ric4.ogg','sound/weapons/effects/ric5.ogg')
+				soundin = pick('sound/weapons/effects/ric1.ogg', 'sound/weapons/effects/ric2.ogg','sound/weapons/effects/ric3.ogg','sound/weapons/effects/ric4.ogg','sound/weapons/effects/ric5.ogg')
+			if ("pour")
+				soundin = pick('sound/effects/water_pour1.ogg', 'sound/effects/water_pour2.ogg', 'sound/effects/water_pour3.ogg')
+			if ("write")
+				soundin = pick('sound/effects/write1.ogg', 'sound/effects/write2.ogg')
+			if ("buckle")
+				soundin = pick('sound/effects/buckle1.ogg', 'sound/effects/buckle2.ogg')
+			if ("fire")
+				soundin = pick('sound/effects/fire1.ogg', 'sound/effects/fire2.ogg')
 	return soundin
 
 /proc/playsound_global(file, repeat=0, wait, channel, volume)
@@ -155,7 +163,7 @@
 		V << sound(file, repeat, wait, channel, volume)
 
 /proc/nullify_sound(file, repeat, wait, volume, channel)
-	var/sound/S = sound(file, repeat, wait, volume, channel)
+	var/sound/S = sound(file, repeat, wait, channel, volume)
 	S.environment = ROOM
 	S.echo = 0
 	return S

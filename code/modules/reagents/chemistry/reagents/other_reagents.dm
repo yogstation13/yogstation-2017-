@@ -102,6 +102,7 @@
 	id = "water"
 	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 	color = "#AAAAAA77" // rgb: 170, 170, 170, 77 (alpha)
+	cleans = TRUE
 	var/cooling_temperature = 2
 
 /*
@@ -113,7 +114,7 @@
 	var/CT = cooling_temperature
 
 	if(reac_volume >= 5)
-		T.MakeSlippery(min_wet_time = 5, wet_time_to_add = reac_volume*0.2)
+		T.MakeSlippery(min_wet_time = 5, wet_time_to_add = reac_volume * 2, max_wet_time = 50)
 
 	for(var/mob/living/simple_animal/slime/M in T)
 		M.apply_water()
@@ -141,8 +142,8 @@
 		cube.Expand()
 
 	// Dehydrated carp
-	else if(istype(O,/obj/item/toy/carpplushie/dehy_carp))
-		var/obj/item/toy/carpplushie/dehy_carp/dehy = O
+	else if(istype(O,/obj/item/toy/plushie/carpplushie/dehy_carp))
+		var/obj/item/toy/plushie/carpplushie/dehy_carp/dehy = O
 		dehy.Swell() // Makes a carp
 
 /*
@@ -165,7 +166,7 @@
 
 /datum/reagent/water/holywater/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(is_servant_of_ratvar(M))
-		M << "<span class='userdanger'>A darkness begins to spread its unholy tendrils through your mind, purging the Justiciar's influence!</span>"
+		to_chat(M, "<span class='userdanger'>A darkness begins to spread its unholy tendrils through your mind, purging the Justiciar's influence!</span>")
 	..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/M)
@@ -175,8 +176,8 @@
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
-		M.stuttering += 4
-		M.Dizzy(5)
+		M.stuttering = max(min(M.stuttering+4, 15), M.stuttering)
+		M.dizziness = max(min(M.dizziness+5, 15), M.dizziness)
 		if(iscultist(M) && prob(5))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
 		else if(is_servant_of_ratvar(M) && prob(8))
@@ -184,14 +185,14 @@
 				if("speech")
 					clockwork_say(M, "...[text2ratvar(pick("Engine... your light grows dark...", "Where are you, master?", "He lies rusting in Error...", "Purge all untruths and... and... something..."))]")
 				if("message")
-					M << "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
-					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>"
+					to_chat(M, "<span class='boldwarning'>[pick("Ratvar's illumination of your mind has begun to flicker", "He lies rusting in Reebe, derelict and forgotten. And there he shall stay", \
+					"You can't save him. Nothing can save him now", "It seems that Nar-Sie will triumph after all")].</span>")
 				if("emote")
 					M.visible_message("<span class='warning'>[M] [pick("whimpers quietly", "shivers as though cold", "glances around in paranoia")].</span>")
 	if(data >= 75)	// 30 units, 135 seconds
 		if (!M.confused)
 			M.confused = 1
-		M.confused += 3
+		M.confused = max(min(M.confused+3, 15), M.confused)
 		if(iscultist(M) || is_handofgod_cultist(M) || is_handofgod_prophet(M) || is_servant_of_ratvar(M))
 			if(iscultist(M))
 				ticker.mode.remove_cultist(M.mind, 1, 1)
@@ -203,6 +204,7 @@
 			M.jitteriness = 0
 			M.stuttering = 0
 			M.confused = 0
+			M.dizziness = 0
 			return
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 
@@ -333,7 +335,7 @@
 
 		if(method == INGEST)
 			if(show_message)
-				M << "<span class='notice'>That tasted horrible.</span>"
+				to_chat(M, "<span class='notice'>That tasted horrible.</span>")
 			M.AdjustStunned(2)
 			M.AdjustWeakened(2)
 	..()
@@ -373,7 +375,7 @@
 
 /datum/reagent/stableslimetoxin/on_mob_life(mob/living/carbon/human/H)
 	..()
-	H << "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>"
+	to_chat(H, "<span class='warning'><b>You crumple in agony as your flesh wildly morphs into new forms!</b></span>")
 	H.visible_message("<b>[H]</b> falls to the ground and screams as their skin bubbles and froths!") //'froths' sounds painful when used with SKIN.
 	H.Weaken(3, 0)
 	spawn(30)
@@ -382,10 +384,10 @@
 
 		var/datum/species/mutation = race
 		if(prob(90) && mutation)
-			H << mutationtext
+			to_chat(H, mutationtext)
 			H.set_species(mutation)
 		else
-			H << "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>"
+			to_chat(H, "<span class='danger'>The pain vanishes suddenly. You feel no different.</span>")
 
 	return 1
 
@@ -564,7 +566,7 @@
 	metabolization_rate = INFINITY
 
 /datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
-	H << "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>"
+	to_chat(H, "<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
 	randomize_human(H)
 	..()
@@ -885,6 +887,7 @@
 	id = "cleaner"
 	description = "A compound used to clean things. Now with 50% more sodium hypochlorite!"
 	color = "#A5F0EE" // rgb: 165, 240, 238
+	cleans = TRUE
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, reac_volume)
 	if(istype(O,/obj/effect/decal/cleanable))
@@ -1402,14 +1405,14 @@ datum/reagent/shadowling_blindness_smoke
 
 /datum/reagent/shadowling_blindness_smoke/on_mob_life(mob/living/M)
 	if(!is_shadow_or_thrall(M))
-		M << "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>"
+		to_chat(M, "<span class='warning'><b>You breathe in the black smoke, and your eyes burn horribly!</b></span>")
 		M.blind_eyes(5)
 		if(prob(25))
 			M.visible_message("<b>[M]</b> claws at their eyes!")
 			M.Stun(3, 0)
 			. = 1
 	else
-		M << "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>"
+		to_chat(M, "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>")
 		M.heal_organ_damage(2,2, 0)
 		M.adjustOxyLoss(-2, 0, DAMAGE_CHEMICAL)
 		M.adjustToxLoss(-2, 0, DAMAGE_CHEMICAL)
@@ -1455,7 +1458,7 @@ datum/reagent/romerol
 
 /datum/reagent/laughter/reaction_mob(mob/living/M)
 	if(!M.reagents.has_reagent("laughter"))
-		M << "<span class='notice'>You suddenly feel very happy!</span>"
+		to_chat(M, "<span class='notice'>You suddenly feel very happy!</span>")
 	..()
 
 /datum/reagent/laughter/on_mob_life(mob/living/M)
@@ -1464,10 +1467,10 @@ datum/reagent/romerol
 	..()
 
 /datum/reagent/laughter/on_mob_delete(mob/living/M)
-	M << "<span class='notice'>Everything is terrible again...</span>"
+	to_chat(M, "<span class='notice'>Everything is terrible again...</span>")
 
 /datum/reagent/laughter/overdose_start(mob/living/M)
-	M << "<span class='userdanger'>You start laughing hysterically!</span>"
+	to_chat(M, "<span class='userdanger'>You start laughing hysterically!</span>")
 
 /datum/reagent/laughter/overdose_process(mob/living/M)
 	M.emote(pick(list("laugh","giggle")))
