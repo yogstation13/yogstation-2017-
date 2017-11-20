@@ -115,6 +115,12 @@
 	
 //Red
 /datum/robot_skin/secred
+ 	Name = "Red"
+ 	Icon_State = "secborg-red"		//Probably a donor sprite.
+ 	eye_icon_state = "eyes-secborg-red"
+ 	headlight_icon_state = "eyes-standard-lights"
+ 	modules = list(/obj/item/weapon/robot_module/security
+
  	name = "Red"
  	icon_state = "secborg-red"		//Probably a donor sprite.
  	eye_icon_state = "eyes-standard"
