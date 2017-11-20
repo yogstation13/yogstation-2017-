@@ -12,20 +12,6 @@
 	to_chat(src, "<b>Drone Laws</b>")
 	to_chat(src, laws)
 
-/mob/living/simple_animal/drone/verb/toggle_light()
-	set category = "Drone"
-	set name = "Toggle drone light"
-	if(light_on == 2)
-		return
-	if(light_on)
-		AddLuminosity(-8)
-	else
-		AddLuminosity(8)
-
-	light_on = !light_on
-
-	to_chat(src, "<span class='notice'>Your light is now [light_on ? "on" : "off"].</span>")
-
 /mob/living/simple_animal/drone/verb/drone_ping()
 	set category = "Drone"
 	set name = "Drone ping"
@@ -53,4 +39,3 @@
 		staticChoice = selectedStatic
 
 	updateSeeStaticMobs()
-

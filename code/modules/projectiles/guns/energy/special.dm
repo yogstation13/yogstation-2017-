@@ -205,7 +205,7 @@
 			blue.target = null
 
 /obj/item/weapon/gun/energy/wormhole_projector/proc/create_portal(obj/item/projectile/beam/wormhole/W)
-	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(W), null, src)
+	var/obj/effect/portal/P = new /obj/effect/portal(get_turf(W), get_turf(W), src)
 	P.precision = 0
 	if(W.name == "bluespace beam")
 		qdel(blue)

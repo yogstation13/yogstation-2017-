@@ -311,6 +311,9 @@
 	return dat
 
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
+	if(!P.master_dna)
+		to_chat(P, "<span class='warning'>You haven't been bound to anyone yet!</span>")
+		return
 	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") as anything in list("Yes", "No")
 	if(answer == "Yes")
 		M.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>",\

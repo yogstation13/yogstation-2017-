@@ -343,11 +343,15 @@ What a mess.*/
 						screen = 1
 //RECORD FUNCTIONS
 			if("Record Maintenance")
+				if(!check_auth())
+					return
 				screen = 2
 				active1 = null
 				active2 = null
 
 			if("Browse Record")
+				if(!check_auth())
+					return
 				var/datum/data/record/R = locate(href_list["d_rec"])
 				var/S = locate(href_list["d_rec"])
 				if(!( data_core.general.Find(R) ))
@@ -467,6 +471,8 @@ What a mess.*/
 				temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
 
 			if("Purge All Records")
+				if(!check_auth())
+					return
 				investigate_log("[usr.name] ([usr.key]) has purged all the security records.", "records")
 				for(var/datum/data/record/R in data_core.security)
 					qdel(R)
@@ -474,6 +480,8 @@ What a mess.*/
 				temp = "All Security records deleted."
 
 			if("Add Entry")
+				if(!check_auth())
+					return
 				if(!( istype(active2, /datum/data/record) ))
 					return
 				var/a2 = active2
@@ -498,10 +506,14 @@ What a mess.*/
 					temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
 
 			if("Delete Entry")
+				if(!check_auth())
+					return
 				if((istype(active2, /datum/data/record) && active2.fields[text("com_[]", href_list["del_c"])]))
 					active2.fields[text("com_[]", href_list["del_c"])] = "<B>Deleted</B>"
 //RECORD CREATE
 			if("New Record (Security)")
+				if(!check_auth())
+					return
 				if((istype(active1, /datum/data/record) && !( istype(active2, /datum/data/record) )))
 					var/datum/data/record/R = new /datum/data/record()
 					R.fields["name"] = active1.fields["name"]
@@ -516,6 +528,8 @@ What a mess.*/
 					screen = 3
 
 			if("New Record (General)")
+				if(!check_auth())
+					return
 				//General Record
 				var/datum/data/record/G = new /datum/data/record()
 				G.fields["name"] = "New Record"
@@ -566,6 +580,8 @@ What a mess.*/
 
 //FIELD FUNCTIONS
 			if("Edit Field")
+				if(!check_auth())
+					return
 				var/a1 = active1
 				var/a2 = active2
 
@@ -692,12 +708,16 @@ What a mess.*/
 				temp=null
 				switch(href_list["choice"])
 					if("Change Rank")
+						if(!check_auth())
+							return
 						if(active1)
 							active1.fields["rank"] = href_list["rank"]
 							if(href_list["rank"] in get_all_jobs())
 								active1.fields["real_rank"] = href_list["real_rank"]
 
 					if("Change Criminal Status")
+						if(!check_auth())
+							return
 						if(active2)
 							var/old_field = active2.fields["criminal"]
 							switch(href_list["criminal2"])
@@ -715,6 +735,8 @@ What a mess.*/
 							for(var/mob/living/carbon/human/H in mob_list) //thanks for forcing me to do this, whoever wrote this shitty records system
 								H.sec_hud_set_security_status()
 					if("Delete Record (Security) Execute")
+						if(!check_auth())
+							return
 						investigate_log("[usr.name] ([usr.key]) has deleted the security records for [active1.fields["name"]].", "records")
 						if(active2)
 							data_core.security -= active2
@@ -722,6 +744,8 @@ What a mess.*/
 							active2 = null
 
 					if("Delete Record (ALL) Execute")
+						if(!check_auth())
+							return
 						if(active1)
 							investigate_log("[usr.name] ([usr.key]) has deleted all records for [active1.fields["name"]].", "records")
 							for(var/datum/data/record/R in data_core.medical)
@@ -743,6 +767,12 @@ What a mess.*/
 	add_fingerprint(usr)
 	updateUsrDialog()
 	return
+
+/obj/machinery/computer/secure_data/proc/check_auth()
+	if(!authenticated)
+		message_admins("EXPLOIT: [usr] attempted to interact with [src] without being logged in.")
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/secure_data/proc/get_photo(mob/user)
 	var/obj/item/weapon/photo/P = null

@@ -69,6 +69,11 @@ insert ascii eagle on american flag background here
 		else if (cook_time == 60)
 			visible_message("[src] emits an acrid smell!")
 
+/obj/machinery/deepfryer/attack_ai(mob/user)
+	return
+
+/obj/machinery/deepfryer/attack_tk(mob/user)
+	return
 
 /obj/machinery/deepfryer/attack_hand(mob/user)
 	if(frying)
@@ -82,6 +87,7 @@ insert ascii eagle on american flag background here
 			S.overlays = frying.overlays
 			S.icon_state = frying.icon_state
 			S.desc = frying.desc
+			S.w_class = frying.w_class
 			reagents.trans_to(S, 2*(cook_time/15))
 			switch(cook_time)
 				if(0 to 15)
