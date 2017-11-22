@@ -169,7 +169,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/proc/deshell(obj/item/O, mob/living/user, extraction)
 	user.unEquip(src)
 	if(O.trash)
-		var/obj/item/weapon/reagent/containers/food/snacks/grown/shell/trash = O
+		var/obj/item/weapon/T
 		if(ispath(trash, /obj/item/weapon/grown) || ispath(trash, /obj/item/weapon/reagent_containers/food/snacks/grown))
 			T = new (user.loc, seed)
 		else
