@@ -139,8 +139,8 @@
 	set desc = "Activate to deshell plants, dropping the items on the ground."
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
-	for(var/obj/item/O in contents)
-		deshell(O)
+	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/shell/O in contents)
+		O.deshell(O, usr, 1)
 	close_all()
 
 // -----------------------------
