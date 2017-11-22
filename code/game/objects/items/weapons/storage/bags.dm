@@ -140,7 +140,7 @@
 	if(usr.stat || !usr.canmove || usr.restrained())
 		return
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/shell/O in contents)
-		O.deshell(O, usr, 1)
+		O.deshell(O, usr, 0)
 	close_all()
 
 // -----------------------------
