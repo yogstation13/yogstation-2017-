@@ -46,6 +46,7 @@
 	staticOverlays = list()
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
+	see_invisible = SEE_INVISIBLE_MINIMUM
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
@@ -55,7 +56,6 @@
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
 	"3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals."
 	var/no_living_interaction = TRUE
-	var/light_on = 0
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
@@ -275,9 +275,6 @@
 /mob/living/simple_animal/drone/bee_friendly()
 	// Why would bees pay attention to drones?
 	return 1
-
-/mob/living/simple_animal/drone/proc/fix_light()
-	light_on = 0
 
 /mob/living/simple_animal/drone/ClickOn(var/atom/A, var/params)
 	if(no_living_interaction && !isdrone(A) && (isliving(A) || istype(A, /obj/effect/blob)) )

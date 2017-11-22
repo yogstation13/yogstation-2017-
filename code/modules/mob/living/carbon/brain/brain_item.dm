@@ -83,7 +83,7 @@
 		to_chat(user, "This one is completely devoid of life.")
 
 /obj/item/organ/brain/attack(mob/living/carbon/M, mob/user)
-	if(!istype(M))
+	if(!istype(M) || istype(M, /mob/living/carbon/brain))
 		return ..()
 
 	add_fingerprint(user)

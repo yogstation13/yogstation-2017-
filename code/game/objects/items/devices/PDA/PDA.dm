@@ -373,6 +373,9 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 
+	if(!(src in U.contents))
+		return
+
 	if(usr.canUseTopic(src) && !href_list["close"])
 		add_fingerprint(U)
 		U.set_machine(src)
