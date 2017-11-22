@@ -30371,6 +30371,10 @@
 	dir = 8;
 	name = "Firelock West"
 	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "maildesk";
+	name = "cargo shutters"
+	},
 /turf/open/floor/plasteel{
 	icon_state = "bot"
 	},
@@ -69730,6 +69734,26 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zsr" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "maildesk";
+	name = "cargo shutters"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/office)
+"Zss" = (
+/obj/machinery/button/door{
+	id = "maildesk";
+	name = "Desk Shutters";
+	pixel_x = 26;
+	pixel_y = 6;
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/office)
 "Zst" = (
 /obj/structure/lattice,
 /obj/machinery/door/poddoor/preopen{
@@ -96930,7 +96954,7 @@ bgD
 bhZ
 bjt
 bjt
-bej
+Zss
 bnX
 bpH
 brj
@@ -97184,9 +97208,9 @@ bbM
 bbM
 bbM
 bgE
-bia
+Zsr
 bju
-bia
+Zsr
 bbM
 bnY
 bbM

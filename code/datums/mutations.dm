@@ -13,6 +13,7 @@
 	var/quality
 	var/get_chance = 100
 	var/lowest_value = 256 * 8
+	var/highest_force_lose_value = 256 * 8 - 1 //the lowest value this block will be when the mutation is forceremoved. This should always be lower than lowest_value.
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
 	var/list/visual_indicators = list()
@@ -34,7 +35,7 @@
 	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
 		return
 	var/before = copytext(se_string, 1, ((dna_block - 1) * DNA_BLOCK_SIZE) + 1)
-	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, lowest_value - 1), DNA_BLOCK_SIZE)
+	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, min(highest_force_lose_value, lowest_value - 1)), DNA_BLOCK_SIZE)
 	var/after = copytext(se_string, (dna_block * DNA_BLOCK_SIZE) + 1, 0)
 	return before + injection + after
 

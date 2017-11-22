@@ -79,7 +79,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		pixel_x = 0
 		pixel_y = 0
 
-		dir = tesla_zap(src, 7, TESLA_DEFAULT_POWER)
+		tesla_zap(src, 7, TESLA_DEFAULT_POWER)
 
 		pixel_x = -32
 		pixel_y = -32
@@ -99,9 +99,9 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
 	//we face the last thing we zapped, so this lets us favor that direction a bit
-	var/first_move = dir
+	var/move_bias = pick(alldirs)
 	for(var/i in 0 to move_amount)
-		var/move_dir = pick(alldirs + first_move) //give the first move direction a bit of favoring.
+		var/move_dir = pick(alldirs + move_bias) //ensures large-ball teslas don't just sit around 
 		if(target && prob(60))
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
@@ -280,5 +280,3 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 	else if(closest_structure)
 		closest_structure.tesla_act(power)
-
-

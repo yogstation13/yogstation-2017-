@@ -416,6 +416,7 @@ var/time_last_changed_position = 0
 
 					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
 				if (modify)
+					log_game("[modify.registered_name]'s ID had its job changed to [t1] from [modify.assignment]")
 					modify.assignment = t1
 		if ("demote")
 			if(modify.assignment in head_subordinates || modify.assignment == "Assistant")

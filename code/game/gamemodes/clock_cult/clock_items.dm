@@ -91,6 +91,8 @@
 		if(isliving(W.loc)) //Only goes one level down - otherwise it won't produce components
 			L = W.loc
 	if(L)
+		if(!L.client)
+			return
 		var/component_to_generate = get_weighted_component_id(src) //more likely to generate components that we have less of
 		stored_components[component_to_generate]++
 		for(var/obj/item/clockwork/slab/S in L.GetAllContents()) //prevent slab abuse today
