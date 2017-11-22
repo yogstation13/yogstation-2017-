@@ -169,8 +169,9 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/shell/proc/deshell(obj/item/O, mob/living/user, extraction)
 	user.unEquip(src)
 	if(O.trash)
+		var/obj/item/weapon/reagent/containers/food/snacks/grown/shell/trash = O
 		if(ispath(trash, /obj/item/weapon/grown) || ispath(trash, /obj/item/weapon/reagent_containers/food/snacks/grown))
-			T = new trash(user.loc, seed)
+			T = new (user.loc, seed)
 		else
 			T = new trash(user.loc)
 		to_chat(user, "<span class='notice'>You open [O]\'s shell and a [T] drops on the ground.</span>")
