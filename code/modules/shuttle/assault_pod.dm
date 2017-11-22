@@ -43,6 +43,7 @@
 	x_offset = 0
 	y_offset = 3
 	rotate_action = null
+	space_turfs_only = FALSE
 	var/target_set = FALSE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate_pod/check_eye(mob/user)

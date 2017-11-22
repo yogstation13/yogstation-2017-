@@ -108,7 +108,7 @@
 /obj/machinery/computer/communications/get_cybermen_hack()
 	return new /datum/cyberman_hack/machinery/comms_console(src)
 
-/obj/item/documents/nanotrasen/get_cybermen_hack()
+/obj/item/documents/secret/nanotrasen/get_cybermen_hack()
 	return new /datum/cyberman_hack/analyze(src)
 
 /obj/machinery/nuclearbomb/selfdestruct/get_cybermen_hack()

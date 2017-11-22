@@ -831,6 +831,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 		else
 			turn_on()
 
+	if(locked && !isaiorborg(usr) && !IsAdminGhost(usr))
+		return
+
 	switch(href_list["operation"])
 		if("patrol")
 			auto_patrol = !auto_patrol
@@ -852,7 +855,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 				to_chat(usr, "<span class='notice'>[text_dehack]</span>")
 				bot_reset()
 		if("ejectpai")
-			if(paicard && (!locked || issilicon(usr) || IsAdminGhost(usr)))
+			if(paicard)
 				to_chat(usr, "<span class='notice'>You eject [paicard] from [bot_name]</span>")
 				ejectpai(usr)
 	update_controls()
