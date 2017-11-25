@@ -379,6 +379,8 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 /datum/cyberman_network/proc/message_all_cybermen(message)
 	for(var/datum/mind/cyberman in cybermen)
 		to_chat(cyberman.current, message)
+	for(var/mob/dead/observer in dead_mob_list)
+		to_chat(observer, message)
 
 /datum/cyberman_network/proc/is_cyberman_or_being_converted(mob/living/carbon/human/H)//this one accepts mobs instead of minds, because conversion hacks target mobs, not minds.
 	if(!istype(H))
