@@ -289,7 +289,8 @@
 	//done throwing, either because it hit something or it finished moving
 	throwing = 0
 	var/turf/T = get_turf(src)
-	T.Entered(src)
+	if(T)
+		T.Entered(src)
 	if(!hit)
 		for(var/atom/A in get_turf(src)) //looking for our target on the turf we land on.
 			if(A == target)

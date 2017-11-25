@@ -66,7 +66,7 @@
 
 	//Making a honkbox.
 	if(src.contents.len >= 1)
-		user << "<span class='notice'>You need to empty the [src] out first if you want to attach the bike horn.</span>"
+		to_chat(user, "<span class='notice'>You need to empty [src] out first if you want to attach the bike horn.</span>")
 		..()
 		return
 
@@ -74,7 +74,7 @@
 
 	qdel(S)
 	user.put_in_hands(A)
-	user << "<span class='notice'>You crudely attach the bikehorn to the side of the [src].</span>"
+	to_chat(user, "<span class='notice'>You crudely attach the bikehorn to the side of [src].</span>")
 	user.unEquip(src, 1)
 	qdel(src)
 
@@ -90,7 +90,7 @@
 
 	qdel(W)
 	user.put_in_hands(A)
-	user << "<span class='notice'>You crudely staple the mask to the top of the [src].</span>"
+	to_chat(user, "<span class='notice'>You crudely staple the mask to the top of [src].</span>")
 	user.unEquip(src, 1)
 	qdel(src)
 
@@ -109,7 +109,7 @@
 		if(isprox(W))
 			user.drop_item()
 			qdel(W)
-			user << "<span class='notice'>You complete the Honkbot! Beep boop.</span>"
+			to_chat(user, "<span class='notice'>You complete the Honkbot! Beep boop.</span>")
 			var/mob/living/simple_animal/hostile/honkbot/S = new /mob/living/simple_animal/hostile/honkbot/(user.loc)
 			S.name = src.created_name
 			user.unEquip(src, 1)
@@ -145,12 +145,12 @@
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		M.adjustEarDamage(0, 30)
-		M << "<font color='red' size='7'>HONK</font>"
+		to_chat(M, "<font color='red' size='7'>HONK</font>")
 		M.SetSleeping(0)
 
 
 /mob/living/simple_animal/hostile/honkbot/proc/Emag(mob/user as mob)
-	if(user) user << "<span class='notice'>The [src] honks excitedly!</span>"
+	if(user) to_chat(user, "<span class='notice'>[src] honks excitedly!</span>")
 	emagged = 2
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)

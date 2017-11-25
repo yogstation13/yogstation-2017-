@@ -252,7 +252,7 @@ RCD AMMO
 	if(istype(W, /obj/item/weapon/rcd_ammo))
 		var/obj/item/weapon/rcd_ammo/R = W
 		if((matter + R.ammoamt) > max_matter)
-			user << "<span class='warning'>The [abbreviated_name] can't hold any more matter-units!</span>"
+			to_chat(user, "<span class='warning'>The [abbreviated_name] can't hold any more matter-units!</span>")
 			return
 		if(!user.unEquip(W))
 			return
@@ -265,7 +265,7 @@ RCD AMMO
 	else if(istype(W, /obj/item/stack/sheet/plasteel))
 		loaded = loadwithsheets(W, plasteelmultiplier*sheetmultiplier, user) //Plasteel is worth 3 times more than glass or metal
 	if(loaded)
-		user << "<span class='notice'>The [abbreviated_name] now holds [matter]/[max_matter] matter-units.</span>"
+		to_chat(user, "<span class='notice'>The [abbreviated_name] now holds [matter]/[max_matter] matter-units.</span>")
 		desc = "A RCD. It currently holds [matter]/[max_matter] matter-units."
 	else
 		return ..()
@@ -278,16 +278,16 @@ RCD AMMO
             S.use(maxsheets)
             matter += value*maxsheets
             playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-            user << "<span class='notice'>You insert [maxsheets] [S.name] sheets into the [abbreviated_name]. </span>"
+            to_chat(user, "<span class='notice'>You insert [maxsheets] [S.name] sheets into the [abbreviated_name]. </span>")
         else
             matter += value*(S.amount)
             user.unEquip()
             S.use(S.amount)
             playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-            user << "<span class='notice'>You insert [S.amount] [S.name] sheets into the [abbreviated_name]. </span>"
+            to_chat(user, "<span class='notice'>You insert [S.amount] [S.name] sheets into the [abbreviated_name]. </span>")
 
         return 1
-    user << "<span class='warning'>You can't insert any more [S.name] sheets into the [abbreviated_name]!"
+    to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into the [abbreviated_name]!")
     return 0
 
 /obj/item/weapon/rcd/attack_self(mob/user)
@@ -296,16 +296,16 @@ RCD AMMO
 	switch(mode)
 		if(1)
 			mode = 2
-			user << "<span class='notice'>You change [abbreviated_name]'s mode to 'Airlock'.</span>"
+			to_chat(user, "<span class='notice'>You change [abbreviated_name]'s mode to 'Airlock'.</span>")
 		if(2)
 			mode = 3
-			user << "<span class='notice'>You change [abbreviated_name]'s mode to 'Deconstruct'.</span>"
+			to_chat(user, "<span class='notice'>You change [abbreviated_name]'s mode to 'Deconstruct'.</span>")
 		if(3)
 			mode = 4
-			user << "<span class='notice'>You change [abbreviated_name]'s mode to 'Grilles & Windows'.</span>"
+			to_chat(user, "<span class='notice'>You change [abbreviated_name]'s mode to 'Grilles & Windows'.</span>")
 		if(4)
 			mode = 1
-			user << "<span class='notice'>You change [abbreviated_name]'s mode to 'Floor & Walls'.</span>"
+			to_chat(user, "<span class='notice'>You change [abbreviated_name]'s mode to 'Floor & Walls'.</span>")
 
 	if(prob(20))
 		src.spark_system.start()
@@ -327,7 +327,7 @@ RCD AMMO
 			if(istype(A, /turf/open/space))
 				var/turf/open/space/S = A
 				if(useResource(floorcost, user))
-					user << "<span class='notice'>You start building floor...</span>"
+					to_chat(user, "<span class='notice'>You start building floor...</span>")
 					activate()
 					S.ChangeTurf(/turf/open/floor/plating)
 					return 1
@@ -335,7 +335,7 @@ RCD AMMO
 			if(islavaturf(A))
 				var/turf/open/floor/plating/lava/L = A
 				if(useResource(floorcost*10, user))
-					user << "<span class='notice'>You fill in the lava with plating...</span>"
+					to_chat(user, "<span class='notice'>You fill in the lava with plating...</span>")
 					activate()
 					L.ChangeTurf(/turf/open/floor/plating)
 					return TRUE
@@ -343,7 +343,7 @@ RCD AMMO
 			if(istype(A, /turf/open/floor) && (A.flags & GIRDERABLE))
 				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
-					user << "<span class='notice'>You start building wall...</span>"
+					to_chat(user, "<span class='notice'>You start building wall...</span>")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, walldelay, target = A))
 						if(!istype(F, /turf/open/floor)) //The turf might have changed during the do_after
@@ -366,7 +366,7 @@ RCD AMMO
 							break
 
 					if(door_check)
-						user << "<span class='notice'>You start building airlock...</span>"
+						to_chat(user, "<span class='notice'>You start building airlock...</span>")
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, airlockdelay, target = A))
 							if(!useResource(airlockcost, user))
@@ -393,7 +393,7 @@ RCD AMMO
 							return 1
 						return 0
 					else
-						user << "<span class='warning'>There is another door here!</span>"
+						to_chat(user, "<span class='warning'>There is another door here!</span>")
 						return 0
 				return 0
 
@@ -403,7 +403,7 @@ RCD AMMO
 				if(istype(W, /turf/closed/wall/r_wall) && !canRturf)
 					return 0
 				if(checkResource(deconwallcost, user))
-					user << "<span class='notice'>You start deconstructing wall...</span>"
+					to_chat(user, "<span class='notice'>You start deconstructing wall...</span>")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconwalldelay, target = A))
 						if(!useResource(deconwallcost, user))
@@ -418,10 +418,10 @@ RCD AMMO
 				if(istype(F, /turf/open/floor/engine) && !canRturf)
 					return 0
 				if(istype(F, F.baseturf))
-					user << "<span class='notice'>You can't dig any deeper!</span>"
+					to_chat(user, "<span class='notice'>You can't dig any deeper!</span>")
 					return 0
 				else if(checkResource(deconfloorcost, user))
-					user << "<span class='notice'>You start deconstructing floor...</span>"
+					to_chat(user, "<span class='notice'>You start deconstructing floor...</span>")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconfloordelay, target = A))
 						if(!useResource(deconfloorcost, user))
@@ -434,7 +434,7 @@ RCD AMMO
 
 			if(istype(A, /obj/machinery/door/airlock))
 				if(checkResource(deconairlockcost, user))
-					user << "<span class='notice'>You start deconstructing airlock...</span>"
+					to_chat(user, "<span class='notice'>You start deconstructing airlock...</span>")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconairlockdelay, target = A))
 						if(!useResource(deconairlockcost, user))
@@ -447,7 +447,7 @@ RCD AMMO
 
 			if(istype(A, /obj/structure/window))
 				if(checkResource(deconwindowcost, user))
-					user << "<span class='notice'>You start deconstructing the window...</span>"
+					to_chat(user, "<span class='notice'>You start deconstructing the window...</span>")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconwindowdelay, target = A))
 						if(!useResource(deconwindowcost, user))
@@ -462,7 +462,7 @@ RCD AMMO
 				var/obj/structure/grille/G = A
 				if(!G.shock(user, 90)) //if it's shocked, try to shock them
 					if(useResource(decongrillecost, user))
-						user << "<span class='notice'>You start deconstructing the grille...</span>"
+						to_chat(user, "<span class='notice'>You start deconstructing the grille...</span>")
 						activate()
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						qdel(A)
@@ -473,9 +473,9 @@ RCD AMMO
 			if(istype(A, /turf/open/floor))
 				if(checkResource(grillecost, user))
 					if(locate(/obj/structure/grille) in A)
-						user << "<span class='warning'>There is already a grille there!</span>"
+						to_chat(user, "<span class='warning'>There is already a grille there!</span>")
 						return 0
-					user << "<span class='notice'>You start building a grille...</span>"
+					to_chat(user, "<span class='notice'>You start building a grille...</span>")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, grilledelay, target = A))
 						if(locate(/obj/structure/grille) in A)
@@ -490,7 +490,7 @@ RCD AMMO
 				return 0
 			if(istype(A, /obj/structure/grille))
 				if(checkResource(windowcost, user))
-					user << "<span class='notice'>You start building a window...</span>"
+					to_chat(user, "<span class='notice'>You start building a window...</span>")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, windowdelay, target = A))
 						if(locate(/obj/structure/window) in A.loc) return 0
@@ -504,13 +504,13 @@ RCD AMMO
 				return 0
 
 		else
-			user << "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin."
+			to_chat(user, "ERROR: RCD in MODE: [mode] attempted use by [user]. Send this text #coderbus or an admin.")
 			return 0
 
 /obj/item/weapon/rcd/proc/useResource(amount, mob/user)
 	if(matter < amount)
 		if(user)
-			user << no_ammo_message
+			to_chat(user, no_ammo_message)
 		return 0
 	matter -= amount
 	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
@@ -519,7 +519,7 @@ RCD AMMO
 /obj/item/weapon/rcd/proc/checkResource(amount, mob/user)
 	. = (matter >= amount)
 	if(!. && user)
-		user << no_ammo_message
+		to_chat(user, no_ammo_message)
 	return .
 
 /obj/item/weapon/rcd/borg/New()
@@ -536,11 +536,11 @@ RCD AMMO
 		return 0
 	var/mob/living/silicon/robot/R = user
 	if(!R.cell)
-		user << no_ammo_message
+		to_chat(user, no_ammo_message)
 		return 0
 	. = R.cell.use(amount * 72) //borgs get 1.3x the use of their RCDs
 	if(!. && user)
-		user << no_ammo_message
+		to_chat(user, no_ammo_message)
 	return .
 
 /obj/item/weapon/rcd/borg/checkResource(amount, mob/user)
@@ -548,11 +548,11 @@ RCD AMMO
 		return 0
 	var/mob/living/silicon/robot/R = user
 	if(!R.cell)
-		user << no_ammo_message
+		to_chat(user, no_ammo_message)
 		return 0
 	. = (R.cell.charge >= (amount * 72))
 	if(!. && user)
-		user << no_ammo_message
+		to_chat(user, no_ammo_message)
 	return .
 
 /obj/item/weapon/rcd/loaded

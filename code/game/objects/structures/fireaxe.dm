@@ -22,13 +22,13 @@
 		if(istype(I, /obj/item/weapon/twohanded/fireaxe) && !fireaxe)
 			var/obj/item/weapon/twohanded/fireaxe/F = I
 			if(F.wielded)
-				user << "<span class='warning'>Unwield the [F.name] first.</span>"
+				to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 				return
 			if(!user.drop_item())
 				return
 			fireaxe = F
 			src.contents += F
-			user << "<span class='caution'>You place the [F.name] back in the [name].</span>"
+			to_chat(user, "<span class='caution'>You place the [F.name] back in the [name].</span>")
 			update_icon()
 			return
 		else if(health > 0)
@@ -92,7 +92,7 @@
 		if(fireaxe)
 			user.put_in_hands(fireaxe)
 			fireaxe = null
-			user << "<span class='caution'>You take the fire axe from the [name].</span>"
+			to_chat(user, "<span class='caution'>You take the fire axe from the [name].</span>")
 			src.add_fingerprint(user)
 			update_icon()
 			return
@@ -146,10 +146,10 @@
 		overlays += "glass_raised"
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
-	user << "<span class = 'caution'> Resetting circuitry...</span>"
+	to_chat(user, "<span class = 'caution'> Resetting circuitry...</span>")
 	playsound(src, 'sound/machines/locktoggle.ogg', 50, 1)
 	if(do_after(user, 20, target = src))
-		user << "<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>"
+		to_chat(user, "<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")
 		locked = !locked
 		update_icon()
 

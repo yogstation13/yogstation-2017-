@@ -182,8 +182,8 @@ var/krampusweak
 	telespell.clothes_req = 0 //santa robes aren't actually magical.
 	santa.mind.AddSpell(telespell) //does the station have chimneys? WHO KNOWS!
 
-	santa << "<span class='boldannounce'>You are Santa! Your objective is to bring joy to the people on this station. You also have the duty of dictating whether someone is naughty or nice. You can conjure more presents using a spell, and there are several presents in your bag. Merry Christmas!</span>"
-	santa << "<span class='boldannounce'><span class='warning'>The Christmas Krampus</span> is here to punish naughty children. One of your spells allows you to summon coal. By placing someones name in that coal, you assign them to the naughty list.</span>"
+	to_chat(santa, "<span class='boldannounce'>You are Santa! Your objective is to bring joy to the people on this station. You also have the duty of dictating whether someone is naughty or nice. You can conjure more presents using a spell, and there are several presents in your bag. Merry Christmas!</span>")
+	to_chat(santa, "<span class='boldannounce'><span class='warning'>The Christmas Krampus</span> is here to punish naughty children. One of your spells allows you to summon coal. By placing someones name in that coal, you assign them to the naughty list.</span>")
 
 /datum/species/whatchamaycallit
 	name = "whatchamaycallit"
@@ -198,13 +198,13 @@ var/krampusweak
 			poof(H)
 	else if(H.health > 80 && foundout)
 		foundout = FALSE
-		H << "<span class='green'>Well nice job, Mr.Whatchamaycallit. You've made it out.</span>"
+		to_chat(H, "<span class='green'>Well nice job, Mr.Whatchamaycallit. You've made it out.</span>")
 
 /datum/species/whatchamaycallit/proc/poof(mob/living/carbon/human/H)
 	for(var/obj/I in H.contents)
 		H.unEquip(I)
 	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
-	H << "<span class='green'>Well shit, Mr.Whatchamaycallit. You've been found out.</span>"
+	to_chat(H, "<span class='green'>Well shit, Mr.Whatchamaycallit. You've been found out.</span>")
 	H.color = "#00ff00" // it's green.
 	foundout = TRUE
 
@@ -230,7 +230,7 @@ var/krampusweak
 	chosen = TRUE
 	qdel(M)
 
-	grinch << "<span class='green'>Oh... you're a mean one.</span>"
+	to_chat(grinch, "<span class='green'>Oh... you're a mean one.</span>")
 	grinch.real_name = "Grinch"
 	grinch.name = "Fuzzy Green Alien" // don't take that the wrong way, freak.
 	grinch.mind.assigned_role = "Grinch"
@@ -239,7 +239,7 @@ var/krampusweak
 
 	if(activesanta)
 		activesanta.SetSleeping(0)
-		activesanta << "<span class='warning'>The hairs on the back of your neck stand up. A whatchamaycallit is here to ruin Christmas!</span>"
+		to_chat(activesanta, "<span class='warning'>The hairs on the back of your neck stand up. A whatchamaycallit is here to ruin Christmas!</span>")
 
 	grinch.set_species(/datum/species/whatchamaycallit)
 	naughty_list += grinch
@@ -264,8 +264,8 @@ var/krampusweak
 
 	grinch.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/sordit)
 
-	grinch << "<font size=4><span class='notice'>You are an agent from the legion of whatchamaycallits</font>, a race of pissed off green-haired aliens that have to listen all day to a bodyless voice always tearing apart your self esteeem. And to top it off Santa has afflicted your entire planet to the naughty list, and has skipped it every year. However, now is the time to get back at them.</span>"
-	grinch << "<font size=2><span class='warning'>REMEMBER. YOU ARE HERE TO RUIN CHRISTMAS BY STEALING GIFTS AND/OR MAKING THEM WORSE. THIS DOES NOT ENTITLE YOU TO KILL ANYONE IN THE PURSUIT OF DOING THIS.</span></font>"
+	to_chat(grinch, "<font size=4><span class='notice'>You are an agent from the legion of whatchamaycallits</font>, a race of pissed off green-haired aliens that have to listen all day to a bodyless voice always tearing apart your self esteeem. And to top it off Santa has afflicted your entire planet to the naughty list, and has skipped it every year. However, now is the time to get back at them.</span>")
+	to_chat(grinch, "<font size=2><span class='warning'>REMEMBER. YOU ARE HERE TO RUIN CHRISTMAS BY STEALING GIFTS AND/OR MAKING THEM WORSE. THIS DOES NOT ENTITLE YOU TO KILL ANYONE IN THE PURSUIT OF DOING THIS.</span></font>")
 
 /obj/effect/proc_holder/spell/targeted/sordit
 	name = "Remake Gift"
@@ -300,7 +300,7 @@ var/krampusweak
 
 /obj/item/weapon/sord/grinch/examine(mob/user)
 	..()
-	user << "<span class='warning'>[name] is calling your name... it wants you to pick it up... and activate it in your hand..</span>"
+	to_chat(user, "<span class='warning'>[name] is calling your name... it wants you to pick it up... and activate it in your hand..</span>")
 
 /obj/item/weapon/sord/grinch/afterattack(atom/target, mob/user)
 	if(used)
@@ -308,8 +308,8 @@ var/krampusweak
 	if(istype(target, /obj/item/))
 		var/obj/item/I = target
 		if(I.high_risk)
-			user << "<span class='warning'>You hear an unexpected voice crack from the great beyond...</span>"
-			user << "<span class='genesisgreen'>You can fuck right off.</span>"
+			to_chat(user, "<span class='warning'>You hear an unexpected voice crack from the great beyond...</span>")
+			to_chat(user, "<span class='genesisgreen'>You can fuck right off.</span>")
 			return
 		stolen = I
 		I.forceMove(src)
@@ -345,26 +345,26 @@ var/krampusweak
 	..()
 	if(user.mind)
 		if(user.mind.special_role == "Santa")
-			user << "<span class='warning'>You reverse this buffoonery of a mechanism, and return [stolen] to it's true form.</span>"
+			to_chat(user, "<span class='warning'>You reverse this buffoonery of a mechanism, and return [stolen] to it's true form.</span>")
 			revert()
 		else if (user.job == "Chaplain")
-			user << "<span class='warning'>This is the art of a wicked whatchamaycallit. Santa must be alerted!</span>"
+			to_chat(user, "<span class='warning'>This is the art of a wicked whatchamaycallit. Santa must be alerted!</span>")
 		else if (user.job == ("Security Officer" || "Head of Security" || "Warden"))
-			user << "<span class='warning'>All of that fighting that you've been through, and centcomm can't even bring down a decent gift...</span>"
+			to_chat(user, "<span class='warning'>All of that fighting that you've been through, and centcomm can't even bring down a decent gift...</span>")
 		else if (user.job == "Captain")
-			user << "<span class='warning'>The clown must be up to something... he's gotten creative with all of this negative aura around [src].</span>"
+			to_chat(user, "<span class='warning'>The clown must be up to something... he's gotten creative with all of this negative aura around [src].</span>")
 		else if (user.job == "Clown")
-			user << "<span class='warning'>Seems like the Captains taking a piss in your outmeal again... terrific.</span>"
+			to_chat(user, "<span class='warning'>Seems like the Captains taking a piss in your outmeal again... terrific.</span>")
 		else if (user.job == "Mime")
-			user << "<span class='warning'>... It's shit.</span>"
+			to_chat(user, "<span class='warning'>... It's shit.</span>")
 		else if (user.job == "Chef")
-			user << "<span class='warning'>365 days of working your ass off in the kitchen to feed a research staff full of manchildren and this is the respect you get...</span>"
+			to_chat(user, "<span class='warning'>365 days of working your ass off in the kitchen to feed a research staff full of manchildren and this is the respect you get...</span>")
 		else if (user.job == "Head of Personnel")
-			user << "<span class='warning'>Ian shouldn't have to look at this.. it'd break his spirit.</span>"
+			to_chat(user, "<span class='warning'>Ian shouldn't have to look at this.. it'd break his spirit.</span>")
 		else if (user.job == "Botanist")
-			user << "<span class='warning'>Another beaker of unstable mutagen could've been nicer...</span>"
+			to_chat(user, "<span class='warning'>Another beaker of unstable mutagen could've been nicer...</span>")
 		else
-			user << "<span class='warning'>Just as bad as coal. Thanks, Santa.</span>"
+			to_chat(user, "<span class='warning'>Just as bad as coal. Thanks, Santa.</span>")
 
 /datum/round_event_control/holidayrole/krampus
 	name = "Krampus has been summoned (Christmas)"
@@ -458,12 +458,12 @@ var/krampusweak
 	eth.clothes_req = 0
 	krampus.mind.AddSpell(eth)
 
-	krampus << "<span class='boldannounce'>You are the Christmas Krampus! Your job is to punish the naughty personnel of SS13, and to bring sinners to justice by turning them into your puppets!</span>"
-	krampus << "<span class='notice'>While you are an antagonist, you are not here to kill or attack anyone. Your purpose is only to punish naughty children.</span>"
+	to_chat(krampus, "<span class='boldannounce'>You are the Christmas Krampus! Your job is to punish the naughty personnel of SS13, and to bring sinners to justice by turning them into your puppets!</span>")
+	to_chat(krampus, "<span class='notice'>While you are an antagonist, you are not here to kill or attack anyone. Your purpose is only to punish naughty children.</span>")
 
 	// CHRIST-, I MEAN... KRAMPUS DOES NOT LAST FOREVER
 	spawn(10000)
-		activekrampus << "<span class='warning'>You can feel your power crumbling...It is almost time to vanish. Soon you'll be forced to retreat for the rest of the shift.</span>"
+		to_chat(activekrampus, "<span class='warning'>You can feel your power crumbling...It is almost time to vanish. Soon you'll be forced to retreat for the rest of the shift.</span>")
 		spawn(5000)
 			joy_to_the_world_krampus_has_fallen()
 
@@ -491,10 +491,9 @@ var/krampusweak
 		if(user.mind)
 			if(user.mind.assigned_role == "Santa")
 				for(var/mob/M in stored_mobs)
-					user << "<span class='notice'>[M], the [M.job], is sitting inside.</span>"
+					to_chat(user, "<span class='notice'>[M], the [M.job], is sitting inside.</span>")
 				return
-		user << "<span class='warning'>You slowly look inside....</span><span clsss='genesisred'>AND A BLAST FLIES \
-			THROUGH YOUR SOUL AS IT'S MERGED WITH THE FOUL DEMONS OF THE UNDERWORLD!</span>"
+		to_chat(user, "<span class='warning'>You slowly look inside....</span><span clsss='genesisred'>AND A BLAST FLIES THROUGH YOUR SOUL AS IT'S MERGED WITH THE FOUL DEMONS OF THE UNDERWORLD!</span>")
 		if(isliving(user))
 			var/mob/living/L = user
 			L.dust_animation()
@@ -504,9 +503,8 @@ var/krampusweak
 		b.key = user.key
 		user.forceMove(ash)
 		user.status_flags |= GODMODE
-		b << "<span class='notice'>Nice job.</span>"
-		activekrampus << "<span class='notice'>[user.real_name] has attempted to open up your christmas bag in \
-			[get_area(user)]!</span>"
+		to_chat(b, "<span class='notice'>Nice job.</span>")
+		to_chat(activekrampus, "<span class='notice'>[user.real_name] has attempted to open up your christmas bag in [get_area(user)]!</span>")
 
 		sleep(200) // basically scared straight: but krampus style
 
@@ -514,8 +512,7 @@ var/krampusweak
 		user.key = b.key
 		user.forceMove(get_turf(ash))
 		qdel(b)
-		user << "<span class='warning'>You hear the ghostly cackle of Krampus in the background. He knowns who you are \
-			now. You better watch out...you best not cry...</span>"
+		to_chat(user, "<span class='warning'>You hear the ghostly cackle of Krampus in the background. He knowns who you are now. You better watch out...you best not cry...</span>")
 		user.status_flags -= GODMODE
 		return
 	if(krampusweak)
@@ -523,9 +520,9 @@ var/krampusweak
 
 	for(var/mob/living/L in stored_mobs)
 		L.Weaken(5)
-		L << "<span class='warning'>The ground starts shaking, everything becoming wobbly! Krampus is doing something with the bag!</span>"
+		to_chat(L, "<span class='warning'>The ground starts shaking, everything becoming wobbly! Krampus is doing something with the bag!</span>")
 
-	user << "<span class='notice'>You rustle up [src] stunning everybody inside!</span>"
+	to_chat(user, "<span class='notice'>You rustle up [src] stunning everybody inside!</span>")
 
 /obj/item/weapon/bagofhorrors/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target))
@@ -533,19 +530,19 @@ var/krampusweak
 	if(user == target)
 		return
 	if(!target.key)
-		user << "<span class='warning'>This one is braindead.</span>"
+		to_chat(user, "<span class='warning'>This one is braindead.</span>")
 		return
 	if(target.stat == DEAD)
-		user << "<span class='warning'>You can't drop dead bodies into your bag.</span>"
+		to_chat(user, "<span class='warning'>You can't drop dead bodies into your bag.</span>")
 		return
 	if(target.stat == UNCONSCIOUS)
 		if(isliving(target))
 			var/mob/living/L = target
 			if(L.health <= 0)
-				user << "<span class='warning'>They have to be awake to drop in.</span>"
+				to_chat(user, "<span class='warning'>They have to be awake to drop in.</span>")
 				return
 	if(!sacarea)
-		user << "<B>ALERT: REPORT TO A CODER/ADMIN. THIS ITEM IS BUGGED, AND CANNOT WORK PROPERLY.</B>"
+		to_chat(user, "<B>ALERT: REPORT TO A CODER/ADMIN. THIS ITEM IS BUGGED, AND CANNOT WORK PROPERLY.</B>")
 		return
 
 	if(krampusweak)
@@ -553,14 +550,14 @@ var/krampusweak
 
 	if(user.mind)
 		if(user.mind.assigned_role == "Santa")
-			user << "<span class='warning'>It's not your place...</span>"
+			to_chat(user, "<span class='warning'>It's not your place...</span>")
 			return
 
 	if(!iskrampus(user))
 		return
 
 	visible_message("<span class='warning'>[user] is trying to shove [target] into [src]!</span>")
-	target << "<span class='warning'>[user] begins to pick you up and shove you into [src].</span>"
+	to_chat(target, "<span class='warning'>[user] begins to pick you up and shove you into [src].</span>")
 	var/naughtymult = 1
 	if((target in naughty_list)) // if they're naughty, we go 2x faster!
 		naughtymult++
@@ -569,7 +566,7 @@ var/krampusweak
 		target.forceMove(get_turf(sacarea))
 		stored_mobs += target
 	else
-		user << "<span class='warning'>You lose grip of [target] releasing him from [src]'s pull.</span>"
+		to_chat(user, "<span class='warning'>You lose grip of [target] releasing him from [src]'s pull.</span>")
 
 /area/krampusbag
 	name = "Krampus's Gift Bag"
@@ -590,7 +587,7 @@ var/krampusweak
 
 /*
 /obj/item/toy/figure/cursed/attack_self(mob/user)
-	user << "<span class='notice'>You scramble [src].</span>"
+	to_chat(user, "<span class='notice'>You scramble [src].</span>")
 	var/obj/item/toy/figure/F =  pick(subtypesof(/obj/item/toy/figure))
 	F = new F.type(src)
 	icon_state = F.icon_state
@@ -603,24 +600,24 @@ var/krampusweak
 	if(krampusweak)
 		return
 	if(moving)
-		user << "<span class='warning'>[src] has already been used.</span>"
+		to_chat(user, "<span class='warning'>[src] has already been used.</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/bagofhorrors))
 		var/obj/item/weapon/bagofhorrors/BoH = W
-		user << "<span class='warning'>You begin to reach in and snatch one of the bodies of your bag.</span>"
+		to_chat(user, "<span class='warning'>You begin to reach in and snatch one of the bodies of your bag.</span>")
 		if(!BoH.stored_mobs.len)
-			user << "<span class='warning'>There's no one inside.</span>"
+			to_chat(user, "<span class='warning'>There's no one inside.</span>")
 			return
 		for(var/mob/M in BoH.stored_mobs)
-			M << "<span class='warning'>You see a claw drop into the bag! Krampus is looking for one of you!</span>"
+			to_chat(M, "<span class='warning'>You see a claw drop into the bag! Krampus is looking for one of you!</span>")
 		if(do_after(user, 700, target = src))
 			var/mob/living/carbon/C = pick(BoH.stored_mobs)
 			if(!C)
-				user << "<span class='warning'>There's nobody in [BoH]</span>"
+				to_chat(user, "<span class='warning'>There's nobody in [BoH]</span>")
 				return
 
-			user << "<span class='warning'>You begin preparing [C].</span>"
+			to_chat(user, "<span class='warning'>You begin preparing [C].</span>")
 			if(C.stat == DEAD)
 				C.revive(full_heal = 1)
 				C.regenerate_limbs(1)
@@ -629,16 +626,16 @@ var/krampusweak
 			var/turf/T = get_turf(src)
 			C.forceMove(T)
 			BoH.stored_mobs -= C
-			C << "<span class='warning'>You see the light!</span>"
+			to_chat(C, "<span class='warning'>You see the light!</span>")
 			C.Stun(30)
 			sleep(100)
 			var/mob/living/simple_animal/hostile/mimic/copy/cursed = new(get_turf(src), src, user)
 			cursed.key = C.key
 			desc = "The lost soul of [C] had been thrown in and out of this abomination. This is all that remains of [C.real_name]."
 			moving = cursed
-			cursed << "<span class='warning'>You've been cursed by Krampus to live your life as an immortal toy!</span>"
+			to_chat(cursed, "<span class='warning'>You've been cursed by Krampus to live your life as an immortal toy!</span>")
 			cursed.forceMove(pick(blobstart))
-			user << "<span class='warning'>You have sent [C]/[cursed] off into the station.</span>"
+			to_chat(user, "<span class='warning'>You have sent [C]/[cursed] off into the station.</span>")
 			C.forceMove(src)
 
 /proc/joy_to_the_world_krampus_has_fallen()
@@ -664,12 +661,12 @@ var/krampusweak
 				H.key = C.moving.key
 
 	for(var/mob/M in player_list)
-		M << "<span class='genesisgreen'>KRAMPUS IS DEAD! REJOICE!</span>"
+		to_chat(M, "<span class='genesisgreen'>KRAMPUS IS DEAD! REJOICE!</span>")
 
 	world << 'sound/christmas/krampusfarewell.ogg'
-	world << "I'll come get you... again."
+	to_chat(world, "I'll come get you... again.")
 	for(var/mob/l in naughty_list)
-		l << "<span class='warning'>and for you it will be next year.</span>"
+		to_chat(l, "<span class='warning'>and for you it will be next year.</span>")
 	qdel(activekrampus)
 	sleep(100)
 	priority_announce("Well... what are we waiting for? Celebrate!", null, 'sound/christmas/deckthehalls.ogg', "Nanotrasen")

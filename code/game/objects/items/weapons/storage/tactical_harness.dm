@@ -159,7 +159,7 @@
 
 /obj/item/weapon/storage/tactical_harness/proc/open_inventory(mob/user)
 	if(user != loc)
-		user << "<span class='notice'>You view \the [src]'s storage pouch. You can add items, but only \the [loc] can remove them while \the [src] is being worn.</span>"
+		to_chat(user, "<span class='notice'>You view \the [src]'s storage pouch. You can add items, but only \the [loc] can remove them while \the [src] is being worn.</span>")
 	orient2hud(user)
 	if(user.s_active)
 		user.s_active.close(user)
@@ -186,13 +186,13 @@
 	if(over_object != usr)
 		return
 	if(!allowed(usr))
-		usr << "<span class='warning'>Access Denied</span>"
+		to_chat(usr, "<span class='warning'>Access Denied</span>")
 		return 0
 	return ..()
 
 /obj/item/weapon/storage/tactical_harness/attack_hand(mob/usr)
 	if(!allowed(usr))
-		usr << "<span class='warning'>Access Denied</span>"
+		to_chat(usr, "<span class='warning'>Access Denied</span>")
 		return 0
 	return ..()
 
@@ -256,28 +256,28 @@
 	if(failed_to_find_player && !animal.ckey)
 		var/list/carp_candidates = get_candidates(ROLE_OPERATIVE, 3000, ROLE_OPERATIVE)
 		if(carp_candidates.len == 0)
-			user << "<span class='warning'>\The [animal] refuses to cooperate, it looks like it won't be helping you on this mission.</span>"
+			to_chat(user, "<span class='warning'>\The [animal] refuses to cooperate, it looks like it won't be helping you on this mission.</span>")
 			failed_to_find_player = 1
 			return
 
 		if(istype(animal, /mob/living/simple_animal/hostile/retaliate/dolphin))
-			user << "<span class='notice'>\The [src] molds itself to the shape of \the [animal].</span>"
+			to_chat(user, "<span class='notice'>\The [src] molds itself to the shape of \the [animal].</span>")
 			qdel(src)
 			var/obj/item/weapon/storage/tactical_harness/ranged/the_harness = new /obj/item/weapon/storage/tactical_harness/ranged/syndicate/dolphin()
 			the_harness.add_harness(animal, user)
 		else if(animal.type == /mob/living/simple_animal/hostile/carp)
-			user << "<span class='notice'>\The [src] molds itself to the shape of \the [animal].</span>"
+			to_chat(user, "<span class='notice'>\The [src] molds itself to the shape of \the [animal].</span>")
 			qdel(src)
 			var/obj/item/weapon/storage/tactical_harness/ranged/the_harness = new /obj/item/weapon/storage/tactical_harness/ranged/syndicate/carp()
 			the_harness.add_harness(animal, user)
 		else
-			user << "<span class='notice'>\The [src] does nothing. It looks like it is not compatible with this type of creature.</span>"
+			to_chat(user, "<span class='notice'>\The [src] does nothing. It looks like it is not compatible with this type of creature.</span>")
 			return
 
 		var/client/C = pick(carp_candidates)
 		animal.ckey = C.key
 		failed_to_find_player = 0
-		animal << "<span class='notice'>You are a space [istype(animal, /mob/living/simple_animal/hostile/retaliate/dolphin) ? "dolphin" : "carp"] trained by the syndicate to assist their elite commando teams. Obey and assist your syndicate masters at all costs.</span>"
+		to_chat(animal, "<span class='notice'>You are a space [istype(animal, /mob/living/simple_animal/hostile/retaliate/dolphin) ? "dolphin" : "carp"] trained by the syndicate to assist their elite commando teams. Obey and assist your syndicate masters at all costs.</span>")
 		animal.faction += "syndicate"
 
 /obj/item/weapon/storage/tactical_harness/ranged/syndicate/New()
@@ -355,6 +355,6 @@
 			C.Weaken(stun_amount)
 			C.apply_effect(STUTTER, stun_amount)
 		else
-			wearer << "<span class='warning'>Not enough charge to stun!</span>"
+			to_chat(wearer, "<span class='warning'>Not enough charge to stun!</span>")
 		return 1
 	return 0

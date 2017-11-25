@@ -40,7 +40,7 @@
 			deconvert = prob (10) // the HoP doesn't have AS much legal training
 	if(deconvert)
 		M.visible_message("<span class='notice'>[user] reminds [M] that [M]'s soul was already purchased by Nanotrasen!</span>")
-		M << "<span class='boldnotice'>You feel that your soul has returned to it's rightful owner, Nanotrasen.</span>"
+		to_chat(M, "<span class='boldnotice'>You feel that your soul has returned to it's rightful owner, Nanotrasen.</span>")
 		M.return_soul()
 	else
 		M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
@@ -130,7 +130,7 @@
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		attempt_signature(user)
 	else if(istype(P, /obj/item/weapon/stamp))
-		user << "<span class='notice'>You stamp the paper with your rubber stamp, however the ink ignites as you release the stamp.</span>"
+		to_chat(user, "<span class='notice'>You stamp the paper with your rubber stamp, however the ink ignites as you release the stamp.</span>")
 	else if(P.is_hot())
 		user.visible_message("<span class='danger'>[user] brings [P] next to [src], but [src] does not catch fire!</span>", "<span class='danger'>The [src] refuses to ignite!</span>")
 	else
@@ -149,18 +149,18 @@
 		if(user.mind == target)
 			if(user.mind.soulOwner == user.mind)
 				if (contractType == CONTRACT_REVIVE)
-					user << "<span class='notice'>You are already alive, this contract would do nothing.</span>"
+					to_chat(user, "<span class='notice'>You are already alive, this contract would do nothing.</span>")
 				else
-					user << "<span class='notice'>You quickly scrawl your name on the contract</span>"
+					to_chat(user, "<span class='notice'>You quickly scrawl your name on the contract</span>")
 					if(FulfillContract()<=0)
-						user << "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>"
+						to_chat(user, "<span class='notice'>But it seemed to have no effect, perhaps even Hell itself cannot grant this boon?</span>")
 					return 1
 			else
-				user << "<span class='notice'>You are not in possession of your soul, you may not sell it.</span>"
+				to_chat(user, "<span class='notice'>You are not in possession of your soul, you may not sell it.</span>")
 		else
-			user << "<span class='notice'>Your signature simply slides off of the sheet, it seems this contract is not meant for you to sign.</span>"
+			to_chat(user, "<span class='notice'>Your signature simply slides off of the sheet, it seems this contract is not meant for you to sign.</span>")
 	else
-		user << "<span class='notice'>You don't know how to read or write.</span>"
+		to_chat(user, "<span class='notice'>You don't know how to read or write.</span>")
 	return 0
 
 
