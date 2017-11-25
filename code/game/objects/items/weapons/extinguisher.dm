@@ -47,7 +47,7 @@
 	safety = !safety
 	src.icon_state = "[sprite_name][!safety]"
 	src.desc = "The safety is [safety ? "on" : "off"]."
-	user << "The safety is [safety ? "on" : "off"]."
+	to_chat(user, "The safety is [safety ? "on" : "off"].")
 	return
 
 /obj/item/weapon/extinguisher/attack(mob/M, mob/user)
@@ -62,27 +62,27 @@
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
 	if(reagents.total_volume)
-		user << "It contains [round(reagents.total_volume)] units."
+		to_chat(user, "It contains [round(reagents.total_volume)] unit\s.")
 	else
-		user << "It is empty."
+		to_chat(user, "It is empty.")
 
 /obj/item/weapon/extinguisher/proc/AttemptRefill(atom/target, mob/user)
 	if(istype(target, /obj/structure/reagent_dispensers/watertank) && target.Adjacent(user))
 		var/safety_save = safety
 		safety = 1
 		if(reagents.total_volume == reagents.maximum_volume)
-			user << "<span class='warning'>\The [src] is already full!</span>"
+			to_chat(user, "<span class='warning'>\The [src] is already full!</span>")
 			safety = safety_save
 			return 1
 		var/obj/structure/reagent_dispensers/watertank/W = target
 		var/transferred = W.reagents.trans_to(src, max_water)
 		if(transferred > 0)
-			user << "<span class='notice'>\The [src] has been refilled by [transferred] units.</span>"
+			to_chat(user, "<span class='notice'>\The [src] has been refilled by [transferred] units.</span>")
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 			for(var/datum/reagent/water/R in reagents.reagent_list)
 				R.cooling_temperature = cooling_power
 		else
-			user << "<span class='warning'>\The [W] is empty!</span>"
+			to_chat(user, "<span class='warning'>\The [W] is empty!</span>")
 		safety = safety_save
 		return 1
 	else
@@ -96,7 +96,7 @@
 	if (!safety)
 		if (src.reagents.total_volume < 1)
 			if(user)
-				user << "<span class='warning'>\The [src] is empty!</span>"
+				to_chat(user, "<span class='warning'>\The [src] is empty!</span>")
 			return
 
 		if (world.time < src.last_use + 20)

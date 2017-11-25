@@ -1,7 +1,7 @@
 /client/verb/tcssave()
 	set hidden = 1
 	if(jobban_isbanned(usr, "ntsl"))
-		usr << "<span class='warning'>You are banned from using NTSL.</span>"
+		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
 		return
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -28,7 +28,7 @@
 /client/verb/tcscompile()
 	set hidden = 1
 	if(jobban_isbanned(usr, "ntsl"))
-		usr << "<span class='warning'>You are banned from using NTSL.</span>"
+		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
 		return
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -100,7 +100,7 @@
 /client/verb/tcsrun()
 	set hidden = 1
 	if(jobban_isbanned(usr, "ntsl"))
-		usr << "<span class='warning'>You are banned from using NTSL.</span>"
+		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
 		return
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -139,7 +139,7 @@
 /client/verb/exittcs()
 	set hidden = 1
 	if(jobban_isbanned(usr, "ntsl"))
-		usr << "<span class='warning'>You are banned from using NTSL.</span>"
+		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
 		return
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -154,7 +154,7 @@
 /client/verb/tcsrevert()
 	set hidden = 1
 	if(jobban_isbanned(usr, "ntsl"))
-		usr << "<span class='warning'>You are banned from using NTSL.</span>"
+		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
 		return
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))
@@ -186,7 +186,7 @@
 /client/verb/tcsclearmem()
 	set hidden = 1
 	if(jobban_isbanned(usr, "ntsl"))
-		usr << "<span class='warning'>You are banned from using NTSL.</span>"
+		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
 		return
 	if(mob.machine || issilicon(mob))
 		if(telecomms_check(mob))

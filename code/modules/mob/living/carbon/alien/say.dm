@@ -12,10 +12,10 @@
 				var/obj/item/organ/alien/hivenode/N = C.getorgan(/obj/item/organ/alien/hivenode)
 				if(N && (N.hive_faction != speakerNode.hive_faction))
 					continue
-			S << rendered
+			to_chat(S, rendered)
 		if(S in dead_mob_list)
 			var/link = FOLLOW_LINK(S, src)
-			S << "[link] [rendered]"
+			to_chat(S, "[link] [rendered]")
 
 /mob/living/carbon/alien_talk(message, shown_name = name, obj/item/organ/alien/hivenode/speakerNode)
 	if(!speakerNode)

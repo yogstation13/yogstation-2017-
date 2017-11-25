@@ -22,7 +22,8 @@
 
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
-	if (amount)
+	update_icon()
+	if(amount)
 		src.amount = amount
 	if(!merge_type)
 		merge_type = src.type
@@ -30,30 +31,30 @@
 	return
 
 /obj/item/stack/Destroy()
-	if (usr && usr.machine==src)
+	if(usr && usr.machine==src)
 		usr << browse(null, "window=stack")
 	return ..()
 
 /obj/item/stack/examine(mob/user)
 	..()
-	if (is_cyborg)
+	if(is_cyborg)
 		if(src.singular_name)
-			user << "There is enough energy for [src.get_amount()] [src.singular_name]\s."
+			to_chat(user, "There is enough energy for [src.get_amount()] [src.singular_name]\s.")
 		else
-			user << "There is enough energy for [src.get_amount()]."
+			to_chat(user, "There is enough energy for [src.get_amount()].")
 		return
 	if(src.singular_name)
 		if(src.get_amount()>1)
-			user << "There are [src.get_amount()] [src.singular_name]\s in the stack."
+			to_chat(user, "There are [src.get_amount()] [src.singular_name]\s in the stack.")
 		else
-			user << "There is [src.get_amount()] [src.singular_name] in the stack."
+			to_chat(user, "There is [src.get_amount()] [src.singular_name] in the stack.")
 	else if(src.get_amount()>1)
-		user << "There are [src.get_amount()] in the stack."
+		to_chat(user, "There are [src.get_amount()] in the stack.")
 	else
-		user << "There is [src.get_amount()] in the stack."
+		to_chat(user, "There is [src.get_amount()] in the stack.")
 
 /obj/item/stack/proc/get_amount()
-	if (is_cyborg)
+	if(is_cyborg)
 		return round(source.energy / cost)
 	else
 		return (amount)
@@ -61,35 +62,42 @@
 /obj/item/stack/update_icon()
 	if(novariants)
 		return ..()
-	var/fifthOfStack = max_amount / 5
-	if(amount <= 1)
-		icon_state = initial(icon_state)
-	else if(amount >= max_amount)
-		icon_state = "[initial(icon_state)]_7"
-	else
-		icon_state = "[initial(icon_state)]_[max(2, round(amount / fifthOfStack, 1))]"
+	var/amount = get_amount()
+	switch(amount)
+		if(1)
+			icon_state = "[initial(icon_state)]"
+		if(2 to 5)
+			icon_state = "[initial(icon_state)]_[amount]"
+		if(6 to 15)
+			icon_state = "[initial(icon_state)]_6"
+		if(16 to 30)
+			icon_state = "[initial(icon_state)]_7"
+		if(31 to 40)
+			icon_state = "[initial(icon_state)]_8"
+		if(41 to 49)
+			icon_state = "[initial(icon_state)]_9"
+		if(50)
+			icon_state = "[initial(icon_state)]_10"
 
 	..()
-
-
 
 /obj/item/stack/attack_self(mob/user)
 	interact(user)
 
 /obj/item/stack/interact(mob/user)
-	if (!recipes)
+	if(!recipes)
 		return
-	if (!src || get_amount() <= 0)
+	if(!src || get_amount() <= 0)
 		user << browse(null, "window=stack")
 		return
 	user.set_machine(src) //for correct work of onclose
 	var/t1 = text("<HTML><HEAD><title>Constructions from []</title></HEAD><body><TT>Amount Left: []<br>", src, src.get_amount())
 	for(var/i=1;i<=recipes.len,i++)
 		var/datum/stack_recipe/R = recipes[i]
-		if (isnull(R))
+		if(isnull(R))
 			t1 += "<hr>"
 			continue
-		if (i>1 && !isnull(recipes[i-1]))
+		if(i>1 && !isnull(recipes[i-1]))
 			t1+="<br>"
 		var/max_multiplier = round(src.get_amount() / R.req_amount)
 		var/title as text
@@ -101,7 +109,7 @@
 		if (R.on_floor)
 			can_build = can_build && istype(usr.loc, /turf/open/floor)
 		*/
-		if (R.res_amount>1)
+		if(R.res_amount>1)
 			title+= "[R.res_amount]x [R.title]\s"
 		else
 			title+= "[R.title]"
@@ -111,14 +119,14 @@
 		else
 			t1 += text("[]", title)
 			continue
-		if (R.max_res_amount>1 && max_multiplier>1)
+		if(R.max_res_amount>1 && max_multiplier>1)
 			max_multiplier = min(max_multiplier, round(R.max_res_amount/R.res_amount))
 			t1 += " |"
 			var/list/multipliers = list(5,10,25)
 			for (var/n in multipliers)
 				if (max_multiplier>=n)
 					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[n]'>[n*R.res_amount]x</A>"
-			if (!(max_multiplier in multipliers))
+			if(!(max_multiplier in multipliers))
 				t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
 	t1 += "</TT></body></HTML>"
@@ -128,18 +136,18 @@
 
 /obj/item/stack/Topic(href, href_list)
 	..()
-	if ((usr.restrained() || usr.stat || usr.get_active_hand() != src))
+	if((usr.restrained() || usr.stat || usr.get_active_hand() != src))
 		return
-	if (href_list["make"])
+	if(href_list["make"])
 		if (src.get_amount() < 1) qdel(src) //Never should happen
 
 		var/datum/stack_recipe/R = recipes[text2num(href_list["make"])]
 		var/multiplier = text2num(href_list["multiplier"])
-		if (!multiplier ||(multiplier <= 0)) //href protection
+		if(!multiplier ||(multiplier <= 0)) //href protection
 			return
 		if(!building_checks(R, multiplier))
 			return
-		if (R.time)
+		if(R.time)
 			usr.visible_message("<span class='notice'>[usr] starts building [R.title].</span>", "<span class='notice'>You start building [R.title]...</span>")
 			if (!do_after(usr, R.time, target = usr))
 				return
@@ -151,50 +159,50 @@
 		use(R.req_amount * multiplier)
 
 		//is it a stack ?
-		if (R.max_res_amount > 1)
+		if(R.max_res_amount > 1)
 			var/obj/item/stack/new_item = O
 			new_item.amount = R.res_amount*multiplier
 
 			if(new_item.amount <= 0)//if the stack is empty, i.e it has been merged with an existing stack and has been garbage collected
 				return
 
-		if (istype(O,/obj/item))
+		if(istype(O,/obj/item))
 			usr.put_in_hands(O)
 		O.add_fingerprint(usr)
 
 		//BubbleWrap - so newly formed boxes are empty
-		if ( istype(O, /obj/item/weapon/storage) )
+		if(istype(O, /obj/item/weapon/storage) )
 			for (var/obj/item/I in O)
 				qdel(I)
 		//BubbleWrap END
 
-	if (src && usr.machine==src) //do not reopen closed window
+	if(src && usr.machine==src) //do not reopen closed window
 		spawn( 0 )
 			src.interact(usr)
 			return
 	return
 
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
-	if (src.get_amount() < R.req_amount*multiplier)
-		if (R.req_amount*multiplier>1)
-			usr << "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>"
+	if(src.get_amount() < R.req_amount*multiplier)
+		if(R.req_amount*multiplier>1)
+			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")
 		else
-			usr << "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>"
+			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.title]!</span>")
 		return 0
-	if (R.one_per_turf && (locate(R.result_type) in usr.loc))
-		usr << "<span class='warning'>There is another [R.title] here!</span>"
+	if(R.one_per_turf && (locate(R.result_type) in usr.loc))
+		to_chat(usr, "<span class='warning'>There is another [R.title] here!</span>")
 		return 0
-	if (R.on_floor && !istype(usr.loc, /turf/open/floor))
-		usr << "<span class='warning'>\The [R.title] must be constructed on the floor!</span>"
+	if(R.on_floor && !istype(usr.loc, /turf/open/floor))
+		to_chat(usr, "<span class='warning'>\The [R.title] must be constructed on the floor!</span>")
 		return 0
 	return 1
 
 /obj/item/stack/proc/use(var/used) // return 0 = borked; return 1 = had enough
 	if(zero_amount())
 		return 0
-	if (is_cyborg)
+	if(is_cyborg)
 		return source.use_charge(used * cost)
-	if (amount < used)
+	if(amount < used)
 		return 0
 	amount -= used
 	zero_amount()
@@ -210,7 +218,7 @@
 	return 0
 
 /obj/item/stack/proc/add(amount)
-	if (is_cyborg)
+	if(is_cyborg)
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
@@ -242,7 +250,7 @@
 	return ..()
 
 /obj/item/stack/attack_hand(mob/user)
-	if (user.get_inactive_hand() == src)
+	if(user.get_inactive_hand() == src)
 		if(zero_amount())
 			return
 		var/obj/item/stack/F = new src.type(user, 1)
@@ -252,7 +260,7 @@
 		src.add_fingerprint(user)
 		F.add_fingerprint(user)
 		use(1)
-		if (src && usr.machine==src)
+		if(src && usr.machine==src)
 			spawn(0) src.interact(usr)
 	else
 		..()
@@ -262,7 +270,7 @@
 	if(istype(W, merge_type))
 		var/obj/item/stack/S = W
 		merge(S)
-		user << "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>"
+		to_chat(user, "<span class='notice'>Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s.</span>")
 	else
 		return ..()
 

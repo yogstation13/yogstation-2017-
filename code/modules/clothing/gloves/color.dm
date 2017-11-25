@@ -1,3 +1,6 @@
+/obj/item/clothing/gloves/color
+	desc = "A pair of gloves. They don't look special in any way."
+
 /obj/item/clothing/gloves/color/yellow
 	desc = "These gloves will protect the wearer from electric shock."
 	name = "insulated gloves"
@@ -44,7 +47,7 @@
 /obj/item/clothing/gloves/color/black/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
-			user << "<span class='notice'>You snip the fingertips off of [src].</span>"
+			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
 			playsound(user.loc,'sound/items/Wirecutter.ogg', rand(10,50), 1)
 			new /obj/item/clothing/gloves/fingerless(user.loc)
 			qdel(src)
@@ -52,14 +55,12 @@
 
 /obj/item/clothing/gloves/color/orange
 	name = "orange gloves"
-	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "orange"
 	item_state = "orangegloves"
 	item_color="orange"
 
 /obj/item/clothing/gloves/color/red
 	name = "red gloves"
-	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "red"
 	item_state = "redgloves"
 	item_color = "red"
@@ -73,7 +74,6 @@
 
 /obj/item/clothing/gloves/color/rainbow
 	name = "rainbow gloves"
-	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "rainbow"
 	item_state = "rainbowgloves"
 	item_color = "rainbow"
@@ -83,28 +83,24 @@
 
 /obj/item/clothing/gloves/color/blue
 	name = "blue gloves"
-	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "blue"
 	item_state = "bluegloves"
 	item_color="blue"
 
 /obj/item/clothing/gloves/color/purple
 	name = "purple gloves"
-	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "purple"
 	item_state = "purplegloves"
 	item_color="purple"
 
 /obj/item/clothing/gloves/color/green
 	name = "green gloves"
-	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "green"
 	item_state = "greengloves"
 	item_color="green"
 
 /obj/item/clothing/gloves/color/grey
 	name = "grey gloves"
-	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "gray"
 	item_state = "graygloves"
 	item_color="grey"
@@ -117,14 +113,12 @@
 
 /obj/item/clothing/gloves/color/light_brown
 	name = "light brown gloves"
-	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "lightbrown"
 	item_state = "lightbrowngloves"
 	item_color="light brown"
 
 /obj/item/clothing/gloves/color/brown
 	name = "brown gloves"
-	desc = "A pair of gloves, they don't look special in any way."
 	icon_state = "brown"
 	item_state = "browngloves"
 	item_color="brown"

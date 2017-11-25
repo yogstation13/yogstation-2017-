@@ -46,11 +46,11 @@
 /turf/open/floor/plating/glass/attackby(obj/item/C, mob/user, params) 		//prevents idiots from unscrewing my floors and making everything look like ass
 	if(intact && istype(C, /obj/item/weapon/crowbar))
 		if(broken || burnt)
-			user << "<span class='danger'>You can't remove this tile, as it would leak into space!.</span>"
+			to_chat(user, "<span class='danger'>You can't remove this tile, as it would leak into space!.</span>")
 
 		else
 
-			user << "<span class='danger'>You can't remove this tile, as it would leak into space!.</span>"
+			to_chat(user, "<span class='danger'>You can't remove this tile, as it would leak into space!.</span>")
 		return 0
 	return 0
 	//Cockblocked :^)
