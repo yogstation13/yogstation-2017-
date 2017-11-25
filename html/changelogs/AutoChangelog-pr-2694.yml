@@ -1,4 +1,3 @@
-author: "nichlas0010"
-delete-after: true 
-changes: 
-  - tweak: "contracts no longer cause braindamage"
+author: nichlas0010
+changes: []
+delete-after: true
