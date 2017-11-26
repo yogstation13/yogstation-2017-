@@ -63,7 +63,7 @@
 		overmind.update_health_hud()
 
 /obj/effect/blob/core/Life()
-	if(!overmind)
+	if(!overmind || !overmind.client)
 		create_overmind()
 	else
 		if(resource_delay <= world.time)

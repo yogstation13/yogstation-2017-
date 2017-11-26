@@ -69,6 +69,11 @@ insert ascii eagle on american flag background here
 		else if (cook_time == 60)
 			visible_message("[src] emits an acrid smell!")
 
+/obj/machinery/deepfryer/attack_ai(mob/user)
+	return
+
+/obj/machinery/deepfryer/attack_tk(mob/user)
+	return
 
 /obj/machinery/deepfryer/attack_hand(mob/user)
 	if(frying)

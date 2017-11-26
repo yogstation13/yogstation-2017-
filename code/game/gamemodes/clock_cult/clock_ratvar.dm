@@ -137,6 +137,7 @@
 			if(ratvar_portal)
 				if(!ratvar_awakens)
 					new/obj/structure/clockwork/massive/ratvar(startpoint)
+					ticker.force_ending = TRUE
 			else
 				to_chat(world, "<span class='ratvar'>\"[text2ratvar("Behold")]!\"</span>\n<span class='inathneq_large'>\"[text2ratvar("See Engine's mercy")]!\"</span>\n\
 				<span class='sevtug_large'>\"[text2ratvar("Observe Engine's design skills")]!\"</span>\n<span class='nezbere_large'>\"[text2ratvar("Behold Engine's light")]!!\"</span>\n\
@@ -214,7 +215,6 @@
 	var/image/alert_overlay = image('icons/effects/clockwork_effects.dmi', "ratvar_alert")
 	var/area/A = get_area(src)
 	notify_ghosts("The Justiciar's light calls to you! Reach out to Ratvar in [A.name] to be granted a shell to spread his glory!", null, source = src, alert_overlay = alert_overlay)
-	addtimer(SSshuttle.emergency, "request", 50, FALSE, null, 0.1)
 
 
 /obj/structure/clockwork/massive/ratvar/Destroy()

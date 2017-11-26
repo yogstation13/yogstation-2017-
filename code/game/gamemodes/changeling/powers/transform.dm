@@ -118,8 +118,8 @@
 	feedback_add_details("changeling_powers","TR")
 	return 1
 
-/datum/changeling/proc/select_dna(var/prompt, var/title, var/mob/living/carbon/user)
-	var/list/names = list("Drop Flesh Disguise")
+/datum/changeling/proc/select_dna(var/prompt, var/title, var/mob/living/carbon/user, drop_flesh_disguise = TRUE)
+	var/list/names = drop_flesh_disguise ? list("Drop Flesh Disguise") : list()
 	for(var/datum/changelingprofile/prof in stored_profiles)
 		names += "[prof.name]"
 

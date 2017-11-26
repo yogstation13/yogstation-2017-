@@ -485,6 +485,7 @@ var/list/teleport_runes = list()
 			color = rgb(255, 0, 0)
 		new /obj/singularity/narsie/large(T) //Causes Nar-Sie to spawn even if the rune has been removed
 		cult_mode.eldergod = 0
+		ticker.force_ending = TRUE
 	else
 		for(var/M in invokers)
 			to_chat(M, "<span class='warning'>Nar-Sie does not respond!</span>")

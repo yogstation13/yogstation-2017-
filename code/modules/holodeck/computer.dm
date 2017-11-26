@@ -164,7 +164,7 @@
 		if(area == offline_program || (area in program_cache) || (emagged && (area in emag_programs)))
 			load_program(area)
 	else if("safety" in href_list)
-		if(!issilicon(usr))
+		if(!isaiorborg(usr))
 			message_admins("EXPLOIT: [usr] attempted to override [src]'s safeties without being a silicon.")
 			return
 		var/safe = text2num(href_list["safety"])

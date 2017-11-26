@@ -1139,6 +1139,12 @@
 	cost = 1000
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 	crate_name = "sandstone blocks crate"
+	
+/datum/supply_pack/materials/carpet50
+	name = "50 Carpet Sheets"
+	cost = 1000
+	contains = list(/obj/item/stack/tile/carpet/fifty)
+	crate_name = "carpet sheets crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
