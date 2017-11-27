@@ -4,7 +4,7 @@
 	if(user.a_intent == "harm")
 		..(user, 1)
 		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
-		if(user.dna.species.id == "abomination")//snowflake abomination hulk damage
+		if(isabomination(user))//snowflake abomination hulk damage
 			if(stat == DEAD)
 				to_chat(user, "<span class='notice'>You dig your claws into [name]...</span>")
 				playsound(loc, 'sound/weapons/slice.ogg', 100, 1, -1)
