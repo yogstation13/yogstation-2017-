@@ -26,7 +26,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	new /obj/effect/immovablerod(startT, endT)
 
 /obj/effect/immovablerod
-	name = "Immovable Rod"
+	name = "immovable rod"
 	desc = "What the fuck is that?"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "immrod"
@@ -75,6 +75,9 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	return TRUE
 
 /obj/effect/immovablerod/Bump(atom/clong)
+	if(qdeleted(src))
+		return
+
 	if(prob(10))
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		audible_message("CLANG")
