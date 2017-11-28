@@ -20,7 +20,7 @@
 	power_channel = EQUIP
 	var/obj/item/weapon/paper/copy = null	//what's in the copier!
 	var/obj/item/weapon/photo/photocopy = null
-	var/obj/item/documents/doccopy = null
+	var/obj/item/documents/secret/doccopy = null
 	var/copies = 1	//how many copies to print!
 	var/toner = 40 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
@@ -126,7 +126,7 @@
 		else if(doccopy)
 			for(var/i = 0, i < copies, i++)
 				if(toner > 5 && !busy && doccopy)
-					new /obj/item/documents/photocopy(loc, doccopy)
+					new /obj/item/documents/secret/photocopy(loc, doccopy)
 					toner-= 6 // the sprite shows 6 papers, yes I checked
 					busy = 1
 					sleep(15)
@@ -267,7 +267,7 @@
 		else
 			to_chat(user, "<span class='warning'>There is already something in [src]!</span>")
 
-	else if(istype(O, /obj/item/documents))
+	else if(istype(O, /obj/item/documents/secret))
 		if(copier_empty())
 			if(!user.drop_item())
 				return
