@@ -29,7 +29,7 @@
 	deathmessage = "collapses in a shattered heap."
 	var/list/construct_spells = list()
 	var/playstyle_string = "<b>You are a generic construct! Your job is to not exist, and you should probably adminhelp this.</b>"
-	var/phaser = FALSE
+	var/phaser = TRUE
 	var/affiliation = "Cult" // Cult, Wizard and Neutral. Or a color.
 
 
@@ -74,7 +74,7 @@
 		msg += "</span>"
 	msg += "*---------*</span>"
 
-	user << msg
+	to_chat(user, msg)
 
 /mob/living/simple_animal/hostile/construct/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
@@ -88,7 +88,7 @@
 							   "<span class='cult'>You repair some of <b>[src]'s</b> dents, leaving <b>[src]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 			else
 				if(src != M)
-					M << "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>"
+					to_chat(M, "<span class='cult'>You cannot repair <b>[src]'s</b> dents, as it has none!</span>")
 		else //if they aren't on our team, attack!
 			..()
 	else if(src != M)
@@ -103,7 +103,7 @@
 /mob/living/simple_animal/construct/examine(mob/user)
 	. = ..()
 	if((iscultist(user) || iswizard(user)) && (!src.key || !src.client))
-		user << "<span class='danger'>You can tell that they've lost all concious awareness and have become as engaging as a blank wall.</span>"
+		to_chat(user, "<span class='danger'>You can tell that they've lost all concious awareness and have become as engaging as a blank wall.</span>")
 
 
 /////////////////Juggernaut///////////////
@@ -178,7 +178,6 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</b>"
-	phaser = TRUE
 
 /mob/living/simple_animal/hostile/construct/wraith/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
@@ -214,7 +213,6 @@
 						use magic missile, repair allied constructs (by clicking on them), \
 						</B><I>and most important of all create new constructs</I><B> \
 						(Use your Artificer spell to summon a new construct shell and Summon Soulstone to create a new soulstone).</B>"
-	phaser = TRUE
 
 /mob/living/simple_animal/hostile/construct/builder/Found(atom/A) //what have we found here?
 	if(isconstruct(A)) //is it a construct?
@@ -264,7 +262,7 @@
 		visible_message("<span class='danger'>[src] repairs some of its own dents.</span>", \
 					"<span class='cult'>You repair some of your own dents, leaving you at <b>[health]/[maxHealth]</b> health.</span>")
 	else
-		src << "<span class='cult'>You cannot repair your own dents, as you have none!</span>"
+		to_chat(src, "<span class='cult'>You cannot repair your own dents, as you have none!</span>")
 
 /////////////////////////////Non-cult Artificer/////////////////////////
 /mob/living/simple_animal/hostile/construct/builder/noncult

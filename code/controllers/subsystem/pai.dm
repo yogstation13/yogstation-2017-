@@ -52,19 +52,19 @@ var/datum/subsystem/pai/SSpai
 
 		switch(option)
 			if("name")
-				t = input("Enter a name for your pAI", "pAI Name", candidate.name) as text
+				t = stripped_input(usr, "Enter a name for your pAI", "pAI Name", candidate.name)
 				if(t)
 					candidate.name = copytext(sanitize(t),1,MAX_NAME_LEN)
 			if("desc")
-				t = input("Enter a description for your pAI", "pAI Description", candidate.description) as message
+				t = stripped_multiline_input("Enter a description for your pAI", "pAI Description", candidate.description)
 				if(t)
 					candidate.description = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if("role")
-				t = input("Enter a role for your pAI", "pAI Role", candidate.role) as text
+				t = stripped_input(usr, "Enter a role for your pAI", "pAI Role", candidate.role)
 				if(t)
 					candidate.role = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if("ooc")
-				t = input("Enter any OOC comments", "pAI OOC Comments", candidate.comments) as message
+				t = stripped_multiline_input("Enter any OOC comments", "pAI OOC Comments", candidate.comments)
 				if(t)
 					candidate.comments = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 			if("save")

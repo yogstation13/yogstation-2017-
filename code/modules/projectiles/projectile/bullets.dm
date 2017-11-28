@@ -177,7 +177,7 @@
 /obj/item/projectile/bullet/dart/New()
 	..()
 	create_reagents(50)
-	reagents.set_reacting(FALSE)
+	reagents.set_reacting(TRUE)
 
 /obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = 0, hit_zone)
 	if(iscarbon(target))

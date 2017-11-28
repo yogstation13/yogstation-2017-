@@ -10,7 +10,7 @@
 "ak" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"; dir = 4},/turf/open/floor/plating/airless,/area/shuttle/abandoned)
 "al" = (/turf/closed/wall/shuttle{icon_state = "swall13"; dir = 2},/area/shuttle/abandoned)
 "am" = (/turf/closed/wall/shuttle{icon_state = "swall11"; dir = 2},/area/shuttle/abandoned)
-"an" = (/obj/structure/toilet{pixel_y = 9},/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/obj/effect/decal/cleanable/greenglow{desc = "Looks like something's sprung a leak"},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
+"an" = (/obj/machinery/disposal/bin/toilet{pixel_y = 9},/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/obj/effect/decal/cleanable/greenglow{desc = "Looks like something's sprung a leak"},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
 "ao" = (/obj/structure/mirror{pixel_x = 28; pixel_y = 0},/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)
 "ap" = (/turf/closed/wall/shuttle{icon_state = "swall3"; dir = 2},/area/shuttle/abandoned)
 "au" = (/obj/structure/tank_dispenser/oxygen{layer = 2.7; pixel_x = -1; pixel_y = 2},/obj/effect/decal/cleanable/dirt{desc = "A thin layer of dust coating the floor."; name = "dust"},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor3"},/area/shuttle/abandoned)

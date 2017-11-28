@@ -573,36 +573,18 @@
 	},
 /area/mine/living_quarters)
 "bo" = (
-/obj/structure/closet/crate/freezer,
-/obj/item/weapon/reagent_containers/blood/empty,
-/obj/item/weapon/reagent_containers/blood/empty{
-	pixel_x = -3;
-	pixel_y = -3
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
 	},
-/obj/item/weapon/reagent_containers/blood/AMinus,
-/obj/item/weapon/reagent_containers/blood/BMinus{
-	pixel_x = -4;
-	pixel_y = 4
+/obj/machinery/jauntbeacon/mother,
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/obj/item/weapon/reagent_containers/blood/BPlus{
-	pixel_x = 1;
-	pixel_y = 2
-	},
-/obj/item/weapon/reagent_containers/blood/OMinus,
-/obj/item/weapon/reagent_containers/blood/OPlus{
-	pixel_x = -2;
-	pixel_y = -1
-	},
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/item/weapon/reagent_containers/blood/random,
-/obj/machinery/camera{
-	c_tag = "Sleeper Room";
-	dir = 1;
-	network = list("MINE")
-	},
-/turf/open/floor/plasteel/whiteblue/side,
-/area/mine/living_quarters)
+/area/mine/production)
 "bp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -1065,7 +1047,7 @@
 	},
 /area/mine/living_quarters)
 "cd" = (
-/obj/machinery/jauntbeacon/mother,
+/obj/machinery/computer/security/mining/medic,
 /turf/open/floor/plasteel/whiteblue/side{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
 	dir = 1;
@@ -1392,9 +1374,19 @@
 	},
 /area/mine/production)
 "cJ" = (
-/obj/machinery/computer/security/mining/medic,
-/turf/open/floor/plasteel/whiteblue/side,
-/area/mine/living_quarters)
+/obj/machinery/computer/security/mining/jaunter{
+	name = "jaunter camera console"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
+/area/mine/production)
 "cK" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet/brown,
@@ -1482,10 +1474,15 @@
 	},
 /area/mine/living_quarters)
 "cU" = (
-/obj/structure/table/glass,
-/obj/item/device/gps/mining/medic,
-/turf/open/floor/plasteel/white{
-	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+/obj/structure/chair/office/dark{
+	desc = "Should my butt go in this one?";
+	dir = 8
+	},
+/turf/open/floor/plasteel/whiteblue/side{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface;
+	dir = 1;
+	icon_state = "whiteblue";
+	tag = "icon-whiteblue (NORTH)"
 	},
 /area/mine/living_quarters)
 "cV" = (
@@ -1535,17 +1532,39 @@
 	},
 /area/mine/living_quarters)
 "da" = (
-/obj/structure/chair/office/dark{
-	desc = "Should my butt go in this one?";
-	dir = 8
-	},
+/obj/structure/closet/secure_closet/mmedical,
 /turf/open/floor/plasteel/white{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
 /area/mine/living_quarters)
 "db" = (
-/obj/machinery/iv_drip,
-/turf/open/floor/plasteel/whiteblue/side,
+/obj/structure/closet/crate/freezer,
+/obj/item/weapon/reagent_containers/blood/empty,
+/obj/item/weapon/reagent_containers/blood/empty{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/weapon/reagent_containers/blood/AMinus,
+/obj/item/weapon/reagent_containers/blood/BMinus{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/weapon/reagent_containers/blood/BPlus{
+	pixel_x = 1;
+	pixel_y = 2
+	},
+/obj/item/weapon/reagent_containers/blood/OMinus,
+/obj/item/weapon/reagent_containers/blood/OPlus{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/item/weapon/reagent_containers/blood/random,
+/obj/machinery/light,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
 /area/mine/living_quarters)
 "dc" = (
 /obj/structure/chair{
@@ -1701,9 +1720,10 @@
 	},
 /area/mine/living_quarters)
 "dq" = (
-/obj/structure/closet/secure_closet/mmedical,
 /obj/machinery/light,
-/turf/open/floor/plasteel/whiteblue/side,
+/turf/closed/wall{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
+	},
 /area/mine/living_quarters)
 "dr" = (
 /obj/machinery/conveyor_switch/oneway{
@@ -2283,11 +2303,10 @@
 	},
 /area/mine/living_quarters)
 "eB" = (
-/obj/structure/chair/office/dark{
-	desc = "Or maybe I should try THIS one?";
-	dir = 8
+/obj/machinery/iv_drip,
+/turf/open/floor/plasteel/white{
+	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},
-/turf/open/floor/plasteel/whiteblue/side,
 /area/mine/living_quarters)
 "eC" = (
 /obj/structure/ore_box,
@@ -9990,7 +10009,7 @@ ei
 ei
 ei
 ee
-ee
+ed
 al
 af
 af
@@ -10244,10 +10263,10 @@ fj
 fj
 ee
 cd
-cU
 bn
-cJ
+da
 ee
+ed
 af
 af
 af
@@ -10500,11 +10519,11 @@ fk
 fv
 fq
 cx
-fB
+cU
 eR
-da
-eB
+eR
 ee
+af
 af
 af
 af
@@ -10759,9 +10778,9 @@ cs
 cy
 eQ
 eT
-eR
-dq
+db
 ee
+af
 af
 af
 af
@@ -11016,9 +11035,9 @@ fj
 cx
 fB
 eR
-eR
-bo
+eB
 ee
+al
 al
 al
 af
@@ -11273,10 +11292,10 @@ cv
 ee
 fd
 ag
-eR
-db
+eB
 ee
-ed
+al
+al
 al
 al
 ab
@@ -18199,8 +18218,8 @@ dx
 dB
 dJ
 dT
-bR
-bR
+bo
+cJ
 bR
 ep
 bR

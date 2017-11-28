@@ -22,9 +22,9 @@
 	var/turf/T = get_turf(user.loc)
 	for(var/mob/living/silicon/ai/AI in player_list)
 		if(T.loc)
-			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>"
+			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress in [T.loc].</b></font>")
 		else
-			AI << "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>"
+			to_chat(AI, "<font color = red><b>Network Alert: Brute-force encryption crack in progress. Unable to pinpoint location.</b></font>")
 	while(user.hackprogress < 100)
 		if(user.cable && user.cable.machine && istype(user.cable.machine, /obj/machinery/door) && user.cable.machine == user.hackdoor && get_dist(user, user.hackdoor) <= 1)
 			user.hackprogress += rand(1, 10)
