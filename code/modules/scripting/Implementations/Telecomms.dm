@@ -90,8 +90,8 @@ var/allowed_translateable_langs = ALL
 	interpreter.SetVar("$service",	1349)
 	interpreter.SetVar("$centcom",	1337) // Yes, that is the real Centcom freq.
 	//This whole game is a big fuckin' meme.
-	interpreter.SetVar("$aiprivate", 1447) // The Common Server is the one
-																		// that handles the AI Private Channel, btw.
+	interpreter.SetVar("$aiprivate", 1447) // The Common Server is the one...
+	// ...that handles the AI Private Channel, btw.
 
 	// Signal data
 
@@ -275,8 +275,8 @@ var/const/MAX_MEM_VARS	 = 500
 
 		else
 			if(S.memory.len >= MAX_MEM_VARS)
-					if(!(address in S.memory))
-						return
+				if(!(address in S.memory))
+					return
 			S.memory[address] = value
 
 
@@ -293,7 +293,12 @@ var/const/MAX_MEM_VARS	 = 500
 		var/datum/radio_frequency/connection = SSradio.return_frequency(freq)
 
 		if(findtext(num2text(freq), ".")) // if the frequency has been set as a decimal
-			freq *= 10 // shift the decimal one place
+			//freq *= 10 // shift the decimal one place
+			////Except that we don't trust floating-point arithmetic on our fraction
+			//// and use string manipulation instead
+			var/shittyfreq = num2text(freq) // Super freq, you're a super freq!
+			freq = text2num(copytext(shittyfreq, 1, findtext(shittyfreq,".")) + copytext(shittyfreq,-1))
+			//SUPER FREAKY!
 
 		freq = sanitize_frequency(freq)
 
@@ -335,11 +340,10 @@ var/const/MAX_MEM_VARS	 = 500
 		freq = text2num(freq)
 	if(findtext(num2text(freq), ".")) // if the frequency has been set as a decimal
 		//freq *= 10 // shift the decimal one place
-		//Except that we don't trust floating-point arithmetic on our fraction
-		// and use string manipulation instead
-		var/shittyfreq = num2text(freq) // Super freq, you're a super freq!
+		////Except that we don't trust floating-point arithmetic--
+		//// woah, deja vu.
+		var/shittyfreq = num2text(freq)
 		freq = text2num(copytext(shittyfreq, 1, findtext(shittyfreq,".")) + copytext(shittyfreq,-1))
-		//SUPER FREAKY!
 
 	if(!islist(spans))
 		spans = list()
@@ -355,6 +359,7 @@ var/const/MAX_MEM_VARS	 = 500
 	virt.languages_understood = virt.languages_spoken //do not remove this or everything turns to jibberish
 	//END SAY REWRITE RELATED CODE.
 
+	//Now we set up the signal
 	newsign.data["mob"] = virt
 	newsign.data["mobtype"] = /mob/living/carbon/human
 	newsign.data["name"] = source
