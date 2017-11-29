@@ -99,8 +99,9 @@ var/allowed_translateable_langs = ALL
 	interpreter.SetVar("$freq"   , 	signal.frequency)
 	interpreter.SetVar("$source" , 	signal.data["name"])
 	interpreter.SetVar("$uuid"   , 	signal.data["uuid"])
+	interpreter.SetVar("$sector" , 	signal.data["level"])
 	interpreter.SetVar("$job"    , 	signal.data["job"])
-	interpreter.SetVar("$sign"   ,	signal) //// WHAT? WHAT THE FUCK?
+	interpreter.SetVar("$sign"   ,	signal)
 	interpreter.SetVar("$pass"	 ,  !(signal.data["reject"])) // if the signal isn't rejected, pass = 1; if the signal IS rejected, pass = 0
 	interpreter.SetVar("$filters"  ,	signal.data["spans"]) //Important, this is given as a vector! (a list)
 	interpreter.SetVar("$say"    , 	signal.data["verb_say"])
@@ -240,6 +241,7 @@ var/allowed_translateable_langs = ALL
 		signal.data["realname"] = setname
 	signal.data["name"]			= setname
 	signal.data["uuid"]			= interpreter.GetCleanVar("$uuid", signal.data["uuid"])
+	signal.data["level"]		= interpreter.GetCleanVar("$sector", signal.data["level"])
 	signal.data["job"]			= interpreter.GetCleanVar("$job", signal.data["job"])
 	signal.data["reject"]		= !(interpreter.GetCleanVar("$pass")) // set reject to the opposite of $pass
 	signal.data["verb_say"]		= interpreter.GetCleanVar("$say")
@@ -259,6 +261,7 @@ var/allowed_translateable_langs = ALL
 /*  -- Actual language proc code --  */
 
 var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
+var/const/MAX_MEM_VARS	 = 500
 
 /datum/signal
 
@@ -271,6 +274,9 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 			return S.memory[address]
 
 		else
+			if(S.memory.len >= MAX_MEM_VARS)
+					if(!(address in S.memory))
+						return
 			S.memory[address] = value
 
 
@@ -302,10 +308,7 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 		connection.post_signal(S, signal)
 
 		var/time = time2text(world.realtime,"hh:mm:ss")
-		lastsignalers.Add("[time] <B>:</B> NTSL sent a signal command while processing something [S.id] said.<B>:</B> [format_frequency(freq)]/[code]")
-		// You might ask "Why not just say that [S.id] triggered a signal command?"
-		// well, how do we know that it's not just something that happens unconditionally every time someone speaks?
-		// Don't need to be all accusative, ye dink.
+		lastsignalers.Add("[time] <B>:</B> [S.id] sent a signal command, which was triggered by NTSL.<B>:</B> [format_frequency(freq)]/[code]")
 
 /datum/signal/proc/tcombroadcast(message, freq, source, job, spans, say = "says", ask = "asks", yell = "yells", exclaim = "exclaims", languages = HUMAN)
 	languages &= allowed_translateable_langs //we can only translate to certain languages
