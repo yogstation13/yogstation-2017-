@@ -296,8 +296,8 @@
 	if(L.mind.special_role)
 		canSword = !canSword
 		if(canSword)
-			L << "<span class='notice'>You squeeze the [name]. Honking it will now extend an esword.</span>"
+			to_chat(L,"<span class='notice'>You squeeze the [name]. Honking it will now extend an esword.</span>")
 		else
-			L << "<span class='notice'>You squeeze the [name]. It functions like a normal bikehorn again.</span>"
+			to_chat(L,"<span class='notice'>You squeeze the [name]. It functions like a normal bikehorn again.</span>")
 		if(active)
 			activate(L)
