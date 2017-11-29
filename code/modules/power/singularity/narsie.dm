@@ -26,8 +26,8 @@
 
 /obj/singularity/narsie/large/New()
 	..()
-	world << "<span class='narsie'>NAR-SIE HAS RISEN</span>"
-	world << pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg')
+	to_chat(world, "<span class='narsie'>NAR-SIE HAS RISEN</span>")
+	to_chat(world, pick('sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg'))
 
 	var/area/A = get_area(src)
 	if(A)
@@ -37,7 +37,6 @@
 	narsie_spawn_animation()
 
 	sleep(70)
-	SSshuttle.emergency.request(null, 0.1) // Cannot recall
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
@@ -72,7 +71,7 @@
 	for(var/mob/living/carbon/M in viewers(consume_range, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
-				M << "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>"
+				to_chat(M, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>")
 				M.apply_effect(3, STUN)
 
 
@@ -127,12 +126,12 @@
 /obj/singularity/narsie/proc/acquire(atom/food)
 	if(food == target)
 		return
-	target << "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>"
+	to_chat(target, "<span class='cultsmall'>NAR-SIE HAS LOST INTEREST IN YOU.</span>")
 	target = food
 	if(isliving(target))
-		target << "<span class ='cult'>NAR-SIE HUNGERS FOR YOUR SOUL.</span>"
+		to_chat(target, "<span class ='cult'>NAR-SIE HUNGERS FOR YOUR SOUL.</span>")
 	else
-		target << "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL.</span>"
+		to_chat(target, "<span class ='cult'>NAR-SIE HAS CHOSEN YOU TO LEAD HER TO HER NEXT MEAL.</span>")
 
 //Wizard narsie
 /obj/singularity/narsie/wizard
@@ -159,4 +158,3 @@
 	sleep(11)
 	move_self = 1
 	icon = initial(icon)
-

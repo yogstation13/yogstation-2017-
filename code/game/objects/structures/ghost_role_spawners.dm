@@ -55,7 +55,7 @@
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
 	if(in_tribe)
-		new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis, and her chosen son: The Chieftain!</b>"
+		to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis, and her chosen son: The Chieftain!</b>")
 		new_spawn <<"<b>The chieftain will have a special HUD over their head. Remember to show utmost respect.</b>"
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
@@ -115,8 +115,8 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.languages_spoken |= HUMAN
 		H.languages_understood |= HUMAN
-		H << "<span class='notice'>You are familiar with these human's language. Use this to your advantage to communicate with those authentic with it.</span>"
-	new_spawn << "<span class='notice'>When you are close to death you will enter a chrysalis state where you will slowly regenerate. During this state you are very vunerable.</span>"
+		to_chat(H, "<span class='notice'>You are familiar with these human's language. Use this to your advantage to communicate with those authentic with it.</span>")
+	to_chat(new_spawn, "<span class='notice'>When you are close to death you will enter a chrysalis state where you will slowly regenerate. During this state you are very vunerable.</span>")
 
 // Rebirth egg that ashwalkers regenerate in when they reach under 0 health. Takes time to regenerate.
 /obj/effect/cyrogenicbubble
@@ -226,13 +226,13 @@
 	var/wish = rand(1,4)
 	switch(wish)
 		if(1)
-			new_spawn << "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>"
+			to_chat(new_spawn, "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>")
 		if(2)
-			new_spawn << "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?</b>"
+			to_chat(new_spawn, "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?</b>")
 		if(3)
-			new_spawn << "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>"
+			to_chat(new_spawn, "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>")
 		if(4)
-			new_spawn << "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>"
+			to_chat(new_spawn, "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>")
 
 //GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 

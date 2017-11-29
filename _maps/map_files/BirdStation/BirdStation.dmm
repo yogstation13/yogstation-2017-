@@ -5499,7 +5499,7 @@
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/toy/carpplushie{
+/obj/item/toy/plushie/carpplushie{
 	attack_verb = list("bitten","pecked","wing slapped");
 	desc = "An adorable stuffed toy that resembles a parrot.";
 	icon = 'icons/mob/animal.dmi';
@@ -18568,7 +18568,7 @@
 /area/security/brig)
 "aSz" = (
 /obj/structure/table,
-/obj/item/toy/carpplushie{
+/obj/item/toy/plushie/carpplushie{
 	attack_verb = list("bitten","pecked","wing slapped");
 	desc = "An adorable stuffed toy that resembles a parrot.";
 	icon = 'icons/mob/animal.dmi';
@@ -20808,7 +20808,7 @@
 /obj/item/device/laser_pointer,
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker,
 /obj/item/clothing/head/rabbitears,
-/obj/item/toy/carpplushie{
+/obj/item/toy/plushie/carpplushie{
 	attack_verb = list("bitten","pecked","wing slapped");
 	desc = "An adorable stuffed toy that resembles a parrot.";
 	icon = 'icons/mob/animal.dmi';

@@ -59,7 +59,7 @@
 "bg" = (/obj/machinery/door/airlock{name = "Unit 2"},/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/shuttle/escape)
 "bh" = (/obj/machinery/door/airlock{name = "Unit B"},/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/shuttle/escape)
 "bi" = (/obj/structure/closet/jcloset,/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/shuttle/escape)
-"bj" = (/obj/structure/toilet{dir = 1},/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/shuttle/escape)
+"bj" = (/obj/machinery/disposal/bin/toilet{dir = 1},/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/shuttle/escape)
 "bk" = (/obj/machinery/recharge_station,/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/shuttle/escape)
 "bl" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/fire,/obj/item/weapon/storage/firstaid/regular{pixel_x = 2;pixel_y = 3},/obj/item/weapon/crowbar,/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/shuttle/escape)
 "bm" = (/obj/structure/window/reinforced{dir = 1},/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape)

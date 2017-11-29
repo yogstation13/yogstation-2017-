@@ -35,7 +35,7 @@
 
 /mob/living/simple_animal/drone/syndrone/Login()
 	..()
-	src << "<span class='notice'>You can kill and eat other drones to increase your health!</span>" //Inform the evil lil guy
+	to_chat(src, "<span class='notice'>You can kill and eat other drones to increase your health!</span>" )
 
 /mob/living/simple_animal/drone/syndrone/badass
 	name = "Badass Syndrone"
@@ -111,17 +111,16 @@
 	access_card = null
 	verbs -= /mob/living/verb/pulled //don't pull them onto the stun rune pls
 	verbs -= /mob/living/simple_animal/drone/verb/check_laws
-	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
 
 /mob/living/simple_animal/drone/cogscarab/Login()
 	..()
 	add_servant_of_ratvar(src, TRUE)
-	src << "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert rods, \
+	to_chat(src, "<span class='heavy_brass'>You are a cogscarab</span><b>, a clockwork creation of Ratvar. As a cogscarab, you have low health, an inbuilt proselytizer that can convert rods, \
 	metal, and plasteel to alloy, a set of relatively fast tools, can communicate over the Hierophant Network with </b><span class='heavy_brass'>:b</span><b>, and are immune to extreme \
 	temperatures and pressures. \nYour goal is to serve the Justiciar and his servants by repairing and defending all they create. \
 	\nYou yourself are one of these servants, and can utilize a slab as well, but you do not start with one. \
-	\nYou are unable to pick up any items not meant to serve the Justiciar.</b>"
+	\nYou are unable to pick up any items not meant to serve the Justiciar.</b>")
 
 
 /mob/living/simple_animal/drone/cogscarab/UnarmedAttack(atom/A, proximity)
