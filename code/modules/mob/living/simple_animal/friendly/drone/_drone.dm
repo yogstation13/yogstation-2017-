@@ -46,6 +46,7 @@
 	staticOverlays = list()
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
+	see_invisible = SEE_INVISIBLE_MINIMUM
 	var/staticChoice = "static"
 	var/list/staticChoices = list("static", "blank", "letter", "animal")
 	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
@@ -55,7 +56,6 @@
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
 	"3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals."
 	var/no_living_interaction = TRUE
-	var/light_on = 0
 	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
 	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
@@ -195,7 +195,7 @@
 		else
 			msg += "<span class='deadsay'>A message repeatedly flashes on its display: \"ERROR -- OFFLINE\".</span>\n"
 	msg += "*---------*</span>"
-	user << msg
+	to_chat(user, msg)
 
 /mob/living/simple_animal/drone/IsAdvancedToolUser()
 	return 1
@@ -215,10 +215,10 @@
 
 /mob/living/simple_animal/drone/emp_act(severity)
 	Stun(5)
-	src << "<span class='danger'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>"
+	to_chat(src, "<span class='danger'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>")
 	if(severity == 1)
 		adjustBruteLoss(heavy_emp_damage)
-		src << "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>"
+		to_chat(src, "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>")
 
 
 /mob/living/simple_animal/drone/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
@@ -234,7 +234,7 @@
 					sources += alarmsource
 				return
 		L[A.name] = list(A, list(alarmsource))
-		src << "--- [class] alarm detected in [A.name]!"
+		to_chat(src, "--- [class] alarm detected in [A.name]!")
 
 
 /mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
@@ -251,7 +251,7 @@
 					cleared = 1
 					L -= I
 		if(cleared)
-			src << "--- [class] alarm in [A.name] has been cleared."
+			to_chat(src, "--- [class] alarm in [A.name] has been cleared.")
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return
@@ -276,18 +276,15 @@
 	// Why would bees pay attention to drones?
 	return 1
 
-/mob/living/simple_animal/drone/proc/fix_light()
-	light_on = 0
-
 /mob/living/simple_animal/drone/ClickOn(var/atom/A, var/params)
 	if(no_living_interaction && !isdrone(A) && (isliving(A) || istype(A, /obj/effect/blob)) )
-		src << "<span class='warning'>You cannot interact with other beings!</span>"
+		to_chat(src, "<span class='warning'>You cannot interact with other beings!</span>")
 		return
 	..()
 
 /mob/living/simple_animal/drone/stripPanelUnequip(obj/item/what, mob/who)
 	if(no_living_interaction)
-		src << "<span class='warning'>You cannot interact with other beings!</span>"
+		to_chat(src, "<span class='warning'>You cannot interact with other beings!</span>")
 		return
 	..()
 

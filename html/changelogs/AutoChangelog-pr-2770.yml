@@ -1,0 +1,4 @@
+author: "morrowwolf"
+delete-after: true 
+changes: 
+  - rscadd: "Adds a preference on the character setup screen for a preferred security armband."

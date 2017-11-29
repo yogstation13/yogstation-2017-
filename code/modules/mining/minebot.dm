@@ -92,16 +92,16 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.welding && !stat && user.a_intent == "help")
 			if(mode != MINEDRONE_IDLE)
-				user << "<span class='info'>[src] is moving around too much to repair!</span>"
+				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
 				return
 			if(maxHealth == health)
-				user << "<span class='info'>[src] is at full integrity.</span>"
+				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 			else
 				adjustBruteLoss(-10)
-				user << "<span class='info'>You repair some of the armor on [src].</span>"
+				to_chat(user, "<span class='info'>You repair some of the armor on [src].</span>")
 			return
 	if(is_mining_scanner(I))
-		user << "<span class='info'>You instruct [src] to drop any collected ore.</span>"
+		to_chat(user, "<span class='info'>You instruct [src] to drop any collected ore.</span>")
 		DropOre()
 		return
 	..()
@@ -123,13 +123,13 @@
 		toggle_mode()
 		switch(mode)
 			if(MINEDRONE_IDLE)
-				M << "<span class='info'>[src] has been set to idle. It can now be easily repaired.</span>"
+				to_chat(M, "<span class='info'>[src] has been set to idle. It can now be easily repaired.</span>")
 			if(MINEDRONE_COLLECT)
-				M << "<span class='info'>[src] has been set to search and store loose ore.</span>"
+				to_chat(M, "<span class='info'>[src] has been set to search and store loose ore.</span>")
 			if(MINEDRONE_ATTACK)
-				M << "<span class='info'>[src] has been set to attack hostile wildlife.</span>"
+				to_chat(M, "<span class='info'>[src] has been set to attack hostile wildlife.</span>")
 			else
-				M << "<span class='warning'>[src] does not seem to be responding!</span>"
+				to_chat(M, "<span class='warning'>[src] does not seem to be responding!</span>")
 		return
 	..()
 
@@ -149,7 +149,7 @@
 	melee_damage_upper = 15
 	a_intent = "harm"
 	icon_state = "mining_drone"
-	src << "<span class='info'>You are set to collect mode. You can now collect loose ore.</span>"
+	to_chat(src, "<span class='info'>You are set to collect mode. You can now collect loose ore.</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetOffenseBehavior()
 	if(mode == MINEDRONE_EMAGGED)
@@ -167,7 +167,7 @@
 	melee_damage_upper = 15
 	a_intent = "harm"
 	icon_state = "mining_drone_offense"
-	src << "<span class='info'>You are set to attack mode. You can now attack from range.</span>"
+	to_chat(src, "<span class='info'>You are set to attack mode. You can now attack from range.</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetInactiveBehavior()
 	if(mode == MINEDRONE_EMAGGED)
@@ -185,7 +185,7 @@
 	melee_damage_upper = 0
 	a_intent = "help"
 	icon_state = "mining_drone_idle"
-	src << "<span class='info'>You are set to idle mode. You can now be repaired.</span>"
+	to_chat(src, "<span class='info'>You are set to idle mode. You can now be repaired.</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/proc/SetEmagBehavior()
 	mode = MINEDRONE_EMAGGED
@@ -208,10 +208,10 @@
 	if(mode == MINEDRONE_EMAGGED)
 		return
 	if(ckey)
-		src << "<span class='danger'>ALERT: Foreign software execution prevented.</span>"
+		to_chat(src, "<span class='danger'>ALERT: Foreign software execution prevented.</span>")
 		return
 	if(user)
-		user << "<span class='notice'>The [src] buzzes and beeps.</span>"
+		to_chat(user, "<span class='notice'>The [src] buzzes and beeps.</span>")
 		faction |= user.faction
 	faction -= "neutral"
 	faction += "mining_drone" //No drone on drone violence.
@@ -242,10 +242,10 @@
 /mob/living/simple_animal/hostile/mining_drone/proc/DropOre(message = 1)
 	if(!contents.len)
 		if(message)
-			src << "<span class='notice'>You attempt to dump your stored ore, but you have none.</span>"
+			to_chat(src, "<span class='notice'>You attempt to dump your stored ore, but you have none.</span>")
 		return
 	if(message)
-		src << "<span class='notice'>You dump your stored ore.</span>"
+		to_chat(src, "<span class='notice'>You dump your stored ore.</span>")
 	for(var/obj/item/weapon/ore/O in contents)
 		contents -= O
 		O.loc = src.loc
@@ -284,7 +284,7 @@
 	else
 		AddLuminosity(6)
 	light_on = !light_on
-	src << "<span class='notice'>You toggle your light [light_on ? "on" : "off"].</span>"
+	to_chat(src, "<span class='notice'>You toggle your light [light_on ? "on" : "off"].</span>")
 
 /mob/living/simple_animal/hostile/mining_drone/radio(message, message_mode, list/spans)
 	. = ..()
@@ -336,7 +336,7 @@
 		user.sight |= SEE_TURFS
 		user.see_invisible = SEE_INVISIBLE_MINIMUM
 
-	user << "<span class='notice'>You toggle your meson vision [(user.sight & SEE_TURFS) ? "on" : "off"].</span>"
+	to_chat(user, "<span class='notice'>You toggle your meson vision [(user.sight & SEE_TURFS) ? "on" : "off"].</span>")
 
 /datum/action/innate/minedrone/toggle_mode
 	name = "Toggle Mode"
@@ -383,7 +383,7 @@
 
 /obj/item/device/mine_bot_upgrade/proc/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.melee_damage_upper != initial(M.melee_damage_upper))
-		user << "[src] already has a combat upgrade installed!"
+		to_chat(user, "[src] already has a combat upgrade installed!")
 		return
 	M.melee_damage_lower = 22
 	M.melee_damage_upper = 22
@@ -396,7 +396,7 @@
 
 /obj/item/device/mine_bot_upgrade/health/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	if(M.maxHealth != initial(M.maxHealth))
-		user << "[src] already has a reinforced chassis!"
+		to_chat(user, "[src] already has a reinforced chassis!")
 		return
 	M.maxHealth = 170
 	qdel(src)
@@ -410,7 +410,7 @@
 /obj/item/device/mine_bot_upgrade/cooldown/upgrade_bot(mob/living/simple_animal/hostile/mining_drone/M, mob/user)
 	name = "minebot cooldown upgrade"
 	if(M.ranged_cooldown_time != initial(M.ranged_cooldown_time))
-		user << "[src] already has a decreased weapon cooldown!"
+		to_chat(user, "[src] already has a decreased weapon cooldown!")
 		return
 	M.ranged_cooldown_time = 10
 	qdel(src)
@@ -430,7 +430,7 @@
 		return 0
 	var/mob/living/simple_animal/hostile/mining_drone/drone = M
 	if(istype(drone) && drone.mode == MINEDRONE_EMAGGED)
-		user << "<span class='warning'>[M] is not responding to [src]!</span>"
+		to_chat(user, "<span class='warning'>[M] is not responding to [src]!</span>")
 		return 0
 	return 1
 

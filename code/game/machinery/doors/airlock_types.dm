@@ -340,7 +340,7 @@
 		PoolOrNew(/obj/effect/overlay/temp/cult/sac, src.loc)
 		var/atom/throwtarget
 		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
-		M << pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50))
+		to_chat(M, pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50)))
 		flash_color(M, color="#960000", time=20)
 		M.Weaken(2)
 		M.throw_at_fast(throwtarget, 5, 1,src)
@@ -450,11 +450,11 @@
 			playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
 			construction_state = GEAR_SECURE
 		else if(construction_state == GEAR_LOOSE)
-			user << "<span class='warning'>The gear isn't secure enough to fasten!</span>"
+			to_chat(user, "<span class='warning'>The gear isn't secure enough to fasten!</span>")
 		return 1
 	else if(istype(I, /obj/item/weapon/wrench))
 		if(construction_state == GEAR_SECURE)
-			user << "<span class='warning'>[src] is too tightly secured! Your [I.name] can't get a solid grip!</span>"
+			to_chat(user, "<span class='warning'>[src] is too tightly secured! Your [I.name] can't get a solid grip!</span>")
 			return 0
 		else if(construction_state == GEAR_UNFASTENED)
 			user.visible_message("<span class='notice'>[user] begins loosening [src]'s gear...</span>", "<span class='notice'>You begin loosening [src]'s gear...</span>")
@@ -475,7 +475,7 @@
 		return 1
 	else if(istype(I, /obj/item/weapon/crowbar))
 		if(construction_state == GEAR_SECURE || construction_state == GEAR_UNFASTENED)
-			user << "<span class='warning'>[src]'s gear is too tightly secured! Your [I.name] can't reach under it!</span>"
+			to_chat(user, "<span class='warning'>[src]'s gear is too tightly secured! Your [I.name] can't reach under it!</span>")
 			return 1
 		else if(construction_state == GEAR_LOOSE)
 			user.visible_message("<span class='notice'>[user] begins slowly lifting off [src]'s gear...</span>", "<span class='notice'>You slowly begin lifting off [src]'s gear...</span>")

@@ -286,17 +286,17 @@
 	if(proximity_flag && ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(inert)
-			user << "<span class='notice'>[src] has become inert, its healing properties are no more.</span>"
+			to_chat(user, "<span class='notice'>[src] has become inert, its healing properties are no more.</span>")
 			return
 		else
 			if(H.stat == DEAD)
-				user << "<span class='notice'>[src] are useless on the dead.</span>"
+				to_chat(user, "<span class='notice'>[src] are useless on the dead.</span>")
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
 				feedback_add_details("hivelord_core","[src.type]|used|other")
 			else
-				user << "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>"
+				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
 				feedback_add_details("hivelord_core","[src.type]|used|self")
 			H.revive(full_heal = 1)
 			qdel(src)
@@ -538,10 +538,10 @@
 			var/list/current_armor = C.armor
 			if(current_armor.["melee"] < 60)
 				current_armor.["melee"] = min(current_armor.["melee"] + 10, 60)
-				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
+				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				use(1)
 			else
-				user << "<span class='warning'>You can't improve [C] any further!</span>"
+				to_chat(user, "<span class='warning'>You can't improve [C] any further!</span>")
 				return
 		if(istype(target, /obj/mecha/working/ripley))
 			var/obj/mecha/working/ripley/D = target
@@ -552,7 +552,7 @@
 				damage_absorption["bullet"] = damage_absorption["bullet"] - 0.1
 				damage_absorption["fire"] = damage_absorption["fire"] - 0.1
 				damage_absorption["laser"] = damage_absorption["laser"] - 0.1
-				user << "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>"
+				to_chat(user, "<span class='info'>You strengthen [target], improving its resistance against melee attacks.</span>")
 				D.update_icon()
 				if(D.hides == 3)
 					D.desc = "Autonomous Power Loader Unit. It's wearing a fearsome carapace entirely composed of goliath hide plates - its pilot must be an experienced monster hunter."
@@ -560,7 +560,7 @@
 					D.desc = "Autonomous Power Loader Unit. Its armour is enhanced with some goliath hide plates."
 				qdel(src)
 			else
-				user << "<span class='warning'>You can't improve [D] any further!</span>"
+				to_chat(user, "<span class='warning'>You can't improve [D] any further!</span>")
 				return
 
 
@@ -623,13 +623,13 @@
 	set category = "Fugu"
 	set desc = "Temporarily increases your size, and makes you significantly more dangerous and tough."
 	if(wumbo)
-		src << "<span class='notice'>You're already inflated.</span>"
+		to_chat(src, "<span class='notice'>You're already inflated.</span>")
 		return
 	if(inflate_cooldown)
-		src << "<span class='notice'>We need time to gather our strength.</span>"
+		to_chat(src, "<span class='notice'>We need time to gather our strength.</span>")
 		return
 	if(buffed)
-		src << "<span class='notice'>Something is interfering with our growth.</span>"
+		to_chat(src, "<span class='notice'>Something is interfering with our growth.</span>")
 		return
 	wumbo = 1
 	icon_state = "Fugu_big"
@@ -684,7 +684,7 @@
 	if(proximity_flag && istype(target, /mob/living/simple_animal))
 		var/mob/living/simple_animal/A = target
 		if(A.buffed || (A.type in banned_mobs) || A.stat)
-			user << "<span class='warning'>Something's interfering with the [src]'s effects. It's no use.</span>"
+			to_chat(user, "<span class='warning'>Something's interfering with the [src]'s effects. It's no use.</span>")
 			return
 		A.buffed++
 		A.maxHealth *= 1.5
@@ -693,7 +693,7 @@
 		A.melee_damage_upper = max((A.melee_damage_upper * 2), 10)
 		A.transform *= 2
 		A.environment_smash += 2
-		user << "<span class='info'>You increase the size of [A], giving it a surge of strength!</span>"
+		to_chat(user, "<span class='info'>You increase the size of [A], giving it a surge of strength!</span>")
 		qdel(src)
 
 /////////////////////Lavaland
@@ -822,7 +822,7 @@
 					if(B.body_zone == "chest")
 						B.dismember()
 			else
-				src << "<span class='warning'>There are no organs left in this corpse.</span>"
+				to_chat(src, "<span class='warning'>There are no organs left in this corpse.</span>")
 
 /mob/living/simple_animal/hostile/asteroid/marrowweaver/CanAttack(atom/A)
 	if(..())

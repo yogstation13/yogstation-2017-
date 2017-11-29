@@ -16,15 +16,15 @@
 /obj/item/device/megaphone/attack_self(mob/living/carbon/human/user)
 	if(user.client)
 		if(user.client.prefs.muted & MUTE_IC)
-			src << "<span class='warning'>You cannot speak in IC (muted).</span>"
+			to_chat(src, "<span class='warning'>You cannot speak in IC (muted).</span>")
 			return
 
 	if(!ishuman(user))
-		user << "<span class='warning'>You don't know how to use this!</span>"
+		to_chat(user, "<span class='warning'>You don't know how to use this!</span>")
 		return
 
 	if(spamcheck > world.time)
-		user << "<span class='warning'>\The [src] needs to recharge!</span>"
+		to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")
 		return
 
 	var/message = stripped_input(user, "Shout a message?", "Megaphone", null, MAX_MESSAGE_LEN)
@@ -33,19 +33,19 @@
 	var/oldmsg = message
 	message = pretty_filter(message)
 	if(oldmsg != message)
-		usr << "<span class='notice'>You fumble over your words as you try to think of what to say into the megaphone. <a href='https://forums.yogstation.net/index.php?pages/rules/'>See rule 0.1.1</a>.</span>"
+		to_chat(usr, "<span class='notice'>You fumble over your words as you try to think of what to say into the megaphone. <a href='https://forums.yogstation.net/index.php?pages/rules/'>See rule 0.1.1</a>.</span>")
 		message_admins("[key_name(user)] just attempted to trip a pretty filter using a megaphone: '[oldmsg]'.")
 		log_say("[user.name]/[user.ckey]: [oldmsg] - via [src.name] / [src.type]")
 		return
 
 	message = capitalize(message)
 	if(!user.can_speak(message))
-		user << "<span class='warning'>You find yourself unable to speak at all!</span>"
+		to_chat(user, "<span class='warning'>You find yourself unable to speak at all!</span>")
 		return
 
 	if ((src.loc == user && user.stat == 0))
 		if(spamcheck > world.time) //If multiple dialogue boxes are open, this will stop it from being spammable.
-			user << "<span class='warning'>\The [src] needs to recharge!</span>"
+			to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")
 			return
 		else
 			if(emagged)
@@ -53,7 +53,7 @@
 					user.say(pick(insultmsg),"machine", list(voicespan))
 					insults--
 				else
-					user << "<span class='warning'>*BZZZZzzzzzt*</span>"
+					to_chat(user, "<span class='warning'>*BZZZZzzzzzt*</span>")
 			else
 				user.say(message,"machine", list(voicespan))
 
@@ -62,7 +62,7 @@
 			return
 
 /obj/item/device/megaphone/emag_act(mob/user)
-	user << "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>"
+	to_chat(user, "<span class='warning'>You overload \the [src]'s voice synthesizer.</span>")
 	emagged = 1
 	insults = rand(1, 3)	//to prevent dickflooding
 

@@ -412,7 +412,7 @@
 "hV" = (/obj/machinery/shower{icon_state = "shower"; dir = 4},/obj/item/weapon/bikehorn/rubberducky,/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/spacebattle/cruiser)
 "hW" = (/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/spacebattle/cruiser)
 "hX" = (/obj/machinery/shower{icon_state = "shower"; dir = 8},/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/spacebattle/cruiser)
-"hY" = (/obj/structure/toilet,/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/spacebattle/cruiser)
+"hY" = (/obj/machinery/disposal/bin/toilet,/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/spacebattle/cruiser)
 "hZ" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/firstaid/fire,/turf/open/floor/plasteel{icon_state = "white"},/area/awaymission/spacebattle/cruiser)
 "ia" = (/turf/open/space,/turf/closed/wall/shuttle{icon_state = "swall_f9"},/area/awaymission/spacebattle/cruiser)
 "ib" = (/obj/machinery/door/unpowered/shuttle,/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/spacebattle/cruiser)

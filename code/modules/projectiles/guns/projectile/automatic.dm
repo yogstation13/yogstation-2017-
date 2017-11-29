@@ -35,12 +35,12 @@
 		var/obj/item/ammo_box/magazine/AM = A
 		if(istype(AM, mag_type))
 			if(magazine)
-				user << "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>"
+				to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>")
 				magazine.loc = get_turf(src.loc)
 				magazine.update_icon()
 				magazine = null
 			else
-				user << "<span class='notice'>You insert the magazine into \the [src].</span>"
+				to_chat(user, "<span class='notice'>You insert the magazine into \the [src].</span>")
 			playsound(user, 'sound/weapons/autoguninsert.ogg', 60, 1)
 			user.remove_from_mob(AM)
 			magazine = AM
@@ -59,11 +59,11 @@
 	if(!select)
 		burst_size = 1
 		fire_delay = 0
-		user << "<span class='notice'>You switch to semi-automatic.</span>"
+		to_chat(user, "<span class='notice'>You switch to semi-automatic.</span>")
 	else
 		burst_size = initial(burst_size)
 		fire_delay = initial(fire_delay)
-		user << "<span class='notice'>You switch to [burst_size]-rnd burst.</span>"
+		to_chat(user, "<span class='notice'>You switch to [burst_size]-rnd burst.</span>")
 
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_icon()
@@ -194,15 +194,15 @@
 			select = 1
 			burst_size = initial(burst_size)
 			fire_delay = initial(fire_delay)
-			user << "<span class='notice'>You switch to [burst_size]-rnd burst.</span>"
+			to_chat(user, "<span class='notice'>You switch to [burst_size]-rnd burst.</span>")
 		if(1)
 			select = 2
-			user << "<span class='notice'>You switch to grenades.</span>"
+			to_chat(user, "<span class='notice'>You switch to grenades.</span>")
 		if(2)
 			select = 0
 			burst_size = 1
 			fire_delay = 0
-			user << "<span class='notice'>You switch to semi-auto.</span>"
+			to_chat(user, "<span class='notice'>You switch to semi-auto.</span>")
 	playsound(user, 'sound/weapons/empty.ogg', 100, 1)
 	update_icon()
 	return

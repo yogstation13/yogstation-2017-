@@ -42,7 +42,7 @@
 			if(!user.drop_item())
 				return
 			contents += I
-			user << "<span class='notice'>You place [I] in [src].</span>"
+			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
 			update_icon()
 			return
 
@@ -76,7 +76,9 @@
 
 /obj/structure/guncase/Topic(href, href_list)
 	if(href_list["retrieve"])
-		var/obj/item/O = locate(href_list["retrieve"])
+		var/obj/item/O = locate(href_list["retrieve"]) in src
+		if(!O)
+			return
 		if(!usr.canUseTopic(src))
 			return
 		if(ishuman(usr))

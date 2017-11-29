@@ -325,12 +325,12 @@
 				var/mob/living/M = AM
 				M.Weaken(5)
 				M.adjustBruteLoss(5)
-				M << "<span class='userdanger'>You're slammed into the floor by [user]!</span>"
+				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
 		else
 			if(istype(AM, /mob/living))
 				var/mob/living/M = AM
 				M.Weaken(2)
-				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
+				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
 			AM.throw_at_fast(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/proc/remove_sparkles(atom/movable/AM, obj/effect/overlay/targeteffect)
