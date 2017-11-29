@@ -22,10 +22,10 @@ var/list/GPS_list = list()
 /obj/item/device/gps/examine(mob/user)
 	..()
 	if(intelligent)
-		user << "<span class='notice'>This GPS is upgraded with intelligent software. It will label other GPS's with a tag based on it's location from you.</span>"
-		user << "<span class='red'>The \[Adjacent\] tag means they are within 20 feet.</span>"
-		user << "<span class='blue'>The \[Close-By\] tag means they are within 40 feet.</span>"
-		user << "<span class='white'>The \[Away\] tag means they are anywhere farther than that.</span>"
+		to_chat(user, "<span class='notice'>This GPS is upgraded with intelligent software. It will label other GPS's with a tag based on it's location from you.</span>")
+		to_chat(user, "<span class='red'>The \[Adjacent\] tag means they are within 20 feet.</span>")
+		to_chat(user, "<span class='blue'>The \[Close-By\] tag means they are within 40 feet.</span>")
+		to_chat(user, "<span class='white'>The \[Away\] tag means they are anywhere farther than that.</span>")
 
 /obj/item/device/gps/New()
 	..()
@@ -51,19 +51,19 @@ var/list/GPS_list = list()
 	if(!user.canUseTopic(src, be_close=TRUE))
 		return //user not valid to use gps
 	if(emped)
-		user << "It's busted!"
+		to_chat(user, "It's busted!")
 	if(tracking)
 		overlays -= "working"
-		user << "[src] is no longer tracking, or visible to other GPS devices."
+		to_chat(user, "[src] is no longer tracking, or visible to other GPS devices.")
 		tracking = FALSE
 	else
 		overlays += "working"
-		user << "[src] is now tracking, and visible to other GPS devices."
+		to_chat(user, "[src] is now tracking, and visible to other GPS devices.")
 		tracking = TRUE
 
 /obj/item/device/gps/attack_self(mob/user)
 	if(!tracking)
-		user << "[src] is turned off. Use alt+click to toggle it back on."
+		to_chat(user, "[src] is turned off. Use alt+click to toggle it back on.")
 		return
 
 	var/obj/item/device/gps/t = ""
@@ -129,7 +129,7 @@ var/list/GPS_list = list()
 		GPS.visible_message("<span class='notice'>The GPS device announces: [gpstag] has pinged your GPS.</span>",\
 			"<span class='notice'>The GPS device announces: [gpstag] has pinged your GPS.</span>")
 		playsound(get_turf(GPS), 'sound/machines/ping.ogg', 50, 0)
-		usr << "<span class='notice'>[GPS.gpstag] has been pinged.</span>"
+		to_chat(usr, "<span class='notice'>[GPS.gpstag] has been pinged.</span>")
 
 /obj/item/device/gps/attackby(obj/item/I, mob/user, params)
 	..()
@@ -144,11 +144,11 @@ var/list/GPS_list = list()
 			return
 
 		channel = "[pointing_a_remote_at_the_tv]"
-		user << "<span class='notice'>You change the GPS's channel to [pointing_a_remote_at_the_tv]."
+		to_chat(user, "<span class='notice'>You change the GPS's channel to [pointing_a_remote_at_the_tv].")
 
 /obj/item/device/gps/emag_act(mob/user)
 	if(!emagged)
-		user << "<span class='warning'>You scramble the GPS's tag interface."
+		to_chat(user, "<span class='warning'>You scramble the GPS's tag interface.")
 		emagged = 1
 
 /obj/item/device/gps/medical

@@ -3,7 +3,7 @@
 	set category = null
 	set name = "Admin PM Mob"
 	if(!check_rights(R_BASIC))
-		src << "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>")
 		return
 	if( !ismob(M) || !M.client )
 		return
@@ -15,7 +15,7 @@
 	set category = "Admin"
 	set name = "Admin PM"
 	if(!check_rights(R_BASIC))
-		src << "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>")
 		return
 	var/list/client/targets[0]
 	for(var/client/T)
@@ -35,10 +35,10 @@
 
 /client/proc/cmd_ahelp_reply(whom)
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
 	if(!check_rights(R_BASIC))
-		src << "<font color='red'>Error: Admin-PM: Only administrators may use this command.</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM: Only administrators may use this command.</font>")
 		return
 	var/client/C
 	if(istext(whom))
@@ -49,7 +49,7 @@
 		C = whom
 	if(!C)
 		if(holder)
-			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		return
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help.")
 	var/msg = stripped_input(src,"Message:", "Private message to [key_name(C, 0, 0)]")
@@ -62,7 +62,7 @@
 //Fetching a message if needed. src is the sender and C is the target client
 /client/proc/cmd_admin_pm(whom, msg)
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
 	var/client/C
 	if(istext(whom))
@@ -73,7 +73,7 @@
 		C = whom
 	if(!C)
 		if(holder)
-			src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+			to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 		else
 			admin_ticket(msg)	//admin we are replying to left. adminhelp instead
 		return
@@ -109,7 +109,7 @@
 			return
 		if(!C)
 			if(holder)
-				src << "<font color='red'>Error: Admin-PM: Client not found.</font>"
+				to_chat(src, "<font color='red'>Error: Admin-PM: Client not found.</font>")
 			else
 				admin_ticket(msg)	//admin we are replying to has vanished, adminhelp instead
 			return
@@ -117,7 +117,7 @@
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	//msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)	return
 
 	msg = emoji_parse(msg)
@@ -134,12 +134,12 @@
 
 			if(T.handling_admin && !compare_ckey(get_client(src), T.handling_admin) && !compare_ckey(get_client(src), T.owner))
 				if(!holder)
-					usr << "<span class='boldnotice'>You are not the owner or primary admin of this users ticket. You may not reply to it.</span>"
+					to_chat(usr, "<span class='boldnotice'>You are not the owner or primary admin of this users ticket. You may not reply to it.</span>")
 				return
 
 			if(!T.resolved)
-				msg = replacetext(msg, "'", "�")
-				msg = replacetext(msg, "&#39;", "�")
+				//msg = replacetext(msg, "'", "�")
+				//msg = replacetext(msg, "&#39;", "�")
 				T.add_log(msg, get_client(src))
 
 				if(holder && !C.holder && T.force_popup)
@@ -147,8 +147,8 @@
 						var/sender = src
 						var/sendername = key
 						var/reply = stripped_input(C, msg,"Admin PM from-[sendername]", "")		//show message and await a reply
-						reply = replacetext(reply, "'", "�")
-						reply = replacetext(reply, "&#39;", "�")
+						//reply = replacetext(reply, "'", "�")
+						//reply = replacetext(reply, "&#39;", "�")
 						if(C && reply)
 							if(sender)
 								C.cmd_admin_pm(src,reply)										//sender is still about, let's reply to them
@@ -159,11 +159,11 @@
 				return
 
 	if(has_resolved_ticket)
-		src << "<span class='boldnotice'>Your ticket was closed. Only admins can add finishing comments to it.</span>"
+		to_chat(src, "<span class='boldnotice'>Your ticket was closed. Only admins can add finishing comments to it.</span>")
 		return
 
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
 
 	// If we didn't find a ticket, we should make one. This bypasses the rest of the original PM system

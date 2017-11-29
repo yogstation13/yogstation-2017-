@@ -57,3 +57,6 @@
 /area/ruin/syndicate_xeno_base
 	name = "Secret Base"
 	noteleport = TRUE
+
+/area/ruin/powered/podperson
+	murders_plants = 0

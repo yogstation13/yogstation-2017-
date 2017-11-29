@@ -34,7 +34,7 @@
 
 /client/Northeast()
 	if(prefs.afreeze)
-		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		to_chat(src, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return
 	swap_hand()
 	return
@@ -42,7 +42,7 @@
 
 /client/Southeast()
 	if(prefs.afreeze)
-		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		to_chat(src, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return
 	attack_self()
 	return
@@ -50,22 +50,22 @@
 
 /client/Southwest()
 	if(prefs.afreeze)
-		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		to_chat(src, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return
 	if(iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.toggle_throw_mode()
 	else
-		usr << "<span class='danger'>This mob type cannot throw items.</span>"
+		to_chat(usr, "<span class='danger'>This mob type cannot throw items.</span>")
 	return
 
 
 /client/Northwest()
 	if(prefs.afreeze)
-		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		to_chat(src, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return
 	if(!usr.get_active_hand())
-		usr << "<span class='warning'>You have nothing to drop in your hand!</span>"
+		to_chat(usr, "<span class='warning'>You have nothing to drop in your hand!</span>")
 		return
 	usr.drop_item()
 
@@ -73,10 +73,10 @@
 /client/verb/delete_key_pressed()
 	set hidden = 1
 	if(prefs.afreeze)
-		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		to_chat(src, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return
 	if(!usr.pulling)
-		usr << "<span class='notice'>You are not pulling anything.</span>"
+		to_chat(usr, "<span class='notice'>You are not pulling anything.</span>")
 		return
 	usr.stop_pulling()
 
@@ -84,7 +84,7 @@
 	set category = "IC"
 	set name = "Swap hands"
 	if(prefs.afreeze)
-		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		to_chat(src, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return
 	if(mob)
 		mob.swap_hand()
@@ -92,7 +92,7 @@
 /client/verb/attack_self()
 	set hidden = 1
 	if(prefs.afreeze)
-		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		to_chat(src, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return
 	if(mob)
 		mob.mode()
@@ -102,7 +102,7 @@
 /client/verb/drop_item()
 	set hidden = 1
 	if(prefs.afreeze)
-		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		to_chat(src, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return
 	if(!isrobot(mob))
 		mob.drop_item_v()
@@ -111,7 +111,7 @@
 
 /client/Center()
 	if(prefs.afreeze)
-		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		to_chat(src, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return
 	if(isobj(mob.loc))
 		var/obj/O = mob.loc
@@ -134,7 +134,7 @@
 
 /client/Move(n, direct)
 	if(prefs.afreeze)
-		src << "<span class='userdanger'>You are frozen by an administrator.</span>"
+		to_chat(src, "<span class='userdanger'>You are frozen by an administrator.</span>")
 		return 0
 	if(world.time < move_delay)
 		return 0
@@ -269,7 +269,7 @@ proc/Can_ShadowWalk(var/mob/mob)
 			return 1
 		else if(mob.restrained(ignore_grab = 1))
 			move_delay = world.time + 10
-			src << "<span class='warning'>You're restrained! You can't move!</span>"
+			to_chat(src, "<span class='warning'>You're restrained! You can't move!</span>")
 			return 1
 		else
 			return mob.resist_grab(1)
@@ -330,7 +330,7 @@ proc/Can_ShadowWalk(var/mob/mob)
 		if(3) //Incorporeal move, but blocked by holy-watered tiles
 			var/turf/open/floor/stepTurf = get_step(L, direct)
 			if(stepTurf.flags & NOJAUNT)
-				L << "<span class='warning'>Holy energies block your path.</span>"
+				to_chat(L, "<span class='warning'>Holy energies block your path.</span>")
 				L.notransform = 1
 				spawn(2)
 					L.notransform = 0
@@ -353,7 +353,7 @@ proc/Can_ShadowWalk(var/mob/mob)
 	if(backup)
 		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
-				src << "<span class='info'>You push off of [backup] to propel yourself.</span>"
+				to_chat(src, "<span class='info'>You push off of [backup] to propel yourself.</span>")
 		return 1
 	return 0
 

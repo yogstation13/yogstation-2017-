@@ -68,7 +68,7 @@
 "bp" = (/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/obj/structure/mirror{pixel_x = 28},/turf/open/floor/plasteel/freezer,/area/ruin/powered{name = "Space Bar"})
 "bq" = (/obj/structure/table/wood,/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/open/floor/plasteel/bar,/area/ruin/powered{name = "Space Bar"})
 "br" = (/obj/machinery/light/small{dir = 8},/turf/open/floor/plasteel/freezer,/area/ruin/powered{name = "Space Bar"})
-"bs" = (/obj/structure/toilet{dir = 4},/obj/machinery/light/small{dir = 8},/turf/open/floor/plasteel/freezer,/area/ruin/powered{name = "Space Bar"})
+"bs" = (/obj/machinery/disposal/bin/toilet{dir = 4},/obj/machinery/light/small{dir = 8},/turf/open/floor/plasteel/freezer,/area/ruin/powered{name = "Space Bar"})
 "bt" = (/obj/machinery/door/airlock{name = "Toilet"},/turf/open/floor/plasteel/freezer,/area/ruin/powered{name = "Space Bar"})
 "bu" = (/obj/effect/glowshroom/single,/turf/open/floor/plasteel/freezer,/area/ruin/powered{name = "Space Bar"})
 "bv" = (/obj/machinery/door/airlock/external,/turf/open/floor/plating,/area/ruin/powered)

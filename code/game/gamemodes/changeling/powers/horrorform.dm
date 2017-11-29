@@ -14,31 +14,31 @@
 	if(user.stat || !ishuman(user))
 		return
 	if(changeling.absorbedcount < 1)
-		user << "<span class='warning'>We require one absorbed lifeform to be able to do this.</span>"
+		to_chat(user, "<span class='warning'>We require one absorbed lifeform to be able to do this.</span>")
 		return
 	if(changeling.chem_charges < 20)//no spamming it with 5 chems, you won't get anything done anyway
-		user << "<span class='warning'>We require sufficient chemicals to use this ability.</span>"
+		to_chat(user, "<span class='warning'>We require sufficient chemicals to use this ability.</span>")
 		return
 	if(user.health < 35)//amount of health that makes you revert
-		user << "<span class='warning'>We are too hurt to sustain such power.</span>"
+		to_chat(user, "<span class='warning'>We are too hurt to sustain such power.</span>")
 		return
 	if(isabomination(H))//can't transform twice at once
-		user << "<span class='warning'>You're already transformed!</span>"
+		to_chat(user, "<span class='warning'>You're already transformed!</span>")
 		return
 	var/transform_or_no=alert(user,"Are you sure you want to transform?",,"Yes","No")
 	switch(transform_or_no)
 		if("No")
-			user << "<span class='warning'>You opt not to transform."
+			to_chat(user, "<span class='warning'>You opt not to transform.")
 			return
 		if("Yes")
 			if(changeling.transforming)
-				user << "<span class='warning'>You're transforming, hold on.</span>"
+				to_chat(user, "<span class='warning'>You're transforming, hold on.</span>")
 				return
 			if(isabomination(H))
-				user << "<span class='warning'>You're already transformed!</span>"
+				to_chat(user, "<span class='warning'>You're already transformed!</span>")
 				return
 			if(changeling.geneticdamage > 15)
-				user << "<span class='warning'>Your genomes are too damaged to allow you to transform.</span>"
+				to_chat(user, "<span class='warning'>Your genomes are too damaged to allow you to transform.</span>")
 				return
 			changeling.transforming = TRUE
 			changeling.geneticdamage += 5
@@ -150,7 +150,7 @@
 	var/datum/changeling/changeling = user.mind.changeling
 	if(user.health < 35)
 		user.visible_message("<span class='warning'>[user] sustains too much damage to continue their transformation, and collapses!</span>")
-		user << "<span class='notice'>You could not transform back correctly, which disfigures you and scrambles your genetic code!</span>"
+		to_chat(user, "<span class='notice'>You could not transform back correctly, which disfigures you and scrambles your genetic code!</span>")
 		var/mob/living/carbon/human/H = user
 		var/datum/mutation/human/HM = mutations_list[HULK]
 		if(H.dna && H.dna.mutations)
@@ -162,7 +162,7 @@
 
 	if(changeling.chem_charges == 0)
 		user.visible_message("<span class='warning'>[user] suddenly shrinks back down to a normal size.</span>")
-		user << "<span class='notice'>You ran out of chemicals before you could revert properly, disfiguring you!</span>"
+		to_chat(user, "<span class='notice'>You ran out of chemicals before you could revert properly, disfiguring you!</span>")
 		var/mob/living/carbon/human/H = user
 		var/datum/mutation/human/HM = mutations_list[HULK]
 		if(H.dna && H.dna.mutations)

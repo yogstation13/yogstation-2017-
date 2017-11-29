@@ -80,9 +80,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))
-			H << "[A] materializes into your hands!"
+			to_chat(H, "[A] materializes into your hands!")
 		else
-			H << "\The [A] materializes onto the floor."
+			to_chat(H, "\The [A] materializes onto the floor.")
 	return 1
 
 // Nuclear Operative (Special Offers)
@@ -610,7 +610,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Dehydrated Space Carp"
 	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate in \
 			your hand before use so it knows not to kill you."
-	item = /obj/item/toy/carpplushie/dehy_carp
+	item = /obj/item/toy/plushie/carpplushie/dehy_carp
 	cost = 1
 
 /datum/uplink_item/stealthy_weapons/soap_clusterbang

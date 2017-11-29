@@ -14,9 +14,9 @@
 	..()
 	if(vlight)
 		if(vlight.toggle)
-			user << "<span class='notice'>The lights are on.</span>"
+			to_chat(user, "<span class='notice'>The lights are on.</span>")
 		else
-			user << "<span class='notice'>The lights are off.</span>"
+			to_chat(user, "<span class='notice'>The lights are off.</span>")
 
 /obj/vehicle/atv/New()
 	..()
