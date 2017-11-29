@@ -88,6 +88,10 @@ var/allowed_translateable_langs = ALL
 	interpreter.SetVar("$security",	1359)
 	interpreter.SetVar("$supply",	1347)
 	interpreter.SetVar("$service",	1349)
+	interpreter.SetVar("$centcom",	1337) // Yes, that is the real Centcom freq.
+	//This whole game is a big fuckin' meme.
+	interpreter.SetVar("$aiprivate", 1447) // The Common Server is the one
+																		// that handles the AI Private Channel, btw.
 
 	// Signal data
 
@@ -95,9 +99,8 @@ var/allowed_translateable_langs = ALL
 	interpreter.SetVar("$freq"   , 	signal.frequency)
 	interpreter.SetVar("$source" , 	signal.data["name"])
 	interpreter.SetVar("$uuid"   , 	signal.data["uuid"])
-	interpreter.SetVar("$sector" , 	signal.data["level"])
 	interpreter.SetVar("$job"    , 	signal.data["job"])
-	interpreter.SetVar("$sign"   ,	signal)
+	interpreter.SetVar("$sign"   ,	signal) //// WHAT? WHAT THE FUCK?
 	interpreter.SetVar("$pass"	 ,  !(signal.data["reject"])) // if the signal isn't rejected, pass = 1; if the signal IS rejected, pass = 0
 	interpreter.SetVar("$filters"  ,	signal.data["spans"]) //Important, this is given as a vector! (a list)
 	interpreter.SetVar("$say"    , 	signal.data["verb_say"])
@@ -237,7 +240,6 @@ var/allowed_translateable_langs = ALL
 		signal.data["realname"] = setname
 	signal.data["name"]			= setname
 	signal.data["uuid"]			= interpreter.GetCleanVar("$uuid", signal.data["uuid"])
-	signal.data["level"]		= interpreter.GetCleanVar("$sector", signal.data["level"])
 	signal.data["job"]			= interpreter.GetCleanVar("$job", signal.data["job"])
 	signal.data["reject"]		= !(interpreter.GetCleanVar("$pass")) // set reject to the opposite of $pass
 	signal.data["verb_say"]		= interpreter.GetCleanVar("$say")
@@ -248,7 +250,7 @@ var/allowed_translateable_langs = ALL
 	var/list/setspans 			= interpreter.GetCleanVar("$filters") //Save the span vector/list to a holder list
 	if(islist(setspans)) //Players cannot be trusted with ANYTHING. At all. Ever.
 		setspans &= allowed_custom_spans //Prune out any illegal ones. Go ahead, comment this line out. See the horror you can unleash!
-		signal.data["spans"]	= setspans //Apply new span to the signal only if it is a valid list, made using vector() in the script.
+		signal.data["spans"]	= setspans //Apply new span to the signal only if it is a valid list, made using $filters & vector() in the script.
 
 	// If the message is invalid, just don't broadcast it!
 	if(signal.data["message"] == "" || !signal.data["message"])
@@ -257,7 +259,6 @@ var/allowed_translateable_langs = ALL
 /*  -- Actual language proc code --  */
 
 var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
-var/const/MAX_MEM_VARS	 = 500
 
 /datum/signal
 
@@ -270,9 +271,6 @@ var/const/MAX_MEM_VARS	 = 500
 			return S.memory[address]
 
 		else
-			if(S.memory.len >= MAX_MEM_VARS)
-				if(!(address in S.memory))
-					return
 			S.memory[address] = value
 
 
@@ -304,8 +302,10 @@ var/const/MAX_MEM_VARS	 = 500
 		connection.post_signal(S, signal)
 
 		var/time = time2text(world.realtime,"hh:mm:ss")
-		lastsignalers.Add("[time] <B>:</B> [S.id] sent a signal command, which was triggered by NTSL.<B>:</B> [format_frequency(freq)]/[code]")
-
+		lastsignalers.Add("[time] <B>:</B> NTSL sent a signal command while processing something [S.id] said.<B>:</B> [format_frequency(freq)]/[code]")
+		// You might ask "Why not just say that [S.id] triggered a signal command?"
+		// well, how do we know that it's not just something that happens unconditionally every time someone speaks?
+		// Don't need to be all accusative, ye dink.
 
 /datum/signal/proc/tcombroadcast(message, freq, source, job, spans, say = "says", ask = "asks", yell = "yells", exclaim = "exclaims", languages = HUMAN)
 	languages &= allowed_translateable_langs //we can only translate to certain languages
@@ -316,19 +316,27 @@ var/const/MAX_MEM_VARS	 = 500
 	if(!hradio)
 		throw EXCEPTION("tcombroadcast(): signal has no radio")
 		return
-
+	//First lets do some checks for bad input
+	if(isnum(message)) // Allows for setting $content to a number value
+		message = "[message]"
 	if((!message) && message != 0)
 		message = "*beep*"
 	if(!source)
 		source = "[html_encode(uppertext(S.id))]"
 		hradio = new // sets the hradio as a radio intercom
-	if(!freq || (!isnum(freq) && text2num(freq) == null))
-		freq = 1459
-	if(findtext(num2text(freq), ".")) // if the frequency has been set as a decimal
-		freq *= 10 // shift the decimal one place
-
 	if(!job)
 		job = "Unknown"
+	if(!freq || (!isnum(freq) && text2num(freq) == null))
+		freq = 1459
+	if(!isnum(freq))
+		freq = text2num(freq)
+	if(findtext(num2text(freq), ".")) // if the frequency has been set as a decimal
+		//freq *= 10 // shift the decimal one place
+		//Except that we don't trust floating-point arithmetic on our fraction
+		// and use string manipulation instead
+		var/shittyfreq = num2text(freq) // Super freq, you're a super freq!
+		freq = text2num(copytext(shittyfreq, 1, findtext(shittyfreq,".")) + copytext(shittyfreq,-1))
+		//SUPER FREAKY!
 
 	if(!islist(spans))
 		spans = list()
@@ -359,21 +367,15 @@ var/const/MAX_MEM_VARS	 = 500
 	newsign.data["verb_ask"] = ask
 	newsign.data["verb_yell"]= yell
 	newsign.data["verb_exclaim"] = exclaim
-	if(!isnum(freq))
-		freq = text2num(freq)
 	newsign.frequency = freq
-
-
 	newsign.data["radio"] = hradio
 	newsign.data["vmessage"] = message
 	newsign.data["vname"] = source
 	newsign.data["vmask"] = 0
 	newsign.data["level"] = data["level"]
-	newsign.data["broadcast_levels"] = data["broadcast_levels"]
 
 	newsign.sanitize_data()
 
 	var/pass = S.relay_information(newsign, "/obj/machinery/telecomms/hub")
-	if(!pass)
-		S.relay_information(newsign, "/obj/machinery/telecomms/broadcaster") // send this simple message to broadcasters
-
+	if(!pass) // If we're not sending this to the hub (i.e. we're running a basic tcomms or something)
+		S.relay_information(newsign, "/obj/machinery/telecomms/broadcaster") // send this message to broadcasters directly
