@@ -5,19 +5,19 @@
 	proc
 		Eval(node/expression/exp)
 			if(istype(exp, /node/expression/FunctionCall))
-				return RunFunction(exp)
+				. = RunFunction(exp)
 			else if(istype(exp, /node/expression/operator))
-				return EvalOperator(exp)
+				. = EvalOperator(exp)
 			else if(istype(exp, /node/expression/value/literal))
 				var/node/expression/value/literal/lit=exp
-				return lit.value
+				. = lit.value
 			else if(istype(exp, /node/expression/value/reference))
 				var/node/expression/value/reference/ref=exp
-				return ref.value
+				. = ref.value
 			else if(istype(exp, /node/expression/value/variable))
 				var/node/expression/value/variable/v=exp
 				if(!v.object)
-					return Eval(GetVariable(v.id.id_name))
+					. = Eval(GetVariable(v.id.id_name))
 				else
 					var/datum/D
 					if(istype(v.object, /node/identifier))
@@ -30,11 +30,13 @@
 					if(!D.vars.Find(v.id.id_name))
 						RaiseError(new/runtimeError/UndefinedVariable("[v.object.ToString()].[v.id.id_name]"))
 						return null
-					return Eval(D.vars[v.id.id_name])
+					. = Eval(D.vars[v.id.id_name])
 			else if(istype(exp, /node/expression))
 				RaiseError(new/runtimeError/UnknownInstruction())
 			else
-				return exp
+				. = exp
+
+			return Trim(.)
 
 		EvalOperator(node/expression/operator/exp)
 			if(istype(exp, /node/expression/operator/binary))
