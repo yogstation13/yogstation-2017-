@@ -190,7 +190,7 @@ EVENTS_MIN_PLAYERS_MUL 1
 ### AI ###
 
 ## Allow the AI job to be picked.
-ALLOW_AI
+#ALLOW_AI
 
 ### Secborg ###
 ## Uncomment to prevent the security cyborg module from being chosen
