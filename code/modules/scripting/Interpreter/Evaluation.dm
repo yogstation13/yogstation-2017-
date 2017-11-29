@@ -5,19 +5,19 @@
 	proc
 		Eval(node/expression/exp)
 			if(istype(exp, /node/expression/FunctionCall))
-				. = RunFunction(exp)
+				return RunFunction(exp)
 			else if(istype(exp, /node/expression/operator))
-				. = EvalOperator(exp)
+				return EvalOperator(exp)
 			else if(istype(exp, /node/expression/value/literal))
 				var/node/expression/value/literal/lit=exp
-				. = lit.value
+				return lit.value
 			else if(istype(exp, /node/expression/value/reference))
 				var/node/expression/value/reference/ref=exp
-				. = ref.value
+				return ref.value
 			else if(istype(exp, /node/expression/value/variable))
 				var/node/expression/value/variable/v=exp
 				if(!v.object)
-					. = Eval(GetVariable(v.id.id_name))
+					return Eval(GetVariable(v.id.id_name))
 				else
 					var/datum/D
 					if(istype(v.object, /node/identifier))
@@ -30,13 +30,11 @@
 					if(!D.vars.Find(v.id.id_name))
 						RaiseError(new/runtimeError/UndefinedVariable("[v.object.ToString()].[v.id.id_name]"))
 						return null
-					. = Eval(D.vars[v.id.id_name])
+					return Eval(D.vars[v.id.id_name])
 			else if(istype(exp, /node/expression))
 				RaiseError(new/runtimeError/UnknownInstruction())
 			else
-				. = exp
-
-			return Trim(.)
+				return exp
 
 		EvalOperator(node/expression/operator/exp)
 			if(istype(exp, /node/expression/operator/binary))
@@ -114,53 +112,36 @@
 		Add(a, b)
 			if(istext(a)&&!istext(b)) 		 b="[b]"
 			else if(istext(b)&&!istext(a)) a="[a]"
-			if(isobject(a) && !isobject(b))
-				RaiseError(new/runtimeError/TypeMismatch("+", a, b))
-				return null
-			else if(isobject(b) && !isobject(a))
+			if(!isobject(a) || !isobject(b))
 				RaiseError(new/runtimeError/TypeMismatch("+", a, b))
 				return null
 			return a+b
 		Subtract(a, b)
-			if(isobject(a) && !isobject(b))
-				RaiseError(new/runtimeError/TypeMismatch("-", a, b))
-				return null
-			else if(isobject(b) && !isobject(a))
+			if(!isobject(a) || !isobject(b))
 				RaiseError(new/runtimeError/TypeMismatch("-", a, b))
 				return null
 			return a-b
 		Divide(a, b)
-			if(isobject(a) && !isobject(b))
+			if(!isobject(a) || !isobject(b))
 				RaiseError(new/runtimeError/TypeMismatch("/", a, b))
 				return null
-			else if(isobject(b) && !isobject(a))
-				RaiseError(new/runtimeError/TypeMismatch("/", a, b))
-				return null
-			if(b==0 || b==null)
+			if(!b) // If 0 or Null or whatever, then we got a divison by zero.
 				RaiseError(new/runtimeError/DivisionByZero())
+				//ReleaseSingularity()
 				return null
 			return a/b
 		Multiply(a, b)
-			if(isobject(a) && !isobject(b))
-				RaiseError(new/runtimeError/TypeMismatch("*", a, b))
-				return null
-			else if(isobject(b) && !isobject(a))
+			if(!isobject(a) || !isobject(b))
 				RaiseError(new/runtimeError/TypeMismatch("*", a, b))
 				return null
 			return a*b
 		Modulo(a, b)
-			if(isobject(a) && !isobject(b))
-				RaiseError(new/runtimeError/TypeMismatch("%", a, b))
-				return null
-			else if(isobject(b) && !isobject(a))
+			if(!isobject(a) || !isobject(b))
 				RaiseError(new/runtimeError/TypeMismatch("%", a, b))
 				return null
 			return a%b
 		Power(a, b)
-			if(isobject(a) && !isobject(b))
-				RaiseError(new/runtimeError/TypeMismatch("**", a, b))
-				return null
-			else if(isobject(b) && !isobject(a))
+			if(!isobject(a) || !isobject(b))
 				RaiseError(new/runtimeError/TypeMismatch("**", a, b))
 				return null
 			return a**b
