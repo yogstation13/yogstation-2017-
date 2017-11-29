@@ -13,6 +13,7 @@ Chief Medical Officer
 	selection_color = "#ffddf0"
 	req_admin_notify = 1
 	minimal_player_age = 7
+	whitelisted = 1
 
 	outfit = /datum/outfit/job/cmo
 
@@ -201,7 +202,7 @@ Mining Medic
 	outfit = /datum/outfit/job/miningmedic
 
 	access = list(access_medical, access_morgue, access_surgery, access_cargo, access_mint, access_mining, access_mining_station, access_mailsorting, access_mineral_storeroom)
-	minimal_access = list(access_medical, access_morgue, access_mining, access_mint, access_mailsorting, access_mineral_storeroom)
+	minimal_access = list(access_medical, access_morgue, access_mining, access_mint, access_mailsorting, access_mineral_storeroom, access_mining_station)
 
 /datum/outfit/job/miningmedic
 	name = "Mining Medic"

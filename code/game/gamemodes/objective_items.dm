@@ -35,12 +35,6 @@
 	difficulty = 5
 	excludefromjob = list("Captain")
 
-/datum/objective_item/steal/magboots
-	name = "the chief engineer's advanced magnetic boots"
-	targetitem =  /obj/item/clothing/shoes/magboots/advance
-	difficulty = 5
-	excludefromjob = list("Chief Engineer")
-
 /datum/objective_item/steal/capmedal
 	name = "the medal of captaincy"
 	targetitem = /obj/item/clothing/tie/medal/gold/captain
@@ -116,10 +110,19 @@
 	targetitem = /obj/item/device/aicard
 	difficulty = 20 //beyond the impossible
 
-/datum/objective_item/steal/functionalai/check_special_completion(obj/item/device/aicard/C)
-	for(var/mob/living/silicon/ai/A in C)
-		if(istype(A, /mob/living/silicon/ai) && A.stat != 2) //See if any AI's are alive inside that card.
-			return 1
+/datum/objective_item/steal/functionalai/check_special_completion(obj/item/I)
+	var/obj/item/device/aicard/C
+
+	if(istype(I, /obj/item/weapon/stock_parts/cell/potato))
+		var/obj/item/weapon/stock_parts/cell/potato/P = I
+		C = P.storage // storage is defined as an intellicard
+	else
+		C = I
+
+	if(istype(C, /obj/item/device/aicard))
+		for(var/mob/living/silicon/ai/A in C)
+			if(istype(A, /mob/living/silicon/ai) && A.stat != 2) //See if any AI's are alive inside that card.
+				return 1
 	return 0
 
 /datum/objective_item/steal/blueprints
@@ -137,6 +140,12 @@
 		if(P.blueprints)	//if the blueprints are in frame
 			return 1
 	return 0
+
+/datum/objective_item/steal/rapidengineeringdevice
+	name = "the rapid engineering device"
+	targetitem = /obj/item/weapon/rapid_engineering_device
+	difficulty = 10
+	excludefromjob = list("Chief Engineer")
 
 /datum/objective_item/steal/slime
 	name = "an unused sample of slime extract"

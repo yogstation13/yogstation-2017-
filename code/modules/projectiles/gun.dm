@@ -206,6 +206,8 @@ obj/item/weapon/gun/proc/newshot()
 
 /obj/item/weapon/gun/proc/process_fire(atom/target as mob|obj|turf, mob/living/user as mob|obj, message = 1, params, zone_override)
 	add_fingerprint(user)
+	user.gunfiring += "\[[time_stamp()]\]fired [src]"
+	log_attack("\[[time_stamp()]\] [user]/[user.ckey] fired [src]")
 
 	if(semicd)
 		return
@@ -382,7 +384,7 @@ obj/item/weapon/gun/proc/newshot()
 
 
 /obj/item/weapon/gun/proc/reskin_gun(mob/M)
-	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") in options
+	var/choice = input(M,"Warning, you can only reskin your weapon once!","Reskin Gun") as anything in options
 
 	if(src && choice && !current_skin && !M.incapacitated() && in_range(M,src))
 		if(options[choice] == null)

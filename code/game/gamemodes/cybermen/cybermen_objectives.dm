@@ -103,7 +103,7 @@
 	var/list/L = list()
 	for(var/V in get_all_accesses())
 		L[get_access_desc(V)] = V
-	var/access_name = input("Set custom required access:", user, 0) in L
+	var/access_name = input("Set custom required access:", user, 0) as anything in L
 	required_access = L[access_name]
 	explanation_text = "Aquire an ID with [get_access_desc(required_access)]-level access upload it to the cybermen network by hacking it."
 
@@ -207,7 +207,7 @@
 	if(!L.len)
 		alert("No AI candidates", user)
 		return
-	var/ai_name = input("Set custom AI:", user, 0) in L
+	var/ai_name = input("Set custom AI:", user, 0) as anything in L
 	if(!ai_name)
 		return
 	var/the_ai = L[ai_name]
@@ -336,11 +336,11 @@
 	descriptions = list()
 	targets = list()
 	for(var/i=0;i<num_analyze_targets;i++)
-		var/target_name = input("Select analysis target [i+1]:", user) in cyberman_network.cybermen_analyze_targets
+		var/target_name = input("Select analysis target [i+1]:", user) as anything in cyberman_network.cybermen_analyze_targets
 		descriptions += target_name
 		targets += cyberman_network.cybermen_analyze_targets[target_name]
 	for(var/i=0;i<num_hack_targets;i++)
-		var/target_name = input("Select hack target [i+1]:", user) in cyberman_network.cybermen_hack_targets
+		var/target_name = input("Select hack target [i+1]:", user) as anything in cyberman_network.cybermen_hack_targets
 		descriptions += target_name
 		targets += cyberman_network.cybermen_hack_targets[target_name]
 	check_completion()//takes care of explanation text.
@@ -458,7 +458,7 @@
 	name = "Custom"
 
 /datum/objective/cybermen/custom/admin_create_objective(mob/user = usr)
-	phase = input("Enter phase name:", user)
-	explanation_text = input("Enter objective text:", user)
+	phase = stripped_input(user, "Enter phase name:")
+	explanation_text = stripped_input(usr, "Enter objective text:", user)
 	win_upon_completion = alert("Cyberman victory upon completion?", user, "Yes", "No") == "Yes" ? 1 : 0
 	alert("Note that an admin must use \"Force Objective Completion\" in the Cyberman Panel to complete this objective and advance the game.", user, "Okay")

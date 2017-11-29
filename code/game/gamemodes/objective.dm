@@ -27,9 +27,9 @@
 	. = list()
 	for(var/V in data_core.locked)
 		var/datum/data/record/R = V
-		var/mob/M = R.fields["reference"]
-		if(M && M.mind)
-			. += M.mind
+		var/datum/mind/M = R.fields["mindref"]
+		if(M)
+			. += M
 
 /datum/objective/proc/find_target()
 	var/list/possible_targets = list()
@@ -518,7 +518,7 @@ var/global/list/possible_items = list()
 		var/tmp_obj = new custom_target
 		var/custom_name = tmp_obj:name
 		qdel(tmp_obj)
-		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)
+		custom_name = stripped_input(usr, "Enter target name:", "Objective target", custom_name)
 		if (!custom_name) return
 		steal_target = custom_target
 		explanation_text = "Steal [custom_name]."
@@ -755,7 +755,7 @@ var/global/list/possible_items_special = list()
 	return 0
 
 /datum/objective/summon_magic
-	explanation_text = "Be the last living, human adept on the station."
+	explanation_text = "Be the last living, humanoid adept on the station."
 
 /datum/objective/summon_magic/check_completion()
 	if(!ishuman(owner.current) || (owner.current.stat & DEAD))

@@ -80,7 +80,9 @@
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
 			target.clean_blood()
-			target.wash_cream()
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
+				H.wash_cream()
 	return
 
 

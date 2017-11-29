@@ -45,6 +45,7 @@
 				return
 			apply_cuffs(C,user)
 			user << "<span class='notice'>You handcuff [C].</span>"
+			playsound(loc, 'sound/weapons/handcuffs_finish.ogg', 30, 1, -2)
 			if(istype(src, /obj/item/weapon/restraints/handcuffs/cable))
 				feedback_add_details("handcuffs","C")
 			else

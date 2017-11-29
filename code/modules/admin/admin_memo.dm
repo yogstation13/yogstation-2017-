@@ -11,7 +11,7 @@
 	if(!dbcon.IsConnected())
 		src << "<span class='danger'>Failed to establish database connection.</span>"
 		return
-	var/memotask = input(usr,"Choose task.","Memo") in list("Show","Write","Edit","Remove")
+	var/memotask = input(usr,"Choose task.","Memo") as anything in list("Show","Write","Edit","Remove")
 	if(!memotask)
 		return
 	admin_memo_output(memotask)
@@ -27,7 +27,7 @@
 		if("Write")
 			var/savefile/F = new(MEMOFILE)
 			if(F)
-				var/memo = input(src,"Type your memo\n(Leaving it blank will delete your current memo):","Write Memo",null) as null|message
+				var/memo = stripped_multiline_input(src,"Type your memo\n(Leaving it blank will delete your current memo):","Write Memo",null)
 				switch(memo)
 					if(null)
 						return
@@ -67,7 +67,7 @@
 				return
 			if(query_memofind.NextRow())
 				var/old_memo = query_memofind.item[1]
-				var/new_memo = input("Input new memo", "New Memo", "[old_memo]", null) as message
+				var/new_memo = stripped_multiline_input("Input new memo", "New Memo", "[old_memo]", null)
 				if(!new_memo)
 					return
 				new_memo = sanitizeSQL(new_memo)

@@ -1,12 +1,12 @@
 /client/proc/fix_air(var/turf/open/T in world)
 	set name = "Fix Air"
-	set category = "Server"
-	set desc = "Fixes air in specified radius"
+	set category = "Admin"
+	set desc = "Fixes air in specified radius."
 
 	if(!holder)
 		src << "Only administrators may use this command."
 		return
-	if(check_rights(R_SERVER,1))
+	if(check_rights(R_ADMIN,1))
 		var/range=input("Enter range:","Num",2) as num
 		message_admins("[key_name_admin(usr)] fixed air with range [range] in area [T.loc.name]")
 		log_game("[key_name_admin(usr)] fixed air with range [range] in area [T.loc.name]")

@@ -8,6 +8,7 @@
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
 	anchored = 1
+	no_malf_ai_overriding = TRUE
 	layer = HIGH_OBJ_LAYER
 	density = 0
 	var/obj/machinery/porta_turret/parent_turret = null
@@ -66,9 +67,6 @@
 
 /obj/machinery/porta_turret_cover/attacked_by(obj/item/I, mob/user)
 	parent_turret.attacked_by(I, user)
-
-/obj/machinery/porta_turret_cover/can_be_overridden()
-	. = 0
 
 /obj/machinery/porta_turret_cover/emag_act(mob/user)
 	if(!parent_turret.emagged)

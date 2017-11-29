@@ -661,7 +661,7 @@
 			menu += "</ol><font size=\"-3\">Upgrade NOW to Space Parts & Space Vendors PLUS for full remote order control and inventory management."
 		if (56) //quartermaster stock viewer
 			menu = "<h4><img src=pda_crate.png> Stock Exchange Viewer</h4>"
-			var/logged_in = "/tg/ Station 13 Cargo Department"
+			var/logged_in = "[station_name()] Cargo Department"
 			menu += "<u><b>[logged_in]</b></u><br>"
 			menu += "<table border='1' bordercolor='#000000'>"
 			menu += "<tr><th>&nbsp</th><th>ID</th><th>Name</th><th>Value</th><th>Owned</th><th>Avail</th></tr>"
@@ -716,7 +716,7 @@
 				menu += "<h4>Located Mops:</h4>"
 
 				var/ldat
-				for (var/obj/item/weapon/mop/M in world)
+				for (var/obj/item/weapon/mop/M in janitorial_items)
 					var/turf/ml = get_turf(M)
 
 					if(ml)
@@ -733,7 +733,7 @@
 				menu += "<h4>Located Janitorial Cart:</h4>"
 
 				ldat = null
-				for (var/obj/structure/janitorialcart/B in world)
+				for (var/obj/structure/mopbucket/janitorialcart/B in janitorial_items)
 					var/turf/bl = get_turf(B)
 
 					if(bl)
@@ -962,10 +962,10 @@
 				if("alert")
 					post_status("alert", href_list["alert"])
 				if("setmsg1")
-					message1 = reject_bad_text(input("Line 1", "Enter Message Text", message1) as text|null, 40)
+					message1 = reject_bad_text(stripped_input(usr, "Line 1", "Enter Message Text", message1), 40)
 					updateSelfDialog()
 				if("setmsg2")
-					message2 = reject_bad_text(input("Line 2", "Enter Message Text", message2) as text|null, 40)
+					message2 = reject_bad_text(stripped_input(usr, "Line 2", "Enter Message Text", message2), 40)
 					updateSelfDialog()
 				else
 					post_status(href_list["statdisp"])

@@ -76,16 +76,19 @@
 	icon_state = "securityhud"
 	origin_tech = "magnets=3;combat=2"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
+	var/syndicate = FALSE
 
 /obj/item/clothing/glasses/hud/security/examine(mob/user)
 	. = ..()
-	user << "<span class='notice'>To operate the criminal status of someone in range,  ALT + SHIFT and click on the target.</span>"
-	user << "<span class='notice'>To add crimes and comments to a person, hold CTRL + SHIFT and click on the target</span>"
+	if(!syndicate)
+		user << "<span class='notice'>To operate the criminal status of someone in range,  ALT + SHIFT and click on the target.</span>"
+		user << "<span class='notice'>To add crimes and comments to a person, hold CTRL + SHIFT and click on the target</span>"
 
 /obj/item/clothing/glasses/hud/security/chameleon
 	name = "Chameleon Security HUD"
 	desc = "A stolen security HUD integrated with Syndicate chameleon technology. Toggle to disguise the HUD. Provides flash protection."
 	flash_protect = 1
+	syndicate = TRUE
 
 /obj/item/clothing/glasses/hud/security/chameleon/attack_self(mob/user)
 	chameleon(user)
@@ -223,7 +226,7 @@
 	var/datum/data/record/R = find_record("name", perpname, data_core.general)
 	R = find_record("name", perpname, data_core.security)
 	if(R)
-		var/setcriminal = input(H, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
+		var/setcriminal = input(H, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) as anything in list("None", "*Arrest*", "Incarcerated", "Parolled", "Discharged", "Cancel")
 		if(setcriminal != "Cancel")
 			if(H.canUseHUD())
 				H.investigate_log("[A.key] has been set from [R.fields["criminal"]] to [setcriminal] by [H.name] ([H.key]).", "records")

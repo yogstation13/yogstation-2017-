@@ -8,6 +8,7 @@ CIGARS
 SMOKING PIPES
 CHEAP LIGHTERS
 ZIPPO
+ASHTRAY
 
 CIGARETTE PACKETS ARE IN FANCY.DM
 */
@@ -41,6 +42,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/match/proc/matchignite()
 	if(lit == 0)
+		playsound(loc, 'sound/effects/match_light.ogg', 50, 1, -1)
 		lit = 1
 		icon_state = "match_lit"
 		damtype = "fire"
@@ -634,3 +636,46 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			user << "<span class='warning'>You need to dry this first!</span>"
 	else
 		..()
+
+///////////
+//ASHTRAY//
+///////////
+/obj/item/weapon/ashtray
+	name = "ashtray"
+	desc = "A small, plastic tray to stub your cigarettes in."
+	icon = 'icons/obj/cigarettes.dmi'
+	icon_state = "ashtray0"
+	w_class = 1
+	var/amount_of_stubs = 0
+	var/capacity = 5
+
+/obj/item/weapon/ashtray/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] dumps the contents of the [src] into his mouth!</span>")
+	playsound(loc, 'sound/items/eatfood.ogg', 50, 1, -1)
+	return (TOXLOSS)
+
+/obj/item/weapon/ashtray/update_icon()
+	if(amount_of_stubs <= 2)
+		icon_state = "ashtray[amount_of_stubs]"
+	else
+		icon_state = "ashtray2"
+
+/obj/item/weapon/ashtray/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/clothing/mask/cigarette))
+		if(amount_of_stubs == capacity)
+			user << "<span class='warning'>[src] is full!</span>"
+			return
+		else
+			amount_of_stubs++
+			update_icon()
+			user.visible_message("[user] stubs [O] in [src].", "<span class='notice'>You stub [O] in [src].</span>")
+			qdel(O)
+
+/obj/item/weapon/ashtray/attack_self(mob/living/user)
+	if(!amount_of_stubs)
+		return
+	else
+		user << "<span class='notice'>You empty the [src] onto the ground.</span>"
+		new /obj/effect/decal/cleanable/ash(get_turf(src))
+		amount_of_stubs = 0
+		update_icon()

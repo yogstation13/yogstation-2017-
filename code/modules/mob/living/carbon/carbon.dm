@@ -1,5 +1,6 @@
 /mob/living/carbon
 	blood_volume = BLOOD_VOLUME_NORMAL
+	var/datum/dream/dream = new()
 
 /mob/living/carbon/New()
 	create_reagents(1000)
@@ -543,13 +544,13 @@
 
 	add_abilities_to_panel()
 
-/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0)
+/mob/living/carbon/proc/vomit(var/lost_nutrition = 10, var/blood = 0, var/stun = 1, var/distance = 0, var/message = 1, var/toxic = 0, var/stunamount = 10)
 	if(nutrition < 100 && !blood)
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
 							"<span class='userdanger'>You try to throw up, but there's nothing your stomach!</span>")
 		if(stun)
-			Weaken(10)
+			Weaken(stunamount)
 		return 1
 
 	if(is_mouth_covered()) //make this add a blood/vomit overlay later it'll be hilarious
@@ -730,8 +731,10 @@
 				if(NOCRIT in status_flags)//no crit when you're stimmed
 					return
 				stat = UNCONSCIOUS
-				blind_eyes(1)
 				update_canmove()
+				if(!dream.Dream(src))
+					blind_eyes(1)
+
 		else if(health <= config.health_threshold_crit)
 			if(NOCRIT in status_flags)
 				return
@@ -803,4 +806,3 @@
 		user << "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>"
 
 	..()
-

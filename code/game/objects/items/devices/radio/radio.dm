@@ -352,7 +352,7 @@
 			"mobtype" = M.type, 	// the mob's type
 			"realname" = real_name, // the mob's real name
 			"name" = voice,			// the mob's voice name
-			"uuid" = real_name,		// Used for tracking when $source is change
+			"uuid" = voice,			// Used for tracking when $source is change
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mask
@@ -405,7 +405,7 @@
 		"mobtype" = M.type, 	// the mob's type
 		"realname" = real_name, // the mob's real name
 		"name" = voice,			// the mob's voice name
-		"uuid" = real_name, // Used for tracking when $source is changed
+		"uuid" = voice, 		// Used for tracking when $source is changed
 		"job" = jobname,		// the mob's job
 		"key" = mobkey,			// the mob's key
 		"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
@@ -436,7 +436,7 @@
 
 /obj/item/device/radio/proc/broadcast_delayed(datum/signal/signal, atom/movable/M, message, channel, list/spans, voicemask, voice, jobname, real_name, freq)
 	var/turf/position = get_turf(src)
-	if(signal.data["done"] && (position.z in signal.data["level"]))
+	if(signal.data["done"] && (position.z in signal.data["broadcast_levels"]))
 		// we're done here.
 		return
 
@@ -466,7 +466,7 @@
 */
 
 
-/obj/item/device/radio/proc/receive_range(freq, level)
+/obj/item/device/radio/proc/receive_range(freq, list/broadcast_levels)
 	// check if this radio can receive on the given frequency, and if so,
 	// what the range is in which mobs will hear the radio
 	// returns: -1 if can't receive, range otherwise
@@ -475,9 +475,9 @@
 		return -1
 	if(!listening)
 		return -1
-	if(!(0 in level))
+	if(!(0 in broadcast_levels))
 		var/turf/position = get_turf(src)
-		if(!position || !(position.z in level))
+		if(!position || !(position.z in broadcast_levels))
 			return -1
 	if(freq == SYND_FREQ)
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
@@ -501,13 +501,6 @@
 		if (!accept)
 			return -1
 	return canhear_range
-
-/obj/item/device/radio/proc/send_hear(freq, level)
-
-	var/range = receive_range(freq, level)
-	if(range > -1)
-		return get_hearers_in_view(canhear_range, src)
-
 
 /obj/item/device/radio/examine(mob/user)
 	..()

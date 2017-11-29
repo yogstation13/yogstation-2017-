@@ -87,6 +87,7 @@
 
 		origin.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 		M.key = origin.key
+		M.reset_perspective(M)
 	owner.gib()
 
 #undef EGG_INCUBATION_TIME

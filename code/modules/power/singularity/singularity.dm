@@ -10,6 +10,7 @@
 	layer = MASSIVE_OBJ_LAYER
 	luminosity = 6
 	unacidable = 1 //Don't comment this out.
+	var/notify_admins = TRUE
 	var/current_size = 1
 	var/allowed_size = 1
 	var/contained = 1 //Are we going to move around?
@@ -32,7 +33,8 @@
 
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
-	admin_investigate_setup()
+	if(notify_admins)
+		admin_investigate_setup()
 
 	src.energy = starting_energy
 	..()
@@ -72,7 +74,9 @@
 	switch(severity)
 		if(1)
 			if(current_size <= STAGE_TWO)
-				investigate_log("has been destroyed by a heavy explosion.","singulo")
+				if(notify_admins)
+					investigate_log("has been destroyed by a heavy explosion.","singulo")
+					log_game("SINGULO: Singularity has been destroyed by an explosion.")
 				qdel(src)
 				return
 			else
@@ -121,6 +125,7 @@
 	if(!count)
 		message_admins("A singulo has been created without containment fields active ([x],[y],[z])",1)
 	investigate_log("was created. [count?"":"<font color='red'>No containment fields were active</font>"]","singulo")
+	log_game("SINGULO: A singulo has been created without containment fields active at ([x],[y],[z])")
 
 /obj/singularity/proc/dissipate()
 	if(!dissipate)
@@ -213,7 +218,7 @@
 	if(rotation_time != cur_rotation)
 		SpinAnimation(rotation_time, segments = 8)
 		cur_rotation = rotation_time
-	if(current_size == allowed_size)
+	if((current_size == allowed_size) && notify_admins)
 		investigate_log("<font color='red'>grew to size [current_size]</font>","singulo")
 		return 1
 	else if(current_size < (--temp_allowed_size))
@@ -224,7 +229,9 @@
 
 /obj/singularity/proc/check_energy()
 	if(energy <= 0)
-		investigate_log("collapsed.","singulo")
+		if(notify_admins)
+			investigate_log("collapsed.","singulo")
+			log_game("SINGULO: Singularity collapsed.  For use of a better phrase, it's gone.")
 		qdel(src)
 		return 0
 	switch(energy)//Some of these numbers might need to be changed up later -Mport

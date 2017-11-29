@@ -12,7 +12,7 @@
 		return 0
 
 /datum/action/innate/godspeak/Activate()
-	var/msg = input(owner,"Speak to your god","Godspeak","") as null|text
+	var/msg = stripped_input(owner,"Speak to your god","Godspeak","")
 	if(!msg)
 		return
 	var/rendered = "<font color='[god.side]'><span class='game say'><i>Prophet [owner]:</i> <span class='message'>[msg]</span></span>"

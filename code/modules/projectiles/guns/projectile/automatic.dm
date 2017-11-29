@@ -41,6 +41,7 @@
 				magazine = null
 			else
 				user << "<span class='notice'>You insert the magazine into \the [src].</span>"
+			playsound(user, 'sound/weapons/autoguninsert.ogg', 60, 1)
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src

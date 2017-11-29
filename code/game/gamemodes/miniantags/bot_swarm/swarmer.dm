@@ -560,7 +560,7 @@
 		SetLuminosity(0)
 
 /mob/living/simple_animal/hostile/swarmer/proc/ContactSwarmers()
-	var/message = input(src, "Announce to other swarmers", "Swarmer contact")
+	var/message = stripped_input(src, "Announce to other swarmers", "Swarmer contact")
 	// TODO get swarmers their own colour rather than just boldtext
 	var/rendered = "<B>Swarm communication - [src]</b> states: [say_quote(message, get_spans())]"
 	if(message)

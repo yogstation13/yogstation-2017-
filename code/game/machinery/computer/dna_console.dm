@@ -354,7 +354,7 @@
 				var/can_add = max(min(REJUVENATORS_MAX - epinephrine_amount, REJUVENATORS_INJECT), 0)
 				viable_occupant.reagents.add_reagent("epinephrine", can_add)
 		if("setbufferlabel")
-			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
+			var/text = stripped_input(usr, "Input a new label:", "Input an Text", null)
 			if(num && text)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]

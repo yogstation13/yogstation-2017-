@@ -65,7 +65,7 @@
 			if("cannon")
 				G = new /obj/item/weapon/gun/energy/lasercannon(get_turf(H))
 			if("crossbow")
-				G = new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large(get_turf(H))
+				G = new /obj/item/weapon/gun/energy/crossbow/large(get_turf(H))
 			if("nuclear")
 				G = new /obj/item/weapon/gun/energy/gun/nuclear(get_turf(H))
 			if("sabr")

@@ -15,6 +15,8 @@
 	icon_state = "sheet-glass"
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=1"
+	novariants = FALSE
+	merge_type = /obj/item/stack/sheet/glass
 
 /obj/item/stack/sheet/glass/cyborg
 	materials = list()
@@ -137,6 +139,8 @@
 	icon_state = "sheet-rglass"
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=2"
+	novariants = FALSE
+	merge_type = /obj/item/stack/sheet/rglass
 
 /obj/item/stack/sheet/rglass/cyborg
 	materials = list()
@@ -171,7 +175,7 @@
 		return 0
 	var/title = "Sheet Reinf. Glass"
 	title += " ([src.get_amount()] sheet\s left)"
-	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
+	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") as anything in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
 			if(!src)
 				return 1

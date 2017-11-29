@@ -131,7 +131,7 @@
 			if(!msg)
 				charge_counter = charge_max
 				return
-			log_say("RevenantTransmit: [key_name(user)]->[key_name(M)] : [msg]")
+			log_say("[key_name(user)]->[key_name(M)] : [msg]", "RevenantTransmit")
 			user << "<span class='revenboldnotice'>You transmit to [M]:</span> <span class='revennotice'>[msg]</span>"
 			M << "<span class='revenboldnotice'>An alien voice resonates from all around...</span> <span class='revennotice'>[msg]</span>"
 			for(var/ded in dead_mob_list)

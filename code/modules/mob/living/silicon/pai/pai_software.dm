@@ -104,7 +104,7 @@
 	..()
 	var/soft = href_list["software"]
 	var/sub = href_list["sub"]
-
+	var/refresh = TRUE
 	if(soft)
 		if (soft == "refresh") //irritating but handles refresh functionality innately this way
 			soft = src.screen
@@ -117,7 +117,8 @@
 		var/datum/pai/software/SW = S
 
 		if (soft == SW.sid) //if we've got a matching href tag, refer it to the software datum's use event
-			SW.action_use(src, href_list)
+			if(SW.action_use(src, href_list))
+				refresh = FALSE
 
 	//LEGACY COMMANDS FROM OLD SOFTWARE SYSTEM, NEW SOFTWARE IS HANDLED AUTOMATICALLY IN /datum/pai/software
 	switch(soft)
@@ -161,7 +162,7 @@
 					radio.recalculateChannels()
 			if(href_list["range"])
 				if(radio)
-					var/newrange = input("Set radio/microphone range", "Radio Range", 3) in list(0, 1, 2, 3, 4)
+					var/newrange = input("Set radio/microphone range", "Radio Range", 3) as anything in list(0, 1, 2, 3, 4)
 					if(radio)
 						radio.canhear_range = newrange
 			if(href_list["channel"])
@@ -170,7 +171,7 @@
 					radio.channels[channel] ^= radio.FREQ_LISTENING
 
 		if("image")
-			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
+			var/newImage = input("Select your new display image.", "Display Image", "Happy") as anything in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
 			var/pID = 1
 			switch(newImage)
 				if("Happy")
@@ -208,10 +209,9 @@
 						return 0
 				spawn CheckDNA(M, src)
 
-
-	//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
-	src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
-	return
+	if(refresh)
+		//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
+		src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 
 // MENUS
 
@@ -311,7 +311,7 @@
 	return dat
 
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
-	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
+	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") as anything in list("Yes", "No")
 	if(answer == "Yes")
 		M.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>",\
 						"<span class='notice'>You press your thumb against [P].</span>",\

@@ -31,12 +31,11 @@
 //Academy Items
 
 /obj/singularity/academy
+	name = "magical gravitational singularity"
 	dissipate = 0
 	move_self = 0
 	grav_pull = 1
-
-/obj/singularity/academy/admin_investigate_setup()
-	return
+	notify_admins = FALSE
 
 /obj/singularity/academy/process()
 	eat()

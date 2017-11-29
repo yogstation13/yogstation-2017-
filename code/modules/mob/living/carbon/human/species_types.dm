@@ -14,6 +14,9 @@
 	use_skintones = 1
 	roundstart = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
+	disliked_food = GROSS
+	liked_food = JUNKFOOD | FRIED
+	toxic_food = TOXIC | RAW
 
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
@@ -49,8 +52,10 @@
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	specflags = list()
 	roundstart = 0
-	limbs_id = "fly"
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
+	disliked_food = null //atleast they got that going for them
+	liked_food = GROSS
+	toxic_food = TOXIC
 
 
 /datum/species/human/fly/handle_speech(message)
@@ -112,6 +117,10 @@
 	low_temp_level_3 = BODYTEMP_COLD_DAMAGE_LEVEL_3
 	highpressure_mod = 0.75
 	lowpressure_mod = 0.75
+
+	disliked_food = DAIRY | GRAIN
+	liked_food = GROSS
+	toxic_food = TOXIC //and raw meat
 
 datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H << "<span class='notice'><b>You are Unathi.</b> Hailing from the homeworld of Moghes, your people are descended from an older race lost to the sands of time.</span>"
@@ -187,6 +196,34 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/lizard/ashwalker/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	return
 
+/datum/species/lizard/ashwalker/cosmic
+	name = "Cosmic Ashwalker"
+	var/rebirth
+	var/rebirthcount = 0
+
+/datum/species/lizard/ashwalker/cosmic/spec_life(mob/living/carbon/human/H)
+	. = ..()
+	if(H.health < 0)
+		if(rebirthcount >= 3)
+			return
+		if(rebirth)
+			return
+		if(H.stat == DEAD) // we only heal when they're close to death. not actually dead.
+			return
+		rebirth = TRUE
+		rebirthcount++
+		H << "<span class='notice'>Your body is entering cryogenic rebirth. You will soon be restored to your physical form. Once this happens your soul will be dragged back into your body."
+		if(rebirthcount >= 3)
+			H << "<span class='notice'>You notice that your body isn't regenerating as fast as it use to. It seems like the abductor's effects are wearing off of you. This is your last rebirth cycle..</span>"
+		H.death()
+		H.ghostize()
+		for(var/obj/item/I in H)
+			H.unEquip(I)
+		var/obj/effect/cyrogenicbubble/CB = new(get_turf(H))
+		CB.name = H.real_name
+		H.forceMove(CB)
+		CB.ashwalker = H
+
 /datum/species/lizard/fly
 	// lizards turned into fly-like abominations in teleporter accidents.
 	name = "Unafly"
@@ -199,6 +236,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
 	specflags = list()
 	default_color = "FFFFFF"
+	toxic_food = TOXIC
 
 /datum/species/lizard/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
@@ -256,6 +294,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	low_temp_level_1 = 280
 	low_temp_level_2 = 250
 	low_temp_level_3 = 190
+	toxic_food = null
+	disliked_food = null
 
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN
 	var/emagged = 0
@@ -466,7 +506,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Phytosian"
 	id = "plant"
 	default_color = "59CE00"
-	specflags = list(MUTCOLORS,EYECOLOR,THRALLAPPTITUDE, PLANT)
+	specflags = list(MUTCOLORS,EYECOLOR,THRALLAPPTITUDE, PLANT,LIPS)
 	attack_verb = "slic"
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -484,6 +524,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/last_light_level = 0
 	var/last_light_message = -STATUS_MESSAGE_COOLDOWN
 	var/last_plantbgone_message = -STATUS_MESSAGE_COOLDOWN
+	disliked_food = MEAT | DAIRY //he's vegan
+	liked_food = VEGETABLES | FRUIT
+	toxic_food = TOXIC | RAW
 
 
 /datum/species/plant/before_equip_job(datum/job/J, mob/living/carbon/human/H)
@@ -759,7 +802,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 					L.show_message("<span class='notice'>You hear quiet, garbled whispers.</span>", 2)
 				if(iscarbon(L) && L.stat)
 					L << "<span class='notice'>The room smells like leaves.</span>"
-		log_say("[H.name]/[H.key] : \[Pheromones\]: [message]")
+		log_say("[H.name]/[H.key] : [message]", "PHEROMONE")
 		H.say_log += "\[Pheromones\]: [message]"
 		return 1
 	return ..()
@@ -768,7 +811,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	// Phytosian turned into fly-like abominations in teleporter accidents.
 	name = "Flytosian"
 	id = "flytosian"
-	specflags = list(THRALLAPPTITUDE, PLANT)
+	specflags = list(THRALLAPPTITUDE, PLANT,LIPS)
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
@@ -807,6 +850,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Podperson"
 	id = "pod"
 	default_color = "59CE00"
+	roundstart = 0
 
 /*
  SHADOWPEOPLE
@@ -960,6 +1004,10 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/datum/action/innate/split_body/slime_split
 	var/datum/action/innate/swap_body/body_swap
 
+	disliked_food = FRUIT
+	liked_food = TOXIC
+	toxic_food = null
+
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
 	if(slime_split)
 		slime_split.Remove(C)
@@ -1071,75 +1119,8 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	owner.mind.transfer_to(selected_body)
 
 /*
- GOLEMS
+GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 */
-
-/datum/species/golem
-	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
-	name = "Golem"
-	id = "golem"
-	specflags = list(NOBREATH,RESISTTEMP,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
-	speedmod = 2
-	armor = 55
-	siemens_coeff = 0
-	punchdamagelow = 5
-	punchdamagehigh = 14
-	punchstunthreshold = 11 //about 40% chance to stun
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
-	nojumpsuit = 1
-	sexes = 1
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
-	// To prevent golem subtypes from overwhelming the odds when random species
-	// changes, only the Random Golem type can be chosen
-	blacklisted = TRUE
-	dangerous_existence = TRUE
-	limbs_id = "golem"
-	fixed_mut_color = "aaa"
-
-/datum/species/golem/random
-	name = "Random Golem"
-	blacklisted = FALSE
-	dangerous_existence = FALSE
-
-/datum/species/golem/random/New()
-	. = ..()
-	var/list/golem_types = typesof(/datum/species/golem) - src.type
-	var/datum/species/golem/golem_type = pick(golem_types)
-	name = initial(golem_type.name)
-	id = initial(golem_type.id)
-	meat = initial(golem_type.meat)
-
-/datum/species/golem/adamantine
-	name = "Adamantine Golem"
-	id = "adamantine"
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
-	fixed_mut_color = "4ed"
-
-/datum/species/golem/plasma
-	name = "Plasma Golem"
-	id = "plasma"
-	fixed_mut_color = "a3d"
-
-/datum/species/golem/diamond
-	name = "Diamond Golem"
-	id = "diamond"
-	fixed_mut_color = "0ff"
-
-/datum/species/golem/gold
-	name = "Gold Golem"
-	id = "gold"
-	fixed_mut_color = "ee0"
-
-/datum/species/golem/silver
-	name = "Silver Golem"
-	id = "silver"
-	fixed_mut_color = "ddd"
-
-/datum/species/golem/uranium
-	name = "Uranium Golem"
-	id = "uranium"
-	fixed_mut_color = "7f0"
-
 
 /*
  FLIES
@@ -1148,10 +1129,11 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/fly
 	// Humans turned into fly-like abominations in teleporter accidents.
 	name = "Human?"
-	id = "fly"
+	id = "manfly"
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
+	toxic_food = TOXIC
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
@@ -1185,6 +1167,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
+	disliked_food = null
+	liked_food = RAW | MEAT | GROSS
+	toxic_food = null //I doubt a skeleton would care
 
 /*
  ZOMBIES
@@ -1201,6 +1186,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 	speedmod = 2
+	disliked_food = null
+	liked_food = RAW | MEAT | GROSS
+	toxic_food = null
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
@@ -1277,6 +1265,9 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	burnmod = 2
 	heatmod = 2
 	speedmod = 1
+	disliked_food = GROSS
+	liked_food = RAW | VEGETABLES
+	toxic_food = TOXIC | RAW
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
@@ -1329,6 +1320,8 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	meat = null
 	exotic_damage_overlay = "synth"
 	limbs_id = "synth"
+	disliked_food = null
+	toxic_food = null
 	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
