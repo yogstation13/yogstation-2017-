@@ -16,6 +16,8 @@
 		. = is_eligible_servant(new_body)
 
 /datum/antagonist/clockcultist/give_to_body(mob/living/new_body)
+	if(is_servant_of_ratvar(new_body))
+		return
 	if(!silent_update)
 		if(issilicon(new_body))
 			new_body << "<span class='heavy_brass'>You are unable to compute this truth. Your vision glows a brilliant yellow, and all at once it comes to you. Ratvar, the Clockwork Justiciar, \

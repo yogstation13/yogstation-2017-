@@ -142,7 +142,7 @@
 
 		if("clear_virus")
 
-			var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
+			var/choice = input("Are you sure you want to cure all disease?") as anything in list("Yes", "Cancel")
 			if(choice == "Yes")
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
 				for(var/datum/disease/D in SSdisease.processing)
@@ -334,7 +334,7 @@
 			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
 				return
-			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
+			var/objective = stripped_input(usr, "Enter an objective", null, null, null, MAX_MESSAGE_LEN)
 			if(!objective)
 				return
 			feedback_inc("admin_secrets_fun_used",1)

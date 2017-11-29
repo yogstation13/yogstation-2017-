@@ -26,4 +26,3 @@
 	set category = "Admin"
 	set hidden = 1
 	src.cmd_admin_say(message)
-

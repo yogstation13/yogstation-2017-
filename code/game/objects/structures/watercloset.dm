@@ -41,6 +41,8 @@
 /obj/machinery/disposal/bin/toilet/attackby(obj/item/I, mob/living/user, params)
 	return ..()
 
+/obj/machinery/disposal/bin/toilet/update_icon()
+	return
 
 
 /obj/structure/urinal

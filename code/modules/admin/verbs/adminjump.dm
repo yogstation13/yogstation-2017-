@@ -141,7 +141,7 @@
 	if(!src.holder)
 		src << "Only administrators may use this command."
 		return
-	var/area/A = input(usr, "Pick an area.", "Pick an area") in sortedAreas|null
+	var/area/A = input(usr, "Pick an area.", "Pick an area") as anything in sortedAreas|null
 	if(A && istype(A))
 		if(M.forceMove(safepick(get_area_turfs(A))))
 

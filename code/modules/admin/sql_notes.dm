@@ -3,7 +3,7 @@
 		usr << "<span class='danger'>Failed to establish database connection.</span>"
 		return
 	if(!target_ckey)
-		var/new_ckey = ckey(input(usr,"Who would you like to add a note for?","Enter a ckey",null) as text)
+		var/new_ckey = ckey(stripped_input(usr,"Who would you like to add a note for?","Enter a ckey",null))
 		if(!new_ckey)
 			return
 		new_ckey = sanitizeSQL(new_ckey)
@@ -18,7 +18,7 @@
 		target_ckey = new_ckey
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	if(!notetext)
-		notetext = input(usr,"Write your Note","Add Note") as message
+		notetext = stripped_multiline_input(usr,"Write your Note","Add Note")
 		if(!notetext)
 			return
 	notetext = sanitizeSQL(notetext)
@@ -89,7 +89,7 @@
 		target_ckey = query_find_note_edit.item[1]
 		var/old_note = query_find_note_edit.item[2]
 		var/adminckey = query_find_note_edit.item[3]
-		var/new_note = input("Input new note", "New Note", "[old_note]") as message
+		var/new_note = stripped_multiline_input("Input new note", "New Note", "[old_note]")
 		if(!new_note)
 			return
 		new_note = sanitizeSQL(new_note)

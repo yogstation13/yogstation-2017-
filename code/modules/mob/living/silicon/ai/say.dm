@@ -14,7 +14,12 @@
 
 /mob/living/silicon/ai/compose_job(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	//Also includes the </a> for AI hrefs, for convenience.
-	return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
+	var/result = ""
+	if(show_radio_jobs && radio_freq)
+		result += " (" + speaker.GetJob() + ")"
+	if(speaker.GetSource())
+		result += "</a>"
+	return result
 
 /mob/living/silicon/ai/IsVocal()
 	return !config.silent_ai
@@ -42,7 +47,7 @@
 
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message)
-	log_say("[key_name(src)] : [message]")
+	log_say("[key_name(src)] : [message]", "HOLOPAD")
 
 	message = trim(message)
 
@@ -97,7 +102,7 @@ var/const/VOX_DELAY = 600
 		src << "<span class='notice'>Please wait [round((announcing_vox - world.time) / 10)] seconds.</span>"
 		return
 
-	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text
+	var/message = stripped_input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement)
 
 	last_announcement = message
 

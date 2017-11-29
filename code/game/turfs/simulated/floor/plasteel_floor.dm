@@ -387,6 +387,12 @@
 /turf/open/floor/plasteel/cult
 	icon_state = "cult"
 	name = "engraved floor"
+	explosion_block = 50
+
+/turf/open/floor/plasteel/cult/dungeon/New()
+	..()
+	slowdown = rand(0,2)
+
 
 /turf/open/floor/plasteel/goonplaque
 	icon_state = "plaque"

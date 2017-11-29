@@ -209,7 +209,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		targets and cause them to slur as if inebriated. It can produce an \
 		infinite amount of bolts, but takes time to automatically recharge \
 		after each shot."
-	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
+	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 9
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear)

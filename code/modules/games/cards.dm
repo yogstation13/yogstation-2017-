@@ -145,7 +145,7 @@
 		if(!blank)
 			user << "You cannot write on that card."
 			return
-		var/cardtext = sanitize(input(user, "What do you wish to write on the card?", "Card Writing") as text|null, 50)
+		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", null, 50)
 		if(!cardtext)
 			return
 		P.name = cardtext

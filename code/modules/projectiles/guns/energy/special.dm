@@ -82,142 +82,46 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/mindflayer)
 	ammo_x_offset = 2
 
-/obj/item/weapon/gun/energy/kinetic_accelerator
-	name = "proto-kinetic accelerator"
-	desc = "According to Nanotrasen accounting, this is mining equipment. \
-	It's been modified for extreme power output to crush rocks, but often \
-	serves as a miner's first defense against hostile alien life; it's not \
-	very powerful unless used in a low pressure environment.\n\
-	It uses an experimental self-charging cell powered by the user's \
-	bioelectrical field. The downside of this is that it quickly discharges \
-	when not in direct contact with a user, and multiple accelerators can \
-	interfere with each other."
-	icon_state = "kineticgun"
-	item_state = "kineticgun"
-	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
-	cell_type = /obj/item/weapon/stock_parts/cell/emproof
-	// Apparently these are safe to carry? I'm sure goliaths would disagree.
-	needs_permit = 0
-	var/overheat_time = 16
-	unique_rename = 1
-	can_flashlight = 1
-	origin_tech = "combat=3;powerstorage=3;engineering=3"
-	weapon_weight = WEAPON_LIGHT
-	var/holds_charge = FALSE
-	var/unique_frequency = FALSE // modified by KA modkits
-	var/overheat = FALSE
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/super
-	name = "super-kinetic accelerator"
-	desc = "An upgraded, superior version of the proto-kinetic accelerator."
-	icon_state = "kineticgun_u"
-	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/super)
-	overheat_time = 15
-	origin_tech = "materials=5;powerstorage=3;engineering=4;magnets=3;combat=3"
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/hyper
-	name = "hyper-kinetic accelerator"
-	desc = "An upgraded, even more superior version of the proto-kinetic accelerator."
-	icon_state = "kineticgun_h"
-	ammo_type = list(/obj/item/ammo_casing/energy/kinetic/hyper)
-	overheat_time = 14
-	origin_tech = "materials=6;powerstorage=4;engineering=4;magnets=4;combat=4"
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/cyborg
-	holds_charge = TRUE
-	unique_frequency = TRUE
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg
-	holds_charge = TRUE
-	unique_frequency = TRUE
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/New()
-	. = ..()
-	if(!holds_charge)
-		empty()
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/shoot_live_shot()
-	. = ..()
-	attempt_reload()
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/equipped(mob/user)
-	. = ..()
-	if(!can_shoot())
-		attempt_reload()
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/dropped()
-	. = ..()
-	if(!holds_charge)
-		// Put it on a delay because moving item from slot to hand
-		// calls dropped()
-		addtimer(src, "empty_if_not_held", 2)
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty_if_not_held()
-	if(!ismob(loc))
-		empty()
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/proc/empty()
-	power_supply.use(500)
-	update_icon()
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/proc/attempt_reload()
-	if(overheat)
-		return
-	overheat = TRUE
-
-	var/carried = 0
-	if(!unique_frequency)
-		for(var/obj/item/weapon/gun/energy/kinetic_accelerator/K in \
-			loc.GetAllContents())
-
-			carried++
-
-		carried = max(carried, 1)
-	else
-		carried = 1
-
-	addtimer(src, "reload", overheat_time * carried)
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/emp_act(severity)
-	return
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
-	power_supply.give(500)
-	if(!suppressed)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
-	else
-		loc << "<span class='warning'>[src] silently charges up.<span>"
-	update_icon()
-	overheat = FALSE
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/update_icon()
-	if(!can_shoot())
-		icon_state = "[initial(icon_state)]_empty"
-	else
-		icon_state = initial(icon_state)
-	if(F && can_flashlight)
-		var/iconF = "flight"
-		if(F.on)
-			iconF = "flight_on"
-		add_overlay(image(icon = icon, icon_state = iconF, pixel_x = flight_x_offset, pixel_y = flight_y_offset))
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
+/obj/item/weapon/gun/energy/crossbow
 	name = "mini radiation crossbow"
 	desc = "A weapon favored by syndicate stealth specialists."
 	icon_state = "crossbow"
 	item_state = "crossbow"
 	w_class = 2
+	cell_type = /obj/item/weapon/stock_parts/cell/emproof
 	materials = list(MAT_METAL=2000)
 	origin_tech = "combat=4;magnets=4;syndicate=5"
 	suppressed = 1
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt)
 	weapon_weight = WEAPON_LIGHT
 	unique_rename = 0
-	overheat_time = 20
-	holds_charge = TRUE
-	unique_frequency = TRUE
+	var/overheat_time = 20
+	var/overheat = FALSE
 
-/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large
+/obj/item/weapon/gun/energy/crossbow/shoot_live_shot()
+	..()
+	overheat = TRUE
+	update_icon()
+	addtimer(src,"reload",overheat_time)
+
+/obj/item/weapon/gun/energy/crossbow/proc/reload()
+	power_supply.give(500)
+	if(!suppressed)
+		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+	else
+		loc << "<span class='warning'>[src] silently charges up.<span>"
+	overheat = FALSE
+	update_icon()
+
+/obj/item/weapon/gun/energy/crossbow/update_icon()
+	if(!can_shoot())
+		icon_state = "[initial(icon_state)]_empty"
+	else
+		icon_state = initial(icon_state)
+
+
+/obj/item/weapon/gun/energy/crossbow/large
 	name = "energy crossbow"
 	desc = "A reverse engineered weapon using syndicate technology."
 	icon_state = "crossbowlarge"
@@ -227,13 +131,6 @@
 	suppressed = 0
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
 	pin = null
-
-/obj/item/weapon/gun/energy/kinetic_accelerator/suicide_act(mob/user)
-	if(!suppressed)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
-	user.visible_message("<span class='suicide'>[user] cocks the [src.name] and pretends to blow \his brains out! It looks like \he's trying to commit suicide!</b></span>")
-	shoot_live_shot()
-	return (OXYLOSS)
 
 /obj/item/weapon/gun/energy/plasmacutter
 	name = "plasma cutter"

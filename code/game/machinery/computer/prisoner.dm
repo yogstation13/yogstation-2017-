@@ -135,7 +135,7 @@
 				usr << "Unauthorized Access."
 
 		else if(href_list["warn"])
-			var/warning = copytext(sanitize(input(usr,"Message:","Enter your message here!","")),1,MAX_MESSAGE_LEN)
+			var/warning = stripped_input(usr,"Message:","Enter your message here!","")
 			if(!warning) return
 			var/obj/item/weapon/implant/I = locate(href_list["warn"])
 			if((I)&&(I.imp_in))

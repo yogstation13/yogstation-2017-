@@ -2,6 +2,7 @@
 /proc/titled_hierophant_message(mob/user, message, name_span = "heavy_brass", message_span = "brass", user_title = "Servant")
 	if(!user || !message || !ticker || !ticker.mode)
 		return 0
+	log_say("[key_name(src)] : [message]", "RATVAR")
 	var/parsed_message = "<span class='[name_span]'>[user_title ? "[user_title] ":""][findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]: \
 	</span><span class='[message_span]'>\"[message]\"</span>"
 	hierophant_message(parsed_message, FALSE, user)

@@ -697,7 +697,7 @@ body
 
 			if(A.reagents)
 				var/list/reagent_options = sortList(chemical_reagents_list)
-				var/chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") in reagent_options|null
+				var/chosen_id = input(usr, "Choose a reagent to add.", "Choose a reagent.") as null|anything in reagent_options
 				if(chosen_id)
 					var/amount = input(usr, "Choose the amount to add.", "Choose the amount.", A.reagents.maximum_volume) as num
 					if(amount)

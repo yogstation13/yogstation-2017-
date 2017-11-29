@@ -456,7 +456,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 							if(signal.data["done"])
 								var/area/A = get_area(src)
 								var/inrange = FALSE
-								if(H.z in signal.data["level"])
+								if(H.z in signal.data["broadcast_levels"])
 									inrange = TRUE
 								H << "<span class='warning'>[owner] is communicating from [inrange ? A.name : "an unknown area"].</span>"
 						H << "<span class='notice'>Your PDA prompts you with: \[<a href='byond://?src=\ref[P];choice=Message;target=\ref[src]'>Contact [owner]</a>\]</span>"
@@ -564,7 +564,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 			if("Clear")//Clears messages
 				tnote = null
 			if("Ringtone")
-				var/t = input(U, "Please enter new ringtone", name, ttone) as text
+				var/t = stripped_input(U, "Please enter new ringtone", name, ttone)
 				if(in_range(src, U) && loc == U)
 					if(t)
 						if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
@@ -835,7 +835,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		if(signal.data["done"])
 			useTC = 1
 			var/turf/pos = get_turf(P)
-			if(pos.z in signal.data["level"])
+			if(pos.z in signal.data["broadcast_levels"])
 				useTC = 2
 
 	if(useTC == 2)

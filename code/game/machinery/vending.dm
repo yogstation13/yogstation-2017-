@@ -390,6 +390,7 @@
 	playsound(get_turf(src), 'sound/effects/meteorimpact.ogg', 40, 1)
 	health = 0
 	anchored = FALSE
+	desc += " It seems like it fell over, though. Someone should probably pick it back up."
 
 /obj/machinery/vending/proc/putbackup()
 	health = 100
@@ -397,6 +398,7 @@
 	power_change() // updates the vendor if it's run out of power.
 	anchored = TRUE
 	fallen_over = FALSE
+	desc = initial(desc)
 
 /obj/machinery/vending/deconstruction()
 	var/product_list = list(product_records, hidden_records, coin_records)
@@ -1093,6 +1095,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/obj/item/clothing/shoes/sneakers/yeezy=2,/obj/item/clothing/shoes/sneakers/nmd=1,/obj/item/device/pda/iwatch=2,
 	/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=2,/obj/item/clothing/shoes/sneakers/black=4,
 	/obj/item/clothing/shoes/sandal=1, /obj/item/clothing/gloves/fingerless=2,/obj/item/clothing/glasses/orange=1,/obj/item/clothing/glasses/red=1,
+	/obj/item/clothing/suit/toggle/trackjacket=2,/obj/item/clothing/suit/toggle/trackjacket/white=2,/obj/item/clothing/suit/toggle/trackjacket/paint=1,
+	/obj/item/clothing/suit/toggle/trackjacket/superb=2,/obj/item/clothing/shoes/sneakers/yeezy/zebra=1,
+	/obj/item/clothing/shoes/sneakers/yeezy/red=1,/obj/item/clothing/shoes/sneakers/yeezy/green=1,/obj/item/clothing/head/soft/superb=3,
 	/obj/item/weapon/storage/belt/fannypack=1, /obj/item/weapon/storage/belt/fannypack/blue=1, /obj/item/weapon/storage/belt/fannypack/red=1, /obj/item/clothing/suit/jacket/letterman=2,
 	/obj/item/clothing/suit/jacket/letterman_red=1))
 	contraband = list("Clothing" = list(/obj/item/clothing/under/syndicate/tacticool=1,/obj/item/clothing/mask/balaclava=1,/obj/item/clothing/head/ushanka=1,/obj/item/clothing/under/soviet=1,/obj/item/weapon/storage/belt/fannypack/black=2,/obj/item/clothing/suit/jacket/letterman_syndie=1))

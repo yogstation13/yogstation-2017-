@@ -37,6 +37,7 @@
 	projectilesound = 'sound/weapons/emitter.ogg'
 	maxHealth = 50
 	health = 50
+	gold_core_spawnable = 0
 
 /mob/living/simple_animal/hostile/carp/ranged/New()
 	projectiletype = pick(typesof(initial(projectiletype)))

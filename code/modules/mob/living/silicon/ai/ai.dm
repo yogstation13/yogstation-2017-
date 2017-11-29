@@ -43,6 +43,7 @@ var/list/ai_list = list()
 	var/mob/living/simple_animal/bot/Bot
 	var/tracking = 0 //this is 1 if the AI is currently tracking somebody, but the track has not yet been completed.
 	var/datum/effect_system/spark_spread/spark_system//So they can initialize sparks whenever/N
+	var/show_radio_jobs = TRUE
 
 	//MALFUNCTION
 	var/datum/module_picker/malf_picker
@@ -119,7 +120,8 @@ var/list/ai_list = list()
 		verbs.Add(/mob/living/silicon/ai/proc/ai_network_change, \
 		/mob/living/silicon/ai/proc/ai_statuschange, /mob/living/silicon/ai/proc/ai_hologram_change, \
 		/mob/living/silicon/ai/proc/toggle_camera_light, /mob/living/silicon/ai/proc/botcall,\
-		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel)
+		/mob/living/silicon/ai/proc/control_integrated_radio, /mob/living/silicon/ai/proc/set_automatic_say_channel,\
+		/mob/living/silicon/ai/proc/toggle_job_indicator)
 
 	if(!safety)//Only used by AIize() to successfully spawn an AI.
 		if (!B)//If there is no player/brain inside.
@@ -243,7 +245,7 @@ var/list/ai_list = list()
 			usr << "Wireless control is disabled!"
 			return
 
-	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
+	var/reason = stripped_input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call")
 
 	if(trim(reason))
 		SSshuttle.requestEvac(src, reason)
@@ -597,7 +599,7 @@ var/list/ai_list = list()
 	if(stat == 2)
 		return //won't work if dead
 	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
-	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
+	var/emote = input("Please, select a status!", "AI Status", null, null) as anything in ai_emotions
 	for (var/obj/machinery/M in machines) //change status
 		if(istype(M, /obj/machinery/ai_status_display))
 			var/obj/machinery/ai_status_display/AISD = M
@@ -721,6 +723,14 @@ var/list/ai_list = list()
 	src << "Accessing Subspace Transceiver control..."
 	if (radio)
 		radio.interact(src)
+
+/mob/living/silicon/ai/proc/toggle_job_indicator()
+	set name = "Toggle Job Indicator"
+	set desc = "Toggle the automatic job display of radio messages"
+	set category = "AI Commands"
+
+	show_radio_jobs = !show_radio_jobs
+	src << "<span class='notice'>Radio job display [show_radio_jobs ? "enabled" : "disabled"].</span>"
 
 /mob/living/silicon/ai/proc/set_syndie_radio()
 	if(radio)

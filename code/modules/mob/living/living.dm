@@ -1026,3 +1026,15 @@ Sorry Giacom. Please don't be mad :(
 		G.Recall()
 		G << "<span class='holoparasite'>Your summoner has changed \
 			form to [new_mob]!</span>"
+
+/mob/living/proc/flying()
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.dna && H.dna.species && (FLYING in H.dna.species.specflags))
+			return 1
+	else if(isanimal(src))
+		var/mob/living/simple_animal/SA = src
+		if(SA.flying)
+			return 1
+
+
