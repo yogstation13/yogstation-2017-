@@ -44,7 +44,7 @@
 		rawScaling = 20
 		scaling = 0.2
 	else
-		rawScaling = rand(90,140)
+		rawScaling = rand(90,130)
 		scaling = rawScaling / 100
 	maxHealth = round(maxHealth * scaling, 1)
 	health = round(health * scaling, 1)
@@ -60,15 +60,12 @@
 		name = "[prefix] [name]"
 		loot += /obj/item/weapon/ore/diamond
 		return
-	if(rawScaling > 115 && rawScaling < 130)
+	if(rawScaling > 115 && rawScaling <= 130)
 		var/prefix = "blazing"
 		name = "[prefix] [name]"
+		loot += pick(/obj/item/clothing/suit/armor/reactive/fire, /obj/item/clothing/suit/hooded/cloak/drake, /obj/item/weapon/dragons_blood)
 		return
-	if(rawScaling >= 130)
-		var/prefix = "infernal"
-		name = "[prefix] [name]"
-		loot += pick(/obj/item/clothing/suit/armor/reactive/fire, /obj/item/clothing/suit/hooded/cloak/drake, /obj/item/weapon/dragons_blood) //Blood is now the fuck you drop seeing as it's pretty crap.
-		return
+
 
 // VAR SCALING END //
 
