@@ -337,10 +337,10 @@ var/const/MAX_MEM_VARS	 = 500
 	if(!isnum(freq))
 		freq = text2num(freq)
 	if(findtext(num2text(freq), ".")) // if the frequency has been set as a decimal
-			freq *= 10 // shift the decimal one place
-			// "But wait, wouldn't floating point mess this up?" You ask.
-			// Nah. That actually can't happen when you multiply by a whole number.
-			// Think about it.
+		freq *= 10 // shift the decimal one place
+		// "But wait, wouldn't floating point mess this up?" You ask.
+		// Nah. That actually can't happen when you multiply by a whole number.
+		// Think about it.
 
 	if(!islist(spans))
 		spans = list()
