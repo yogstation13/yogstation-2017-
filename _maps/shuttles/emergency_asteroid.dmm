@@ -55,7 +55,7 @@
 "bc" = (/obj/structure/ore_box,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
 "bd" = (/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
 "be" = (/obj/structure/chair/office/light{dir = 4; name = "Captain"},/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
-"bf" = (/obj/machinery/computer/shuttle,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"bf" = (/obj/machinery/computer/emergency_shuttle,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "bg" = (/obj/structure/chair/office/light{dir = 8; name = "Head of Personnel"},/obj/machinery/light{icon_state = "tube1"; dir = 4},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
 "bh" = (/obj/machinery/suit_storage_unit,/turf/open/floor/plasteel/shuttle/yellow,/area/shuttle/escape)
 "bi" = (/obj/structure/chair/office/light{dir = 4; name = "Chief Engineer"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
