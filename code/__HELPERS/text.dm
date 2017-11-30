@@ -476,3 +476,6 @@ var/list/rot13_lookup = list()
 			ca -= 13
 		result += ascii2text(ca)
 	return jointext(result, "")
+
+/proc/fix_apostrophes(str)
+	return replacetext(replacetext(str, "&#39;", "'"), "&#34;", "\"")

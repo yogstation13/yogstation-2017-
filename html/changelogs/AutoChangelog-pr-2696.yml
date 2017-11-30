@@ -1,7 +1,0 @@
-author: "Partheo"
-delete-after: true 
-changes: 
-  - imageadd: "All vending machines now have new sprites."
-  - tweak: "The Liberation Station no longer requires access. FREEDOM!"
-  - rscadd: "A PTech vendor has been added to the HoP office."
-  - rscadd: "A ClothesMate has been added to the Heads of Staff meeting room."

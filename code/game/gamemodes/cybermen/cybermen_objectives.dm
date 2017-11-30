@@ -82,7 +82,7 @@
 /datum/objective/cybermen/explore/get_secret_documents/check_completion()
 	if(..())
 		return 1
-	for(var/obj/item/documents/nanotrasen/D in cyberman_network.cybermen_hacked_objects)
+	for(var/obj/item/documents/secret/nanotrasen/D in cyberman_network.cybermen_hacked_objects)
 		return 1
 	return 0
 

@@ -51,8 +51,4 @@
 	x_offset = -4
 	y_offset = -2
 
-
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/checkLandingTurf(turf/T)
-	return ..() && isspaceturf(T)
-
 #undef SYNDICATE_CHALLENGE_TIMER

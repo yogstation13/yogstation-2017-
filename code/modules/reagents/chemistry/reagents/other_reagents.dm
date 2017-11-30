@@ -176,8 +176,8 @@
 	if(data >= 30)		// 12 units, 54 seconds @ metabolism 0.4 units & tick rate 1.8 sec
 		if(!M.stuttering)
 			M.stuttering = 1
-		M.stuttering += 4
-		M.Dizzy(5)
+		M.stuttering = max(min(M.stuttering+4, 15), M.stuttering)
+		M.dizziness = max(min(M.dizziness+5, 15), M.dizziness)
 		if(iscultist(M) && prob(5))
 			M.say(pick("Av'te Nar'sie","Pa'lid Mors","INO INO ORA ANA","SAT ANA!","Daim'niodeis Arc'iai Le'eones","R'ge Na'sie","Diabo us Vo'iscum","Eld' Mon Nobis"))
 		else if(is_servant_of_ratvar(M) && prob(8))
@@ -192,7 +192,7 @@
 	if(data >= 75)	// 30 units, 135 seconds
 		if (!M.confused)
 			M.confused = 1
-		M.confused += 3
+		M.confused = max(min(M.confused+3, 15), M.confused)
 		if(iscultist(M) || is_handofgod_cultist(M) || is_handofgod_prophet(M) || is_servant_of_ratvar(M))
 			if(iscultist(M))
 				ticker.mode.remove_cultist(M.mind, 1, 1)
@@ -204,6 +204,7 @@
 			M.jitteriness = 0
 			M.stuttering = 0
 			M.confused = 0
+			M.dizziness = 0
 			return
 	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
 

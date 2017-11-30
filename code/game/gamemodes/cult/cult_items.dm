@@ -149,6 +149,7 @@
 
 /obj/item/weapon/sharpener/cult
 	name = "eldritch whetstone"
+	icon_state = "cult_sharpener"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
 	used = 0
 	increment = 5
@@ -383,7 +384,7 @@
 
 		var/list/cultists = list()
 		for(var/datum/mind/M in ticker.mode.cult)
-			if(!(user) && M.current && M.current.stat != DEAD)
+			if(M != user.mind && M.current && M.current.stat != DEAD)
 				cultists |= M.current
 		var/mob/living/cultist_to_receive = input(user, "Who do you wish to call to [src]?", "Followers of the Geometer") as null|anything in cultists
 		if(!Adjacent(user) || qdeleted(src) || user.incapacitated())
@@ -401,9 +402,9 @@
 			log_game("Void torch failed - target was deconverted")
 			return
 		to_chat(user, "<span class='cultitalic'>You ignite [A] with \the [src], turning it to ash, but through the torch's flames you see that [A] has reached [cultist_to_receive]!")
+		charges--
 		to_chat(user, "\The [src] now has [charges] charge\s.")
 		cultist_to_receive.put_in_hands(A)
-		charges--
 		if(charges == 0)
 			qdel(src)
 

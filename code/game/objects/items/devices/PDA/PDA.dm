@@ -373,6 +373,9 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 
+	if(!(src in U.contents))
+		return
+
 	if(usr.canUseTopic(src) && !href_list["close"])
 		add_fingerprint(U)
 		U.set_machine(src)
@@ -638,8 +641,12 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 							if(virus.infect(P))
 								cartridge.detonate_charges--
 								U.show_message("<span class='notice'>Success!</span>", 1)
+								message_admins("[U]/[U.ckey] has PDA bombed [P]")
+								log_attack("[U]/[U.ckey] has PDA bombed [P]")
 							else
 								U.show_message("<span class='warning'>Failure!</span>", 1)
+								message_admins("[U]/[U.ckey] attempted to PDA bomb [P]")
+
 
 					else
 						to_chat(U, "PDA not found.")
