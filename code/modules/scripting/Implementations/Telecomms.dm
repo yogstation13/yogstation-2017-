@@ -293,12 +293,10 @@ var/const/MAX_MEM_VARS	 = 500
 		var/datum/radio_frequency/connection = SSradio.return_frequency(freq)
 
 		if(findtext(num2text(freq), ".")) // if the frequency has been set as a decimal
-			//freq *= 10 // shift the decimal one place
-			////Except that we don't trust floating-point arithmetic on our fraction
-			//// and use string manipulation instead
-			var/shittyfreq = num2text(freq) // Super freq, you're a super freq!
-			freq = text2num(copytext(shittyfreq, 1, findtext(shittyfreq,".")) + copytext(shittyfreq,-1))
-			//SUPER FREAKY!
+			freq *= 10 // shift the decimal one place
+			// "But wait, wouldn't floating point mess this up?" You ask.
+			// Nah. That actually can't happen when you multiply by a whole number.
+			// Think about it.
 
 		freq = sanitize_frequency(freq)
 
@@ -339,11 +337,10 @@ var/const/MAX_MEM_VARS	 = 500
 	if(!isnum(freq))
 		freq = text2num(freq)
 	if(findtext(num2text(freq), ".")) // if the frequency has been set as a decimal
-		//freq *= 10 // shift the decimal one place
-		////Except that we don't trust floating-point arithmetic--
-		//// woah, deja vu.
-		var/shittyfreq = num2text(freq)
-		freq = text2num(copytext(shittyfreq, 1, findtext(shittyfreq,".")) + copytext(shittyfreq,-1))
+			freq *= 10 // shift the decimal one place
+			// "But wait, wouldn't floating point mess this up?" You ask.
+			// Nah. That actually can't happen when you multiply by a whole number.
+			// Think about it.
 
 	if(!islist(spans))
 		spans = list()
