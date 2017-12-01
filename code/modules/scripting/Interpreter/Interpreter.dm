@@ -39,6 +39,8 @@
 		max_iterations=100 	// max number of uninterrupted loops possible
 		max_recursion=10   	// max recursions without returning anything (or completing the code block)
 		cur_recursion=0	   	// current amount of recursion
+		max_stringlen=1024
+		max_listlen=256
 /*
 	Var: persist
 	If 0, global variables will be reset after Run() finishes.
@@ -55,6 +57,17 @@
 		if(program)Load(program)
 
 	proc
+/*
+	Proc: Trim
+	Trims strings and vectors down to an acceptable size, to prevent runaway memory usage
+*/
+		Trim(value)
+			if(istext(value) && (length(value) > max_stringlen))
+				value = copytext(value, 1, max_stringlen+1)
+			else if(islist(value) && (length(value) > max_listlen))
+				var/list/L = value
+				value = L.Copy(1, max_listlen+1)
+			return value
 
 /*
 	Set ourselves to Garbage Collect
@@ -332,9 +345,11 @@
 			if(!S) S = curScope
 			if(!S) S = globalScope
 			ASSERT(istype(S))
-			if(istext(value) || isnum(value) || isnull(value))	value = new/node/expression/value/literal(value)
-			else if(!istype(value) && isobject(value))			value = new/node/expression/value/reference(value)
+			if(istext(value) || isnum(value) || isnull(value))
+				value = new/node/expression/value/literal(value)
+			else if(!istype(value) && isobject(value))
+				value = new/node/expression/value/reference(value)
 			//TODO: check for invalid name
-			S.variables["[name]"] = value
+			S.variables["[name]"] = Trim(value)
 
 

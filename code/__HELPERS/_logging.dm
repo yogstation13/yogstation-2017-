@@ -28,7 +28,7 @@
 		log_admin("DSAY: [text]")
 
 /proc/log_game(text)
-	if (config.log_game)
+	if (config && config.log_game)
 		diary << "#[yog_round_number]# \[[time_stamp()]]GAME: [text]"
 
 /proc/log_vote(text)

@@ -91,6 +91,23 @@
 			grabbedby(M)
 		if("harm")
 			M.do_attack_animation(src)
+
+			if(isabomination(M))
+				if(stat == DEAD)
+					to_chat(M, "<span class='notice'>You dig your claws into [name]...</span>")
+					playsound(loc, 'sound/weapons/slice.ogg', 100, 1, -1)
+					if(do_mob(M, src, 60))
+						visible_message("<span class='danger'>[M] rips apart [name]!</span>", \
+									"<span class='warning'>You rip [name] apart!</span>")
+						gib()
+						return
+				visible_message("<span class='danger'>[M] tears into [name]!</span>")
+				adjustBruteLoss(40)
+				playsound(loc, 'sound/weapons/bladeslice.ogg', 100, 1, -1)
+				add_logs(M, src, "attacked")
+				updatehealth()
+				return
+
 			if (prob(75))
 				visible_message("<span class='danger'>[M] has punched [name]!</span>", \
 						"<span class='userdanger'>[M] has punched [name]!</span>")
@@ -278,7 +295,7 @@
 			wear_mask.acid_act(acidpwr)
 			update_inv_wear_mask()
 		else
-			src << "<span class='warning'>Your mask protects you from the acid.</span>"
+			to_chat(src, "<span class='warning'>Your mask protects you from the acid.</span>")
 		return
 
 	take_organ_damage(min(6*toxpwr, acid_volume * acidpwr/10))

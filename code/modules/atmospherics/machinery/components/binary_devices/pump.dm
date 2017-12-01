@@ -33,10 +33,11 @@ Thus, the two variables affect pump operation are set in New():
 
 
 /obj/machinery/atmospherics/components/binary/pump/Destroy()
-	if(SSradio)
-		SSradio.remove_object(src,frequency)
 	if(adminlog == 1)
 		message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) destroyed protected device '[src]'. <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>(JMP)</a> This alert will not show again for this device.")
+		log_admin("[usr] destroyed protected device `[src]`")
+	if(SSradio)
+		SSradio.remove_object(src,frequency)
 	if(radio_connection)
 		radio_connection = null
 	return ..()
@@ -128,6 +129,7 @@ Thus, the two variables affect pump operation are set in New():
 			. = TRUE
 			if(adminlog == 1)
 				message_admins("[key_name_admin(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has toggled [src] [on ? "ON" : "OFF"]. ([loc.x],[loc.y],[loc.z]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[loc.x];Y=[loc.y];Z=[loc.z]'>(JMP)</a>")
+				log_admin("[usr] has toggled [src] [on ? "ON" : "OFF"]")
 		if("pressure")
 			var/pressure = params["pressure"]
 			if(pressure == "max")
@@ -169,7 +171,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", "atmos")
-		
+
 
 	if("status" in signal.data)
 		broadcast_status()
@@ -186,7 +188,6 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
 	if(..())
 		if(!(stat & NOPOWER) && on)
-			user << "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>"
+			to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first!</span>")
 		else
 			return 1
-

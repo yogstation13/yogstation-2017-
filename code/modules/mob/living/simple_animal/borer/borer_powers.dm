@@ -4,7 +4,7 @@
 	set desc = "Infect a adjacent human being"
 
 	if(victim)
-		src << "<span class='warning'>You already have a host! leave this one if you want a new one.</span>"
+		to_chat(src, "<span class='warning'>You already have a host! leave this one if you want a new one.</span>")
 		return
 
 	if(stat == DEAD)
@@ -19,14 +19,14 @@
 	if(!H) return
 
 	if(H.borer)
-		src << "<span class='warning'>[victim] is already infected!</span>"
+		to_chat(src, "<span class='warning'>[victim] is already infected!</span>")
 		return
 
 	if(CanInfect(H))
-		src << "<span class='warning'>You slither up [H] and begin probing at their ear canal...</span>"
+		to_chat(src, "<span class='warning'>You slither up [H] and begin probing at their ear canal...</span>")
 		layer = MOB_LAYER
 		if(!do_mob(src, H, 30))
-			src << "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>"
+			to_chat(src, "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>")
 			return
 
 		if(!H || !src) return
@@ -41,26 +41,26 @@
 		return 0
 
 	if(stat != CONSCIOUS)
-		src << "<span class='warning'>I must be conscious to do this...</span>"
+		to_chat(src, "<span class='warning'>I must be conscious to do this...</span>")
 		return 0
 
 	if(H.mind.devilinfo)
-		src << "<span class='warning'>This being has a strange presence, it would be unwise to enter their body."
+		to_chat(src, "<span class='warning'>This being has a strange presence, it would be unwise to enter their body.")
 		return 0
 
 	if(isshadow(H))
-		src << "<span class='warning'>[H] cannot be infected! Retreating!</span>"
+		to_chat(src, "<span class='warning'>[H] cannot be infected! Retreating!</span>")
 		return 0
 
 	if(!H.mind.active)
-		src << "<span class='warning'>[H] does not have an active mind.</span>"
+		to_chat(src, "<span class='warning'>[H] does not have an active mind.</span>")
 		return 0
 
 	var/unprotected = TRUE
 
 	if((H.wear_suit && (H.wear_suit.flags & THICKMATERIAL)) && (H.head && (H.head.flags & THICKMATERIAL)))
 		unprotected = FALSE
-		src << "<span class='warning'>[H] is wearing protective clothing! We can't get through!</span>"
+		to_chat(src, "<span class='warning'>[H] is wearing protective clothing! We can't get through!</span>")
 
 	return unprotected
 
@@ -70,14 +70,14 @@
 	set desc = "Push some chemicals into your host's bloodstream."
 
 	if(!victim)
-		src << "<span class='warning'>You are not inside a host body!</span>"
+		to_chat(src, "<span class='warning'>You are not inside a host body!</span>")
 		return
 
 	if(stat != CONSCIOUS)
-		src << "<span class='warning'>You cannot secrete chemicals in your current state.</span>"
+		to_chat(src, "<span class='warning'>You cannot secrete chemicals in your current state.</span>")
 
 	if(docile)
-		src << "<span class='warning'>You are feeling far too docile to do that.</span>"
+		to_chat(src, "<span class='warning'>You are feeling far too docile to do that.</span>")
 		return
 
 	if(!checkStrength())
@@ -108,7 +108,7 @@
 	set desc = "Become invisible to the common eye."
 
 	if(victim)
-		src << "<span class='warning'>You cannot do this whilst you are infecting a host</span>"
+		to_chat(src, "<span class='warning'>You cannot do this whilst you are infecting a host</span>")
 
 	if(src.stat != CONSCIOUS)
 		return
@@ -128,15 +128,15 @@
 	set desc = "Freeze the limbs of a potential host with supernatural fear."
 
 	if(world.time - used_dominate < 150)
-		src << "<span class='warning'>You cannot use that ability again so soon.</span>"
+		to_chat(src, "<span class='warning'>You cannot use that ability again so soon.</span>")
 		return
 
 	if(victim)
-		src << "<span class='warning'>You cannot do that from within a host body.</span>"
+		to_chat(src, "<span class='warning'>You cannot do that from within a host body.</span>")
 		return
 
 	if(src.stat != CONSCIOUS)
-		src << "<span class='warning'>You cannot do that in your current state.</span>"
+		to_chat(src, "<span class='warning'>You cannot do that in your current state.</span>")
 		return
 
 	var/list/choices = list()
@@ -145,7 +145,7 @@
 			choices += C
 
 	if(world.time - used_dominate < dominate_cooldown)
-		src << "<span class='warning'>You cannot use that ability again so soon.</span>"
+		to_chat(src, "<span class='warning'>You cannot use that ability again so soon.</span>")
 		return
 
 	var/mob/living/carbon/M = input(src,"Who do you wish to dominate?") in null|choices
@@ -155,13 +155,13 @@
 	if(!Adjacent(M)) return
 
 	if(M.borer)
-		src << "<span class='warning'>You cannot paralyze someone who is already infected!</span>"
+		to_chat(src, "<span class='warning'>You cannot paralyze someone who is already infected!</span>")
 		return
 
 	src.layer = MOB_LAYER
 
-	src << "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>"
-	M << "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>"
+	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
+	to_chat(M, "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
 	M.Stun(4)
 
 	used_dominate = world.time
@@ -172,23 +172,23 @@
 	set desc = "Slither out of your host."
 
 	if(!victim)
-		src << "<span class='userdanger'>You are not inside a host body.</span>"
+		to_chat(src, "<span class='userdanger'>You are not inside a host body.</span>")
 		return
 
 	if(stat != CONSCIOUS)
-		src << "<span class='userdanger'>You cannot leave your host in your current state.</span>"
+		to_chat(src, "<span class='userdanger'>You cannot leave your host in your current state.</span>")
 
 	if(!victim || !src) return
 
 	if(leaving)
 		leaving = 0
-		src << "<span class='userdanger'>You decide against leaving your host.</span>"
+		to_chat(src, "<span class='userdanger'>You decide against leaving your host.</span>")
 		return
 
-	src << "<span class='userdanger'>You begin disconnecting from [victim]'s synapses and prodding at their internal ear canal.</span>"
+	to_chat(src, "<span class='userdanger'>You begin disconnecting from [victim]'s synapses and prodding at their internal ear canal.</span>")
 
 	if(victim.stat != DEAD)
-		host << "<span class='userdanger'>An odd, uncomfortable pressure begins to build inside your skull, behind your ear...</span>"
+		to_chat(host, "<span class='userdanger'>An odd, uncomfortable pressure begins to build inside your skull, behind your ear...</span>")
 
 	leaving = 1
 
@@ -199,13 +199,13 @@
 		if(controlling) return
 
 		if(src.stat != CONSCIOUS)
-			src << "<span class='userdanger'>You cannot release your host in your current state.</span>"
+			to_chat(src, "<span class='userdanger'>You cannot release your host in your current state.</span>")
 			return
 
-		src << "<span class='userdanger'>You wiggle out of [victim]'s ear and plop to the ground.</span>"
+		to_chat(src, "<span class='userdanger'>You wiggle out of [victim]'s ear and plop to the ground.</span>")
 		if(victim.mind)
-			host << "<span class='danger'>Something slimy wiggles out of your ear and plops to the ground!</span>"
-			host << "<span class='danger'>As though waking from a dream, you shake off the insidious mind control of the brain worm. Your thoughts are your own again.</span>"
+			to_chat(host, "<span class='danger'>Something slimy wiggles out of your ear and plops to the ground!</span>")
+			to_chat(host, "<span class='danger'>As though waking from a dream, you shake off the insidious mind control of the brain worm. Your thoughts are your own again.</span>")
 		leave_victim()
 
 
@@ -216,15 +216,15 @@
 	set desc = "Brings your host back from the dead."
 
 	if(!victim)
-		src << "<span class='warning'>You need a host to be able to use this.</span>"
+		to_chat(src, "<span class='warning'>You need a host to be able to use this.</span>")
 		return
 
 	if(docile)
-		src << "<span class='warning'>You are feeling too docile to use this!</span>"
+		to_chat(src, "<span class='warning'>You are feeling too docile to use this!</span>")
 		return
 
 	if(chemicals < 250)
-		src << "<span class='warning'>You need 250 chemicals to use this!</span>"
+		to_chat(src, "<span class='warning'>You need 250 chemicals to use this!</span>")
 		return
 
 	if(!checkStrength())
@@ -253,7 +253,7 @@
 		victim.stat = CONSCIOUS
 		log_game("[src]/([src.ckey]) has revived [victim]/([victim.ckey]")
 		chemicals -= 250
-		src << "<span class='notice'>You send a jolt of energy to your host, reviving them!</span>"
+		to_chat(src, "<span class='notice'>You send a jolt of energy to your host, reviving them!</span>")
 		victim.grab_ghost(force = TRUE) //brings the host back, no eggscape
 		victim <<"<span class='notice'>You bolt upright, gasping for breath!</span>"
 
@@ -263,32 +263,32 @@
 	set desc = "Fully connect to the brain of your host."
 
 	if(!victim)
-		src << "<span class='warning'>You are not inside a host body.</span>"
+		to_chat(src, "<span class='warning'>You are not inside a host body.</span>")
 		return
 
 	if(src.stat != CONSCIOUS)
-		src << "You cannot do that in your current state."
+		to_chat(src, "You cannot do that in your current state.")
 		return
 
 	if(docile)
-		src << "<span class='warning'>You are feeling far too docile to do that.</span>"
+		to_chat(src, "<span class='warning'>You are feeling far too docile to do that.</span>")
 		return
 
 	if(victim.stat == DEAD)
-		src << "<span class='warning'>This host lacks enough brain function to control.</span>"
+		to_chat(src, "<span class='warning'>This host lacks enough brain function to control.</span>")
 		return
 
 	if(world.time - used_control < control_cooldown)
-		src << "<span class='warning'>It's too soon to use that!</span>"
+		to_chat(src, "<span class='warning'>It's too soon to use that!</span>")
 		return
 
 	if(!checkStrength())
 		return 0
 	if(client.prefs.afreeze)
-		src << "<span class='warning'>You are frozen by an administrator.</span>"
+		to_chat(src, "<span class='warning'>You are frozen by an administrator.</span>")
 		return
 
-	src << "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>"
+	to_chat(src, "<span class='danger'>You begin delicately adjusting your connection to the host brain...</span>")
 
 	spawn(100+(victim.brainloss*5))
 
@@ -301,8 +301,8 @@
 
 
 			log_game("[src]/([src.ckey]) assumed control of [victim]/([victim.ckey] with borer powers.")
-			src << "<span class='warning'>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</span>"
-			victim << "<span class='userdanger'>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</span>"
+			to_chat(src, "<span class='warning'>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</span>")
+			to_chat(victim, "<span class='userdanger'>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</span>")
 
 			// host -> brain
 			var/h2b_id = victim.computer_id
@@ -354,19 +354,19 @@
 	set desc = "Punish your victim"
 
 	if(!victim)
-		src << "<span class='warning'>You are not inside a host body.</span>"
+		to_chat(src, "<span class='warning'>You are not inside a host body.</span>")
 		return
 
 	if(src.stat != CONSCIOUS)
-		src << "You cannot do that in your current state."
+		to_chat(src, "You cannot do that in your current state.")
 		return
 
 	if(docile)
-		src << "<span class='warning'>You are feeling far too docile to do that.</span>"
+		to_chat(src, "<span class='warning'>You are feeling far too docile to do that.</span>")
 		return
 
 	if(chemicals < 75)
-		src << "<span class='warning'>You need 75 chems to punish your host.</span>"
+		to_chat(src, "<span class='warning'>You need 75 chems to punish your host.</span>")
 		return
 
 	if(!checkStrength())
@@ -378,7 +378,7 @@
 		return
 
 	if(chemicals < 75)
-		src << "<span class='warning'>You need 75 chems to punish your host.</span>"
+		to_chat(src, "<span class='warning'>You need 75 chems to punish your host.</span>")
 		return
 
 	switch(punishment) //Hardcoding this stuff.
@@ -404,7 +404,7 @@ mob/living/carbon/proc/release_control()
 		if(!borer.docile) //if the borer is docile they have to give up control regardless
 			if(alert(src, "Sure you want to give up your control so soon?", "Confirm", "Yes", "No") != "Yes")
 				return
-		src << "<span class='danger'>You withdraw your probosci, releasing control of [borer.host_brain]</span>"
+		to_chat(src, "<span class='danger'>You withdraw your probosci, releasing control of [borer.host_brain]</span>")
 
 		borer.detatch()
 
@@ -418,22 +418,22 @@ mob/living/carbon/proc/release_control()
 	var/poll_time = 100
 
 	if(istype(src, /mob/living/carbon/brain))
-		src << "<span class='usernotice'>You need a mouth to be able to do this.</span>"
+		to_chat(src, "<span class='usernotice'>You need a mouth to be able to do this.</span>")
 		return
 
 	if(!borer)
 		return
 
 	if(world.time < borer.next_spawn_time)
-		src << "<span class='warning'>We are already reproducing.</span>"
+		to_chat(src, "<span class='warning'>We are already reproducing.</span>")
 		return
 
 	if(borer.chemicals >= 100)
-		src << "<span class='notice'>We prepare our host for the creation of a new borer.</span>"
+		to_chat(src, "<span class='notice'>We prepare our host for the creation of a new borer.</span>")
 		borer.next_spawn_time = world.time + poll_time
 		var/list/Bcandidates = pollCandidates("Do you want to play as a borer?", ROLE_BORER, null, ROLE_BORER, poll_time) // we use this to FIND candidates. not necessarily use them.
 		if(!Bcandidates.len)
-			src << "<span class='usernotice'>Our reproduction system seems to have failed... Perhaps we should try again some other time?</span>"
+			to_chat(src, "<span class='usernotice'>Our reproduction system seems to have failed... Perhaps we should try again some other time?</span>")
 			return
 
 		borer.chemicals -= 100
@@ -447,5 +447,5 @@ mob/living/carbon/proc/release_control()
 		var/mob/dead/observer/O = pick(Bcandidates)
 		newborer.key = O.key
 	else
-		src << "<span class='warning'>You do not have enough chemicals stored to reproduce.</span>"
+		to_chat(src, "<span class='warning'>You do not have enough chemicals stored to reproduce.</span>")
 		return

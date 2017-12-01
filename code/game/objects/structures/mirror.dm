@@ -62,12 +62,12 @@
 		if(shattered)
 			user.changeNext_move(CLICK_CD_MELEE)
 			if(WT.remove_fuel(0, user))
-				user << "<span class='notice'>You begin repairing [src]...</span>"
+				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 				playsound(src, 'sound/items/Welder.ogg', 100, 1)
 				if(do_after(user, 10/I.toolspeed, target = src))
 					if(!user || !WT || !WT.isOn())
 						return
-					user << "<span class='notice'>You repair [src].</span>"
+					to_chat(user, "<span class='notice'>You repair [src].</span>")
 					shattered = 0
 					icon_state = initial(icon_state)
 					desc = initial(desc)
@@ -158,7 +158,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
+			var/newname = stripped_input(H, "Who are we again?", "Name change", H.name, MAX_NAME_LEN)
 
 			if(!newname)
 				return
@@ -198,7 +198,7 @@
 						H.dna.features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 
 					else
-						H << "<span class='notice'>Invalid color. Your color is not bright enough.</span>"
+						to_chat(H, "<span class='notice'>Invalid color. Your color is not bright enough.</span>")
 
 			H.update_body()
 			H.update_hair()
@@ -214,14 +214,14 @@
 			if(H.gender == "male")
 				if(alert(H, "Become a Witch?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "female"
-					H << "<span class='notice'>Man, you feel like a woman!</span>"
+					to_chat(H, "<span class='notice'>Man, you feel like a woman!</span>")
 				else
 					return
 
 			else
 				if(alert(H, "Become a Warlock?", "Confirmation", "Yes", "No") == "Yes")
 					H.gender = "male"
-					H << "<span class='notice'>Whoa man, you feel like a man!</span>"
+					to_chat(H, "<span class='notice'>Whoa man, you feel like a man!</span>")
 				else
 					return
 			H.dna.update_ui_block(DNA_GENDER_BLOCK)

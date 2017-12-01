@@ -59,7 +59,7 @@
 
 /obj/machinery/computer/camera_advanced/attack_hand(mob/user)
 	if(current_user)
-		user << "<span class='notice'>The console is already in use!</span>"
+		to_chat(user, "<span class='notice'>The console is already in use!</span>")
 		return
 	if(..())
 		return
@@ -68,7 +68,7 @@
 	if(!eyeobj)
 		CreateEye()
 		if(!eyeobj)
-			user << "<span class='warning'>Error - no available camera</span>"
+			to_chat(user, "<span class='warning'>Error - no available camera</span>")
 			return
 
 	if(!eyeobj.eye_initialized)

@@ -8,6 +8,7 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	name = "metal rod"
 	desc = "Some rods. Can be used for building, or something."
 	singular_name = "metal rod"
+	icon = 'icons/obj/materials.dmi'
 	icon_state = "rods"
 	item_state = "rods"
 	flags = CONDUCT
@@ -20,6 +21,10 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	max_amount = 50
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	hitsound = 'sound/weapons/grenadelaunch.ogg'
+	novariants = FALSE
+
+/obj/item/stack/rods/fifty
+	amount = 50
 
 /obj/item/stack/rods/New(var/loc, var/amount=null)
 	..()
@@ -27,28 +32,12 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	recipes = rod_recipes
 	update_icon()
 
-/obj/item/stack/rods/update_icon()
-	var/amount = get_amount()
-	switch(amount)
-		if(0 to 5)
-			icon_state = "rods_[amount]"
-		if (6 to 15)
-			icon_state = "[initial(icon_state)]_6"
-		if (16 to 30)
-			icon_state = "[initial(icon_state)]_7"
-		if (31 to 40)
-			icon_state = "[initial(icon_state)]_8"
-		if (41 to 49)
-			icon_state = "[initial(icon_state)]_9"
-		if (50)
-			icon_state = "[initial(icon_state)]_10"
-
 /obj/item/stack/rods/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(get_amount() < 2)
-			user << "<span class='warning'>You need at least two rods to do this!</span>"
+			to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
 			return
 
 		if(WT.remove_fuel(0,user))
@@ -66,9 +55,9 @@ var/global/list/datum/stack_recipe/rod_recipes = list ( \
 	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = W
 		if(amount != 1)
-			user << "<span class='warning'>You must use a single rod!</span>"
+			to_chat(user, "<span class='warning'>You must use a single rod!</span>")
 		else if(S.w_class > 2)
-			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
+			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
 		else
 			var/obj/item/weapon/reagent_containers/food/snacks/customizable/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/kebab(get_turf(src))
 			A.initialize_custom_food(src, S, user)

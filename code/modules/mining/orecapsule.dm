@@ -4,9 +4,10 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "capsule2"
 	var/obj/structure/ore_box/box
+	w_class = 1
 
 /obj/item/orecapsule/attack_self(mob/user)
-	user << "<span class='warning'>[src] starts shaking! An orebox is emerging!</span>"
+	to_chat(user, "<span class='warning'>[src] starts shaking! An orebox is emerging!</span>")
 	addtimer(src, "summonorebox", 20, TRUE)
 
 /obj/item/orecapsule/proc/summonorebox()

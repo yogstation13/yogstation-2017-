@@ -76,8 +76,8 @@ Made by Xhuis
 	prob_traitor_ai = 18
 
 /datum/game_mode/shadowling/announce()
-	world << "<b>The current game mode is - Shadowling!</b>"
-	world << "<b>There are alien <span class='shadowling'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>"
+	to_chat(world, "<b>The current game mode is - Shadowling!</b>")
+	to_chat(world, "<b>There are alien <span class='shadowling'>shadowlings</span> on the station. Crew: Kill the shadowlings before they can enthrall the crew. Shadowlings: Enthrall the crew while remaining in hiding.</b>")
 
 /datum/game_mode/shadowling/pre_setup()
 	if(config.protect_roles_from_antagonist)
@@ -105,8 +105,8 @@ Made by Xhuis
 	for(var/datum/mind/shadow in shadows)
 		log_game("[shadow.key] (ckey) has been selected as a Shadowling.")
 		sleep(10)
-		shadow.current << "<br>"
-		shadow.current << "<span class='shadowling'><b><font size=3>You are a shadowling!</font></b></span>"
+		to_chat(shadow.current, "<br>")
+		to_chat(shadow.current, "<span class='shadowling'><b><font size=3>You are a shadowling!</font></b></span>")
 		greet_shadow(shadow)
 		finalize_shadowling(shadow)
 		process_shadow_objectives(shadow)
@@ -115,11 +115,11 @@ Made by Xhuis
 	return
 
 /datum/game_mode/proc/greet_shadow(datum/mind/shadow)
-	shadow.current << "<b>Currently, you are disguised as an employee aboard [station_name()]].</b>"
-	shadow.current << "<b>In your limited state, you have two abilities: Hatch and Hivemind Commune.</b>"
-	shadow.current << "<b>To begin converting the crew, you need to Hatch first, to gain the Enthrall ability.</b>"
-	shadow.current << "<b>Any other shadowlings are your allies. You must assist them as they shall assist you.</b>"
-	shadow.current << "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>"
+	to_chat(shadow.current, "<b>Currently, you are disguised as an employee aboard [station_name()]].</b>")
+	to_chat(shadow.current, "<b>In your limited state, you have two abilities: Hatch and Hivemind Commune.</b>")
+	to_chat(shadow.current, "<b>To begin converting the crew, you need to Hatch first, to gain the Enthrall ability.</b>")
+	to_chat(shadow.current, "<b>Any other shadowlings are your allies. You must assist them as they shall assist you.</b>")
+	to_chat(shadow.current, "<b>If you are new to shadowling, or want to read about abilities, check the wiki page at https://tgstation13.org/wiki/Shadowling</b><br>")
 
 
 /datum/game_mode/proc/process_shadow_objectives(datum/mind/shadow_mind)
@@ -129,7 +129,7 @@ Made by Xhuis
 		objective_explanation = "Ascend to your true form by use of the Ascendance ability. This may only be used with [required_thralls] collective thralls, while hatched, and is unlocked with the Collective Mind ability."
 		shadow_objectives += "enthrall"
 		shadow_mind.memory += "<b>Objective #1</b>: [objective_explanation]"
-		shadow_mind.current << "<b>Objective #1</b>: [objective_explanation]<br>"
+		to_chat(shadow_mind.current, "<b>Objective #1</b>: [objective_explanation]<br>")
 
 
 /datum/game_mode/proc/finalize_shadowling(datum/mind/shadow_mind)
@@ -139,7 +139,7 @@ Made by Xhuis
 	spawn(0)
 		update_shadow_icons_added(shadow_mind)
 		if(shadow_mind.assigned_role == "Clown")
-			S << "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>"
+			to_chat(S, "<span class='notice'>Your alien nature has allowed you to overcome your clownishness.</span>")
 			S.dna.remove_mutation(CLOWNMUT)
 
 /datum/game_mode/proc/add_thrall(datum/mind/new_thrall_mind)
@@ -154,12 +154,12 @@ Made by Xhuis
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow/lesser_glare(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadow_walk(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/thrall_vision(null))
-		new_thrall_mind.current << "<span class='shadowling'><b>You see the truth. Reality has been torn away and you realize what a fool you've been.</b></span>"
-		new_thrall_mind.current << "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>"
-		new_thrall_mind.current << "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>"
-		new_thrall_mind.current << "<span class='shadowling'>Your body has been irreversibly altered. The attentive can see this - you may conceal it by wearing a mask.</span>"
-		new_thrall_mind.current << "<span class='shadowling'>Though not nearly as powerful as your masters, you possess some weak powers. These can be found in the Thrall Abilities tab.</span>"
-		new_thrall_mind.current << "<span class='shadowling'>You may communicate with your allies by using the Lesser Commune ability.</span>"
+		to_chat(new_thrall_mind.current, "<span class='shadowling'><b>You see the truth. Reality has been torn away and you realize what a fool you've been.</b></span>")
+		to_chat(new_thrall_mind.current, "<span class='shadowling'><b>The shadowlings are your masters.</b> Serve them above all else and ensure they complete their goals.</span>")
+		to_chat(new_thrall_mind.current, "<span class='shadowling'>You may not harm other thralls or the shadowlings. However, you do not need to obey other thralls.</span>")
+		to_chat(new_thrall_mind.current, "<span class='shadowling'>Your body has been irreversibly altered. The attentive can see this - you may conceal it by wearing a mask.</span>")
+		to_chat(new_thrall_mind.current, "<span class='shadowling'>Though not nearly as powerful as your masters, you possess some weak powers. These can be found in the Thrall Abilities tab.</span>")
+		to_chat(new_thrall_mind.current, "<span class='shadowling'>You may communicate with your allies by using the Lesser Commune ability.</span>")
 		if(jobban_isbanned(new_thrall_mind.current, ROLE_SHADOWLING))
 			replace_jobbaned_player(new_thrall_mind.current, ROLE_SHADOWLING, ROLE_SHADOWLING)
 		return 1
@@ -221,13 +221,13 @@ Made by Xhuis
 
 /datum/game_mode/shadowling/declare_completion()
 	if(check_shadow_victory() && EMERGENCY_ESCAPED_OR_ENDGAMED) //Doesn't end instantly - this is hacky and I don't know of a better way ~X
-		world << "<span class='greentext'>The shadowlings have ascended and taken over the station!</span>"
+		to_chat(world, "<span class='greentext'>The shadowlings have ascended and taken over the station!</span>")
 	else if(shadowling_dead && !check_shadow_victory()) //If the shadowlings have ascended, they can not lose the round
-		world << "<span class='redtext'>The shadowlings have been killed by the crew!</span>"
+		to_chat(world, "<span class='redtext'>The shadowlings have been killed by the crew!</span>")
 	else if(!check_shadow_victory() && EMERGENCY_ESCAPED_OR_ENDGAMED)
-		world << "<span class='redtext'>The crew escaped the station before the shadowlings could ascend!</span>"
+		to_chat(world, "<span class='redtext'>The crew escaped the station before the shadowlings could ascend!</span>")
 	else
-		world << "<span class='redtext'>The shadowlings have failed!</span>"
+		to_chat(world, "<span class='redtext'>The shadowlings have failed!</span>")
 	..()
 	return 1
 
@@ -244,7 +244,7 @@ Made by Xhuis
 			for(var/datum/mind/thrall in thralls)
 				text += printplayer(thrall)
 	text += "<br>"
-	world << text
+	to_chat(world, text)
 
 
 /*
