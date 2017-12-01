@@ -290,14 +290,18 @@
 
 	else if(istype(W, /obj/item/toy/crayon/spraycan))
 		var/obj/item/toy/crayon/spraycan/S = W
-		if(S.check_empty(user))
-			return
-
+		if(S.charges_left < 15)
+			to_chat(user, "<span class='warning'>There is not enough paint left in [S]!</span>")
+			return 1
+		if(S.is_capped)
+			to_chat(user, "<span class='warning'>You need to take the cap off first!</span>")
+			return 1
 		to_chat(user, "<span class='notice'>You start painting [src]...</span>")
 		if(do_after(user, 100, target=src))
-			if(S.check_empty())
-				return
-			S.use_charges(10)
+			if(S.charges_left < 15)
+				to_chat(user, "<span class='warning'>There is not enough paint left in [S]!</span>")
+				return 1
+			S.use_charges(15)
 			color = S.paint_color
 			audible_message("<span class='notice'>You hear spraying.</span>")
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
@@ -305,7 +309,6 @@
 
 	else
 		return ..()
-
 
 /obj/mecha/attacked_by(obj/item/I, mob/living/user)
 	log_message("Attacked by [I]. Attacker - [user]")
