@@ -378,7 +378,7 @@ var/const/MAX_MEM_VARS	 = 500
 	newsign.data["vname"] = source
 	newsign.data["vmask"] = 0
 	newsign.data["level"] = data["level"]
-
+	newsign.data["broadcast_levels"] = data["broadcast_levels"]
 	newsign.sanitize_data()
 
 	var/pass = S.relay_information(newsign, "/obj/machinery/telecomms/hub")
