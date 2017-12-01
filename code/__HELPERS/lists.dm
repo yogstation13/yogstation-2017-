@@ -391,6 +391,14 @@
 		if(islist(.[i]))
 			.[i] = .(.[i])
 
+//Flattens a keyed list into a list of it's contents
+/proc/flatten_list(list/key_list)
+	if(!islist(key_list))
+		return null
+	. = list()
+	for(var/key in key_list)
+		. |= key_list[key]
+
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
 
