@@ -528,20 +528,7 @@
 /obj/item/clothing/head/winterhood/miner
 	icon_state = "winterhood_miner"
 
-/obj/item/clothing/suit/spookyghost
-	name = "bedsheet ghost"
-	desc = "this is obviously just a bedsheet."
-	icon_state = "bedsheet"
-	flags_cover = HEADCOVERSEYES
-	flash_protect = 2
-	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire
 
-/obj/item/clothing/suit/spookyghost/extraspooky
-	name = "spooky ghost"
-	desc = "this is obviously just a bedsheet, but maybe try it on?"
-	icon_state = "bedsheet"
-	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = 1, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
-	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire
 
 
 //hoody

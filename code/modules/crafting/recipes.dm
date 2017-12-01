@@ -358,7 +358,7 @@
 
 /datum/crafting_recipe/bedsheetcostume
 	name = "Bedsheet costume"
-	result = /obj/item/clothing/suit/spookyghost
+	result = /obj/item/clothing/head/spookyghost
 	time = 30
 	reqs = list(/obj/item/weapon/bedsheet = 1)
 	category = CAT_MISC
