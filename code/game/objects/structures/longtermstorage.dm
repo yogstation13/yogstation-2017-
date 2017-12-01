@@ -72,8 +72,8 @@
 
 	var/msg = "[target]"
 	if(j)
-		msg += ", [target.mind.assigned_role], "
-	msg += "has entered long-term storage."
+		msg += ", [target.mind.assigned_role],"
+	msg += " has entered long-term storage."
 	announcement_radio.talk_into(src, msg, 1459)
 	sleep(30)
 	qdel(target)
