@@ -118,15 +118,15 @@
 		for(, src.codepos<=lentext(code), src.codepos++)
 
 			var/char=copytext(code, codepos, codepos+1)
-			var/nextchar=copytext(code, codepos+1, codepos+2)
+			var/twochar=copytext(code, codepos+1, codepos+2) // For finding comment syntax
 			if(char=="\n")
 				line++
 				linepos=codepos
 
 			if(ignore.Find(char))
 				continue
-			else if(char == "/" && (nextchar == "/" || nextchar == "*"))
-				ReadComment()
+			else if(twochar == "//" || twochar == "/*")
+				ReadComment(twochar == "//") // Feeds whether it's a short comment or not to ReadComment()
 			else if(end_stmt.Find(char))
 				tokens+=new /token/end(char, line, COL)
 			else if(string_delim.Find(char))
@@ -244,45 +244,32 @@
 /*
 	Proc: ReadComment
 	Reads a comment and outputs the type of comment
+
+	Parameters:
+		isshort - a variable that stores how this comment started
+			i.e., if it was a // or a /*
 */
 
-		ReadComment()
-			var
-				char=copytext(code, codepos, codepos+1)
-				nextchar=copytext(code, codepos+1, codepos+2)
-				charstring = char+nextchar
-				comm = 1
-					// 1: single-line comment
-					// 2: multi-line comment
-				expectedend = 0
-
-			if(charstring == "//" || charstring == "/*")
-				if(charstring == "/*")
-					comm = 2 // starts a multi-line comment
-
-				while(comm)
-					if(++codepos>lentext(code)) break
-
-					if(expectedend) // ending statement expected...
-						char = copytext(code, codepos, codepos+1)
-						if(char == "/") // ending statement found - beak the comment
-							comm = 0
-							break
-
-					if(comm == 2)
-						// multi-line comments are broken by ending statements
-						char = copytext(code, codepos, codepos+1)
-						if(char == "*")
-							expectedend = 1
-							continue
-					else
-						char = copytext(code, codepos, codepos+1)
-						if(char == "\n")
-							comm = 0
-							break
-
-					if(expectedend) expectedend = 0
-
-				if(comm == 2)
+		ReadComment(isshort)
+			// Remember that we still have that $codepos pointer variable,
+			// since it was a global
+			if(isshort) // If line comment
+				++codepos // To skip over the second slash
+				while(++codepos>lentext(code))
+				{
+					char = copytext(code, codepos, codepos+1)
+					if(char == "\n") // then stop on the newline
+						break
+				}
+			else
+				var/noend = TRUE
+				++codepos // To prevent /*/ from being valid syntax
+				while(++codepos>lentext(code)) // If long comment
+				{
+					end = copytext(code, codepos, codepos+2)
+					if(end == "*/") // then stop on */
+						noend = FALSE
+						break
+				}
+				if(noend) // If the comment wasn't completed
 					errors+=new/scriptError/UnterminatedComment()
-
