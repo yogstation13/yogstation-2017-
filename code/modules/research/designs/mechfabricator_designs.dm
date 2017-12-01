@@ -648,7 +648,7 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_hyperka
+/*/datum/design/borg_upgrade_hyperka
 	name = "Cyborg Upgrade(Hyper-Kinetic Accelerator)"
 	id = "borg_upgrade_hyperka"
 	req_tech = list("materials" = 7, "powerstorage" = 5, "engineering" = 5, "magnets" = 5, "combat" = 4)
@@ -656,7 +656,7 @@
 	materials = list(MAT_METAL = 8000, MAT_GLASS = 1500, MAT_SILVER = 2000, MAT_GOLD = 2000, MAT_DIAMOND = 2000)
 	build_path = /obj/item/borg/upgrade/hyperka
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Modules")*/
 
 /*/datum/design/borg_upgrade_ashplating
 	name = "Cyborg Upgrade (Ash Storm Plating)"
@@ -667,6 +667,16 @@
 	materials = list(MAT_METAL = 8000, MAT_PLASMA = 10000)
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")*/
+
+/datum/design/borg_upgrade_plasmacutter_adv
+	name = "Cyborg Upgrade(Advanced Plasma Cutter)"
+	id = "borg_upgrade_plasmacutter_adv"
+	build_type = MECHFAB
+	build_path = /obj/item/borg/upgrade/plasmacutter_adv
+	req_tech = list("materials" = 4, "plasmatech" = 4, "engineering" = 2, "combat" = 3, "magnets" = 3) //Same as the human version
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_PLASMA = 2000, MAT_GOLD = 500) //Same price as human version. Could raise it, since its autocharge
+	construction_time = 120
+	category = list("Cyborg Upgrade Modules")
 
 /datum/design/borg_syndicate_module
 	name = "Cyborg Upgrade (Illegal Modules)"
