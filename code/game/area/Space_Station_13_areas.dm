@@ -68,8 +68,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 	var/sound_env = ROOM
 
-	var/dream_type //A special type of dream that occurs in the area. example: = "legion"
-
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 var/list/teleportlocs = list()
@@ -204,6 +202,7 @@ var/list/teleportlocs = list()
 	has_gravity = 1
 	noteleport = 1
 	blob_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
+	murders_plants = 0
 	sound_env = LARGE_ENCLOSED
 
 /area/centcom/control
@@ -328,6 +327,7 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
+	murders_plants = 0
 	sound_env = LARGE_ENCLOSED
 
 //Abductors
@@ -337,6 +337,7 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	noteleport = 1
 	has_gravity = 1
+	murders_plants = 0
 	sound_env = SMALL_ENCLOSED
 
 

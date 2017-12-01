@@ -125,7 +125,7 @@
 		did_suicide = 1
 		death(0)
 	else
-		src << "Aborting suicide attempt."
+		to_chat(src, "Aborting suicide attempt.")
 
 /mob/living/carbon/alien/humanoid/verb/suicide()
 	set hidden = 1
@@ -161,17 +161,17 @@
 	if(stat == CONSCIOUS)
 		return 1
 	else if(stat == DEAD)
-		src << "You're already dead!"
+		to_chat(src, "You're already dead!")
 	else if(stat == UNCONSCIOUS)
-		src << "You need to be conscious to suicide!"
+		to_chat(src, "You need to be conscious to suicide!")
 	return
 
 /mob/living/carbon/canSuicide()
 	if(!..())
 		return
 	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
-		src << "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))"
+		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 		return
 	if(borer && borer.controlling)
-		src << "You can't commit suicide while you're controlling your host!"
+		to_chat(src, "You can't commit suicide while you're controlling your host!")
 	return 1

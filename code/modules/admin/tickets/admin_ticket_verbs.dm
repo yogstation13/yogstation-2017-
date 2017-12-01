@@ -4,15 +4,15 @@
 	set name = "Adminhelp"
 
 	if(prefs.muted & MUTE_ADMINHELP)
-		src << "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>"
+		to_chat(src, "<font color='red'>Error: Admin-PM: You are unable to use admin PM-s (muted).</font>")
 		return
 
 	if(!ticket_title)
-		usr << "<span class='ticket-status'>You did not supply a message for your ticket. Ignoring your request.</span>"
+		to_chat(usr, "<span class='ticket-status'>You did not supply a message for your ticket. Ignoring your request.</span>")
 		return
 
-	ticket_title = replacetext(ticket_title, "'", "\'")
-	ticket_title = sanitize(copytext(ticket_title,1,MAX_MESSAGE_LEN))
+	//ticket_title = replacetext(ticket_title, "'", "\'")
+	//ticket_title = sanitize(copytext(ticket_title,1,MAX_MESSAGE_LEN))
 
 	var/datum/admin_ticket/found_ticket = null
 	for(var/datum/admin_ticket/T in tickets_list)
@@ -46,7 +46,7 @@
 			T.view_log()
 			return
 
-	usr << "<span class='ticket-status'>Oops! You do not appear to have a ticket!</span>"
+	to_chat(usr, "<span class='ticket-status'>Oops! You do not appear to have a ticket!</span>")
 
 /client/proc/view_tickets()
 	set name = "Adminlisttickets"
@@ -219,7 +219,7 @@
 		var/mob/M = src.mob
 
 		if(!M || !M.job)
-			src << "<p class='info-bar emboldened'>You do not appear to have a job, so reporting being AFK is not necessary.</p>"
+			to_chat(src, "<p class='info-bar emboldened'>You do not appear to have a job, so reporting being AFK is not necessary.</p>")
 		else
 			var/time = input(src, "How long do you expect to be gone?") as anything in list("5 minutes","10 minutes","15 minutes","30 minutes","Whole round","Unknown")
 
@@ -268,7 +268,7 @@
 			if(alert_admins)
 				admin_ticket("I need to go AFK as '[M.job]' for duration of '[time]' [reason ? " with the reason: '[reason]'" : ""]")
 			else
-				src << "<p class='info-bar emboldened'>Admins will not be specifically alerted, because you are not in a critical station role.</p>"
+				to_chat(src, "<p class='info-bar emboldened'>Admins will not be specifically alerted, because you are not in a critical station role.</p>")
 	else
-		src << "<p class='info-bar emboldened'>It is not necessary to report being AFK if you are not in the game.</p>"
+		to_chat(src, "<p class='info-bar emboldened'>It is not necessary to report being AFK if you are not in the game.</p>")
 

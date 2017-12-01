@@ -2,7 +2,7 @@
 	name = "blood pack"
 	desc = "Contains blood used for transfusion. Must be attached to an IV drip."
 	icon = 'icons/obj/bloodpack.dmi'
-	icon_state = "empty"
+	icon_state = "bloodpack"
 	volume = 200
 	var/blood_type = null
 	var/labelled = 0
@@ -35,13 +35,22 @@
 
 /obj/item/weapon/reagent_containers/blood/update_icon()
 	var/percent = round((reagents.total_volume / volume) * 100)
-	switch(percent)
-		if(0 to 9)
-			icon_state = "empty"
-		if(10 to 50)
-			icon_state = "half"
-		if(51 to INFINITY)
-			icon_state = "full"
+	if(blood_type == "L")
+		switch(percent)
+			if(0 to 9)
+				icon_state = "lizardpack"
+			if(10 to 50)
+				icon_state = "lizardpack-half"
+			if(51 to INFINITY)
+				icon_state = "lizardpack-full"
+	else
+		switch(percent)
+			if(0 to 9)
+				icon_state = "bloodpack"
+			if(10 to 50)
+				icon_state = "bloodpack-half"
+			if(51 to INFINITY)
+				icon_state = "bloodpack-full"
 
 /obj/item/weapon/reagent_containers/blood/random/New()
 	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
@@ -67,10 +76,11 @@
 
 /obj/item/weapon/reagent_containers/blood/lizard
 	blood_type = "L"
+	icon_state = "lizardpack"
+	desc = "Contains disgusting lizard blood used for transfusion. Must be attached to an IV drip."
 
 /obj/item/weapon/reagent_containers/blood/empty
 	name = "empty blood pack"
-	icon_state = "empty"
 
 /obj/item/weapon/reagent_containers/blood/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/toy/crayon))

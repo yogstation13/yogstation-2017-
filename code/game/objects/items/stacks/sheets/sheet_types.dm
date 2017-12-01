@@ -54,7 +54,8 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	name = "metal"
 	desc = "Sheets made out of metal."
 	singular_name = "metal sheet"
-	icon_state = "sheet-metal"
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "metal"
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 10
 	flags = CONDUCT
@@ -91,7 +92,8 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	name = "plasteel"
 	singular_name = "plasteel sheet"
 	desc = "This sheet is an alloy of iron and plasma."
-	icon_state = "sheet-plasteel"
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "rmetal"
 	item_state = "sheet-metal"
 	materials = list(MAT_METAL=6000, MAT_PLASMA=6000)
 	throwforce = 10
@@ -136,11 +138,12 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	name = "wooden plank"
 	desc = "One can only guess that this is a bunch of wood."
 	singular_name = "wood plank"
-	icon_state = "sheet-wood"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "planks"
 	origin_tech = "materials=1;biotech=1"
 	sheettype = "wood"
 	burn_state = FLAMMABLE
+	novariants = FALSE
 	merge_type = /obj/item/stack/sheet/mineral/wood
 
 /obj/item/stack/sheet/mineral/wood/New(var/loc, var/amount=null)
@@ -246,13 +249,13 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 
 /obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
 	if(!iscultist(user))
-		user << "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>"
+		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
 		return
 	return ..()
 
 /obj/item/stack/sheet/runed_metal/attack(atom/target, mob/living/user)
 	if(!iscultist(user))
-		user << "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>"
+		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
 		return
 	..()
 

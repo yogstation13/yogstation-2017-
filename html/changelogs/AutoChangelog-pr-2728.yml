@@ -1,0 +1,4 @@
+author: " Kor"
+delete-after: true 
+changes: 
+  - rscadd: "The Captain can now purchase alternate escape shuttles from the communications console. This drains from the station supply of cargo points, and you can only do so once per round, so spend wisely."

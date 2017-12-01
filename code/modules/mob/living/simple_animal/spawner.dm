@@ -21,6 +21,8 @@
 	layer = BELOW_MOB_LAYER
 	sentience_type = SENTIENCE_BOSS
 
+/mob/living/simple_animal/hostile/spawner/can_buckle()
+	return 0
 
 /mob/living/simple_animal/hostile/spawner/Destroy()
 	for(var/mob/living/simple_animal/L in spawned_mobs)

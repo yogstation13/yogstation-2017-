@@ -1,0 +1,4 @@
+author: "1fbff5f83b23d39d38b1dfcb4cac8d9b"
+delete-after: true 
+changes: 
+  - rscadd: "Research Directors can now attempt to slam looping immovable rods into plant pots. Grab the nearest pot and try to catch the rod!"

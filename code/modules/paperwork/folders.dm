@@ -31,11 +31,11 @@
 
 
 /obj/item/weapon/folder/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo) || istype(W, /obj/item/documents))
+	if(istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/photo) || istype(W, /obj/item/documents/secret))
 		if(!user.unEquip(W))
 			return
 		W.loc = src
-		user << "<span class='notice'>You put [W] into [src].</span>"
+		to_chat(user, "<span class='notice'>You put [W] into [src].</span>")
 		update_icon()
 	else if(istype(W, /obj/item/weapon/pen))
 		var/n_name = stripped_input(user, "What would you like to label the folder?", "Folder Labelling", null, MAX_NAME_LEN)
@@ -81,7 +81,7 @@
 
 /obj/item/weapon/folder/documents/New()
 	..()
-	new /obj/item/documents/nanotrasen(src)
+	new /obj/item/documents/secret/nanotrasen(src)
 	update_icon()
 
 /obj/item/weapon/folder/syndicate
@@ -94,7 +94,14 @@
 
 /obj/item/weapon/folder/syndicate/red/New()
 	..()
-	new /obj/item/documents/syndicate/red(src)
+	new /obj/item/documents/secret/syndicate/red(src)
+	update_icon()
+
+/obj/item/weapon/folder/syndicate/red/fake
+
+/obj/item/weapon/folder/syndicate/red/fake/New()
+	..()
+	new /obj/item/documents(src)
 	update_icon()
 
 /obj/item/weapon/folder/syndicate/blue
@@ -102,10 +109,10 @@
 
 /obj/item/weapon/folder/syndicate/blue/New()
 	..()
-	new /obj/item/documents/syndicate/blue(src)
+	new /obj/item/documents/secret/syndicate/blue(src)
 	update_icon()
 
 /obj/item/weapon/folder/syndicate/mining/New()
 	..()
-	new /obj/item/documents/syndicate/mining(src)
+	new /obj/item/documents/secret/syndicate/mining(src)
 	update_icon()

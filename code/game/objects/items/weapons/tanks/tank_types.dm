@@ -73,7 +73,7 @@
 
 /obj/item/weapon/tank/internals/royalp
 	name = "outdated plasma tank"
-	desc = "The last of it's kind, used back in the discovery era for collecting plasma. As of today, it serves as a memorial for the effort former nanotrasen employees put together so we can have research facility's like these."
+	desc = "The last of it's kind, used back in the discovery era for collecting plasma. As of today, it serves as a memorial for the effort former nanotrasen employees put together so we can have research facilities like these."
 	icon_state = "canister"
 	force = 10
 /*
@@ -86,7 +86,6 @@
 	flags = CONDUCT
 	slot_flags = null	//they have no straps!
 	force = 8
-
 
 /obj/item/weapon/tank/internals/plasma/New()
 	..()

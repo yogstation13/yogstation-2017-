@@ -12,7 +12,8 @@
 	name = "glass"
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
-	icon_state = "sheet-glass"
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "glass"
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=1"
 	novariants = FALSE
@@ -34,11 +35,11 @@
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if (get_amount() < 1 || CC.get_amount() < 5)
-			user << "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass!</span>"
+			to_chat(user, "<span class='warning>You need five lengths of coil and one sheet of glass to make wired glass!</span>")
 			return
 		CC.use(5)
 		use(1)
-		user << "<span class='notice'>You attach wire to the [name].</span>"
+		to_chat(user, "<span class='notice'>You attach wire to the [name].</span>")
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
 		new_tile.add_fingerprint(user)
 	else if(istype(W, /obj/item/stack/rods))
@@ -54,7 +55,7 @@
 			if (!G && replace)
 				user.put_in_hands(RG)
 		else
-			user << "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass!</span>"
+			to_chat(user, "<span class='warning'>You need one rod and one sheet of glass to make reinforced glass!</span>")
 			return
 	else
 		return ..()
@@ -65,7 +66,7 @@
 	if(!istype(user.loc,/turf))
 		return 0
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	if(zero_amount())
 		return 0
@@ -83,11 +84,11 @@
 			for (var/obj/structure/window/win in user.loc)
 				i++
 				if(i >= 4)
-					user << "<span class='warning'>There are too many windows in this location.</span>"
+					to_chat(user, "<span class='warning'>There are too many windows in this location.</span>")
 					return 1
 				directions-=win.dir
 				if(!(win.ini_dir in cardinal))
-					user << "<span class='danger'>Can't let you do that.</span>"
+					to_chat(user, "<span class='danger'>Can't let you do that.</span>")
 					return 1
 
 			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
@@ -115,10 +116,10 @@
 			if(src.loc != user)
 				return 1
 			if(src.get_amount() < 2)
-				user << "<span class='warning'>You need more glass to do that!</span>"
+				to_chat(user, "<span class='warning'>You need more glass to do that!</span>")
 				return 1
 			if(locate(/obj/structure/window) in user.loc)
-				user << "<span class='warning'>There is a window in the way!</span>"
+				to_chat(user, "<span class='warning'>There is a window in the way!</span>")
 				return 1
 			var/obj/structure/window/W
 			W = new /obj/structure/window/fulltile( user.loc, 0 )
@@ -136,7 +137,8 @@
 	name = "reinforced glass"
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
-	icon_state = "sheet-rglass"
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "rglass"
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT/2, MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 	origin_tech = "materials=2"
 	novariants = FALSE
@@ -171,11 +173,11 @@
 	if(!istype(user.loc,/turf))
 		return 0
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	var/title = "Sheet Reinf. Glass"
 	title += " ([src.get_amount()] sheet\s left)"
-	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") as anything in list("One Direction", "Full Window", "Windoor", "Cancel"))
+	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
 			if(!src)
 				return 1
@@ -186,11 +188,11 @@
 			for (var/obj/structure/window/win in user.loc)
 				i++
 				if(i >= 4)
-					user << "<span class='danger'>There are too many windows in this location.</span>"
+					to_chat(user, "<span class='danger'>There are too many windows in this location.</span>")
 					return 1
 				directions-=win.dir
 				if(!(win.ini_dir in cardinal))
-					user << "<span class='danger'>Can't let you do that.</span>"
+					to_chat(user, "<span class='danger'>Can't let you do that.</span>")
 					return 1
 
 			//Determine the direction. It will first check in the direction the person making the window is facing, if it finds an already made window it will try looking at the next cardinal direction, etc.
@@ -219,10 +221,10 @@
 			if(src.loc != user)
 				return 1
 			if(src.get_amount() < 2)
-				user << "<span class='warning'>You need more glass to do that!</span>"
+				to_chat(user, "<span class='warning'>You need more glass to do that!</span>")
 				return 1
 			if(locate(/obj/structure/window) in user.loc)
-				user << "<span class='warning'>There is a window in the way!</span>"
+				to_chat(user, "<span class='warning'>There is a window in the way!</span>")
 				return 1
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced/fulltile(user.loc, 1)
@@ -237,16 +239,16 @@
 
 			for(var/obj/structure/windoor_assembly/WA in user.loc)
 				if(WA.dir == user.dir)
-					user << "<span class='warning'>There is already a windoor assembly in that location!</span>"
+					to_chat(user, "<span class='warning'>There is already a windoor assembly in that location!</span>")
 					return 1
 
 			for(var/obj/machinery/door/window/W in user.loc)
 				if(W.dir == user.dir)
-					user << "<span class='warning'>There is already a windoor in that location!</span>"
+					to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
 					return 1
 
 			if(src.get_amount() < 5)
-				user << "<span class='warning'>You need more glass to do that!</span>"
+				to_chat(user, "<span class='warning'>You need more glass to do that!</span>")
 				return 1
 
 			var/obj/structure/windoor_assembly/WD = new(user.loc)
@@ -319,14 +321,14 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!istype(H.gloves, /obj/item/clothing) && !(PIERCEIMMUNE in H.dna.species.specflags)) // golems, etc
-			H << "<span class='warning'>[src] cuts into your hand!</span>"
+			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			var/organ = (H.hand ? "l_" : "r_") + "arm"
 			var/obj/item/bodypart/affecting = H.get_bodypart(organ)
 			if(affecting && affecting.take_damage(force / 2))
 				H.update_damage_overlays(0)
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
-		M << "<span class='warning'>[src] cuts into your hand!</span>"
+		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
 		M.adjustBruteLoss(force / 2)
 
 
@@ -341,7 +343,7 @@
 				if(G.amount >= G.max_amount)
 					continue
 				G.attackby(NG, user)
-			user << "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>"
+			to_chat(user, "<span class='notice'>You add the newly-formed glass to the stack. It now contains [NG.amount] sheet\s.</span>")
 			qdel(src)
 	else
 		return ..()

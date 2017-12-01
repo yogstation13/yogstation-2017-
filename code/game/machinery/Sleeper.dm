@@ -82,7 +82,7 @@
 		playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		..(user)
 		if(occupant && occupant.stat != DEAD)
-			occupant << "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
+			to_chat(occupant, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
 
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)
 	if(M.environment_smash)
@@ -121,11 +121,11 @@
 	if(default_deconstruction_crowbar(I))
 		return
 	if(istype(I, /obj/item/weapon/wirecutters) && emag_effect)
-		user << "<span class='alert'>You begin mending seperated wires and cutting the useless ones...</span>"
+		to_chat(user, "<span class='alert'>You begin mending seperated wires and cutting the useless ones...</span>")
 		spark_system.start()
 		playsound(user, "sparks", 50, 1)
 		if(do_after(user, 80/I.toolspeed, target = src))
-			user << "<span class='notice'>You mend some of the wires together and cut off the burnt out ones, allowing the sleeper to function properly.</span>"
+			to_chat(user, "<span class='notice'>You mend some of the wires together and cut off the burnt out ones, allowing the sleeper to function properly.</span>")
 			emag_effect = !emag_effect
 			emagged = !emagged
 			return
@@ -137,7 +137,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
 
 	if(emag_effect)
-		user << "<span class='danger'>You see a small line of smoke coming from inside of the sleeper and wires ripped apart creating brief electric sparks making you hesitate from touching it.</span>"
+		to_chat(user, "<span class='danger'>You see a small line of smoke coming from inside of the sleeper and wires ripped apart creating brief electric sparks making you hesitate from touching it.</span>")
 		if(ui)
 			ui.close()
 		return
@@ -198,16 +198,22 @@
 			if(emagged)
 				for(var/reagent_id in available_chems)
 					occupant.reagents.add_reagent(reagent_id, 30)
-					audible_message("<span class='alert'>[src] begins to overloading and goes REEEEEEEEEEEEEEEEEEE!</span>")
-					emag_effect = 1
-					open_machine()
-					return
+					occupant.attack_log += text("\[[time_stamp()]\] <font color='orange'>[occupant]/[occupant.ckey] has been injected by [usr]/[usr.ckey] with 30 [reagent_id] using an EMAGGED sleeper</font>")
+					log_attack("[usr]/[usr.ckey] injected [occupant]/[occupant.ckey] with 30 [reagent_id] using an EMAGGED sleeper")
+					usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[usr]/[usr.ckey] has injected [occupant]/[occupant.ckey] with 30 [reagent_id] using an EMAGGED sleeper</font>")
+				audible_message("<span class='alert'>[src] buzzes and beeps madly!</span>")
+				emag_effect = 1
+				open_machine()
+				return
 			if(inject_chem(chem))
 				. = TRUE
 
 /obj/machinery/sleeper/proc/inject_chem(chem)
 	if((chem in available_chems) && chem_allowed(chem))
 		occupant.reagents.add_reagent(chem, 10)
+		occupant.attack_log += text("\[[time_stamp()]\] <font color='orange'>[occupant]/[occupant.ckey] has been injected by [usr]/[usr.ckey] with 10 [chem] using a sleeper</font>")
+		usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[usr]/[usr.ckey] has injected [occupant]/[occupant.ckey] with 10 [chem] using a sleeper</font>")
+		log_attack("[usr]/[usr.ckey] injected [occupant]/[occupant.ckey] with 10 [chem] using a sleeper")
 		return TRUE
 
 /obj/machinery/sleeper/proc/chem_allowed(chem)
@@ -220,7 +226,7 @@
 /obj/machinery/sleeper/emag_act(mob/user)
 	if(!emagged)
 		src.emagged = 1
-		user << "You breach the safety mechanics.."
+		to_chat(user, "You breach the safety mechanics..")
 
 
 /obj/machinery/sleeper/syndie

@@ -1377,6 +1377,12 @@
 /obj/machinery/computer/security/mining/jaunter{
 	name = "jaunter camera console"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/lava/smooth/lava_land_surface
 	},

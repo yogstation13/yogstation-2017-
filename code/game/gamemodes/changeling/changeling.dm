@@ -47,8 +47,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/changeling_team_objective_type = null //If this is not null, we hand our this objective to all lings
 
 /datum/game_mode/changeling/announce()
-	world << "<b>The current game mode is - Changeling!</b>"
-	world << "<b>There are alien changelings on the station. Do not let the changelings succeed!</b>"
+	to_chat(world, "<b>The current game mode is - Changeling!</b>")
+	to_chat(world, "<b>There are alien changelings on the station. Do not let the changelings succeed!</b>")
 
 /datum/game_mode/changeling/pre_setup()
 
@@ -199,19 +199,19 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 /datum/game_mode/proc/greet_changeling(datum/mind/changeling, you_are=1)
 	if (you_are)
-		changeling.current << "<span class='boldannounce'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>"
-	changeling.current << "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>"
-	changeling.current << "<b>You must complete the following tasks:</b>"
+		to_chat(changeling.current, "<span class='boldannounce'>You are [changeling.changeling.changelingID], a changeling! You have absorbed and taken the form of a human.</span>")
+	to_chat(changeling.current, "<span class='boldannounce'>Use say \":g message\" to communicate with your fellow changelings.</span>")
+	to_chat(changeling.current, "<b>You must complete the following tasks:</b>")
 
 	if (changeling.current.mind)
 		var/mob/living/carbon/human/H = changeling.current
 		if(H.mind.assigned_role == "Clown")
-			H << "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself."
+			to_chat(H, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
 			H.dna.remove_mutation(CLOWNMUT)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in changeling.objectives)
-		changeling.current << "<b>Objective #[obj_count]</b>: [objective.explanation_text]"
+		to_chat(changeling.current, "<b>Objective #[obj_count]</b>: [objective.explanation_text]")
 		obj_count++
 	return
 
@@ -271,7 +271,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 				feedback_add_details("changeling_success","FAIL")
 			text += "<br>"
 
-		world << text
+		to_chat(world, text)
 
 
 	return 1
@@ -344,21 +344,21 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		var/datum/changelingprofile/prof = stored_profiles[1]
 		if(prof.dna == user.dna && stored_profiles.len >= dna_max)//If our current DNA is the stalest, we gotta ditch it.
 			if(verbose)
-				user << "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>"
+				to_chat(user, "<span class='warning'>We have reached our capacity to store genetic information! We must transform before absorbing more.</span>")
 			return
 	if(!target)
 		return
 	if((target.disabilities & NOCLONE)/* || (target.disabilities & HUSK)*/)//Husk absorption, to prevent redtext due to people spacing themselves.
 		if(verbose)
-			user << "<span class='warning'>DNA of [target] is ruined beyond usability!</span>"
+			to_chat(user, "<span class='warning'>DNA of [target] is ruined beyond usability!</span>")
 		return
 	if(!ishuman(target))//Absorbing monkeys is entirely possible, but it can cause issues with transforming. That's what lesser form is for anyway!
 		if(verbose)
-			user << "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>"
+			to_chat(user, "<span class='warning'>We could gain no benefit from absorbing a lesser creature.</span>")
 		return
 	if(!target.has_dna())
 		if(verbose)
-			user << "<span class='warning'>[target] is not compatible with our biology.</span>"
+			to_chat(user, "<span class='warning'>[target] is not compatible with our biology.</span>")
 		return
 	return 1
 
@@ -511,78 +511,4 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CHANGELING]
 	hud.leave_hud(changling_mind.current)
 	set_antag_hud(changling_mind.current, null)
-
-//for the abomination species, see horrorform.dm
-
-/datum/species/deformed //what you get from abomination reversion
-	name = "???"
-	id = "husk"
-	say_mod = "gasps"
-	sexes = 0
-	roundstart = 0
-
-/obj/item/clothing/suit/space/abomination
-	name = "fleshy hide"
-	desc = "A huge chunk of flesh. It seems to be shifting around itself."
-	icon_state = "golem"
-	item_state = "golem"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list(melee = 80, bullet = 50, laser = 70,energy = 100, bomb = 30, bio = 100, rad = 0)
-	slowdown = 0
-	unacidable = 1
-	burn_state = -1
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	flags = ABSTRACT | NODROP
-
-/obj/item/clothing/shoes/abomination
-	name = "spiked hooks"
-	desc = "A fleshy membrane with spikes that dig into the ground below."
-	icon_state = "golem"
-	unacidable = 1
-	burn_state = -1
-	flags = NOSLIP | ABSTRACT | NODROP
-
-/obj/item/clothing/mask/muzzle/abomination
-	name = "distorted mouth"
-	desc = "A disgusting mouth with multiple rows of teeth. There's no way someone with this on could talk normally."
-	icon_state = "golem"
-	item_state = "golem"
-	flags = ABSTRACT | NODROP
-	armor = list(melee = 30, bullet = 20, laser = 30, energy = 50, bomb = 20, bio = 50, rad = 0)
-	unacidable = 1
-	burn_state = -1
-	flags_cover = MASKCOVERSEYES
-
-/obj/item/clothing/head/helmet/space/abomination
-	name = "hardened membrane"
-	icon_state = "golem"
-	item_state = "golem"
-	desc = "Hardened resin of some sort."
-	flags = ABSTRACT | NODROP
-	armor = list(melee = 50, bullet = 25, laser = 40,energy = 50, bomb = 10, bio = 50, rad = 0)
-	unacidable = 1
-	burn_state = -1
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-
-/obj/item/clothing/gloves/abomination
-	name = "hardened membrane"
-	desc = "A strange filament webbing that would fit around one's hands. They seem to be rather thick."
-	icon_state = "golem"
-	item_state = "golem"
-	siemens_coefficient = 0
-	permeability_coefficient = 0.9
-	cold_protection = HANDS
-	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	heat_protection = HANDS
-	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	unacidable = 1
-	burn_state = -1
-	flags = ABSTRACT | NODROP
-
-/obj/item/clothing/glasses/night/shadowling/abomination
-	name = "sunken pits"
-	desc = "Eye holes housing some sort of eyes. Something tells you you don't want to know what kind."
-	icon_state = "golem"
-	item_state = "golem"
-	actions_types = null
 

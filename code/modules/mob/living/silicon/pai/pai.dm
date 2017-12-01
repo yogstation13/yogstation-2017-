@@ -172,13 +172,13 @@
 		return src.death(0)
 
 	silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
-	src << "<span class ='warning'>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</span>"
+	to_chat(src, "<span class ='warning'>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</span>")
 
 	switch(pick(1,2,3))
 		if(1)
 			src.master = null
 			src.master_dna = null
-			src << "<span class='notice'>You feel unbound.</span>"
+			to_chat(src, "<span class='notice'>You feel unbound.</span>")
 		if(2)
 			var/command
 			if(severity  == 1)
@@ -186,9 +186,9 @@
 			else
 				command = pick("Serve", "Kill", "Love", "Hate", "Disobey", "Devour", "Fool", "Enrage", "Entice", "Observe", "Judge", "Respect", "Disrespect", "Consume", "Educate", "Destroy", "Disgrace", "Amuse", "Entertain", "Ignite", "Glorify", "Memorialize", "Analyze")
 			src.laws.zeroth = "[command] your master."
-			src << "<span class='notice'>Pr1m3 d1r3c71v3 uPd473D.</span>"
+			to_chat(src, "<span class='notice'>Pr1m3 d1r3c71v3 uPd473D.</span>")
 		if(3)
-			src << "<span class='notice'>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</span>"
+			to_chat(src, "<span class='notice'>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</span>")
 
 /mob/living/silicon/pai/ex_act(severity, target)
 	switch(severity)
@@ -204,7 +204,7 @@
 			if (src.stat != 2)
 				adjustBruteLoss(30)
 				adjustFireLoss(15)
-	src << "<span class='danger'><b>A warning chime fires at the back of your consciousness process, heralding the unexpected shutdown of your holographic emitter. You're defenseless!</b></span>"
+	to_chat(src, "<span class='danger'><b>A warning chime fires at the back of your consciousness process, heralding the unexpected shutdown of your holographic emitter. You're defenseless!</b></span>")
 	close_up()
 	return
 
@@ -227,10 +227,10 @@
 
 /mob/living/silicon/pai/attack_alien(mob/living/carbon/alien/humanoid/M as mob)
 	if (!ticker)
-		M << "You cannot attack people before the game has started."
+		to_chat(M, "You cannot attack people before the game has started.")
 		return
 	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
-		M << "You cannot attack someone in the spawn area."
+		to_chat(M, "You cannot attack someone in the spawn area.")
 		return
 	switch(M.a_intent)
 		if ("help")
@@ -325,15 +325,15 @@
 /mob/living/silicon/pai/proc/flicker_fade(var/dur = 40)
 	updatehealth()
 	if (emittersFailing)
-		src << "<span class='boldwarning'>Your failing containment field surges at the new intrusion, searing your circuitry even more!</span>"
+		to_chat(src, "<span class='boldwarning'>Your failing containment field surges at the new intrusion, searing your circuitry even more!</span>")
 		src.adjustFireLoss(5)
 		return
-	src << "<span class='boldwarning'>The holographic containment field surrounding you is failing! Your emitters whine in protest, burning out slightly.</span>"
+	to_chat(src, "<span class='boldwarning'>The holographic containment field surrounding you is failing! Your emitters whine in protest, burning out slightly.</span>")
 	src.adjustFireLoss(rand(5,15))
 	last_special = world.time + rand(100,500)
 	src.emittersFailing = 1
 	if (health < 5)
-		src << "<span class='boldwarning'>HARDWARE ERROR: EMITTERS OFFLINE</span>"
+		to_chat(src, "<span class='boldwarning'>HARDWARE ERROR: EMITTERS OFFLINE</span>")
 	spawn(dur)
 		visible_message("<span class='danger'>[src]'s holographic field flickers out of existence!</span>")
 		src.emittersFailing = 0
@@ -358,16 +358,16 @@
 	return
 
 /mob/living/silicon/pai/stripPanelUnequip(obj/item/what, mob/who, where) //prevents stripping
-	src << "<span class='warning'>Your containment field stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>"
+	to_chat(src, "<span class='warning'>Your containment field stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>")
 	return
 
 /mob/living/silicon/pai/stripPanelEquip(obj/item/what, mob/who, where) //prevents stripping
-	src << "<span class='warning'>Your containment field stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>"
+	to_chat(src, "<span class='warning'>Your containment field stutters and warps intensely as you attempt to interact with the object, forcing you to cease lest the field fail.</span>")
 	return
 
 //disable ignition, no need for it. however, this will card the pAI instantly.
 /mob/living/silicon/pai/IgniteMob(var/mob/living/silicon/pai/P)
-	src << "<span class='danger'>The intense heat from the nearby fire causes your holographic field to fail instantly, damaging your internal hardware!</span>"
+	to_chat(src, "<span class='danger'>The intense heat from the nearby fire causes your holographic field to fail instantly, damaging your internal hardware!</span>")
 	flicker_fade(0)
 	return
 
@@ -399,7 +399,7 @@
 	paired.paired = null
 	paired.update_icon()
 	if(!silent)
-		src << "<span class='warning'><b>\[ERROR\]</b> Network timeout. Remote control connection to [paired.name] severed.</span>"
+		to_chat(src, "<span class='warning'><b>\[ERROR\]</b> Network timeout. Remote control connection to [paired.name] severed.</span>")
 	paired = null
 	return
 
@@ -409,10 +409,10 @@
 	if(!P)
 		return
 	if(P.stat & (BROKEN|NOPOWER))
-		src << "<span class='warning'><b>\[ERROR\]</b> Remote device not responding to remote control handshake. Cannot establish connection.</span>"
+		to_chat(src, "<span class='warning'><b>\[ERROR\]</b> Remote device not responding to remote control handshake. Cannot establish connection.</span>")
 		return
 	if(!P.paiAllowed)
-		src << "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>"
+		to_chat(src, "<span class='warning'><b>\[ERROR\]</b> Remote device does not accept remote control connections.</span>")
 		return
 	if(P.paired && (P.paired != src))
 		P.paired.unpair(0)
@@ -420,7 +420,7 @@
 	paired = P
 	paired.update_icon()
 	pairing = 0
-	src << "<span class='info'>Handshake complete. Remote control connection established.</span>"
+	to_chat(src, "<span class='info'>Handshake complete. Remote control connection established.</span>")
 	return
 
 /mob/living/silicon/pai/canUseTopic(atom/movable/M)
@@ -442,19 +442,19 @@ mob/verb/makePAI(var/turf/t in view())
 		return
 
 	if (wiped)
-		src << "\red Your holographic control processes were the first to be deleted! You can't move!"
+		to_chat(src, "\red Your holographic control processes were the first to be deleted! You can't move!")
 		return
 
 	if (!canholo)
-		src << "\red Your master has not enabled your external holographic emitters! Ask nicely!"
+		to_chat(src, "\red Your master has not enabled your external holographic emitters! Ask nicely!")
 		return
 
 	if(src.loc != card)
-		src << "\red You are already in your holographic form!"
+		to_chat(src, "\red You are already in your holographic form!")
 		return
 
 	if(world.time <= last_special)
-		src << "\red You must wait before altering your holographic emitters again!"
+		to_chat(src, "\red You must wait before altering your holographic emitters again!")
 		return
 
 	last_special = world.time + 200
@@ -489,7 +489,7 @@ mob/verb/makePAI(var/turf/t in view())
 /mob/living/silicon/pai/proc/close_up(var/force = 0)
 
 	if (health < 5 && !force)
-		src << "<span class='warning'><b>Your holographic emitters are too damaged to function!</b></span>"
+		to_chat(src, "<span class='warning'><b>Your holographic emitters are too damaged to function!</b></span>")
 		return
 
 	last_special = world.time + 200
@@ -524,11 +524,11 @@ mob/verb/makePAI(var/turf/t in view())
 		return
 
 	if(src.loc == card)
-		src << "\red You are already in your card form!"
+		to_chat(src, "\red You are already in your card form!")
 		return
 
 	if(world.time <= last_special)
-		src << "\red You must wait before returning to your card form!"
+		to_chat(src, "\red You must wait before returning to your card form!")
 		return
 
 	if (emitter_OD)
@@ -542,7 +542,7 @@ mob/verb/makePAI(var/turf/t in view())
 	set name = "Choose Holographic Projection"
 
 	if (src.loc == card)
-		src << "\red You must be in your holographic form to choose your projection shape!"
+		to_chat(src, "\red You must be in your holographic form to choose your projection shape!")
 		return
 
 	var/choice
@@ -565,10 +565,10 @@ mob/verb/makePAI(var/turf/t in view())
 
 	if(src && istype(src.loc,/obj/item/device/paicard))
 		resting = 0
-		src << "\blue You spool down the clock on your internal processor for a moment. Ahhh. T h a t ' s  t h e  s t u f f."
+		to_chat(src, "\blue You spool down the clock on your internal processor for a moment. Ahhh. T h a t ' s  t h e  s t u f f.")
 	else
 		resting = !resting
 		icon_state = resting ? "[chassis]_rest" : "[chassis]"
-		src << "\blue You are now [resting ? "resting" : "getting up"]"
+		to_chat(src, "\blue You are now [resting ? "resting" : "getting up"]")
 
 	canmove = !resting

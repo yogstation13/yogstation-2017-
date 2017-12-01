@@ -397,7 +397,7 @@
 "hG" = (/obj/structure/table,/obj/item/weapon/storage/toolbox/mechanical,/turf/open/floor/plating,/area/awaymission/centcomAway/hangar)
 "hH" = (/obj/structure/table/reinforced,/obj/item/weapon/storage/box/bodybags,/turf/open/floor/plasteel{icon_state = "engine"},/area/awaymission/centcomAway/general)
 "hI" = (/turf/open/floor/plasteel{icon_state = "green"; dir = 1},/area/awaymission/centcomAway/general)
-"hJ" = (/obj/structure/toilet{dir = 8},/turf/open/floor/plasteel{icon_state = "white"},/area/awaymission/centcomAway/general)
+"hJ" = (/obj/machinery/disposal/bin/toilet{dir = 8},/turf/open/floor/plasteel{icon_state = "white"},/area/awaymission/centcomAway/general)
 "hK" = (/obj/machinery/button/door{id = "XCCHangar1"; name = "Hangar Bay Blast Doors"; pixel_x = -28; pixel_y = 7; req_access_txt = "2"},/turf/open/floor/plating{icon_state = "warnplate"; dir = 8},/area/awaymission/centcomAway/hangar)
 "hL" = (/obj/structure/reagent_dispensers/watertank,/turf/open/floor/plasteel{icon_state = "dark"},/area/awaymission/centcomAway/hangar)
 "hM" = (/obj/structure/rack,/obj/item/clothing/ears/earmuffs{pixel_x = -3; pixel_y = -2},/turf/open/floor/plating{icon_state = "warnplate"; dir = 8},/area/awaymission/centcomAway/hangar)
