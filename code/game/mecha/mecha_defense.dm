@@ -287,8 +287,25 @@
 		W.forceMove(src)
 		user.visible_message("[user] attaches [W] to [src].", "<span class='notice'>You attach [W] to [src].</span>")
 		return
+
+	else if(istype(W, /obj/item/toy/crayon/spraycan))
+		var/obj/item/toy/crayon/spraycan/S = W
+		if(S.check_empty(user))
+			return
+
+		to_chat(user, "<span class='notice'>You start painting [src]...</span>")
+		if(do_after(user, 100, target=src))
+			if(S.check_empty())
+				return
+			S.use_charges(10)
+			color = S.paint_color
+			audible_message("<span class='notice'>You hear spraying.</span>")
+			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+			to_chat(user, "<span class='notice'>You finish painting [src]. Beautiful.</span>")
+
 	else
 		return ..()
+
 
 /obj/mecha/attacked_by(obj/item/I, mob/living/user)
 	log_message("Attacked by [I]. Attacker - [user]")
