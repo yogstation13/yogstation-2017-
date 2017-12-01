@@ -60,9 +60,7 @@
 		linepos 			 = 0 										 //column=codepos-linepos
 		n_scriptOptions/nS_Options/options
 
-		commenting = 0
-				// 1: single-line
-				// 2: multi-line
+
 		list
 /*
 	Variable: ignore
@@ -255,6 +253,7 @@
 			// since it was a global
 			if(isshort) // If line comment
 				++codepos // To skip over the second slash
+				var/char
 				while(++codepos>lentext(code))
 				{
 					char = copytext(code, codepos, codepos+1)
@@ -264,6 +263,7 @@
 			else
 				var/noend = TRUE
 				++codepos // To prevent /*/ from being valid syntax
+				var/end
 				while(++codepos>lentext(code)) // If long comment
 				{
 					end = copytext(code, codepos, codepos+2)
