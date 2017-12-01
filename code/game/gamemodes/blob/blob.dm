@@ -30,7 +30,9 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 	var/messagedelay_low = 2400 //in deciseconds
 	var/messagedelay_high = 3600 //blob report will be sent after a random value between these (minimum 4 minutes, maximum 6 minutes)
-
+	
+	var/message_sent = 0
+	
 	var/list/blob_overminds = list()
 
 /datum/game_mode/blob/pre_setup()
@@ -87,13 +89,20 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 
 	spawn(0)
 		var/message_delay = rand(messagedelay_low, messagedelay_high) //between 4 and 6 minutes with 2400 low and 3600 high.
-
-		sleep(message_delay)
-
-		send_intercept(1)
-
-		sleep(24000) //40 minutes, plus burst_delay*3(minimum of 6 minutes, maximum of 8)
-
-		send_intercept(2) //if the blob has been alive this long, it's time to bomb it
+		addtimer(src, "announce_bleb", message_delay)
 
 	return ..()
+
+/datum/game_mode/blob/proc/announce_bleb()
+	send_intercept(1)
+	message_sent = 1
+	addtimer(src, "send_intercept", 24000, 2)
+
+/mob/living/Stat()
+	..()
+	if(statpanel("Status"))
+		if(ticker && ticker.mode)
+			if(istype(ticker.mode, /datum/game_mode/blob))
+				var/datum/game_mode/blob/B = ticker.mode
+				if(B.message_sent)
+					stat(null, "Blobs to Blob Win: [blobs_legit.len]/[B.blobwincount]")
