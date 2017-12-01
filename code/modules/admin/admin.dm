@@ -2,13 +2,13 @@
 var/global/BSACooldown = 0
 
 ////////////////////////////////
-/proc/message_admins(msg, fuckholder = 0)
+/proc/message_admins(msg, requires_basic = 0)
 	var/list/validmins = list()
-	if(fuckholder)
+	if(requires_basic)
 		for(var/client/C in admins)
 			if(check_rights_for(C, R_BASIC))
 				validmins += C
-		msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span> - MESSAGE NOT SENT TO PEOPLE WITHOUT +BASIC</span>"
+		msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
 		to_chat(validmins, msg)
 	else
 		msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
