@@ -292,7 +292,7 @@
 		var/obj/item/toy/crayon/spraycan/S = W
 		if(S.charges_left < 15)
 			to_chat(user, "<span class='warning'>There is not enough paint left in [S]!</span>")
-			return 1
+			return 1 //returning 1 prevents afterattack() from running
 		if(S.is_capped)
 			to_chat(user, "<span class='warning'>You need to take the cap off first!</span>")
 			return 1
