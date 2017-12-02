@@ -1088,7 +1088,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "An additional objective, chosen from either assassinate, steal or maroon"
 	item = /obj/item/weapon/wrench //we need an item or it won't be included in the uplink
 	cost = -5
-	var/max_objectives = 10
+	var/max_objectives = 5
 	exclude_modes = list(/datum/game_mode/nuclear)
 
 // Pointless
