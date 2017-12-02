@@ -1204,7 +1204,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	if(user.mind.special_role != "traitor")
 		return
 	if(user.mind.objectives.len >= max_objectives)
-		to_chat(user, "Our databases only have 10 available objectives. For more objectives, please contact your nearest syndicate commander.")
+		to_chat(user, "Our databases only have [max_objectives] available objectives. For more objectives, please contact your nearest syndicate commander.")
 		return
 	U.telecrystals -= cost
 
