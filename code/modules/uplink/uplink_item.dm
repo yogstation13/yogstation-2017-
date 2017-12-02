@@ -60,7 +60,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/proc/buy(mob/user, obj/item/device/uplink/U)
 	if(!istype(U))
 		return
-	if (!user || user.incapacitated())
+	if(!user || user.incapacitated())
 		return
 
 	if(U.telecrystals < cost)
@@ -1079,6 +1079,18 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	restricted_roles = list("Clown")
 	cost = 9
 
+//miscellaneous
+/datum/uplink_item/misc
+	category = "Miscellaneous"
+
+/datum/uplink_item/misc/objective
+	name = "Additional Objective"
+	desc = "An additional objective, chosen from either assassinate, steal or maroon"
+	item = /obj/item/weapon/wrench //we need an item or it won't be included in the uplink
+	cost = -5
+	var/max_objectives = 10
+	exclude_modes = list(/datum/game_mode/nuclear)
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
@@ -1183,3 +1195,46 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		U.spent_telecrystals += I.cost
 		feedback_add_details("traitor_uplink_items_bought","RN")
 		return new I.item(loc)
+
+/datum/uplink_item/misc/objective/buy(mob/user, obj/item/device/uplink/U)
+	if(!istype(U))
+		return
+	if(!user || user.incapacitated())
+		return
+	if(user.mind.special_role != "traitor")
+		return
+	if(user.mind.objectives.len >= max_objectives)
+		to_chat(user, "Our databases only have 10 available objectives. For more objectives, please contact your nearest syndicate commander.")
+		return
+	U.telecrystals -= cost
+
+	var/list/active_ais = active_ais()
+	if(prob(50))
+		if(active_ais.len && prob(100/joined_player_list.len))
+			var/datum/objective/destroy/destroy_objective = new
+			destroy_objective.owner = user.mind
+			destroy_objective.find_target()
+			user.mind.objectives += destroy_objective
+		else if(prob(30))
+			var/datum/objective/maroon/maroon_objective = new
+			maroon_objective.owner = user.mind
+			maroon_objective.find_target()
+			user.mind.objectives += maroon_objective
+		else
+			var/datum/objective/assassinate/kill_objective = new
+			kill_objective.owner = user.mind
+			kill_objective.find_target()
+			user.mind.objectives += kill_objective
+	else
+		var/datum/objective/steal/steal_objective = new
+		steal_objective.owner = user.mind
+		steal_objective.find_target()
+		user.mind.objectives += steal_objective
+
+	to_chat(user, "<U><B>Thank you for accepting an additional objective. Your current objectives are:</B></U>")
+	var/obj_count = 1
+	for(var/datum/objective/objective in user.mind.objectives)
+		to_chat(user, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
+		obj_count++
+
+	return 1
