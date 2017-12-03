@@ -213,7 +213,7 @@
 /datum/map_template/shuttle/emergency/makara
 	suffix = "makara"
 	name = "Makara Emergency Shuttle"
-	description = "A refitted submarine, now used for emergency travel"
+	description = "A refitted submarine, now used for emergency travel."
 	credit_cost = 50000
 
 /datum/map_template/shuttle/emergency/train
