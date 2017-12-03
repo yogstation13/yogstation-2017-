@@ -216,6 +216,12 @@
 	description = "A refitted submarine, now used for emergency travel"
 	credit_cost = 50000
 
+/datum/map_template/shuttle/emergency/train
+	suffix = "train"
+	name = "The Emergency Escape Train"
+	description = "Fuck shuttles, Trains are AWESOME. And now, with a small transaction of funds, YOU can be the next universal conductor."
+	credit_cost = 2500
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
