@@ -202,6 +202,7 @@ var/list/teleportlocs = list()
 	has_gravity = 1
 	noteleport = 1
 	blob_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
+	murders_plants = 0
 	sound_env = LARGE_ENCLOSED
 
 /area/centcom/control
@@ -326,6 +327,7 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
+	murders_plants = 0
 	sound_env = LARGE_ENCLOSED
 
 //Abductors
@@ -335,6 +337,7 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	noteleport = 1
 	has_gravity = 1
+	murders_plants = 0
 	sound_env = SMALL_ENCLOSED
 
 

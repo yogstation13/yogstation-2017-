@@ -7340,8 +7340,6 @@
 "YJ" = (
 /obj/structure/table,
 /obj/item/weapon/grenade/clusterbuster/syndieminibomb,
-/obj/item/weapon/grenade/clusterbuster/spawner_spesscarp,
-/obj/item/weapon/grenade/spawnergrenade/clownbugs,
 /turf/open/indestructible,
 /area/centcom/control)
 "YK" = (
