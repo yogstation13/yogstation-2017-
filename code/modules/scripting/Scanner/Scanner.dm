@@ -241,7 +241,8 @@
 
 /*
 	Proc: ReadComment
-	Reads a comment and outputs the type of comment
+	Reads a comment. Wow.
+	 I'm glad I wrote this proc description for you to explain that.
 
 	Parameters:
 		isshort - a variable that stores how this comment started
@@ -249,23 +250,19 @@
 */
 
 		ReadComment(isshort)
-			// Remember that we still have that $codepos pointer variable,
-			// since it was a global
+			// Remember that we still have that $codepos pointer variable to use.
 			if(isshort) // If line comment
 				++codepos // To skip over the second slash
 				while(++codepos>lentext(code))
-				{
 					if(copytext(code, codepos, codepos+1) == "\n") // then stop on the newline
 						break
-				}
 			else
 				var/noend = TRUE
 				++codepos // To prevent /*/ from being valid syntax
 				while(++codepos>lentext(code)) // If long comment
-				{
 					if(copytext(code, codepos, codepos+2) == "*/") // then stop on any */ 's'
 						noend = FALSE
 						break
-				}
 				if(noend) // If the comment wasn't completed
 					errors+=new/scriptError/UnterminatedComment()
+
