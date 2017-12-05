@@ -253,11 +253,9 @@
 			// since it was a global
 			if(isshort) // If line comment
 				++codepos // To skip over the second slash
-				var/char
 				while(++codepos>lentext(code))
 				{
-					char = copytext(code, codepos, codepos+1)
-					if(char == "\n") // then stop on the newline
+					if(copytext(code, codepos, codepos+1) == "\n") // then stop on the newline
 						break
 				}
 			else
