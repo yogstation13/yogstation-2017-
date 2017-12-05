@@ -263,11 +263,9 @@
 			else
 				var/noend = TRUE
 				++codepos // To prevent /*/ from being valid syntax
-				var/end
 				while(++codepos>lentext(code)) // If long comment
 				{
-					end = copytext(code, codepos, codepos+2)
-					if(end == "*/") // then stop on */
+					if(copytext(code, codepos, codepos+2) == "*/") // then stop on any */ 's'
 						noend = FALSE
 						break
 				}
