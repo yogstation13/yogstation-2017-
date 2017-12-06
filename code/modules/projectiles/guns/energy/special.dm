@@ -218,6 +218,23 @@
 		blue.target = get_turf(orange)
 		orange.target = get_turf(blue)
 
+/obj/item/weapon/gun/energy/BCT
+	name = "bluespace conciousness translocater"
+	desc = "A translocater to move conciousness from one being to another."
+	ammo_type = list(/obj/item/ammo_casing/energy/BCT)
+	item_state = null
+	icon_state = "wormhole_projector"
+	origin_tech = "combat=4;bluespace=6;plasmatech=4;engineering=4"
+	var/datum/mind/mind
+	
+/obj/item/weapon/gun/energy/BCT/attack_self(mob/user)
+	..()
+	if(mind)
+		mind = null
+		to_chat(user, "Stored mind nullified.")
+	else
+		mind = user.mind
+		to_chat(user, "Your mind is stored.")
 
 /* 3d printer 'pseudo guns' for borgs */
 
