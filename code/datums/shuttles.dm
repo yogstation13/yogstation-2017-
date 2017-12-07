@@ -45,6 +45,14 @@
 	name = "Asteroid emergency shuttle"
 	credit_cost = 10000
 
+/datum/map_template/shuttle/emergency/ashes
+	suffix = "ashes"
+	name = "The Ashes"
+	description = "Originally a modern art piece, the shuttle was sold to the nanotrasen fleet after the art crash of 2467"
+	admin_notes = "a mishmash of different shuttles, with the delta-shuttle as the template"
+	credit_cost = 10000
+	emag_buy = TRUE
+
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
