@@ -236,7 +236,6 @@ var/next_external_rsc = 0
 		if(prefs.toggles & QUIET_ROUND)
 			prefs.toggles &= ~QUIET_ROUND
 			prefs.save_preferences()
-	prefs.update_character_slots(src)
 	sethotkeys(1) //use preferences to set hotkeys (from_pref = 1)
 
 	. = ..()	//calls mob.Login()
