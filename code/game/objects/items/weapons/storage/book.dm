@@ -9,6 +9,12 @@
 	silent = TRUE
 	burn_state = FLAMMABLE
 	var/title = "book"
+
+// Dwarfism Book for maint ruin
+/obj/item/weapon/storage/book/dwarfism/New()
+	..()
+	new /obj/item/weapon/dnainjector/dwarf/expired(src)
+	
 /obj/item/weapon/storage/book/attack_self(mob/user)
 		to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 

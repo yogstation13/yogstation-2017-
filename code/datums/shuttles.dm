@@ -45,6 +45,14 @@
 	name = "Asteroid emergency shuttle"
 	credit_cost = 10000
 
+/datum/map_template/shuttle/emergency/ashes
+	suffix = "ashes"
+	name = "The Ashes"
+	description = "Originally a modern art piece, the shuttle was sold to the nanotrasen fleet after the art crash of 2467"
+	admin_notes = "a mishmash of different shuttles, with the delta-shuttle as the template"
+	credit_cost = 10000
+	emag_buy = TRUE
+
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
@@ -209,6 +217,18 @@
 	description = "A shuttle usually used by syndicate boarding parties, comes prepackaged with guns, explosives and hardsuits."
 	emag_buy = TRUE
 	credit_cost = 20000
+
+/datum/map_template/shuttle/emergency/makara
+	suffix = "makara"
+	name = "Makara Emergency Shuttle"
+	description = "A refitted submarine, now used for emergency travel."
+	credit_cost = 50000
+
+/datum/map_template/shuttle/emergency/train
+	suffix = "train"
+	name = "The Emergency Escape Train"
+	description = "Fuck shuttles, Trains are AWESOME. And now, with a small transaction of funds, YOU can be the next universal conductor."
+	credit_cost = 2500
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
