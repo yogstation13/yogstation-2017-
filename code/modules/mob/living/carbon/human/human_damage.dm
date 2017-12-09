@@ -2,6 +2,7 @@
 /mob/living/carbon/human/updatehealth()
 	if(GODMODE in status_flags)
 		return
+	var/oldhealth = health
 	var/total_burn	= 0
 	var/total_brute	= 0
 	for(var/X in bodyparts)	//hardcoded to streamline things a bit
@@ -16,6 +17,7 @@
 			shred_clothing()
 	med_hud_set_health()
 	med_hud_set_status()
+	hulk_health_check(oldhealth)
 
 
 //These procs fetch a cumulative total damage from all bodyparts

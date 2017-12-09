@@ -1812,6 +1812,15 @@
 			qdel(S)
 			spell_list -= S
 
+//Check if there is a specific spell in mind
+/datum/mind/proc/CheckSpell(var/obj/effect/proc_holder/spell/spell)
+	if(!spell) return
+	for(var/X in spell_list)
+		var/obj/effect/proc_holder/spell/S = X
+		if(istype(S, spell))
+			return 1
+	return 0
+
 /datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)
 		for(var/datum/action/A in current.actions)
