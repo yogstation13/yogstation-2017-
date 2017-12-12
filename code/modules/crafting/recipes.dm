@@ -377,6 +377,8 @@
 	reqs = list(/obj/item/weapon/bedsheet = 1,
 				/obj/item/stack/sheet/metal = 2,
 				/obj/item/stack/rods = 4)
+	tools = list(/obj/item/weapon/wrench = 1,
+			/obj/item/weapon/weldingtool = 1)
 	category = CAT_MISC
 
 
