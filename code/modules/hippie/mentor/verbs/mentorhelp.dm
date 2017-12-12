@@ -14,16 +14,22 @@
 		to_chat(src, "<font color='red'>You are unable to use mentorhelp (muted).</font>")
 		return
 	var/show_char = config.mentors_mobname_only
-	var/mentor_msg = "<span class='mentornotice'><b><font color='#3280ff'>MENTORHELP:</b> <b><a href='?follow=\ref[src]>(F)</a>[key_name_mentor(src, 1, 0, show_char)]</b>:</font> [msg]</span>"
+	var/mentor_msg = ""
 	log_mentor("MENTORHELP: [key_name_mentor(src, 0, 0, 0, 0)]: [msg]")
 
 	for(var/client/X in mentors)
 		if(X.mob && (istype(X.mob, /mob/new_player) || isobserver(X.mob)))
 			X << 'sound/items/bikehorn.ogg'
+			mentor_msg = "<span class='mentornotice'><b><font color='#3280ff'>MENTORHELP:</b> <b>"
+			mentor_msg += FOLLOW_LINK(X, src)
+			mentor_msg += " [key_name_mentor(src, 1, 0, show_char)]</b>:</font> [msg]</span>"
 			to_chat(X, mentor_msg)
 
 	for(var/client/A in admins)
 		A << 'sound/items/bikehorn.ogg'
+		mentor_msg = "<span class='mentornotice'><b><font color='#3280ff'>MENTORHELP:</b> <b>"
+		mentor_msg += FOLLOW_LINK(A, src)
+		mentor_msg += " [key_name_mentor(src, 1, 0, show_char)]</b>:</font> [msg]</span>"
 		to_chat(A, mentor_msg)
 
 	to_chat(src, "<span class='mentornotice'><font color='purple'>PM to-<b>Mentors</b>: [msg]</font></span>")
