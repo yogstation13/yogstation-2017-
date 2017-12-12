@@ -2,26 +2,25 @@
 	set category = "Mentor"
 	set name = "Mentorhelp"
 
-	//remove out adminhelp verb temporarily to prevent spamming of mentors.
-	//src.verbs -= /client/verb/mentorhelp
-	//spawn(300)
-	//	src.verbs += /client/verb/mentorhelp	// 30 second cool-down for mentorhelp
-
 	//clean the input msg
-	if(!msg)	return
+	if(!msg)
+		return
 	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-	if(!msg)	return
-	if(!mob)	return						//this doesn't happen
+	if(!msg)
+		return
+	if(!mob) //this doesn't happen
+		return
 	if(src.prefs.muted & MUTE_MENTORHELP)
 		to_chat(src, "<font color='red'>You are unable to use mentorhelp (muted).</font>")
 		return
 	var/show_char = config.mentors_mobname_only
-	var/mentor_msg = "<span class='mentornotice'><b><font color='#3280ff'>MENTORHELP:</b> <b>[key_name_mentor(src, 1, 0, 1, show_char)]</b>:</font> [msg]</span>"
+	var/mentor_msg = "<span class='mentornotice'><b><font color='#3280ff'>MENTORHELP:</b> <b><a href='?follow=\ref[src]>(F)</a>[key_name_mentor(src, 1, 0, show_char)]</b>:</font> [msg]</span>"
 	log_mentor("MENTORHELP: [key_name_mentor(src, 0, 0, 0, 0)]: [msg]")
 
 	for(var/client/X in mentors)
-		X << 'sound/items/bikehorn.ogg'
-		to_chat(X, mentor_msg)
+		if(X.mob && (istype(X.mob, /mob/new_player) || isobserver(X.mob)))
+			X << 'sound/items/bikehorn.ogg'
+			to_chat(X, mentor_msg)
 
 	for(var/client/A in admins)
 		A << 'sound/items/bikehorn.ogg'
@@ -39,7 +38,7 @@
 		else
 			.["present"]++
 
-/proc/key_name_mentor(var/whom, var/include_link = null, var/include_name = 0, var/include_follow = 0, var/char_name_only = 0)
+/proc/key_name_mentor(var/whom, var/include_link = null, var/include_name = 0, var/char_name_only = 0)
 	var/mob/M
 	var/client/C
 	var/key
@@ -95,8 +94,5 @@
 			. += "</a>"
 	else
 		. += "*no key*"
-
-	if(include_follow)
-		. += " (<a href='?mentor_follow=\ref[M]'>F</a>)"
 
 	return .

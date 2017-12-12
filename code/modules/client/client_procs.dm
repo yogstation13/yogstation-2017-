@@ -99,15 +99,6 @@
 			cmd_mentor_pm(href_list["mentor_msg"],null)
 		return
 
-	// Mentor Follow
-	if(href_list["mentor_follow"])
-		var/mob/living/M = locate(href_list["mentor_follow"])
-
-		if(istype(M))
-			mentor_follow(M)
-
-		return
-
 	switch(href_list["_src_"])
 		if("holder")
 			hsrc = holder

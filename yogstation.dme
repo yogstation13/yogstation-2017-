@@ -1240,7 +1240,6 @@
 #include "code\modules\golem\golem.dm"
 #include "code\modules\golem\golem_spawners.dm"
 #include "code\modules\golem\golem_types.dm"
-#include "code\modules\hippie\mentor\follow.dm"
 #include "code\modules\hippie\mentor\holder2.dm"
 #include "code\modules\hippie\mentor\mentor_ranks.dm"
 #include "code\modules\hippie\mentor\verbs\mentor_memo.dm"
