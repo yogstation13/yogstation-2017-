@@ -224,7 +224,6 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/BCT)
 	item_state = null
 	icon_state = "wormhole_projector"
-	origin_tech = "combat=4;bluespace=6;plasmatech=4;engineering=4"
 	var/datum/mind/mind
 	
 /obj/item/weapon/gun/energy/BCT/attack_self(mob/user)
