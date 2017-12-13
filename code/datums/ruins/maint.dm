@@ -51,3 +51,21 @@
 	suffix = "maint_electric.dmm"
 	name = "Electric"
 	description = "The old electric maintenance room, abandoned for the larger one in the north. As boring as it gets."
+	
+/datum/map_template/ruin/maint/winter
+	id = "winter"
+	suffix = "maint_winter.dmm"
+	name = "Winter"
+	description = "It's freezing in here... There are some thick coats and hot drinks if you want to stay warm."
+	
+/datum/map_template/ruin/maint/neckbeard
+	id = "neckbeard"
+	suffix = "maint_neckbeard.dmm"
+	name = "Neckbeard"
+	description = "An odd room full of tabletop roleplay material that smells like ale. It seems the players might have taken their fantasy games too far..."
+	
+/datum/map_template/ruin/maint/cult
+	id = "cult"
+	suffix = "maint_cult.dmm"
+	name = "Cult"
+	description = "You feel your gut churn as you enter this room... The air is thick with the smell of rot. A large, strange rune lies on the floor."

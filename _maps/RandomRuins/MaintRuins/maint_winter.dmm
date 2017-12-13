@@ -1,0 +1,20 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/obj/structure/rack,/obj/item/clothing/suit/cloak,/obj/item/clothing/gloves/color/random{pixel_y = -3},/obj/effect/decal/cleanable/cobweb,/turf/open/floor/plasteel{icon_state = "showroomfloor"; temperature = 253.15},/area/template_noop)
+"c" = (/obj/item/toy/snowball,/obj/machinery/light/small{dir = 1},/turf/open/floor/plasteel{icon_state = "showroomfloor"; temperature = 253.15},/area/template_noop)
+"d" = (/obj/machinery/space_heater{on = 1; targetTemperature = 253.15},/turf/open/floor/plasteel{icon_state = "showroomfloor"; temperature = 253.15},/area/template_noop)
+"e" = (/obj/machinery/vending/coffee,/turf/open/floor/plating/snowed{temperature = 253.15},/area/template_noop)
+"f" = (/obj/structure/rack,/obj/item/clothing/suit/jacket{pixel_x = -2},/obj/item/clothing/suit/hooded/wintercoat/medical{pixel_x = 5; pixel_y = 0},/turf/open/floor/plasteel{icon_state = "showroomfloor"; temperature = 253.15},/area/template_noop)
+"g" = (/turf/open/floor/plasteel{icon_state = "showroomfloor"; temperature = 253.15},/area/template_noop)
+"h" = (/turf/open/floor/plating/snowed{temperature = 253.15},/area/template_noop)
+"i" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/open/floor/plating,/area/template_noop)
+"j" = (/obj/structure/rack,/obj/item/clothing/suit/hooded/wintercoat/hydro{pixel_x = -5; pixel_y = 8},/obj/item/clothing/suit/hooded/wintercoat/miner{pixel_x = 4; pixel_y = 3},/turf/open/floor/plasteel{icon_state = "showroomfloor"; temperature = 253.15},/area/template_noop)
+"k" = (/obj/item/toy/snowball,/obj/item/toy/snowball,/turf/open/floor/plating/snowed{temperature = 253.15},/area/template_noop)
+"l" = (/obj/structure/closet,/obj/item/clothing/gloves/color/brown,/obj/item/clothing/gloves/color/black,/obj/item/clothing/gloves/color/light_brown,/turf/open/floor/plating/snowed{temperature = 253.15},/area/template_noop)
+
+(1,1,1) = {"
+aaaaaa
+abcdea
+afghhi
+ajhkla
+aaaaaa
+"}
