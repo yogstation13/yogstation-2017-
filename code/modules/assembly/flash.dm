@@ -128,6 +128,11 @@
 	user.visible_message("<span class='disarm'>[user]'s flash emits a blinding light!</span>", "<span class='danger'>Your flash emits a blinding light!</span>")
 	for(var/mob/living/carbon/M in oviewers(3, null))
 		flash_carbon(M, user, 1, 0)
+	for(var/mob/living/silicon/S in oviewers(2, null))
+		add_logs(user, S, "flashed", src)
+		update_icon(1)
+		S.Weaken(rand(2,4))
+		user.visible_message("<span class='disarm'>[user] overloads [S]'s sensors with the flash!</span>", "<span class='danger'>You overload [S]'s sensors with the flash!</span>")
 
 
 /obj/item/device/assembly/flash/emp_act(severity)
