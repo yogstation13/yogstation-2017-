@@ -77,6 +77,13 @@
 			msg += "<span class='warning'>[t_He] [t_has] \icon[back] [back.gender==PLURAL?"some":"a"] blood-stained [back] on [t_his] back.</span>\n"
 		else
 			msg += "[t_He] [t_has] \icon[back] \a [back] on [t_his] back.\n"
+			
+	//neck
+	if(wear_neck)
+		if(wear_neck.blood_DNA)
+			msg += "<span class='warning'>[t_He] [t_has] \icon[wear_neck] [wear_neck.gender==PLURAL?"some":"a"] blood-stained [wear_neck] around [t_his] neck.</span>\n"
+		else
+			msg += "[t_He] [t_has] \icon[wear_neck] \a [wear_neck] around [t_his] neck.\n"
 
 	//left hand
 	if(l_hand && !(l_hand.flags&ABSTRACT))
