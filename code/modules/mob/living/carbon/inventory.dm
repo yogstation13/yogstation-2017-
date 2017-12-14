@@ -45,6 +45,9 @@
 		if(slot_wear_mask)
 			wear_mask = I
 			wear_mask_update(I, toggle_off = 0)
+		if(slot_neck)
+			wear_neck = I
+			wear_neck_update(I)
 		if(slot_head)
 			head = I
 			head_update(I)
@@ -82,6 +85,9 @@
 	else if(I == wear_mask)
 		wear_mask = null
 		wear_mask_update(I, toggle_off = 1)
+	else if(I == wear_neck)
+		wear_neck = null
+		wear_neck_update(I)
 	else if(I == handcuffed)
 		handcuffed = null
 		if(buckled && buckled.buckle_requires_restraints)
@@ -109,3 +115,6 @@
 	if(I.flags_inv & HIDEMASK || forced)
 		update_inv_wear_mask()
 	update_inv_head()
+
+/mob/living/carbon/proc/wear_neck_update(obj/item/I)
+	update_inv_neck()

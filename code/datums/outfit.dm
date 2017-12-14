@@ -9,6 +9,7 @@
 	var/shoes = null
 	var/head = null
 	var/mask = null
+	var/neck = null
 	var/ears = null
 	var/glasses = null
 	var/id = null
@@ -47,6 +48,8 @@
 		H.equip_to_slot_or_del(new head(H),slot_head)
 	if(mask)
 		H.equip_to_slot_or_del(new mask(H),slot_wear_mask)
+	if(neck)
+		H.equip_to_slot_or_del(new neck(H),slot_neck)
 	if(ears)
 		H.equip_to_slot_or_del(new ears(H),slot_ears)
 	if(glasses)
@@ -84,6 +87,7 @@
 	shoes = other.shoes
 	head = other.head
 	mask = other.mask
+	neck = other.neck
 	ears = other.ears
 	glasses = other.glasses
 	id = other.id
@@ -104,6 +108,7 @@
 	shoes = null
 	head = null
 	mask = null
+	neck = null
 	ears = null
 	glasses = null
 	id = null

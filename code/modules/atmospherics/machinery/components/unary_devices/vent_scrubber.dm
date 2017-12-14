@@ -4,7 +4,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it"
-	icon = 'icons/obj/atmospherics/components/scrubber.dmi'
 	icon_state = "scrub_map"
 	use_power = 1
 	idle_power_usage = 10
@@ -81,7 +80,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	overlays.Cut()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/components/scrubber.dmi', "scrub_cap", initialize_directions)
+		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "scrub_cap", initialize_directions)
 
 	if(welded)
 		icon_state = "scrub_welded"
@@ -92,10 +91,7 @@
 		return
 
 	if(scrubbing & SCRUBBING)
-		if(widenet)
-			icon_state = "scrub_wide"
-		else
-			icon_state = "scrub_on"
+		icon_state = "scrub_on"
 	else //scrubbing == SIPHONING
 		icon_state = "scrub_purge"
 

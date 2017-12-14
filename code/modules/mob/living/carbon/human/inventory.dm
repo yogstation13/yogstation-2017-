@@ -18,6 +18,8 @@
 			return back
 		if(slot_wear_mask)
 			return wear_mask
+		if(slot_neck)
+			return wear_neck
 		if(slot_handcuffed)
 			return handcuffed
 		if(slot_legcuffed)
@@ -84,6 +86,9 @@
 		if(slot_shoes)
 			shoes = I
 			update_inv_shoes()
+		if(slot_neck)
+			wear_neck = I
+			update_inv_neck()
 		if(slot_wear_suit)
 			wear_suit = I
 			if(I.flags_inv & HIDEJUMPSUIT)
@@ -122,6 +127,9 @@
 		if(I.flags_inv & HIDEJUMPSUIT)
 			update_inv_w_uniform()
 		update_inv_wear_suit()
+	else if(I == wear_neck)
+		wear_neck = null
+		update_inv_neck()
 	else if(I == w_uniform)
 		if(r_store)
 			unEquip(r_store, 1) //Again, makes sense for pockets to drop.
