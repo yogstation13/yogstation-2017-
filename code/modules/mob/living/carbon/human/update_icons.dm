@@ -259,9 +259,8 @@ There are several things that need to be remembered:
 			if(hud_used.inventory_shown)			//if the inventory is open ...
 				wear_neck.screen_loc = ui_neck		//...draw the item in the inventory screen
 			client.screen += wear_neck					//Either way, add the item to the HUD
-		var/t_state = wear_neck.icon_state
 
-		var/image/standing = wear_neck.build_worn_icon(state = t_state, default_layer = NECK_LAYER, default_icon_file = 'icons/mob/neck.dmi')
+		var/image/standing = wear_neck.build_worn_icon(state = wear_neck.icon_state, default_layer = NECK_LAYER, default_icon_file = 'icons/mob/neck.dmi')
 
 		overlays_standing[NECK_LAYER]	= standing
 		
