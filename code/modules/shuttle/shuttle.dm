@@ -17,6 +17,7 @@
 	var/height = 0	//size of covered area, paralell to dir
 	var/dwidth = 0	//position relative to covered area, perpendicular to dir
 	var/dheight = 0	//position relative to covered area, parallel to dir
+	var/distance = 0 //Difference between 2 docking ports, for the transit time on certain shuttles
 
 	//these objects are indestructable
 /obj/docking_port/Destroy(force)

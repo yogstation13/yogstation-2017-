@@ -1,18 +1,19 @@
 /*
-The yogstation codebase currently requires you to have 9 z-levels of the same size dimensions.
+The yogstation codebase currently requires you to have 10 z-levels of the same size dimensions.
 z-level order is important, the order you put them in inside this file will determine what z level number they are assigned ingame.
 Names of z-level do not matter, but order does greatly, for instances such as checking alive status of revheads on z1
 
-current as of 2016/3/27
+current as of 2017/12/15
 z1 = station
 z2 = centcomm
 z3 = derelict telecomms satellite
 z4 = derelict station
-z5 = mining
+z5 = lavaland
 z6 = empty space
 z7 = empty space
 z8 = empty space
 z9 = empty space
+z10 = abandoned asteroid
 */
 
 #if !defined(MAP_FILE)
@@ -31,6 +32,7 @@ z9 = empty space
         #include "map_files\generic\z7.dmm"
         #include "map_files\generic\z8.dmm"
 		#include "map_files\generic\z9.dmm"
+		#include "map_files\generic\z10.dmm"
 
 		#define MAP_PATH "map_files/YogStation"
         #define MAP_FILE "yogstation.2.1.3.dmm"
