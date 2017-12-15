@@ -1,5 +1,4 @@
 /mob/living/carbon/monkey/can_equip(obj/item/I, slot, disable_warning = 0)
-	world << "first"
 	switch(slot)
 		if(slot_l_hand)
 			if(l_hand)
@@ -16,17 +15,12 @@
 				return 0
 			return 1
 		if(slot_neck)
-			world << "second"
 			if(istype(I, /obj/item/weapon/bedsheet))
-				world << "third"
 				return 0
 			if(wear_neck)
-				world << "fourth"
 				return 0
 			if( !(I.slot_flags & SLOT_NECK) )
-				world << "fifth"
 				return 0
-			world << "sixth"
 			return 1
 		if(slot_head)
 			if(head)
