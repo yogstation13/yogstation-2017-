@@ -139,9 +139,7 @@
 		if(M.wear_mask)
 			M.wear_mask.screen_loc = ui_monkey_mask
 			M.client.screen += M.wear_mask
-		world << "gets to neck"
 		if(M.wear_neck)
-			world << "gets past neck check"
 			M.wear_neck.screen_loc = ui_monkey_neck
 			M.client.screen += M.wear_neck
 		if(M.head)
