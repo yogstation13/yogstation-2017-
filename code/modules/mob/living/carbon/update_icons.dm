@@ -105,7 +105,7 @@
 	
 /mob/living/carbon/update_inv_neck()
 	remove_overlay(NECK_LAYER)
-	if(istype(wear_neck, /obj/item/clothing/neck))
+	if(istype(wear_neck, /obj/item/clothing/neck | /obj/item/weapon/bedsheet))
 		if(!(head && (head.flags_inv & HIDENECK)))
 			var/image/standing = wear_neck.build_worn_icon(state = wear_neck.icon_state, default_layer = NECK_LAYER, default_icon_file = 'icons/mob/neck.dmi')
 			overlays_standing[NECK_LAYER] = standing
