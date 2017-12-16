@@ -223,7 +223,7 @@
 	desc = "A translocater to move conciousness from one being to another."
 	ammo_type = list(/obj/item/ammo_casing/energy/BCT)
 	icon_state = "bluespace_conciousness_translocater"
-	item_state = "wormhole_projector1"
+	item_state = "bluespace_conciousness_translocater"
 	var/datum/mind/mind
 	
 /obj/item/weapon/gun/energy/BCT/attack_self(mob/user)
