@@ -192,3 +192,32 @@
 	desc = "No animals were harmed in the making of these fuzzy slippers"
 	icon_state = "fuzzyslippers"
 	item_state = "fuzzyslippers"
+
+/obj/item/clothing/shoes/cluwne
+	desc = "The prankster's standard-issue clowning shoes. Damn, they're huge!"
+	name = "clown shoes"
+	icon_state = "clown"
+	item_state = "clown"
+	item_color = "cluwne"
+	burn_state = FIRE_PROOF
+	flags = NODROP | DROPDEL
+	slowdown = SHOES_SLOWDOWN+1
+	var/footstep = 1
+
+/obj/item/clothing/shoes/cluwne/step_action()
+	if(footstep > 1)
+		playsound(src, "clownstep", 50, 1)
+		footstep = 0
+	else
+		footstep++
+
+/obj/item/clothing/shoes/cluwne/equipped(mob/user, slot)
+	if(!ishuman(user))
+		return
+	if(slot == slot_shoes)
+		var/mob/living/carbon/human/H = user
+		H.dna.add_mutation(CLUWNEMUT)
+	return
+	
+/obj/item/clothing/shoes/cluwne/Destroy(force)
+	return QDEL_HINT_LETMELIVE

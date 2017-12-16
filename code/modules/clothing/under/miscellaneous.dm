@@ -609,3 +609,25 @@
 	item_state = "ronald"
 	item_color = "ronald"
 	can_adjust = 0
+	
+/obj/item/clothing/under/cluwne
+	name = "clown suit"
+	desc = "<i>'HONK!'</i>"
+	icon_state = "cluwne"
+	item_state = "cluwne"
+	item_color = "cluwne"
+	burn_state = FIRE_PROOF
+	flags = NODROP | DROPDEL
+	can_adjust = 0
+	canbetorn = 0
+
+/obj/item/clothing/under/cluwne/equipped(mob/living/carbon/user, slot)
+	if(!ishuman(user))
+		return
+	if(slot == slot_w_uniform)
+		var/mob/living/carbon/human/H = user
+		H.dna.add_mutation(CLUWNEMUT)
+	return ..()
+	
+/obj/item/clothing/under/cluwne/Destroy(force)
+	return QDEL_HINT_LETMELIVE
