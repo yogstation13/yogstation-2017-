@@ -113,11 +113,6 @@ var/list/preferences_datums = list()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			unlock_content |= C.IsByondMember()
-			if(unlock_content)
-				max_save_slots = 8
-			else if(is_donator(C))
-				max_save_slots = DONOR_CHARACTER_SLOTS
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
@@ -1352,5 +1347,12 @@ var/list/preferences_datums = list()
 	if(character.dna)
 		features = character.dna.features.Copy()
 		pref_species = character.dna.species
+
+/datum/preferences/proc/update_character_slots(client/C)
+	unlock_content |= C.IsByondMember()
+	if(unlock_content)
+		max_save_slots = 8
+	else if(is_donator(C))
+		max_save_slots = DONOR_CHARACTER_SLOTS
 
 #undef DONOR_CHARACTER_SLOTS
