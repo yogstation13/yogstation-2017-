@@ -19,7 +19,6 @@
 /datum/game_mode/zombies/pre_setup()
 	carriers_to_make = max(round(num_players()/players_per_carrier, 1), 1)
 	var/list/datum/mind/patient_zeros = pick_candidate(amount = carriers_to_make)
-	update_not_chosen_candidates()
 
 	for(var/j in patient_zeros)
 		var/datum/mind/carrier = j

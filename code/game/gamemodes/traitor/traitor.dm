@@ -43,7 +43,6 @@
 		num_traitors = max(1, min(num_players(), traitors_possible))
 
 	var/list/datum/mind/backstabbers = pick_candidate(amount = num_traitors)
-	update_not_chosen_candidates()
 
 	for(var/v in backstabbers)
 		var/datum/mind/traitor = v

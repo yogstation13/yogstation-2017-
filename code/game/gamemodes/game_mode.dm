@@ -474,7 +474,7 @@
 		for(var/v in not_chosen)
 			var/datum/mind/candidate = v
 
-			if(candidate.current && candidate.current.client)
+			if(candidate.current && candidate.current.client && candidate.current.stat != DEAD) //dead and braindead people wont get their weight increased
 				var/client/C = candidate.current.client
 
 				if(C && C.last_cached_weight) //if it's not null, we've updated it during the picking stage
@@ -484,6 +484,7 @@
 					var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET `antag_weight` = [weight] WHERE `ckey` = '[SQL_ckey]'")
 					query.Execute()
 					C.last_cached_weight = weight
+					to_chat(candidate.current, "<font color='green'><b>Your chance to become an antagonist in next round increased!</b></FONT>")
 
 /datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()

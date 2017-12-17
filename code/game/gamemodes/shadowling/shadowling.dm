@@ -89,7 +89,6 @@ Made by Xhuis
 	var/shadowlings = max(2, round(num_players()/10))
 
 	var/list/datum/mind/shadowmen = pick_candidate(amount = shadowlings)
-	update_not_chosen_candidates()
 
 	for(var/v in shadowmen)
 		var/datum/mind/shadow = v

@@ -57,7 +57,6 @@ var/datum/cyberman_network/cyberman_network
 	#endif
 
 	var/list/datum/mind/tinmen = pick_candidate(amount = cybermen_num)
-	update_not_chosen_candidates()
 
 	for(var/v in tinmen)
 		var/datum/mind/cyberman = v

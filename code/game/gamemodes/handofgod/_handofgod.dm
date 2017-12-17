@@ -51,7 +51,6 @@ var/global/list/global_handofgod_structuretypes = list()
 		restricted_jobs += "Assistant"
 
 	var/list/datum/mind/hogs = pick_candidate(amount = recommended_enemies)
-	update_not_chosen_candidates()
 
 	for(var/F in hogs)
 		var/datum/mind/follower = F

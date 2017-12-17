@@ -30,7 +30,6 @@
 		n_agents = antag_candidates.len
 
 	var/list/datum/mind/new_cops = pick_candidate(amount = n_agents)
-	update_not_chosen_candidates()
 
 	for(var/v in new_cops)
 		var/datum/mind/new_syndicate = v

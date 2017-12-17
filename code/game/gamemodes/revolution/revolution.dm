@@ -45,7 +45,6 @@
 		restricted_jobs += "Assistant"
 
 	var/list/datum/mind/communists = pick_candidate(amount = max_headrevs)
-	update_not_chosen_candidates()
 
 	for(var/v in communists)
 		var/datum/mind/lenin = v

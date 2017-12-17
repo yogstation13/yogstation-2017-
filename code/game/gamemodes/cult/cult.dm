@@ -71,7 +71,6 @@
 	recommended_enemies = 3 + round(num_players()/15)
 
 	var/list/datum/mind/cultists = pick_candidate(amount = recommended_enemies)
-	update_not_chosen_candidates()
 
 	for(var/v in cultists)
 		var/datum/mind/cultist = v
