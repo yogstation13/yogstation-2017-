@@ -69739,6 +69739,17 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zsq" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/drinks/mug/canmug{
+	desc = "A mug with the canadian flag emblazoned on it. It's cold now.";
+	list_reagents = list("coffee" = 30)
+	},
+/turf/open/floor/plasteel{
+	icon_state = "arrival";
+	dir = 4
+	},
+/area/quartermaster/office)
 "Zsr" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -72687,11 +72698,14 @@
 /turf/open/space,
 /area/maintenance/incinerator)
 "ZxJ" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 4
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/drinks/mug/britmug{
+	desc = "Kingston's personal mug.";
+	list_reagents = list("coffee" = 30)
 	},
-/turf/open/space,
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
 /area/maintenance/incinerator)
 "ZxK" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
@@ -96958,7 +96972,7 @@ bfA
 bgD
 bhZ
 bjt
-bjt
+Zsq
 Zss
 bnX
 bpH
