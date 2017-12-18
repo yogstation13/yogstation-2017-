@@ -899,7 +899,7 @@
 	staticOverlays["animal"] = staticOverlay
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
-	if(dna && dna.check_mutation(HULK))
+	if(dna && (dna.check_mutation(HULK) || dna.check_mutation(ACTIVE_HULK)))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		if(..(I, cuff_break = FAST_CUFFBREAK))
 			unEquip(I)
@@ -1121,3 +1121,33 @@
 		if(!(NOCRIT in status_flags))
 			return TRUE
 	return FALSE
+
+/mob/living/carbon/human/proc/hulk_health_check(oldhealth)
+	if(dna.check_mutation(ACTIVE_HULK))
+		if(health < config.health_threshold_crit)
+			dna.remove_mutation(ACTIVE_HULK)
+			return
+		if(health < oldhealth)
+			adjustStaminaLoss(-1.5 * (oldhealth - health))
+	else
+		if(!dna.check_mutation(HULK) && dna.check_mutation(GENETICS_HULK) && stat == CONSCIOUS && oldhealth >= health + 10)
+			dna.add_mutation(ACTIVE_HULK)
+
+/mob/living/carbon/human/proc/hulk_stamina_check()
+	if(dna.check_mutation(ACTIVE_HULK))
+		if(staminaloss < 60 && prob(1))
+			confused = 7
+			say("HULK SMASH!!")
+		if(staminaloss >= 90)
+			dna.remove_mutation(ACTIVE_HULK)
+			to_chat(src, "<span class='notice'>You have calm down enough to become human again.</span>")
+			Weaken(6)
+		return 1
+	else
+		return 0
+
+/mob/living/carbon/human/Bump(atom/movable/AM)
+	..()
+	if(dna.check_mutation(ACTIVE_HULK) && confused && (world.time - last_bumped) > 15)
+		Bumped(AM)
+		return AM.attack_hulk(src)

@@ -391,6 +391,13 @@
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
 
+/datum/spellbook_entry/item/pouch_of_holding
+	name = "Pouch of Holding"
+	desc = "An unassuming pouch worn around the waist that holds in it a pocket dimmension for storing items"
+	item_path = /obj/item/weapon/storage/belt/fannypack/holding/pouch
+	log_name = "PH"
+	category = "Assistance"
+
 // /datum/spellbook_entry/item/cursed_heart
 //	name = "Cursed Heart"
 //	desc = "A heart that has been revived by dark magicks, the user must \

@@ -66,29 +66,32 @@
 	panel = "Abomination"
 	charge_max = 0
 	clothes_req = 0
-	range = 1
+	range = -1
+	include_user = 1
 
 
-/obj/effect/proc_holder/spell/targeted/abomination/devour/cast(list/targets,mob/user)
+/obj/effect/proc_holder/spell/targeted/abomination/devour/cast(list/targets, mob/user)
 	if(!isabomination(user))
 		return
 	var/datum/changeling/changeling = user.mind.changeling
 	if(changeling.isabsorbing)
 		to_chat(user, "<span class='warning'>We are already absorbing!</span>")
 		return
-	if(!user.pulling || !iscarbon(user.pulling))
+	if(!user.pulling || !ishuman(user.pulling))
 		to_chat(user, "<span class='warning'>We must be grabbing a valid creature to devour them!</span>")
+		return
+	var/mob/living/carbon/target = user.pulling
+	if(!changeling.can_absorb_dna(user,target))
 		return
 	if(user.grab_state < GRAB_AGGRESSIVE)
 		to_chat(user, "<span class='warning'>We must have a tighter grip to devour this creature!</span>")
 		return
-	var/mob/living/carbon/target = user.pulling
-	changeling.can_absorb_dna(user,target)
 
 	changeling.isabsorbing = 1
 	to_chat(user, "<span class='notice'>This creature is compatible. We must hold still...</span>")
 	user.visible_message("<span class='warning'><b>[user] opens their mouth wide, lifting up [target]!</span>", "<span class='notice'>We prepare to devour [target].</span>")
 
+//copied from absorb code
 	if(!do_mob(user, target, 30))
 		to_chat(user, "<span class='warning'>Our devouring of [target] has been interrupted!</span>")
 		changeling.isabsorbing = 0
@@ -145,9 +148,11 @@
 	changeling.isabsorbing = 0
 	changeling.canrespec = 1
 	changeling.absorbedcount++
+
 	for(var/obj/item/I in target) //drops all items
 		target.unEquip(I)
 	new /obj/effect/decal/remains/human(target.loc)
+	user.stop_pulling()
 	qdel(target)
 
 
@@ -183,5 +188,5 @@
 			if(H.dna && H.dna.mutations)
 				HM.force_lose(H)
 			changeling.reverting = 1
-			changeling.geneticdamage += 10
+			changeling.geneticdamage += 5
 

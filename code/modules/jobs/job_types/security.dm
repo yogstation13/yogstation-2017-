@@ -235,34 +235,40 @@ var/list/sec_departments = list("engineering", "supply", "medical", "science")
 	..()
 
 	if(sec_departments.len)
-		department = pick(sec_departments)
-		if(!visualsOnly)
-			sec_departments -= department
-		switch(department)
-			if("supply")
-				ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
-				dep_access = list(access_mailsorting, access_mining, access_mining_station, access_mineral_storeroom, access_cargo)
-				destination = /area/security/checkpoint/supply
-				spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in department_security_spawns
-				tie = /obj/item/clothing/tie/armband/cargo
-			if("engineering")
-				ears = /obj/item/device/radio/headset/headset_sec/alt/department/engi
-				dep_access = list(access_construction, access_engine)
-				destination = /area/security/checkpoint/engineering
-				spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in department_security_spawns
-				tie = /obj/item/clothing/tie/armband/engine
-			if("medical")
-				ears = /obj/item/device/radio/headset/headset_sec/alt/department/med
-				dep_access = list(access_medical)
-				destination = /area/security/checkpoint/medical
-				spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in department_security_spawns
-				tie =  /obj/item/clothing/tie/armband/medblue
-			if("science")
-				ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
-				dep_access = list(access_research)
-				destination = /area/security/checkpoint/science
-				spawn_point = locate(/obj/effect/landmark/start/depsec/science) in department_security_spawns
-				tie = /obj/item/clothing/tie/armband/science
+		if(H && H.client && H.client.prefs)
+			department = H.client.prefs.prefered_security_department
+			if(!(department in sec_departments) && department != "none")
+				department = pick(sec_departments)
+		else
+			department = pick(sec_departments)
+		if(department != "none")
+			if(!visualsOnly)
+				sec_departments -= department
+			switch(department)
+				if("supply")
+					ears = /obj/item/device/radio/headset/headset_sec/alt/department/supply
+					dep_access = list(access_mailsorting, access_mining, access_mining_station, access_mineral_storeroom, access_cargo)
+					destination = /area/security/checkpoint/supply
+					spawn_point = locate(/obj/effect/landmark/start/depsec/supply) in department_security_spawns
+					tie = /obj/item/clothing/tie/armband/cargo
+				if("engineering")
+					ears = /obj/item/device/radio/headset/headset_sec/alt/department/engi
+					dep_access = list(access_construction, access_engine)
+					destination = /area/security/checkpoint/engineering
+					spawn_point = locate(/obj/effect/landmark/start/depsec/engineering) in department_security_spawns
+					tie = /obj/item/clothing/tie/armband/engine
+				if("medical")
+					ears = /obj/item/device/radio/headset/headset_sec/alt/department/med
+					dep_access = list(access_medical)
+					destination = /area/security/checkpoint/medical
+					spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in department_security_spawns
+					tie =  /obj/item/clothing/tie/armband/medblue
+				if("science")
+					ears = /obj/item/device/radio/headset/headset_sec/alt/department/sci
+					dep_access = list(access_research)
+					destination = /area/security/checkpoint/science
+					spawn_point = locate(/obj/effect/landmark/start/depsec/science) in department_security_spawns
+					tie = /obj/item/clothing/tie/armband/science
 
 /datum/outfit/job/security/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()
