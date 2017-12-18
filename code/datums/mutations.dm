@@ -13,6 +13,7 @@
 	var/quality
 	var/get_chance = 100
 	var/lowest_value = 256 * 8
+	var/highest_force_lose_value = 256 * 8 - 1 //the lowest value this block will be when the mutation is forceremoved. This should always be lower than lowest_value.
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
 	var/list/visual_indicators = list()
@@ -34,7 +35,7 @@
 	if(!se_string || lentext(se_string) < DNA_STRUC_ENZYMES_BLOCKS * DNA_BLOCK_SIZE)
 		return
 	var/before = copytext(se_string, 1, ((dna_block - 1) * DNA_BLOCK_SIZE) + 1)
-	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, lowest_value - 1), DNA_BLOCK_SIZE)
+	var/injection = num2hex(on ? rand(lowest_value, (256 * 16) - 1) : rand(0, min(highest_force_lose_value, lowest_value - 1)), DNA_BLOCK_SIZE)
 	var/after = copytext(se_string, (dna_block * DNA_BLOCK_SIZE) + 1, 0)
 	return before + injection + after
 
@@ -115,13 +116,32 @@
 
 /datum/mutation/human/hulk
 
+	name = "Mutation"
+	quality = POSITIVE
+	dna_block = NON_SCANNABLE
+	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
+	species_allowed = list("human","abomination") //no skeleton/lizard hulk
+	health_req = 1
+
+/datum/mutation/human/genetics_hulk
+
 	name = "Hulk"
 	quality = POSITIVE
 	get_chance = 10
 	lowest_value = 256 * 14
-	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
+	text_gain_indication = "<span class='notice'>You suddenly feel very angry.</span>"
 	species_allowed = list("human","abomination") //no skeleton/lizard hulk
 	health_req = 25
+
+/datum/mutation/human/active_hulk
+
+	name = "Hulk State"
+	quality = POSITIVE
+	dna_block = NON_SCANNABLE
+	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
+	species_allowed = list("human","abomination") //no skeleton/lizard hulk
+	health_req = 1
+	var/health_based = 0
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -130,8 +150,39 @@
 	owner.status_flags -= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
 	owner.update_body_parts()
 
+/datum/mutation/human/active_hulk/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.SetParalysis(0)
+	owner.status_flags -= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/hulk(null))
+	owner.status_flags |= IGNORESLOWDOWN
+	if(istype(owner.w_uniform, /obj/item/clothing/under))
+		var/obj/item/clothing/under/U = owner.w_uniform
+		if(owner.canUnEquip(U))
+			U.teardown(owner)
+	if(istype(owner.wear_suit, /obj/item/clothing/suit))
+		var/obj/item/clothing/suit/S = owner.wear_suit
+		if(owner.canUnEquip(S))
+			owner.unEquip(S)
+	owner.adjustBrainLoss(90)
+	owner.undershirt = "Nude"
+	owner.dna.species.no_equip.Add(slot_wear_suit, slot_w_uniform)
+	owner.say("PUNY HUMANS!!")
+	owner.dna.species.stamina_recover_normal -= 6
+	owner.dna.species.staminamod = 0.3
+	owner.update_body()
+
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
 	return target.attack_hulk(owner)
+
+/datum/mutation/human/active_hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
+	if(prob(3))
+		owner.jitteriness = 10
+	owner.adjustStaminaLoss(-0.5)
+	return target.attack_hulk(owner)
+
+
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
 	if(owner.health < 0)
@@ -144,7 +195,24 @@
 	owner.status_flags |= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
 	owner.update_body_parts()
 
+/datum/mutation/human/active_hulk/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.status_flags |= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
+	owner.mind.RemoveSpell(/obj/effect/proc_holder/spell/aoe_turf/repulse/hulk)
+	owner.status_flags -= IGNORESLOWDOWN
+	owner.adjustBrainLoss(-90)
+	owner.dna.species.no_equip.Remove(slot_wear_suit, slot_w_uniform)
+	owner.dna.species.stamina_recover_normal += 6
+	owner.dna.species.staminamod = 1
+	owner.update_body_parts()
+
 /datum/mutation/human/hulk/say_mod(message)
+	if(message)
+		message = "[uppertext(replacetext(message, ".", "!"))]!!"
+	return message
+
+/datum/mutation/human/active_hulk/say_mod(message)
 	if(message)
 		message = "[uppertext(replacetext(message, ".", "!"))]!!"
 	return message

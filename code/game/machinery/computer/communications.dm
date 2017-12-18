@@ -30,6 +30,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/const/STATE_ALERT_LEVEL = 8
 	var/const/STATE_CONFIRM_LEVEL = 9
 	var/const/STATE_TOGGLE_EMERGENCY = 10
+	var/const/STATE_PURCHASE = 11
 
 	var/status_display_freq = "1435"
 	var/stat_msg1
@@ -113,43 +114,80 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				to_chat(usr, "<span class='warning'>You need to swipe your ID!</span>")
 
 		if("announce")
-			if(src.authenticated==2 && !message_cooldown)
+			if(check_auth() && src.authenticated==2 && !message_cooldown)
 				make_announcement(usr)
 			else if (src.authenticated==2 && message_cooldown)
 				to_chat(usr, "Intercomms recharging. Please stand by.")
 
+		if("purchase_menu")
+			src.state = STATE_PURCHASE
+
+		if("buyshuttle")
+			if(src.authenticated==2)
+				var/list/shuttles = flatten_list(shuttle_templates)
+				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
+				if(S && istype(S))
+					if((SSshuttle.shuttle_purchased && !src.emagged) || SSshuttle.emag_shuttle_purchased)
+						usr << "A replacement shuttle has already been purchased."
+					else
+						if(SSshuttle.points >= S.credit_cost)
+							var/obj/machinery/shuttle_manipulator/M  = locate() in machines
+							if(M)
+								SSshuttle.shuttle_purchased = TRUE
+								if(src.emagged)
+									SSshuttle.emag_shuttle_purchased = TRUE
+								M.unload_preview()
+								M.load_template(S)
+								M.existing_shuttle = SSshuttle.emergency
+								M.action_load(S)
+								SSshuttle.points -= S.credit_cost
+								if(!src.emagged)
+									minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
+								else
+									minor_announce("Unknown has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
+								message_admins("[key_name_admin(usr)] purchased [S.name].")
+								feedback_add_details("shuttle_manipulator", S.name)
+							else
+								usr << "Something went wrong! The shuttle exchange system seems to be down."
+						else
+							usr << "Not enough credits."
+
+
 		if("callshuttle")
 			src.state = STATE_DEFAULT
-			if(src.authenticated)
+			if(check_auth())
 				src.state = STATE_CALLSHUTTLE
 		if("callshuttle2")
-			if(src.authenticated)
+			if(check_auth())
 				SSshuttle.requestEvac(usr, href_list["call"])
 				if(SSshuttle.emergency.timer)
 					post_status("shuttle")
 			src.state = STATE_DEFAULT
 		if("cancelshuttle")
 			src.state = STATE_DEFAULT
-			if(src.authenticated)
+			if(check_auth())
 				src.state = STATE_CANCELSHUTTLE
 		if("cancelshuttle2")
-			if(src.authenticated)
+			if(check_auth())
 				SSshuttle.cancelEvac(usr)
 			src.state = STATE_DEFAULT
 		if("messagelist")
-			src.currmsg = 0
-			src.state = STATE_MESSAGELIST
+			if(check_auth())
+				src.currmsg = 0
+				src.state = STATE_MESSAGELIST
 		if("viewmessage")
-			src.state = STATE_VIEWMESSAGE
-			if (!src.currmsg)
-				if(href_list["message-num"])
-					src.currmsg = text2num(href_list["message-num"])
-				else
-					src.state = STATE_MESSAGELIST
+			if(check_auth())
+				src.state = STATE_VIEWMESSAGE
+				if (!src.currmsg)
+					if(href_list["message-num"])
+						src.currmsg = text2num(href_list["message-num"])
+					else
+						src.state = STATE_MESSAGELIST
 		if("delmessage")
-			src.state = (src.currmsg) ? STATE_DELMESSAGE : STATE_MESSAGELIST
+			if(check_auth())
+				src.state = (src.currmsg) ? STATE_DELMESSAGE : STATE_MESSAGELIST
 		if("delmessage2")
-			if(src.authenticated)
+			if(check_auth())
 				if(src.currmsg)
 					var/title = src.messagetitle[src.currmsg]
 					var/text  = src.messagetext[src.currmsg]
@@ -165,45 +203,53 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			src.state = STATE_STATUSDISPLAY
 
 		if("securitylevel")
-			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
-			if(!tmp_alertlevel) tmp_alertlevel = 0
-			state = STATE_CONFIRM_LEVEL
+			if(check_auth())
+				src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
+				if(!tmp_alertlevel) tmp_alertlevel = 0
+				state = STATE_CONFIRM_LEVEL
 		if("changeseclevel")
-			state = STATE_ALERT_LEVEL
+			if(check_auth())
+				state = STATE_ALERT_LEVEL
 
 		if("emergencyaccess")
-			state = STATE_TOGGLE_EMERGENCY
+			if(check_auth())
+				state = STATE_TOGGLE_EMERGENCY
 		if("enableemergency")
-			make_maint_all_access()
-			log_game("[key_name(usr)] enabled emergency maintenance access.")
-			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
-			src.state = STATE_DEFAULT
+			if(check_auth())
+				make_maint_all_access()
+				log_game("[key_name(usr)] enabled emergency maintenance access.")
+				message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
+				src.state = STATE_DEFAULT
 		if("disableemergency")
-			revoke_maint_all_access()
-			log_game("[key_name(usr)] disabled emergency maintenance access.")
-			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
-			src.state = STATE_DEFAULT
+			if(check_auth())
+				revoke_maint_all_access()
+				log_game("[key_name(usr)] disabled emergency maintenance access.")
+				message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
+				src.state = STATE_DEFAULT
 
 		// Status display stuff
 		if("setstat")
-			switch(href_list["statdisp"])
-				if("message")
-					post_status("message", stat_msg1, stat_msg2)
-				if("alert")
-					post_status("alert", href_list["alert"])
-				else
-					post_status(href_list["statdisp"])
+			if(check_auth())
+				switch(href_list["statdisp"])
+					if("message")
+						post_status("message", stat_msg1, stat_msg2)
+					if("alert")
+						post_status("alert", href_list["alert"])
+					else
+						post_status(href_list["statdisp"])
 
 		if("setmsg1")
-			stat_msg1 = reject_bad_text(stripped_input(usr, "Line 1", "Enter Message Text", stat_msg1), 40)
-			src.updateDialog()
+			if(check_auth())
+				stat_msg1 = reject_bad_text(stripped_input(usr, "Line 1", "Enter Message Text", stat_msg1), 40)
+				src.updateDialog()
 		if("setmsg2")
-			stat_msg2 = reject_bad_text(stripped_input(usr, "Line 2", "Enter Message Text", stat_msg2), 40)
-			src.updateDialog()
+			if(check_auth())
+				stat_msg2 = reject_bad_text(stripped_input(usr, "Line 2", "Enter Message Text", stat_msg2), 40)
+				src.updateDialog()
 
 		// OMG CENTCOM LETTERHEAD
 		if("MessageCentcomm")
-			if(src.authenticated==2)
+			if(check_auth() && src.authenticated==2)
 				if(CM.cooldownLeft())
 					to_chat(usr, "Arrays recycling.  Please stand by.")
 					return
@@ -218,7 +264,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 		// OMG SYNDICATE ...LETTERHEAD
 		if("MessageSyndicate")
-			if((src.authenticated==2) && (src.emagged))
+			if((check_auth() && src.authenticated==2) && (src.emagged))
 				if(CM.cooldownLeft())
 					to_chat(usr, "Arrays recycling.  Please stand by.")
 					return
@@ -231,12 +277,13 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				CM.nextAllowedTime = world.time + 600
 
 		if("RestoreBackup")
-			to_chat(usr, "Backup routing data restored!")
-			src.emagged = 0
-			src.updateDialog()
+			if(check_auth())
+				to_chat(usr, "Backup routing data restored!")
+				src.emagged = 0
+				src.updateDialog()
 
 		if("nukerequest") //When there's no other way
-			if(src.authenticated==2)
+			if(check_auth() && src.authenticated==2)
 				if(CM.cooldownLeft())
 					to_chat(usr, "Arrays recycling. Please stand by.")
 					return
@@ -252,76 +299,102 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 		// AI interface
 		if("ai-main")
-			src.aicurrmsg = 0
-			src.aistate = STATE_DEFAULT
-		if("ai-callshuttle")
-			src.aistate = STATE_CALLSHUTTLE
-		if("ai-callshuttle2")
-			SSshuttle.requestEvac(usr, href_list["call"])
-			src.aistate = STATE_DEFAULT
-		if("ai-messagelist")
-			src.aicurrmsg = 0
-			src.aistate = STATE_MESSAGELIST
-		if("ai-viewmessage")
-			src.aistate = STATE_VIEWMESSAGE
-			if (!src.aicurrmsg)
-				if(href_list["message-num"])
-					src.aicurrmsg = text2num(href_list["message-num"])
-				else
-					src.aistate = STATE_MESSAGELIST
-		if("ai-delmessage")
-			src.aistate = (src.aicurrmsg) ? STATE_DELMESSAGE : STATE_MESSAGELIST
-		if("ai-delmessage2")
-			if(src.aicurrmsg)
-				var/title = src.messagetitle[src.aicurrmsg]
-				var/text  = src.messagetext[src.aicurrmsg]
-				src.messagetitle.Remove(title)
-				src.messagetext.Remove(text)
-				if(src.currmsg == src.aicurrmsg)
-					src.currmsg = 0
+			if(check_silicon())
 				src.aicurrmsg = 0
-			src.aistate = STATE_MESSAGELIST
+				src.aistate = STATE_DEFAULT
+		if("ai-callshuttle")
+			if(check_silicon())
+				src.aistate = STATE_CALLSHUTTLE
+		if("ai-callshuttle2")
+			if(check_silicon())
+				SSshuttle.requestEvac(usr, href_list["call"])
+				src.aistate = STATE_DEFAULT
+		if("ai-messagelist")
+			if(check_silicon())
+				src.aicurrmsg = 0
+				src.aistate = STATE_MESSAGELIST
+		if("ai-viewmessage")
+			if(check_silicon())
+				src.aistate = STATE_VIEWMESSAGE
+				if (!src.aicurrmsg)
+					if(href_list["message-num"])
+						src.aicurrmsg = text2num(href_list["message-num"])
+					else
+						src.aistate = STATE_MESSAGELIST
+		if("ai-delmessage")
+			if(check_silicon())
+				src.aistate = (src.aicurrmsg) ? STATE_DELMESSAGE : STATE_MESSAGELIST
+		if("ai-delmessage2")
+			if(check_silicon())
+				if(src.aicurrmsg)
+					var/title = src.messagetitle[src.aicurrmsg]
+					var/text  = src.messagetext[src.aicurrmsg]
+					src.messagetitle.Remove(title)
+					src.messagetext.Remove(text)
+					if(src.currmsg == src.aicurrmsg)
+						src.currmsg = 0
+					src.aicurrmsg = 0
+				src.aistate = STATE_MESSAGELIST
 		if("ai-status")
-			src.aistate = STATE_STATUSDISPLAY
+			if(check_silicon())
+				src.aistate = STATE_STATUSDISPLAY
 		if("ai-announce")
-			if(!ai_message_cooldown)
-				make_announcement(usr, 1)
+			if(check_silicon())
+				if(!ai_message_cooldown)
+					make_announcement(usr, 1)
 		if("ai-securitylevel")
-			src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
-			if(!tmp_alertlevel) tmp_alertlevel = 0
-			var/old_level = security_level
-			if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
-			if(tmp_alertlevel < SEC_LEVEL_GREEN) tmp_alertlevel = SEC_LEVEL_GREEN
-			if(tmp_alertlevel > SEC_LEVEL_BLUE) tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
-			set_security_level(tmp_alertlevel)
-			if(security_level != old_level)
-				//Only notify the admins if an actual change happened
-				log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
-				message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
-				switch(security_level)
-					if(SEC_LEVEL_GREEN)
-						feedback_inc("alert_comms_green",1)
-					if(SEC_LEVEL_BLUE)
-						feedback_inc("alert_comms_blue",1)
-			tmp_alertlevel = 0
-			src.aistate = STATE_DEFAULT
+			if(check_silicon())
+				src.tmp_alertlevel = text2num( href_list["newalertlevel"] )
+				if(!tmp_alertlevel) tmp_alertlevel = 0
+				var/old_level = security_level
+				if(!tmp_alertlevel) tmp_alertlevel = SEC_LEVEL_GREEN
+				if(tmp_alertlevel < SEC_LEVEL_GREEN) tmp_alertlevel = SEC_LEVEL_GREEN
+				if(tmp_alertlevel > SEC_LEVEL_BLUE) tmp_alertlevel = SEC_LEVEL_BLUE //Cannot engage delta with this
+				set_security_level(tmp_alertlevel)
+				if(security_level != old_level)
+					//Only notify the admins if an actual change happened
+					log_game("[key_name(usr)] has changed the security level to [get_security_level()].")
+					message_admins("[key_name_admin(usr)] has changed the security level to [get_security_level()].")
+					switch(security_level)
+						if(SEC_LEVEL_GREEN)
+							feedback_inc("alert_comms_green",1)
+						if(SEC_LEVEL_BLUE)
+							feedback_inc("alert_comms_blue",1)
+				tmp_alertlevel = 0
+				src.aistate = STATE_DEFAULT
 		if("ai-changeseclevel")
-			src.aistate = STATE_ALERT_LEVEL
+			if(check_silicon())
+				src.aistate = STATE_ALERT_LEVEL
 
 		if("ai-emergencyaccess")
-			src.aistate = STATE_TOGGLE_EMERGENCY
+			if(check_silicon())
+				src.aistate = STATE_TOGGLE_EMERGENCY
 		if("ai-enableemergency")
-			make_maint_all_access()
-			log_game("[key_name(usr)] enabled emergency maintenance access.")
-			message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
-			src.aistate = STATE_DEFAULT
+			if(check_silicon())
+				make_maint_all_access()
+				log_game("[key_name(usr)] enabled emergency maintenance access.")
+				message_admins("[key_name_admin(usr)] enabled emergency maintenance access.")
+				src.aistate = STATE_DEFAULT
 		if("ai-disableemergency")
-			revoke_maint_all_access()
-			log_game("[key_name(usr)] disabled emergency maintenance access.")
-			message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
-			src.aistate = STATE_DEFAULT
+			if(check_silicon())
+				revoke_maint_all_access()
+				log_game("[key_name(usr)] disabled emergency maintenance access.")
+				message_admins("[key_name_admin(usr)] disabled emergency maintenance access.")
+				src.aistate = STATE_DEFAULT
 
 	src.updateUsrDialog()
+
+/obj/machinery/computer/communications/proc/check_silicon()
+	if(!isaiorborg(usr))
+		message_admins("EXPLOIT: [usr] attempted to perform a silicon function on [src] without being a silicon.")
+		return FALSE
+	return TRUE
+
+/obj/machinery/computer/communications/proc/check_auth()
+	if(!src.authenticated)
+		message_admins("EXPLOIT: [usr] attempted to interact with [src] while not authenticated.")
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/communications/attackby(obj/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/card/id))
@@ -387,6 +460,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if (src.authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=purchase_menu'>Purchase Shuttle</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
@@ -450,6 +524,17 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			else
 				dat += "<b>Emergency Maintenance Access is currently <font color='green'>DISABLED</font></b>"
 				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=\ref[src];operation=enableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
+		if(STATE_PURCHASE)
+			dat += "Budget: [SSshuttle.points] Credits.<BR>"
+			for(var/shuttle_id in shuttle_templates)
+				var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+				if(!src.emagged && S.emag_buy)
+					continue
+				if(S.credit_cost < INFINITY)
+					dat += "[S.name] | [S.credit_cost] Credits<BR>"
+					if(S.description)
+						dat += "[S.description]<BR>"
+					dat += "<A href='?src=\ref[src];operation=buyshuttle;chosen_shuttle=\ref[S]'>(<font color=red><i>Purchase</i></font>)</A><BR><BR>"
 
 	dat += "<BR><BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	//user << browse(dat, "window=communications;size=400x500")

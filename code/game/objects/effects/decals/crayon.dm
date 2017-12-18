@@ -6,6 +6,17 @@
 	layer = ABOVE_NORMAL_TURF_LAYER
 	var/do_icon_rotate = TRUE
 
+/obj/effect/decal/cleanable/crayon/fakerune //for cultist maint ruin
+	name = "suspicious rune"
+	desc = "An odd collection of symbols drawn in what seems to be blood."
+	icon = 'icons/effects/96x96.dmi'
+	color = rgb(125,23,23)
+	icon_state = "rune_large"
+	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
+	pixel_y = -32
+	
+/obj/effect/decal/cleanable/crayon/fakerune/New()
+	
 /obj/effect/decal/cleanable/crayon/examine()
 	set src in view(2)
 	..()

@@ -79,6 +79,7 @@
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/grass
 	burn_state = FLAMMABLE
+	merge_type = /obj/item/stack/tile/grass
 
 
 //Wood
@@ -90,6 +91,7 @@
 	origin_tech = "biotech=1"
 	turf_type = /turf/open/floor/wood
 	burn_state = FLAMMABLE
+	merge_type = /obj/item/stack/tile/wood
 
 
 //Carpets
@@ -100,6 +102,10 @@
 	icon_state = "tile-carpet"
 	turf_type = /turf/open/floor/carpet
 	burn_state = FLAMMABLE
+	merge_type = /obj/item/stack/tile/carpet
+
+/obj/item/stack/tile/carpet/fifty
+	amount = 50
 
 
 /obj/item/stack/tile/fakespace
@@ -109,6 +115,7 @@
 	icon_state = "tile_space"
 	turf_type = /turf/open/floor/fakespace
 	burn_state = FLAMMABLE
+	merge_type = /obj/item/stack/tile/fakespace
 
 /obj/item/stack/tile/fakespace/loaded
 	amount = 30
@@ -121,6 +128,7 @@
 	icon_state = "tile_noslip"
 	turf_type = /turf/open/floor/noslip
 	origin_tech = "materials=3"
+	merge_type = /obj/item/stack/tile/noslip
 
 /obj/item/stack/tile/noslip/thirty
 	amount = 30
@@ -132,6 +140,7 @@
 	desc = "A grooved floor tile."
 	icon_state = "tile_pod"
 	turf_type = /turf/open/floor/pod
+	merge_type = /obj/item/stack/tile/pod
 
 /obj/item/stack/tile/pod/light
 	name = "light pod floor tile"
@@ -139,6 +148,7 @@
 	desc = "A lightly colored grooved floor tile."
 	icon_state = "tile_podlight"
 	turf_type = /turf/open/floor/pod/light
+	merge_type = /obj/item/stack/tile/pod/light
 
 /obj/item/stack/tile/pod/dark
 	name = "dark pod floor tile"
@@ -146,6 +156,7 @@
 	desc = "A darkly colored grooved floor tile."
 	icon_state = "tile_poddark"
 	turf_type = /turf/open/floor/pod/dark
+	merge_type = /obj/item/stack/tile/pod/dark
 
 //Plasteel (normal)
 /obj/item/stack/tile/plasteel
@@ -159,6 +170,7 @@
 	flags = CONDUCT
 	turf_type = /turf/open/floor/plasteel
 	mineralType = "metal"
+	merge_type = /obj/item/stack/tile/plasteel
 
 /obj/item/stack/tile/plasteel/cyborg
 	desc = "The ground you walk on." //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR

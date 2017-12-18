@@ -13,7 +13,7 @@
 	//set src in world
 
 
-	if(!usr.client || !usr.client.holder)
+	if(!usr.client || !usr.client.holder || !check_rights_for(usr.client, R_BASIC))
 		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>")
 		return
 
@@ -488,6 +488,16 @@ body
 			return
 		M.regenerate_icons()
 
+	else if(href_list["offer_control"])
+		if(!check_rights(0))
+			return
+
+		var/mob/M = locate(href_list["offer_control"])
+		if(!istype(M))
+			to_chat(usr, "This can only be used on instances of type /mob")
+			return
+		offer_control(M)
+
 //Needs +VAREDIT past this point
 
 	else if(check_rights(R_VAREDIT))
@@ -627,16 +637,6 @@ body
 
 			if(usr.client)
 				usr.client.cmd_assume_direct_control(M)
-
-		else if(href_list["offer_control"])
-			if(!check_rights(0))
-				return
-
-			var/mob/M = locate(href_list["offer_control"])
-			if(!istype(M))
-				to_chat(usr, "This can only be used on instances of type /mob")
-				return
-			offer_control(M)
 
 		else if(href_list["delall"])
 			if(!check_rights(R_DEBUG|R_SERVER))
@@ -969,4 +969,3 @@ body
 
 
 	return
-

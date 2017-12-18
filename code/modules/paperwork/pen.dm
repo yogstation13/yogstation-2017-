@@ -98,7 +98,9 @@
 
 /obj/item/weapon/pen/sleepy/New()
 	create_reagents(45)
-	reagents.add_reagent("morphine", 20)
+	reagents.add_reagent("chloralhydrate", 8)
+	reagents.add_reagent("haloperidol", 4)
+	reagents.add_reagent("sodium_thiopental", 8)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
 	..()

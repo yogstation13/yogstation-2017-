@@ -172,11 +172,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/veil/proc/extinguishMob(mob/living/H)
 	var/blacklistLuminosity = 0
-	if(istype(H, /mob/living/simple_animal/drone))
-		var/mob/living/simple_animal/drone/D = H
-		D.light_on = 2
-		blacklistLuminosity -= D.luminosity
-	else if(istype(H, /mob/living/simple_animal/hostile/mining_drone))
+	if(istype(H, /mob/living/simple_animal/hostile/mining_drone))
 		var/mob/living/simple_animal/hostile/mining_drone/D = H
 		D.light_on = 2
 		blacklistLuminosity -= D.luminosity
