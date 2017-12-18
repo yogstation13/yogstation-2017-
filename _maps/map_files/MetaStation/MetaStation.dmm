@@ -59633,7 +59633,7 @@
 	})
 "bSx" = (
 /obj/structure/table/wood,
-/obj/item/toy/carpplushie{
+/obj/item/toy/plushie/carpplushie{
 	color = "red";
 	name = "NanoTrasen wildlife department space carp plushie"
 	},

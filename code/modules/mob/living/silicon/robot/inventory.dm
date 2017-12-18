@@ -44,7 +44,7 @@
 	if(!(locate(O) in src.module.modules) && O != src.module.emag)
 		return
 	if(activated(O))
-		src << "<span class='notice'>Already activated</span>"
+		to_chat(src, "<span class='notice'>Already activated</span>")
 		return
 	if(!module_state_1)
 		O.mouse_opacity = initial(O.mouse_opacity)
@@ -77,7 +77,7 @@
 			sight_mode |= S.sight_mode
 			update_sight()
 	else
-		src << "<span class='warning'>You need to disable a module first!</span>"
+		to_chat(src, "<span class='warning'>You need to disable a module first!</span>")
 	O.equipped(src)
 
 /mob/living/silicon/robot/proc/uneq_active()

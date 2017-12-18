@@ -56,7 +56,7 @@
 	if( ishuman(AM) )
 		if(!stat)
 			var/mob/M = AM
-			M << "<span class='notice'>\icon[src] Squeek!</span>"
+			to_chat(M, "<span class='notice'>\icon[src] Squeek!</span>")
 			playsound(src, 'sound/effects/mousesqueek.ogg', 100, 1)
 	..()
 
@@ -106,6 +106,6 @@
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "mouse_gray_dead"
 	bitesize = 3
-	eatverb = "devours"
+	eatverb = "devour"
 	list_reagents = list("nutriment" = 3, "vitamin" = 2)
 	foodtype = GROSS | MEAT | RAW

@@ -87,9 +87,9 @@
 		return
 	harness.cycle_weapon()
 	if(harness.selected_weapon)
-		usr << "<span class='notice'>You toggle your dorsal weapon to fire [harness.ranged_attacks[harness.selected_weapon][0]] rounds.</span>"
+		to_chat(usr, "<span class='notice'>You toggle your dorsal weapon to fire [harness.ranged_attacks[harness.selected_weapon][0]] rounds.</span>")
 	else
-		usr << "<span class='notice'>Your dorsal weapon does not have any modules loaded.</span>"
+		to_chat(usr, "<span class='notice'>Your dorsal weapon does not have any modules loaded.</span>")
 
 /obj/screen/tac_harness/toggle_safety
 	name = "Toggle Safety"
@@ -106,7 +106,7 @@
 		return
 	var/obj/item/weapon/storage/tactical_harness/ranged/harness = animal.harness
 	harness.toggle_safety()
-	usr << "<span class='notice'>You [harness.weapon_safety ? "enable" : "disable"] the safety on your dorsal weapon.</span>"
+	to_chat(usr, "<span class='notice'>You [harness.weapon_safety ? "enable" : "disable"] the safety on your dorsal weapon.</span>")
 
 /obj/screen/tac_harness/toggle_emag
 	var/on_icon = "emag_button_on"
@@ -124,7 +124,7 @@
 	if(!istype(animal) || !animal.harness)
 		return
 	animal.harness.toggle_emag()
-	usr << "<span class='notice'>You [animal.harness.emag_active ? "enable" : "disable"] your harness's built-in emag.</span>"
+	to_chat(usr, "<span class='notice'>You [animal.harness.emag_active ? "enable" : "disable"] your harness's built-in emag.</span>")
 
 /obj/screen/pull/tac_harness
 	icon = 'icons/mob/screen_tactical.dmi'

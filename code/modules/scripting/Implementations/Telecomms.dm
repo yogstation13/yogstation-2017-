@@ -231,9 +231,7 @@ var/allowed_translateable_langs = ALL
 	signal.data["message"] 	= interpreter.GetCleanVar("$content", signal.data["message"])
 	signal.frequency 		= interpreter.GetCleanVar("$freq", signal.frequency)
 
-	var/setname = reject_bad_name(interpreter.GetVar("$source"))
-	if(!setname)
-		setname = "Unknown"
+	var/setname = interpreter.GetCleanVar("$source", signal.data["name"])
 
 	if(signal.data["name"] != setname)
 		signal.data["realname"] = setname
@@ -259,6 +257,7 @@ var/allowed_translateable_langs = ALL
 /*  -- Actual language proc code --  */
 
 var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
+var/const/MAX_MEM_VARS	 = 500
 
 /datum/signal
 
@@ -271,6 +270,9 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 			return S.memory[address]
 
 		else
+			if(S.memory.len >= MAX_MEM_VARS)
+				if(!(address in S.memory))
+					return
 			S.memory[address] = value
 
 

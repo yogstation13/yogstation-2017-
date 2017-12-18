@@ -1,0 +1,20 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/obj/effect/decal/cleanable/blood,/obj/item/organ/heart,/obj/effect/decal/cleanable/cobweb,/obj/item/candle{pixel_x = 15; pixel_y = 5},/turf/open/floor/plasteel/cult,/area/template_noop)
+"c" = (/turf/open/floor/plasteel/cult,/area/template_noop)
+"d" = (/obj/effect/decal/cleanable/dirt,/obj/item/candle{pixel_x = -4; pixel_y = -2},/turf/open/floor/plasteel/cult,/area/template_noop)
+"e" = (/obj/structure/table/wood,/obj/item/weapon/match{pixel_x = -10},/obj/effect/decal/cleanable/cobweb2,/obj/item/weapon/book{author = "an unknown author"; dat = "<html><body><i>the pages are too faded for you to read...</i></body></html>"; icon = 'icons/obj/weapons.dmi'; icon_state = "tome"; name = "suspicious tome"},/turf/open/floor/plasteel/cult,/area/template_noop)
+"f" = (/obj/item/candle{pixel_x = -5; pixel_y = -2},/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel/cult,/area/template_noop)
+"g" = (/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/crayon/fakerune{do_icon_rotate = 0; luminosity = 0},/obj/effect/decal/cleanable/blood,/turf/open/floor/plasteel/cult,/area/template_noop)
+"h" = (/obj/machinery/door/airlock/maintenance{req_one_access_txt = "12"},/turf/open/floor/plasteel/cult,/area/template_noop)
+"i" = (/obj/effect/decal/cleanable/dirt,/obj/item/weapon/storage/box/matches{pixel_x = -5},/turf/open/floor/plasteel/cult,/area/template_noop)
+"j" = (/obj/item/candle{pixel_x = -4; pixel_y = -3},/turf/open/floor/plasteel/cult,/area/template_noop)
+"k" = (/obj/effect/decal/cleanable/blood,/obj/item/organ/tongue,/obj/item/candle{pixel_x = 3; pixel_y = 17},/turf/open/floor/plasteel/cult,/area/template_noop)
+"l" = (/obj/item/weapon/sharpener{name = "worn-out whetstone"; used = 1},/turf/open/floor/plasteel/cult,/area/template_noop)
+
+(1,1,1) = {"
+aaaaaa
+abcdea
+afgcch
+aijkla
+aaaaaa
+"}
