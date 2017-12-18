@@ -69849,19 +69849,19 @@
 	on = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/maintenance/incinerator)
 "Zsw" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/space,
-/area/space)
+/area/maintenance/incinerator)
 "Zsx" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
 /turf/open/space,
-/area/space)
+/area/maintenance/incinerator)
 "Zsy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
@@ -109928,7 +109928,7 @@ Zxp
 cuw
 ZxA
 cqS
-ZxI
+aaa
 aaa
 aaa
 aaa
@@ -110185,7 +110185,7 @@ Zxq
 Zxv
 ZxB
 Sup
-ZxI
+aaa
 aaa
 aaa
 aaa
@@ -110442,7 +110442,7 @@ Zxr
 cuv
 ZxC
 Sup
-ZxI
+aaa
 aaa
 aaa
 aaa
@@ -110699,7 +110699,7 @@ cyq
 Zxw
 ZxD
 cqS
-ZxI
+aaa
 aaa
 aaa
 aaa
