@@ -55584,6 +55584,10 @@
 /turf/closed/wall,
 /area/engine/break_room)
 "cfn" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27;
+	pixel_y = 1
+	},
 /turf/open/floor/plasteel{
 	dir = 9;
 	icon_state = "blueyellow"
@@ -58003,10 +58007,6 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "cki" = (
-/obj/machinery/vending/cigarette{
-	pixel_x = 0;
-	pixel_y = 0
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
@@ -58314,9 +58314,8 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "ckS" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (NORTH)";
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
@@ -69745,6 +69744,46 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zsl" = (
+/obj/structure/closet,
+/obj/item/clothing/under/patriotsuit,
+/obj/item/clothing/head/dallas,
+/obj/item/weapon/bedsheet/patriot,
+/obj/item/clothing/gloves/fingerless,
+/obj/item/clothing/shoes/jackboots,
+/turf/open/space,
+/area/space)
+"Zsm" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	dir = 4;
+	icon_state = "intact";
+	tag = ""
+	},
+/turf/closed/wall/r_wall,
+/area/security/checkpoint/engineering)
+"Zsn" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	tag = "icon-intact (NORTHWEST)";
+	icon_state = "intact";
+	dir = 9
+	},
+/turf/closed/wall/r_wall,
+/area/security/checkpoint/engineering)
+"Zso" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/vending/cigarette{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel,
+/area/engine/break_room)
+"Zsp" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/engine/break_room)
 "Zsq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -103694,8 +103733,8 @@ Zts
 bSo
 ZtL
 ZtY
-ZtD
-bRj
+Zsm
+Zuw
 cfq
 cgt
 chs
@@ -103951,7 +103990,7 @@ bXC
 bSo
 cbg
 ccm
-ZtD
+Zsm
 cel
 cfr
 cgu
@@ -104208,13 +104247,13 @@ Ztt
 Ztt
 cbh
 ccn
-ZtD
+Zsm
 cem
 cfs
 cgv
 chu
 cih
-cjp
+Zso
 cgr
 ckS
 clH
@@ -104465,7 +104504,7 @@ bXD
 ZtB
 ZtM
 ZtZ
-ZtD
+Zsm
 cen
 cft
 cgw
@@ -104473,7 +104512,7 @@ chv
 cij
 cjr
 cki
-ckT
+cki
 clI
 cmz
 cny
@@ -104722,15 +104761,15 @@ bXC
 ZtC
 ZtN
 ZtN
-Zum
+Zsn
 Zuw
 Zuw
 ZuP
 Zuw
 Zuw
 Zvm
-Zvm
-ZvA
+Zsp
+Zsp
 Zvm
 cnp
 cnp
@@ -104994,7 +105033,7 @@ aaa
 aaA
 aaA
 aaA
-aaa
+Zsl
 aaa
 aaA
 aaA
@@ -105240,7 +105279,7 @@ cdz
 ccp
 cbi
 cgx
-ZuY
+aaA
 cbi
 cbi
 cbi
