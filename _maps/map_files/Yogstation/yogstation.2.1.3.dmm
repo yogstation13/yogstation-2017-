@@ -72706,7 +72706,7 @@
 /turf/open/floor/plasteel{
 	icon_state = "white"
 	},
-/area/maintenance/incinerator)
+/area/medical/medbay)
 "ZxK" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
 /turf/open/floor/plasteel/shuttle{
