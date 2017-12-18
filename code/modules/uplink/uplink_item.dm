@@ -217,7 +217,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 /datum/uplink_item/dangerous/flamethrower
 	name = "Back-mounted High-power Flamethrower"
 	desc = "A compact back-mounted sprayer that comes pre-loaded with a cocktail of flammable chemicals. Use with caution."
-	item = /obj/item/weapon/watertank/operator
+	item = /obj/item/weapon/watertank/op
 	cost = 20
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
