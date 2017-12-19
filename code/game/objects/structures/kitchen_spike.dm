@@ -64,11 +64,12 @@
 /obj/structure/kitchenspike/attack_hand(mob/user)
 	if(user.pulling && isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
-		if(do_mob(user, src, 120))
+		if(do_mob(user, L, 120))
 			if(has_buckled_mobs()) //to prevent spam/queing up attacks
 				return
 			if(L.buckled)
 				return
+
 			playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
 			L.loc = src.loc
@@ -79,6 +80,7 @@
 			L.buckled = src
 			L.dir = 2
 			buckle_mob(L, force=1)
+
 			var/matrix/m180 = matrix(L.transform)
 			m180.Turn(180)
 			animate(L, transform = m180, time = 3)
@@ -97,11 +99,12 @@
 		return
 
 	var/mob/living/L = user.pulling
-	if(do_mob(user, src, 120))
+	if(do_mob(user, L, 120))
 		if(has_buckled_mobs()) //to prevent spam/queing up attacks
 			return
 		if(target.buckled)
 			return
+
 		playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
 		target.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
 		target.loc = src.loc
@@ -111,6 +114,7 @@
 		target.buckled = src
 		target.dir = 2
 		buckle_mob(L, force=1)
+
 		var/matrix/m180 = matrix(target.transform)
 		m180.Turn(180)
 		animate(L, transform = m180, time = 3)
@@ -148,13 +152,15 @@
 				return
 		if(!M.buckled)
 			return
+
 		var/matrix/m180 = matrix(M.transform)
 		m180.Turn(180)
 		animate(M, transform = m180, time = 3)
 		M.pixel_y = M.get_standard_pixel_y_offset(180)
+
 		M.adjustBruteLoss(30)
 		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
-		unbuckle_mob(M,force=1)
+		unbuckle_mob(M, force=1)
 		spiked = 0
 		M.emote("scream")
 		M.AdjustWeakened(10)
