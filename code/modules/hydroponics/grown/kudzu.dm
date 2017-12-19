@@ -24,7 +24,7 @@
 
 /obj/item/seeds/kudzu/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] swallows the pack of kudzu seeds! It looks like \he's trying to commit suicide..</span>")
-	//plant(user)
+	plant(user)
 	return (BRUTELOSS)
 
 /obj/item/seeds/kudzu/proc/plant(mob/user, turf/T)
@@ -36,7 +36,7 @@
 
 /obj/item/seeds/kudzu/attack_self(mob/user)
 	to_chat(user, "Nothing happens.")
-	/*if(istype(user.loc,/turf/open/space))
+	if(istype(user.loc,/turf/open/space))
 		return
 	var/turf/T = get_turf(src)
 	to_chat(user, "<span class='notice'>You start planting the kudzu...</span>")
@@ -59,7 +59,7 @@
 	if(href_list["approval"])
 		admin_approved = TRUE
 		message_admins("[key_name_admin(usr)] has allowed vines to be planted.")
-		return TRUE*/
+		return TRUE
 
 /obj/item/seeds/kudzu/get_analyzer_text()
 	var/text = ..()
