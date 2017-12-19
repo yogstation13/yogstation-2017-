@@ -64,7 +64,13 @@
 /obj/structure/kitchenspike/attack_hand(mob/user)
 	if(user.pulling && isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
+		var/old_loc = src.loc
+		if(L.buckled)
+			return
+
 		if(do_mob(user, L, 120))
+			if(src.loc != old_loc)
+				return
 			if(has_buckled_mobs()) //to prevent spam/queing up attacks
 				return
 			if(L.buckled)
@@ -80,6 +86,8 @@
 			L.buckled = src
 			L.dir = 2
 			buckle_mob(L, force=1)
+			if(user.pulling == L)
+				user.stop_pulling()
 
 			var/matrix/m180 = matrix(L.transform)
 			m180.Turn(180)
@@ -93,32 +101,37 @@
 /obj/structure/kitchenspike/MouseDrop_T(mob/living/target, mob/living/carbon/human/user)
 	if(!isliving(target) || has_buckled_mobs())
 		return
-	if(user.pulling != target)
-		return
-	if(user.a_intent != "grab")
+
+	var/mob/living/L = target
+	var/old_loc = src.loc
+	if(L.buckled)
 		return
 
-	var/mob/living/L = user.pulling
 	if(do_mob(user, L, 120))
+		if(src.loc != old_loc)
+			return
 		if(has_buckled_mobs()) //to prevent spam/queing up attacks
 			return
-		if(target.buckled)
+		if(L.buckled)
 			return
 
 		playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
-		target.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
-		target.loc = src.loc
-		target.emote("scream")
-		target.add_splatter_floor()
-		target.adjustBruteLoss(30)
-		target.buckled = src
-		target.dir = 2
+		L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
+		L.loc = src.loc
+		spiked = L
+		L.emote("scream")
+		L.add_splatter_floor()
+		L.adjustBruteLoss(30)
+		L.buckled = src
+		L.dir = 2
 		buckle_mob(L, force=1)
+		if(user.pulling == L)
+			user.stop_pulling()
 
-		var/matrix/m180 = matrix(target.transform)
+		var/matrix/m180 = matrix(L.transform)
 		m180.Turn(180)
 		animate(L, transform = m180, time = 3)
-		target.pixel_y = target.get_standard_pixel_y_offset(180)
+		L.pixel_y = L.get_standard_pixel_y_offset(180)
 	else
 		return
 
@@ -152,12 +165,10 @@
 				return
 		if(!M.buckled)
 			return
-
 		var/matrix/m180 = matrix(M.transform)
 		m180.Turn(180)
 		animate(M, transform = m180, time = 3)
 		M.pixel_y = M.get_standard_pixel_y_offset(180)
-
 		M.adjustBruteLoss(30)
 		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
 		unbuckle_mob(M, force=1)
