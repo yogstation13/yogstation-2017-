@@ -144,7 +144,13 @@
 /obj/item/clothing/head/kitty/update_icon(mob/living/carbon/human/user)
 	if(istype(user))
 		color = "#[user.hair_color]"
-
+		
+/obj/item/clothing/head/kitty/OnMobLife(var/mob/living/carbon/human/wearer)
+	if(!istype(wearer))
+		return
+	if(wearer.head == src)
+		if(prob(20))
+			wearer.adjustBrainLoss(1)
 
 /obj/item/clothing/head/hardhat/reindeer
 	name = "novelty reindeer hat"
