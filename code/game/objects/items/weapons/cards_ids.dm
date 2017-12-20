@@ -71,6 +71,24 @@
 	if(!proximity && prox_check)
 		return
 	A.emag_act(user)
+	
+/obj/item/weapon/card/emag/emag_act(mob/user)
+	var/otherEmag
+	if(user.l_hand)
+		if(istype(user.l_hand, /obj/item/weapon/card/emag))
+			if(user.l_hand != src)
+				otherEmag = user.l_hand
+	if(!otherEmag)
+		if(user.r_hand)
+			if(istype(user.r_hand, /obj/item/weapon/card/emag))
+				if(user.r_hand != src)
+					otherEmag = user.r_hand
+	if(!otherEmag)
+		return
+	to_chat(user, "<span class='notice'>The cyptographic sequencers attempt to override each other inevitably destroying themselves.</span>")
+	playsound(src.loc, "sparks", 50, 1)
+	qdel(otherEmag)
+	qdel(src)
 
 /obj/item/weapon/card/id
 	name = "identification card"
