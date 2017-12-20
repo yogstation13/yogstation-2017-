@@ -72,6 +72,7 @@
 		return
 	A.emag_act(user)
 	
+//Don't let Nich touch my baby
 /obj/item/weapon/card/emag/emag_act(mob/user)
 	var/otherEmag
 	if(user.l_hand)
