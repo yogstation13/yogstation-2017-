@@ -69734,6 +69734,12 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zsq" = (
+/obj/structure/sign/bobross{
+	pixel_y = 24
+	},
+/turf/open/floor/wood,
+/area/crew_quarters/captain)
 "Zsr" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -105171,7 +105177,7 @@ aXi
 aYU
 baD
 bbX
-bdE
+Zsq
 beJ
 YoU
 bgW

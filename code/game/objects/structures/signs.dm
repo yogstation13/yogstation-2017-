@@ -255,3 +255,8 @@
 	name = "escape arm"
 	desc = "A direction sign, pointing out which way the escape shuttle dock is."
 	icon_state = "direction_evac"
+
+/obj/structure/sign/bobross
+	name = "\improper calming painting"
+	desc = "We don't make mistakes, just happy little accidents."
+	icon_state = "bob"
