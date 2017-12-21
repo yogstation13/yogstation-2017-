@@ -111,9 +111,15 @@
 				m_type = 2
 
 		if ("flip","flips")
-			if (!restrained() || !resting || !sleeping)
-				src.SpinAnimation(7,1)
-				m_type = 2
+			if(!restrained() || !resting || !sleeping || !weakened)
+				if(prob(5))
+					message = "<B>[src]</B> attempts a flip and crashes to the floor!"
+					SpinAnimation(5,1)
+					sleep(3)
+					Weaken(2)
+				else
+					src.SpinAnimation(7,1)
+					m_type = 2
 
 		if ("frown","frowns")
 			message = "<B>[src]</B> frowns."
