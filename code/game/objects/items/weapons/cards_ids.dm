@@ -86,7 +86,7 @@
 					otherEmag = user.r_hand
 	if(!otherEmag)
 		return
-	to_chat(user, "<span class='notice'>The cyptographic sequencers attempt to override each other inevitably destroying themselves.</span>")
+	to_chat(user, "<span class='notice'>The cryptographic sequencers attempt to override each other and destroy themselves in the process.</span>")
 	playsound(src.loc, "sparks", 50, 1)
 	qdel(otherEmag)
 	qdel(src)
