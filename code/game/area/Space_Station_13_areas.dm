@@ -68,8 +68,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 	var/sound_env = ROOM
 
-	var/dream_type //A special type of dream that occurs in the area. example: = "legion"
-
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 var/list/teleportlocs = list()
@@ -113,10 +111,11 @@ var/list/teleportlocs = list()
 	power_environ = 0
 	valid_territory = 0
 	outdoors = 1
-	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg','sound/ambience/space.ogg' )
+	ambientsounds = list('sound/ambience/ambispace.ogg','sound/ambience/title2.ogg','sound/ambience/space.ogg', 'sound/ambience/ambiatmos.ogg')
 	blob_allowed = 0 //Eating up space doesn't count for victory as a blob.
 
 /area/space/mapgen_protected
+	icon_state = "mapgen_protect"
 	mapgen_protected = 1
 
 /area/space/nearstation
@@ -172,6 +171,7 @@ var/list/teleportlocs = list()
 /area/shuttle/syndicate
 	name = "Syndicate Infiltrator"
 	sound_env = LARGE_ENCLOSED
+	ambientsounds = list('sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
 
 /area/shuttle/assault_pod
 	name = "Steel Rain"
@@ -179,6 +179,10 @@ var/list/teleportlocs = list()
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 	sound_env = LARGE_ENCLOSED
+	ambientsounds = list('sound/ambience/ambimine.ogg', 'sound/ambience/ambicave.ogg', 'sound/ambience/ambiruin.ogg',\
+	 'sound/ambience/ambiruin2.ogg',  'sound/ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
+	  'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',\
+	'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
 
 /area/start
 	name = "start area"
@@ -198,6 +202,7 @@ var/list/teleportlocs = list()
 	has_gravity = 1
 	noteleport = 1
 	blob_allowed = 0 //Should go without saying, no blobs should take over centcom as a win condition.
+	murders_plants = 0
 	sound_env = LARGE_ENCLOSED
 
 /area/centcom/control
@@ -322,6 +327,7 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	has_gravity = 1
 	noteleport = 1
+	murders_plants = 0
 	sound_env = LARGE_ENCLOSED
 
 //Abductors
@@ -331,6 +337,7 @@ var/list/teleportlocs = list()
 	requires_power = 0
 	noteleport = 1
 	has_gravity = 1
+	murders_plants = 0
 	sound_env = SMALL_ENCLOSED
 
 
@@ -672,7 +679,7 @@ var/list/teleportlocs = list()
 /area/chapel/main
 	name = "Chapel"
 	icon_state = "chapel"
-	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg')
+	ambientsounds = list('sound/ambience/ambicha1.ogg','sound/ambience/ambicha2.ogg','sound/ambience/ambicha3.ogg','sound/ambience/ambicha4.ogg', 'sound/ambience/ambiholy.ogg', 'sound/ambience/ambiholy2.ogg', 'sound/ambience/ambiholy3.ogg')
 	sound_env = LARGE_ENCLOSED
 
 /area/chapel/office
@@ -687,7 +694,8 @@ var/list/teleportlocs = list()
 //Engineering
 
 /area/engine
-	ambientsounds = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
+	ambientsounds = list('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg', 'sound/ambience/ambiatmos.ogg',\
+	'sound/ambience/ambiatmos2.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg')
 
 /area/engine/engine_smes
 	name = "Engineering SMES"
@@ -798,26 +806,29 @@ var/list/teleportlocs = list()
 	icon_state = "teleporter"
 	music = "signal"
 	sound_env = SMALL_ENCLOSED
+	ambientsounds = list('sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 
 /area/AIsattele
 	name = "Abandoned Teleporter"
 	icon_state = "teleporter"
 	music = "signal"
-	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambientmystery.ogg')
+	ambientsounds = list('sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 
 /area/gateway
 	name = "Gateway"
 	icon_state = "teleporter"
 	music = "signal"
+	ambientsounds = list('sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 
 //MedBay
+/area/medical
+	ambientsounds = list('sound/ambience/ambinice.ogg')
 
 /area/medical/medbay
 	name = "Medbay"
 	icon_state = "medbay"
 	music = 'sound/ambience/signal.ogg'
 	sound_env = LARGE_ENCLOSED
-	ambientsounds = list('sound/ambience/mysteriousambience.ogg')
 
 //Medbay is a large area, these additional areas help level out APC load.
 /area/medical/medbay2
@@ -857,7 +868,7 @@ var/list/teleportlocs = list()
 /area/medical/morgue
 	name = "Morgue"
 	icon_state = "morgue"
-	ambientsounds = list('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg')
+	ambientsounds = list('sound/ambience/ambimo1.ogg','sound/ambience/ambimo2.ogg','sound/ambience/ambiruin7.ogg','sound/ambience/ambiruin6.ogg')
 
 /area/medical/chemistry
 	name = "Chemistry"
@@ -980,11 +991,17 @@ var/list/teleportlocs = list()
 	name = "Vault"
 	icon_state = "nuke_storage"
 	sound_env = LARGE_ENCLOSED
+	ambientsounds = list('sound/ambience/ambimystery.ogg', 'sound/ambience/ambiruin7.ogg' ,'sound/ambience/ambiruin6.ogg',\
+	'sound/ambience/ambitech.ogg' ,'sound/ambience/ambitech2.ogg' ,'sound/ambience/ambitech3.ogg',\
+	'sound/ambience/ambidanger.ogg' ,'sound/ambience/ambidanger2.ogg')
 
 /area/ai_monitored/nuke_storage
 	name = "Vault"
 	icon_state = "nuke_storage"
 	sound_env = LARGE_ENCLOSED
+	ambientsounds = list('sound/ambience/ambimystery.ogg', 'sound/ambience/ambiruin7.ogg' ,'sound/ambience/ambiruin6.ogg',\
+	'sound/ambience/ambitech.ogg' ,'sound/ambience/ambitech2.ogg' ,'sound/ambience/ambitech3.ogg',\
+	'sound/ambience/ambidanger.ogg' ,'sound/ambience/ambidanger2.ogg')
 
 /area/security/checkpoint
 	name = "Security Checkpoint"
@@ -1100,6 +1117,7 @@ var/list/teleportlocs = list()
 /area/toxins/server
 	name = "Server Room"
 	icon_state = "server"
+	ambientsounds = list('sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 
 /area/toxins/explab
 	name = "Experimentation Lab"
@@ -1109,6 +1127,7 @@ var/list/teleportlocs = list()
 	name = "\improper Telescience Lab"
 	icon_state = "toxtest"
 	sound_env = LARGE_ENCLOSED
+	ambientsounds = list('sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 
 /area/toxins/toxlab
 	name = "\improper Toxins Lab"
@@ -1181,6 +1200,11 @@ var/list/teleportlocs = list()
 	name = "Derelict Station"
 	icon_state = "storage"
 	blob_allowed = 0 //Nope, no winning on the derelict as a blob. Gotta eat the station.
+	ambientsounds = list('sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiruin.ogg',\
+	 'sound/ambience/ambiruin2.ogg',  'sound/ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
+	  'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',\
+		'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambimaint.ogg',\
+		'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
 
 /area/derelict/hallway/primary
 	name = "Derelict Primary Hallway"
@@ -1282,6 +1306,9 @@ var/list/teleportlocs = list()
 	name = "Construction Area"
 	icon_state = "yellow"
 	sound_env = LARGE_ENCLOSED
+	ambientsounds = list('sound/ambience/ambimystery.ogg', 'sound/ambience/ambiruin7.ogg' ,'sound/ambience/ambiruin6.ogg',\
+	'sound/ambience/ambitech.ogg' ,'sound/ambience/ambitech2.ogg' ,'sound/ambience/ambitech3.ogg',\
+	'sound/ambience/ambidanger.ogg' ,'sound/ambience/ambidanger2.ogg')
 
 /area/construction/supplyshuttle
 	name = "Supply Shuttle"
@@ -1334,7 +1361,7 @@ var/list/teleportlocs = list()
 
 
 /area/turret_protected/
-	ambientsounds = list('sound/ambience/ambimalf.ogg')
+	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
 
 /area/turret_protected/ai_upload
 	name = "AI Upload Chamber"
@@ -1395,7 +1422,12 @@ var/list/teleportlocs = list()
 
 //Misc
 
-
+area/wreck
+	ambientsounds = list('sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiruin.ogg',\
+ 'sound/ambience/ambiruin2.ogg',  'sound/ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
+	'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',\
+	'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambimaint.ogg',\
+	'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg', 'sound/ambience/ambitech3.ogg')
 
 /area/wreck/ai
 	name = "AI Chamber"
@@ -1423,7 +1455,7 @@ var/list/teleportlocs = list()
 
 /area/tcommsat
 	sound_env = LARGE_ENCLOSED
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
+	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg', 'sound/ambience/ambimystery.ogg')
 
 /area/tcommsat/entrance
 	name = "Telecoms Teleporter"
@@ -1436,22 +1468,18 @@ var/list/teleportlocs = list()
 /area/turret_protected/tcomsat
 	name = "Telecoms Satellite"
 	icon_state = "tcomsatlob"
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/turret_protected/tcomfoyer
 	name = "Telecoms Foyer"
 	icon_state = "tcomsatentrance"
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/turret_protected/tcomwest
 	name = "Telecommunications Satellite West Wing"
 	icon_state = "tcomsatwest"
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/turret_protected/tcomeast
 	name = "Telecommunications Satellite East Wing"
 	icon_state = "tcomsateast"
-	ambientsounds = list('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/tcommsat/computer
 	name = "Telecoms Control Room"
@@ -1513,11 +1541,16 @@ var/list/teleportlocs = list()
 	lighting_use_dynamic = DYNAMIC_LIGHTING_DISABLED
 	requires_power = 0
 	has_gravity = 1
-	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg')
+	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/seag1.ogg','sound/ambience/seag2.ogg','sound/ambience/seag2.ogg', 'sound/ambience/ambiodd.ogg', 'sound/ambience/ambinice.ogg')
 	sound_env = PLAIN
 
 /area/spacecontent
 	name = "space"
+	ambientsounds = list('sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiruin.ogg',\
+	 'sound/ambience/ambiruin2.ogg',  'sound/ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
+		'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',\
+		'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambimaint.ogg',\
+		'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
 
 /area/spacecontent/a1
 	icon_state = "spacecontent1"
@@ -1614,6 +1647,11 @@ var/list/teleportlocs = list()
 
 /area/awaycontent
 	name = "space"
+	ambientsounds = list('sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiruin.ogg',\
+	 'sound/ambience/ambiruin2.ogg',  'sound/ambience/ambiruin3.ogg',  'sound/ambience/ambiruin4.ogg',\
+		'sound/ambience/ambiruin5.ogg',  'sound/ambience/ambiruin6.ogg',  'sound/ambience/ambiruin7.ogg',\
+		'sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambimaint.ogg',\
+		'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
 
 /area/awaycontent/a1
 	icon_state = "awaycontent1"

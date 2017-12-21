@@ -93,7 +93,7 @@
 /obj/item/organ/examine(mob/user)
 	..()
 	if(status == ORGAN_ROBOTIC && crit_fail)
-		user << "<span class='warning'>[src] seems to be broken!</span>"
+		to_chat(user, "<span class='warning'>[src] seems to be broken!</span>")
 
 
 /obj/item/organ/proc/prepare_eat()
@@ -142,17 +142,16 @@
 	if(is_health_analyzer(I))
 		if(decay_time)
 			if(decay >= decay_time)
-				user << "<span class='notice'>\The [src] has decayed beyond the point of no return.</span>"
+				to_chat(user, "<span class='notice'>\The [src] has decayed beyond the point of no return.</span>")
 			else
-				user << "<span class='notice'>\The [src] is [round(decay / decay_time, 0.1)]% decayed.</span>"
+				to_chat(user, "<span class='notice'>\The [src] is [round(decay / decay_time, 0.1)]% decayed.</span>")
 		else
-			user << "<span class='notice'>\The [src] will not decay.</span>"
+			to_chat(user, "<span class='notice'>\The [src] will not decay.</span>")
 		return 1
 	return 0
 
 //Looking for brains?
 //Try code/modules/mob/living/carbon/brain/brain_item.dm
-
 /obj/item/organ/shadowtumor
 	name = "black tumor"
 	desc = "A tiny black mass with red tendrils trailing from it. It seems to shrivel in the light."

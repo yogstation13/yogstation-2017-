@@ -83,6 +83,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 			"server" = signal.data["server"],
 			"reject" = signal.data["reject"],
 			"level" = signal.data["level"],
+			"broadcast_levels" = signal.data["broadcast_levels"],
 			"spans" = signal.data["spans"],
 			"languages" = signal.data["languages"],
 			"verb_say" = signal.data["verb_say"],

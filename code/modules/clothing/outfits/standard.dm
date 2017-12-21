@@ -164,7 +164,7 @@
 		qdel(briefcase_item)
 	for(var/i=3, i>0, i--)
 		sec_briefcase.handle_item_insertion(new /obj/item/stack/spacecash/c1000,1)
-	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow,1)
+	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/energy/crossbow,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/gun/projectile/revolver/mateba,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/ammo_box/a357,1)
 	sec_briefcase.handle_item_insertion(new /obj/item/weapon/grenade/plastic/x4,1)
@@ -417,7 +417,7 @@
 	W.update_label()
 
 
-	H << "<span class='alert'>You are NOT security. You are NOT a head of department. You will NOT challenge a head of department and nor will you meddle in securities affairs. You have a gun ONLY to defend your valuable all-access ID. If you see criminals, you MAY stun them, and take the body they are holding. Nothing more. You MAY report their location, Nothing more. You are NOT security. Your job is to recover bodies to the morgue to ensure more players get to play a fair game. ( for more information https://wiki.yogstation.net/index.php?title=Recovery_Agent_manual )</span>"
+	to_chat(H, "<span class='alert'>You are NOT security. You are NOT a head of department. You will NOT challenge a head of department and nor will you meddle in securities affairs. You have a gun ONLY to defend your valuable all-access ID. If you see criminals, you MAY stun them, and take the body they are holding. Nothing more. You MAY report their location, Nothing more. You are NOT security. Your job is to recover bodies to the morgue to ensure more players get to play a fair game. ( for more information https://wiki.yogstation.net/index.php?title=Recovery_Agent_manual )</span>")
 
 
 /datum/outfit/recovery_throwback // for adminbuse.

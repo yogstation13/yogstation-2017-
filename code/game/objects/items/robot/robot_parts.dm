@@ -54,13 +54,13 @@
 			if (M.use(1))
 				var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
 				B.loc = get_turf(src)
-				user << "<span class='notice'>You arm the robot frame.</span>"
+				to_chat(user, "<span class='notice'>You arm the robot frame.</span>")
 				if (user.get_inactive_hand()==src)
 					user.unEquip(src)
 					user.put_in_inactive_hand(B)
 				qdel(src)
 			else
-				user << "<span class='warning'>You need one sheet of metal to start building ED-209!</span>"
+				to_chat(user, "<span class='warning'>You need one sheet of metal to start building ED-209!</span>")
 				return
 	else if(istype(W, /obj/item/bodypart/l_leg/robot))
 		if(src.l_leg)
@@ -108,9 +108,9 @@
 			src.chest = W
 			src.updateicon()
 		else if(!W:wired)
-			user << "<span class='warning'>You need to attach wires to it first!</span>"
+			to_chat(user, "<span class='warning'>You need to attach wires to it first!</span>")
 		else
-			user << "<span class='warning'>You need to attach a cell to it first!</span>"
+			to_chat(user, "<span class='warning'>You need to attach a cell to it first!</span>")
 
 	else if(istype(W, /obj/item/bodypart/head/robot))
 		if(src.head)
@@ -122,39 +122,39 @@
 			src.head = W
 			src.updateicon()
 		else
-			user << "<span class='warning'>You need to attach a flash to it first!</span>"
+			to_chat(user, "<span class='warning'>You need to attach a flash to it first!</span>")
 
 	else if (istype(W, /obj/item/device/multitool))
 		if(check_completion())
 			Interact(user)
 		else
-			user << "<span class='warning'>The endoskeleton must be assembled before debugging can begin!</span>"
+			to_chat(user, "<span class='warning'>The endoskeleton must be assembled before debugging can begin!</span>")
 
 	else if(istype(W, /obj/item/device/mmi))
 		var/obj/item/device/mmi/M = W
 		if(check_completion())
 			if(!istype(loc,/turf))
-				user << "<span class='warning'>You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise!</span>"
+				to_chat(user, "<span class='warning'>You can't put the MMI in, the frame has to be standing on the ground to be perfectly precise!</span>")
 				return
 			if(!M.brainmob)
-				user << "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose!</span>"
+				to_chat(user, "<span class='warning'>Sticking an empty MMI into the frame would sort of defeat the purpose!</span>")
 				return
 
 			var/mob/living/carbon/brain/BM = M.brainmob
 			if(!BM.key || !BM.mind)
-				user << "<span class='warning'>The mmi indicates that their mind is completely unresponsive; there's no point!</span>"
+				to_chat(user, "<span class='warning'>The mmi indicates that their mind is completely unresponsive; there's no point!</span>")
 				return
 
 			if(!BM.client) //braindead
-				user << "<span class='warning'>The mmi indicates that their mind is currently inactive; it might change!</span>"
+				to_chat(user, "<span class='warning'>The mmi indicates that their mind is currently inactive; it might change!</span>")
 				return
 
 			if(BM.stat == DEAD || (M.brain && M.brain.damaged_brain))
-				user << "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>"
+				to_chat(user, "<span class='warning'>Sticking a dead brain into the frame would sort of defeat the purpose!</span>")
 				return
 
 			if(jobban_isbanned(BM, "Cyborg"))
-				user << "<span class='warning'>This MMI does not seem to fit!</span>"
+				to_chat(user, "<span class='warning'>This MMI does not seem to fit!</span>")
 				return
 
 			if(!user.unEquip(W))
@@ -199,8 +199,8 @@
 
 			if(O.mind && O.mind.special_role)
 				O.mind.store_memory("As a cyborg, you must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.")
-				O << "<span class='userdanger'>You have been robotized!</span>"
-				O << "<span class='danger'>You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.</span>"
+				to_chat(O, "<span class='userdanger'>You have been robotized!</span>")
+				to_chat(O, "<span class='danger'>You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead.</span>")
 
 			O.job = "Cyborg"
 
@@ -224,13 +224,13 @@
 			if(!locomotion)
 				O.lockcharge = 1
 				O.update_canmove()
-				O << "<span class='warning'>Error: Servo motors unresponsive.</span>"
+				to_chat(O, "<span class='warning'>Error: Servo motors unresponsive.</span>")
 
 		else
-			user << "<span class='warning'>The MMI must go in after everything else!</span>"
+			to_chat(user, "<span class='warning'>The MMI must go in after everything else!</span>")
 
 	else if(istype(W,/obj/item/weapon/pen))
-		user << "<span class='warning'>You need to use a multitool to name [src]!</span>"
+		to_chat(user, "<span class='warning'>You need to use a multitool to name [src]!</span>")
 	else
 		return ..()
 
@@ -253,11 +253,11 @@
 	var/mob/living/living_user = usr
 	var/obj/item/item_in_hand = living_user.get_active_hand()
 	if(!istype(item_in_hand, /obj/item/device/multitool))
-		living_user << "<span class='warning'>You need a multitool!</span>"
+		to_chat(living_user, "<span class='warning'>You need a multitool!</span>")
 		return
 
 	if(href_list["Name"])
-		var/new_name = reject_bad_name(input(usr, "Enter new designation. Set to blank to reset to default.", "Cyborg Debug", src.created_name),1)
+		var/new_name = name_input(usr, "Enter new designation. Set to blank to reset to default.", "Cyborg Debug", src.created_name, TRUE)
 		if(!in_range(src, usr) && src.loc != usr)
 			return
 		if(new_name)
@@ -268,7 +268,7 @@
 	else if(href_list["Master"])
 		forced_ai = select_active_ai(usr)
 		if(!forced_ai)
-			usr << "<span class='error'>No active AIs detected.</span>"
+			to_chat(usr, "<span class='error'>No active AIs detected.</span>")
 
 	else if(href_list["Law"])
 		lawsync = !lawsync
@@ -282,4 +282,3 @@
 	add_fingerprint(usr)
 	Interact(usr)
 	return
-

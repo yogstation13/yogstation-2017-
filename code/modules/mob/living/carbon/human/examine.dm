@@ -282,9 +282,9 @@
 	temp = getCloneLoss()
 	if(temp)
 		if(temp < 45)
-			msg += "[t_He] [t_has] appears slightly stunted and pale.\n"
+			msg += "[t_He] appears slightly stunted and pale.\n"
 		else
-			msg += "<B>[t_He] [t_has] is severely deformed and bears a greyish pallor.</B>\n"
+			msg += "<B>[t_He] is severely deformed and bears a greyish pallor.</B>\n"
 
 	temp = getOxyLoss()
 	if (temp)
@@ -436,4 +436,4 @@
 
 	msg += "*---------*</span>"
 
-	user << msg
+	to_chat(user, msg)

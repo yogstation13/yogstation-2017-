@@ -83,16 +83,16 @@
 
 		if ("custom")
 			if(jobban_isbanned(src, "emote"))
-				src << "You cannot send custom emotes (banned)"
+				to_chat(src, "You cannot send custom emotes (banned)")
 				return
 			if(src.client)
 				if(client.prefs.muted & MUTE_IC)
-					src << "You cannot send IC messages (muted)."
+					to_chat(src, "You cannot send IC messages (muted).")
 					return
-			var/input = copytext(sanitize(input("Choose an emote to display.") as text|null),1,MAX_MESSAGE_LEN)
+			var/input = stripped_input(usr, "Choose an emote to display.", null, null, null, MAX_MESSAGE_LEN)
 			if (!input)
 				return
-			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
+			var/input2 = input("Is this a visible or hearable emote?") as anything in list("Visible","Hearable")
 			if (input2 == "Visible")
 				m_type = 1
 			else if (input2 == "Hearable")
@@ -146,11 +146,11 @@
 
 		if ("me")
 			if(jobban_isbanned(src, "emote"))
-				src << "You cannot send custom emotes (banned)"
+				to_chat(src, "You cannot send custom emotes (banned)")
 				return
 			if (src.client)
 				if(client.prefs.muted & MUTE_IC)
-					src << "You cannot send IC messages (muted)."
+					to_chat(src, "You cannot send IC messages (muted).")
 					return
 				if (src.client.handle_spam_prevention(message,MUTE_IC))
 					return
@@ -231,10 +231,10 @@
 			m_type = 2
 
 		if ("help")
-			src << "Help for cyborg emotes. You can use these emotes with say \"*emote\":\n\naflap, beep-(none)/mob, bow-(none)/mob, buzz-(none)/mob,buzz2,chime, clap, custom, deathgasp, flap, glare-(none)/mob, honk, look-(none)/mob, me, nod, ping-(none)/mob, sad, \nsalute-(none)/mob, twitch, twitch_s, warn,"
+			to_chat(src, "Help for cyborg emotes. You can use these emotes with say \"*emote\":\n\naflap, beep-(none)/mob, bow-(none)/mob, buzz-(none)/mob,buzz2,chime, clap, custom, deathgasp, flap, glare-(none)/mob, honk, look-(none)/mob, me, nod, ping-(none)/mob, sad, \nsalute-(none)/mob, twitch, twitch_s, warn,")
 
 		else
-			src << "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>"
+			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 
 	if (message && src.stat == CONSCIOUS)
 		log_emote("[name]/[key] : [message]")
@@ -253,4 +253,4 @@
 						 "You announce you are operating in low power mode.")
 		playsound(loc, 'sound/machines/buzz-two.ogg', 50, 0)
 	else
-		src << "<span class='warning'>You can only use this emote when you're out of charge.</span>"
+		to_chat(src, "<span class='warning'>You can only use this emote when you're out of charge.</span>")

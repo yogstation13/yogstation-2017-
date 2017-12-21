@@ -6,10 +6,10 @@
 
 /obj/item/device/breachshield/attack_self(mob/user)
 	if(used)
-		user << "<span class='notice'>[src] is empty.</span>"
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 		return
 
-	user << "<span class='notice'>[src] begins to vibrate! The shields going to expand!</span>"
+	to_chat(user, "<span class='notice'>[src] begins to vibrate! The shields going to expand!</span>")
 	addtimer(src, "expand", 100, TRUE)
 
 /obj/item/device/breachshield/proc/expand()
@@ -35,5 +35,5 @@
 
 /obj/item/device/breachshield/emag_act(mob/user)
 	if(!used)
-		user << "<span class='warning'>You screw up [src]'s transformation blueprints rendering the device useless.</span>."
+		to_chat(user, "<span class='warning'>You screw up [src]'s transformation blueprints rendering the device useless.</span>.")
 		used = TRUE

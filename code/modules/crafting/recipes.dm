@@ -9,7 +9,7 @@
 	var/chem_catalysts[] = list() //like tools but for reagents
 	var/category = CAT_NONE //where it shows up in the crafting UI
 
-
+// WEAPONS //
 /datum/crafting_recipe/pin_removal
 	name = "Pin Removal"
 	result = /obj/item/weapon/gun
@@ -91,6 +91,73 @@
 	time = 40
 	category = CAT_WEAPON
 
+/datum/crafting_recipe/flamethrower
+	name = "Flamethrower"
+	result = /obj/item/weapon/flamethrower
+	reqs = list(/obj/item/weapon/weldingtool = 1,
+				/obj/item/device/assembly/igniter = 1,
+				/obj/item/stack/rods = 1)
+	parts = list(/obj/item/device/assembly/igniter = 1,
+				/obj/item/weapon/weldingtool = 1)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 10
+	category = CAT_WEAPON
+
+/datum/crafting_recipe/ishotgun
+	name = "Improvised Shotgun"
+	result = /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised
+	reqs = list(/obj/item/weaponcrafting/reciever = 1,
+				/obj/item/pipe = 1,
+				/obj/item/weaponcrafting/stock = 1,
+				/obj/item/stack/packageWrap = 5,)
+	tools = list(/obj/item/weapon/screwdriver)
+	time = 100
+	category = CAT_WEAPON
+
+/datum/crafting_recipe/chainsaw
+	name = "Chainsaw"
+	result = /obj/item/weapon/twohanded/required/chainsaw
+	reqs = list(/obj/item/weapon/circular_saw = 1,
+				/obj/item/stack/cable_coil = 1,
+				/obj/item/stack/sheet/plasteel = 1)
+	tools = list(/obj/item/weapon/weldingtool)
+	time = 50
+	category = CAT_WEAPON
+
+/datum/crafting_recipe/spear
+	name = "Spear"
+	result = /obj/item/weapon/twohanded/spear
+	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
+				/obj/item/weapon/shard = 1,
+				/obj/item/stack/rods = 1)
+	time = 40
+	category = CAT_WEAPON
+
+/datum/crafting_recipe/chemical_payload
+	name = "Chemical Payload (C4)"
+	result = /obj/item/weapon/bombcore/chemical
+	reqs = list(
+		/obj/item/weapon/stock_parts/matter_bin = 1,
+		/obj/item/weapon/c4 = 1,
+		/obj/item/weapon/grenade/chem_grenade = 2
+	)
+	parts = list(/obj/item/weapon/stock_parts/matter_bin = 1, /obj/item/weapon/grenade/chem_grenade = 2)
+	time = 30
+	category = CAT_WEAPON
+
+/datum/crafting_recipe/chemical_payload2
+	name = "Chemical Payload (gibtonite)"
+	result = /obj/item/weapon/bombcore/chemical
+	reqs = list(
+		/obj/item/weapon/stock_parts/matter_bin = 1,
+		/obj/item/weapon/twohanded/required/gibtonite = 1,
+		/obj/item/weapon/grenade/chem_grenade = 2
+	)
+	parts = list(/obj/item/weapon/stock_parts/matter_bin = 1, /obj/item/weapon/grenade/chem_grenade = 2)
+	time = 50
+	category = CAT_WEAPON
+
+// ROBOTS //
 /datum/crafting_recipe/ed209
 	name = "ED209"
 	result = /mob/living/simple_animal/bot/ed209
@@ -150,17 +217,7 @@
 	time = 40
 	category = CAT_ROBOT
 
-/datum/crafting_recipe/flamethrower
-	name = "Flamethrower"
-	result = /obj/item/weapon/flamethrower
-	reqs = list(/obj/item/weapon/weldingtool = 1,
-				/obj/item/device/assembly/igniter = 1,
-				/obj/item/stack/rods = 1)
-	parts = list(/obj/item/device/assembly/igniter = 1,
-				/obj/item/weapon/weldingtool = 1)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 10
-	category = CAT_WEAPON
+// AMMO //
 
 /datum/crafting_recipe/meteorshot
 	name = "Meteorshot Shell"
@@ -243,35 +300,7 @@
 	time = 5
 	category = CAT_AMMO
 
-/datum/crafting_recipe/ishotgun
-	name = "Improvised Shotgun"
-	result = /obj/item/weapon/gun/projectile/revolver/doublebarrel/improvised
-	reqs = list(/obj/item/weaponcrafting/reciever = 1,
-				/obj/item/pipe = 1,
-				/obj/item/weaponcrafting/stock = 1,
-				/obj/item/stack/packageWrap = 5,)
-	tools = list(/obj/item/weapon/screwdriver)
-	time = 100
-	category = CAT_WEAPON
-
-/datum/crafting_recipe/chainsaw
-	name = "Chainsaw"
-	result = /obj/item/weapon/twohanded/required/chainsaw
-	reqs = list(/obj/item/weapon/circular_saw = 1,
-				/obj/item/stack/cable_coil = 1,
-				/obj/item/stack/sheet/plasteel = 1)
-	tools = list(/obj/item/weapon/weldingtool)
-	time = 50
-	category = CAT_WEAPON
-
-/datum/crafting_recipe/spear
-	name = "Spear"
-	result = /obj/item/weapon/twohanded/spear
-	reqs = list(/obj/item/weapon/restraints/handcuffs/cable = 1,
-				/obj/item/weapon/shard = 1,
-				/obj/item/stack/rods = 1)
-	time = 40
-	category = CAT_WEAPON
+// MISC //
 
 /datum/crafting_recipe/spooky_camera
 	name = "Camera Obscura"
@@ -319,31 +348,29 @@
 	reqs = list(/obj/item/weapon/paper = 5)
 	category = CAT_MISC
 
+/datum/crafting_recipe/gold_horn
+	name = "Golden bike horn"
+	result = /obj/item/device/assembly/bikehorn/golden
+	time = 20
+	reqs = list(/obj/item/stack/sheet/mineral/bananium = 5,
+				/obj/item/device/assembly/bikehorn)
+	category = CAT_MISC
 
-/datum/crafting_recipe/chemical_payload
-	name = "Chemical Payload (C4)"
-	result = /obj/item/weapon/bombcore/chemical
-	reqs = list(
-		/obj/item/weapon/stock_parts/matter_bin = 1,
-		/obj/item/weapon/c4 = 1,
-		/obj/item/weapon/grenade/chem_grenade = 2
-	)
-	parts = list(/obj/item/weapon/stock_parts/matter_bin = 1, /obj/item/weapon/grenade/chem_grenade = 2)
+/datum/crafting_recipe/bedsheetcostume
+	name = "Bedsheet costume"
+	result = /obj/item/clothing/suit/spookyghost
 	time = 30
-	category = CAT_WEAPON
+	reqs = list(/obj/item/weapon/bedsheet = 1)
+	category = CAT_MISC
 
-/datum/crafting_recipe/chemical_payload2
-	name = "Chemical Payload (gibtonite)"
-	result = /obj/item/weapon/bombcore/chemical
-	reqs = list(
-		/obj/item/weapon/stock_parts/matter_bin = 1,
-		/obj/item/weapon/twohanded/required/gibtonite = 1,
-		/obj/item/weapon/grenade/chem_grenade = 2
-	)
-	parts = list(/obj/item/weapon/stock_parts/matter_bin = 1, /obj/item/weapon/grenade/chem_grenade = 2)
-	time = 50
-	category = CAT_WEAPON
+/datum/crafting_recipe/bedsheet
+	name = "Bedsheet"
+	result = /obj/item/weapon/bedsheet
+	time = 30
+	reqs = list(/obj/item/stack/sheet/cloth = 4)
+	category = CAT_MISC
 
+// TRIBAL //
 /datum/crafting_recipe/bonearmor
 	name = "Bone Armor"
 	result = /obj/item/clothing/suit/armor/bone
@@ -382,14 +409,6 @@
 				/obj/item/stack/sheet/sinew = 2,
 				/obj/item/stack/sheet/animalhide/ashdrake = 5)
 	category = CAT_PRIMAL
-
-/datum/crafting_recipe/gold_horn
-	name = "Golden bike horn"
-	result = /obj/item/device/assembly/bikehorn/golden
-	time = 20
-	reqs = list(/obj/item/stack/sheet/mineral/bananium = 5,
-				/obj/item/device/assembly/bikehorn)
-	category = CAT_MISC
 
 /datum/crafting_recipe/bonedagger
 	name = "Bone Dagger"

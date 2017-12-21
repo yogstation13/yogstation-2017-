@@ -883,7 +883,7 @@
 	},
 /area/shuttle)
 "cx" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 0
 	},
 /turf/open/floor/plasteel{

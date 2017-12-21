@@ -16,8 +16,8 @@
 	var/finished = 0
 
 /datum/game_mode/wizard/announce()
-	world << "<B>The current game mode is - Wizard!</B>"
-	world << "<B>There is a <span class='danger'>SPACE WIZARD</span>\black on the station. You can't let him achieve his objective!</B>"
+	to_chat(world, "<B>The current game mode is - Wizard!</B>")
+	to_chat(world, "<B>There is a <span class='danger'>SPACE WIZARD</span>\black on the station. You can't let him achieve his objective!</B>")
 
 /datum/game_mode/wizard/pre_setup()
 	//Potential here, people. Magin' Rages Light
@@ -31,7 +31,7 @@
 		wizard.assigned_role = "Wizard"
 		wizard.special_role = "Wizard"
 		if(wizardstart.len == 0)
-			wizard.current << "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>"
+			to_chat(wizard.current, "<span class='boldannounce'>A starting location for you could not be found, please report this bug!</span>")
 			return 0
 
 	for(var/datum/mind/wiz in wizards)
@@ -54,51 +54,50 @@
 
 
 /datum/game_mode/proc/forge_wizard_objectives(datum/mind/wizard)
-	switch(rand(1,100))
+	var/person_objectives = 0
+	var/item_objectives = 0
+	var/hijack = FALSE
+	var/glorious_death = FALSE
+
+	switch(rand(1, 100))
 		if(1 to 30)
-
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = wizard
-			kill_objective.find_target()
-			wizard.objectives += kill_objective
-
-			if (!(locate(/datum/objective/escape) in wizard.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = wizard
-				wizard.objectives += escape_objective
-		if(31 to 60)
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = wizard
-			steal_objective.find_target()
-			wizard.objectives += steal_objective
-
-			if (!(locate(/datum/objective/escape) in wizard.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = wizard
-				wizard.objectives += escape_objective
-
-		if(61 to 85)
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = wizard
-			kill_objective.find_target()
-			wizard.objectives += kill_objective
-
-			var/datum/objective/steal/steal_objective = new
-			steal_objective.owner = wizard
-			steal_objective.find_target()
-			wizard.objectives += steal_objective
-
-			if (!(locate(/datum/objective/survive) in wizard.objectives))
-				var/datum/objective/survive/survive_objective = new
-				survive_objective.owner = wizard
-				wizard.objectives += survive_objective
-
+			hijack = TRUE
+			item_objectives = 3
+		if(30 to 40)
+			glorious_death = TRUE
+			person_objectives = 3
 		else
-			if (!(locate(/datum/objective/hijack) in wizard.objectives))
-				var/datum/objective/hijack/hijack_objective = new
-				hijack_objective.owner = wizard
-				wizard.objectives += hijack_objective
-	return
+			person_objectives = rand(2, 4)
+			item_objectives = 6 - person_objectives
+
+	for(var/i in 1 to person_objectives)
+		var/datum/objective/O
+		if(!hijack && !glorious_death && prob(10))
+			O = new /datum/objective/protect()
+		else
+			O = new /datum/objective/assassinate()
+		O.owner = wizard
+		O.find_target()
+		wizard.objectives += O
+
+	for(var/i in 1 to item_objectives)
+		var/datum/objective/steal/steal_objective = new /datum/objective/steal()
+		steal_objective.owner = wizard
+		steal_objective.find_target()
+		wizard.objectives += steal_objective
+
+	if(hijack)
+		var/datum/objective/hijack/hijack_objective = new /datum/objective/hijack()
+		hijack_objective.owner = wizard
+		wizard.objectives += hijack_objective
+	else if(glorious_death)
+		var/datum/objective/martyr/die = new /datum/objective/martyr()
+		die.owner = wizard
+		wizard.objectives += die
+	else
+		var/datum/objective/survive/survive_objective = new /datum/objective/survive()
+		survive_objective.owner = wizard
+		wizard.objectives += survive_objective
 
 
 /datum/game_mode/proc/name_wizard(mob/living/carbon/human/wizard_mob)
@@ -107,7 +106,7 @@
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	spawn(0)
-		var/newname = copytext(sanitize(input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname) as null|text),1,MAX_NAME_LEN)
+		var/newname = name_input(wizard_mob, "You are the Space Wizard. Would you like to change your name to something else?", "Name change", randomname, TRUE)
 
 		if (!newname)
 			newname = randomname
@@ -121,12 +120,12 @@
 
 /datum/game_mode/proc/greet_wizard(datum/mind/wizard, you_are=1)
 	if (you_are)
-		wizard.current << "<span class='boldannounce'>You are the Space Wizard!</span>"
-	wizard.current << "<B>The Space Wizards Federation has given you the following tasks:</B>"
+		to_chat(wizard.current, "<span class='boldannounce'>You are the Space Wizard!</span>")
+	to_chat(wizard.current, "<B>The Space Wizards Federation has given you the following tasks:</B>")
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in wizard.objectives)
-		wizard.current << "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
+		to_chat(wizard.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++
 	return
 
@@ -163,9 +162,9 @@
 	spellbook.owner = wizard_mob
 	wizard_mob.equip_to_slot_or_del(spellbook, slot_r_hand)
 
-	wizard_mob << "You will find a list of available spells in your spell book. Choose your magic arsenal carefully."
-	wizard_mob << "The spellbook is bound to you, and others cannot use it."
-	wizard_mob << "In your pockets you will find a teleport scroll. Use it as needed."
+	to_chat(wizard_mob, "You will find a list of available spells in your spell book. Choose your magic arsenal carefully.")
+	to_chat(wizard_mob, "The spellbook is bound to you, and others cannot use it.")
+	to_chat(wizard_mob, "In your pockets you will find a teleport scroll. Use it as needed.")
 	wizard_mob.mind.store_memory("<B>Remember:</B> do not forget to prepare your spells.")
 	wizard_mob.update_icons()
 	return 1
@@ -186,7 +185,7 @@
 /datum/game_mode/wizard/declare_completion()
 	if(finished)
 		feedback_set_details("round_end_result","loss - wizard killed")
-		world << "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>"
+		to_chat(world, "<span class='userdanger'>The wizard[(wizards.len>1)?"s":""] has been killed by the crew! The Space Wizards Federation has been taught a lesson they will not soon forget!</span>")
 	..()
 	return 1
 
@@ -221,14 +220,16 @@
 					wizardwin = 0
 				count++
 
-			if(wizard.current && wizard.current.stat!=2 && wizardwin)
+			if(wizardwin)
 				text += "<br><font color='green'><B>The wizard was successful!</B></font>"
 				feedback_add_details("wizard_success","SUCCESS")
 			else
 				text += "<br><font color='red'><B>The wizard has failed!</B></font>"
 				feedback_add_details("wizard_success","FAIL")
-			if(wizard.spell_list.len>0)
-				text += "<br><B>[wizard.name] used the following spells: </B>"
+			text += "<br><B>[wizard.name] used the following spells: </B>"
+			if(wizardwin && wizard.spell_list && (wizard.spell_list.len == 0))
+				text += "<BIG><IMG CLASS=icon SRC=\ref['icons/BadAss.dmi'] ICONSTATE='badass'></BIG>"
+			else
 				var/i = 1
 				for(var/obj/effect/proc_holder/spell/S in wizard.spell_list)
 					text += "[S.name]"
@@ -237,7 +238,7 @@
 					i++
 			text += "<br>"
 
-		world << text
+		to_chat(world, text)
 	return 1
 
 //OTHER PROCS
@@ -256,13 +257,13 @@ Made a proc so this is not repeated 14 (or more) times.*/
 /mob/proc/casting()
 //Removed the stat check because not all spells require clothing now.
 	if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe))
-		usr << "I don't feel strong enough without my robe."
+		to_chat(usr, "I don't feel strong enough without my robe.")
 		return 0
 	if(!istype(usr:shoes, /obj/item/clothing/shoes/sandal))
-		usr << "I don't feel strong enough without my sandals."
+		to_chat(usr, "I don't feel strong enough without my sandals.")
 		return 0
 	if(!istype(usr:head, /obj/item/clothing/head/wizard))
-		usr << "I don't feel strong enough without my hat."
+		to_chat(usr, "I don't feel strong enough without my hat.")
 		return 0
 	else
 		return 1
