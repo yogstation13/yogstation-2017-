@@ -454,13 +454,13 @@
 	var/list/categorizedJobs = list(
 		"Command" = list(jobs = list(), titles = command_positions, color = "#aac1ee"),
 		"Engineering" = list(jobs = list(), titles = engineering_positions, color = "#ffd699"),
-		"Security" = list(jobs = list(), titles = security_positions, color = "#ff9999"),
-		"Miscellaneous" = list(jobs = list(), titles = list(), color = "#ffffff", colBreak = 1),
+		"Security" = list(jobs = list(), titles = security_positions, color = "#ff9999", colBreak = 1),
+		"Supply" = list(jobs = list(), titles = supply_positions, color = "#ead4ae"),
+		"Miscellaneous" = list(jobs = list(), titles = list(), color = "#ffffff"),
 		"Synthetic" = list(jobs = list(), titles = nonhuman_positions, color = "#ccffcc"),
-		"Service" = list(jobs = list(), titles = civilian_positions, color = "#cccccc"),
+		"Service" = list(jobs = list(), titles = civilian_positions, color = "#cccccc", colBreak = 1),
 		"Medical" = list(jobs = list(), titles = medical_positions, color = "#99ffe6", colBreak = 1),
 		"Science" = list(jobs = list(), titles = science_positions, color = "#e6b3e6"),
-		"Supply" = list(jobs = list(), titles = supply_positions, color = "#ead4ae"),
 		)
 	dat += "<div class='jobs'><div class='jobsColumn'>"
 	for(var/datum/job/job in SSjob.occupations)
