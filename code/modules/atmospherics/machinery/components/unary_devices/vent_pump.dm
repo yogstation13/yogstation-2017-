@@ -8,6 +8,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump
 	name = "air vent"
 	desc = "Has a valve and pump attached to it"
+	icon = 'icons/obj/atmospherics/components/vent.dmi'
 	icon_state = "vent_map"
 	use_power = 1
 	can_unwrench = 1
@@ -70,16 +71,32 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	overlays.Cut()
 	if(showpipe)
-		overlays += getpipeimage('icons/obj/atmospherics/components/unary_devices.dmi', "vent_cap", initialize_directions)
+		overlays += getpipeimage('icons/obj/atmospherics/components/vent.dmi', "vent_cap", initialize_directions)
 
 	if(welded)
 		icon_state = "vent_welded"
 		return
 
 	if(!NODE1 || !on || stat & (NOPOWER|BROKEN))
-		icon_state = "vent_off"
+		if(icon_state == "vent_welded")
+			icon_state = "vent_off"
+			return
+			
+		if(pump_direction & RELEASING)
+			icon_state = "vent_out-off"
+		else //pump_direction == SIPHONING
+			icon_state = "vent_in-off"
 		return
 
+	if(icon_state == ("vent_out-off" || "vent_in-off" || "vent_off"))
+		if(pump_direction & RELEASING)
+			icon_state = "vent_out"
+			flick("vent_out-starting", src)
+		else //pump_direction == SIPHONING
+			icon_state = "vent_in"
+			flick("vent_in-starting", src)
+		return
+		
 	if(pump_direction & RELEASING)
 		icon_state = "vent_out"
 	else //pump_direction == SIPHONING
