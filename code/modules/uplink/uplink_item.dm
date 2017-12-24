@@ -1072,6 +1072,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 	//restricted_roles = list("Assistant")
 
+/datum/uplink_item/role_restricted/bikehornsword
+	name = "Energy Sword Bikehorn"
+	desc = "A bikehorn with a built-in energy sword. Activate through Alt-Click."
+	item = /obj/item/weapon/melee/energy/sword/bikehorn
+	restricted_roles = list("Clown")
+	cost = 9
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"

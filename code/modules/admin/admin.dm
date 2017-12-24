@@ -2,14 +2,21 @@
 var/global/BSACooldown = 0
 
 ////////////////////////////////
-/proc/message_admins(msg)
-	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
-	to_chat(admins, msg)
+/proc/message_admins(msg, requires_basic = 0)
+	var/list/validmins = list()
+	if(requires_basic)
+		for(var/client/C in admins)
+			if(check_rights_for(C, R_BASIC))
+				validmins += C
+		msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
+		to_chat(validmins, msg)
+	else
+		msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message\">[msg]</span></span>"
+		to_chat(admins, msg)
 
 /proc/relay_msg_admins(msg)
 	msg = "<span class=\"admin\"><span class=\"prefix\">RELAY:</span> <span class=\"message\">[msg]</span></span>"
 	to_chat(admins, msg)
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////Panels
 
@@ -18,7 +25,7 @@ var/global/BSACooldown = 0
 	set name = "Show Player Panel"
 	set desc="Edit player (respawn, ban, heal, etc)"
 
-	if(!check_rights())
+	if(!check_rights(R_BASIC))
 		return
 
 	if(!isobserver(usr))
@@ -729,7 +736,7 @@ var/global/BSACooldown = 0
 		else
 			S.laws.show_laws(usr)
 	if(!ai_number)
-		to_chat(usr, "<b>No AIs located</b>" )
+		to_chat(usr, "<b>No AIs located</b>" ) //Just so you know the thing is actually working and not just ignoring you.
 
 /datum/admins/proc/output_devil_info()
 	var/devil_number = 0
@@ -737,7 +744,7 @@ var/global/BSACooldown = 0
 		devil_number++
 		to_chat(usr, "Devil #[devil_number]:<br><br>" + ticker.mode.printdevilinfo(D))
 	if(!devil_number)
-		to_chat(usr, "<b>No Devils located</b>" )
+		to_chat(usr, "<b>No Devils located</b>" ) //Just so you know the thing is actually working and not just ignoring you.
 
 /datum/admins/proc/manage_free_slots()
 	if(!check_rights())
