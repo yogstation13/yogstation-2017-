@@ -328,7 +328,7 @@ update_label("John Doe", "Clowny")
 	"Cargo Technician" = list("cargo","brown"),
 	"Shaft Miner" = list("cargo","black"),
 	"Mining Medic" = list("cargo","blue"),
-	"Bartender" = list("civillian,","black"),
+	"Bartender" = list("civillian","black"),
 	"Botanist" = list("civillian","blue"),
 	"Cook" = list("civillian","white"),
 	"Janitor" = list("civillian","purple"),
