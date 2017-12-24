@@ -284,7 +284,7 @@
 			playsound(get_turf(holder.my_atom), 'sound/effects/phasein.ogg', 100, 1)
 			for(var/mob/living/M in range (get_turf(holder.my_atom), 7))
 				M.bodytemperature -= 240
-				M << "<span class='notice'>You feel a chill!</span>"
+				to_chat(M, "<span class='notice'>You feel a chill!</span>")
 
 
 /datum/chemical_reaction/slimefireproof
@@ -375,7 +375,7 @@
 /datum/chemical_reaction/slimeglow/on_reaction(datum/reagents/holder)
 	feedback_add_details("slime_cores_used","[type]")
 	var/turf/T = get_turf(holder.my_atom)
-	T.visible_message("<span class='danger'>The slime begins to emit a soft light. Squeezing it will cause it to grow brightly.</span>")
+	T.visible_message("<span class='danger'>The slime begins to emit a soft light. Squeezing it will cause it to glow brightly.</span>")
 	var/obj/item/device/flashlight/slime/F = new /obj/item/device/flashlight/slime
 	F.loc = get_turf(holder.my_atom)
 

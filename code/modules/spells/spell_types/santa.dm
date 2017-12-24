@@ -28,4 +28,4 @@
 /obj/effect/proc_holder/spell/targeted/coal/cast(list/targets, mob/user)
 	var/obj/item/trash/coal/C = new(get_turf(user))
 	user.put_in_active_hand(C)
-	user << "<span class='warning'>Put someone's name into this coal, and they will be assigned to the naughty list. There is no turning back.</span>"
+	to_chat(user, "<span class='warning'>Put someone's name into this coal, and they will be assigned to the naughty list. There is no turning back.</span>")

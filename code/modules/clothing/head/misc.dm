@@ -275,7 +275,7 @@
 
 /obj/item/clothing/head/bombCollar/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/screwdriver) && !locked && linked)
-		user << "<span class='notice'>You unlink [src] from [linked].</span>"
+		to_chat(user, "<span class='notice'>You unlink [src] from [linked].</span>")
 		linked.linkedCollars.Remove(src)
 		linked = null
 		return
@@ -314,7 +314,7 @@
 /obj/item/clothing/head/bombCollar/pickup(mob/living/carbon/user)
 	if(src.locked == 1 && flags & NODROP)
 		flags &= ~NODROP
-		user << "<span class='notice'>[src] blares a sharp red light as if it's just come to realize something.</span>"
+		to_chat(user, "<span class='notice'>[src] blares a sharp red light as if it's just come to realize something.</span>")
 		if(linked && linked.z == src.z)
 			var/area/A = get_area(linked)
 			linked.audible_message("[src] begins to beep rapidly.")
@@ -334,9 +334,9 @@
 	if(istype(W, /obj/item/clothing/head/bombCollar))
 		var/obj/item/clothing/head/bombCollar/C = W
 		if(C.linked)
-			user << "<span class='warning'>[C] is already linked to a detonator!</span>"
+			to_chat(user, "<span class='warning'>[C] is already linked to a detonator!</span>")
 			return
-		user << "<span class='notice'>You link [C] to [src] and add it to the control interface.</span>"
+		to_chat(user, "<span class='notice'>You link [C] to [src] and add it to the control interface.</span>")
 		var/newName = stripped_input(user, "Enter an ID for the collar.", "Collar ID")
 		if(!newName)
 			C.name = "[initial(C.name)] #[rand(1,99999)]"
@@ -348,11 +348,11 @@
 	..()
 /obj/item/device/collarDetonator/attack_self(mob/user as mob)
 	if(!ishuman(user))
-		user << "<span class='warning'>You aren't sure how to use this...</span>"
+		to_chat(user, "<span class='warning'>You aren't sure how to use this...</span>")
 		return
 	for(var/obj/item/weapon/implant/bombcollar/I in user.contents)
 		I.linkedCollars = src.linkedCollars
-		user << "Implant updated with the latest collars"
+		to_chat(user, "Implant updated with the latest collars")
 	switch(alert("Select an option.","Bomb Collar Control","Locks","Detonation","Status"))
 		if("Locks")
 			var/choice = input(user, "Select collar to change.", "Locking Control") as anything in linkedCollars
@@ -362,25 +362,25 @@
 			if(!collarToLock)
 				return
 			if(!iscarbon(collarToLock.loc))
-				user << "<span class='warning'>That collar isn't being held or worn by anyone.</span>"
+				to_chat(user, "<span class='warning'>That collar isn't being held or worn by anyone.</span>")
 				return
 			var/mob/living/carbon/C = collarToLock.loc
 			if(C.head != collarToLock)
-				user << "<span class='warning'>That collar isn't around someone's neck.</span>"
+				to_chat(user, "<span class='warning'>That collar isn't around someone's neck.</span>")
 				return
 			collarToLock.audible_message("<span class='warning'>[collarToLock] softly clicks.</span>")
 			switch(collarToLock.locked)
 				if(0)
 					collarToLock.locked = 1
 					collarToLock.flags |= NODROP
-					C << "<span class='boldannounce'>[collarToLock] tightens and locks around your neck.</span>"
+					to_chat(C, "<span class='boldannounce'>[collarToLock] tightens and locks around your neck.</span>")
 					message_admins("[user] locked bomb collar worn by [C]")
 				if(1)
 					collarToLock.locked = 0
 					collarToLock.flags &= ~NODROP
-					C << "<span class='boldannounce'>[collarToLock] loosens around your neck.</span>"
+					to_chat(C, "<span class='boldannounce'>[collarToLock] loosens around your neck.</span>")
 					message_admins("[user] unlocked bomb collar worn by [C]")
-			user << "<span class='notice'>You [collarToLock.locked ? "" : "dis"]engage [collarToLock]'s locks.</span>"
+			to_chat(user, "<span class='notice'>You [collarToLock.locked ? "" : "dis"]engage [collarToLock]'s locks.</span>")
 			return
 		if("Detonation")
 			var/choice = input(user, "Select collar to detonate.", "Detonation Control") as anything in linkedCollars
@@ -390,18 +390,18 @@
 			if(!collarToDetonate)
 				return
 			if(!iscarbon(collarToDetonate.loc))
-				user << "<span class='warning'>That collar isn't being held or worn by anyone.</span>"
+				to_chat(user, "<span class='warning'>That collar isn't being held or worn by anyone.</span>")
 				return
 			var/mob/living/carbon/C = collarToDetonate.loc
 			if(C.head != collarToDetonate)
-				user << "<span class='warning'>That collar isn't around someone's neck.</span>"
+				to_chat(user, "<span class='warning'>That collar isn't around someone's neck.</span>")
 				return
 			switch(alert("Are you sure about this?","Bomb Collar Detonation","Proceed","Exit"))
 				if("Proceed")
 					if(!collarToDetonate.locked)
-						user << "<span class='warning'>That collar isn't locked.</span>"
+						to_chat(user, "<span class='warning'>That collar isn't locked.</span>")
 						return
-					user << "<span class='notice'>Detonation signal sent.</span>"
+					to_chat(user, "<span class='notice'>Detonation signal sent.</span>")
 					linkedCollars.Remove(collarToDetonate)
 					collarToDetonate.detonate()
 					message_admins("[user] detonated bomb collar worn by [C]")
@@ -409,10 +409,10 @@
 					return
 			return
 		if("Status")
-			user << "<span class='notice'><b>Bomb Collar Status Report:</b></span>"
+			to_chat(user, "<span class='notice'><b>Bomb Collar Status Report:</b></span>")
 			for(var/obj/item/clothing/head/bombCollar/C in linkedCollars)
 				var/turf/T = get_turf(C)
-				user << "<b>[C]:</b> [iscarbon(C.loc) ? "Worn by [C.loc], " : ""][get_area(C)], [T.loc.x], [T.loc.y], [C.locked ? "<span class='boldannounce'>Locked</span>" : "<font color='green'><b>Unlocked</b></font>"]"
+				to_chat(user, "<b>[C]:</b> [iscarbon(C.loc) ? "Worn by [C.loc], " : ""][get_area(C)], [T.loc.x], [T.loc.y], [C.locked ? "<span class='boldannounce'>Locked</span>" : "<font color='green'><b>Unlocked</b></font>"]")
 			return
 
 /obj/item/clothing/head/crown

@@ -8,7 +8,7 @@
 	var/global/originals_recieved = list()
 	var/global/copies_recieved = list()
 	var/copy_path = null
-	export_types = list(/obj/item/documents/syndicate)
+	export_types = list(/obj/item/documents/secret/syndicate)
 
 /datum/export/intel/applies_to(obj/O, contr = 0, emag = 0)
 	if(!..())
@@ -18,8 +18,8 @@
 		return FALSE
 
 	// No docs double-selling!
-	if(istype(O, /obj/item/documents/photocopy))
-		var/obj/item/documents/photocopy/C = O
+	if(istype(O, /obj/item/documents/secret/photocopy))
+		var/obj/item/documents/secret/photocopy/C = O
 		if(!C.copy_type)
 			return FALSE
 		if((C.copy_type in originals_recieved) || (C.copy_type in copies_recieved))
@@ -39,8 +39,8 @@
 
 /datum/export/intel/sell_object(obj/O)
 	..()
-	if(istype(O, /obj/item/documents/photocopy))
-		var/obj/item/documents/photocopy/C = O
+	if(istype(O, /obj/item/documents/secret/photocopy))
+		var/obj/item/documents/secret/photocopy/C = O
 		copies_recieved += C.copy_type
 	else
 		originals_recieved += O.type
@@ -48,27 +48,27 @@
 /datum/export/intel/photocopy
 	cost = 15000 // Allows double agents to earn some cargo points without failing their objectives.
 	unit_name = "photocopied article"
-	export_types = list(/obj/item/documents/photocopy)
-	copy_path = /obj/item/documents/syndicate
+	export_types = list(/obj/item/documents/secret/photocopy)
+	copy_path = /obj/item/documents/secret/syndicate
 
 
 
 // Selling NT docs to Syndicate
 /datum/export/intel/syndie
 	message = "of Nanotrasen intelligence"
-	export_types = list(/obj/item/documents/nanotrasen)
+	export_types = list(/obj/item/documents/secret/nanotrasen)
 	emagged = TRUE
 
 /datum/export/intel/syndie/photocopy
 	cost = 15000
 	unit_name = "photocopied article"
-	export_types = list(/obj/item/documents/photocopy)
-	copy_path = /obj/item/documents/nanotrasen
+	export_types = list(/obj/item/documents/secret/photocopy)
+	copy_path = /obj/item/documents/secret/nanotrasen
 
 // Selling Syndicate docs to Syndicate, why not?
 /datum/export/intel/syndie/recovered
 	cost = 15000
 	unit_name = "recovered article"
 	message = "of Syndicate intelligence"
-	export_types = list(/obj/item/documents/syndicate)
+	export_types = list(/obj/item/documents/secret/syndicate)
 	// Syndicate only wants originals of their docs recovered.

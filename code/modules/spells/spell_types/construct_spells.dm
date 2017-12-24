@@ -4,6 +4,7 @@
 	charge_max = 1800
 	action_icon_state = "artificer"
 	action_background_icon_state = "bg_demon"
+	summon_ignore_density = TRUE
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser/cult
 	cult_req = 1
@@ -65,6 +66,7 @@
 	range = 0
 	action_icon_state = "summonsoulstone"
 	action_background_icon_state = "bg_demon"
+	summon_ignore_density = TRUE
 
 	summon_type = list(/obj/item/device/soulstone)
 

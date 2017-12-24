@@ -325,12 +325,12 @@
 				var/mob/living/M = AM
 				M.Weaken(5)
 				M.adjustBruteLoss(5)
-				M << "<span class='userdanger'>You're slammed into the floor by [user]!</span>"
+				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
 		else
 			if(istype(AM, /mob/living))
 				var/mob/living/M = AM
 				M.Weaken(2)
-				M << "<span class='userdanger'>You're thrown back by [user]!</span>"
+				to_chat(M, "<span class='userdanger'>You're thrown back by [user]!</span>")
 			AM.throw_at_fast(throwtarget, ((Clamp((maxthrow - (Clamp(distfromcaster - 2, 0, distfromcaster))), 3, maxthrow))), 1,user)//So stuff gets tossed around at the same time.
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/proc/remove_sparkles(atom/movable/AM, obj/effect/overlay/targeteffect)
@@ -355,4 +355,24 @@
 		var/mob/living/carbon/C = user
 		playsound(C.loc, 'sound/voice/hiss5.ogg', 80, 1, 1)
 		C.spin(6,1)
+	..()
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/hulk
+	name = "Ground Smash"
+	desc = "Smash the ground to throw your enemies back!"
+	sound = 'sound/magic/Repulse.ogg'
+	charge_max = 150
+	clothes_req = 0
+	range = 1
+	cooldown_min = 150
+	invocation = "HULK SMASH!!"
+	action_icon_state = "green_hand"
+	action_background_icon_state = "bg_default"
+	animation = 0
+
+/obj/effect/proc_holder/spell/aoe_turf/repulse/hulk/cast(list/targets,mob/user = usr)
+	var/turf/open/floor/T = get_turf(usr)
+	if(istype(T))
+		T.break_tile()
+	playsound(usr.loc, 'sound/effects/meteorimpact.ogg', 30, 1, 2)
 	..()

@@ -9,7 +9,7 @@
 	..()
 	var/mob/living/carbon/human/H = targets[1]
 	if(!ishuman(H))
-		user << "<span class='warning'>You may only glare at humans!</span>"
+		to_chat(user, "<span class='warning'>You may only glare at humans!</span>")
 		revert_cast()
 		return
 	user.visible_message("<span class='warning'><b>[user]'s eyes lock with [H]'s, and a devilish grin spreads \
@@ -18,10 +18,10 @@
 	H.silent += 10
 	if((H in naughty_list))
 		H.Stun(15)
-		H << "<span class='warning'>You hear [user.real_name]'s cackling in the back of your head. Everything grows silent \
-					Santa has betrayed you. Krampus is here because you are on the naughty list.</span>"
+		to_chat(H, "<span class='warning'>You hear [user.real_name]'s cackling in the back of your head. Everything grows silent \
+					Santa has betrayed you. Krampus is here because you are on the naughty list.</span>")
 	else
-		user << "<span class='notice'>[H] is on the nice list!</span>"
+		to_chat(user, "<span class='notice'>[H] is on the nice list!</span>")
 		H.Stun(1) // krampus get away!
 
 /obj/effect/proc_holder/spell/self/krampustele
@@ -33,10 +33,10 @@
 	clothes_req = 0
 
 /obj/effect/proc_holder/spell/self/krampustele/cast(list/targets, mob/user = usr)
-	user << "<span class='warning'>You begin to channel negative energy. The crew will be alerted of your location shortly..</span>"
+	to_chat(user, "<span class='warning'>You begin to channel negative energy. The crew will be alerted of your location shortly..</span>")
 	var/obj/item/toy/figure/cursed/C = locate() in user
 	if(C)
-		user << "<span class='warning'>You can't travel with one of your cursed toys!</span>"
+		to_chat(user, "<span class='warning'>You can't travel with one of your cursed toys!</span>")
 		return
 
 	if (do_after(user, 80, target = user))
@@ -45,7 +45,7 @@
 			return
 		for(var/mob/mob in player_list)
 			if(mob != user)
-				mob << "<span class='warning'>You hear the demonic screams of hell reign [dir2text(get_dir(get_turf(mob), get_turf(user)))] of your location! The ringing of unholy bells!</span>"
+				to_chat(mob, "<span class='warning'>You hear the demonic screams of hell reign [dir2text(get_dir(get_turf(mob), get_turf(user)))] of your location! The ringing of unholy bells!</span>")
 				mob << 'sound/hallucinations/im_here1.ogg'
 
 		if(do_after(user, 1000, target = user))
@@ -53,7 +53,7 @@
 				if(L.name == "KrampShip")
 					user.forceMove(get_turf(L))
 	else
-		user << "<span class='warning'>You cancel your ability.</span>"
+		to_chat(user, "<span class='warning'>You cancel your ability.</span>")
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/unholybells
 	name = "Conjure Unholy Bells!"

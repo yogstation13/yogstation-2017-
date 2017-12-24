@@ -1,0 +1,72 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/closed/wall/shuttle/smooth,/area/shuttle/escape)
+"c" = (/obj/structure/grille,/obj/structure/window/shuttle,/turf/open/floor/plating,/area/shuttle/escape)
+"d" = (/obj/machinery/computer/emergency_shuttle,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"e" = (/obj/machinery/computer/communications,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"f" = (/obj/machinery/computer/crew,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"g" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"h" = (/obj/machinery/computer/atmos_alert,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"i" = (/obj/machinery/computer/med_data,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"j" = (/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"k" = (/obj/machinery/computer/station_alert,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"l" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/shuttle{name = "Cockpit"; req_access_txt = "19"},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"m" = (/turf/open/floor/plating/airless,/area/shuttle/escape)
+"n" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/shuttle{name = "Emergency Shuttle Brig"; req_one_access_txt = "2;19"},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"o" = (/obj/structure/chair,/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"p" = (/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"q" = (/obj/structure/chair{dir = 1},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"r" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"s" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"t" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"u" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile/emergency{dwidth = 26; height = 6; timid = 1; width = 42},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"v" = (/obj/structure/fans/tiny,/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/shuttle/escape)
+"w" = (/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/shuttle/escape)
+"x" = (/obj/structure/window/reinforced,/obj/structure/closet,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/shuttle/escape)
+"y" = (/obj/structure/window/reinforced,/obj/structure/closet/crate,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/shuttle/escape)
+"z" = (/obj/structure/shuttle/engine/heater,/turf/open/floor/plating/airless,/area/shuttle/escape)
+"A" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating/airless,/area/shuttle/escape)
+
+(1,1,1) = {"
+abccba
+bbdebb
+bfgghb
+bijjkb
+bbllbb
+mammam
+mammam
+bbnnbb
+boppob
+bppppb
+npqqpn
+bbbbnb
+amaama
+amaama
+bbbbrb
+rjjjjr
+bsjjtb
+csjjtc
+bsjjtb
+csjjtc
+bsjjtb
+rjjjjr
+brbbbb
+amaama
+amaama
+brbbbb
+ujjjjr
+bsjjtb
+csjjtc
+bsjjtb
+csjjtc
+bsjjtb
+rjjjjr
+bbbbrb
+amaama
+amaama
+bbbbvb
+vwwwwv
+bwwwwb
+bxxyyb
+bzaazb
+bAaaAb
+"}
