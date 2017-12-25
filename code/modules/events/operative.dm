@@ -1,7 +1,6 @@
 /datum/round_event_control/operative
 	name = "Lone Operative"
 	typepath = /datum/round_event/ghost_role/operative
-	weight = 10
 	max_occurrences = 1
 	gamemode_blacklist = list("nuclear","wizard","revolution","blob")
 
