@@ -5,11 +5,11 @@
 
 /obj/effect/proc_holder/vampire/shriek
 	name = "Agonizing Shriek"
-	desc = "Scream at incredibly high levels causing confusion and chaos. \
+	desc = "This ability causes confusion and chaos. \
 		At close range, will briefly stun someone."
 	human_req = TRUE
-	blood_cost = 25
-	cooldownlen = 150
+	blood_cost = 50
+	cooldownlen = 200
 	action_icon_state = "vamp_scream"
 
 /obj/effect/proc_holder/vampire/shriek/fire(mob/living/carbon/human/H)
@@ -33,16 +33,16 @@
 				human.setEarDamage(human.ear_damage + (20 / max(min(get_dist(L, H), 5), 1)))
 			if(issilicon(L))
 				L.Weaken(4)
-				playsound(L, 'sound/machines/warning-buzzer.ogg', 50, 1)
+				playsound(get_turf(L), 'sound/machines/warning-buzzer.ogg', 50, 1)
 
 	for(var/obj/structure/window/R in view(7, H))
-		R.take_damage(100)
+		R.take_damage(110)
 	for(var/obj/structure/grille/G in view(7, H))
 		if(prob(60))
 			G.Break()
 		else
-			G.visible_message("<span class='warning'>[G] whips back and forth repelling the scream!</span>",\
-					"<span class='warning'>[src] whips back and forth repelling the scream!</span>")
+			G.visible_message("<span class='warning'>[G] whips back and forth!</span>",\
+					"<span class='warning'>[src] whips back and forth!</span>")
 	for(var/obj/machinery/computer/C in view(7, H))
 		C.take_damage(100)
 

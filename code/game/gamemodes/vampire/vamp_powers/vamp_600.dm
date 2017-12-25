@@ -20,7 +20,7 @@
 	H.SetWeakened(0)
 	H.adjustStaminaLoss(-(H.getStaminaLoss()))
 	if(H.reagents.get_reagent_amount("stimulants") < 60 && H.reagents.get_reagent_amount("stimulants") + 30 <= 60)
-		H.reagents.add_reagent("stimulants", 30)
+		H.reagents.add_reagent("stimulants", 20)
 	if(H.reagents.get_reagent_amount("omnizine") < 30 && H.reagents.get_reagent_amount("omnizine") + 10 <= 30)
 		H.reagents.add_reagent("omnizine", 10) // while stimulants do heal, I want to make sure that they're getting something out of this 100%
 

@@ -30,7 +30,7 @@
 		charm.mind.special_role = "Vampire Thrall"
 	else
 		if(!(istype(charm, /mob/living/simple_animal/hostile)))
-			var/mob/living/simple_animal/hostile/mimic/copy/C = new(get_turf(H), charm, H, destroy_original = TRUE, eyes = FALSE)
+			var/mob/living/simple_animal/hostile/mimic/copy/C = new(get_turf(charm), charm, H, destroy_original = TRUE, eyes = FALSE)
 			C.check_obj = FALSE
 
 	charm.faction |= "Vampire"

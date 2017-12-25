@@ -31,7 +31,7 @@
 		while(playerbasecut -= 15 > 0)
 			if(!makemore)
 				break
-			if(playerbasecut) // after we've counted 60 players for every 15 more make another vampire
+			if(playerbasecut) // for every 15 more players after 60 we make another vampire
 				vampireknights++
 			else
 				makemore = FALSE
@@ -126,6 +126,12 @@
 				count++
 
 			text += objectives
+
+			var/drankblood = vamp.vampire.get_limit()
+			if(drankblood)
+				text += "<br><span class='noticevampire'>This Vampire drank up to [drankblood] units of blood, and ended the round with [vamp.vampire.bloodcount] units of blood.</span>"
+			else
+				text += "<br><span class='noticevampire'>This Vampire didn't even break 100 units of blood. What a shame.</span>"
 
 			if(vampirewin)
 				text += "<br><font color='green'><B>The vampire was successful!</B></font>"

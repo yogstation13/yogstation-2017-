@@ -1482,7 +1482,7 @@
 					usr << "<span class='warning'>This only works on humans!</span>"
 					return
 				ticker.mode.transform_vampire(src)
-				ticker.mode.vampires -= src
+				ticker.mode.vampires += src
 				message_admins("[key_name_admin(usr)] has vampired [current].")
 				log_admin("[key_name(usr)] has vampired [current].")
 

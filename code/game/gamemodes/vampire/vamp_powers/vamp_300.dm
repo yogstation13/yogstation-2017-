@@ -66,7 +66,7 @@
 /obj/effect/proc_holder/vampire/coffin
 	name = "Designate Coffin"
 	desc = "Choose a coffin."
-	blood_cost = 250
+	blood_cost = 100
 	action_icon_state = "coffin"
 
 /obj/effect/proc_holder/vampire/coffin/fire(mob/living/carbon/human/H)

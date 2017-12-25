@@ -211,12 +211,14 @@
 		locatedblood_DNA = L.get_blood_dna_list()
 		if(locatedblood_DNA)
 			if(locatedblood_DNA.len)
-				for(var/a in locatedblood_DNA, stopsearching != TRUE)
+				for(var/a in locatedblood_DNA)
 					for(var/b in object_bloodDNA)
 						if(a == b)
 							stopsearching = TRUE
 							humanscaught += L
 							break
+					if(stopsearching)
+						break
 		else
 			continue
 		stopsearching = FALSE
@@ -227,7 +229,7 @@
 		for(var/mob/living/carbon/human/caughthuman in humanscaught)
 			H << "<span class='noticevampire'>[caughthuman] is in the [get_area(caughthuman)] [dir2text(get_dir(get_turf(caughthuman), get_turf(H)))] from your location.</span>"
 	else
-		H << "<span class='alertvampire'>You couldn't find who the blood belonged to.</span>"
+		H << "<span class='alertvampire'>You couldn't find anything.</span>"
 	feedback_add_details("vampire_powers","blood track")
 
 ////////////////////////////////////
