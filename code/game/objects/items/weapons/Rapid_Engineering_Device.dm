@@ -72,7 +72,7 @@
 		if(RED_AIRLOCK_PAINTER_MODE)
 			painter.get_examine_info(user)
 		if(RED_RCD_MODE)
-			user << "<span class='notice'>It has [rcd.matter]/[rcd.max_matter] matter-units stored.</span>"
+			to_chat(user, "<span class='notice'>It has [rcd.matter]/[rcd.max_matter] matter-units stored.</span>")
 
 /obj/item/weapon/rapid_engineering_device/attack_self(mob/user)
 	..()
@@ -105,7 +105,7 @@
 	set src in usr
 
 	mode = mode % mode_names.len + 1
-	usr << "<span class='notice'>You switch \the [src] to [mode_names[mode]] configuration.</span>"
+	to_chat(usr, "<span class='notice'>You switch \the [src] to [mode_names[mode]] configuration.</span>")
 	update_desc()
 
 	//toggle the sprite and play animation, if necessary.

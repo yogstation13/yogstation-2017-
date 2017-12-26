@@ -14,25 +14,25 @@
 		siemens_coefficient *= 1.5
 
 	if (H.nutrition > NUTRITION_LEVEL_WELL_FED)
-		H << "<span class='notice'>CONSUME protocol reports no need for additional power at this time.</span>"
+		to_chat(H, "<span class='notice'>CONSUME protocol reports no need for additional power at this time.</span>")
 		return 1
 
 	if(H.gloves)
 		if(H.gloves.siemens_coefficient == 0)
-			H << "<span class='info'>NOTICE: [H.gloves] prevent electrical contact - CONSUME protocol aborted.</span>"
+			to_chat(H, "<span class='info'>NOTICE: [H.gloves] prevent electrical contact - CONSUME protocol aborted.</span>")
 			return 1
 		else
 			if(H.gloves.siemens_coefficient < 1)
-				H << "<span class='info'>NOTICE: [H.gloves] are interfering with electrical contact - advise removal before activating CONSUME protocol.</span>"
+				to_chat(H, "<span class='info'>NOTICE: [H.gloves] are interfering with electrical contact - advise removal before activating CONSUME protocol.</span>")
 			siemens_coefficient *= H.gloves.siemens_coefficient
 
 	H.face_atom(A)
 	H.visible_message("<span class='warning'>[H] starts placing their hands on [A]...</span>", "<span class='warning'>You start placing your hands on [A]...</span>")
 	if(!do_after(H, 20, target = A))
-		H << "<span class='info'>CONSUME protocol aborted.</span>"
+		to_chat(H, "<span class='info'>CONSUME protocol aborted.</span>")
 		return 1
 
-	H << "<span class='info'>Extracutaneous implants detect viable power source. Initiating CONSUME protocol.</span>"
+	to_chat(H, "<span class='info'>Extracutaneous implants detect viable power source. Initiating CONSUME protocol.</span>")
 
 	var/done = 0
 	var/drain = 150 * siemens_coefficient
@@ -53,7 +53,7 @@
 			var/can_drain = A.can_consume_power_from()
 			if(!can_drain || istext(can_drain))
 				if(istext(can_drain))
-					H << can_drain
+					to_chat(H, can_drain)
 				done = 1
 			else
 				playsound(A.loc, "sparks", 50, 1)
@@ -61,16 +61,16 @@
 					spark_system.start()
 				var/drained = A.consume_power_from(drain)
 				if(drained < drain)
-					H << "<span class='info'>[A]'s power has been depleted, CONSUME protocol halted.</span>"
+					to_chat(H, "<span class='info'>[A]'s power has been depleted, CONSUME protocol halted.</span>")
 					done = 1
 				H.nutrition += drained * ELECTRICITY_TO_NUTRIMENT_FACTOR
 
 				if(!done)
 					if(H.nutrition > (NUTRITION_LEVEL_WELL_FED-1))
-						H << "<span class='info'>CONSUME protocol complete. Physical nourishment refreshed.</span>"
+						to_chat(H, "<span class='info'>CONSUME protocol complete. Physical nourishment refreshed.</span>")
 						done = 1
 					else if(cycle % 4 == 0)
-						H << "<span class='info'>CONSUME protocol continues. Current satiety level: [(H.nutrition / NUTRITION_LEVEL_WELL_FED)*100]%.</span>"
+						to_chat(H, "<span class='info'>CONSUME protocol continues. Current satiety level: [(H.nutrition / NUTRITION_LEVEL_WELL_FED)*100]%.</span>")
 		else
 			done = 1
 	qdel(spark_system)
@@ -157,7 +157,7 @@
 	return 1
 
 /mob/living/silicon/robot/consume_power_from(amount)
-	src << "<span class='danger'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>"
+	to_chat(src, "<span class='danger'>Warning: Unauthorized access through sub-route 12, block C, detected.</span>")
 	if((cell.charge - amount) < MIN_DRAINABLE_POWER)
 		amount = max(cell.charge - MIN_DRAINABLE_POWER, 0)
 	cell.use(amount)

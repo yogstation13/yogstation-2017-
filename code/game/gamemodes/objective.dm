@@ -518,7 +518,7 @@ var/global/list/possible_items = list()
 		var/tmp_obj = new custom_target
 		var/custom_name = tmp_obj:name
 		qdel(tmp_obj)
-		custom_name = stripped_input("Enter target name:", "Objective target", custom_name)
+		custom_name = stripped_input(usr, "Enter target name:", "Objective target", custom_name)
 		if (!custom_name) return
 		steal_target = custom_target
 		explanation_text = "Steal [custom_name]."

@@ -63,19 +63,19 @@
 	if(!active)
 		return FALSE
 	if(!power_check())
-		user << "<span class='notice'>There is not enough power to use [name], recharge the cell!</span>"
+		to_chat(user, "<span class='notice'>There is not enough power to use [name], recharge the cell!</span>")
 		return FALSE
 	if(!charge_check())
-		user << "<span class='notice'>The [name] is out of charges!</span>"
+		to_chat(user, "<span class='notice'>The [name] is out of charges!</span>")
 		return FALSE
 	if(!distance_check(target))
-		user << "<span class='notice'>The [target] is outside the range of [name].</span>"
+		to_chat(user, "<span class='notice'>The [target] is outside the range of [name].</span>")
 		return FALSE
 	if(applicable_atoms && applicable_atoms.len > 0)
 		if(!is_type_in_typecache(target, applicable_atoms))
 			return FALSE
 	if(world.time < next_allowed_time)
-		user << "<span class='notice'>You must wait [round(((next_allowed_time-world.time)/10), 0.1)] more seconds before you can use [name] again.</span>"
+		to_chat(user, "<span class='notice'>You must wait [round(((next_allowed_time-world.time)/10), 0.1)] more seconds before you can use [name] again.</span>")
 		return FALSE
 	return TRUE
 

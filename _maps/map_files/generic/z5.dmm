@@ -522,7 +522,7 @@
 "kb" = (/obj/machinery/light/small{dir = 1},/turf/open/floor/plasteel{icon_state = "floorgrime"},/area/mine/eva)
 "kc" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'EXTERNAL AIRLOCK'"; icon_state = "space"; layer = 4; name = "EXTERNAL AIRLOCK"; pixel_x = 0; pixel_y = 32},/turf/open/floor/plasteel{dir = 4; icon_state = "warning"},/area/mine/eva)
 "kd" = (/turf/open/floor/plasteel/airless{icon_state = "asteroidwarning"; dir = 5},/area/mine/eva)
-"ke" = (/obj/structure/toilet{dir = 4},/turf/open/floor/plasteel{icon_state = "showroomfloor"},/area/mine/living_quarters)
+"ke" = (/obj/machinery/disposal/bin/toilet{dir = 4},/turf/open/floor/plasteel{icon_state = "showroomfloor"},/area/mine/living_quarters)
 "kf" = (/obj/structure/sink{pixel_y = 30},/obj/machinery/light/small,/obj/structure/mirror{pixel_y = -32},/turf/open/floor/plasteel{icon_state = "showroomfloor"},/area/mine/living_quarters)
 "kg" = (/obj/machinery/door/airlock{name = "Toilet"},/turf/open/floor/plasteel{icon_state = "showroomfloor"},/area/mine/living_quarters)
 "kh" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"},/turf/open/floor/plasteel,/area/mine/living_quarters)

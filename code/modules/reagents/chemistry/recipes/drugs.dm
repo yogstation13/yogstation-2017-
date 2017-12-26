@@ -53,3 +53,25 @@
 	result = "bolamine"
 	required_reagents = list("space_drugs" = 2, "frostoil" = 1)
 	result_amount = 2
+
+
+ /datum/chemical_reaction/yespowder
+ 	name = "Yes Powder"
+ 	id = "yespowder"
+ 	result = "yespowder"
+ 	required_reagents = list("itching_powder" = 1, "morphine" = 1)
+ 	required_temp = 374
+
+ /datum/chemical_reaction/tastepowder
+ 	name = "Taste Powder"
+ 	id = "tastepowder"
+ 	result = "tastepowder"
+ 	required_reagents = list("itching_powder" = 1, "sugar" = 1)
+ 	required_temp = 374
+
+/datum/chemical_reaction/honkpowder
+ 	name = "Honk Powder"
+ 	id = "honkpowder"
+ 	result = "honkpowder"
+ 	required_reagents = list("itching_powder" = 1, "bananium" = 1)
+ 	required_temp = 374

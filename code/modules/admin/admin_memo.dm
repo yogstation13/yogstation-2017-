@@ -9,9 +9,9 @@
 	if(!check_rights(0))
 		return
 	if(!dbcon.IsConnected())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	var/memotask = input(usr,"Choose task.","Memo") in list("Show","Write","Edit","Remove")
+	var/memotask = input(usr,"Choose task.","Memo") as anything in list("Show","Write","Edit","Remove")
 	if(!memotask)
 		return
 	admin_memo_output(memotask)
@@ -20,14 +20,14 @@
 	if(!task)
 		return
 	if(!dbcon.IsConnected())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/sql_ckey = sanitizeSQL(src.ckey)
 	switch(task)
 		if("Write")
 			var/savefile/F = new(MEMOFILE)
 			if(F)
-				var/memo = input(src,"Type your memo\n(Leaving it blank will delete your current memo):","Write Memo",null) as null|message
+				var/memo = stripped_multiline_input(src,"Type your memo\n(Leaving it blank will delete your current memo):","Write Memo",null)
 				switch(memo)
 					if(null)
 						return
@@ -54,7 +54,7 @@
 				var/lkey = query_memolist.item[1]
 				memolist += "[lkey]"
 			if(!memolist.len)
-				src << "No memos found in database."
+				to_chat(src, "No memos found in database.")
 				return
 			var/target_ckey = input(src, "Select whose memo to edit", "Select memo") as null|anything in memolist
 			if(!target_ckey)
@@ -67,7 +67,7 @@
 				return
 			if(query_memofind.NextRow())
 				var/old_memo = query_memofind.item[1]
-				var/new_memo = input("Input new memo", "New Memo", "[old_memo]", null) as message
+				var/new_memo = stripped_multiline_input("Input new memo", "New Memo", "[old_memo]", null)
 				if(!new_memo)
 					return
 				new_memo = sanitizeSQL(new_memo)
@@ -89,7 +89,7 @@
 				var/savefile/F = new(MEMOFILE)
 				if(F)
 					for(var/ckey in F.dir)
-						src << "<center><span class='motd'><span class='prefix'>Admin Memo</span><span class='emote'> by [F[ckey]]</span></span></center>"
+						to_chat(src, "<center><span class='motd'><span class='prefix'>Admin Memo</span><span class='emote'> by [F[ckey]]</span></span></center>")
 		if("Remove")
 			var/savefile/F = new(MEMOFILE)
 			if(F)

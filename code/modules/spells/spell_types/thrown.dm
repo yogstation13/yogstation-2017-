@@ -20,7 +20,7 @@
 	if(!(C.put_in_active_hand(held) || C.put_in_inactive_hand(held)))
 		qdel(held)
 		charge_counter = charge_max
-		usr << "<span class='warning'>You need a free hand to cast this!</span>"
+		to_chat(usr, "<span class='warning'>You need a free hand to cast this!</span>")
 		return
 
 	held.spell = src
@@ -205,7 +205,7 @@ var/obj/effect/vortex_end/vortex_beacon
 
 /obj/effect/vortex/attack_hand(mob/user)
 	if(user == creator)
-		user << "<span class='notice'>You distort the [name].</span>"
+		to_chat(user, "<span class='notice'>You distort the [name].</span>")
 		stopVortex()
 	else if(!(user in vortex_beacon.casters))
 		suck(user)
@@ -291,7 +291,7 @@ var/obj/effect/vortex_end/vortex_beacon
 			var/obj/effect/vortex/vortex = pick(vortexes)
 			A.forceMove(get_turf(vortex))
 		else if(A in casters)
-			A << "<span class='warning'>The vortex is closed, cast the spell again or find another way out!</span>"
+			to_chat(A, "<span class='warning'>The vortex is closed, cast the spell again or find another way out!</span>")
 	else if(isliving(A))
 		var/mob/living/L = A
 		L.Stun(4)
@@ -303,7 +303,7 @@ var/obj/effect/vortex_end/vortex_beacon
 		for(var/obj/effect/vortex/vortex in vortexes)
 			if(vortex.creator == user)
 				vortex.stopVortex()
-				user << "<span class='warning'>You closed a vortex!</span>"
+				to_chat(user, "<span class='warning'>You closed a vortex!</span>")
 				break
 
 /obj/effect/vortex_end/Destroy(force)

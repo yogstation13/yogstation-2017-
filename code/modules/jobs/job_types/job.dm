@@ -233,6 +233,8 @@
 		PDA.owner = H.real_name
 		PDA.ownjob = H.job
 		PDA.update_label()
+	if(H.job != "Mime" && H.job != "Clown")
+		log_game("[H.real_name]/[H.ckey] joined the round as [H.job].")
 
 /datum/outfit/job/proc/announce_head(var/mob/living/carbon/human/H, var/channels) //tells the given channel that the given mob is the new department head. See communications.dm for valid channels.
 	spawn(4) //to allow some initialization

@@ -163,8 +163,9 @@
 			return
 		if(area == offline_program || (area in program_cache) || (emagged && (area in emag_programs)))
 			load_program(area)
+			investigate_log("[usr.real_name]([usr.ckey]) activated the [program.name].","holodeck")
 	else if("safety" in href_list)
-		if(!issilicon(usr))
+		if(!isaiorborg(usr))
 			message_admins("EXPLOIT: [usr] attempted to override [src]'s safeties without being a silicon.")
 			return
 		var/safe = text2num(href_list["safety"])
@@ -185,13 +186,14 @@
 /obj/machinery/computer/holodeck/emag_act(mob/user as mob)
 	if(!emagged)
 		if(!emag_programs.len)
-			user << "[src] does not seem to have a card swipe port.  It must be an inferior model."
+			to_chat(user, "[src] does not seem to have a card swipe port.  It must be an inferior model.")
 			return
 		playsound(loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
-		user << "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>"
-		user << "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator."
+		to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
+		to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
 		log_game("[key_name(user)] emagged the Holodeck Control Console")
+		investigate_log("[key_name(user)] emagged the [src].", "holodeck")
 		updateUsrDialog()
 		nerf(!emagged)
 

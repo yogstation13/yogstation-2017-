@@ -58,6 +58,7 @@ Clown
 
 	H.dna.add_mutation(CLOWNMUT)
 	H.rename_self("clown")
+	log_game("[H.real_name]/[H.ckey] joined the round as [H.job].")
 
 /*
 Mime
@@ -107,6 +108,7 @@ Mime
 		H.mind.miming = 1
 
 	H.rename_self("mime")
+	log_game("[H.real_name]/[H.ckey] joined the round as [H.job].")
 
 /*
 Librarian
