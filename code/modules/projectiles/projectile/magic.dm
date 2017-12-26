@@ -296,6 +296,8 @@
 
 			to_chat(new_mob, "<B>Your form morphs into that of a [randomize].</B>")
 
+			M.transfer_observers_to(new_mob)
+
 			qdel(M)
 			return new_mob
 
