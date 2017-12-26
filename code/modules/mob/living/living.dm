@@ -971,7 +971,7 @@ Sorry Giacom. Please don't be mad :(
 	return
 
 /mob/living/carbon/human/update_stamina()
-	if(staminaloss)
+	if(staminaloss && !hulk_stamina_check())
 		var/total_health = (health - staminaloss)
 		if(total_health <= config.health_threshold_crit && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")

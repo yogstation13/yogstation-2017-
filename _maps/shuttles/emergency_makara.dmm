@@ -1,0 +1,89 @@
+"a" = (/turf/open/space,/area/space)
+"b" = (/turf/closed/wall,/area/shuttle/escape)
+"c" = (/obj/structure/grille,/obj/structure/window/reinforced/fulltile,/turf/open/floor/plating,/area/shuttle/escape)
+"d" = (/turf/closed/wall/r_wall,/area/shuttle/escape)
+"e" = (/obj/structure/table,/obj/machinery/recharger,/turf/open/floor/plasteel,/area/shuttle/escape)
+"f" = (/obj/machinery/computer/communications,/turf/open/floor/plasteel,/area/shuttle/escape)
+"g" = (/obj/machinery/computer/emergency_shuttle,/turf/open/floor/plasteel,/area/shuttle/escape)
+"h" = (/obj/machinery/computer/card,/turf/open/floor/plasteel,/area/shuttle/escape)
+"i" = (/obj/structure/chair{tag = "icon-chair (EAST)"; icon_state = "chair"; dir = 4},/turf/open/floor/plasteel,/area/shuttle/escape)
+"j" = (/turf/open/floor/plasteel,/area/shuttle/escape)
+"k" = (/obj/structure/chair/comfy{tag = "icon-comfychair (NORTH)"; icon_state = "comfychair"; dir = 1},/turf/open/floor/plasteel,/area/shuttle/escape)
+"l" = (/obj/structure/chair{tag = "icon-chair (WEST)"; icon_state = "chair"; dir = 8},/turf/open/floor/plasteel,/area/shuttle/escape)
+"m" = (/obj/structure/chair{tag = "icon-chair (EAST)"; icon_state = "chair"; dir = 4},/obj/structure/chair{tag = "icon-chair (EAST)"; icon_state = "chair"; dir = 4},/turf/open/floor/plasteel,/area/shuttle/escape)
+"n" = (/obj/machinery/door/airlock/glass_command,/turf/open/floor/plasteel,/area/shuttle/escape)
+"o" = (/obj/machinery/door/airlock/glass,/turf/open/floor/plasteel/black,/area/shuttle/escape)
+"p" = (/obj/machinery/door/airlock,/turf/open/floor/plasteel,/area/shuttle/escape)
+"q" = (/obj/structure/bed,/turf/open/floor/carpet,/area/shuttle/escape)
+"r" = (/turf/open/floor/carpet,/area/shuttle/escape)
+"s" = (/obj/structure/closet/crate,/obj/machinery/light/small{tag = "icon-bulb1 (WEST)"; icon_state = "bulb1"; dir = 8},/turf/open/floor/plating,/area/shuttle/escape)
+"t" = (/turf/open/floor/plating,/area/shuttle/escape)
+"u" = (/obj/structure/closet/crate,/obj/machinery/light/small{tag = "icon-bulb1 (EAST)"; icon_state = "bulb1"; dir = 4},/turf/open/floor/plating,/area/shuttle/escape)
+"v" = (/obj/structure/closet/secure_closet/personal,/turf/open/floor/carpet,/area/shuttle/escape)
+"w" = (/obj/structure/table/glass,/turf/open/floor/carpet,/area/shuttle/escape)
+"x" = (/obj/machinery/disposal/bin/toilet,/turf/open/floor/plasteel/freezer,/area/shuttle/escape)
+"y" = (/obj/machinery/door/airlock,/turf/open/floor/plasteel/freezer,/area/shuttle/escape)
+"z" = (/turf/open/floor/plasteel/freezer,/area/shuttle/escape)
+"A" = (/obj/machinery/shower,/turf/open/floor/plasteel/freezer,/area/shuttle/escape)
+"B" = (/obj/machinery/door/airlock/glass,/turf/open/floor/plasteel,/area/shuttle/escape)
+"C" = (/obj/machinery/light/small{tag = "icon-bulb1 (NORTH)"; icon_state = "bulb1"; dir = 1},/obj/structure/closet/crate,/turf/open/floor/plating,/area/shuttle/escape)
+"D" = (/obj/structure/chair,/turf/open/floor/plasteel,/area/shuttle/escape)
+"E" = (/obj/machinery/door/airlock,/turf/open/floor/plating,/area/shuttle/escape)
+"F" = (/obj/machinery/door/airlock/hatch,/turf/open/floor/plasteel,/area/shuttle/escape)
+"G" = (/obj/structure/chair{tag = "icon-chair (NORTH)"; icon_state = "chair"; dir = 1},/turf/open/floor/plasteel,/area/shuttle/escape)
+"H" = (/obj/machinery/door/airlock/survival_pod,/turf/open/floor/plating,/area/shuttle/escape)
+"I" = (/obj/structure/sink{dir = 1; icon_state = "sink"; pixel_y = 10; tag = "icon-sink (NORTH)"},/turf/open/floor/plasteel/freezer,/area/shuttle/escape)
+"J" = (/obj/machinery/door/airlock/glass,/obj/machinery/door/airlock,/turf/open/floor/plasteel,/area/shuttle/escape)
+"K" = (/obj/machinery/door/airlock/survival_pod,/obj/docking_port/mobile/emergency{dwidth = 24; height = 21; timid = 1; width = 40},/turf/open/floor/plating,/area/shuttle/escape)
+"L" = (/obj/machinery/shower{tag = "icon-shower (NORTH)"; icon_state = "shower"; dir = 1},/turf/open/floor/plasteel/freezer,/area/shuttle/escape)
+"M" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{tag = "icon-rwindow (NORTH)"; icon_state = "rwindow"; dir = 1},/turf/open/floor/plating,/area/shuttle/escape)
+"N" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating,/area/shuttle/escape)
+"O" = (/obj/machinery/door/airlock/glass_security,/turf/open/floor/plasteel/black,/area/shuttle/escape)
+"P" = (/obj/structure/chair{tag = "icon-chair (EAST)"; icon_state = "chair"; dir = 4},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"Q" = (/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"R" = (/obj/structure/table,/obj/machinery/recharger,/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"S" = (/obj/structure/chair{tag = "icon-chair (WEST)"; icon_state = "chair"; dir = 8},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"T" = (/obj/structure/chair{tag = "icon-chair (NORTH)"; icon_state = "chair"; dir = 1},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+
+(1,1,1) = {"
+aaaaaaabcccccbaaaaaaa
+aaaaaabdcccccdbaaaaaa
+aaaaaabdefghedbaaaaaa
+aaaaabbdijkjldbbaaaaa
+aaaaabbdmjjjldbbaaaaa
+aaaaabbdijjjldbbaaaaa
+aaaaabdddncndddbaaaaa
+aaaaabdjjjjjjjdbaaaaa
+aaaabbdjjjjjjjdbbaaaa
+aaaabddoddpddoddbaaaa
+aaaabdqrbstubrqdbaaaa
+aaaabdvrbbbbbrvdbaaaa
+aaaabdwrbxbxbrwdbaaaa
+aaaabdwrbybybrwdbaaaa
+aaabbddobzAzboddbbaaa
+aabbbqBjyzzzyjBqbbbaa
+abbbbvcjbbbbbjcvbbbba
+abbCbbbjDDDDDjbbbCbba
+abbttEjjjjjjjjjEttbba
+abbtbbbjjjjjjjbbbtbba
+adbFbvcjGGGGGjcvbFbda
+ddjjbqBjbbbbbjBqbjjdd
+HjjldddpbIIIbpdddijjH
+djjldvcjJzzzJjcvdijjd
+KjjldqBjbLLLbjBqdijjH
+dijldbbjbbbbbjbbdijld
+dijjFjjjcvbvcjjjFjjld
+dijjFjjjBqbqBjjjFjjld
+dijldbbjbbbbbjbbdijld
+djjldvcjcvbvcjcvdijjd
+HjjldqBjBqbqBjBqdijjH
+djjldddpbbbbbpdddijjd
+HjjldbbjjjjjjjbbdijjH
+dMMMdbbbjjjjjbbbdMMMd
+aNNNabdbbOcObbdbaNNNa
+aaaaaabdPQRQSdbaaaaaa
+aaaaaaadPQQQSdaaaaaaa
+aaaaaaadTTTTTdaaaaaaa
+aaaaaaadddddddaaaaaaa
+aaaaaaaabbbbbaaaaaaaa
+"}

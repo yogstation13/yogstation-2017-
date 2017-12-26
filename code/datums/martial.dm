@@ -14,7 +14,7 @@
  	return FALSE
 
 /datum/martial_art/proc/try_deflect_projectile(mob/living/carbon/human/user, obj/item/projectile/Proj, silent = FALSE)
-	if(user.incapacitated() || (user.dna && user.dna.check_mutation(HULK)))
+	if(user.incapacitated() || (user.dna && (user.dna.check_mutation(HULK) || user.dna.check_mutation(ACTIVE_HULK))) )
 		return FALSE
 	if(prob(deflection_chance))
 		if(!silent)

@@ -26,7 +26,7 @@
 		sparks.start()
 	else if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(C.dna && C.dna.check_mutation(HULK))
+		if(C.dna && (C.dna.check_mutation(HULK) || C.dna.check_mutation(ACTIVE_HULK)))
 			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else if(CANWEAKEN in C.status_flags)
 			spawn(5)

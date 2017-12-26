@@ -8,6 +8,9 @@
 	var/description
 	var/admin_notes
 
+	var/credit_cost = INFINITY
+	var/emag_buy = FALSE
+
 /datum/map_template/shuttle/New()
 	shuttle_id = "[port_id]_[suffix]"
 	mappath = "[prefix][shuttle_id].dmm"
@@ -40,6 +43,15 @@
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
 	name = "Asteroid emergency shuttle"
+	credit_cost = 10000
+
+/datum/map_template/shuttle/emergency/ashes
+	suffix = "ashes"
+	name = "The Ashes"
+	description = "Originally a modern art piece, the shuttle was sold to the nanotrasen fleet after the art crash of 2467"
+	admin_notes = "a mishmash of different shuttles, with the delta-shuttle as the template"
+	credit_cost = 10000
+	emag_buy = TRUE
 
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"
@@ -49,6 +61,7 @@
 		small gambling table."
 	admin_notes = "Bardrone should be controlled by a player, either admin \
 		or ghost, has modified drone laws, can speak human and see normally."
+	credit_cost = 15000
 
 /datum/map_template/shuttle/emergency/birdboat
 	suffix = "birdboat"
@@ -72,6 +85,8 @@
 	admin_notes = "Brig is replaced by anchored greentext book surrounded by \
 		lavaland chasms, stationside door has been removed to prevent \
 		accidental dropping."
+	emag_buy = TRUE
+	credit_cost = 15000
 
 /datum/map_template/shuttle/emergency/cramped
 	suffix = "cramped"
@@ -87,13 +102,22 @@
 	admin_notes = "Due to origin as a solo piloted secure vessel, has an \
 		active GPS onboard labeled STV5."
 
+/datum/map_template/shuttle/emergency/dept
+	suffix = "dept"
+	name = "emergency shuttle (department)"
+	description = "Features include: areas for each department, and a small bar."
+	admin_notes = "Designed to reduce chaos. Each dept requires dept access."
+	credit_cost = 7500
+
 /datum/map_template/shuttle/emergency/meta
 	suffix = "meta"
 	name = "Meta emergency shuttle"
+	credit_cost = 7500
 
 /datum/map_template/shuttle/emergency/mini
 	suffix = "mini"
 	name = "Mini emergency shuttle"
+	credit_cost = 6000
 
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
@@ -122,6 +146,11 @@
 		without protective goggles. Emitters spawn powered on, expect \
 		admin notices, they are harmless."
 
+/datum/map_template/shuttle/emergency/tauceti
+	suffix = "tauceti"
+	name = "Tau Ceti Escape Shuttle"
+	credit_cost = 12500
+
 /datum/map_template/shuttle/emergency/imfedupwiththisworld
 	suffix = "imfedupwiththisworld"
 	name = "Oh, Hi Daniel"
@@ -131,6 +160,8 @@
 		I cannot tell you; it's space confidential. \
 		Aw, come space on. Why not? \
 		No, I can't. Anyway, how is your space roleplay life?"
+	emag_buy = TRUE
+	credit_cost = 5000
 
 /datum/map_template/shuttle/emergency/goon
 	suffix = "goon"
@@ -138,6 +169,7 @@
 	description = "The Nanotrasen Emergency Shuttle Port(NES Port for short) \
 	is a shuttle used at other less known nanotrasen facilities \
 	and has a more open inside for larger crowds."
+	credit_cost = 7500
 
 /datum/map_template/shuttle/emergency/wabbajack
 	suffix = "wabbajack"
@@ -151,11 +183,52 @@
 	admin_notes = "If the crew can solve the puzzle, they will wake the \
 	wabbajack statue. It will likely not end well. There's a reason it's \
 	boarded up. Maybe they should have just left it alone."
+	emag_buy = TRUE
+	credit_cost = 7500
 
 /datum/map_template/shuttle/emergency/yogstation
 	suffix = "yogstation"
 	name = "The Undying Classic"
 	description = "The old and faithful Yogstation shuttle."
+
+/datum/map_template/shuttle/emergency/pubby
+	suffix = "pubby"
+	name = "Puppy Station Emergency Shuttle"
+	description = "A small, but feature complete shuttle. It boasts a card table to keep crew members occupied on the long flight home."
+	credit_cost = 7500
+
+/datum/map_template/shuttle/emergency/delta
+	suffix = "delta"
+	name = "Delta Station Emergency Shuttle"
+	description = "A large shuttle for a large station, this shuttle can comfortably fit all your overpopulation and crowding needs. Complete with all facilities plus additional equipment."
+	credit_cost = 12500
+
+/datum/map_template/shuttle/emergency/scrapheap
+	suffix = "scrapheap"
+	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
+	description = "Due to a lack of functional emergency shuttles, we bought this second hand from a scrapyard and pressed it into service. Please do not lean to heavily on the exterior windows, they are fragile."
+	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight."
+	emag_buy = TRUE
+	credit_cost = 2500
+
+/datum/map_template/shuttle/emergency/nukeops
+	suffix = "nukeops"
+	name = "Syndicate Boarding Shuttle"
+	description = "A shuttle usually used by syndicate boarding parties, comes prepackaged with guns, explosives and hardsuits."
+	emag_buy = TRUE
+	credit_cost = 20000
+
+/datum/map_template/shuttle/emergency/makara
+	suffix = "makara"
+	name = "Makara Emergency Shuttle"
+	description = "A refitted submarine, now used for emergency travel."
+	credit_cost = 50000
+
+/datum/map_template/shuttle/emergency/train
+	suffix = "train"
+	name = "The Emergency Escape Train"
+	description = "Fuck shuttles, Trains are AWESOME. And now, with a small transaction of funds, YOU can be the next universal conductor."
+	credit_cost = 2500
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
