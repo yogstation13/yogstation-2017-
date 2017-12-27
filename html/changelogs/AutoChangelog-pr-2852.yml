@@ -1,0 +1,4 @@
+author: "ThatLing"
+delete-after: true 
+changes: 
+  - rscadd: "Added AZERTY support to the hotkeys."
