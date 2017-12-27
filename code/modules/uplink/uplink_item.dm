@@ -954,6 +954,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/device_tools/projector
+	name = "Holographic Object Projector"
+	item = /obj/item/device/holoprojector
+	desc = "A device for masters of deception and trickery. This item allows you to scan objects and create \
+			holograms of them. The holograms will dissipate when interacted with. You can replace the stock \
+			parts it comes with to increase the maximum number of holograms and variety of scannable objects."
+	cost = 4
+
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
