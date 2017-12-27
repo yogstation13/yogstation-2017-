@@ -236,6 +236,7 @@ var/next_external_rsc = 0
 		if(prefs.toggles & QUIET_ROUND)
 			prefs.toggles &= ~QUIET_ROUND
 			prefs.save_preferences()
+	prefs.update_character_slots(src)
 	sethotkeys(1) //use preferences to set hotkeys (from_pref = 1)
 
 	. = ..()	//calls mob.Login()
@@ -448,7 +449,7 @@ var/next_external_rsc = 0
 	var/DBQuery/query_getid = dbcon.NewQuery("SELECT `id` FROM `[format_table_name("connection_log")]` WHERE `serverip`='[serverip]' AND `ckey`='[sql_ckey]' AND `ip`='[sql_ip]' AND `computerid`='[sql_computerid]' ORDER BY datetime DESC LIMIT 1;")
 	query_getid.Execute()
 	while (query_getid.NextRow())
-		connection_number = text2num(query_getid.item[1])
+		connection_number = query_getid.item[1]
 
 /client/proc/add_verbs_from_config()
 	if(config.see_own_notes)
