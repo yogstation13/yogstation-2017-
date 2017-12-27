@@ -6,12 +6,15 @@
 	circuit = /obj/item/weapon/circuitboard/computer/shuttle
 	var/shuttleId
 	var/possible_destinations = ""
+	var/list/rogue_destinations = list() //"mining_away" = "asteroid"
 	var/current_destination
 	var/admin_controlled
 	var/no_destination_swap = 0
 	var/notification // assign a frequency here - ex: SEC_FREQ, etc
 	var/cooldownlen
+	var/smart_transit = FALSE //TRUE for having the time be the difference between docking port distance
 	var/awayspeech // enables awayspeech()
+	var/error_chance = 1
 
 	var/sending
 
@@ -73,12 +76,22 @@
 			if(M.mode != SHUTTLE_IDLE)
 				to_chat(usr, "<span class='warning'>Shuttle already in transit.</span>")
 				return
+		var/destination = href_list["move"]
 
-		if(processcooldown(shuttleId, href_list["move"]))
+		if(prob(error_chance) && rogue_destinations[destination])
+			destination = rogue_destinations[destination]
+			say("404 error message not found")
+
+		if(smart_transit)
+			var/obj/docking_port/stationary/D = SSshuttle.getDock(destination)
+			var/obj/docking_port/stationary/C = SSshuttle.getDock(current_destination)
+			M.callTime = abs(D.distance - C.distance)
+
+		if(processcooldown(shuttleId, destination))
 			processnotification("cooldown")
-			current_destination = href_list["move"]
+			current_destination = destination
 
-		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
+		switch(SSshuttle.moveShuttle(shuttleId, destination, 1))
 			if(0)
 				to_chat(usr, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
 				processnotification("awayspeech")
@@ -131,6 +144,7 @@
 		src.req_access = list()
 		emagged = 1
 		to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
+		error_chance = 5
 
 /obj/machinery/computer/shuttle/proc/awayspeech(destination)
 	return "The shuttle is blasting off to [current_destination]!"

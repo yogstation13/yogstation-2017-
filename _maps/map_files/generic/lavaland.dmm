@@ -1140,6 +1140,7 @@
 /obj/docking_port/stationary{
 	area_type = /area/lavaland/surface/outdoors;
 	dir = 8;
+	distance = 50;
 	dwidth = 3;
 	height = 5;
 	id = "mining_away";
