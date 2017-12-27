@@ -2,6 +2,7 @@
 /mob/living/carbon/monkey/regenerate_icons()
 	if(!..())
 		update_inv_wear_mask()
+		update_inv_neck()
 		update_inv_head()
 		update_inv_back()
 		update_icons()
@@ -45,6 +46,11 @@
 /mob/living/carbon/monkey/update_hud_wear_mask(obj/item/I)
 	if(client && hud_used && hud_used.hud_shown)
 		I.screen_loc = ui_monkey_mask
+		client.screen += I
+		
+/mob/living/carbon/monkey/update_hud_neck(obj/item/I)
+	if(client && hud_used && hud_used.hud_shown)
+		I.screen_loc = ui_monkey_neck
 		client.screen += I
 
 //update whether our back item appears on our hud.
