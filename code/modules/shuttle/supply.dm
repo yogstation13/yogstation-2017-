@@ -156,3 +156,15 @@
 			sold_atoms += recursive_sell(thing, level)
 	qdel(O)
 	return sold_atoms
+
+/obj/docking_port/mobile/supply/getStatusText()
+	var/obj/docking_port/stationary/dockedAt = get_docked()
+	. = (dockedAt && dockedAt.name) ? dockedAt.name : "unknown"
+	if(istype(dockedAt, /obj/docking_port/stationary/transit))
+		var/obj/docking_port/stationary/dst
+		if(mode == SHUTTLE_RECALL)
+			dst = previous
+		else
+			dst = destination
+		. += " towards [dst ? dst.name : "unknown location"] ([timeLeft(10)] seconds)"
+#undef DOCKING_PORT_HIGHLIGHT
