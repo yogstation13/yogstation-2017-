@@ -24,6 +24,11 @@
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user)
+	if(user.s_intent[user.a_intent] == SPECIAL_INTENT_GIVE)
+		if(istype(M, /mob/living/carbon))
+			var/mob/living/carbon/C = M
+			C.special_help_act(user)
+			return
 	if(flags & NOBLUDGEON)
 		return
 	if(!force)

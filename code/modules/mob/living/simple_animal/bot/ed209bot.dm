@@ -160,7 +160,7 @@ Auto Patrol[]"},
 		mode = BOT_HUNT
 
 /mob/living/simple_animal/bot/ed209/attack_hand(mob/living/carbon/human/H)
-	if(H.a_intent == "harm")
+	if(H.a_intent == HARM && H.s_intent[H.a_intent] != SPECIAL_INTENT_KICK)
 		retaliate(H)
 	return ..()
 
@@ -563,3 +563,8 @@ Auto Patrol[]"},
 			C.handcuffed = new /obj/item/weapon/restraints/handcuffs/cable/zipties/used(C)
 			C.update_handcuffed()
 			back_to_idle()
+
+/mob/living/simple_animal/bot/ed209/kick_act(mob/living/carbon/human/H)
+	visible_message("<span class='warning'>[H] kicks [src], but it doesn't do anything!</span>",\
+					"<span class='warning'>[H] kicks [src], but it doesn't do anything!</span>")
+	retaliate(H)

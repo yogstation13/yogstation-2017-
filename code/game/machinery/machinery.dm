@@ -516,3 +516,10 @@ Class Procs:
 	if(!software)
 		software = list()
 	return software
+
+/obj/machinery/kick_act(mob/living/carbon/human/H)
+	kick_obj_structure_machinery(H, src)
+
+/obj/machinery/bite_act(mob/living/L)
+	visible_message("<span class='warning'>[L] latches onto and bites [src] for no good reason!</span>",\
+					"<span class='warning'>[L] latches onto and bites [src] for no good reason!</span>")

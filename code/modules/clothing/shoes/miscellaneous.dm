@@ -21,6 +21,7 @@
 	strip_delay = 70
 	burn_state = FIRE_PROOF
 	can_hold_items = 1
+	extra_kick_damage = 2
 
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
@@ -28,6 +29,7 @@
 	permeability_coefficient = 0.01
 	flags = NOSLIP
 	armor = list(melee = 40, bullet = 30, laser = 25, energy = 25, bomb = 50, bio = 30, rad = 30)
+	extra_kick_damage = 3
 
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
@@ -74,6 +76,7 @@
 	var/footstep = 1	//used for squeeks whilst walking
 	can_hold_items = 1
 	valid_held_items = list(/obj/item/device/assembly/bikehorn,/obj/item/weapon/nullrod/clown)
+	extra_kick_damage = 1
 
 /obj/item/clothing/shoes/clown_shoes/step_action()
 	if(footstep > 1)
@@ -116,6 +119,7 @@
 	put_on_delay = 50
 	burn_state = FIRE_PROOF
 	can_hold_items = 1
+	extra_kick_damage = 2
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -145,6 +149,7 @@
 	desc = "Steel-toed mining boots for mining in hazardous environments. Very good at keeping toes uncrushed."
 	icon_state = "explorer"
 	burn_state = FIRE_PROOF
+	extra_kick_damage = 1
 
 /obj/item/clothing/shoes/cult
 	name = "nar-sian invoker boots"
@@ -156,6 +161,7 @@
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+	extra_kick_damage = 2
 
 /obj/item/clothing/shoes/cult/alt
 	name = "cultist boots"
@@ -186,6 +192,7 @@
 	icon_state = "griffinboots"
 	item_state = "griffinboots"
 	can_hold_items = 1
+	extra_kick_damage = 2
 
 /obj/item/clothing/shoes/fuzzy_slippers
 	name = "fuzzy bunny slippers"

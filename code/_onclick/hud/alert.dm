@@ -200,7 +200,7 @@ If you're feeling frisky, click yourself in help intent to pull the object out."
 /obj/screen/alert/embeddedobject/Click()
 	if(isliving(usr))
 		var/mob/living/carbon/human/M = usr
-		return M.help_shake_act(M)
+		return M.help_act(M)
 
 /obj/screen/alert/asleep
 	name = "Asleep"

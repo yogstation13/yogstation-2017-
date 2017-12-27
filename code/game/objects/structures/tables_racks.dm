@@ -117,6 +117,13 @@
 /obj/structure/table/attack_tk() // no telehulk sorry
 	return
 
+/obj/structure/table/kick_act(mob/living/carbon/human/H)
+	..(H)
+
+	visible_message("<span class='warning'>[H] kicks [src]!</span>")
+	take_damage(rand(3,5), BRUTE) // someone make this flip over.
+
+
 /obj/structure/table/bullet_act(obj/item/projectile/P)
 	. = ..()
 	take_damage(P.damage, P.damage_type, 0)
@@ -530,6 +537,9 @@
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
 						 "<span class='danger'>You kick [src].</span>")
 	take_damage(rand(4,8), BRUTE)
+
+/obj/structure/rack/kick_act(mob/living/user)
+	attack_hand(user)
 
 /obj/structure/rack/attack_alien(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)

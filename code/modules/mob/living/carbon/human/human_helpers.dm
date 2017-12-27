@@ -166,3 +166,10 @@
 		return 0
 
 	return .
+
+/mob/living/carbon/human/proc/shoe_damage(num)
+	if(istype(shoes, /obj/item/clothing/shoes))
+		var/obj/item/clothing/shoes/S = shoes
+		return num + S.extra_kick_damage
+	else
+		return num

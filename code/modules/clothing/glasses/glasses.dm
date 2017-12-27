@@ -1,3 +1,17 @@
+/obj/item/clothing/glasses/kick_act(mob/living/H) //Stomps the FUCK out of them
+	if(can_be_crushed)
+		H.visible_message("<span class='danger'>[H] stomps on [src], crushing them!</span>", "<span class='danger'>You crush [src] under your foot.</span>")
+		playsound(get_turf(src), "shatter", 50, 1)
+		log_game("[H] ([H.ckey]) crushed [src]!")
+
+		var/obj/item/weapon/shard/S = new(get_turf(src))
+		S.Crossed() //To punish user for stomping on sunglasses without shoes
+
+		qdel(src)
+	else
+		..()
+		return 1
+
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
 	if(ishuman(src.loc))
@@ -228,6 +242,7 @@
 //	vision_flags = BLIND
 	flash_protect = 2
 	tint = 3			// to make them blind
+	can_be_crushed = FALSE
 
 /obj/item/clothing/glasses/sunglasses/big
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Larger than average enhanced shielding blocks many flashes."
@@ -303,6 +318,7 @@
 	scan_reagents = 1
 	flags = NODROP
 	invis_view = SEE_INVISIBLE_MINIMUM
+	can_be_crushed = FALSE
 
 /obj/item/clothing/glasses/proc/chameleon(var/mob/user)
 	var/input_glasses = input(user, "Choose a piece of eyewear to disguise as.", "Choose glasses style.") as null|anything in list("Sunglasses", "Medical HUD", "Mesons", "Science Goggles", "Glasses", "Security Sunglasses","Eyepatch","Welding","Gar")

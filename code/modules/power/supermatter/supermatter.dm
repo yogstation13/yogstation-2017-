@@ -367,3 +367,20 @@
 /obj/machinery/power/supermatter_shard/hugbox
 	takes_damage = 0
 	produces_gas = 0
+
+
+/obj/machinery/power/supermatter_shard/kick_act(mob/living/carbon/human/H)
+	visible_message("<span class='danger'>[H] slams [H.gender == MALE ? "his" : "her"] foot into [src]!</span>")
+	if(!damage)
+		Consume(H)
+		visible_message("<span class='genesisred'>WHAT A DUMBASS!</span>")
+		return
+
+	if(prob(99))
+		Consume(H)
+		visible_message("<span class='genesisred'>WOW! HOLY SHIT! WHAT A DUMBASS!</span>")
+	else
+		damage = 0
+		playsound(H, 'sound/effects/meteorimpact.ogg', 100, 1, extrarange = 45)
+		visible_message("<span class='genesisred'>HOOOOLY SHIT!</span>")
+		radio.talk_into(src, "Attention crew. [H] has kicked the instability percent back to 0. Get that [H.gender == MALE ? "man" : "woman"] a goddamn medal.")

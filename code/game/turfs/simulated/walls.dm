@@ -131,9 +131,12 @@
 
 /turf/closed/wall/attack_hand(mob/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
-	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
-	src.add_fingerprint(user)
+	if(user.s_intent[user.a_intent] == SPECIAL_INTENT_KICK)
+		kick_act(user)
+	else
+		to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
+		playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
+		src.add_fingerprint(user)
 	..()
 	return
 
@@ -274,3 +277,10 @@
 
 /turf/closed/wall/storage_contents_dump_act(obj/item/weapon/storage/src_object, mob/user)
 	return 0
+
+/turf/closed/wall/kick_act(mob/living/carbon/human/H)
+	H.visible_message("<span class='danger'>[H] kicks \the [src]!</span>", "<span class='danger'>You kick \the [src]!</span>")
+
+	if(prob(70))
+		H << "<span class='userdanger'>Ouch! That hurts!</span>"
+		H.apply_damage(rand(5,7), BRUTE, pick("r_leg", "l_leg", "r_foot", "l_foot"))

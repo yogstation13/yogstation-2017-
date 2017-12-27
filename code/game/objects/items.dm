@@ -631,6 +631,17 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	. = ..()
 	throw_speed = initial(throw_speed) //explosions change this.
 
+/obj/item/proc/throw_at_arc(atom/target, range, speed, mob/thrower, spin=1)
+	var/original_pixel_y = pixel_y
+	animate(src, pixel_y = original_pixel_y + 32, time = 10, easing = CUBIC_EASING)
+	while(loc)
+		if(!throwing)
+			animate(src, pixel_y = original_pixel_y, time = 5, easing = ELASTIC_EASING)
+			break
+		sleep(5)
+
+	throw_at(target, range, speed, thrower, spin)
+
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/weapon/storage
 	if(!newLoc)
@@ -666,3 +677,30 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 			location = get_turf(M)
 	if(isturf(location))
 		location.hotspot_expose(700, 5)
+
+/obj/item/kick_act(mob/living/carbon/human/H)
+	if(!isturf(loc)) return 1
+
+	if(anchored || w_class > 3)
+		H.visible_message("<span class='danger'>[H] attempts to kick \the [src]!</span>", "<span class='danger'>You attempt to kick \the [src]!</span>")
+		if(prob(70))
+			H << "<span class='danger'>Dumb move! You strain a muscle.</span>"
+
+			H.apply_damage(rand(1,4), BRUTE, pick("r_leg", "l_leg", "r_foot", "l_foot"))
+		return
+
+	var/turf/T = get_edge_target_turf(loc, get_dir(H, src))
+
+	var/kick_power =  H.shoe_damage((8 - (w_class * 2))) // originally was 10 - (w_class * 2), but it was changed because kicking stuff off screen is a little too much
+
+	H.visible_message("<span class='danger'>[H] kicks \the [src]!</span>", "<span class='danger'>You kick \the [src]!</span>")
+
+	if(kick_power > 6) //Fly in an arc!
+		throw_at_arc(T, kick_power, 1)
+	else
+		throw_at(T, kick_power, 1)
+	Crossed(H) //So you can't kick shards while naked without suffering
+
+/obj/item/bite_act(mob/living/L)
+	L.visible_message("<span class='notice'>[L] starts biting [src] for whatever reason",\
+					"<span class='notice'>[L] starts biting [src] for whatever reason")

@@ -775,7 +775,7 @@
 	..()
 
 
-/mob/living/carbon/human/help_shake_act(mob/living/carbon/M)
+/mob/living/carbon/human/help_act(mob/living/carbon/M)
 	if(!istype(M))
 		return
 

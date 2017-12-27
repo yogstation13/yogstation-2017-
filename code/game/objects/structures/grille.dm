@@ -55,6 +55,9 @@
 	if(!shock(user, 70))
 		take_damage(rand(1,2))
 
+/obj/structure/grille/kick_act(mob/living/user)
+	attack_hand(user)
+
 /obj/structure/grille/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)

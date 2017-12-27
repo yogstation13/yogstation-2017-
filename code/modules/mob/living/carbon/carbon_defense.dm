@@ -59,7 +59,7 @@
 			ContractDisease(D)
 
 	if(M.a_intent == "help")
-		help_shake_act(M)
+		help_act(M)
 		return 0
 
 	if(..()) //successful monkey bite.

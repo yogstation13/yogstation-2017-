@@ -23,6 +23,8 @@
 	environment_smash = 0
 	var/list/edibles = list(/mob/living/simple_animal/butterfly, /mob/living/simple_animal/cockroach)
 
+	can_be_kicked = TRUE
+
 /mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?
 	if(see_invisible < the_target.invisibility)//Target's invisible to us, forget it
 		return 0

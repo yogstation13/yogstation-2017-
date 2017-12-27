@@ -99,3 +99,10 @@
 				to_chat(user, "<span class='warning'>You fail to climb onto [src].</span>")
 			density = 1
 	structureclimber = null
+
+/obj/structure/kick_act(mob/living/carbon/human/H)
+	kick_obj_structure_machinery(H, src)
+
+/obj/structure/bite_act(mob/living/L) // TODO: in the future make some races bite do damage to machines.
+	L.visible_message("<span class='warning'>[L] grips [src] and bites it!</span>",\
+					"<span class='warning'>[L] grips [src] and bites it!</span>")

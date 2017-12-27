@@ -968,3 +968,12 @@ var/next_mob_id = 0
 
 /mob/proc/get_idcard()
 	return
+
+/mob/proc/open_special_intents()
+	return
+
+/mob/verb/open_si() // used for hotkey
+	set name = "open-si"
+	set hidden = 1
+
+	open_special_intents()

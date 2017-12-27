@@ -51,7 +51,7 @@
 		qdel(src)
 
 /mob/living/simple_animal/hostile/retaliate/dolphin/handle_automated_action()
-	if(..())	
+	if(..())
 		for(var/mob/living/simple_animal/hostile/carp/C in view(src, 10))
 			if(C.stat != DEAD)
 				enemies |= C

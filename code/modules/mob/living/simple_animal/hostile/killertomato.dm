@@ -25,3 +25,5 @@
 	maxbodytemp = 500
 	gold_core_spawnable = 1
 	var/spawnedBy = null
+
+	can_be_kicked = TRUE

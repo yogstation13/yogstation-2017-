@@ -78,6 +78,7 @@
 	var/weakened = 0
 	var/losebreath = 0//Carbon
 	var/a_intent = "help"//Living
+	var/list/s_intent = list(HELP = SPECIAL_INTENT_HUG, DISARM = DISARM, HARM = SPECIAL_INTENT_PUNCH, GRAB = GRAB)
 	var/m_intent = "run"//Living
 	var/lastKnownIP = null
 	var/atom/movable/buckled = null//Living

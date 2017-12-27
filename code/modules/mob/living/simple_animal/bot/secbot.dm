@@ -157,7 +157,7 @@ Auto Patrol: []"},
 		mode = BOT_HUNT
 
 /mob/living/simple_animal/bot/secbot/attack_hand(mob/living/carbon/human/H)
-	if(H.a_intent == "harm")
+	if(H.a_intent == HARM && H.s_intent[H.a_intent] != SPECIAL_INTENT_KICK) // kick is handled in ..()
 		retaliate(H)
 	return ..()
 
@@ -457,3 +457,10 @@ Auto Patrol: []"},
 
 /obj/machinery/bot_core/secbot
 	req_access = list(access_security)
+
+/mob/living/simple_animal/bot/secbot/kick_act(mob/living/carbon/human/H)
+	..()
+	playsound(loc, 'sound/voice/binsult.ogg', 50, 0)
+	visible_message("<span class='warning'>[src] points an erect stunbaton in [H]'s direction!</span>",\
+					"<span class='warning'>You point your stunbaton at [H]!</span>")
+	retaliate(H)

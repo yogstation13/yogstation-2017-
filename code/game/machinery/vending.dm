@@ -381,6 +381,20 @@
 	if(health <= 0)
 		fallover()
 
+/obj/machinery/vending/kick_act(mob/living/carbon/human/H)
+	//..(H) how about we NOT hurt ourselves in the process
+
+	var/kickdamage = rand(2,3)
+	if(H.dna)
+		if(H.dna.species)
+			kickdamage = rand(H.dna.species.kickdamagelow, H.dna.species.kickdamagehigh)
+	kickdamage = H.shoe_damage(kickdamage)
+	take_damage(kickdamage + 10) // added bonus because vending machines take forever to knock down
+
+	playsound(get_turf(src), 'sound/effects/grillehit.ogg', 50, 1)
+	visible_message("<span class='warning'>[H] kicks [src]!</span>",\
+					"<span class='warning'>[H] kicks [src]!</span>")
+
 /obj/machinery/vending/proc/fallover()
 	visible_message("<span class='warning'>[src] falls over!</span>",\
 					"<span class='warning'>[src] falls over!</span>")

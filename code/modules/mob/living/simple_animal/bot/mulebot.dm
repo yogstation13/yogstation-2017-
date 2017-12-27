@@ -746,3 +746,10 @@ var/global/mulebot_count = 0
 
 /obj/machinery/bot_core/mulebot
 	req_access = list(access_cargo)
+
+
+/mob/living/simple_animal/bot/mulebot/kick_act(mob/living/carbon/human/H)
+	visible_message("<span class='warning'>[H] kicks [src], but it doesn't do anything!</span>",\
+					"<span class='warning'>[H] kicks you, but it doesn't do anything!</span>")
+	H.say("Jesus christ that hurts!")
+	H.apply_damage(rand(5,7), BRUTE, pick("r_leg", "l_leg", "r_foot", "l_foot"))

@@ -77,6 +77,8 @@ var/list/slime_colours = list("rainbow", "grey", "purple", "metal", "orange",
 	var/coretype = /obj/item/slime_extract/grey
 	var/list/slime_mutation[4]
 
+	can_be_kicked = TRUE
+
 /mob/living/simple_animal/slime/New(loc, new_colour="grey", new_is_adult=FALSE)
 	var/datum/action/innate/slime/feed/F = new
 	F.Grant(src)

@@ -86,7 +86,7 @@
 
 	switch(M.a_intent)
 		if("help")
-			help_shake_act(M)
+			help_act(M)
 		if("grab")
 			grabbedby(M)
 		if("harm")
@@ -300,7 +300,7 @@
 
 	take_organ_damage(min(6*toxpwr, acid_volume * acidpwr/10))
 
-/mob/living/carbon/monkey/help_shake_act(mob/living/carbon/M)
+/mob/living/carbon/monkey/help_act(mob/living/carbon/M)
 	if(health < 0 && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.do_cpr(src)

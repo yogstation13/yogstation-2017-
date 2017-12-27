@@ -30,6 +30,8 @@
 	var/mob/living/simple_animal/mouse/movement_target
 	gold_core_spawnable = 2
 
+	can_be_kicked = TRUE
+
 /mob/living/simple_animal/pet/cat/New()
 	..()
 	verbs += /mob/living/proc/lay_down

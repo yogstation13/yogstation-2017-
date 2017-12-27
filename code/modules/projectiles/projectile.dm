@@ -225,3 +225,6 @@
 /obj/item/projectile/proc/dumbfire(var/dir)
 	current = get_ranged_target_turf(src, dir, world.maxx)
 	fire()
+
+/obj/item/projectile/kick_act() //Can't be kicked around
+	return
