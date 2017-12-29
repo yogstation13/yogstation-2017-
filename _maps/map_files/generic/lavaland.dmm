@@ -1146,7 +1146,7 @@
 	id = "mining_away";
 	name = "lavaland mine";
 	turf_type = /turf/open/floor/plating/asteroid/basalt/lava_land_surface;
-	width = 7
+	width = 6
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
