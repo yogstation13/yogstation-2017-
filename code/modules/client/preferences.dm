@@ -1192,9 +1192,11 @@ var/list/preferences_datums = list()
 
 				if("hotkeys")
 					hotkeys = !hotkeys
+					user.client.sethotkeys(1)
 
 				if("hotkeysmode")
 					hotkeysmode = !hotkeysmode
+					user.client.sethotkeys(1)
 
 				if("tgui_fancy")
 					tgui_fancy = !tgui_fancy
