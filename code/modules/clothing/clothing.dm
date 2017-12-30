@@ -394,7 +394,7 @@ BLIND     // can't see anything
 	if(!canbetorn)
 		return
 
-	while(var/count = ripcount, count > 0, ripcount--)
+	for(var/count = ripcount, count > 0, ripcount--)
 		take_teardamage(20)
 		permeability_coefficient += 0.20
 		if (armor)
@@ -408,6 +408,8 @@ BLIND     // can't see anything
 				if(!qdeleted(src))
 					user.visible_message("You hear cloth tearing.", "A segment of [src] falls away to the floor, torn apart.", "*riiip*")
 	return 1
+
+
 
 
 /obj/item/clothing/under/proc/teardown(mob/user)
