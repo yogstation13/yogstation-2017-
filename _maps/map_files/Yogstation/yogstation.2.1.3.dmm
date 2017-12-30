@@ -44349,8 +44349,9 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bKa" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	tag = "icon-manifold-b-f (WEST)";
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
@@ -45019,7 +45020,7 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "bLy" = (
-/obj/structure/table,
+/obj/structure/chair,
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle/labor)
 "bLz" = (
@@ -45058,8 +45059,9 @@
 /obj/effect/landmark/start{
 	name = "Shaft Miner"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4;
+	initialize_directions = 11
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
@@ -45822,6 +45824,9 @@
 /area/toxins/xenobiology)
 "bMW" = (
 /obj/effect/landmark/event_spawn,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bMX" = (
@@ -46742,6 +46747,9 @@
 	name = "Mining Dock";
 	req_access_txt = "48"
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bOA" = (
@@ -47459,6 +47467,7 @@
 	},
 /area/quartermaster/miningdock)
 "bPM" = (
+/obj/structure/table,
 /turf/open/floor/plasteel{
 	dir = 6;
 	icon_state = "brown"
@@ -57401,10 +57410,14 @@
 "ciR" = (
 /obj/structure/table,
 /obj/item/weapon/storage/fancy/cigarettes,
+/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ciS" = (
 /obj/structure/chair/stool,
+/obj/effect/landmark{
+	name = "blobstart"
+	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ciT" = (
@@ -69724,6 +69737,173 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"ZrD" = (
+/obj/machinery/vending/snack,
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"ZrE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"ZrF" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6;
+	initialize_directions = 6
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"ZrG" = (
+/obj/effect/landmark/start{
+	name = "Shaft Miner"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"ZrH" = (
+/obj/effect/landmark/start{
+	name = "Shaft Miner"
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"ZrI" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"ZrJ" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	adminlog = 1;
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"ZrK" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"ZrL" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 1;
+	external_pressure_bound = 101.325;
+	on = 1;
+	pressure_checks = 1
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"ZrM" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"ZrN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"ZrO" = (
+/turf/open/floor/plasteel{
+	dir = 2;
+	icon_state = "browncorner"
+	},
+/area/quartermaster/miningdock)
+"ZrP" = (
+/obj/structure/table,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/plasteel{
+	dir = 2;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"ZrQ" = (
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/o2,
+/turf/open/floor/plasteel{
+	dir = 2;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"ZrR" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Mining Shuttle Airlock";
+	req_access_txt = "48"
+	},
+/obj/docking_port/stationary{
+	dheight = 0;
+	dir = 8;
+	dwidth = 4;
+	height = 5;
+	id = "mining_home2";
+	name = "asteroid mining shuttle bay";
+	width = 7
+	},
+/obj/docking_port/mobile{
+	dir = 8;
+	dwidth = 4;
+	height = 5;
+	id = "asteroid";
+	name = "asteroid mining shuttle";
+	travelDir = 270;
+	width = 7
+	},
+/turf/open/floor/plating,
+/area/shuttle/labor)
+"ZrS" = (
+/obj/machinery/computer/shuttle/mining/asteroid,
+/turf/open/floor/plasteel{
+	dir = 10;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"ZrT" = (
+/obj/machinery/light{
+	status = 2
+	},
+/turf/open/floor/plasteel{
+	dir = 6;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"ZrU" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f5";
+	dir = 2
+	},
+/area/shuttle/labor)
+"ZrV" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f9";
+	dir = 2
+	},
+/area/shuttle/labor)
 "ZrW" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Mining Shuttle Airlock";
@@ -69752,6 +69932,7 @@
 /obj/machinery/door/airlock/external{
 	glass = 1;
 	name = "Mining Shuttle Airlock";
+	normalspeed = 0;
 	opacity = 0;
 	req_access_txt = "0"
 	},
@@ -69800,6 +69981,12 @@
 	dir = 1
 	},
 /obj/structure/flora/kirbyplants,
+/obj/machinery/airalarm{
+	dir = 8;
+	icon_state = "alarm0";
+	pixel_x = 22;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel{
 	dir = 5;
 	icon_state = "brown"
@@ -69815,6 +70002,9 @@
 "Zse" = (
 /obj/structure/grille,
 /obj/structure/window/fulltile,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/quartermaster/miningdock)
 "Zsf" = (
@@ -69833,7 +70023,7 @@
 	network = list("SS13")
 	},
 /turf/open/floor/plasteel{
-	dir = 10;
+	dir = 8;
 	icon_state = "brown"
 	},
 /area/quartermaster/miningdock)
@@ -90485,14 +90675,14 @@ aaA
 ady
 aaa
 aaa
+aaa
+aaa
 aaA
 caI
 aaa
 aaa
 aaa
-aaa
-aaA
-ajB
+ajA
 aaA
 ciQ
 ciQ
@@ -90742,15 +90932,15 @@ aaA
 ady
 aaA
 aaa
+aaa
+aaa
 aaA
 caJ
 aaA
 aaA
 aaa
-aaa
-aaA
 ajA
-aaa
+aaA
 aaa
 aaA
 aaa
@@ -90984,30 +91174,30 @@ bzw
 bnQ
 aaA
 aaA
-aaC
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaC
-aaa
-aaa
 aaA
-ady
-ady
-ady
+aaC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaC
+bsl
+bsl
+bsl
+bsl
+bsl
+bsl
+bsl
+aaa
 ady
 caK
 ady
 ady
 aaa
-aaa
-aaA
-ajB
-ajB
+ajA
+ajA
 ajB
 aaA
 aaA
@@ -91241,8 +91431,8 @@ bzv
 bnQ
 aaa
 aaa
-aCa
 aaa
+aCa
 amG
 anv
 anv
@@ -91250,11 +91440,13 @@ amH
 anv
 aqU
 aGf
-aaa
-aaa
-aaA
-ady
-aaA
+amG
+amH
+anv
+anv
+anv
+amH
+ZrU
 aaa
 aaA
 caJ
@@ -91263,8 +91455,6 @@ ady
 aaa
 aaa
 aaA
-aaa
-aaa
 aaa
 aaa
 aaa
@@ -91498,8 +91688,8 @@ bzx
 bnQ
 aaa
 aaa
-aCa
 aaa
+aCa
 bJX
 bLy
 apo
@@ -91507,11 +91697,13 @@ bMQ
 aqe
 bJX
 aGf
-aaa
-aaa
-aaA
-ady
-aaA
+amH
+apL
+apL
+apL
+apL
+Zso
+amH
 aaa
 dvC
 caL
@@ -91520,8 +91712,6 @@ ady
 aaA
 aaa
 aaA
-aaA
-aaa
 aaa
 aaa
 aaa
@@ -91755,8 +91945,8 @@ bzy
 bbG
 aaA
 aaA
-bIl
-aaa
+aaA
+aCa
 amH
 bLz
 apo
@@ -91764,11 +91954,13 @@ bMQ
 bQR
 bSe
 aGf
-aaa
-aaa
-aaA
-ady
-aaA
+amH
+apo
+apo
+apo
+apo
+bQR
+bSe
 aaa
 aaA
 caM
@@ -91776,8 +91968,6 @@ aaa
 ady
 aaA
 aaA
-bHm
-bHm
 bHm
 bHm
 bHm
@@ -92012,8 +92202,8 @@ bzx
 bnQ
 aaa
 aaa
-aCa
 aaa
+aCa
 bJX
 bLy
 apo
@@ -92021,11 +92211,13 @@ bMQ
 bQS
 bJX
 aGf
-aaa
-aaa
-aaA
-aaa
-aaA
+amH
+Zsm
+apo
+Zsm
+Zsm
+bQS
+amH
 aaa
 aaA
 caM
@@ -92034,8 +92226,6 @@ ccZ
 bQV
 aaA
 bHm
-bMZ
-chQ
 ciR
 bQV
 aaa
@@ -92269,8 +92459,8 @@ bzx
 bnQ
 aaa
 aaa
-aCa
 aaa
+aCa
 amI
 anv
 ZrW
@@ -92278,11 +92468,13 @@ amH
 anv
 aqW
 aGf
-bsl
-bsl
-bsl
-bsl
-bsl
+amI
+amH
+ZrR
+anv
+anv
+amH
+ZrV
 aaa
 aaA
 caN
@@ -92291,8 +92483,6 @@ bMZ
 bQV
 aaA
 bHm
-bMZ
-bMY
 ciS
 bQV
 aaa
@@ -92527,7 +92717,7 @@ bnQ
 aaA
 aaA
 aaA
-aaa
+aaA
 aaa
 bBh
 ZrX
@@ -92535,20 +92725,20 @@ bLA
 bBh
 bBh
 bBh
-amG
-amH
-amH
-amH
-aqU
-aaa
+bBh
+bLA
+ZrX
+bBh
+bBh
+bsm
+bsm
+aaA
 bHm
 caO
 bQV
 ccZ
 bQV
 bQV
-bHm
-bMZ
 bHm
 bHm
 bHm
@@ -92784,19 +92974,21 @@ bBe
 aaa
 aaa
 aaa
-aaa
+aaA
 aaa
 bLA
 ZrY
+bMT
 Zsd
-Zsf
 Zsg
+bMT
+bMT
+bMT
+bMT
+ZrS
 bBh
-Zsj
-bLy
-Zso
-bLy
-bJX
+aaa
+aaa
 aaa
 bHm
 caP
@@ -92804,8 +92996,6 @@ bMZ
 cda
 cdT
 ceU
-bHm
-bMZ
 bHm
 ciT
 bHm
@@ -93045,15 +93235,17 @@ bBe
 aaa
 bLA
 ZrZ
-bJZ
-bJZ
-Zsh
-bLA
-amH
-apo
-Zsm
-apo
-amH
+ZrF
+ZrL
+ZrO
+bMS
+bMS
+bMS
+bMS
+ZrT
+bBh
+aaa
+aaa
 aaa
 bHm
 caQ
@@ -93061,8 +93253,6 @@ cbW
 cdb
 cdU
 ceV
-bHm
-bMZ
 bHm
 bMZ
 cjT
@@ -93301,16 +93491,18 @@ bFv
 bBe
 aaa
 bLA
-Zsa
+ZrD
+bCF
 bJZ
-bJZ
-Zsh
-ZrX
-Zsk
-apo
-apo
-apo
-bJX
+bPL
+bBh
+bBh
+bLA
+bLA
+bBh
+bBh
+aaa
+aaa
 aaa
 bHm
 caR
@@ -93319,8 +93511,6 @@ cdc
 cdV
 ceV
 cdY
-bMZ
-bZK
 bMZ
 cjU
 bHm
@@ -93559,15 +93749,17 @@ bBg
 aaa
 bLA
 Zsa
+bCF
 bJZ
-bJZ
-Zsi
-bLA
-amH
-Zsm
-Zsm
-Zsm
-amH
+Zsh
+bBh
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 bHm
 caS
@@ -93575,8 +93767,6 @@ cbY
 cbX
 cdW
 ceW
-bHm
-bMZ
 bHm
 ciU
 bVY
@@ -93816,15 +94006,17 @@ bBg
 aaa
 bLA
 Zsa
+ZrG
 bJZ
-bJZ
-Zsh
+ZrP
 bBh
-Zsj
-aqe
-Zsp
-bQS
-bJX
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 bHm
 caS
@@ -93832,8 +94024,6 @@ cbZ
 cdd
 cdX
 cca
-bHm
-bMZ
 bHm
 bVY
 bMZ
@@ -94073,23 +94263,23 @@ bBg
 aaa
 bLA
 Zsb
-bJZ
-bJZ
-bPL
+bCF
+bLC
+ZrQ
 bBh
-Zsl
-Zsn
-Zsq
-Zsn
-aqW
 aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaA
 bHm
 caT
 cca
 cde
 bMZ
-ceX
-bHm
 ceX
 bHm
 ciV
@@ -94330,24 +94520,24 @@ bBg
 aaa
 bBh
 Zsc
-bMS
-bMS
+ZrH
+ZrM
 bPM
 bBh
-bsm
-bsm
-bsm
-bsm
-bsm
 aaa
+aaa
+aaA
+aaA
+aaA
+aaA
+bHm
+bHm
 bHm
 bHm
 bHm
 bHm
 cdY
 bHm
-bHm
-bMZ
 bHm
 bHm
 bHm
@@ -94844,8 +95034,8 @@ bBe
 bBh
 bBh
 ZrY
-bMT
-bMT
+ZrI
+ZrN
 bPO
 bBh
 aaa
@@ -95101,8 +95291,8 @@ bHh
 bIm
 bJY
 bJZ
-bJZ
-bJZ
+bCF
+bFD
 bPP
 bBh
 aaa
@@ -95358,8 +95548,8 @@ bHi
 bIn
 bJZ
 bLC
-bMU
-bJZ
+ZrG
+bFD
 Zyn
 bBh
 aaa
@@ -95614,9 +95804,9 @@ bFE
 bHj
 bIo
 bKa
+ZrE
+ZrJ
 bFD
-bJZ
-bJZ
 bPQ
 bBh
 aaa
@@ -95872,7 +96062,7 @@ bHk
 bIp
 bKb
 bLE
-bJZ
+ZrK
 bMW
 bMU
 bBh

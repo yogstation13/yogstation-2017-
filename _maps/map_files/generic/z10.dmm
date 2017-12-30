@@ -3711,9 +3711,11 @@
 /turf/open/floor/plating,
 /area/mine/production)
 "jx" = (
-/obj/machinery/atmospherics/pipe/manifold,
-/turf/open/floor/plating,
-/area/mine/living_quarters)
+/turf/open/floor/plasteel{
+	dir = 5;
+	icon_state = "warning"
+	},
+/area/mine/production)
 "jy" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/donkpockets,
@@ -3772,11 +3774,11 @@
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "jG" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "warning"
 	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
+/area/mine/production)
 "jH" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/open/floor/plasteel,
@@ -3840,7 +3842,7 @@
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/mine/eva)
 "jP" = (
 /obj/machinery/light{
@@ -4193,7 +4195,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "kE" = (
 /obj/structure/cable{
@@ -5230,7 +5232,7 @@
 /obj/docking_port/stationary{
 	dir = 8;
 	distance = 150;
-	dwidth = 3;
+	dwidth = 4;
 	height = 5;
 	id = "asteroid";
 	name = "asteroid mine";
@@ -5326,7 +5328,7 @@
 	dir = 4;
 	icon_state = "pipe-j2"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/mine/production)
 "nb" = (
 /obj/structure/disposalpipe/segment{
@@ -5335,7 +5337,10 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "warning"
+	},
 /area/mine/production)
 "nc" = (
 /obj/structure/door_assembly/door_assembly_min/glass,
@@ -5400,11 +5405,14 @@
 	dir = 1;
 	on = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/mine/production)
 "nk" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plating,
+/turf/open/floor/plasteel{
+	dir = 2;
+	icon_state = "warning"
+	},
 /area/mine/production)
 "nl" = (
 /obj/machinery/door/airlock/glass_mining{
@@ -5437,32 +5445,40 @@
 	},
 /area/mine/production)
 "np" = (
-/obj/structure/lattice,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/open/space,
-/area/space)
+/turf/closed/wall,
+/area/mine/production)
 "nq" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel{
+	dir = 2;
+	icon_state = "warning"
+	},
 /area/mine/production)
 "nr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel{
+	icon_state = "warningcorner";
+	dir = 1
+	},
 /area/mine/production)
 "ns" = (
 /obj/structure/closet/crate{
 	icon_state = "crateopen";
 	opened = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel{
+	dir = 6;
+	icon_state = "warning"
+	},
 /area/mine/production)
 "nt" = (
 /obj/structure/disposalpipe/segment,
@@ -5551,10 +5567,14 @@
 /obj/machinery/light{
 	status = 2
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating{
+	tag = "icon-warnplate (SOUTHWEST)";
+	icon_state = "warnplate";
+	dir = 10
+	},
 /area/mine/production)
 "nC" = (
-/obj/structure/ore_box,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel{
 	icon_state = "delivery";
 	name = "floor"
@@ -5737,14 +5757,12 @@
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "od" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
 "oe" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -40891,7 +40909,7 @@ jE
 jQ
 jH
 kC
-jx
+kY
 ho
 lL
 mc
@@ -41147,8 +41165,8 @@ ho
 ho
 ho
 jB
-od
-jG
+jD
+kX
 lr
 lM
 md
@@ -42688,7 +42706,7 @@ ib
 ib
 ib
 ho
-md
+jo
 kE
 kX
 lu
@@ -42945,7 +42963,7 @@ bS
 bS
 bS
 ho
-md
+jo
 kE
 kX
 ib
@@ -43215,8 +43233,8 @@ ha
 gV
 gW
 gT
+gT
 gU
-bS
 ac
 ac
 ac
@@ -43471,9 +43489,9 @@ bS
 bS
 gW
 gT
+gT
 gU
 gV
-bS
 ac
 ac
 ac
@@ -43728,10 +43746,10 @@ bS
 bS
 bS
 bS
+bS
 gV
 gV
 bS
-ac
 ac
 ad
 ad
@@ -43984,11 +44002,11 @@ bS
 bS
 bS
 bS
+bS
 gX
 iC
 iC
 gM
-ac
 ac
 ad
 ad
@@ -44241,11 +44259,11 @@ bS
 bS
 bS
 bS
+bS
 gR
 iD
 iD
 gO
-ac
 ac
 ad
 ad
@@ -44499,10 +44517,10 @@ bS
 bS
 bS
 bS
+bS
 gV
 gV
 bS
-ac
 ac
 ad
 ac
@@ -44756,10 +44774,10 @@ aj
 bS
 bS
 bS
+bS
 gV
 gV
 bS
-ac
 ac
 ac
 ac
@@ -45013,11 +45031,11 @@ aj
 aa
 bS
 bS
+bS
 gV
 gV
 bS
-ac
-ac
+ab
 ac
 ac
 ac
@@ -45269,12 +45287,12 @@ aa
 aj
 aa
 aa
+aa
 dk
 nw
 nI
 dk
-ac
-ac
+ab
 ac
 ac
 aa
@@ -45526,11 +45544,11 @@ aj
 aj
 aa
 aa
+aa
 dk
 nx
 nx
 dk
-bS
 bS
 aa
 aa
@@ -45783,11 +45801,11 @@ aa
 aj
 aa
 aa
-aj
-ny
-ny
-aj
 aa
+aj
+ny
+ny
+aj
 aa
 aa
 aa
@@ -46041,10 +46059,10 @@ aj
 aa
 aa
 aa
+aa
 ny
 ny
-aa
-aa
+aj
 aa
 aa
 aa
@@ -46298,10 +46316,10 @@ aj
 aa
 aa
 aa
+aa
 ny
 ny
-aa
-aa
+aj
 aa
 aa
 aa
@@ -46555,10 +46573,10 @@ aj
 aj
 aj
 aj
+aj
 ny
 ny
-aa
-aa
+aj
 aa
 aa
 aa
@@ -46812,10 +46830,10 @@ aa
 aa
 aa
 aa
+aa
 ny
 ny
-aa
-aa
+aj
 aa
 aa
 aa
@@ -47069,10 +47087,10 @@ aa
 aa
 aa
 aa
+aa
 ny
 ny
-aa
-aa
+aj
 aa
 aa
 aa
@@ -47326,10 +47344,10 @@ aa
 aa
 aa
 aa
+aa
 ny
 ny
-aa
-aa
+aj
 aa
 aa
 aa
@@ -47583,10 +47601,10 @@ aa
 aa
 aa
 aa
+aa
 ny
 ny
-aa
-aa
+aj
 aa
 aa
 ab
@@ -47840,10 +47858,10 @@ mO
 aa
 aa
 aa
+aa
 ny
 ny
-aa
-aa
+aj
 aa
 ab
 ab
@@ -48097,10 +48115,10 @@ mP
 jK
 aj
 aj
+aj
 ny
 ny
-aa
-aa
+aj
 ab
 ab
 ab
@@ -48354,10 +48372,10 @@ lv
 jK
 aa
 aa
+aa
 ny
 ny
-aa
-aa
+aj
 ab
 ab
 ab
@@ -48610,11 +48628,11 @@ mG
 mP
 jK
 jK
-np
-nz
+aa
+aj
+ny
 ny
 aj
-aa
 ab
 ab
 ae
@@ -48856,8 +48874,8 @@ bS
 bS
 jI
 jK
-ob
-jw
+ko
+kL
 li
 jK
 jI
@@ -48867,10 +48885,10 @@ mH
 lv
 mX
 jK
-lB
-jI
-lB
-aj
+np
+jJ
+nJ
+od
 aa
 ab
 ab
@@ -49113,7 +49131,7 @@ bS
 gY
 jJ
 jT
-ob
+kp
 kM
 lj
 lv
@@ -49126,8 +49144,8 @@ mY
 lv
 nq
 nA
-nJ
-aj
+jJ
+nz
 aa
 ab
 ab
@@ -49638,7 +49656,7 @@ ml
 mS
 na
 nj
-ob
+mQ
 nk
 jK
 aj
@@ -49892,10 +49910,10 @@ jI
 mz
 mm
 mJ
-ob
+jx
 nb
-ob
-ob
+jG
+jG
 ns
 jK
 aj
@@ -50909,7 +50927,7 @@ bS
 bS
 bS
 jc
-js
+jZ
 jO
 ka
 jZ
