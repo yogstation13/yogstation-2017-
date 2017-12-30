@@ -5,6 +5,7 @@
 #define ABOVE_OPEN_TURF_LAYER 2.01
 #define CLOSED_TURF_LAYER 2.05
 #define ABOVE_NORMAL_TURF_LAYER 2.08
+#define BULLET_HOLE_LAYER 2.09
 #define LATTICE_LAYER 2.2
 #define DISPOSAL_PIPE_LAYER 2.3
 #define GAS_PIPE_LAYER 2.35
@@ -39,6 +40,7 @@
 #define SPACEVINE_LAYER 4.8
 #define SPACEVINE_MOB_LAYER 4.9
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
+#define RIPPLE_LAYER 5.1
 
 #define GHOST_LAYER 6
 #define AREA_LAYER 10

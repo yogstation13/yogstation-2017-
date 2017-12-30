@@ -71,6 +71,25 @@
 	if(!proximity && prox_check)
 		return
 	A.emag_act(user)
+	
+//Don't let Nich touch my baby
+/obj/item/weapon/card/emag/emag_act(mob/user)
+	var/otherEmag
+	if(user.l_hand)
+		if(istype(user.l_hand, /obj/item/weapon/card/emag))
+			if(user.l_hand != src)
+				otherEmag = user.l_hand
+	if(!otherEmag)
+		if(user.r_hand)
+			if(istype(user.r_hand, /obj/item/weapon/card/emag))
+				if(user.r_hand != src)
+					otherEmag = user.r_hand
+	if(!otherEmag)
+		return
+	to_chat(user, "<span class='notice'>The cryptographic sequencers attempt to override each other and destroy themselves in the process.</span>")
+	playsound(src.loc, "sparks", 50, 1)
+	qdel(otherEmag)
+	qdel(src)
 
 /obj/item/weapon/card/id
 	name = "identification card"
@@ -95,7 +114,7 @@
 /obj/item/weapon/card/id/examine(mob/user)
 	..()
 	if(mining_points)
-		user << "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+		to_chat(user, "There's [mining_points] mining equipment redemption point\s loaded onto this card.")
 
 /obj/item/weapon/card/id/GetAccess()
 	return access
@@ -155,7 +174,7 @@ update_label("John Doe", "Clowny")
 		src.access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(!restricted || user.mind.special_role)
-				usr << "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>"
+				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(istype(user, /mob/living) && user.mind)
@@ -174,7 +193,7 @@ update_label("John Doe", "Clowny")
 					return
 				assignment = u
 				update_label()
-				user << "<span class='notice'>You successfully forge the ID card.</span>"
+				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 				return
 	..()
 
@@ -268,7 +287,7 @@ update_label("John Doe", "Clowny")
 	var/points = 0
 
 /obj/item/weapon/card/id/prisoner/attack_self(mob/user)
-	usr << "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>"
+	to_chat(usr, "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>")
 
 /obj/item/weapon/card/id/prisoner/one
 	name = "Prisoner #13-001"
@@ -328,7 +347,7 @@ update_label("John Doe", "Clowny")
 	"Cargo Technician" = list("cargo","brown"),
 	"Shaft Miner" = list("cargo","black"),
 	"Mining Medic" = list("cargo","blue"),
-	"Bartender" = list("civillian,","black"),
+	"Bartender" = list("civillian","black"),
 	"Botanist" = list("civillian","blue"),
 	"Cook" = list("civillian","white"),
 	"Janitor" = list("civillian","purple"),

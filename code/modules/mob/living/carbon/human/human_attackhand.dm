@@ -4,11 +4,19 @@
 	if(user.a_intent == "harm")
 		..(user, 1)
 		playsound(loc, user.dna.species.attack_sound, 25, 1, -1)
-		if(user.dna.species.id == "abomination")//snowflake abomination hulk damage
+		if(isabomination(user))//snowflake abomination hulk damage
+			if(stat == DEAD)
+				to_chat(user, "<span class='notice'>You dig your claws into [name]...</span>")
+				playsound(loc, 'sound/weapons/slice.ogg', 100, 1, -1)
+				if(do_mob(user, src, 100))
+					visible_message("<span class='danger'>[user] rips apart [name]!</span>", \
+									"<span class='warning'>You rip [name] apart!</span>")
+					gib()
+					return 1
 			visible_message("<span class='danger'>[user] has torn into [src]!</span>", \
 							"<span class='userdanger'>[user] has torn into [src]!</span>")
 			apply_damage(40, BRUTE, affecting, armor_block)
-			apply_effect(3, WEAKEN, armor_block)
+			apply_effect(1, WEAKEN, armor_block)
 			return 1
 		var/hulk_verb = pick("smash","pummel")
 		visible_message("<span class='danger'>[user] has [hulk_verb]ed [src]!</span>", \

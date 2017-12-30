@@ -173,7 +173,7 @@
 			update_inv_wear_mask()
 			update_inv_head()
 		else
-			src << "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>"
+			to_chat(src, "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>")
 	else
 		. = get_bodypart("head")
 		if(.)
@@ -194,7 +194,7 @@
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 		else
-			src << "<span class='notice'>Your [chest_clothes.name] protects your body from the acid!</span>"
+			to_chat(src, "<span class='notice'>Your [chest_clothes.name] protects your body from the acid!</span>")
 	else
 		. = get_bodypart("chest")
 		if(.)
@@ -225,7 +225,7 @@
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 		else
-			src << "<span class='notice'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>"
+			to_chat(src, "<span class='notice'>Your [arm_clothes.name] protects your arms and hands from the acid!</span>")
 	else
 		. = get_bodypart("r_arm")
 		if(.)
@@ -251,7 +251,7 @@
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 		else
-			src << "<span class='notice'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>"
+			to_chat(src, "<span class='notice'>Your [leg_clothes.name] protects your legs and feet from the acid!</span>")
 	else
 		. = get_bodypart("r_leg")
 		if(.)

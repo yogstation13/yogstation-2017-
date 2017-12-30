@@ -29,6 +29,7 @@ var/list/preferences_datums = list()
 
 	var/UI_style = "Midnight"
 	var/hotkeys = FALSE
+	var/hotkeysmode = FALSE		// FALSE = QWERTY, TRUE = AZERTY
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/toggles = TOGGLES_DEFAULT
@@ -62,6 +63,8 @@ var/list/preferences_datums = list()
 	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
+	var/prefered_security_department = "random"
+	
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -111,11 +114,6 @@ var/list/preferences_datums = list()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			unlock_content |= C.IsByondMember()
-			if(unlock_content)
-				max_save_slots = 8
-			else if(is_donator(C))
-				max_save_slots = DONOR_CHARACTER_SLOTS
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
@@ -185,13 +183,13 @@ var/list/preferences_datums = list()
 
 			dat += "<b>Special Names:</b><BR>"
 			dat += "<a href ='?_src_=prefs;preference=clown_name;task=input'><b>Clown:</b> [custom_names["clown"]]</a> "
-			dat += "<a href ='?_src_=prefs;preference=mime_name;task=input'><b>Mime:</b>[custom_names["mime"]]</a><BR>"
+			dat += "<a href ='?_src_=prefs;preference=mime_name;task=input'><b>Mime:</b> [custom_names["mime"]]</a><BR>"
 			dat += "<a href ='?_src_=prefs;preference=ai_name;task=input'><b>AI:</b> [custom_names["ai"]]</a> "
 			dat += "<a href ='?_src_=prefs;preference=cyborg_name;task=input'><b>Cyborg:</b> [custom_names["cyborg"]]</a><BR>"
 			dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
-			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR></td>"
-
-
+			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR>"
+			dat += "<a href ='?_src_=prefs;preference=sec_dept;task=input'><b>Security department:</b> [prefered_security_department]</a><BR></td>"
+			
 			dat += "<td valign='center'>"
 
 			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
@@ -358,6 +356,7 @@ var/list/preferences_datums = list()
 			dat += "<h2>General Settings</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
+			dat += "<b>Hotkeys mode:</b> <a href='?_src_=prefs;preference=hotkeysmode'>[(hotkeysmode) ? "AZERTY" : "QWERTY"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
@@ -705,7 +704,7 @@ var/list/preferences_datums = list()
 		return
 
 	if (!isnum(desiredLvl))
-		user << "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>"
+		to_chat(user, "<span class='danger'>UpdateJobPreference - desired level was not a number. Please notify coders!</span>")
 		ShowChoices(user)
 		return
 
@@ -797,7 +796,7 @@ var/list/preferences_datums = list()
 			if(text2num(duration) > 0)
 				text += ". The ban is for [duration] minutes and expires on [expiration_time] (server time)"
 			text += ".</span>"
-			user << text
+			to_chat(user, text)
 		return
 	if(href_list["preference"] == "donor")
 		if(is_donator(user))
@@ -905,7 +904,7 @@ var/list/preferences_datums = list()
 					if(new_name)
 						real_name = new_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("age")
 					var/new_age = input(user, "Choose your character's age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference") as num|null
@@ -1019,7 +1018,7 @@ var/list/preferences_datums = list()
 						else if((MUTCOLORS_PARTSONLY in pref_species.specflags) || ReadHSV(temp_hsv)[3] >= ReadHSV("#7F7F7F")[3]) // mutantcolors must be bright, but only if they affect the skin
 							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
 						else
-							user << "<span class='danger'>Invalid color. Your color is not bright enough.</span>"
+							to_chat(user, "<span class='danger'>Invalid color. Your color is not bright enough.</span>")
 
 				if("tail_lizard")
 					var/new_tail
@@ -1095,42 +1094,46 @@ var/list/preferences_datums = list()
 					if(new_clown_name)
 						custom_names["clown"] = new_clown_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("mime_name")
 					var/new_mime_name = name_input(user, "Choose your character's mime name:", "Character Preference")
 					if(new_mime_name)
 						custom_names["mime"] = new_mime_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("ai_name")
 					var/new_ai_name = name_input(user, "Choose your character's AI name:", "Character Preference", null, TRUE)
 					if(new_ai_name)
 						custom_names["ai"] = new_ai_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>")
 
 				if("cyborg_name")
 					var/new_cyborg_name = name_input(user, "Choose your character's cyborg name:", "Character Preference", null, 1 )
 					if(new_cyborg_name)
 						custom_names["cyborg"] = new_cyborg_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, 0-9, -, ' and .</font>")
 
 				if("religion_name")
 					var/new_religion_name = name_input(user, "Choose your character's religion:", "Character Preference")
 					if(new_religion_name)
 						custom_names["religion"] = new_religion_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
 
 				if("deity_name")
 					var/new_deity_name = name_input(user, "Choose your character's deity:", "Character Preference")
 					if(new_deity_name)
 						custom_names["deity"] = new_deity_name
 					else
-						user << "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>"
+						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
+				if("sec_dept")
+					var/department = input(user, "Choose your preferred security department:", "Security Departments") as null|anything in security_depts_prefs
+					if(department)
+						prefered_security_department = department
 				if ("preferred_map")
 					var/maplist = list()
 					var/default = "Default"
@@ -1189,6 +1192,9 @@ var/list/preferences_datums = list()
 
 				if("hotkeys")
 					hotkeys = !hotkeys
+
+				if("hotkeysmode")
+					hotkeysmode = !hotkeysmode
 
 				if("tgui_fancy")
 					tgui_fancy = !tgui_fancy
@@ -1346,5 +1352,12 @@ var/list/preferences_datums = list()
 	if(character.dna)
 		features = character.dna.features.Copy()
 		pref_species = character.dna.species
+
+/datum/preferences/proc/update_character_slots(client/C)
+	unlock_content |= C.IsByondMember()
+	if(unlock_content)
+		max_save_slots = 8
+	else if(is_donator(C))
+		max_save_slots = DONOR_CHARACTER_SLOTS
 
 #undef DONOR_CHARACTER_SLOTS

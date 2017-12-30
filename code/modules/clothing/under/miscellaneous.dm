@@ -543,6 +543,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = 0
 	strip_delay = 80
+	slowdown = 1
 	var/next_extinguish = 0
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
@@ -550,7 +551,7 @@
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	..()
-	user << "<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>"
+	to_chat(user, "<span class='notice'>There are [extinguishes_left] extinguisher canisters left in this suit.</span>")
 
 
 /obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
@@ -571,11 +572,11 @@
 /obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
 	if (istype(E, /obj/item/device/extinguisher_refill))
 		if (extinguishes_left == 5)
-			user << "<span class='notice'>The inbuilt extinguisher is full.</span>"
+			to_chat(user, "<span class='notice'>The inbuilt extinguisher is full.</span>")
 			return
 		else
 			extinguishes_left = 5
-			user << "<span class='notice'>You refill the suits inbuilt extinguisher, using up the refill pack.</span>"
+			to_chat(user, "<span class='notice'>You refill the suits inbuilt extinguisher, using up the refill pack.</span>")
 			qdel(E)
 			return
 		return

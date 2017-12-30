@@ -16,14 +16,14 @@
 		var/obj/item/stack/rods/R = I
 		if(R.get_amount() >= 4)
 			R.use(4)
-			user << "<span class='notice'>You add spikes to the frame.</span>"
+			to_chat(user, "<span class='notice'>You add spikes to the frame.</span>")
 			var/obj/F = new /obj/structure/kitchenspike(src.loc,)
 			transfer_fingerprints_to(F)
 			qdel(src)
 	else if(istype(I, /obj/item/weapon/screwdriver))
-		user << "<span class='notice'>You start to deconstruct the frame...</span>"
+		to_chat(user, "<span class='notice'>You start to deconstruct the frame...</span>")
 		if(do_after(user, 40/I.toolspeed, target = src))
-			user << "<span class='notice'>You deconstruct the frame.</span>"
+			to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 			new /obj/item/stack/sheet/metal(loc, 5)
 			qdel(src)
 		return
@@ -51,24 +51,31 @@
 		if(!spiked)
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 			if(do_after(user, 20/I.toolspeed, target = src))
-				user << "<span class='notice'>You pry the spikes out of the frame.</span>"
+				to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
 				new /obj/item/stack/rods(loc, 4)
 				var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
 				transfer_fingerprints_to(F)
 				qdel(src)
 		else
-			user << "<span class='notice'>You can't do that while something's on the spike!</span>"
+			to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
 	else
 		return ..()
 
 /obj/structure/kitchenspike/attack_hand(mob/user)
 	if(user.pulling && isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
-		if(do_mob(user, src, 120))
+		var/old_loc = src.loc
+		if(L.buckled)
+			return
+
+		if(do_mob(user, L, 120))
+			if(src.loc != old_loc)
+				return
 			if(has_buckled_mobs()) //to prevent spam/queing up attacks
 				return
 			if(L.buckled)
 				return
+
 			playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
 			L.loc = src.loc
@@ -79,6 +86,9 @@
 			L.buckled = src
 			L.dir = 2
 			buckle_mob(L, force=1)
+			if(user.pulling == L)
+				user.stop_pulling()
+
 			var/matrix/m180 = matrix(L.transform)
 			m180.Turn(180)
 			animate(L, transform = m180, time = 3)
@@ -91,30 +101,37 @@
 /obj/structure/kitchenspike/MouseDrop_T(mob/living/target, mob/living/carbon/human/user)
 	if(!isliving(target) || has_buckled_mobs())
 		return
-	if(user.pulling != target)
-		return
-	if(user.a_intent != "grab")
+
+	var/mob/living/L = target
+	var/old_loc = src.loc
+	if(L.buckled)
 		return
 
-	var/mob/living/L = user.pulling
-	if(do_mob(user, src, 120))
+	if(do_mob(user, L, 120))
+		if(src.loc != old_loc)
+			return
 		if(has_buckled_mobs()) //to prevent spam/queing up attacks
 			return
-		if(target.buckled)
+		if(L.buckled)
 			return
+
 		playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
-		target.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
-		target.loc = src.loc
-		target.emote("scream")
-		target.add_splatter_floor()
-		target.adjustBruteLoss(30)
-		target.buckled = src
-		target.dir = 2
+		L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
+		L.loc = src.loc
+		spiked = L
+		L.emote("scream")
+		L.add_splatter_floor()
+		L.adjustBruteLoss(30)
+		L.buckled = src
+		L.dir = 2
 		buckle_mob(L, force=1)
-		var/matrix/m180 = matrix(target.transform)
+		if(user.pulling == L)
+			user.stop_pulling()
+
+		var/matrix/m180 = matrix(L.transform)
 		m180.Turn(180)
 		animate(L, transform = m180, time = 3)
-		target.pixel_y = target.get_standard_pixel_y_offset(180)
+		L.pixel_y = L.get_standard_pixel_y_offset(180)
 	else
 		return
 
@@ -144,7 +161,7 @@
 			M.adjustBruteLoss(30)
 			if(!do_after(M, 1200, target = src))
 				if(M && M.buckled)
-					M << "<span class='warning'>You fail to free yourself!</span>"
+					to_chat(M, "<span class='warning'>You fail to free yourself!</span>")
 				return
 		if(!M.buckled)
 			return
@@ -154,7 +171,7 @@
 		M.pixel_y = M.get_standard_pixel_y_offset(180)
 		M.adjustBruteLoss(30)
 		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
-		unbuckle_mob(M,force=1)
+		unbuckle_mob(M, force=1)
 		spiked = 0
 		M.emote("scream")
 		M.AdjustWeakened(10)

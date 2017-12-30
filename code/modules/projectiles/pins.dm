@@ -28,20 +28,20 @@
 			if(G.pin && (force_replace || G.pin.pin_removeable))
 				G.pin.loc = get_turf(G)
 				G.pin.gun_remove(user)
-				user << "<span class ='notice'>You remove [G]'s old pin.</span>"
+				to_chat(user, "<span class ='notice'>You remove [G]'s old pin.</span>")
 
 			if(!G.pin)
 				if(!user.unEquip(src))
 					return
 				gun_insert(user, G)
-				user << "<span class ='notice'>You insert [src] into [G].</span>"
+				to_chat(user, "<span class ='notice'>You insert [src] into [G].</span>")
 			else
-				user << "<span class ='notice'>This firearm already has a firing pin installed.</span>"
+				to_chat(user, "<span class ='notice'>This firearm already has a firing pin installed.</span>")
 
 /obj/item/device/firing_pin/emag_act(mob/user)
 	if(!emagged)
 		emagged = 1
-		user << "<span class='notice'>You override the authentication mechanism.</span>"
+		to_chat(user, "<span class='notice'>You override the authentication mechanism.</span>")
 
 /obj/item/device/firing_pin/proc/gun_insert(mob/living/user, obj/item/weapon/gun/G)
 	gun = G
@@ -61,7 +61,7 @@
 	user.show_message(fail_message, 1)
 	if(selfdestruct)
 		user.show_message("<span class='danger'>SELF-DESTRUCTING...</span><br>", 1)
-		user << "<span class='userdanger'>[gun] explodes!</span>"
+		to_chat(user, "<span class='userdanger'>[gun] explodes!</span>")
 		explosion(get_turf(gun), -1, 0, 2, 3)
 		if(gun)
 			qdel(gun)
@@ -163,7 +163,7 @@
 		var/mob/living/carbon/M = target
 		if(M.dna && M.dna.unique_enzymes)
 			unique_enzymes = M.dna.unique_enzymes
-			user << "<span class='notice'>DNA-LOCK SET.</span>"
+			to_chat(user, "<span class='notice'>DNA-LOCK SET.</span>")
 
 /obj/item/device/firing_pin/dna/pin_auth(mob/living/carbon/user)
 	if(istype(user) && user.dna && user.dna.unique_enzymes)
@@ -176,7 +176,7 @@
 	if(!unique_enzymes)
 		if(istype(user) && user.dna && user.dna.unique_enzymes)
 			unique_enzymes = user.dna.unique_enzymes
-			user << "<span class='notice'>DNA-LOCK SET.</span>"
+			to_chat(user, "<span class='notice'>DNA-LOCK SET.</span>")
 	else
 		..()
 
@@ -198,7 +198,7 @@
 		var/mob/living/carbon/human/M = user
 		if(istype(M.wear_suit, suit_requirement))
 			return 1
-	user << "<span class='warning'>You need to be wearing [tagcolor] laser tag armor!</span>"
+	to_chat(user, "<span class='warning'>You need to be wearing [tagcolor] laser tag armor!</span>")
 	return 0
 
 /obj/item/device/firing_pin/tag/red
@@ -217,3 +217,17 @@
 	if(gun)
 		gun.pin = null
 	return ..()
+
+
+/obj/item/device/firing_pin/paintball
+	name = "Paintball firing pin"
+	icon_state = "firing_pin_blue"
+	desc = "This one-use firing pin cannot be inserted or removed from a gun. It can usually be found in paintball guns."
+
+/obj/item/device/firing_pin/paintball/gun_insert(mob/living/user, obj/item/weapon/gun/G)
+	user << "<span class='warning'>The [src] plops to the floor. Once removed, this pin cannot be inserted into anything.</span>"
+	return
+
+/obj/item/device/firing_pin/paintball/gun_remove(mob/living/user)
+	user << "<span class='warning'>If you attempt to remove this firing pin, it will not be useable again!</span>"
+	return

@@ -85,8 +85,10 @@
 			if(prob(25))
 				emote("drool")
 			else
-				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
-
+				if(!dna.check_mutation(ACTIVE_HULK))
+					say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
+				else
+					say(pick_list_replacements(BRAIN_DAMAGE_FILE, "hulk"))
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))
@@ -295,7 +297,7 @@
 		for(var/obj/item/I in BP.embedded_objects)
 			if(prob(I.embedded_pain_chance))
 				BP.take_damage(I.w_class*I.embedded_pain_multiplier)
-				src << "<span class='userdanger'>\the [I] embedded in your [BP.name] hurts!</span>"
+				to_chat(src, "<span class='userdanger'>\the [I] embedded in your [BP.name] hurts!</span>")
 
 			if(prob(I.embedded_fall_chance))
 				BP.take_damage(I.w_class*I.embedded_fall_pain_multiplier)
@@ -383,15 +385,15 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(drunkenness >= 81)
 			adjustToxLoss(0.2)
 			if(prob(5) && !stat)
-				src << "<span class='warning'>Maybe you should lie down for a bit...</span>"
+				to_chat(src, "<span class='warning'>Maybe you should lie down for a bit...</span>")
 
 		if(drunkenness >= 91)
 			adjustBrainLoss(0.4)
 			if(prob(20) && !stat)
 				if(SSshuttle.emergency.mode == SHUTTLE_DOCKED && z == ZLEVEL_STATION) //QoL mainly
-					src << "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>"
+					to_chat(src, "<span class='warning'>You're so tired... but you can't miss that shuttle...</span>")
 				else
-					src << "<span class='warning'>Just a quick nap...</span>"
+					to_chat(src, "<span class='warning'>Just a quick nap...</span>")
 					Sleeping(45)
 
 		if(drunkenness >= 101)
@@ -404,7 +406,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 				stuttering += 1
 				confused += 2
 			if(prob(10) && !stat)
-				src << "<span class='warning'>You feel kind of iffy...</span>"
+				to_chat(src, "<span class='warning'>You feel kind of iffy...</span>")
 			jitteriness = max(jitteriness - 3, 0)
 		if(disgust >= DISGUST_LEVEL_VERYGROSS)
 			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
