@@ -44337,7 +44337,6 @@
 	},
 /area/shuttle/labor)
 "bJY" = (
-/obj/machinery/computer/security/mining,
 /obj/machinery/camera{
 	c_tag = "Mining Dock";
 	dir = 4;
@@ -47460,10 +47459,16 @@
 /turf/open/floor/plating/airless,
 /area/space)
 "bPL" = (
-/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/status_display{
+	density = 0;
+	pixel_x = 32;
+	pixel_y = -32;
+	supply_display = 1
+	},
 /turf/open/floor/plasteel{
 	dir = 2;
-	icon_state = "brown"
+	icon_state = "browncorner"
 	},
 /area/quartermaster/miningdock)
 "bPM" = (
@@ -57408,9 +57413,9 @@
 	},
 /area/solar/port)
 "ciR" = (
-/obj/structure/table,
-/obj/item/weapon/storage/fancy/cigarettes,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/closet,
+/obj/item/clothing/head/fedora,
+/obj/item/clothing/suit/det_suit/grey,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "ciS" = (
@@ -69737,6 +69742,176 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zri" = (
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel{
+	dir = 9;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"Zrj" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/donkpockets,
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"Zrk" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"Zrl" = (
+/obj/machinery/computer/security/mining,
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"Zrm" = (
+/obj/structure/table,
+/obj/item/weapon/folder/yellow,
+/obj/machinery/camera{
+	c_tag = "Chapel North";
+	dir = 2;
+	network = list("SS13")
+	},
+/turf/open/floor/plasteel{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"Zrn" = (
+/turf/open/floor/plasteel{
+	dir = 10;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"Zro" = (
+/turf/open/floor/plasteel{
+	dir = 8;
+	icon_state = "browncorner"
+	},
+/area/quartermaster/miningdock)
+"Zrp" = (
+/obj/structure/chair/stool,
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/quartermaster/miningdock)
+"Zrq" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/quartermaster/miningdock)
+"Zrr" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningdock)
+"Zrs" = (
+/obj/structure/table,
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/quartermaster/miningdock)
+"Zrt" = (
+/obj/structure/chair/stool,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/turf/open/floor/plasteel{
+	icon_state = "bar"
+	},
+/area/quartermaster/miningdock)
+"Zru" = (
+/obj/machinery/light{
+	status = 2
+	},
+/turf/open/floor/plasteel{
+	dir = 2;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"Zrv" = (
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
+	name = "KEEP CLEAR: DOCKING AREA";
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/closed/wall,
+/area/quartermaster/miningdock)
+"Zrw" = (
+/obj/machinery/light{
+	icon_state = "tube1";
+	dir = 8
+	},
+/turf/open/floor/plasteel{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"Zrx" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"Zry" = (
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/labor)
+"Zrz" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"ZrA" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Mining Shuttle Airlock";
+	req_access_txt = "48"
+	},
+/turf/open/floor/plating,
+/area/shuttle/labor)
+"ZrB" = (
+/obj/machinery/light{
+	status = 2
+	},
+/obj/machinery/computer/shuttle/mining,
+/turf/open/floor/plasteel{
+	dir = 6;
+	icon_state = "brown"
+	},
+/area/quartermaster/miningdock)
+"ZrC" = (
+/obj/structure/lattice,
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
+	name = "KEEP CLEAR: DOCKING AREA";
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/open/space,
+/area/space)
 "ZrD" = (
 /obj/machinery/vending/snack,
 /turf/open/floor/plasteel{
@@ -69838,6 +70013,9 @@
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel{
 	dir = 2;
 	icon_state = "brown"
@@ -69884,11 +70062,9 @@
 	},
 /area/quartermaster/miningdock)
 "ZrT" = (
-/obj/machinery/light{
-	status = 2
-	},
+/obj/structure/closet/crate,
 /turf/open/floor/plasteel{
-	dir = 6;
+	dir = 2;
 	icon_state = "brown"
 	},
 /area/quartermaster/miningdock)
@@ -90666,7 +90842,7 @@ aaA
 aaC
 aaC
 aaA
-aaC
+bIk
 aaC
 aaA
 als
@@ -90921,20 +91097,20 @@ aaa
 aaC
 aaC
 bJW
-aaC
-aaC
+bIk
+bIk
 bOw
-aaC
+bIk
 aaA
 aaa
 aaa
 aaA
 ady
-aaA
-aaa
-aaa
-aaa
-aaA
+ady
+ady
+ady
+ady
+ady
 caJ
 aaA
 aaA
@@ -91181,16 +91357,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
 aaC
-bsl
-bsl
-bsl
-bsl
-bsl
-bsl
-bsl
 aaa
+bsl
+bsl
+bsl
+bsl
+bsl
+bsl
+bsl
+aaA
 ady
 caK
 ady
@@ -91432,14 +91608,14 @@ bnQ
 aaa
 aaa
 aaa
-aCa
-amG
-anv
-anv
-amH
-anv
-aqU
-aGf
+aaa
+aaa
+bBh
+bBh
+bBh
+bLA
+bBh
+bBh
 amG
 amH
 anv
@@ -91447,7 +91623,7 @@ anv
 anv
 amH
 ZrU
-aaa
+aGf
 aaA
 caJ
 aaa
@@ -91689,14 +91865,14 @@ bnQ
 aaa
 aaa
 aaa
-aCa
-bJX
-bLy
-apo
-bMQ
-aqe
-bJX
-aGf
+aaa
+aaa
+bLA
+Zri
+Zrn
+Zrp
+Zrs
+bBh
 amH
 apL
 apL
@@ -91704,7 +91880,7 @@ apL
 apL
 Zso
 amH
-aaa
+aGf
 dvC
 caL
 aaa
@@ -91946,22 +92122,22 @@ bbG
 aaA
 aaA
 aaA
-aCa
+aaA
+aaA
+bLA
+Zrj
+Zsh
+Zrq
+Zrt
+bLA
 amH
-bLz
-apo
-bMQ
+Zry
+Zry
+Zry
+Zry
 bQR
 bSe
 aGf
-amH
-apo
-apo
-apo
-apo
-bQR
-bSe
-aaa
 aaA
 caM
 aaa
@@ -92203,22 +92379,22 @@ bnQ
 aaa
 aaa
 aaa
-aCa
-bJX
-bLy
-apo
-bMQ
-bQS
-bJX
-aGf
-amH
-Zsm
-apo
-Zsm
-Zsm
-bQS
-amH
 aaa
+aaa
+bLA
+ZrZ
+Zro
+bMT
+Zrn
+bBh
+amH
+Zsm
+Zry
+Zsm
+Zsm
+bQS
+amH
+aGf
 aaA
 caM
 bQV
@@ -92460,14 +92636,14 @@ bnQ
 aaa
 aaa
 aaa
-aCa
-amI
-anv
-ZrW
-amH
-anv
-aqW
-aGf
+aaa
+aaa
+bBh
+ZrZ
+bJZ
+bJZ
+Zsh
+Zrv
 amI
 amH
 ZrR
@@ -92475,8 +92651,8 @@ anv
 anv
 amH
 ZrV
-aaa
-aaA
+aGf
+ZrC
 caN
 bQV
 bMZ
@@ -92718,17 +92894,17 @@ aaA
 aaA
 aaA
 aaA
-aaa
+aaA
+bLA
+Zrk
+bJZ
+bJZ
+Zru
 bBh
+bBh
+bLA
 ZrX
 bLA
-bBh
-bBh
-bBh
-bBh
-bLA
-ZrX
-bBh
 bBh
 bsm
 bsm
@@ -92977,16 +93153,16 @@ aaa
 aaA
 aaa
 bLA
-ZrY
-bMT
-Zsd
-Zsg
-bMT
+Zrl
+bJZ
+bJZ
+Zro
+Zrw
 bMT
 bMT
 bMT
 ZrS
-bBh
+bLA
 aaa
 aaa
 aaa
@@ -93234,16 +93410,16 @@ bBe
 bBe
 aaa
 bLA
-ZrZ
+Zrm
+bJZ
+bLC
+bJZ
+bJZ
+bJZ
 ZrF
 ZrL
-ZrO
-bMS
-bMS
-bMS
-bMS
 ZrT
-bBh
+bLA
 aaa
 aaa
 aaa
@@ -93490,20 +93666,20 @@ bEg
 bFv
 bBe
 aaa
-bLA
+bBh
 ZrD
-bCF
-bJZ
+ZrF
+Zrr
 bPL
-bBh
-bBh
+Zrx
+Zrx
+Zrz
+bMS
+ZrB
 bLA
-bLA
-bBh
-bBh
-aaa
-aaa
-aaa
+aaA
+aaA
+aaA
 bHm
 caR
 cbX
@@ -93746,19 +93922,19 @@ bCy
 bEh
 bFw
 bBg
-aaa
+aaA
 bLA
 Zsa
 bCF
-bJZ
+bFD
 Zsh
 bBh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bBh
+bLA
+ZrX
+bLA
+bBh
+bsl
 aaa
 aaa
 bHm
@@ -94007,16 +94183,16 @@ aaa
 bLA
 Zsa
 ZrG
-bJZ
+bFD
 ZrP
 bBh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+amG
+anv
+ZrA
+amH
+anv
+aqU
+aGf
 aaa
 bHm
 caS
@@ -94260,20 +94436,20 @@ bCA
 bEj
 bFy
 bBg
-aaa
+aaA
 bLA
 Zsb
 bCF
-bLC
+bFD
 ZrQ
 bBh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bJX
+bLy
+apo
+bMQ
+aqe
+bJX
+aGf
 aaA
 bHm
 caT
@@ -94523,13 +94699,13 @@ Zsc
 ZrH
 ZrM
 bPM
-bBh
-aaa
-aaa
-aaA
-aaA
-aaA
-aaA
+bLA
+amH
+bLz
+apo
+bMQ
+bQR
+bSe
 bHm
 bHm
 bHm
@@ -94781,13 +94957,13 @@ Zse
 bOz
 bPN
 bBh
-aaa
-aaa
-bHm
-bHm
-bHm
-bHm
-Zyh
+bJX
+bLy
+apo
+bMQ
+bQS
+bJX
+bQV
 bMZ
 bMZ
 cda
@@ -95038,13 +95214,13 @@ ZrI
 ZrN
 bPO
 bBh
-aaa
-aaa
-bHm
-bMZ
-bMZ
-bMZ
-bHm
+amI
+anv
+ZrW
+amH
+anv
+aqW
+bQV
 bMZ
 ccb
 ccb
@@ -95295,13 +95471,13 @@ bCF
 bFD
 bPP
 bBh
-aaa
-aaa
-bHm
-bMZ
-bMZ
-bMZ
-bHm
+bsm
+bsm
+bsm
+bsm
+bsm
+bsm
+bQV
 bMZ
 ccb
 cdf
@@ -95555,10 +95731,10 @@ bBh
 aaa
 aaa
 bHm
-bMZ
-bMZ
-bMZ
 bHm
+bHm
+bHm
+Zyh
 bMZ
 ccb
 cdg
@@ -96066,8 +96242,8 @@ ZrK
 bMW
 bMU
 bBh
-aaa
-aaa
+aaA
+aaA
 bHm
 bMZ
 bMZ
@@ -96326,9 +96502,9 @@ bBh
 aaa
 aaa
 bHm
-bHm
-bHm
-bHm
+bMZ
+bMZ
+bMZ
 bHm
 bMZ
 ccb
@@ -96580,13 +96756,13 @@ bBh
 bBh
 bBh
 bBh
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-bQV
+aaA
+aaA
+bHm
+bMZ
+bMZ
+bMZ
+bHm
 bMZ
 ccb
 cdk
@@ -96839,11 +97015,11 @@ bHm
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaA
-bQV
+bHm
+bMZ
+bMZ
+bMZ
+bHm
 bMZ
 ccb
 cdl
@@ -97096,11 +97272,11 @@ bHm
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-bQV
+bHm
+bHm
+bHm
+bHm
+bHm
 bMZ
 ccb
 cdm
@@ -97351,9 +97527,9 @@ bMZ
 bOB
 bHm
 aaa
+aaa
+aaa
 aaA
-aaa
-aaa
 aaa
 aaa
 aaa
