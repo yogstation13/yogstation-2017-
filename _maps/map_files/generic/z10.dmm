@@ -5190,12 +5190,6 @@
 	},
 /area/mine/production)
 "mJ" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/machinery/computer/shuttle/mining{
-	req_access = "0"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -5208,6 +5202,7 @@
 	pixel_x = 30;
 	pixel_y = 1
 	},
+/obj/machinery/computer/shuttle/mining/asteroid,
 /turf/open/floor/plasteel{
 	icon_state = "delivery";
 	name = "floor"
@@ -50213,9 +50208,9 @@ jI
 lz
 jI
 jI
-lh
+jK
 jI
-lh
+jK
 nc
 nl
 lh
