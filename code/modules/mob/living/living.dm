@@ -1036,4 +1036,18 @@ Sorry Giacom. Please don't be mad :(
 		if(SA.flying)
 			return 1
 
+/mob/living/proc/pummel(atom/movable/AM, var/force = 2)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(force >= 6 && H.shoes)
+			H.unEquip(H.shoes)
+		else if(istype(H.shoes, /obj/item/clothing/shoes/magboots))
+			var/obj/item/clothing/shoes/magboots/MB = H.shoes
+			if(MB.magpulse)
+				force = 0
+	var/throw_dir = get_dir(AM,src)
+	var/throw_range = rand(force*3, force*4)
+	var/turf/throw_at = get_ranged_target_turf(src, throw_dir, throw_range)
+	throw_speed = force
+	src.throw_at_fast(throw_at, throw_range, force)
 
