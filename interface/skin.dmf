@@ -1,7 +1,7 @@
 macro "default"
 	elem 
 		name = "TAB"
-		command = "Toggle-Hotkeys"
+		command = ".winset \"mainwindow.macro=hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
 	elem 
 		name = "CENTER+REP"
 		command = ".center"
@@ -131,11 +131,146 @@ macro "default"
 	elem 
 		name = "F12"
 		command = "F12"
+		
+macro "default-azerty"
+	elem 
+		name = "TAB"
+		command = ".winset \"mainwindow.macro=hotkeys-azerty mapwindow.map.focus=true input.background-color=#e0e0e0\""
+	elem 
+		name = "CENTER+REP"
+		command = ".center"
+	elem 
+		name = "NORTHEAST"
+		command = ".northeast"
+	elem 
+		name = "SOUTHEAST"
+		command = ".southeast"
+	elem 
+		name = "SOUTHWEST"
+		command = ".southwest"
+	elem 
+		name = "NORTHWEST"
+		command = ".northwest"
+	elem 
+		name = "CTRL+WEST"
+		command = "westface"
+	elem 
+		name = "WEST+REP"
+		command = ".moveleft"
+	elem 
+		name = "CTRL+NORTH"
+		command = "northface"
+	elem 
+		name = "NORTH+REP"
+		command = ".moveup"
+	elem 
+		name = "CTRL+EAST"
+		command = "eastface"
+	elem 
+		name = "EAST+REP"
+		command = ".moveright"
+	elem 
+		name = "CTRL+SOUTH"
+		command = "southface"
+	elem 
+		name = "SOUTH+REP"
+		command = ".movedown"
+	elem 
+		name = "INSERT"
+		command = "a-intent right"
+	elem 
+		name = "DELETE"
+		command = "delete-key-pressed"
+	elem 
+		name = "CTRL+1"
+		command = "a-intent help"
+	elem 
+		name = "CTRL+2"
+		command = "a-intent disarm"
+	elem 
+		name = "CTRL+3"
+		command = "a-intent grab"
+	elem 
+		name = "CTRL+4"
+		command = "a-intent harm"
+	elem 
+		name = "CTRL+Q+REP"
+		command = ".moveleft"
+	elem 
+		name = "CTRL+B"
+		command = "resist"
+	elem 
+		name = "CTRL+D+REP"
+		command = ".moveright"
+	elem 
+		name = "CTRL+E"
+		command = "quick-equip"
+	elem 
+		name = "CTRL+F"
+		command = "a-intent left"
+	elem 
+		name = "CTRL+G"
+		command = "a-intent right"
+	elem 
+		name = "CTRL+A"
+		command = ".northwest"
+	elem 
+		name = "CTRL+R"
+		command = ".southwest"
+	elem 
+		name = "CTRL+S+REP"
+		command = ".movedown"
+	elem 
+		name = "CTRL+Z+REP"
+		command = ".moveup"
+	elem 
+		name = "CTRL+X"
+		command = ".northeast"
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+	elem 
+		name = "CTRL+W"
+		command = "Activate-Held-Object"
+	elem 
+		name = "F1"
+		command = "adminhelp"
+	elem 
+		name = "CTRL+SHIFT+F1+REP"
+		command = ".options"
+	elem 
+		name = "F2+REP"
+		command = ".screenshot auto"
+	elem 
+		name = "SHIFT+F2+REP"
+		command = ".screenshot"
+	elem 
+		name = "F5"
+		command = "Aghost"
+	elem 
+		name = "CTRL+O"
+		command = "ooc"
+	elem 
+		name = "F6"
+		command = "Player-Panel"
+	elem 
+		name = "F7"
+		command = "Admin-PM"
+	elem 
+		name = "F8"
+		command = "Invisimin"
+	elem 
+		name = "F9"
+		command = "Adminlisttickets"
+	elem 
+		name = "F12"
+		command = "F12"
+
 
 macro "hotkeys"
 	elem 
 		name = "Tab"
-		command = "Toggle-Hotkeys"
+		command = ".winset \"mainwindow.macro=default input.focus=true input.background-color=#d3b5b5\""
 	elem 
 		name = "Center+REP"
 		command = ".center"
@@ -335,7 +470,7 @@ macro "hotkeys"
 macro "hotkeys-azerty"
 	elem 
 		name = "Tab"
-		command = "Toggle-Hotkeys"
+		command = ".winset \"mainwindow.macro=default-azerty input.focus=true input.background-color=#d3b5b5\""
 	elem 
 		name = "Center+REP"
 		command = ".center"
@@ -536,7 +671,7 @@ macro "hotkeys-azerty"
 macro "robot-default"
 	elem 
 		name = "TAB"
-		command = "Toggle-Hotkeys"
+		command = ".winset \"mainwindow.macro=robot-hotkeys mapwindow.map.focus=true input.background-color=#e0e0e0\""
 	elem 
 		name = "CENTER+REP"
 		command = ".center"
@@ -663,11 +798,143 @@ macro "robot-default"
 	elem "dsay"
 		name = "."
 		command = "dsay"
+
+macro "robot-default-azerty"
+	elem 
+		name = "TAB"
+		command = ".winset \"mainwindow.macro=robot-hotkeys-azerty mapwindow.map.focus=true input.background-color=#e0e0e0\""
+	elem 
+		name = "CENTER+REP"
+		command = ".center"
+	elem 
+		name = "NORTHEAST"
+		command = ".northeast"
+	elem 
+		name = "SOUTHEAST"
+		command = ".southeast"
+	elem 
+		name = "NORTHWEST"
+		command = "unequip-module"
+	elem 
+		name = "CTRL+WEST"
+		command = "westface"
+	elem 
+		name = "WEST+REP"
+		command = ".moveleft"
+	elem 
+		name = "CTRL+NORTH"
+		command = "northface"
+	elem 
+		name = "NORTH+REP"
+		command = ".moveup"
+	elem 
+		name = "CTRL+EAST"
+		command = "eastface"
+	elem 
+		name = "EAST+REP"
+		command = ".moveright"
+	elem 
+		name = "CTRL+SOUTH"
+		command = "southface"
+	elem 
+		name = "SOUTH+REP"
+		command = ".movedown"
+	elem 
+		name = "INSERT"
+		command = "a-intent right"
+	elem 
+		name = "DELETE"
+		command = "delete-key-pressed"
+	elem 
+		name = "CTRL+1"
+		command = "toggle-module 1"
+	elem 
+		name = "CTRL+2"
+		command = "toggle-module 2"
+	elem 
+		name = "CTRL+3"
+		command = "toggle-module 3"
+	elem 
+		name = "CTRL+4"
+		command = "a-intent left"
+	elem 
+		name = "CTRL+Q+REP"
+		command = ".moveleft"
+	elem 
+		name = "CTRL+B"
+		command = "resist"
+	elem 
+		name = "CTRL+O"
+		command = "ooc"
+	elem 
+		name = "CTRL+D+REP"
+		command = ".moveright"
+	elem 
+		name = "CTRL+F"
+		command = "a-intent left"
+	elem 
+		name = "CTRL+G"
+		command = "a-intent right"
+	elem 
+		name = "CTRL+A"
+		command = "unequip-module"
+	elem 
+		name = "CTRL+S+REP"
+		command = ".movedown"
+	elem 
+		name = "CTRL+Z+REP"
+		command = ".moveup"
+	elem 
+		name = "CTRL+X"
+		command = ".northeast"
+	elem 
+		name = "CTRL+Y"
+		command = "Activate-Held-Object"
+	elem 
+		name = "CTRL+W"
+		command = "Activate-Held-Object"
+	elem 
+		name = "F1"
+		command = "adminhelp"
+	elem 
+		name = "CTRL+SHIFT+F1+REP"
+		command = ".options"
+	elem 
+		name = "F2+REP"
+		command = ".screenshot auto"
+	elem 
+		name = "SHIFT+F2+REP"
+		command = ".screenshot"
+	elem 
+		name = "F5"
+		command = "Aghost"
+	elem 
+		name = "F6"
+		command = "Player-Panel"
+	elem 
+		name = "F7"
+		command = "Admin-PM"
+	elem 
+		name = "F8"
+		command = "Invisimin"
+	elem 
+		name = "F9"
+		command = "Adminlisttickets"
+	elem 
+		name = "F12"
+		command = "F12"
+	elem "asay"
+		name = ","
+		command = "asay"
+	elem "dsay"
+		name = "."
+		command = "dsay"
+		
 		
 macro "robot-hotkeys"
 	elem 
 		name = "TAB"
-		command = "Toggle-Hotkeys"
+		command = ".winset \"mainwindow.macro=robot-default input.focus=true input.background-color=#d3b5b5\""
 	elem 
 		name = "CENTER+REP"
 		command = ".center"
@@ -849,7 +1116,7 @@ macro "robot-hotkeys"
 macro "robot-hotkeys-azerty"
 	elem 
 		name = "TAB"
-		command = "Toggle-Hotkeys"
+		command = ".winset \"mainwindow.macro=robot-default-azerty input.focus=true input.background-color=#d3b5b5\""
 	elem 
 		name = "CENTER+REP"
 		command = ".center"
