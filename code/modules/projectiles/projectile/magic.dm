@@ -288,7 +288,7 @@
 					return
 
 			new_mob.attack_log = M.attack_log
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
+			M.attack_log += text("\[[gameTimestamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
 			new_mob.a_intent = "harm"
 
