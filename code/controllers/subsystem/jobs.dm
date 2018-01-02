@@ -37,6 +37,8 @@ var/datum/subsystem/job/SSjob
 			continue
 		if(!job.config_check())
 			continue
+		if(!job.map_check())
+			continue
 		occupations += job
 
 	return 1

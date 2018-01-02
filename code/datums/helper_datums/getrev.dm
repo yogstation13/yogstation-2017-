@@ -24,7 +24,7 @@ var/global/datum/getrev/revdata = new()
 			if(line)
 				world.log << "Test merge active of PR #[line]"
 		world.log << "Based off master commit [parentcommit]"
-	world.log << "Current map - [MAP_NAME]" //can't think of anywhere better to put it
+	world.log << "Current map - [SSmapping.config.map_name]" //can't think of anywhere better to put it
 
 /client/verb/showrevinfo()
 	set category = "OOC"

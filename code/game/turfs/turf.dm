@@ -35,10 +35,19 @@
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
-/turf/Destroy()
+/turf/Destroy(force)
+	. = QDEL_HINT_IWILLGC
+	if(force)
+		..()
+		//this will completely wipe turf state
+		var/turf/basic/B = new /turf/basic(src)
+		for(var/A in B.contents)
+			qdel(A)
+		for(var/I in B.vars)
+			B.vars[I] = null
+		return
 	visibilityChanged()
 	..()
-	return QDEL_HINT_HARDDEL_NOW
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)

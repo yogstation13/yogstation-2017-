@@ -10,6 +10,10 @@
 #define EMPTY_AREA_2 "Empty Area 2"
 #define EMPTY_AREA_3 "Empty Area 3"
 #define EMPTY_AREA_4 "Empty Area 4"
+#define EMPTY_AREA_5 "Empty Area 5"
+#define EMPTY_AREA_6 "Empty Area 6"
+#define EMPTY_AREA_7 "Empty Area 7"
+#define EMPTY_AREA_8 "Empty Area 8"
 #define ASTEROID "Abandoned Asteroid"
 #define AWAY_MISSION "Away Mission"
 

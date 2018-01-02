@@ -553,7 +553,7 @@ var/datum/subsystem/ticker/ticker
 			queue_delay = 0
 
 /datum/subsystem/ticker/proc/check_maprotate()
-	if (!config.maprotation || !SERVERTOOLS)
+	if (!config.maprotation)
 		return
 	if (SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
 		return
@@ -566,7 +566,7 @@ var/datum/subsystem/ticker/ticker
 	if (!prob((world.time/600)*config.maprotatechancedelta))
 		return
 	spawn(0) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
-		maprotate()
+		SSmapping.maprotate()
 
 
 /world/proc/has_round_started()

@@ -50,6 +50,10 @@
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX 1 // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
 
+//Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
+#define TITLESCREEN "title"
+#define TITLESCREEN_ALT null
+
 //Additional code for the above flags.
 #ifdef TESTING
 #warn compiling in TESTING mode. testing() debug messages will be visible.

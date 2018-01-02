@@ -14,7 +14,8 @@ var/global/list/potentialRandomZlevels = generateMapList(filename = "config/away
 			smooth_zlevel(world.maxz)
 			world.log << "away mission loaded: [map]"
 
-		map_transition_config.Add(AWAY_MISSION_LIST)
+		// map_transition_config.Add(AWAY_MISSION_LIST)
+		// Away missions need to be totally removed, ill do this at some point
 
 		for(var/obj/effect/landmark/L in landmarks_list)
 			if (L.name != "awaystart")
