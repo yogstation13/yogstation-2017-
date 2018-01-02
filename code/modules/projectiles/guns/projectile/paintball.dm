@@ -1,4 +1,3 @@
-
 /obj/item/weapon/gun/projectile/automatic/paintball
 	name = "paintball gun (blue)"
 	desc = "An entry level paintball gun. This one comes in blue."
@@ -101,6 +100,18 @@
 	icon_state = "paintballmag"
 	max_ammo = 20
 
+
+/obj/item/ammo_casing/paintball/Crossed(atom/movable/mover)
+	to_chat(mover, "SPLAT!")
+	var/spreadem = rand(1,100)
+	var/turf/theturf = get_turf(src)
+	theturf.color = src.color
+	if(spreadem < 2 || spreadem == 1)
+		src.visible_message("[src] explodes in a shower of paint! covering everything around it in sticky horridness.")
+		for(var/atom/movable/T in orange(3, src))
+			T.color = src.color //ohhhhh you're gonna hate me after this Enka ;)
+	qdel(src)
+
 /obj/item/ammo_box/magazine/paintball/blue
 	name = "paintball ammo cartridge (blue)"
 	ammo_type = /obj/item/ammo_casing/paintball/blue
@@ -116,13 +127,22 @@
 /obj/item/projectile/bullet/paintball/on_hit(atom/target, blocked = 0)
 	if(iscarbon(target))
 		var/mob/living/carbon/human/H = target
-		var/image/paintoverlay = image('icons/effects/paintball.dmi')
-		paintoverlay.color = color //colour the paint splats in
-		paintoverlay.icon_state = pick("1","2","3","4","5","6","7")
-		H.overlays += paintoverlay
+		if(prob(10))
+			H.color = color
+		if(H.wear_suit)
+			H.wear_suit.add_blood(H)
+			H.update_inv_wear_suit(1)    //updates mob overlays to show the new blood (no refresh)
+		else if(H.w_uniform)
+			H.w_uniform.add_blood(H)
+			H.update_inv_w_uniform(1)    //updates mob overlays to show the new blood (no refresh)
 		H << "<span class='warning'>Your feel a sharp sting.</span>"
-	else if(isturf(target))
-		target.color = color //paints walls that it hits with paint
+	else
+		target.color = color //paints EVERYTHING THAT IT HITS WITH FUCKING PAINT
+
+/obj/effect/decal/cleanable/paintball_splat
+	name = "paintball splat"
+	icon = 'icons/effects/paintball.dmi'
+	icon_state = "1"
 
 //Colour list reference, in case you wanna make more ammo types
 	//		if("red")
