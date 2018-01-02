@@ -441,7 +441,7 @@ var/datum/subsystem/ticker/ticker
 				to_chat(Player, "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>")
 
 	if(mode.name != "extended (secret)" && mode.name != "extended (announced)")
-		mode.update_not_chosen_candidates() //reward non-antags for making it thru round
+		mode.update_not_chosen_candidates() //reward non-antags with antag weight increase
 
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
