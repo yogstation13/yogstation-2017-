@@ -180,6 +180,7 @@
 #include "code\datums\dna.dm"
 #include "code\datums\dog_fashion.dm"
 #include "code\datums\hud.dm"
+#include "code\datums\map_config.dm"
 #include "code\datums\martial.dm"
 #include "code\datums\material_container.dm"
 #include "code\datums\mind.dm"
