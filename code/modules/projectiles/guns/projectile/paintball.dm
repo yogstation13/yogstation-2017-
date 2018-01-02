@@ -102,15 +102,18 @@
 
 
 /obj/item/ammo_casing/paintball/Crossed(atom/movable/mover)
-	to_chat(mover, "SPLAT!")
-	var/spreadem = rand(1,100)
-	var/turf/theturf = get_turf(src)
-	theturf.color = src.color
-	if(spreadem < 2 || spreadem == 1)
-		src.visible_message("[src] explodes in a shower of paint! covering everything around it in sticky horridness.")
-		for(var/atom/movable/T in orange(3, src))
-			T.color = src.color //ohhhhh you're gonna hate me after this Enka ;)
-	qdel(src)
+	if(isliving(mover))
+		to_chat(mover, "SPLAT!")
+		var/turf/theturf = get_turf(src)
+		theturf.color = src.color
+		if(prob(1))
+			src.visible_message("[src] explodes in a shower of paint! covering everything around it in sticky horridness.")
+			for(var/atom/movable/T in orange(3, src))
+				if(!istype(T,/mob/dead))
+					T.color = src.color //ohhhhh you're gonna hate me after this Enka ;)
+		qdel(src)
+	else
+		. = ..()
 
 /obj/item/ammo_box/magazine/paintball/blue
 	name = "paintball ammo cartridge (blue)"
