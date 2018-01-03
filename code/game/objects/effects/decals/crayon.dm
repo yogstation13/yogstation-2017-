@@ -5,6 +5,7 @@
 	icon_state = "rune1"
 	layer = ABOVE_NORMAL_TURF_LAYER
 	var/do_icon_rotate = TRUE
+	mergeable_decal = FALSE
 
 /obj/effect/decal/cleanable/crayon/examine()
 	set src in view(2)
