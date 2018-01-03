@@ -101,13 +101,13 @@
 	max_ammo = 20
 
 
-/obj/item/ammo_casing/paintball/Crossed(atom/movable/mover)
+/obj/item/ammo_casing/paintball/Crossed(mob/living/mover)
 	if(isliving(mover))
 		to_chat(mover, "SPLAT!")
 		var/turf/theturf = get_turf(src)
 		theturf.color = src.color
 		if(prob(1))
-			src.visible_message("[src] explodes in a shower of paint! covering everything around it in sticky horridness.")
+			src.visible_message("[src] explodes in a shower of paint, covering everything around it in sticky horridness!")
 			for(var/atom/movable/T in orange(3, src))
 				if(!istype(T,/mob/dead))
 					T.color = src.color //ohhhhh you're gonna hate me after this Enka ;)
