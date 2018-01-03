@@ -124,3 +124,6 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 
 /obj/machinery/telecomms/broadcaster/preset_left/birdstation
 	name = "Broadcaster"
+
+/obj/machinery/telecomms/broadcaster/preset_left/ministation
+	name = "Broadcaster"
