@@ -60,7 +60,7 @@
 "bh" = (/obj/item/stack/sheet/metal,/turf/open/floor/plasteel/whiteyellow,/area/awaymission/research/interior/engineering)
 "bi" = (/obj/structure/table,/obj/item/weapon/storage/toolbox/electrical,/obj/item/clothing/gloves/color/yellow,/turf/open/floor/plasteel/whiteyellow/side{tag = "icon-whiteyellow (WEST)"; icon_state = "whiteyellow"; dir = 8},/area/awaymission/research/interior/engineering)
 "bj" = (/obj/machinery/light/small,/turf/open/floor/plating/asteroid/airless,/area/awaymission/research/exterior)
-"bk" = (/obj/item/weapon/bikehorn,/turf/open/floor/plating/asteroid/airless,/area/space)
+"bk" = (/obj/item/device/assembly/bikehorn,/turf/open/floor/plating/asteroid/airless,/area/space)
 "bl" = (/turf/closed/wall/r_wall,/area/awaymission/research/interior/gateway)
 "bm" = (/obj/structure/cable{d1 = 1; d2 = 2; icon_state = "1-2"; pixel_y = 0},/obj/structure/cable{icon_state = "0-2"; d2 = 2},/obj/machinery/power/apc{auto_name = 1; cell_type = 9000; dir = 4; name = "Engineering APC"; pixel_x = 27; pixel_y = 2},/turf/open/floor/plating,/area/awaymission/research/interior/engineering)
 "bn" = (/turf/open/floor/plasteel/whiteyellow/side{tag = "icon-whiteyellow (EAST)"; icon_state = "whiteyellow"; dir = 4},/area/awaymission/research/interior/engineering)

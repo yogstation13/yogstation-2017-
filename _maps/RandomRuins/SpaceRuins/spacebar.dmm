@@ -37,7 +37,7 @@
 "aK" = (/turf/closed/wall,/area/ruin/powered)
 "aL" = (/obj/structure/table,/mob/living/carbon/monkey{name = "Nup Nup"},/turf/open/floor/wood,/area/ruin/powered{name = "Space Bar"})
 "aM" = (/obj/structure/table,/turf/open/floor/wood,/area/ruin/powered{name = "Space Bar"})
-"aN" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/beer,/obj/item/weapon/reagent_containers/glass/rag,/turf/open/floor/wood,/area/ruin/powered{name = "Space Bar"})
+"aN" = (/obj/structure/table,/obj/item/weapon/reagent_containers/food/drinks/beer,/obj/item/weapon/mop/rag,/turf/open/floor/wood,/area/ruin/powered{name = "Space Bar"})
 "aO" = (/obj/machinery/door/airlock{name = "Bar Storage"; req_access_txt = "25"},/turf/open/floor/plasteel{icon_state = "wood"},/area/ruin/powered{name = "Space Bar"})
 "aP" = (/obj/structure/chair/stool,/turf/open/floor/plasteel/bar,/area/ruin/powered{name = "Space Bar"})
 "aQ" = (/turf/open/floor/plasteel/bar,/area/ruin/powered{name = "Space Bar"})
