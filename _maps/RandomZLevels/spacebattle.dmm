@@ -409,7 +409,7 @@
 "hS" = (/obj/machinery/computer/shuttle,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/awaymission/spacebattle/syndicate7)
 "hT" = (/obj/structure/chair{dir = 8},/mob/living/simple_animal/hostile/syndicate,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/awaymission/spacebattle/syndicate7)
 "hU" = (/obj/machinery/door/airlock/external,/turf/open/floor/plasteel/shuttle/red/syndicate,/area/awaymission/spacebattle/syndicate7)
-"hV" = (/obj/machinery/shower{icon_state = "shower"; dir = 4},/obj/item/weapon/bikehorn/rubberducky,/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/spacebattle/cruiser)
+"hV" = (/obj/machinery/shower{icon_state = "shower"; dir = 4},/obj/item/device/assembly/bikehorn/rubberducky,/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/spacebattle/cruiser)
 "hW" = (/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/spacebattle/cruiser)
 "hX" = (/obj/machinery/shower{icon_state = "shower"; dir = 8},/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/spacebattle/cruiser)
 "hY" = (/obj/machinery/disposal/bin/toilet,/turf/open/floor/plasteel{icon_state = "freezerfloor"},/area/awaymission/spacebattle/cruiser)
