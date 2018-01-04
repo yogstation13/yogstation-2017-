@@ -339,7 +339,7 @@ var/next_mob_id = 0
 /mob/on_pulledby(mob/new_pulledby, supress_message)
 	..()
 	if(!supress_message)
-		visible_message("<span class='warning'>[new_pulledby] has grabbed [src] passively!</span>")
+		visible_message("<span class='warning'>[new_pulledby] has grabbed [src][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by their hands":" passively"]!</span>")
 	if(!iscarbon(new_pulledby))
 		LAssailant = null
 	else
