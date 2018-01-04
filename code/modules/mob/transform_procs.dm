@@ -105,7 +105,7 @@
 			loc.vars[A] = O
 
 	transfer_observers_to(O)
-	
+
 	. = O
 
 	qdel(src)
@@ -314,7 +314,7 @@
 	O.rename_self("ai")
 	. = O
 	qdel(src)
-	return
+	return O
 
 
 //human -> robot

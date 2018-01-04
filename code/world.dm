@@ -285,10 +285,7 @@ var/last_irc_status = 0
 			log << "#[count]\t[index]"
 #endif
 	spawn(0)
-		if(ticker && ticker.round_end_sound)
-			world << sound(ticker.round_end_sound)
-		else
-			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
+		RoundEndAnimation()
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
@@ -591,3 +588,16 @@ var/rebootingpendingmapchange = 0
 			log_game("Failed to change map: Unknown error: Error code #[.]")
 	if(rebootingpendingmapchange)
 		world.Reboot("Map change finished", time = 10)
+
+/world/proc/RoundEndAnimation()
+	set waitfor = FALSE
+
+	var/titlescreen = TITLESCREEN
+	if(!titlescreen)
+		titlescreen = "title"
+
+	for(var/thing in clients)
+		var/obj/screen/splash/S = new(thing, FALSE)
+		S.Fade(FALSE,FALSE)
+
+	world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg'))
