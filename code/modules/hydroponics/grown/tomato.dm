@@ -84,7 +84,7 @@
 	yield = 2
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport)
-	reagents_add = list("lube" = 0.8, "bluespace" = 0.04, "vitamin" = 0.08, "nutriment" = 0.2)
+	reagents_add = list("lube" = 0.3, "bluespace" = 0.4, "vitamin" = 0.08, "nutriment" = 0.2)
 	rarity = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
