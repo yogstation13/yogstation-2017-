@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowdin)
@@ -4779,7 +4779,7 @@
 "mu" = (
 /mob/living/simple_animal/bot/medbot{
 	name = "Accidents Happen";
-	 faction=list("syndicate")
+	faction=list("syndicate")
 	},
 /turf/open/floor/plasteel{
 	baseturf = /turf/open/floor/plating/asteroid/snow;

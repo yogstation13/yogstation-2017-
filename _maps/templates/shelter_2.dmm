@@ -1,8 +1,23 @@
-"a" = (/turf/open/floor/engine/cult,/area/survivalpod)
-"b" = (/turf/closed/wall/mineral/sandstone,/area/survivalpod)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/open/floor/engine/cult,
+/area/survivalpod)
+"b" = (
+/turf/closed/wall/mineral/sandstone,
+/area/survivalpod)
 
 (1,1,1) = {"
-aaa
-aba
-aaa
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+a
+"}
+(3,1,1) = {"
+a
+a
+a
 "}

@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -1507,7 +1507,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "warnplate";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1546,7 +1546,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "loadingarea";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1558,7 +1558,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorgrime";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1574,7 +1574,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "red";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1587,7 +1587,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "red";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1606,7 +1606,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1622,7 +1622,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "warningcorner";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1641,7 +1641,7 @@
 	dir = 1;
 	heat_capacity = 1e+006;
 	icon_state = "warning";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1657,7 +1657,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "warningcorner";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1676,7 +1676,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "red";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1783,7 +1783,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "warning";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1804,7 +1804,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "red";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1836,7 +1836,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "red";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1874,7 +1874,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorgrime";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -1892,7 +1892,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "red";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2004,7 +2004,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "warnplate";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2026,7 +2026,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "warning";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2039,7 +2039,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "red";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2071,7 +2071,7 @@
 	dir = 10;
 	heat_capacity = 1e+006;
 	icon_state = "red";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2083,7 +2083,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "red";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2094,7 +2094,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "red";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2116,7 +2116,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "red";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2131,7 +2131,7 @@
 	dir = 6;
 	heat_capacity = 1e+006;
 	icon_state = "red";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2202,7 +2202,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "warning";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2215,7 +2215,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged4";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2241,7 +2241,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "red";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2285,7 +2285,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "warning";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2298,7 +2298,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged2";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2311,7 +2311,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged3";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2331,7 +2331,7 @@
 	dir = 1;
 	heat_capacity = 1e+006;
 	icon_state = "bot";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2423,7 +2423,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "warnplate";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2449,7 +2449,7 @@
 	dir = 1;
 	heat_capacity = 1e+006;
 	icon_state = "bot";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2522,7 +2522,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "loadingarea";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2535,7 +2535,7 @@
 	dir = 1;
 	heat_capacity = 1e+006;
 	icon_state = "warning";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2547,7 +2547,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "warningcorner";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2560,7 +2560,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged1";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2578,7 +2578,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2707,7 +2707,7 @@
 	dir = 9;
 	heat_capacity = 1e+006;
 	icon_state = "warnplate";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2734,7 +2734,7 @@
 	dir = 5;
 	heat_capacity = 1e+006;
 	icon_state = "warnplate";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2784,7 +2784,7 @@
 	dir = 10;
 	heat_capacity = 1e+006;
 	icon_state = "warnplate";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2796,7 +2796,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -2810,7 +2810,7 @@
 	dir = 6;
 	heat_capacity = 1e+006;
 	icon_state = "warnplate";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a4{
 	has_gravity = 1;
@@ -7438,7 +7438,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -7842,7 +7842,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -7861,7 +7861,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged1";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -7880,7 +7880,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorgrime";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -7901,7 +7901,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorgrime";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -7920,7 +7920,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -7938,7 +7938,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -7957,7 +7957,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged3";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8226,7 +8226,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged2";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8252,7 +8252,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged4";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8264,7 +8264,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorgrime";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8277,7 +8277,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged5";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8290,7 +8290,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorgrime";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8424,7 +8424,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8699,7 +8699,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "neutralcorner";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8712,7 +8712,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "neutral";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -8946,7 +8946,7 @@
 	},
 /turf/open/floor/plating{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9003,7 +9003,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "neutralcorner";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9015,7 +9015,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "neutralcorner";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9264,7 +9264,7 @@
 	dir = 2;
 	heat_capacity = 1e+006;
 	icon_state = "neutralcorner";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9472,7 +9472,7 @@
 	dir = 2;
 	heat_capacity = 1e+006;
 	icon_state = "neutralcorner";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9714,7 +9714,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "neutralcorner";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9732,7 +9732,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9848,7 +9848,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "neutralcorner";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9950,7 +9950,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -9967,7 +9967,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged2";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10054,7 +10054,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged1";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10127,7 +10127,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "barber";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10149,7 +10149,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "barber";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10169,7 +10169,7 @@
 	dir = 2;
 	heat_capacity = 1e+006;
 	icon_state = "neutralcorner";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10249,7 +10249,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10266,7 +10266,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10283,7 +10283,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorgrime";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10300,7 +10300,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorgrime";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10385,7 +10385,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "neutralcorner";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10397,7 +10397,7 @@
 	dir = 4;
 	heat_capacity = 1e+006;
 	icon_state = "neutral";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10458,7 +10458,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged1";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10528,7 +10528,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10544,7 +10544,7 @@
 	dir = 2;
 	heat_capacity = 1e+006;
 	icon_state = "neutralcorner";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -10589,7 +10589,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "neutral";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a1{
 	has_gravity = 1;
@@ -11078,7 +11078,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorgrime";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -11097,7 +11097,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged1";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -11116,7 +11116,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged2";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -11135,7 +11135,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged3";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -11154,7 +11154,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged4";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -11173,7 +11173,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "damaged5";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -11192,7 +11192,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched1";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -11211,7 +11211,7 @@
 	dir = 8;
 	heat_capacity = 1e+006;
 	icon_state = "floorscorched2";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -11258,7 +11258,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg1";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -11276,7 +11276,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg2";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -11294,7 +11294,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "platingdmg3";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -11312,7 +11312,7 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
 	heat_capacity = 1e+006;
 	icon_state = "panelscorched";
-	  temperature = 251
+	 temperature = 251
 	},
 /area/awaycontent/a3{
 	always_unpowered = 1;
@@ -11358,6 +11358,7 @@
 	has_gravity = 1;
 	name = "MO19 Research"
 	})
+
 (1,1,1) = {"
 aa
 aa
