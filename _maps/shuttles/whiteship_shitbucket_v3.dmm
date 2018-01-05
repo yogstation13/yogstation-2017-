@@ -3,7 +3,6 @@
 /turf/open/space,
 /area/space)
 "ab" = (
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f6";
 	dir = 2
