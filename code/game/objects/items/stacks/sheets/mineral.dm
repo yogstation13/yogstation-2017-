@@ -210,6 +210,7 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	sheettype = "silver"
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/silver
+	grind_results = list("silver" = 20)
 
 var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
@@ -238,6 +239,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "clown"
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/bananium
+	grind_results = list("banana" = 20)
 
 var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	new/datum/stack_recipe("bananium tile", /obj/item/stack/tile/mineral/bananium, 1, 4, 20), \
