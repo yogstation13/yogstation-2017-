@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -3936,7 +3936,6 @@
 /area/awaymission/centcomAway/general)
 "kP" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/golden_cup,
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/general)
 "kQ" = (

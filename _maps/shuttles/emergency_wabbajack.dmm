@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -169,7 +169,8 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	timid = 1, name = "NT Lepton Violet"
+	timid = 1;
+	name = "NT Lepton Violet"
 	},
 /turf/open/floor/plating,
 /area/shuttle/escape)
