@@ -336,12 +336,12 @@
 "bj" = (
 /turf/closed/mineral/clown,
 /area/mine/explored)
+"bk" = (
+/turf/closed/mineral/random/low_chance,
+/area/mine/explored)
 "bl" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
-/area/mine/explored)
-"bk" = (
-/turf/closed/mineral/random/low_chance,
 /area/mine/explored)
 
 (1,1,1) = {"
