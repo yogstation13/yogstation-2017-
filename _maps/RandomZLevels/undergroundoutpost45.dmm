@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -10977,11 +10977,7 @@
 	})
 "oZ" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/engine{
-	name = "air floor";
-	!INVALID_VAR! = 10580;
-	!INVALID_VAR! = 2644
-	},
+/turf/open/floor/engine/air,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -10991,11 +10987,7 @@
 	frequency = 1441;
 	id_tag = "UO45_air_sensor"
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	!INVALID_VAR! = 10580;
-	!INVALID_VAR! = 2644
-	},
+/turf/open/floor/engine/air,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -11456,11 +11448,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	!INVALID_VAR! = 10580;
-	!INVALID_VAR! = 2644
-	},
+/turf/open/floor/engine/air,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -11471,11 +11459,7 @@
 	frequency = 1441;
 	id = "UO45_air_in"
 	},
-/turf/open/floor/engine{
-	name = "air floor";
-	!INVALID_VAR! = 10580;
-	!INVALID_VAR! = 2644
-	},
+/turf/open/floor/engine/air,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -11856,7 +11840,6 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Server Base";
-	!INVALID_VAR! = 500;
 	temperature = 80
 	},
 /area/awaycontent/a5{
@@ -11870,7 +11853,6 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Server Walkway";
-	!INVALID_VAR! = 500;
 	temperature = 80
 	},
 /area/awaycontent/a5{
@@ -12414,7 +12396,6 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "Server Base";
-	!INVALID_VAR! = 500;
 	temperature = 80
 	},
 /area/awaycontent/a5{
@@ -12428,7 +12409,6 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Server Walkway";
-	!INVALID_VAR! = 500;
 	temperature = 80
 	},
 /area/awaycontent/a5{
@@ -12979,7 +12959,6 @@
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Server Walkway";
-	!INVALID_VAR! = 500;
 	temperature = 80
 	},
 /area/awaycontent/a5{
@@ -13756,11 +13735,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	!INVALID_VAR! = 0.01;
-	!INVALID_VAR! = 0.01
-	},
+/turf/open/floor/engine/airless,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -13769,11 +13744,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	!INVALID_VAR! = 0.01;
-	!INVALID_VAR! = 0.01
-	},
+/turf/open/floor/engine/airless,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -14328,11 +14299,7 @@
 	frequency = 1441;
 	id = "UO45_mix_in"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	!INVALID_VAR! = 0.01;
-	!INVALID_VAR! = 0.01
-	},
+/turf/open/floor/engine/airless,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -14342,11 +14309,7 @@
 	frequency = 1441;
 	id_tag = "UO45_mix_sensor"
 	},
-/turf/open/floor/engine{
-	name = "vacuum floor";
-	!INVALID_VAR! = 0.01;
-	!INVALID_VAR! = 0.01
-	},
+/turf/open/floor/engine/airless,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -15042,7 +15005,7 @@
 	dir = 1;
 	pixel_y = 0
 	},
-/obj/item/weapon/bikehorn/rubberducky,
+/obj/item/device/assembly/bikehorn/rubberducky,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006;
 	icon_state = "freezerfloor"
@@ -15853,11 +15816,7 @@
 	frequency = 1441;
 	id = "UO45_n2_in"
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	!INVALID_VAR! = 10000;
-	!INVALID_VAR! = 0
-	},
+/turf/open/floor/engine/n2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -15874,11 +15833,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "n2 floor";
-	!INVALID_VAR! = 10000;
-	!INVALID_VAR! = 0
-	},
+/turf/open/floor/engine/n2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -15889,11 +15844,7 @@
 	frequency = 1441;
 	id = "UO45_o2_in"
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	!INVALID_VAR! = 0;
-	!INVALID_VAR! = 10000
-	},
+/turf/open/floor/engine/o2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -15910,11 +15861,7 @@
 	pressure_checks = 2;
 	pump_direction = 0
 	},
-/turf/open/floor/engine{
-	name = "o2 floor";
-	!INVALID_VAR! = 0;
-	!INVALID_VAR! = 10000
-	},
+/turf/open/floor/engine/o2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -16260,22 +16207,14 @@
 	id_tag = "UO45_n2_sensor"
 	},
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "n2 floor";
-	!INVALID_VAR! = 10000;
-	!INVALID_VAR! = 0
-	},
+/turf/open/floor/engine/n2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
 	})
 "vE" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/floor/engine{
-	name = "n2 floor";
-	!INVALID_VAR! = 10000;
-	!INVALID_VAR! = 0
-	},
+/turf/open/floor/engine/n2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
@@ -16286,22 +16225,14 @@
 	id_tag = "UO45_o2_sensor"
 	},
 /obj/machinery/light/small,
-/turf/open/floor/engine{
-	name = "o2 floor";
-	!INVALID_VAR! = 0;
-	!INVALID_VAR! = 10000
-	},
+/turf/open/floor/engine/o2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"
 	})
 "vG" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/engine{
-	name = "o2 floor";
-	!INVALID_VAR! = 0;
-	!INVALID_VAR! = 10000
-	},
+/turf/open/floor/engine/o2,
 /area/awaycontent/a3{
 	has_gravity = 1;
 	name = "UO45 Engineering"

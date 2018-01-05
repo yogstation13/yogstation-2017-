@@ -1,9 +1,9 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
 "ab" = (
-/turf/open/space/turf/closed/wall/shuttle{
+/turf/closed/wall/shuttle{
 	icon_state = "swall_f6";
 	dir = 2
 	},
@@ -45,7 +45,7 @@
 	},
 /area/shuttle)
 "ag" = (
-/turf/open/space/turf/closed/wall/shuttle{
+/turf/closed/wall/shuttle{
 	icon_state = "swall_f10";
 	dir = 2
 	},
@@ -87,7 +87,7 @@
 	},
 /area/shuttle)
 "an" = (
-/turf/open/space/turf/closed/wall/shuttle{
+/turf/closed/wall/shuttle{
 	icon_state = "swall_f10";
 	dir = 2
 	},
@@ -278,7 +278,7 @@
 	},
 /area/shuttle)
 "aP" = (
-/turf/open/space/turf/closed/wall/shuttle{
+/turf/closed/wall/shuttle{
 	icon_state = "swall_f10";
 	dir = 2
 	},
@@ -514,7 +514,7 @@
 	},
 /area/shuttle)
 "bu" = (
-/obj/item/weapon/reagent_containers/glass/rag,
+/obj/item/weapon/mop/rag,
 /turf/open/floor/wood,
 /area/shuttle)
 "bv" = (
@@ -771,7 +771,7 @@
 /turf/open/floor/plasteel/shuttle,
 /area/shuttle)
 "ci" = (
-/turf/open/space/turf/closed/wall/shuttle{
+/turf/closed/wall/shuttle{
 	icon_state = "swall_f6";
 	dir = 2
 	},
@@ -1043,7 +1043,7 @@
 	},
 /area/shuttle)
 "cT" = (
-/turf/open/space/turf/closed/wall/shuttle{
+/turf/closed/wall/shuttle{
 	icon_state = "swall_f5";
 	dir = 2
 	},
@@ -1551,7 +1551,7 @@
 	},
 /area/shuttle)
 "dZ" = (
-/turf/open/space/turf/closed/wall/shuttle{
+/turf/closed/wall/shuttle{
 	icon_state = "swall_f9";
 	dir = 2
 	},
@@ -1729,7 +1729,7 @@
 	},
 /area/shuttle)
 "ev" = (
-/turf/open/space/turf/closed/wall/shuttle{
+/turf/closed/wall/shuttle{
 	icon_state = "swall_f5";
 	dir = 2
 	},
