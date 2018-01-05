@@ -866,7 +866,7 @@
 		to_chat(M, "<span class='warning'>You feel unstable...</span>")
 		M.Jitter(2)
 		current_cycle = 1
-		addtimer(GLOBAL_PROC,"do_teleport",30, FALSE, list(M, get_turf(M), 5, asoundin = 'sound/effects/phasein.ogg'))
+		addtimer(GLOBAL_PROC,"do_teleport",30, FALSE, M, get_turf(M), 5,,,, asoundin = 'sound/effects/phasein.ogg') //im so sorry for that
 	..()
 
 /datum/reagent/aluminium

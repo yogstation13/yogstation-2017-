@@ -31,14 +31,14 @@
 		if (!beaker)
 			if(!user.drop_item())
 				return 1
-		beaker =  I
-		beaker.loc = src
-		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
-		update_icon()
-		src.updateUsrDialog()
-	else
-		to_chat(user, "<span class='warning'>There's already a container inside.</span>")
-	return 1 //no afterattack
+			beaker =  I
+			beaker.loc = src
+			to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
+			update_icon()
+			src.updateUsrDialog()
+		else
+			to_chat(user, "<span class='warning'>There's already a container inside.</span>")
+		return 1 //no afterattack
 
 	if(items.len >= limit)
 		to_chat(user, "<span class='warning'>[src] is filled to capacity!</span>")
@@ -51,10 +51,10 @@
 			if(items && items.len >= limit) //Sanity checking so the blender doesn't overfill
 				to_chat(user, "<span class='notice'>You fill the All-In-One grinder to the brim.</span>")
 				break
-	if(!I.contents.len)
-		to_chat(user, "<span class='notice'>You empty the plant bag into the All-In-One grinder.</span>")
-		src.updateUsrDialog()
-		return 1
+			if(!I.contents.len)
+				to_chat(user, "<span class='notice'>You empty the plant bag into the All-In-One grinder.</span>")
+				src.updateUsrDialog()
+				return 1
 
 	if(!I.grind_results && !I.juice_results)
 		if(user.a_intent == "harm")
