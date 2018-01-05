@@ -484,7 +484,7 @@
 					var/DBQuery/query = dbcon.NewQuery("UPDATE [format_table_name("player")] SET `antag_weight` = [weight] WHERE `ckey` = '[SQL_ckey]'")
 					query.Execute()
 					C.last_cached_weight = weight
-					to_chat(candidate.current, "<font color='green'><b>For playing thru the whole round your chance to become an antagonist increased!</b></FONT>")
+					to_chat(candidate.current, "<font color='green'><b>For playing through the whole round your chance to become an antagonist increased!</b></FONT>")
 
 /datum/game_mode/proc/get_players_for_role(role)
 	var/list/players = list()
