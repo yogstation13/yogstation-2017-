@@ -78,3 +78,7 @@
 		if(G)
 			user.AddLuminosity(-G.get_lum(seed))
 			SetLuminosity(G.get_lum(seed))
+
+/obj/item/weapon/grown/on_grind()
+	for(var/i in 1 to grind_results.len)
+		grind_results[grind_results[i]] = round(seed.potency)

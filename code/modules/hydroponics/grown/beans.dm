@@ -15,6 +15,7 @@
 	icon_dead = "soybean-dead"
 	mutatelist = list(/obj/item/seeds/soya/koi)
 	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.1)
+	grind_results = list("soymilk" = 0)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/soybeans
 	seed = /obj/item/seeds/soya

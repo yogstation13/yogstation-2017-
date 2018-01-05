@@ -21,6 +21,8 @@
 	desc = "These aromatic tips of the tea plant can be dried to make tea."
 	icon_state = "tea_aspera_leaves"
 	filling_color = "#008000"
+	dry_grind = TRUE
+	grind_results = list("teapowder" = 0)
 
 // Tea Astra
 /obj/item/seeds/tea/astra
@@ -38,6 +40,7 @@
 	name = "Tea Astra tips"
 	icon_state = "tea_astra_leaves"
 	filling_color = "#4582B4"
+	grind_results = list("teapowder" = 0, "salglu_solution" = 0)
 
 
 // Coffee
@@ -65,6 +68,9 @@
 	icon_state = "coffee_arabica"
 	filling_color = "#DC143C"
 	bitesize_mod = 2
+	dry_grind = TRUE
+	grind_results = list("coffeepowder" = 0)
+
 
 // Coffee Robusta
 /obj/item/seeds/coffee/robusta
@@ -83,3 +89,4 @@
 	name = "coffee robusta beans"
 	desc = "Increases robustness by 37 percent!"
 	icon_state = "coffee_robusta"
+	grind_results = list("coffeepowder" = 0, "morphine" = 0)

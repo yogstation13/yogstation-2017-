@@ -23,6 +23,7 @@
 	filling_color = "#FFA500"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	juice_results = list("pumpkinjuice" = 0)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
@@ -52,3 +53,4 @@
 	filling_color = "#87CEFA"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	juice_results = list("blumpkinjuice" = 0)

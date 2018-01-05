@@ -116,6 +116,9 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	//Need it for hit_reaction() and check_for_positions() calls.
 	var/thrower_dir
 
+	//Grinder vars
+	var/list/grind_results //A reagent list containing the reagents this item produces when ground up in a grinder - this can be an empty list to allow for reagent transferring only
+	var/list/juice_results //A reagent list containing blah blah... but when JUICED in a grinder!
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!istype(target.loc, /turf) && !istype(target, /turf) && not_inside))
@@ -666,3 +669,13 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 			location = get_turf(M)
 	if(isturf(location))
 		location.hotspot_expose(700, 5)
+
+/obj/item/proc/grind_requirements(obj/machinery/reagentgrinder/R) //Used to check for extra requirements for grinding an object
+	return TRUE
+
+ //Called BEFORE the object is ground up - use this to change grind results based on conditions
+ //Use "return -1" to prevent the grinding from occurring
+/obj/item/proc/on_grind()
+
+/obj/item/proc/on_juice()
+

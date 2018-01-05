@@ -20,6 +20,18 @@
 	var/merge_type = null // This path and its children should merge with this stack, defaults to src.type
 	var/novariants = TRUE //If this object should change sprites based on amount
 
+	//NOTE: When adding grind_results, the amounts should be for an INDIVIDUAL ITEM - these amounts will be multiplied by the stack size in on_grind()
+
+/obj/item/stack/on_grind()
+	for(var/i in 1 to grind_results.len) //This should only call if it's ground, so no need to check if grind_results exists
+		grind_results[grind_results[i]] *= amount //Gets the key at position i, then the reagent amount of that key, then multiplies it by stack size
+
+/obj/item/stack/grind_requirements()
+	if(is_cyborg)
+		to_chat(usr, "<span class='danger'>[src] is electronically synthesized in your chassis and can't be ground up!</span>")
+		return
+	return TRUE
+
 /obj/item/stack/New(var/loc, var/amount=null)
 	..()
 	update_icon()

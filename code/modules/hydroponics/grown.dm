@@ -17,6 +17,7 @@
 	burn_state = FLAMMABLE
 	origin_tech = "biotech=1"
 	volume = 50
+	var/dry_grind = FALSE //If TRUE, this object needs to be dry to be ground up
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/New(newloc, var/obj/item/seeds/new_seed = null)
 	..()
@@ -174,3 +175,25 @@
 		user.put_in_hands(T)
 		to_chat(user, "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>")
 	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/grind_requirements()
+	if(dry_grind && !dry)
+		to_chat(usr, "<span class='warning'>[src] needs to be dry before it can be ground up!</span>")
+		return
+	return TRUE
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/on_grind()
+	var/nutriment = reagents.get_reagent_amount("nutriment")
+	if(grind_results.len)
+		for(var/i in 1 to grind_results.len)
+			grind_results[grind_results[i]] = nutriment
+		reagents.del_reagent("nutriment")
+		reagents.del_reagent("vitamin")
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/on_juice()
+	var/nutriment = reagents.get_reagent_amount("nutriment")
+	if(juice_results.len)
+		for(var/i in 1 to juice_results.len)
+			juice_results[juice_results[i]] = nutriment
+		reagents.del_reagent("nutriment")
+		reagents.del_reagent("vitamin")
