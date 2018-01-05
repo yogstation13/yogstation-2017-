@@ -9,6 +9,7 @@
 	origin_tech = "bluespace=6;materials=3"
 	points = 50
 	var/blink_range = 8 // The teleport range when crushed/thrown at someone.
+	grind_results = list("bluespace" = 2)
 
 /obj/item/weapon/ore/bluespace_crystal/New()
 	..()

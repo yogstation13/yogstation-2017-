@@ -14,6 +14,7 @@
 	mutatelist = list(/obj/item/seeds/tomato/blue, /obj/item/seeds/tomato/blood, /obj/item/seeds/tomato/killer)
 	reagents_add = list("vitamin" = 0.08, "nutriment" = 0.2)
 
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	seed = /obj/item/seeds/tomato
 	name = "tomato"
@@ -23,6 +24,8 @@
 	filling_color = "#FF6347"
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	grind_results = list("ketchup" = 0)
+	juice_results = list("tomatojuice" = 0)
 
 // Blood Tomato
 /obj/item/seeds/tomato/blood
@@ -81,7 +84,7 @@
 	yield = 2
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/squash, /datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport)
-	reagents_add = list("lube" = 0.4, "singulo" = 0.4, "vitamin" = 0.08, "nutriment" = 0.2)
+	reagents_add = list("lube" = 0.8, "bluespace" = 0.04, "vitamin" = 0.08, "nutriment" = 0.2)
 	rarity = 50
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/blue/bluespace
@@ -117,6 +120,7 @@
 	var/awakening = 0
 	filling_color = "#FF0000"
 	origin_tech = "biotech=4;combat=5"
+	grind_results = list("liquidgibs" = 0)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)
