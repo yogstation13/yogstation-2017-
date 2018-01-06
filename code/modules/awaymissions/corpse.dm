@@ -23,7 +23,7 @@
 	anchored = 1
 	var/jobban_type
 
-/obj/effect/mob_spawn/attack_ghost(mob/user)
+/obj/effect/mob_spawn/attack_ghost(mob/dead/observer/user)
 	if(ticker.current_state != GAME_STATE_PLAYING || !loc)
 		return
 	if(!uses)
@@ -31,6 +31,8 @@
 		return
 	if(jobban_type && jobban_isbanned(user, jobban_type))
 		to_chat(user, "<span class='warning'>You are banned from this role.</span>")
+		return
+	if(!user.respawn_check(mob_name, DEFAULT_RESPAWN_TIME))
 		return
 	var/ghost_role = alert("Become [mob_name]? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(ghost_role == "No" || !loc)
@@ -69,6 +71,7 @@
 
 /obj/effect/mob_spawn/proc/create(ckey)
 	var/mob/living/M = new mob_type(get_turf(src)) //living mobs only
+	M.is_ghostrole = TRUE
 	if(!random)
 		M.real_name = mob_name ? mob_name : M.name
 		M.gender = mob_gender

@@ -152,3 +152,5 @@
 	var/list/observers = null	//The list of people observing this mob.
 
 	var/list/progressbars = null	//for stacking do_after bars
+
+	var/is_ghostrole = FALSE //Only for stuff you select. Like drones and ashwalkers, not stuff that pops up, like revenants.

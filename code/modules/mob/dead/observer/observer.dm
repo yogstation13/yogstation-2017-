@@ -57,6 +57,8 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	var/body_attack_log
 	var/body_say_log
 
+	var/timeofdeath_ghostrole
+
 /mob/dead/observer/New(mob/body)
 	alpha = 0
 	verbs += /mob/dead/observer/proc/dead_tele
@@ -73,12 +75,17 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	updateallghostimages()
 
 	var/turf/T
+
+	timeofdeath_ghostrole = 0
+
 	if(isliving(body))
 		var/mob/living/L = body
 		T = get_turf(body)				//Where is the body located?
 		//preserve our logs by copying them to our ghost
 		body_attack_log = L.attack_log
 		body_say_log = L.say_log
+		if(body.is_ghostrole)
+			timeofdeath_ghostrole = body.timeofdeath
 
 		gender = body.gender
 		if(body.mind && body.mind.name)
@@ -668,3 +675,22 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/is_literate()
 	return 1
+
+/mob/dead/observer/proc/respawn_check(var/thing = "cancer rat", var/respawn_time = 1200, feedback = TRUE)
+	if(!client)
+		return FALSE
+	if(!timeofdeath_ghostrole) //So we don't have to wait if we observed or just died like a normal crewmember.
+		return TRUE
+	if(mind && mind.current && mind.current.stat != DEAD && can_reenter_corpse)
+		if(feedback)
+			to_chat(src, "<span class='warning'>Your non-dead body prevents you from respawning as \a [thing].</span>")
+		return FALSE
+
+	var/timedifference = world.time - timeofdeath_ghostrole
+	if(respawn_time && timeofdeath_ghostrole && timedifference < respawn_time)
+		var/timedifference_text = time2text(respawn_time - timedifference, "mm:ss")
+		if(feedback)
+			to_chat(src, "<span class='warning'>You must have been dead for [round(respawn_time / 600)] minute\s to respawn as [thing]. You have [timedifference_text] left.</span>")
+		return FALSE
+
+	return TRUE
