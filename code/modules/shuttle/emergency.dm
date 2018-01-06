@@ -82,13 +82,12 @@
 				cooldownTime = world.time + revokeCooldown
 
 		if("abort")
-			if(world.time >= cooldownTime)
-				if(authorized.len)
-					// Abort. The action for when heads are fighting over whether
-					// to launch early.
-					authorized.Cut()
-					. = TRUE
-					cooldownTime = world.time + revokeCooldown
+			if(authorized.len && world.time >= cooldownTime)
+				// Abort. The action for when heads are fighting over whether
+				// to launch early.
+				authorized.Cut()
+				. = TRUE
+				cooldownTime = world.time + revokeCooldown
 
 	if((old_len != authorized.len) && !ENGINES_STARTED)
 		var/alert = (authorized.len > old_len)
