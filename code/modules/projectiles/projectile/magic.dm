@@ -6,6 +6,7 @@
 	nodamage = 1
 	armour_penetration = 100
 	flag = "magic"
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/magic/death
 	name = "bolt of death"
