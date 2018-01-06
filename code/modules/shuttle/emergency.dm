@@ -11,6 +11,8 @@
 	var/auth_need = 3
 	var/list/authorized = list()
 	paiAllowed = 0
+	var/revokeCooldown = 100
+	var/cooldownTime = null
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
 	if(istype(I, /obj/item/weapon/card/id))
@@ -75,14 +77,18 @@
 			. = authorize(user)
 
 		if("repeal")
-			authorized -= ID
+			if(world.time >= cooldownTime)
+				authorized -= ID
+				cooldownTime = world.time + revokeCooldown
 
 		if("abort")
-			if(authorized.len)
-				// Abort. The action for when heads are fighting over whether
-				// to launch early.
-				authorized.Cut()
-				. = TRUE
+			if(world.time >= cooldownTime)
+				if(authorized.len)
+					// Abort. The action for when heads are fighting over whether
+					// to launch early.
+					authorized.Cut()
+					. = TRUE
+					cooldownTime = world.time + revokeCooldown
 
 	if((old_len != authorized.len) && !ENGINES_STARTED)
 		var/alert = (authorized.len > old_len)
@@ -273,7 +279,7 @@
 		else if(mode == SHUTTLE_ESCAPE)
 			destination = SSshuttle.getDock("emergency_away")
 		create_ripples(destination)
-		
+
 	switch(mode)
 		if(SHUTTLE_RECALL)
 			if(time_left <= 0)
