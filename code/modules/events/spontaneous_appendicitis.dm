@@ -6,6 +6,9 @@
 	earliest_start = 6000
 	min_players = 5 // To make your chance of getting help a bit higher.
 
+/datum/round_event/spontaneous_appendicitis/
+	ghost_announce = "%special% has gotten appendicits."
+
 /datum/round_event/spontaneous_appendicitis/start()
 	for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
 		var/foundAlready = 0	//don't infect someone that already has the virus
@@ -16,4 +19,6 @@
 
 		var/datum/disease/D = new /datum/disease/appendicitis
 		H.ForceContractDisease(D)
+		interest = H
+		special = H.name
 		break

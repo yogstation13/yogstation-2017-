@@ -18,6 +18,7 @@
 	var/dispatch_type = 0
 	var/bonus_points = 10000
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
+	ghost_announce = "The cargo shuttle has been hijacked by %special%."
 
 /datum/round_event/shuttle_loan/start()
 	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED)
@@ -27,16 +28,21 @@
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
 			priority_announce("Cargo: The syndicate are trying to infiltrate your station. If you let them hijack your cargo shuttle, you'll save us a headache.","Centcom Counter Intelligence")
+			special = "the Syndicate"
 		if(RUSKY_PARTY)
 			priority_announce("Cargo: A group of angry russians want to have a party, can you send them your cargo shuttle then make them disappear?","Centcom Russian Outreach Program")
+			special = "angry Russians"
 		if(SPIDER_GIFT)
 			priority_announce("Cargo: The Spider Clan has sent us a mysterious gift, can we ship it to you to see what's inside?","Centcom Diplomatic Corps")
+			special = "the Spider Clan"
 		if(DEPARTMENT_RESUPPLY)
 			priority_announce("Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","Centcom Supply Department")
 			thanks_msg = "The cargo shuttle should return in 5 minutes."
 			bonus_points = 0
+			special = "no one"
 		if(ANTIDOTE_NEEDED)
 			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "Centcom Research Initiatives")
+			special = "mistakes"
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by Centcom.")

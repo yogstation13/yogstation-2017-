@@ -11,6 +11,7 @@
 	endWhen			= 66
 	announceWhen	= 1
 	var/list/wave_type
+	ghost_announce = "The station is being hit by a meteor wave."
 
 /datum/round_event/meteor_wave/New()
 	..()

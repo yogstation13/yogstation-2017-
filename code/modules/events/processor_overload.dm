@@ -5,7 +5,8 @@
 	min_players = 20
 
 /datum/round_event/processor_overload
-	announceWhen	= 1
+	announceWhen = 1
+	ghost_announce = "Telecomms has been temporarily di*1eta;c5;'1v¬-BZZZT"
 
 /datum/round_event/processor_overload/announce()
 	var/alert = pick(	"Exospheric bubble inbound. Processor overload is likely. Please contact you*%xp25)`6cq-BZZT", \

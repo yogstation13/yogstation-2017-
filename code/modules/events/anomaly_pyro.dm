@@ -8,6 +8,7 @@
 	startWhen = 10
 	announceWhen = 3
 	endWhen = 85
+	direct_announce = "A Pyroclastic Anomaly has spawned."
 
 
 /datum/round_event/anomaly/anomaly_pyro/announce()
@@ -17,6 +18,7 @@
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/pyro(T)
+		interest = newAnomaly
 
 /datum/round_event/anomaly/anomaly_pyro/tick()
 	if(!newAnomaly)

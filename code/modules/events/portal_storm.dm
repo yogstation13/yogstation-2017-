@@ -9,12 +9,16 @@
 	boss_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space/stormtrooper = 2)
 	hostile_types = list(/mob/living/simple_animal/hostile/syndicate/melee/space = 3,\
 						/mob/living/simple_animal/hostile/syndicate/ranged/space = 1)
+	ghost_announce = "The station is under attack by a Syndicate portal storm."
 
 /datum/round_event_control/portal_storm_narsie
 	name = "Portal Storm: Constructs"
 	typepath = /datum/round_event/portal_storm/portal_storm_narsie
 	weight = 0
 	max_occurrences = 0
+
+/datum/round_event/portal_storm/portal_storm_narsie
+	ghost_announce = "The station is under attack by a Nar'Sie portal storm."
 
 /datum/round_event/portal_storm/portal_storm_narsie
 	boss_types = list(/mob/living/simple_animal/hostile/construct/builder = 6)

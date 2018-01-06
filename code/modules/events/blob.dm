@@ -13,6 +13,7 @@
 	announceWhen	= 12
 	endWhen			= 120
 	var/new_rate = 2
+	direct_announce = TRUE //Update this aswell as the direct_announce proc if you inevitably make blob not force a random player
 
 /datum/round_event/blob/New(var/strength)
 	..()
@@ -27,4 +28,4 @@
 	var/turf/T = pick(blobstart)
 	if(!T)
 		return kill()
-	new/obj/effect/blob/core(T, null, new_rate)
+	interest = new/obj/effect/blob/core(T, null, new_rate)

@@ -5,6 +5,7 @@
 
 /datum/round_event/communications_blackout
 	announceWhen	= 1
+	ghost_announce = "Communications Blackout triggered."
 
 /datum/round_event/communications_blackout/announce()
 	var/alert = pick(	"Ionospheric anomalies detected. Temporary telecommunication failure imminent. Please contact you*%fj00)`5vc-BZZT", \

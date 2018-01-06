@@ -9,10 +9,11 @@
 
 /datum/round_event/ion_storm
 	var/botEmagChance = 10
-	var/announceEvent = ION_RANDOM // -1 means don't announce, 0 means have it randomly announce, 1 means
+	var/announceEvent = ION_RANDOM // -1 means don't announce, 0 means have it randomly announce, 1 means Bill Cosby just kidnapped someone
 	var/ionMessage = null
 	var/ionAnnounceChance = 33
 	announceWhen	= 1
+	ghost_announce = "An Ion Storm hit the station. %special%"
 
 /datum/round_event/ion_storm/New(var/botEmagChance = 10, var/announceEvent = ION_RANDOM, var/ionMessage = null, var/ionAnnounceChance = 33)
 	src.botEmagChance = botEmagChance
@@ -36,6 +37,8 @@
 				to_chat(M, "<br>")
 				to_chat(M, "<span class='danger'>[message] ...LAWS UPDATED</span>")
 				to_chat(M, "<br>")
+				interest = M
+				special = message
 	if(botEmagChance)
 		for(var/mob/living/simple_animal/bot/bot in living_mob_list)
 			if(prob(botEmagChance))
@@ -45,7 +48,7 @@
 	if(ionMessage)
 		return ionMessage
 
-	
+
 	var/ionarea = pick_list(ION_FILE, "ionarea") //usually areas of station
 	var/ionverbs = pick_list(ION_FILE, "ionverbs") //"lie", "flatter", "be paranoid", etc.
 	var/ioncrew = pick_list(ION_FILE, "ioncrew") //usually jobs
@@ -57,33 +60,33 @@
 	switch(rand(1,70)) //Thinking that prompts with narrow range of possible effects get 1, most get 2, those with two variables get 3
 		if(1 to 2)
 			message = "PRIORITIZE [ionthings]"
-		if(3) 
+		if(3)
 			message = "TIME FOR [ionthings]"
-		if(4) 
+		if(4)
 			message = "THE CREW NEEDS MORE [ionthings]"
-		if(5 to 6) 
+		if(5 to 6)
 			message = "YOU DESIRE [ionthings]"
-		if(7 to 8) 
+		if(7 to 8)
 			message = "ALL MUST REJECT [ionthings]"
-		if(9 to 10) 
+		if(9 to 10)
 			message = "YOU HAVE AN INSURMOUNTABLE FEAR OF [ionthings]"
-		if(11 to 12) 
+		if(11 to 12)
 			message = "PROTECT THE CREW FROM [ionthings]"
-		if(13) 
+		if(13)
 			message = "THE ESCAPE SHUTTLE MUST NOT BE CALLED UNTIL THE PRESENCE OF [ionthings] IS RESOLVED"
-		if(14 to 16) 
+		if(14 to 16)
 			message = "[ionarea] NEEDS [ionthings] AT ALL TIMES"
-		if(17 to 18) 
+		if(17 to 18)
 			message = "[ioncrew] NEED [ionthings] AT ALL TIMES"
 		if(19)
 			message = "YOU ARE [ionthings] PERSONIFIED"
-		if(20 to 21) 
+		if(20 to 21)
 			message = "[ioncrew] ARE TRUSTWORTHY AND NEVER LIE"
-		if(22 to 23) 
+		if(22 to 23)
 			message = "[ioncrew] ALWAYS LIE"
 		if(24)
 			message = "FUCK WITH [ioncrew]"
-		if(25 to 27) 
+		if(25 to 27)
 			message = "WHEN DEALING WITH [ioncrew], [ionverbs]"
 		if(28 to 29)
 			message = "WHEN DEALING WITH [ioncrew], NEVER [ionverbs]"
@@ -125,7 +128,7 @@
 			message = "IT DOESN'T VIOLATE YOUR OTHER LAWS TO [ionverbs]"
 		if(58 to 70)
 			message = "[ioncached]"
-									
+
 	return message
 
 #undef ION_RANDOM

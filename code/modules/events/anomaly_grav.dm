@@ -8,7 +8,7 @@
 	startWhen = 3
 	announceWhen = 20
 	endWhen = 120
-
+	direct_announce = "An Gravitational Anomaly has spawned."
 
 /datum/round_event/anomaly/anomaly_grav/announce()
 	priority_announce("Gravitational anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
@@ -17,3 +17,4 @@
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/grav(T)
+		interest = newAnomaly

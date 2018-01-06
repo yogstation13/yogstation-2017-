@@ -15,6 +15,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /datum/round_event/immovable_rod
 	announceWhen = 5
+	ghost_announce = "An Immovable Rod has spawned."
 
 /datum/round_event/immovable_rod/announce()
 	priority_announce("What the fuck was that?!", "General Alert")
@@ -23,7 +24,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	var/startside = pick(cardinal)
 	var/turf/startT = spaceDebrisStartLoc(startside, 1)
 	var/turf/endT = spaceDebrisFinishLoc(startside, 1)
-	new /obj/effect/immovablerod(startT, endT)
+	interest = 	new /obj/effect/immovablerod(startT, endT)
 
 /obj/effect/immovablerod
 	name = "Immovable Rod"

@@ -9,6 +9,7 @@
 	startWhen = 1
 	endWhen = 2
 	announceWhen = 0
+	direct_announce = FALSE  //Too boring
 
 /datum/round_event/camera_failure/tick()
 	var/iterations = 1

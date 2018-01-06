@@ -9,6 +9,7 @@
 	announceWhen	= 15
 
 	var/virus_type
+	ghost_announce = "i ded" //Gets overwritten in start(), this way we can have both the victim AND the virus
 
 
 /datum/round_event/disease_outbreak/announce()
@@ -46,5 +47,5 @@
 		else
 			D = new virus_type()
 		D.carrier = 1
-		H.AddDisease(D)
+		ghost_announce = "[H.name] has been infected with [D.name]"
 		break

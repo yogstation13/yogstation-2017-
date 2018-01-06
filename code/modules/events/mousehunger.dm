@@ -6,7 +6,9 @@
 	weight = 20
 	earliest_start = 10000 //About 16 minutes. Enough time for engi's to start everything up
 
+
 /datum/round_event/mouse_hunger
+	direct_announce = FALSE //I made this myself, and it's lame
 
 /datum/round_event/mouse_hunger/start()
 	for(var/mob/living/simple_animal/mouse/M in mob_list)

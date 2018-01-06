@@ -11,6 +11,7 @@
 	var/list/vents  = list()
 	var/list/gunk = list("mine_salve","unholywater","mindbreaker","uranium","toxin","cleaner","carpotoxin","condensedcapsaicin","mushroomhallucinogen","lube",
 								 "plantbgone","mutagen","charcoal","space_drugs","morphine","holywater","ethanol","mutetoxin","facid")
+	ghost_announce = "The station vents have been clogged."
 
 /datum/round_event/vent_clog/announce()
 	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "Atmospherics alert")

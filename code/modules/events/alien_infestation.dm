@@ -12,6 +12,7 @@
 
 	minimum_required = 1
 	role_name = "alien larva"
+	direct_announce = "One or more alien larva's have spawned."
 
 	// 50% chance of being incremented by one
 	var/spawncount = 1
@@ -68,6 +69,7 @@
 		message_admins("[new_xeno.key] has been made into an alien by an event.")
 		log_game("[new_xeno.key] was spawned as an alien by an event.")
 		spawned_mobs += new_xeno
+		interest = new_xeno
 
 	if(successSpawn)
 		return SUCCESSFUL_SPAWN

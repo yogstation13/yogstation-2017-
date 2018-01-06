@@ -9,7 +9,7 @@
 	announceWhen	= 400
 
 	var/spawncount = 1
-
+	ghost_announce = "The station has been infested by spiders."
 
 /datum/round_event/spider_infestation/setup()
 	announceWhen = rand(announceWhen, announceWhen + 50)

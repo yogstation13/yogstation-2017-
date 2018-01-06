@@ -10,6 +10,7 @@
 	var/area/impact_area
 	var/obj/effect/anomaly/newAnomaly
 	announceWhen	= 1
+	direct_announce = "An Energtic Flux Anomaly has spawned."
 
 
 /datum/round_event/anomaly/setup(loop=0)
@@ -31,6 +32,7 @@
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/flux(T)
+		interest = newAnomaly
 
 /datum/round_event/anomaly/tick()
 	if(!newAnomaly)

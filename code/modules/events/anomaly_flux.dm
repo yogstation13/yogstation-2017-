@@ -10,6 +10,7 @@
 	startWhen = 3
 	announceWhen = 20
 	endWhen = 80
+	direct_announce = "A Hyper Energetic Flux Anomaly has spawned."
 
 
 /datum/round_event/anomaly/anomaly_flux/announce()
@@ -20,7 +21,7 @@
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/flux(T)
-
+		interest = newAnomaly
 
 /datum/round_event/anomaly/anomaly_flux/end()
 	if(newAnomaly.loc)//If it hasn't been neutralized, it's time to blow up.

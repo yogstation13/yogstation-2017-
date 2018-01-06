@@ -10,6 +10,7 @@
 	startWhen = 10
 	announceWhen = 3
 	endWhen = 95
+	direct_announce = "A Vortex Anomaly has spawned."
 
 
 /datum/round_event/anomaly/anomaly_vortex/announce()
@@ -19,3 +20,4 @@
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/bhole(T)
+		interest = newAnomaly
