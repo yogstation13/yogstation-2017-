@@ -50,7 +50,7 @@ var/datum/subsystem/mapping/SSmapping
 	previous_map_config = SSmapping.previous_map_config
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
- 
+
 
 	..()
 
@@ -81,6 +81,7 @@ var/datum/subsystem/mapping/SSmapping
 		new /turf/open/space(T)
 
 #define INIT_ANNOUNCE(X) world << "<span class='boldannounce'>[X]</span>"; world.log << X
+
 /datum/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
@@ -150,7 +151,7 @@ var/datum/subsystem/mapping/SSmapping
 	if (.)
 		world << "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>"
 
-/datum/subsystem/mapping/proc/changemap(var/datum/map_config/VM)	
+/datum/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
 	if(!VM.MakeNextMap())
 		next_map_config = new(default_to_box = TRUE)
 		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
@@ -196,6 +197,8 @@ var/datum/subsystem/mapping/SSmapping
 			lava_ruins_templates[R.name] = R
 		else if(istype(R, /datum/map_template/ruin/space))
 			space_ruins_templates[R.name] = R
+		else if(istype(R, /datum/map_template/ruin/maint))
+			maint_room_templates[R.name] = R
 
 /datum/subsystem/mapping/proc/preloadShuttleTemplates()
 
