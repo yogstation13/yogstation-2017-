@@ -166,11 +166,11 @@
 	return ..()
 
 /datum/round_event/proc/announceGhost(atom/movable/interesting, message)
-	if(!special) 
+	if(!special)
 		special = "ERROR. THIS IS A BUG!!"
-	if(message) 
+	if(message)
 		ghost_announce = message
-	if(interesting) 
+	if(interesting)
 		interest = interesting
 	if(!ghost_announce)
 		return
