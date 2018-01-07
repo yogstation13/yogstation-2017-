@@ -26,8 +26,6 @@
 	var/list/gamemode_blacklist = list() // Event won't happen in these gamemodes
 	var/list/gamemode_whitelist = list() // Event will happen ONLY in these gamemodes if not empty
 
-/obj/menshcijgbfdn
-
 /datum/round_event_control/New()
 	..()
 	if(config && !wizardevent) // Magic is unaffected by configs
