@@ -46,6 +46,7 @@
 			DS.strain_data["SE"] = H.dna.struc_enzymes
 		else
 			D = new virus_type()
+		H.AddDisease(D)
 		D.carrier = 1
 		ghost_announce = "[H.name] has been infected with [D.name]"
 		interest = H
