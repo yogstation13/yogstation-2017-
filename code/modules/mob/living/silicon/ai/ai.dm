@@ -152,8 +152,8 @@ var/list/ai_list = list()
 	shuttle_caller_list += src
 
 	eyeobj.ai = src
-	eyeobj.name = "[src.name] (AI Eye)" // Give it a name
-	eyeobj.loc = src.loc
+	eyeobj.name = "[name] (AI Eye)" // Give it a name
+	eyeobj.loc = loc
 
 	builtInCamera = new /obj/machinery/camera/portable(src)
 	builtInCamera.network = list("SS13")
@@ -259,7 +259,7 @@ var/list/ai_list = list()
 	return
 
 /mob/living/silicon/ai/cancel_camera()
-	src.view_core()
+	view_core()
 
 /mob/living/silicon/ai/verb/toggle_anchor()
 	set category = "AI Commands"
@@ -374,14 +374,14 @@ var/list/ai_list = list()
 		return
 	if(href_list["callbot"]) //Command a bot to move to a selected location.
 		Bot = locate(href_list["callbot"]) in living_mob_list
-		if(!Bot || Bot.remote_disabled || src.control_disabled)
+		if(!Bot || Bot.remote_disabled || control_disabled)
 			return //True if there is no bot found, the bot is manually emagged, or the AI is carded with wireless off.
 		waypoint_mode = 1
 		to_chat(src, "<span class='notice'>Set your waypoint by clicking on a valid location free of obstructions.</span>")
 		return
 	if(href_list["interface"]) //Remotely connect to a bot!
 		Bot = locate(href_list["interface"]) in living_mob_list
-		if(!Bot || Bot.remote_disabled || src.control_disabled)
+		if(!Bot || Bot.remote_disabled || control_disabled)
 			return
 		Bot.attack_ai(src)
 	if(href_list["botrefresh"]) //Refreshes the bot control panel.
@@ -422,7 +422,7 @@ var/list/ai_list = list()
 	if (!C || stat == DEAD) //C.can_use())
 		return 0
 
-	if(!src.eyeobj)
+	if(!eyeobj)
 		view_core()
 		return
 	// ok, we're alive, camera is good and in our network...
@@ -664,7 +664,7 @@ var/list/ai_list = list()
 	set category = "Malfunction"
 	set name = "Return to Main Core"
 
-	var/obj/machinery/power/apc/apc = src.loc
+	var/obj/machinery/power/apc/apc = loc
 	if(!istype(apc))
 		to_chat(src, "<span class='notice'>You are already in your Main Core.</span>")
 		return
@@ -769,7 +769,7 @@ var/list/ai_list = list()
 	return // no eyes, no flashing
 
 /mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user, params)
-	if(W.force && W.damtype != STAMINA && src.stat != DEAD) //only sparks if real damage is dealt.
+	if(W.force && W.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
 		spark_system.start()
 	return ..()
 

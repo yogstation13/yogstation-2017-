@@ -122,7 +122,7 @@ RCD AMMO
 
 	var/datum/browser/popup = new(usr, "airlock_electronics", "Access Control", 900, 500)
 	popup.set_content(t1)
-	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(usr.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	onclose(usr, "airlock")
 
@@ -229,7 +229,7 @@ RCD AMMO
 /obj/item/weapon/rcd/New()
 	..()
 	desc = "An RCD. It currently holds [matter]/[max_matter] matter-units."
-	src.spark_system = new /datum/effect_system/spark_spread
+	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	rcd_list += src
@@ -258,7 +258,7 @@ RCD AMMO
 			return
 		qdel(W)
 		matter += R.ammoamt
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(loc, 'sound/machines/click.ogg', 50, 1)
 		loaded = 1
 	else if(istype(W, /obj/item/stack/sheet/metal) || istype(W, /obj/item/stack/sheet/glass))
 		loaded = loadwithsheets(W, sheetmultiplier, user)
@@ -277,13 +277,13 @@ RCD AMMO
             //S.amount -= maxsheets
             S.use(maxsheets)
             matter += value*maxsheets
-            playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+            playsound(loc, 'sound/machines/click.ogg', 50, 1)
             to_chat(user, "<span class='notice'>You insert [maxsheets] [S.name] sheets into the [abbreviated_name]. </span>")
         else
             matter += value*(S.amount)
             user.unEquip()
             S.use(S.amount)
-            playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+            playsound(loc, 'sound/machines/click.ogg', 50, 1)
             to_chat(user, "<span class='notice'>You insert [S.amount] [S.name] sheets into the [abbreviated_name]. </span>")
 
         return 1
@@ -292,7 +292,7 @@ RCD AMMO
 
 /obj/item/weapon/rcd/attack_self(mob/user)
 	//Change the mode
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
 	switch(mode)
 		if(1)
 			mode = 2
@@ -308,11 +308,11 @@ RCD AMMO
 			to_chat(user, "<span class='notice'>You change [abbreviated_name]'s mode to 'Floor & Walls'.</span>")
 
 	if(prob(20))
-		src.spark_system.start()
+		spark_system.start()
 	return
 
 /obj/item/weapon/rcd/proc/activate()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 
 /obj/item/weapon/rcd/afterattack(atom/A, mob/user, proximity)
@@ -344,7 +344,7 @@ RCD AMMO
 				var/turf/open/floor/F = A
 				if(checkResource(wallcost, user))
 					to_chat(user, "<span class='notice'>You start building wall...</span>")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, walldelay, target = A))
 						if(!istype(F, /turf/open/floor)) //The turf might have changed during the do_after
 							return 0
@@ -367,14 +367,14 @@ RCD AMMO
 
 					if(door_check)
 						to_chat(user, "<span class='notice'>You start building airlock...</span>")
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+						playsound(loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, airlockdelay, target = A))
 							if(!useResource(airlockcost, user))
 								return 0
 							activate()
 							var/obj/machinery/door/airlock/T = new airlock_type( A )
 
-							T.electronics = new/obj/item/weapon/electronics/airlock( src.loc )
+							T.electronics = new/obj/item/weapon/electronics/airlock( loc )
 
 							if(conf_access)
 								T.electronics.accesses = conf_access.Copy()
@@ -404,7 +404,7 @@ RCD AMMO
 					return 0
 				if(checkResource(deconwallcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing wall...</span>")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconwalldelay, target = A))
 						if(!useResource(deconwallcost, user))
 							return 0
@@ -422,7 +422,7 @@ RCD AMMO
 					return 0
 				else if(checkResource(deconfloorcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing floor...</span>")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconfloordelay, target = A))
 						if(!useResource(deconfloorcost, user))
 							return 0
@@ -435,7 +435,7 @@ RCD AMMO
 			if(istype(A, /obj/machinery/door/airlock))
 				if(checkResource(deconairlockcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing airlock...</span>")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconairlockdelay, target = A))
 						if(!useResource(deconairlockcost, user))
 							return 0
@@ -448,7 +448,7 @@ RCD AMMO
 			if(istype(A, /obj/structure/window))
 				if(checkResource(deconwindowcost, user))
 					to_chat(user, "<span class='notice'>You start deconstructing the window...</span>")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, deconwindowdelay, target = A))
 						if(!useResource(deconwindowcost, user))
 							return 0
@@ -464,7 +464,7 @@ RCD AMMO
 					if(useResource(decongrillecost, user))
 						to_chat(user, "<span class='notice'>You start deconstructing the grille...</span>")
 						activate()
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+						playsound(loc, 'sound/machines/click.ogg', 50, 1)
 						qdel(A)
 						return 1
 					return 0
@@ -476,7 +476,7 @@ RCD AMMO
 						to_chat(user, "<span class='warning'>There is already a grille there!</span>")
 						return 0
 					to_chat(user, "<span class='notice'>You start building a grille...</span>")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, grilledelay, target = A))
 						if(locate(/obj/structure/grille) in A)
 							return 0
@@ -491,7 +491,7 @@ RCD AMMO
 			if(istype(A, /obj/structure/grille))
 				if(checkResource(windowcost, user))
 					to_chat(user, "<span class='notice'>You start building a window...</span>")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, windowdelay, target = A))
 						if(locate(/obj/structure/window) in A.loc) return 0
 						if(!useResource(windowcost, user))

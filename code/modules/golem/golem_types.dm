@@ -35,7 +35,7 @@
 
 /datum/species/golem/random/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
-	var/datum/species/golem/golem_type = pick(typesof(/datum/species/golem) - src.type)
+	var/datum/species/golem/golem_type = pick(typesof(/datum/species/golem) - type)
 	if(ishuman(C)) //Not risking it
 		var/mob/living/carbon/human/H = C
 		H.set_species(golem_type)

@@ -44,7 +44,7 @@ var
 /node
 	proc
 		ToString()
-			return "[src.type]"
+			return "[type]"
 /*
 	Class: identifier
 */
@@ -54,7 +54,7 @@ var
 
 	New(id)
 		.=..()
-		src.id_name=id
+		id_name=id
 
 	ToString()
 		return id_name
@@ -76,7 +76,7 @@ var
 
 	New()
 		.=..()
-		if(!src.name) src.name="[src.type]"
+		if(!name) name="[type]"
 
 	ToString()
 		return "operator: [name]"
@@ -100,10 +100,10 @@ var
 
 	New(value)
 		.=..()
-		src.value=value
+		value=value
 
 	ToString()
-		return src.value
+		return value
 
 /*
 	Class: variable
@@ -122,7 +122,7 @@ var
 		if(istext(id))id=new(id)
 
 	ToString()
-		return src.id.ToString()
+		return id.ToString()
 
 /*
 	Class: reference
@@ -133,7 +133,7 @@ var
 
 	New(value)
 		.=..()
-		src.value=value
+		value=value
 
 	ToString()
-		return "ref: [src.value] ([src.value.type])"
+		return "ref: [value] ([value.type])"

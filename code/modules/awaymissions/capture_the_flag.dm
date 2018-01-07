@@ -34,7 +34,7 @@
 
 /obj/item/weapon/twohanded/ctf/process()
 	if(world.time > reset_cooldown)
-		src.loc = get_turf(src.reset)
+		loc = get_turf(reset)
 		for(var/mob/M in player_list)
 			var/area/mob_area = get_area(M)
 			if(istype(mob_area, /area/ctf))
@@ -150,8 +150,8 @@
 		if(user.ckey in CTF.team_members)
 			to_chat(user, "No switching teams while the round is going!")
 			return
-		if(CTF.team_members.len < src.team_members.len)
-			to_chat(user, "[src.team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up.")
+		if(CTF.team_members.len < team_members.len)
+			to_chat(user, "[team] has more team members than [CTF.team]. Try joining [CTF.team] to even things up.")
 			return
 	team_members |= user.ckey
 	var/client/new_team_member = user.client
@@ -159,7 +159,7 @@
 	spawn_team_member(new_team_member)
 
 /obj/machinery/capture_the_flag/proc/dust_old(mob/user)
-	if(user.mind && user.mind.current && user.mind.current.z == src.z)
+	if(user.mind && user.mind.current && user.mind.current.z == z)
 		new /obj/item/ammo_box/magazine/recharge/ctf (get_turf(user.mind.current))
 		new /obj/item/ammo_box/magazine/recharge/ctf (get_turf(user.mind.current))
 		user.mind.current.dust()
@@ -185,7 +185,7 @@
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/twohanded/ctf))
 		var/obj/item/weapon/twohanded/ctf/flag = I
-		if(flag.team != src.team)
+		if(flag.team != team)
 			user.unEquip(flag)
 			flag.loc = get_turf(flag.reset)
 			points++
@@ -309,7 +309,7 @@
 	return
 
 /obj/structure/divine/trap/ctf/trap_effect(mob/living/L)
-	if(!(src.team in L.faction))
+	if(!(team in L.faction))
 		to_chat(L, "<span class='danger'><B>Stay out of the enemy spawn!</B></span>")
 		L.dust()
 

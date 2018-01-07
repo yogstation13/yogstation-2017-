@@ -62,22 +62,22 @@ var/list/datum/software/active_software = list()
 	return new_copy.infect(target)
 
 /datum/software/proc/on_join(datum/software/other)//when a new piece of malware joins your host.
-	if((other.type == src.type) && !(other.flags & SOFTWARE_NOCOPY) )//prevents massive spam of duplicate viruses on the same machine.
+	if((other.type == type) && !(other.flags & SOFTWARE_NOCOPY) )//prevents massive spam of duplicate viruses on the same machine.
 		return 1
 	return 0
 
 /datum/software/proc/copy(do_not_mutate = 0)
 	if(flags & SOFTWARE_NOCOPY)
 		return src
-	var/datum/software/the_copy = new src.type()
-	the_copy.name = src.name
-	the_copy.flags = src.flags
-	the_copy.infect_chance = src.infect_chance
-	the_copy.mutate_on_copy_chance = src.mutate_on_copy_chance
+	var/datum/software/the_copy = new type()
+	the_copy.name = name
+	the_copy.flags = flags
+	the_copy.infect_chance = infect_chance
+	the_copy.mutate_on_copy_chance = mutate_on_copy_chance
 	if(can_infect)
-		the_copy.can_infect = src.can_infect.Copy()
+		the_copy.can_infect = can_infect.Copy()
 	if(cannot_infect)
-		the_copy.cannot_infect = src.cannot_infect.Copy()
+		the_copy.cannot_infect = cannot_infect.Copy()
 
 	if(!do_not_mutate && prob(mutate_on_copy_chance))
 		mutate()

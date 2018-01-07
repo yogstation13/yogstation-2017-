@@ -33,20 +33,20 @@
 /obj/machinery/implantchair/attack_hand(mob/user)
 	user.set_machine(src)
 	var/health_text = ""
-	if(src.occupant)
-		if(src.occupant.health <= -100)
+	if(occupant)
+		if(occupant.health <= -100)
 			health_text = "<FONT color=red>Dead</FONT>"
-		else if(src.occupant.health < 0)
-			health_text = "<FONT color=red>[round(src.occupant.health,0.1)]</FONT>"
+		else if(occupant.health < 0)
+			health_text = "<FONT color=red>[round(occupant.health,0.1)]</FONT>"
 		else
-			health_text = "[round(src.occupant.health,0.1)]"
+			health_text = "[round(occupant.health,0.1)]"
 
 	var/dat ="<B>Implanter Status</B><BR>"
 
-	dat +="<B>Current occupant:</B> [src.occupant ? "<BR>Name: [src.occupant]<BR>Health: [health_text]<BR>" : "<FONT color=red>None</FONT>"]<BR>"
-	dat += "<B>Implants:</B> [src.implant_list.len ? "[implant_list.len]" : "<A href='?src=\ref[src];replenish=1'>Replenish</A>"]<BR>"
-	if(src.occupant)
-		dat += "[src.ready ? "<A href='?src=\ref[src];implant=1'>Implant</A>" : "Recharging"]<BR>"
+	dat +="<B>Current occupant:</B> [occupant ? "<BR>Name: [occupant]<BR>Health: [health_text]<BR>" : "<FONT color=red>None</FONT>"]<BR>"
+	dat += "<B>Implants:</B> [implant_list.len ? "[implant_list.len]" : "<A href='?src=\ref[src];replenish=1'>Replenish</A>"]<BR>"
+	if(occupant)
+		dat += "[ready ? "<A href='?src=\ref[src];implant=1'>Implant</A>" : "Recharging"]<BR>"
 	user.set_machine(src)
 	user << browse(dat, "window=implant")
 	onclose(user, "implant")
@@ -56,7 +56,7 @@
 	if(..())
 		return
 	if(href_list["implant"])
-		if(src.occupant)
+		if(occupant)
 			injecting = 1
 			go_out()
 			ready = 0
@@ -80,7 +80,7 @@
 	occupant.loc = loc
 	occupant.reset_perspective(null)
 	if(injecting)
-		implant(src.occupant)
+		implant(occupant)
 		injecting = 0
 	occupant = null
 	icon_state = "implantchair"
@@ -89,16 +89,16 @@
 
 /obj/machinery/implantchair/put_mob(mob/living/carbon/M)
 	if(!iscarbon(M))
-		to_chat(usr, "<span class='warning'>The [src.name] cannot hold this!</span>")
+		to_chat(usr, "<span class='warning'>The [name] cannot hold this!</span>")
 		return
-	if(src.occupant)
-		to_chat(usr, "<span class='warning'>The [src.name] is already occupied!</span>")
+	if(occupant)
+		to_chat(usr, "<span class='warning'>The [name] is already occupied!</span>")
 		return
 	M.stop_pulling()
 	M.loc = src
 	M.reset_perspective(src)
-	src.occupant = M
-	src.add_fingerprint(usr)
+	occupant = M
+	add_fingerprint(usr)
 	icon_state = "implantchair_on"
 	return 1
 
@@ -112,7 +112,7 @@
 		if(!imp)
 			continue
 		if(istype(imp, /obj/item/weapon/implant/mindshield))
-			M.visible_message("<span class='warning'>[M] has been implanted by the [src.name].</span>")
+			M.visible_message("<span class='warning'>[M] has been implanted by the [name].</span>")
 
 			if(imp.implant(M))
 				implant_list -= imp
@@ -121,7 +121,7 @@
 
 
 /obj/machinery/implantchair/add_implants()
-	for(var/i=0, i<src.max_implants, i++)
+	for(var/i=0, i<max_implants, i++)
 		var/obj/item/weapon/implant/mindshield/I = new /obj/item/weapon/implant/mindshield(src)
 		implant_list += I
 	return
@@ -132,7 +132,7 @@
 	set src in oview(1)
 	if(usr.stat != 0)
 		return
-	src.go_out(usr)
+	go_out(usr)
 	add_fingerprint(usr)
 	return
 

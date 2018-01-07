@@ -216,7 +216,7 @@
 		var/turf/T = get_turf(src)
 		var/fraction = 1/initial(lifetime)
 		for(var/atom/movable/AM in T)
-			if(AM.type == src.type)
+			if(AM.type == type)
 				continue
 			reagents.reaction(AM, TOUCH, fraction)
 

@@ -142,30 +142,30 @@
 
 
 /obj/item/clothing/shoes/sneakers/orange/attack_self(mob/user)
-	if (src.chained)
-		src.chained = null
-		src.slowdown = SHOES_SLOWDOWN
+	if (chained)
+		chained = null
+		slowdown = SHOES_SLOWDOWN
 		new /obj/item/weapon/restraints/handcuffs( user.loc )
-		src.icon_state = "orange"
+		icon_state = "orange"
 	return
 
 /obj/item/clothing/shoes/sneakers/orange/attackby(obj/H, loc, params)
 	..()
-	if ((istype(H, /obj/item/weapon/restraints/handcuffs) && !( src.chained )))
+	if ((istype(H, /obj/item/weapon/restraints/handcuffs) && !( chained )))
 		//H = null
-		if (src.icon_state != "orange") return
+		if (icon_state != "orange") return
 		if(istype(H, /obj/item/weapon/restraints/handcuffs/cable))
 			return 0
 		qdel(H)
-		src.chained = 1
-		src.slowdown = 15
-		src.icon_state = "orange1"
+		chained = 1
+		slowdown = 15
+		icon_state = "orange1"
 	return
 
 /obj/item/clothing/shoes/sneakers/orange/attack_hand(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/C = user
-		if(C.shoes == src && src.chained == 1)
+		if(C.shoes == src && chained == 1)
 			to_chat(user, "<span class='warning'>You need help taking these off!</span>")
 			return
 	..()

@@ -101,14 +101,14 @@
 	return ..()
 
 /obj/effect/dummy/spell_jaunt/relaymove(var/mob/user, direction)
-	if (!src.canmove || reappearing || !direction) return
+	if (!canmove || reappearing || !direction) return
 	var/turf/newLoc = get_step(src,direction)
 	if(!(newLoc.flags & NOJAUNT))
 		loc = newLoc
 	else
 		to_chat(user, "<span class='warning'>Some strange aura is blocking the way!</span>")
-	src.canmove = 0
-	spawn(2) src.canmove = 1
+	canmove = 0
+	spawn(2) canmove = 1
 
 /obj/effect/dummy/spell_jaunt/ex_act(blah)
 	return

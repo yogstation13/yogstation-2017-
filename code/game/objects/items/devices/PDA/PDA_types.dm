@@ -10,9 +10,9 @@
 	if (istype(AM, /mob/living/carbon))
 		var/mob/living/carbon/M = AM
 		if(M.slip(0, 6, src, NO_SLIP_WHEN_WALKING))
-			if (ishuman(M) && (M.real_name != src.owner))
-				if (istype(src.cartridge, /obj/item/weapon/cartridge/clown))
-					var/obj/item/weapon/cartridge/clown/cart = src.cartridge
+			if (ishuman(M) && (M.real_name != owner))
+				if (istype(cartridge, /obj/item/weapon/cartridge/clown))
+					var/obj/item/weapon/cartridge/clown/cart = cartridge
 					if(cart.honk_charges < 5)
 						cart.honk_charges++
 

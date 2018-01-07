@@ -23,9 +23,9 @@ var/datum/subsystem/tgui/SStgui
 
 /datum/subsystem/tgui/fire(resumed = 0)
 	if (!resumed)
-		src.currentrun = processing_uis.Copy()
+		currentrun = processing_uis.Copy()
 	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
+	var/list/currentrun = currentrun
 
 	while(currentrun.len)
 		var/datum/tgui/ui = currentrun[currentrun.len]

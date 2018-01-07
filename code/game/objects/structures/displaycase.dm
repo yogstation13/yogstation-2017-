@@ -23,7 +23,7 @@
 /obj/structure/displaycase/ex_act(severity, target)
 	switch(severity)
 		if (1)
-			new /obj/item/weapon/shard( src.loc )
+			new /obj/item/weapon/shard( loc )
 			dump()
 			qdel(src)
 		if (2)
@@ -45,12 +45,12 @@
 
 /obj/structure/displaycase/proc/dump()
 	if (showpiece)
-		showpiece.loc = src.loc
+		showpiece.loc = loc
 		showpiece = null
 
 /obj/structure/displaycase/blob_act(obj/effect/blob/B)
 	if (prob(75))
-		new /obj/item/weapon/shard( src.loc )
+		new /obj/item/weapon/shard( loc )
 		dump()
 		qdel(src)
 
@@ -64,17 +64,17 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
-				playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+				playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
 	health = max( health - damage, 0)
 	if(!health && !destroyed)
 		density = 0
 		destroyed = 1
-		new /obj/item/weapon/shard( src.loc )
+		new /obj/item/weapon/shard( loc )
 		playsound(src, "shatter", 70, 1)
 		update_icon()
 
@@ -116,7 +116,7 @@
 		var/icon/S = get_flat_icon_directional(showpiece)
 		S.Scale(17,17)
 		I.Blend(S,ICON_UNDERLAY,8,8)
-	src.icon = I
+	icon = I
 	return
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user, params)
@@ -165,21 +165,21 @@
 	take_damage(W.force, W.damtype)
 
 /obj/structure/displaycase/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/displaycase/attack_alien(mob/living/carbon/alien/humanoid/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/slash.ogg', 100, 1)
 	take_damage(20, BRUTE, 0)
 
 /obj/structure/displaycase/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if(M.melee_damage_upper > 0)
-		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
-		"<span class='danger'>You smash against the [src.name].</span>")
+		M.visible_message("<span class='danger'>[M.name] smashes against \the [name].</span>",\
+		"<span class='danger'>You smash against the [name].</span>")
 		take_damage(M.melee_damage_upper, M.melee_damage_type, 1)
 
 /obj/structure/displaycase/attack_hand(mob/user)
@@ -187,7 +187,7 @@
 	if (showpiece && (destroyed || open))
 		dump()
 		to_chat(user, "<span class='notice'>You deactivate the hover field built into the case.</span>")
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		update_icon()
 		return
 	else
@@ -211,15 +211,15 @@
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 30/I.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			new /obj/item/stack/sheet/mineral/wood(get_turf(src))
 			qdel(src)
 
 	else if(istype(I, /obj/item/weapon/electronics/airlock))
 		to_chat(user, "<span class='notice'>You start installing the electronics into [src]...</span>")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(user.unEquip(I) && do_after(user, 30, target = src))
 			I.loc = src
 			electronics = I
@@ -233,7 +233,7 @@
 		to_chat(user, "<span class='notice'>You start adding [G] to [src]...</span>")
 		if(do_after(user, 20, target = src))
 			G.use(10)
-			var/obj/structure/displaycase/display = new(src.loc)
+			var/obj/structure/displaycase/display = new(loc)
 			if(electronics)
 				electronics.loc = display
 				display.electronics = electronics

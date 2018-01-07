@@ -167,7 +167,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
 	if(stat & BROKEN)
@@ -182,7 +182,7 @@
 
 		stat |= BROKEN
 		density = 0
-		playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+		playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
 		update_icon()
 		investigate_log("was destroyed.", "atmos")
 

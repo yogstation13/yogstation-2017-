@@ -228,7 +228,7 @@
 
 	if(href_list["eject_seed"] && !operation)
 		if (seed)
-			seed.loc = src.loc
+			seed.loc = loc
 			seed.verb_pickup()
 			seed = null
 			update_genes()
@@ -243,7 +243,7 @@
 		update_icon()
 	else if(href_list["eject_disk"] && !operation)
 		if (disk)
-			disk.loc = src.loc
+			disk.loc = loc
 			disk.verb_pickup()
 			disk = null
 			update_genes()
@@ -389,8 +389,8 @@
 /obj/item/weapon/disk/plantgene/New()
 	..()
 	overlays += "datadisk_gene"
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 /obj/item/weapon/disk/plantgene/attackby(obj/item/weapon/W, mob/user, params)
 	..()
@@ -413,11 +413,11 @@
 
 /obj/item/weapon/disk/plantgene/attack_self(mob/user)
 	read_only = !read_only
-	to_chat(user, "<span class='notice'>You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].</span>")
+	to_chat(user, "<span class='notice'>You flip the write-protect tab to [read_only ? "protected" : "unprotected"].</span>")
 
 /obj/item/weapon/disk/plantgene/examine(mob/user)
 	..()
-	to_chat(user, "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
+	to_chat(user, "The write-protect tab is set to [read_only ? "protected" : "unprotected"].")
 
 
 /*

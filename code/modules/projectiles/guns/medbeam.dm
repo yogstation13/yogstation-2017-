@@ -54,7 +54,7 @@
 	spawn(0)
 		current_beam.Start()
 
-	feedback_add_details("gun_fired","[src.type]")
+	feedback_add_details("gun_fired","[type]")
 
 /obj/item/weapon/gun/medbeam/process()
 

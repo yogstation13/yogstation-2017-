@@ -526,7 +526,7 @@
 										if(R)
 											if(H.canUseHUD())
 												if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
-													investigate_log("[src.key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
+													investigate_log("[key] has been set from [R.fields["criminal"]] to [setcriminal] by [usr.name] ([usr.key]).", "records")
 													R.fields["criminal"] = setcriminal
 													sec_hud_set_security_status()
 									return
@@ -619,7 +619,7 @@
 							to_chat(usr, "<span class='warning'>Unable to locate a data core entry for this person.</span>")
 
 /mob/living/carbon/human/proc/canUseHUD()
-	return !(src.stat || src.weakened || src.stunned || src.restrained())
+	return !(stat || weakened || stunned || restrained())
 
 /mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone, var/penetrate_thick = 0)
 	. = 1 // Default to returning true.
@@ -867,7 +867,7 @@
 		if(C.health > config.health_threshold_crit)
 			return
 
-		src.visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
+		visible_message("[src] performs CPR on [C.name]!", "<span class='notice'>You perform CPR on [C.name].</span>")
 		C.cpr_time = world.time
 		add_logs(src, C, "CPRed")
 
@@ -1090,11 +1090,11 @@
 		if(7) // Pride
 			log_game("[src] was influenced by the sin of pride.")
 			O = new /datum/objective/sintouched/pride
-	ticker.mode.sintouched += src.mind
-	src.mind.objectives += O
+	ticker.mode.sintouched += mind
+	mind.objectives += O
 	var/obj_count = 1
 	to_chat(src, "<span class='notice'>Your current objectives:</span>")
-	for(O in src.mind.objectives)
+	for(O in mind.objectives)
 		var/datum/objective/objective = O
 		to_chat(src, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 		obj_count++

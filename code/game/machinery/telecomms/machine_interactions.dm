@@ -52,9 +52,9 @@
 
 	user.set_machine(src)
 	var/dat
-	dat = "<font face = \"Courier\"><HEAD><TITLE>[src.name]</TITLE></HEAD><center><H3>[src.name] Access</H3></center>"
+	dat = "<font face = \"Courier\"><HEAD><TITLE>[name]</TITLE></HEAD><center><H3>[name] Access</H3></center>"
 	dat += "<br>[temp]<br>"
-	dat += "<br>Power Status: <a href='?src=\ref[src];input=toggle'>[src.toggled ? "On" : "Off"]</a>"
+	dat += "<br>Power Status: <a href='?src=\ref[src];input=toggle'>[toggled ? "On" : "Off"]</a>"
 	if(on && toggled)
 		if(id != "" && id)
 			dat += "<br>Identification String: <a href='?src=\ref[src];input=id'>[id]</a>"
@@ -72,7 +72,7 @@
 		var/i = 0
 		for(var/obj/machinery/telecomms/T in links)
 			i++
-			if(T.hide && !src.hide)
+			if(T.hide && !hide)
 				continue
 			dat += "<li>\ref[T] [T.name] ([T.id])  <a href='?src=\ref[src];unlink=[i]'>\[X\]</a></li>"
 		dat += "</ol>"
@@ -154,14 +154,14 @@
 
 			if("toggle")
 
-				src.toggled = !src.toggled
-				temp = "<font color = #666633>-% [src] has been [src.toggled ? "activated" : "deactivated"].</font color>"
+				toggled = !toggled
+				temp = "<font color = #666633>-% [src] has been [toggled ? "activated" : "deactivated"].</font color>"
 				update_power()
 
 			/*
 			if("hide")
-				src.hide = !hide
-				temp = "<font color = #666633>-% Shadow Link has been [src.hide ? "activated" : "deactivated"].</font color>"
+				hide = !hide
+				temp = "<font color = #666633>-% Shadow Link has been [hide ? "activated" : "deactivated"].</font color>"
 			*/
 
 			if("id")
@@ -213,7 +213,7 @@
 			if(T)
 				temp = "<font color = #666633>-% Removed \ref[T] [T.name] from linked entities. %-</font color>"
 
-				// Remove link entries from both T and src.
+				// Remove link entries from both T and 
 
 				if(T.links)
 					T.links.Remove(src)
@@ -230,8 +230,8 @@
 				if(!(src in T.links))
 					T.links.Add(src)
 
-				if(!(T in src.links))
-					src.links.Add(T)
+				if(!(T in links))
+					links.Add(T)
 
 				temp = "<font color = #666633>-% Successfully linked with \ref[T] [T.name] %-</font color>"
 
@@ -249,7 +249,7 @@
 		temp = "<font color = #666633>-% Buffer successfully flushed. %-</font color>"
 		P.buffer = null
 
-	src.Options_Topic(href, href_list)
+	Options_Topic(href, href_list)
 
 	usr.set_machine(src)
 

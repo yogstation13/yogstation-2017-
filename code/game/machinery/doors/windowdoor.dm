@@ -19,9 +19,9 @@
 	..()
 	if(set_dir)
 		dir = set_dir
-	if(src.req_access && src.req_access.len)
-		src.icon_state = "[src.icon_state]"
-		src.base_state = src.icon_state
+	if(req_access && req_access.len)
+		icon_state = "[icon_state]"
+		base_state = icon_state
 	for(var/i in 1 to shards)
 		debris += new /obj/item/weapon/shard(src)
 	if(rods)
@@ -42,23 +42,23 @@
 	if(density)
 		icon_state = base_state
 	else
-		icon_state = "[src.base_state]open"
+		icon_state = "[base_state]open"
 
 /obj/machinery/door/window/proc/open_and_close()
 	open()
-	if(src.check_access(null))
+	if(check_access(null))
 		sleep(50)
 	else //secure doors close faster
 		sleep(20)
 	close()
 
 /obj/machinery/door/window/Bumped(atom/movable/AM as mob|obj)
-	if( operating || !src.density )
+	if( operating || !density )
 		return
 	if (!( ismob(AM) ))
 		if(istype(AM, /obj/mecha))
 			var/obj/mecha/mecha = AM
-			if(mecha.occupant && src.allowed(mecha.occupant))
+			if(mecha.occupant && allowed(mecha.occupant))
 				open_and_close()
 			else
 				do_animate("deny")
@@ -71,10 +71,10 @@
 	return
 
 /obj/machinery/door/window/bumpopen(mob/user)
-	if( operating || !src.density )
+	if( operating || !density )
 		return
-	src.add_fingerprint(user)
-	if(!src.requiresID())
+	add_fingerprint(user)
+	if(!requiresID())
 		user = null
 
 	if(allowed(user))
@@ -110,7 +110,7 @@
 		return 1
 
 /obj/machinery/door/window/open(forced=0)
-	if (src.operating == 1) //doors can still open when emag-disabled
+	if (operating == 1) //doors can still open when emag-disabled
 		return 0
 	if(!ticker || !ticker.mode)
 		return 0
@@ -120,24 +120,24 @@
 	if(forced < 2)
 		if(emagged)
 			return 0
-	if(!src.operating) //in case of emag
-		src.operating = 1
+	if(!operating) //in case of emag
+		operating = 1
 	do_animate("opening")
-	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	src.icon_state ="[src.base_state]open"
+	playsound(loc, 'sound/machines/windowdoor.ogg', 100, 1)
+	icon_state ="[base_state]open"
 	sleep(10)
 
-	src.density = 0
-//	src.sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
+	density = 0
+//	sd_SetOpacity(0)	//TODO: why is this here? Opaque windoors? ~Carn
 	air_update_turf(1)
 	update_freelook_sight()
 
 	if(operating == 1) //emag again
-		src.operating = 0
+		operating = 0
 	return 1
 
 /obj/machinery/door/window/close(forced=0)
-	if (src.operating)
+	if (operating)
 		return 0
 	if(!forced)
 		if(!hasPower())
@@ -145,17 +145,17 @@
 	if(forced < 2)
 		if(emagged)
 			return 0
-	src.operating = 1
+	operating = 1
 	do_animate("closing")
-	playsound(src.loc, 'sound/machines/windowdoor.ogg', 100, 1)
-	src.icon_state = src.base_state
+	playsound(loc, 'sound/machines/windowdoor.ogg', 100, 1)
+	icon_state = base_state
 
-	src.density = 1
+	density = 1
 	air_update_turf(1)
 	update_freelook_sight()
 	sleep(10)
 
-	src.operating = 0
+	operating = 0
 	return 1
 
 /obj/machinery/door/window/take_damage(damage, damage_type = BRUTE, sound_effect = 1)
@@ -165,10 +165,10 @@
 				playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
-	health = max(0, src.health - damage)
+	health = max(0, health - damage)
 	if(health <= 0)
 		shatter()
 
@@ -196,7 +196,7 @@
 	color = "#7D1919"
 
 /obj/machinery/door/window/ratvar_act()
-	new/obj/machinery/door/window/clockwork(src.loc, dir)
+	new/obj/machinery/door/window/clockwork(loc, dir)
 	qdel(src)
 
 /obj/machinery/door/window/bullet_act(obj/item/projectile/P)
@@ -222,12 +222,12 @@
 
 
 /obj/machinery/door/window/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/door/window/emag_act(mob/user)
 	if(!operating && density && !emagged)
 		operating = 1
-		flick("[src.base_state]spark", src)
+		flick("[base_state]spark", src)
 		sleep(6)
 		operating = 0
 		desc += "<BR><span class='warning'>Its access panel is smoking slightly.</span>"
@@ -245,19 +245,19 @@
 			if(density || operating)
 				to_chat(user, "<span class='warning'>You need to open the door to access the maintenance panel!</span>")
 				return
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			panel_open = !panel_open
-			to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [src.name].</span>")
+			to_chat(user, "<span class='notice'>You [panel_open ? "open":"close"] the maintenance panel of the [name].</span>")
 			return
 
 		if(istype(I, /obj/item/weapon/crowbar))
 			if(panel_open && !density && !operating)
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
-				user.visible_message("[user] removes the electronics from the [src.name].", \
-									 "<span class='notice'>You start to remove electronics from the [src.name]...</span>")
+				playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
+				user.visible_message("[user] removes the electronics from the [name].", \
+									 "<span class='notice'>You start to remove electronics from the [name]...</span>")
 				if(do_after(user,40/I.toolspeed, target = src))
-					if(panel_open && !density && !operating && src.loc)
-						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
+					if(panel_open && !density && !operating && loc)
+						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(loc)
 						switch(base_state)
 							if("left")
 								WA.facing = "l"
@@ -271,10 +271,10 @@
 								WA.secure = 1
 						WA.anchored = 1
 						WA.state= "02"
-						WA.dir = src.dir
-						WA.ini_dir = src.dir
+						WA.dir = dir
+						WA.ini_dir = dir
 						WA.update_icon()
-						WA.created_name = src.name
+						WA.created_name = name
 
 						if(emagged)
 							to_chat(user, "<span class='warning'>You discard the damaged electronics.</span>")
@@ -285,16 +285,16 @@
 
 						var/obj/item/weapon/electronics/airlock/ae
 						if(!electronics)
-							ae = new/obj/item/weapon/electronics/airlock( src.loc )
+							ae = new/obj/item/weapon/electronics/airlock( loc )
 							if(req_one_access)
 								ae.one_access = 1
-								ae.accesses = src.req_one_access
+								ae.accesses = req_one_access
 							else
-								ae.accesses = src.req_access
+								ae.accesses = req_access
 						else
 							ae = electronics
 							electronics = null
-							ae.loc = src.loc
+							ae.loc = loc
 
 						qdel(src)
 				return
@@ -312,11 +312,11 @@
 /obj/machinery/door/window/do_animate(animation)
 	switch(animation)
 		if("opening")
-			flick("[src.base_state]opening", src)
+			flick("[base_state]opening", src)
 		if("closing")
-			flick("[src.base_state]closing", src)
+			flick("[base_state]closing", src)
 		if("deny")
-			flick("[src.base_state]deny", src)
+			flick("[base_state]deny", src)
 
 /obj/machinery/door/window/attack_hulk(mob/user)
 	..(user, 1)

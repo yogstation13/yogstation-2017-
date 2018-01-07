@@ -37,10 +37,10 @@
 		return
 
 	if (t)
-		src.name = "data disk- '[t]'"
+		name = "data disk- '[t]'"
 	else
-		src.name = "data disk"
-	src.add_fingerprint(usr)
+		name = "data disk"
+	add_fingerprint(usr)
 	return
 
 /*
@@ -87,7 +87,7 @@
 	if(!otherEmag)
 		return
 	to_chat(user, "<span class='notice'>The cryptographic sequencers attempt to override each other and destroy themselves in the process.</span>")
-	playsound(src.loc, "sparks", 50, 1)
+	playsound(loc, "sparks", 50, 1)
 	qdel(otherEmag)
 	qdel(src)
 
@@ -106,9 +106,9 @@
 	var/has_fluff
 
 /obj/item/weapon/card/id/attack_self(mob/user)
-	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [src.name].</span>", \
-					"<span class='notice'>You show \the [src.name].</span>")
-	src.add_fingerprint(user)
+	user.visible_message("<span class='notice'>[user] shows you: \icon[src] [name].</span>", \
+					"<span class='notice'>You show \the [name].</span>")
+	add_fingerprint(user)
 	return
 
 /obj/item/weapon/card/id/examine(mob/user)
@@ -171,7 +171,7 @@ update_label("John Doe", "Clowny")
 		return
 	if(istype(O, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/I = O
-		src.access |= I.access
+		access |= I.access
 		if(istype(user, /mob/living) && user.mind)
 			if(!restricted || user.mind.special_role)
 				to_chat(usr, "<span class='notice'>The card's microscanners activate as you pass it over the ID, copying its access.</span>")

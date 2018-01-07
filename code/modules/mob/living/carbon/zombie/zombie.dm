@@ -123,9 +123,9 @@
 
 				var/isZombie = is_zombie(src)
 				var/isInfected = is_infected(src)
-				//var/isDead = (src.stat == DEAD ? 1 : 0)
-				var/isUnconcious = (src.stat == UNCONSCIOUS ? 1 : 0)
-				var/isCritical = src.InCritical()
+				//var/isDead = (stat == DEAD ? 1 : 0)
+				var/isUnconcious = (stat == UNCONSCIOUS ? 1 : 0)
+				var/isCritical = InCritical()
 
 				var/allowDamage = 1
 				var/selfMessage = ""
@@ -160,7 +160,7 @@
 
 				for(var/datum/disease/D in M.viruses)
 					//contract_disease(D,1,0)
-					src.ForceContractDisease(D)
+					ForceContractDisease(D)
 			else
 				visible_message("<span class='danger'>[M.name] has attempted to bite [name] ferociously!</span>", \
 					"<span class='userdanger'>[M.name] has attempted to bite [name] ferociously!</span>")
@@ -447,7 +447,7 @@
 	return message
 
 /mob/living/carbon/human/zombie/say(message, bubble_type)
-	if(src.stat != DEAD)
+	if(stat != DEAD)
 		message = urrizeText(message)
 
 	playsound(loc, "zombie", 25, 1, 1)

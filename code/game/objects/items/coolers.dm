@@ -65,8 +65,8 @@
 
 
 /obj/item/device/cubiclecooler/proc/check_container()
-	if(istype(src.loc, /obj/item/weapon/storage/handcooler/cubicle))
-		container = src.loc
+	if(istype(loc, /obj/item/weapon/storage/handcooler/cubicle))
+		container = loc
 
 /obj/item/device/cubiclecooler/proc/UpdateIcon(seton, setoff)
 	if(seton == 1)
@@ -79,7 +79,7 @@
 /obj/item/device/cubiclecooler/process(iconchecked)
 	if(!iconchecked)
 		UpdateIcon(seton=1)
-	if(src.loc == container)
+	if(loc == container)
 		if(ccell.charge && !idle)
 			var/processingorgans
 			for(var/obj/item/organ/O in container)
@@ -171,7 +171,7 @@
 
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(ccell)
-			ccell.loc = get_turf(src.loc)
+			ccell.loc = get_turf(loc)
 			ccell = null
 			to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
 			return
@@ -219,7 +219,7 @@
 		if(!portable)
 			return
 		flags = NODROP
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 */
 
 // Other variations:

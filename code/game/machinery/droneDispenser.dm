@@ -291,7 +291,7 @@
 	switch(damage_type)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		if(BRUTE)
 			if(sound_effect)
 				if(damage)

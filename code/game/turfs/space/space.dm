@@ -55,7 +55,7 @@
 		SetLuminosity(0)
 
 /turf/open/space/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/space/attackby(obj/item/C, mob/user, params)
 	..()
@@ -119,32 +119,32 @@
 /turf/open/space/proc/Sandbox_Spacemove(atom/movable/A)
 	var/cur_x
 	var/cur_y
-	var/next_x = src.x
-	var/next_y = src.y
+	var/next_x = x
+	var/next_y = y
 	var/target_z
 	var/list/y_arr
-	var/list/cur_pos = src.get_global_map_pos()
+	var/list/cur_pos = get_global_map_pos()
 	if(!cur_pos)
 		return
 	cur_x = cur_pos["x"]
 	cur_y = cur_pos["y"]
 
-	if(src.x <= 1)
+	if(x <= 1)
 		next_x = (--cur_x||global_map.len)
 		y_arr = global_map[next_x]
 		target_z = y_arr[cur_y]
 		next_x = world.maxx - 2
-	else if (src.x >= world.maxx)
+	else if (x >= world.maxx)
 		next_x = (++cur_x > global_map.len ? 1 : cur_x)
 		y_arr = global_map[next_x]
 		target_z = y_arr[cur_y]
 		next_x = 3
-	else if (src.y <= 1)
+	else if (y <= 1)
 		y_arr = global_map[cur_x]
 		next_y = (--cur_y||y_arr.len)
 		target_z = y_arr[next_y]
 		next_y = world.maxy - 2
-	else if (src.y >= world.maxy)
+	else if (y >= world.maxy)
 		y_arr = global_map[cur_x]
 		next_y = (++cur_y > y_arr.len ? 1 : cur_y)
 		target_z = y_arr[next_y]

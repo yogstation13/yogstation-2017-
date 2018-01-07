@@ -23,21 +23,21 @@
 			switch (healtype)
 				if ("brute")
 					if (healing_limb.brute_dam)
-						success = healing_limb.heal_damage(healamount/src.duration, 0, 0)
+						success = healing_limb.heal_damage(healamount/duration, 0, 0)
 					else
-						to_chat(H, "<span class='notice'>The wounds on your [getLimbDisplayName(src.healing_limb)] have stopped bleeding and appear to be healed.</span>")
+						to_chat(H, "<span class='notice'>The wounds on your [getLimbDisplayName(healing_limb)] have stopped bleeding and appear to be healed.</span>")
 						used = 1
 				if ("burn")
 					if (healing_limb.burn_dam)
-						success = healing_limb.heal_damage(0, healamount/src.duration, 0)
+						success = healing_limb.heal_damage(0, healamount/duration, 0)
 					else
 						used = 1
-						to_chat(H, "<span class='notice'>The burns on your [getLimbDisplayName(src.healing_limb)] feel much better, and seem to be completely healed.</span>")
+						to_chat(H, "<span class='notice'>The burns on your [getLimbDisplayName(healing_limb)] feel much better, and seem to be completely healed.</span>")
 			if (success)
 				H.update_damage_overlays(0)
 			if (staunch_bleeding && !H.bleedsuppress)
 				H.suppress_bloodloss(staunch_bleeding)
-			if (activefor <= src.duration)
+			if (activefor <= duration)
 				activefor += 1
 			else
 				used = 1
@@ -48,8 +48,8 @@
 /obj/item/medical/bandage/proc/unwrap(mob/living/M, mob/living/carbon/human/T)
 	//DUPLICATE CODE BUT I'M FUCKING LAZY
 	if (healing_limb.bandaged)
-		M.visible_message("<span class='warning'>[M] grabs and pulls at the [src] on [T]'s [src.healing_limb.name], unwrapping it instantly!</span>", "<span class='notice'>You deftly yank [src] off [T]'s [getLimbDisplayName(src.healing_limb)].</span>")
-		name = "used [src.name]"
+		M.visible_message("<span class='warning'>[M] grabs and pulls at the [src] on [T]'s [healing_limb.name], unwrapping it instantly!</span>", "<span class='notice'>You deftly yank [src] off [T]'s [getLimbDisplayName(healing_limb)].</span>")
+		name = "used [name]"
 		desc = "Piled into a tangled, crusty mess, these bandages have obviously been used and then disposed of in great haste."
 		color = "red"
 		loc = T.loc
@@ -60,7 +60,7 @@
 /obj/item/medical/bandage/proc/fall_off(mob/living/carbon/human/H, obj/item/bodypart/L)
 	if (L.bandaged)
 		to_chat(H, "You loosen the bandage around [getLimbDisplayName(L.name)] and let it fall to the floor.")
-		name = "used [src.name]"
+		name = "used [name]"
 		desc = "Bloodied and crusted, these bandages have clearly been used and aren't fit for much anymore. Seems as if they were wrapped around someone's [getLimbDisplayName(L.name)] last."
 		color = "red"
 		loc = H.loc
@@ -109,12 +109,12 @@
 		return 0
 
 /obj/item/medical/bandage/proc/wash(obj/O, mob/user)
-	if (src.used)
+	if (used)
 		to_chat(user, "You clean [src] fastidiously washing away as much of the detritus and residue as you can. The bandage can probably be used again now.")
 		name = "reused bandages"
 		desc = "Whatever quality these bandages once were, there's no sign of it any more. Not like the wounds you put this stuff over care, though."
-		healamount = src.healamount * 0.85
-		duration = src.duration * 1.15
+		healamount = healamount * 0.85
+		duration = duration * 1.15
 		activefor = 1
 		blood_DNA = 0
 		color = 0

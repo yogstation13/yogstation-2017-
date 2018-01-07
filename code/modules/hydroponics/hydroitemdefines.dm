@@ -39,7 +39,7 @@
 	reagents.add_reagent("weedkiller", 100)
 
 /obj/item/weapon/reagent_containers/spray/weedspray/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is huffing the [name]! It looks like \he's trying to commit suicide.</span>")
 	return (TOXLOSS)
 
 /obj/item/weapon/reagent_containers/spray/pestspray // -- Skie
@@ -61,7 +61,7 @@
 	reagents.add_reagent("pestkiller", 100)
 
 /obj/item/weapon/reagent_containers/spray/pestspray/suicide_act(mob/user)
-	viewers(user) << "<span class='suicide'>[user] is huffing the [src.name]! It looks like \he's trying to commit suicide.</span>"
+	viewers(user) << "<span class='suicide'>[user] is huffing the [name]! It looks like \he's trying to commit suicide.</span>"
 	return (TOXLOSS)
 
 /obj/item/weapon/cultivator
@@ -97,7 +97,7 @@
 	sharpness = IS_SHARP
 
 /obj/item/weapon/hatchet/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is chopping at \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is chopping at \himself with the [name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -146,8 +146,8 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/New()
 	..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 
 /obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez

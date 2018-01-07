@@ -110,7 +110,7 @@
 		if(prob(getYield() * 20))
 			seed_count++
 		for(var/i=0,i<seed_count,i++)
-			var/obj/item/seeds/replicapod/harvestseeds = src.Copy()
+			var/obj/item/seeds/replicapod/harvestseeds = Copy()
 			harvestseeds.loc = user.loc
 
 	parent.update_tray()

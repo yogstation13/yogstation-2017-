@@ -51,7 +51,7 @@
 				flash_color(M, color = "#FF0000", time = 50)
 	notify_ghosts("Legion has been summoned in the [get_area(src)]!", source = src, action = NOTIFY_ORBIT)
 	is_anyone_home = FALSE
-	new/mob/living/simple_animal/hostile/megafauna/legion(get_step(src.loc, SOUTH))
+	new/mob/living/simple_animal/hostile/megafauna/legion(get_step(loc, SOUTH))
 
 /obj/structure/lavaland_door/singularity_pull()
 	return 0

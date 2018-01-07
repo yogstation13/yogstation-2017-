@@ -763,7 +763,7 @@ var/list/obj/machinery/newscaster/allCasters = list()
 					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
 	if(damage < 15) //so it can't be broken with a small weapon.

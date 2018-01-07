@@ -145,9 +145,9 @@
 /mob/living/silicon/emp_act(severity)
 	switch(severity)
 		if(1)
-			src.take_organ_damage(20)
+			take_organ_damage(20)
 		if(2)
-			src.take_organ_damage(10)
+			take_organ_damage(10)
 	to_chat(src, "<span class='userdanger'>*BZZZT*</span>")
 	to_chat(src, "<span class='danger'>Warning: Electromagnetic pulse detected.</span>")
 	flash_eyes(affect_silicon = 1)
@@ -244,44 +244,44 @@
 /mob/living/silicon/proc/statelaws()
 
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
-	src.say("[radiomod] Current Active Laws:")
-	//src.laws_sanity_check()
-	//src.laws.show_laws(world)
+	say("[radiomod] Current Active Laws:")
+	//laws_sanity_check()
+	//laws.show_laws(world)
 	var/number = 1
 	sleep(10)
 
 
 
-	if (src.laws.zeroth)
-		if (src.lawcheck[1] == "Yes")
-			src.say("[radiomod] 0. [src.laws.zeroth]")
+	if (laws.zeroth)
+		if (lawcheck[1] == "Yes")
+			say("[radiomod] 0. [laws.zeroth]")
 			sleep(10)
 
-	for (var/index = 1, index <= src.laws.ion.len, index++)
-		var/law = src.laws.ion[index]
+	for (var/index = 1, index <= laws.ion.len, index++)
+		var/law = laws.ion[index]
 		var/num = ionnum()
 		if (length(law) > 0)
-			if (src.ioncheck[index] == "Yes")
-				src.say("[radiomod] [num]. [law]")
+			if (ioncheck[index] == "Yes")
+				say("[radiomod] [num]. [law]")
 				sleep(10)
 
-	for (var/index = 1, index <= src.laws.inherent.len, index++)
-		var/law = src.laws.inherent[index]
+	for (var/index = 1, index <= laws.inherent.len, index++)
+		var/law = laws.inherent[index]
 
 		if (length(law) > 0)
-			if (src.lawcheck[index+1] == "Yes")
-				src.say("[radiomod] [number]. [law]")
+			if (lawcheck[index+1] == "Yes")
+				say("[radiomod] [number]. [law]")
 				sleep(10)
 			number++
 
 
-	for (var/index = 1, index <= src.laws.supplied.len, index++)
-		var/law = src.laws.supplied[index]
+	for (var/index = 1, index <= laws.supplied.len, index++)
+		var/law = laws.supplied[index]
 
 		if (length(law) > 0)
-			if(src.lawcheck.len >= number+1)
-				if (src.lawcheck[number+1] == "Yes")
-					src.say("[radiomod] [number]. [law]")
+			if(lawcheck.len >= number+1)
+				if (lawcheck[number+1] == "Yes")
+					say("[radiomod] [number]. [law]")
 					sleep(10)
 				number++
 
@@ -290,39 +290,39 @@
 
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
-	if (src.laws.zeroth)
-		if (!src.lawcheck[1])
-			src.lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
-		list += {"<A href='byond://?src=\ref[src];lawc=0'>[src.lawcheck[1]] 0:</A> [src.laws.zeroth]<BR>"}
+	if (laws.zeroth)
+		if (!lawcheck[1])
+			lawcheck[1] = "No" //Given Law 0's usual nature, it defaults to NOT getting reported. --NeoFite
+		list += {"<A href='byond://?src=\ref[src];lawc=0'>[lawcheck[1]] 0:</A> [laws.zeroth]<BR>"}
 
-	for (var/index = 1, index <= src.laws.ion.len, index++)
-		var/law = src.laws.ion[index]
+	for (var/index = 1, index <= laws.ion.len, index++)
+		var/law = laws.ion[index]
 
 		if (length(law) > 0)
-			if (!src.ioncheck[index])
-				src.ioncheck[index] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawi=[index]'>[src.ioncheck[index]] [ionnum()]:</A> [law]<BR>"}
-			src.ioncheck.len += 1
+			if (!ioncheck[index])
+				ioncheck[index] = "Yes"
+			list += {"<A href='byond://?src=\ref[src];lawi=[index]'>[ioncheck[index]] [ionnum()]:</A> [law]<BR>"}
+			ioncheck.len += 1
 
 	var/number = 1
-	for (var/index = 1, index <= src.laws.inherent.len, index++)
-		var/law = src.laws.inherent[index]
+	for (var/index = 1, index <= laws.inherent.len, index++)
+		var/law = laws.inherent[index]
 
 		if (length(law) > 0)
-			src.lawcheck.len += 1
+			lawcheck.len += 1
 
-			if (!src.lawcheck[number+1])
-				src.lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			if (!lawcheck[number+1])
+				lawcheck[number+1] = "Yes"
+			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[lawcheck[number+1]] [number]:</A> [law]<BR>"}
 			number++
 
-	for (var/index = 1, index <= src.laws.supplied.len, index++)
-		var/law = src.laws.supplied[index]
+	for (var/index = 1, index <= laws.supplied.len, index++)
+		var/law = laws.supplied[index]
 		if (length(law) > 0)
-			src.lawcheck.len += 1
-			if (!src.lawcheck[number+1])
-				src.lawcheck[number+1] = "Yes"
-			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
+			lawcheck.len += 1
+			if (!lawcheck[number+1])
+				lawcheck[number+1] = "Yes"
+			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[lawcheck[number+1]] [number]:</A> [law]<BR>"}
 			number++
 	list += {"<br><br><A href='byond://?src=\ref[src];laws=1'>State Laws</A>"}
 
@@ -481,7 +481,7 @@
 			grabbedby(M)
 		else
 			M.do_attack_animation(src)
-			playsound(src.loc, 'sound/effects/bang.ogg', 10, 1)
+			playsound(loc, 'sound/effects/bang.ogg', 10, 1)
 			visible_message("<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>", \
 						"<span class='warning'>[M] punches [src], but doesn't leave a dent.</span>")
 	return 0

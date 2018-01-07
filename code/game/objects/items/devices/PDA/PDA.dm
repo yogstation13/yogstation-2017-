@@ -574,7 +574,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 							hidden_uplink.interact(U)
 							to_chat(U, "The PDA softly beeps.")
 							U << browse(null, "window=pda")
-							src.mode = 0
+							mode = 0
 						else
 							t = copytext(sanitize(t), 1, 20)
 							ttone = t
@@ -583,10 +583,10 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 					return
 			if("Message")
 				var/obj/item/device/pda/P = locate(href_list["target"])
-				src.create_message(U, P)
+				create_message(U, P)
 
 			if("MessageAll")
-				src.send_to_all(U)
+				send_to_all(U)
 
 			if("Send Honk")//Honk virus
 				if(cartridge && (cartridge.special_functions & PDA_SPECIAL_CLOWN_FUNCTIONS))//Cartridge checks are kind of unnecessary since everything is done through switch.
@@ -772,8 +772,8 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 			P.show_recieved_message(msg,src)
 			if(!multiple)
 				show_to_ghosts(user,msg)
-				log_pda("[user.real_name]([user.ckey]) (PDA: [src.name]) sent \"[message]\" to [P.name]")
-				investigate_log("[user.real_name]([user.ckey]) (PDA: [src.name]) sent \"[message]\" to [P.name]", "pda")
+				log_pda("[user.real_name]([user.ckey]) (PDA: [name]) sent \"[message]\" to [P.name]")
+				investigate_log("[user.real_name]([user.ckey]) (PDA: [name]) sent \"[message]\" to [P.name]", "pda")
 		else
 			if(!multiple)
 				to_chat(user, "<span class='notice'>ERROR: Server isn't responding.</span>")
@@ -783,8 +783,8 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	if(multiple)
 		show_to_sender(last_sucessful_msg,1)
 		show_to_ghosts(user,last_sucessful_msg,1)
-		log_pda("[user.real_name]([user.ckey]) (PDA: [src.name]) sent \"[message]\" to Everyone")
-		investigate_log("[user.real_name]([user.ckey]) (PDA: [src.name]) sent \"[message]\" to Everyone", "pda")
+		log_pda("[user.real_name]([user.ckey]) (PDA: [name]) sent \"[message]\" to Everyone")
+		investigate_log("[user.real_name]([user.ckey]) (PDA: [name]) sent \"[message]\" to Everyone", "pda")
 
 /obj/item/device/pda/proc/show_to_sender(datum/data_pda_msg/msg,multiple = 0)
 	tnote += "<i><b>&rarr; To [multiple ? "Everyone" : msg.recipient]:</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
@@ -815,7 +815,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 			hrefstart = "<a href='?src=\ref[L];track=[html_encode(source.owner)]'>"
 			hrefend = "</a>"
 
-		to_chat(L, "\icon[src.icon] <b>Message from [hrefstart][source.owner] ([source.ownjob])[hrefend], </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
+		to_chat(L, "\icon[icon] <b>Message from [hrefstart][source.owner] ([source.ownjob])[hrefend], </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
 
 	overlays.Cut()
 	overlays += image(icon, icon_alert)
@@ -838,7 +838,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 				useMS = MS
 				break
 
-	var/datum/signal/signal = src.telecomms_process()
+	var/datum/signal/signal = telecomms_process()
 
 	if(!P || qdeleted(P) || P.toff) //in case the PDA or mob gets destroyed during telecomms_process()
 		return null
@@ -970,7 +970,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 				updateSelfDialog()//Update self dialog on success.
 			return	//Return in case of failed check or when successful.
 		updateSelfDialog()//For the non-input related code.
-	else if(istype(C, /obj/item/device/paicard) && !src.pai)
+	else if(istype(C, /obj/item/device/paicard) && !pai)
 		if(!user.unEquip(C))
 			return
 		C.loc = src
@@ -1054,7 +1054,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 
 		if(PDA_SCAN_FORENSIC)
 			if(!scanning)
-				user.visible_message("\The [user] points the [src.name] at \the [A] and performs a forensic scan.", "<span class='notice'>You scan \the [A]. The scanner is now analysing the results...</span>")
+				user.visible_message("\The [user] points the [name] at \the [A] and performs a forensic scan.", "<span class='notice'>You scan \the [A]. The scanner is now analysing the results...</span>")
 				var/list/scan_results = forensic_scan(A)
 				scanning = 1
 				addtimer(src, "forensic_scan_report", 0, , scan_results)
@@ -1183,14 +1183,14 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	if(user.stat == 2)
 		return //won't work if dead
 
-	if(src.aiPDA.toff)
+	if(aiPDA.toff)
 		to_chat(user, "Turn on your receiver in order to send messages.")
 		return
 
 	for (var/obj/item/device/pda/P in get_viewable_pdas())
 		if (P == src)
 			continue
-		else if (P == src.aiPDA)
+		else if (P == aiPDA)
 			continue
 
 		var/name = P.owner
@@ -1214,8 +1214,8 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		var/add_photo = input(user,"Do you want to attach a photo?","Photo","No") as null|anything in list("Yes","No")
 		if(add_photo=="Yes")
 			var/datum/picture/Pic = aicamera.selectpicture(aicamera)
-			src.aiPDA.photo = Pic.fields["img"]
-	src.aiPDA.create_message(src, selected)
+			aiPDA.photo = Pic.fields["img"]
+	aiPDA.create_message(src, selected)
 
 
 /mob/living/silicon/ai/verb/cmd_toggle_pda_receiver()

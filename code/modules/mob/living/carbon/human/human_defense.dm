@@ -137,8 +137,8 @@
 		dna.species.handle_emp(src, severity)
 	//CYBERMEN STUFF
 	//I'd prefer to have a event-listener system set up for this, but for now this will do.
-	if(ticker.mode.is_cyberman(src.mind))
-		src.mind.cyberman.emp_act(src, severity)
+	if(ticker.mode.is_cyberman(mind))
+		mind.cyberman.emp_act(src, severity)
 	else
 		if(cyberman_network)
 			for(var/datum/cyberman_hack/human/H in cyberman_network.active_cybermen_hacks)

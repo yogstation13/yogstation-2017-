@@ -114,7 +114,7 @@
 				admin_ticket(msg)	//admin we are replying to has vanished, adminhelp instead
 			return
 
-	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
+	if (handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
 	//msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))

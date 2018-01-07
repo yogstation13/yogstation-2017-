@@ -15,19 +15,19 @@
 	var/precision = 1 // how close to the portal you will teleport. 0 = on the portal, 1 = adjacent
 
 /obj/effect/portal/Bumped(mob/M as mob|obj)
-	src.teleport(M)
+	teleport(M)
 
 /obj/effect/portal/New(loc, turf/target, creator, lifespan=300)
 	portals += src
-	src.loc = loc
-	src.target = target
-	src.creator = creator
+	loc = loc
+	target = target
+	creator = creator
 	var/area/A = get_area(target)
 	if(A && A.noteleport)
 		destroy_effect()
 		return
-	for(var/mob/M in src.loc)
-		src.teleport(M)
+	for(var/mob/M in loc)
+		teleport(M)
 	if(lifespan > 0)
 		spawn(lifespan)
 			qdel(src)

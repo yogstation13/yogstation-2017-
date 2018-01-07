@@ -34,10 +34,10 @@ var/datum/subsystem/events/SSevent
 /datum/subsystem/events/fire(resumed = 0)
 	if(!resumed)
 		checkEvent() //only check these if we aren't resuming a paused fire
-		src.currentrun = running.Copy()
+		currentrun = running.Copy()
 
 	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
+	var/list/currentrun = currentrun
 
 	while(currentrun.len)
 		var/datum/thing = currentrun[currentrun.len]

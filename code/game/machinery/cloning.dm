@@ -368,7 +368,7 @@
 		else
 			if(occupant.mind != clonemind)
 				clonemind.transfer_to(occupant)
-		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
+		playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, 0)
 		if(occupant.grab_ghost()) // We really just want to make you suffer, but only if you actually deserve it (which is most of the time)
 			flash_color(occupant, color="#960000", time=100)
 			to_chat(occupant, "<span class='warning'><b>Agony blazes across your \

@@ -22,7 +22,7 @@
 	var/volume = 5
 
 /obj/item/weapon/mop/rag/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] ties the [src.name] around their head and groans! It looks like--</span>")
+	user.visible_message("<span class='suicide'>[user] ties the [name] around their head and groans! It looks like--</span>")
 	user.say("MY BRAIN HURTS!!")
 	return (OXYLOSS)
 

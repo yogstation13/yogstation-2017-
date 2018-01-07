@@ -139,7 +139,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		return
 
 	vessel.remove_reagent("blood",amt)
-	if (isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
+	if (isturf(loc)) //Blood loss still happens in locker, floor stays clean
 		blood_splatter(src,src)
 
 /****************************************************
@@ -162,27 +162,27 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		B.data["virus"] = new T.virus.type(0)
 	*/
 
-	for(var/datum/disease/D in src.viruses)
+	for(var/datum/disease/D in viruses)
 		B.data["viruses"] += D.Copy()
 
-	B.data["blood_DNA"] = copytext(src.dna.unique_enzymes,1,0)
-	if(src.resistances&&src.resistances.len)
-		B.data["resistances"] = src.resistances.Copy()
+	B.data["blood_DNA"] = copytext(dna.unique_enzymes,1,0)
+	if(resistances&&resistances.len)
+		B.data["resistances"] = resistances.Copy()
 	var/list/temp_chem = list()
-	for(var/datum/reagent/R in src.reagents.reagent_list)
+	for(var/datum/reagent/R in reagents.reagent_list)
 		temp_chem[R.id] = R.volume
 	B.data["trace_chem"] = list2params(temp_chem)
 	if(mind)
-		B.data["mind"] = src.mind
+		B.data["mind"] = mind
 	if(ckey)
-		B.data["ckey"] = src.ckey
+		B.data["ckey"] = ckey
 	if(!suiciding)
 		B.data["cloneable"] = 1
-	B.data["blood_type"] = copytext(src.dna.blood_type,1,0)
-	B.data["gender"] = src.gender
-	B.data["real_name"] = src.real_name
-	B.data["features"] = src.dna.features
-	B.data["factions"] = src.faction
+	B.data["blood_type"] = copytext(dna.blood_type,1,0)
+	B.data["gender"] = gender
+	B.data["real_name"] = real_name
+	B.data["features"] = dna.features
+	B.data["factions"] = faction
 	return B
 
 //For humans, blood does not appear from blue, it comes from vessels.
@@ -208,7 +208,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 	var/list/chems = list()
 	chems = params2list(injected.data["trace_chem"])
 	for(var/C in chems)
-		src.reagents.add_reagent(C, (text2num(chems[C]) / 560) * amount)//adds trace chemicals to owner's blood
+		reagents.add_reagent(C, (text2num(chems[C]) / 560) * amount)//adds trace chemicals to owner's blood
 	reagents.update_total()
 
 	container.reagents.remove_reagent("blood", amount)

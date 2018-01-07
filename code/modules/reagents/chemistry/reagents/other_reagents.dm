@@ -95,7 +95,7 @@
 
 /datum/reagent/vaccine/on_merge(list/data)
 	if(istype(data))
-		src.data |= data.Copy()
+		data |= data.Copy()
 
 /datum/reagent/water
 	name = "Water"
@@ -200,13 +200,13 @@
 				ticker.mode.remove_hog_follower(M.mind)
 			else if(is_servant_of_ratvar(M))
 				remove_servant_of_ratvar(M)
-			holder.remove_reagent(src.id, src.volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
+			holder.remove_reagent(id, volume)	// maybe this is a little too perfect and a max() cap on the statuses would be better??
 			M.jitteriness = 0
 			M.stuttering = 0
 			M.confused = 0
 			M.dizziness = 0
 			return
-	holder.remove_reagent(src.id, 0.4)	//fixed consumption to prevent balancing going out of whack
+	holder.remove_reagent(id, 0.4)	//fixed consumption to prevent balancing going out of whack
 
 /datum/reagent/water/holywater/reaction_turf(turf/T, reac_volume)
 	..()
@@ -237,7 +237,7 @@
 		M.adjustFireLoss(2, 0, DAMAGE_CHEMICAL)
 		M.adjustOxyLoss(2, 0, DAMAGE_CHEMICAL)
 		M.adjustBruteLoss(2, 0, DAMAGE_CHEMICAL)
-	holder.remove_reagent(src.id, 1)
+	holder.remove_reagent(id, 1)
 	. = 1
 
 /datum/reagent/hellwater			//if someone has this in their system they've really pissed off an eldrich god
@@ -251,7 +251,7 @@
 	M.adjustToxLoss(1, 0, DAMAGE_CHEMICAL)
 	M.adjustFireLoss(1, 0, DAMAGE_CHEMICAL)		//Hence the other damages... ain't I a bastard?
 	M.adjustBrainLoss(5, 0, DAMAGE_CHEMICAL)
-	holder.remove_reagent(src.id, 1)
+	holder.remove_reagent(id, 1)
 
 /datum/reagent/medicine/omnizine/godblood
 	name = "Godblood"

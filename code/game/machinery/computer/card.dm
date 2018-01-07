@@ -302,9 +302,9 @@ var/time_last_changed_position = 0
 	//user << browse(dat, "window=id_com;size=900x520")
 	//onclose(user, "id_com")
 
-	var/datum/browser/popup = new(user, "id_com", src.name, 900, 620)
+	var/datum/browser/popup = new(user, "id_com", name, 900, 620)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -334,7 +334,7 @@ var/time_last_changed_position = 0
 
 		if ("scan")
 			if (scan)
-				scan.loc = src.loc
+				scan.loc = loc
 				scan.verb_pickup()
 				scan = null
 			else

@@ -109,7 +109,7 @@
 	//Attach hydraulic clamp
 	var/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/HC = new /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp
 	HC.attach(src)
-	for(var/obj/item/mecha_parts/mecha_tracking/B in src.contents)//Deletes the beacon so it can't be found easily
+	for(var/obj/item/mecha_parts/mecha_tracking/B in contents)//Deletes the beacon so it can't be found easily
 		qdel(B)
 
 	var/obj/item/mecha_parts/mecha_equipment/mining_scanner/scanner = new /obj/item/mecha_parts/mecha_equipment/mining_scanner
@@ -124,11 +124,11 @@
 	..()
 	if(href_list["drop_from_cargo"])
 		var/obj/O = locate(href_list["drop_from_cargo"])
-		if(O && O in src.cargo)
-			src.occupant_message("<span class='notice'>You unload [O].</span>")
+		if(O && O in cargo)
+			occupant_message("<span class='notice'>You unload [O].</span>")
 			O.loc = loc
-			src.cargo -= O
-			src.log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - src.cargo.len]")
+			cargo -= O
+			log_message("Unloaded [O]. Cargo compartment capacity: [cargo_capacity - cargo.len]")
 	return
 
 

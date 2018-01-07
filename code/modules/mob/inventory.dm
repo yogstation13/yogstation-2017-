@@ -258,7 +258,7 @@
 	if(istype(S) && S.can_be_inserted(src,1))
 		S.handle_item_insertion(src)
 		if(!S.silent)
-			playsound(src.loc, "rustle", 50, 1, -5)
+			playsound(loc, "rustle", 50, 1, -5)
 		return 1
 
 	to_chat(M, "<span class='warning'>You are unable to equip that!</span>")

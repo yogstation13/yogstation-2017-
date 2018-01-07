@@ -39,7 +39,7 @@
 		var/move_dir = get_dir(loc, AM.loc)
 		var/mob/living/carbon/human/H = AM
 		if((transform_standing || H.lying) && move_dir == EAST)// || move_dir == WEST)
-			AM.loc = src.loc
+			AM.loc = loc
 			do_transform(AM)
 
 /obj/machinery/transformer/CanPass(atom/movable/mover, turf/target, height=0)
@@ -56,7 +56,7 @@
 		return
 
 	if(!transform_dead && H.stat == DEAD)
-		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+		playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 		return
 
 	// Activate the cooldown
@@ -66,7 +66,7 @@
 		cooldown = 0
 		update_icon()
 
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 	H.emote("scream") // It is painful
 	H.adjustBruteLoss(max(0, 80 - H.getBruteLoss())) // Hurt the human, don't try to kill them though.
 
@@ -82,7 +82,7 @@
  	// So he can't jump out the gate right away.
 	R.SetLockdown()
 	spawn(50)
-		playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+		playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 		sleep(30)
 		if(R)
 			R.SetLockdown(0)

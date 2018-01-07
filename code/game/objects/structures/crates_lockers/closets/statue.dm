@@ -68,9 +68,9 @@
 
 /obj/structure/closet/statue/dump_contents()
 
-	if(istype(src.loc, /mob/living/simple_animal/hostile/statue))
-		var/mob/living/simple_animal/hostile/statue/S = src.loc
-		src.loc = S.loc
+	if(istype(loc, /mob/living/simple_animal/hostile/statue))
+		var/mob/living/simple_animal/hostile/statue/S = loc
+		loc = S.loc
 		if(S.mind)
 			for(var/mob/M in contents)
 				S.mind.transfer_to(M)
@@ -81,10 +81,10 @@
 
 
 	for(var/obj/O in src)
-		O.loc = src.loc
+		O.loc = loc
 
 	for(var/mob/living/M in src)
-		M.loc = src.loc
+		M.loc = loc
 		M.disabilities -= MUTE
 		M.take_overall_damage((M.health - health - 100),0) //any new damage the statue incurred is transfered to the mob
 		M.faction -= "mimic"

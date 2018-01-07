@@ -52,7 +52,7 @@
 			S.loc = src
 			mix_filling_color(S)
 			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
-			src.foodtype |= S.foodtype
+			foodtype |= S.foodtype
 			update_overlays(S)
 			to_chat(user, "<span class='notice'>You add the [I.name] to the [name].</span>")
 			update_name(S)
@@ -262,7 +262,7 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/breadslice/BS = I
 		if(finished)
 			return
-		to_chat(user, "<span class='notice'>You finish the [src.name].</span>")
+		to_chat(user, "<span class='notice'>You finish the [name].</span>")
 		finished = 1
 		name = "[customname] sandwich"
 		BS.reagents.trans_to(src, BS.reagents.total_volume)

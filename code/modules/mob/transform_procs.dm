@@ -18,7 +18,7 @@
 			I.loc = null //hide the organ in nullspace
 
 	if(tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in (src.contents-implants-int_organs))
+		for(var/obj/item/W in (contents-implants-int_organs))
 			unEquip(W)
 
 	//Make mob invisible and spawn animation
@@ -134,7 +134,7 @@
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
-		for(var/obj/item/W in (src.contents-implants-int_organs))
+		for(var/obj/item/W in (contents-implants-int_organs))
 			unEquip(W)
 			if (client)
 				client.screen -= W
@@ -505,7 +505,7 @@
 	for(var/t in bodyparts)
 		qdel(t)
 
-	var/mob/new_mob = new mobpath(src.loc)
+	var/mob/new_mob = new mobpath(loc)
 
 	new_mob.key = key
 	new_mob.a_intent = "harm"
@@ -524,7 +524,7 @@
 		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
 		return
 
-	var/mob/new_mob = new mobpath(src.loc)
+	var/mob/new_mob = new mobpath(loc)
 
 	new_mob.key = key
 	new_mob.a_intent = "harm"

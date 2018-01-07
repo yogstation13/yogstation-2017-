@@ -4,9 +4,9 @@
 	set name = "Approve Link"
 
 	/*// 15 second cool-down for link posting
-	src.verbs -= /client/verb/admin_link_approval
+	verbs -= /client/verb/admin_link_approval
 	spawn(150)
-		src.verbs += /client/verb/admin_link_approval*/
+		verbs += /client/verb/admin_link_approval*/
 
 	for(var/datum/link_approval/test in link_approval_list)
 		if(test.link == hyperlink)

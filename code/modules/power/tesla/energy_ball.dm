@@ -55,7 +55,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	if(!qdeleted(src))
 		for(var/obj/singularity/energy_ball/EB in range(1, src))
 			if(EB != src && !orbiting)
-				if(!(EB in src.orbiting_balls))
+				if(!(EB in orbiting_balls))
 					visible_message("<span class='warning'><b>[src]'s electrical field contacts [EB] and destabilizes!</b></span>")
 					for(var/mob/living/L in living_mob_list)
 						dist = get_dist(L,src)
@@ -74,7 +74,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 		move_the_basket_ball(4 + orbiting_balls.len * 1.5)
 
-		playsound(src.loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 30)
+		playsound(loc, 'sound/magic/lightningbolt.ogg', 100, 1, extrarange = 30)
 
 		pixel_x = 0
 		pixel_y = 0
@@ -115,7 +115,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 		energy_to_lower = energy_to_raise - 20
 		energy_to_raise = energy_to_raise * 1.25
 
-		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 30)
+		playsound(loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 30)
 		spawn(100)
 			if (!loc)
 				return

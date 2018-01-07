@@ -35,8 +35,8 @@
 	return ..()
 
 /obj/item/radio/integrated/signal/initialize()
-	if (src.frequency < 1200 || src.frequency > 1600)
-		src.frequency = sanitize_frequency(src.frequency)
+	if (frequency < 1200 || frequency > 1600)
+		frequency = sanitize_frequency(frequency)
 
 	set_frequency(frequency)
 

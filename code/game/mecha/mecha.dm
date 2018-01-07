@@ -136,7 +136,7 @@
 	add_cell()
 	START_PROCESSING(SSobj, src)
 	poi_list |= src
-	log_message("[src.name] created.")
+	log_message("[name] created.")
 	mechas_list += src //global mech list
 	prepare_huds()
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in huds)

@@ -38,7 +38,7 @@
 	update_icon()
 
 /obj/machinery/disposal/proc/trunk_check()
-	trunk = locate() in src.loc
+	trunk = locate() in loc
 	if(!trunk)
 		mode = 0
 		flush = 0
@@ -77,7 +77,7 @@
 				mode=-1
 			else
 				mode=0
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You [mode==0?"attach":"remove"] the screws around the power connection.</span>")
 			return
 		else if(istype(I,/obj/item/weapon/weldingtool) && mode==-1)
@@ -86,7 +86,7 @@
 				if(contents.len > 0)
 					to_chat(user, "<span class='notice'>Eject the items first!</span>")
 					return
-				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>You start slicing the floorweld off \the [src]...</span>")
 				if(do_after(user,20/I.toolspeed, target = src))
 					if(!W.isOn())
@@ -159,7 +159,7 @@
 	attempt_escape(usr)
 
 /obj/machinery/disposal/proc/attempt_escape(mob/user)
-	if(src.flushing)
+	if(flushing)
 		return
 	go_out(user)
 	return
@@ -167,7 +167,7 @@
 // leave the disposal
 /obj/machinery/disposal/proc/go_out(mob/user)
 
-	user.loc = src.loc
+	user.loc = loc
 	user.reset_perspective(null)
 	update_icon()
 	return
@@ -257,7 +257,7 @@
 	playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 	if(H) // Somehow, someone managed to flush a window which broke mid-transit and caused the disposal to go in an infinite loop trying to expel null, hopefully this fixes it
 		for(var/atom/movable/AM in H)
-			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
+			target = get_offset_target_turf(loc, rand(5)-rand(5), rand(5)-rand(5))
 
 			AM.forceMove(T)
 			AM.pipe_eject(0)
@@ -270,7 +270,7 @@
 	if(stored)
 		var/turf/T = loc
 		stored.loc = T
-		src.transfer_fingerprints_to(stored)
+		transfer_fingerprints_to(stored)
 		stored.anchored = 0
 		stored.density = 1
 		stored.update_icon()
@@ -312,7 +312,7 @@
 
 // user interaction
 /obj/machinery/disposal/bin/interact(mob/user, ai=0)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(stat & BROKEN)
 		user.unset_machine()
 		return
@@ -440,7 +440,7 @@
 					flush()
 		flush_count = 0
 
-	src.updateDialog()
+	updateDialog()
 
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE )	// flush can happen even without power
 		spawn(0)

@@ -72,7 +72,7 @@ var/global/mulebot_count = 0
 	return ..()
 
 /mob/living/simple_animal/bot/mulebot/proc/set_suffix(suffix)
-	src.suffix = suffix
+	suffix = suffix
 	if(paicard)
 		bot_name = "\improper MULEbot ([suffix])"
 	else

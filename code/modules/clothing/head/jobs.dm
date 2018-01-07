@@ -93,7 +93,7 @@
 
 /obj/item/clothing/head/det_hat/evil/attack_self(mob/user)
 	extended = !extended
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	if(extended)
 		force = 15
 		throwforce = 40

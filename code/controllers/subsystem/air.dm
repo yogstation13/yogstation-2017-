@@ -135,9 +135,9 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/proc/process_pipenets(resumed = 0)
 	if (!resumed)
-		src.currentrun = networks.Copy()
+		currentrun = networks.Copy()
 	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
+	var/list/currentrun = currentrun
 	while(currentrun.len)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
@@ -152,9 +152,9 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air/proc/process_atmos_machinery(resumed = 0)
 	var/seconds = wait * 0.1
 	if (!resumed)
-		src.currentrun = atmos_machinery.Copy()
+		currentrun = atmos_machinery.Copy()
 	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
+	var/list/currentrun = currentrun
 	while(currentrun.len)
 		var/obj/machinery/M = currentrun[currentrun.len]
 		currentrun.len--
@@ -166,9 +166,9 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/proc/process_super_conductivity(resumed = 0)
 	if (!resumed)
-		src.currentrun = active_super_conductivity.Copy()
+		currentrun = active_super_conductivity.Copy()
 	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
+	var/list/currentrun = currentrun
 	while(currentrun.len)
 		var/turf/T = currentrun[currentrun.len]
 		currentrun.len--
@@ -178,9 +178,9 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/proc/process_hotspots(resumed = 0)
 	if (!resumed)
-		src.currentrun = hotspots.Copy()
+		currentrun = hotspots.Copy()
 	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
+	var/list/currentrun = currentrun
 	while(currentrun.len)
 		var/obj/effect/hotspot/H = currentrun[currentrun.len]
 		currentrun.len--
@@ -205,9 +205,9 @@ var/datum/subsystem/air/SSair
 	//cache for sanic speed
 	var/fire_count = times_fired
 	if (!resumed)
-		src.currentrun = active_turfs.Copy()
+		currentrun = active_turfs.Copy()
 	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
+	var/list/currentrun = currentrun
 	while(currentrun.len)
 		var/turf/open/T = currentrun[currentrun.len]
 		currentrun.len--
@@ -218,9 +218,9 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/proc/process_excited_groups(resumed = 0)
 	if (!resumed)
-		src.currentrun = excited_groups.Copy()
+		currentrun = excited_groups.Copy()
 	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
+	var/list/currentrun = currentrun
 	while(currentrun.len)
 		var/datum/excited_group/EG = currentrun[currentrun.len]
 		currentrun.len--
@@ -255,8 +255,8 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/proc/setup_allturfs()
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
-	var/list/active_turfs = src.active_turfs
-	var/times_fired = ++src.times_fired
+	var/list/active_turfs = active_turfs
+	var/times_fired = ++times_fired
 
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing

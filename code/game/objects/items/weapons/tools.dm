@@ -31,7 +31,7 @@
 	scarab_usable = TRUE
 
 /obj/item/weapon/wrench/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -107,8 +107,8 @@
 	scarab_usable = TRUE
 
 /obj/item/weapon/screwdriver/suicide_act(mob/user)
-	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
-						"<span class='suicide'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
+	user.visible_message(pick("<span class='suicide'>[user] is stabbing the [name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
+						"<span class='suicide'>[user] is stabbing the [name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 	return(BRUTELOSS)
 
 /obj/item/weapon/screwdriver/New(loc, var/param_color = null)
@@ -119,7 +119,7 @@
 		icon_state = "screwdriver_[param_color]"
 
 	if (prob(75))
-		src.pixel_y = rand(0, 16)
+		pixel_y = rand(0, 16)
 	return
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -199,7 +199,7 @@
 		..()
 
 /obj/item/weapon/wirecutters/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is cutting at \his arteries with the [name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -298,7 +298,7 @@
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 
 	if(affecting && (affecting.status == ORGAN_ROBOTIC || affecting.status == ORGAN_SEMI_ROBOTIC) && user.a_intent == "help")
-		if(src.remove_fuel(1, user))
+		if(remove_fuel(1, user))
 			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] starts to fix some of the dents on [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the dents on [H]'s [affecting.name].</span>")
 			if(!do_mob(user, H, 50))
@@ -308,8 +308,8 @@
 		else
 			return
 
-	else if(user.a_intent == "help" && src.stop_bleeding && H.bleed_rate) // for cauterizing wounds. unlike lighter, no limits.
-		if(src.remove_fuel(1) && !H.bleedsuppress)
+	else if(user.a_intent == "help" && stop_bleeding && H.bleed_rate) // for cauterizing wounds. unlike lighter, no limits.
+		if(remove_fuel(1) && !H.bleedsuppress)
 			var/hitzone = user.zone_selected
 			if(user == H)
 				user.visible_message("<span class='notice'>You mend your bleeding wound with [src], sealing it completely. It was extremely painful though.</span>")
@@ -321,7 +321,7 @@
 					return
 				else
 					H.emote("scream")
-			H.suppress_bloodloss(src.stop_bleeding)
+			H.suppress_bloodloss(stop_bleeding)
 			H.cauterized = 1
 			H.apply_damage(15, BURN, hitzone) // OW. WHY?!
 		else
@@ -357,7 +357,7 @@
 		if(!welding)
 			O.reagents.trans_to(src, max_fuel)
 			to_chat(user, "<span class='notice'>[src] refueled.</span>")
-			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
+			playsound(loc, 'sound/effects/refill.ogg', 50, 1, -6)
 			update_icon()
 			return
 		else
@@ -578,7 +578,7 @@
 	scarab_usable = TRUE
 
 /obj/item/weapon/crowbar/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is beating \himself to death with the [name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/weapons/genhit.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 

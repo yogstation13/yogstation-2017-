@@ -215,8 +215,8 @@
 	set category = "OOC"
 	set desc = "Report to Admins and your peers that your will go AFK"
 
-	if(src.mob)
-		var/mob/M = src.mob
+	if(mob)
+		var/mob/M = mob
 
 		if(!M || !M.job)
 			to_chat(src, "<p class='info-bar emboldened'>You do not appear to have a job, so reporting being AFK is not necessary.</p>")

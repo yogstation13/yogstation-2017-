@@ -78,7 +78,7 @@
 	..()
 	if ( usr.stat || usr.restrained() )
 		return
-	if (src.loc == usr)
+	if (loc == usr)
 		if(tank_one && href_list["tankone"])
 			split_gases()
 			valve_open = 0
@@ -106,8 +106,8 @@
 			if(href_list["device"])
 				attached_device.attack_self(usr)
 
-		src.attack_self(usr)
-		src.add_fingerprint(usr)
+		attack_self(usr)
+		add_fingerprint(usr)
 		return
 	return
 
@@ -182,7 +182,7 @@
 		if(attacher)
 			log_attacher = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[attacher]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[attacher]'>FLW</A>)"
 
-		var/mob/mob = get_mob_by_key(src.fingerprintslast)
+		var/mob/mob = get_mob_by_key(fingerprintslast)
 		var/last_touch_info = ""
 		if(mob)
 			last_touch_info = "(<A HREF='?_src_=holder;adminmoreinfo=\ref[mob]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[mob]'>FLW</A>)"
@@ -198,14 +198,14 @@
 		merge_gases()
 		spawn(20) // In case one tank bursts
 			for (var/i=0,i<5,i++)
-				src.update_icon()
+				update_icon()
 				sleep(10)
-			src.update_icon()
+			update_icon()
 
 	else if(valve_open && tank_one && tank_two)
 		split_gases()
 		valve_open = 0
-		src.update_icon()
+		update_icon()
 
 // this doesn't do anything but the timer etc. expects it to be here
 // eventually maybe have it update icon to show state (timer, prox etc.) like old bombs

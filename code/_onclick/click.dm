@@ -204,10 +204,10 @@
 	return
 
 /mob/living/carbon/MiddleClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+	if(!stat && mind && mind.changeling && mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else if(!src.stat && src.mind && src.mind.cyberman && src.mind.cyberman.quickhack)
+	else if(!stat && mind && mind.cyberman && mind.cyberman.quickhack)
 		next_click = world.time + 5
 		mind.cyberman.initiate_hack(A)
 	else
@@ -257,10 +257,10 @@
 	return
 
 /mob/living/carbon/AltClickOn(atom/A)
-	if(!src.stat && src.mind && src.mind.changeling && src.mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
+	if(!stat && mind && mind.changeling && mind.changeling.chosen_sting && (istype(A, /mob/living/carbon)) && (A != src))
 		next_click = world.time + 5
 		mind.changeling.chosen_sting.try_to_sting(src, A)
-	else if(!src.stat && src.mind && src.mind.cyberman && src.mind.cyberman.quickhack)
+	else if(!stat && mind && mind.cyberman && mind.cyberman.quickhack)
 		next_click = world.time + 5
 		mind.cyberman.initiate_hack(A)
 	else if(dna && dna.species && dna.species.specAltClickOn(A))
@@ -290,7 +290,7 @@
 	return
 
 /mob/proc/ShiftMiddleClickOn(atom/A)
-	src.pointed(A)
+	pointed(A)
 	return
 
 /atom/proc/CtrlShiftClick(mob/user)
@@ -401,7 +401,7 @@
 	if(istype(A, /mob/living/carbon/human))
 		if(A == src)
 			return
-		var/obj/item/organ/cyberimp/eyes/hud/CIH = src.getorgan(/obj/item/organ/cyberimp/eyes/hud/security)
+		var/obj/item/organ/cyberimp/eyes/hud/CIH = getorgan(/obj/item/organ/cyberimp/eyes/hud/security)
 		if(istype(glasses, /obj/item/clothing/glasses/hud/security) || istype(CIH,/obj/item/organ/cyberimp/eyes/hud/security))
 			var/allowed_access = checkHUDaccess(1)
 			if(allowed_access)

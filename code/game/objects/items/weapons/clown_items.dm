@@ -43,7 +43,7 @@
 
 /obj/item/weapon/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!")
-	user.visible_message("<span class='suicide'>[user] lifts the [src.name] to their mouth and gnaws on it furiously, producing a thick froth! They'll never get that BB gun now!")
+	user.visible_message("<span class='suicide'>[user] lifts the [name] to their mouth and gnaws on it furiously, producing a thick froth! They'll never get that BB gun now!")
 	PoolOrNew(/obj/effect/particle_effect/foam, loc)
 	return (TOXLOSS)
 
@@ -61,21 +61,21 @@
 		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
 	else if(istype(target,/obj/effect/decal/cleanable))
 		user.visible_message("[user] begins to scrub \the [target.name] out with [src].", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
+		if(do_after(user, cleanspeed, target = target))
 			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
 			qdel(target)
 	else if(ishuman(target) && user.zone_selected == "mouth")
-		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
+		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [name]!</span>") //washes mouth out with soap sounds better than 'the soap' here
 		return
 	else if(istype(target, /obj/structure/window))
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
+		if(do_after(user, cleanspeed, target = target))
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			target.color = initial(target.color)
 			target.SetOpacity(initial(target.opacity))
 	else
 		user.visible_message("[user] begins to clean \the [target.name] with [src]...", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
+		if(do_after(user, cleanspeed, target = target))
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			var/obj/effect/decal/cleanable/C = locate() in target
 			qdel(C)
@@ -121,7 +121,7 @@
 	if(!spam_flag)
 		spam_flag = 1
 		playsound(get_turf(src), honksound, 50, 1)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		spawn(cooldowntime)
 			spam_flag = 0
 	return

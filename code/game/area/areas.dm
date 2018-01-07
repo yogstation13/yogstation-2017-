@@ -113,7 +113,7 @@ var/list/motion_alert_listeners = list()
 				var/datum/alert_listener/listener = L
 				listener.triggerAlarm("Atmosphere", src, cameras, source)
 
-		else if (src.atmosalm == 2)
+		else if (atmosalm == 2)
 			for(var/mob/living/silicon/aiPlayer in player_list)
 				aiPlayer.cancelAlarm("Atmosphere", src, source)
 			for(var/obj/machinery/computer/station_alert/a in machines)
@@ -124,7 +124,7 @@ var/list/motion_alert_listeners = list()
 				var/datum/alert_listener/listener = L
 				listener.cancelAlarm("Atmosphere", src, source)
 
-		src.atmosalm = danger_level
+		atmosalm = danger_level
 		return 1
 	return 0
 
@@ -242,19 +242,19 @@ var/list/motion_alert_listeners = list()
 	return
 
 /area/proc/partyalert()
-	if(src.name == "Space") //no parties in space!!!
+	if(name == "Space") //no parties in space!!!
 		return
-	if (!( src.party ))
-		src.party = 1
-		src.updateicon()
-		src.mouse_opacity = 0
+	if (!( party ))
+		party = 1
+		updateicon()
+		mouse_opacity = 0
 	return
 
 /area/proc/partyreset()
-	if (src.party)
-		src.party = 0
-		src.mouse_opacity = 0
-		src.updateicon()
+	if (party)
+		party = 0
+		mouse_opacity = 0
+		updateicon()
 		for(var/obj/machinery/door/firedoor/D in src)
 			if(!D.welded)
 				if(D.operating)

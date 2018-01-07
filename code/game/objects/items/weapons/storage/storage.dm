@@ -368,9 +368,9 @@
 	return 1
 
 
-/obj/item/weapon/storage/empty_object_contents(burn, src.loc)
+/obj/item/weapon/storage/empty_object_contents(burn, loc)
 	for(var/obj/item/Item in contents)
-		remove_from_storage(Item, src.loc, burn)
+		remove_from_storage(Item, loc, burn)
 
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/W, mob/user, params)

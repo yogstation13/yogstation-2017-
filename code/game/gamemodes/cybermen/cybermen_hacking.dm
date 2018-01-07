@@ -67,7 +67,7 @@
 		return null
 
 /obj/machinery/computer/upload/ai/get_cybermen_hack()
-	if(!src.current)
+	if(!current)
 		to_chat(usr, "<span class='warning'>AI upload is not linked to an AI.</span>")
 		return null
 	return new /datum/cyberman_hack/machinery/ai_upload(src)
@@ -100,7 +100,7 @@
 	return new /datum/cyberman_hack/machinery/RnDserver(src)
 
 /mob/living/carbon/human/get_cybermen_hack()
-	if(ticker.mode.is_cyberman(src.mind) )
+	if(ticker.mode.is_cyberman(mind) )
 		return null// new /datum/cyberman_hack/cyberman()
 	else
 		return new /datum/cyberman_hack/human(src)
@@ -178,7 +178,7 @@
 	name = "[display_verb] of \the [target_name]"
 	if(!cyberman_network)
 		new /datum/cyberman_network()
-	src.target = target
+	target = target
 	if(target)
 		target_name = target.name
 	else
@@ -394,7 +394,7 @@
 
 /datum/cyberman_hack/multiple_vector/start_helper(datum/cyberman_hack/first_component_hack)
 	for(var/datum/cyberman_hack/multiple_vector/H in cyberman_network.active_cybermen_hacks)
-		if(istype(H, src.type) && H.target == target)
+		if(istype(H, type) && H.target == target)
 			drop("<span class='warning'>[display_verb] failed, \the [target_name] is already being hacked.</span>")//this should never happen, because whatever started this should have checked to see if it could join H before starting this one.
 			return 0
 	if(target)

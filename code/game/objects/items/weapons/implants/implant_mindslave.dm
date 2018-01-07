@@ -27,7 +27,7 @@
 		to_chat(holder, "<span class='notice'>You can't implant yourself!</span>")
 		return 0
 
-	var/obj/item/weapon/implant/mindslave/imp = locate(src.type) in source
+	var/obj/item/weapon/implant/mindslave/imp = locate(type) in source
 
 	if(imp)
 		to_chat(holder, "<span class='warning'>[target] is already a slave!</span>")
@@ -70,7 +70,7 @@
 		return 1
 
 /obj/item/weapon/implant/mindslave/activate()
-	var/turf/T = get_turf(src.loc)
+	var/turf/T = get_turf(loc)
 
 	if (ismob(loc))
 		var/mob/M = loc

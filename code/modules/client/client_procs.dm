@@ -100,7 +100,7 @@
 		if("vars")
 			return view_var_Topic(href,href_list,hsrc)
 
-	..()	//redirect to hsrc.Topic()
+	..()	//redirect to hTopic()
 
 /client/proc/is_content_unlocked()
 	if(!prefs.unlock_content)
@@ -378,14 +378,14 @@ var/next_external_rsc = 0
 	query_logout.Execute()
 
 /client/proc/set_client_age_from_db()
-	if (IsGuestKey(src.key))
+	if (IsGuestKey(key))
 		return
 
 	establish_db_connection()
 	if(!dbcon.IsConnected())
 		return
 
-	var/sql_ckey = sanitizeSQL(src.ckey)
+	var/sql_ckey = sanitizeSQL(ckey)
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT id, datediff(Now(),firstseen) as age FROM [format_table_name("player")] WHERE ckey = '[sql_ckey]'")
 	if (!query.Execute())
@@ -400,7 +400,7 @@ var/next_external_rsc = 0
 
 
 /client/proc/sync_client_with_db()
-	if (IsGuestKey(src.key))
+	if (IsGuestKey(key))
 		return
 
 	establish_db_connection()
@@ -422,8 +422,8 @@ var/next_external_rsc = 0
 		related_accounts_cid += "[query_cid.item[1]], "
 
 	var/admin_rank = "Player"
-	if (src.holder && src.holder.rank)
-		admin_rank = src.holder.rank.name
+	if (holder && holder.rank)
+		admin_rank = holder.rank.name
 	else
 		if (check_randomizer())
 			return
@@ -435,8 +435,8 @@ var/next_external_rsc = 0
 		send2irc_adminless_only("Watchlist", "[key_name(src)] is on the watchlist and has just connected - Reason: [watchreason]")
 
 
-	var/sql_ip = sanitizeSQL(src.address)
-	var/sql_computerid = sanitizeSQL(src.computer_id)
+	var/sql_ip = sanitizeSQL(address)
+	var/sql_computerid = sanitizeSQL(computer_id)
 	var/sql_admin_rank = sanitizeSQL(admin_rank)
 
 	var/DBQuery/query_insert = dbcon.NewQuery("INSERT INTO [format_table_name("player")] (id, ckey, firstseen, lastseen, ip, computerid, lastadminrank) VALUES (null, '[sql_ckey]', Now(), Now(), '[sql_ip]', '[sql_computerid]', '[sql_admin_rank]') ON DUPLICATE KEY UPDATE lastseen = VALUES(lastseen), ip = VALUES(ip), computerid = VALUES(computerid), lastadminrank = VALUES(lastadminrank)")

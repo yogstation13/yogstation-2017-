@@ -114,7 +114,7 @@
 		for(var/obj/item/ammo_casing/AC in stored_ammo)
 			if(!AC.BB)//found a spent ammo
 				stored_ammo -= AC
-				AC.loc = get_turf(src.loc)
+				AC.loc = get_turf(loc)
 
 				stored_ammo += R
 				R.loc = src

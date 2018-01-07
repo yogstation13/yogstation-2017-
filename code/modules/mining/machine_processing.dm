@@ -13,7 +13,7 @@
 /obj/machinery/mineral/processing_unit_console/New()
 	..()
 	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))
+		machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))
 		if (machine)
 			machine.CONSOLE = src
 		else
@@ -122,7 +122,7 @@
 	if(..())
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["sel_iron"])
 		if (href_list["sel_iron"] == "yes")
 			machine.selected_iron = 1
@@ -168,7 +168,7 @@
 			machine.on = 1
 		else
 			machine.on = 0
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /**********************Mineral processing unit**************************/

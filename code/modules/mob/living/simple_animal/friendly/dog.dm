@@ -123,7 +123,7 @@
 		switch(remove_from)
 			if("head")
 				if(inventory_head)
-					inventory_head.loc = src.loc
+					inventory_head.loc = loc
 					inventory_head = null
 					update_corgi_fluff()
 					regenerate_icons()
@@ -132,7 +132,7 @@
 					return
 			if("back")
 				if(inventory_back)
-					inventory_back.loc = src.loc
+					inventory_back.loc = loc
 					inventory_back = null
 					update_corgi_fluff()
 					regenerate_icons()
@@ -189,7 +189,7 @@
 
 					usr.drop_item()
 					item_to_add.loc = src
-					src.inventory_back = item_to_add
+					inventory_back = item_to_add
 					update_corgi_fluff()
 					regenerate_icons()
 
@@ -234,7 +234,7 @@
 				"<span class='notice'>You put [item_to_add] on [real_name]'s head.  [src] gives you a peculiar look, then wags \his tail once and barks.</span>",
 				"<span class='italics'>You hear a friendly-sounding bark.</span>")
 		item_to_add.loc = src
-		src.inventory_head = item_to_add
+		inventory_head = item_to_add
 		update_corgi_fluff()
 		regenerate_icons()
 	else
@@ -369,13 +369,13 @@
 				step_to(src,movement_target,1)
 
 				if(movement_target)		//Not redundant due to sleeps, Item can be gone in 6 decisecomds
-					if (movement_target.loc.x < src.x)
+					if (movement_target.loc.x < x)
 						dir = WEST
-					else if (movement_target.loc.x > src.x)
+					else if (movement_target.loc.x > x)
 						dir = EAST
-					else if (movement_target.loc.y < src.y)
+					else if (movement_target.loc.y < y)
 						dir = SOUTH
-					else if (movement_target.loc.y > src.y)
+					else if (movement_target.loc.y > y)
 						dir = NORTH
 					else
 						dir = SOUTH

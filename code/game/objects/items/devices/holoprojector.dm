@@ -79,11 +79,11 @@
 /obj/item/device/holoprojector/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(laser)
-			laser.loc = get_turf(src.loc)
+			laser.loc = get_turf(loc)
 			laser = null
 			replaced_parts = TRUE
 		if(cap)
-			cap.loc = get_turf(src.loc)
+			cap.loc = get_turf(loc)
 			cap = null
 			replaced_parts = TRUE
 		if(replaced_parts)

@@ -124,7 +124,7 @@
 		log_admin("Ticket #[ticket_id]: [log_item.user] -> Ticket #[ticket_id] - [fix_apostrophes(log_item.text)]")
 
 /datum/admin_ticket/proc/get_view_link(var/mob/user)
-	return "<a href='?src=\ref[src];user=\ref[user];action=view_admin_ticket;ticket=\ref[src]'>Ticket #[src.ticket_id]</a>"
+	return "<a href='?src=\ref[src];user=\ref[user];action=view_admin_ticket;ticket=\ref[src]'>Ticket #[ticket_id]</a>"
 
 /datum/admin_ticket/proc/is_monitor(var/client/C)
 	return (C in monitors) ? 1 : 0

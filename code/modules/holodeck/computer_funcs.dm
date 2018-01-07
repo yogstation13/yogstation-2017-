@@ -12,7 +12,7 @@
 
 	var/datum/browser/popup = new(user, "computer", name, 400, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -34,7 +34,7 @@
 
 	var/datum/browser/popup = new(user, "computer", name, 400, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 
@@ -94,7 +94,7 @@
 
 /obj/machinery/computer/holodeck/proc/derez(var/obj/obj, var/silent = 1, var/forced = 0)
 	// Emagging a machine creates an anomaly in the derez systems.
-	if(obj && src.emagged && !src.stat && !forced)
+	if(obj && emagged && !stat && !forced)
 		if((ismob(obj) || istype(obj.loc,/mob)) && prob(50))
 			spawn(50) .(obj,silent) // may last a disturbingly long time
 			return

@@ -65,14 +65,14 @@
 /mob/living/simple_animal/revenant/New()
 	..()
 
-	ghostimage = image(src.icon,src,src.icon_state)
+	ghostimage = image(icon,src,icon_state)
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
 	spawn(5)
-		if(src.mind)
-			src.mind.remove_all_antag()
-			src.mind.wipe_memory()
+		if(mind)
+			mind.remove_all_antag()
+			mind.wipe_memory()
 			src << 'sound/effects/ghost.ogg'
 			to_chat(src, "<br>")
 			to_chat(src, "<span class='deadsay'><font size=3><b>You are a revenant.</b></font></span>")
@@ -83,14 +83,14 @@
 			to_chat(src, "<b><i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i></b>")
 			to_chat(src, "<b>Be sure to read the wiki page at https://tgstation13.org/wiki/Revenant to learn more.</b>")
 			var/datum/objective/revenant/objective = new
-			objective.owner = src.mind
-			src.mind.objectives += objective
+			objective.owner = mind
+			mind.objectives += objective
 			to_chat(src, "<b>Objective #1</b>: [objective.explanation_text]")
 			var/datum/objective/revenantFluff/objective2 = new
-			objective2.owner = src.mind
-			src.mind.objectives += objective2
+			objective2.owner = mind
+			mind.objectives += objective2
 			to_chat(src, "<b>Objective #2</b>: [objective2.explanation_text]")
-			ticker.mode.traitors |= src.mind //Necessary for announcing
+			ticker.mode.traitors |= mind //Necessary for announcing
 		revtransmit = new(null)
 		AddSpell(new /obj/effect/proc_holder/spell/targeted/night_vision/revenant(null))
 		AddSpell(revtransmit)
@@ -222,7 +222,7 @@
 	var/reforming_essence = essence_regen_cap //retain the gained essence capacity
 	var/obj/item/weapon/ectoplasm/revenant/R = new(get_turf(src))
 	R.essence = max(reforming_essence - 15 * perfectsouls, 75) //minus any perfect souls
-	R.client_to_revive = src.client //If the essence reforms, the old revenant is put back in the body
+	R.client_to_revive = client //If the essence reforms, the old revenant is put back in the body
 	ghostize()
 	qdel(src)
 	return
@@ -271,7 +271,7 @@
 	else
 		icon_state = icon_idle
 	if(ghostimage)
-		ghostimage.icon_state = src.icon_state
+		ghostimage.icon_state = icon_state
 		updateallghostimages()
 
 /mob/living/simple_animal/revenant/proc/castcheck(essence_cost)
@@ -285,10 +285,10 @@
 		if(O.density && !O.CanPass(src, T, 5))
 			to_chat(src, "<span class='revenwarning'>You cannot use abilities inside of a dense object.</span>")
 			return 0
-	if(src.inhibited)
+	if(inhibited)
 		to_chat(src, "<span class='revenwarning'>Your powers have been suppressed by nulling energy!</span>")
 		return 0
-	if(!src.change_essence_amount(essence_cost, 1))
+	if(!change_essence_amount(essence_cost, 1))
 		to_chat(src, "<span class='revenwarning'>You lack the essence to use that ability.</span>")
 		return 0
 	return 1

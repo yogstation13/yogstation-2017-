@@ -126,10 +126,10 @@
 		invisible = 0
 
 /obj/item/clothing/cloak/wizard/IsShield()
-	breakInvisible(src.loc)
+	breakInvisible(loc)
 	return 0
 
 /obj/item/clothing/cloak/wizard/IsReflect()
-	breakInvisible(src.loc)
+	breakInvisible(loc)
 	return 0
 */

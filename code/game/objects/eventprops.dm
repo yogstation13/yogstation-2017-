@@ -129,7 +129,7 @@
 
 /obj/machinery/firing_console/attack_hand(mob/user) //type that shit to recalibrate!
 	playsound(src,'sound/effects/typing.ogg',25,1)
-	src.say("Recalibration complete")
+	say("Recalibration complete")
 
 
 

@@ -17,7 +17,7 @@
 	cooldown = 1
 	var/openclose
 	for(var/obj/machinery/door/poddoor/M in machines)
-		if(M.id == src.id)
+		if(M.id == id)
 			if(openclose == null)
 				openclose = M.density
 			spawn(0)
@@ -47,7 +47,7 @@
 /obj/item/device/assembly/control/airlock/activate()
 	cooldown = 1
 	for(var/obj/machinery/door/airlock/D in airlocks)
-		if(D.id_tag == src.id)
+		if(D.id_tag == id)
 			if(specialfunctions & OPEN)
 				if(D.density)
 					D.open()
@@ -83,20 +83,20 @@
 /obj/item/device/assembly/control/massdriver/activate()
 	cooldown = 1
 	for(var/obj/machinery/door/poddoor/M in machines)
-		if (M.id == src.id)
+		if (M.id == id)
 			spawn( 0 )
 				M.open()
 
 	sleep(10)
 
 	for(var/obj/machinery/mass_driver/M in machines)
-		if(M.id == src.id)
+		if(M.id == id)
 			M.drive()
 
 	sleep(60)
 
 	for(var/obj/machinery/door/poddoor/M in machines)
-		if (M.id == src.id)
+		if (M.id == id)
 			spawn( 0 )
 				M.close()
 
@@ -111,12 +111,12 @@
 /obj/item/device/assembly/control/igniter/activate()
 	cooldown = 1
 	for(var/obj/machinery/sparker/M in machines)
-		if (M.id == src.id)
+		if (M.id == id)
 			spawn( 0 )
 				M.ignite()
 
 	for(var/obj/machinery/igniter/M in machines)
-		if(M.id == src.id)
+		if(M.id == id)
 			M.use_power(50)
 			M.on = !M.on
 			M.icon_state = "igniter[M.on]"
@@ -132,7 +132,7 @@
 /obj/item/device/assembly/control/flasher/activate()
 	cooldown = 1
 	for(var/obj/machinery/flasher/M in machines)
-		if(M.id == src.id)
+		if(M.id == id)
 			spawn(0)
 				M.flash()
 

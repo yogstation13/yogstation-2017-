@@ -133,10 +133,10 @@
 	else if (attack_type == HULK_ATTACK) // trying to block a hulk backfires.
 		playsound(src, 'sound/effects/bang.ogg', 100, 1)
 		owner.unEquip(src)
-		var/target = src.loc
+		var/target = loc
 		for(var/i = 0, i < 7, i++)
 			target = get_step(target, pick(alldirs))
-		src.throw_at(target,7,1, spin = 1)
+		throw_at(target,7,1, spin = 1)
 		final_block_chance -= 50
 		owner.visible_message("<span class='danger'>[owner] fails to block [attack_text] with [src]!</span>",\
 			"<span class='danger'>[owner] block [attack_text] with [src]!</span>")
@@ -260,7 +260,7 @@
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
 	active = !active
 	icon_state = "teleriot[active]"
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
 
 	if(active)
 		force = 8
@@ -290,8 +290,8 @@
 
 /obj/item/weapon/shield/broken/proc/generateshield(formershield)
 	if(formershield)
-		src.icon_state = "broken-[formershield]"
-		src.item_state = "broken-[formershield]"
+		icon_state = "broken-[formershield]"
+		item_state = "broken-[formershield]"
 	playsound(src, "shatter", 70, 1)
 
 /obj/item/weapon/shield/broken/hit_reaction(mob/living/carbon/human/owner, attack_text, final_block_chance)

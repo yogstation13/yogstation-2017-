@@ -45,7 +45,7 @@ var/list/gaslist_cache = null
 	gases = new
 	temperature = 0
 	temperature_archived = 0
-	src.volume = volume
+	volume = volume
 	last_share = 0
 	fuel_burnt = 0
 
@@ -401,7 +401,7 @@ var/list/gaslist_cache = null
 	return 1
 
 /datum/gas_mixture/parse_gas_string(gas_string)
-	var/list/gases = src.gases
+	var/list/gases = gases
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
 		temperature = text2num(gas["TEMP"])

@@ -206,7 +206,7 @@
 	if(lastmove + move_delay >= world.time)
 		return 0
 	lastmove = world.time
-	if(src.dir == dir)
+	if(dir == dir)
 		var/turf/going_to = get_step(src, dir)
 		for(var/obj/item/toy/toy_mech/in_the_way in going_to)
 			if(in_the_way.on)
@@ -220,7 +220,7 @@
 	else
 		if(!quiet)
 			playsound(src, 'sound/mecha/mechturn.ogg', 20, 1)
-		src.dir = dir
+		dir = dir
 		return 2
 
 /obj/item/toy/toy_mech/proc/special_action(action)

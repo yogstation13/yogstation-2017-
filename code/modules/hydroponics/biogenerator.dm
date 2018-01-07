@@ -54,9 +54,9 @@
 /obj/machinery/biogenerator/update_icon()
 	if(panel_open)
 		icon_state = "biogen-empty-o"
-	else if(!src.beaker)
+	else if(!beaker)
 		icon_state = "biogen-empty"
-	else if(!src.processing)
+	else if(!processing)
 		icon_state = "biogen-stand"
 	else
 		icon_state = "biogen-work"
@@ -131,7 +131,7 @@
 		else
 			user.unEquip(O)
 			O.loc = src
-			to_chat(user, "<span class='info'>You put [O.name] in [src.name]</span>")
+			to_chat(user, "<span class='info'>You put [O.name] in [name]</span>")
 		return 1 //no afterattack
 	else if (istype(O, /obj/item/weapon/disk/design_disk))
 		user.visible_message("[user] begins to load \the [O] in \the [src]...",
@@ -146,7 +146,7 @@
 		processing = 0
 		return 1
 	else
-		to_chat(user, "<span class='warning'>You cannot put this in [src.name]!</span>")
+		to_chat(user, "<span class='warning'>You cannot put this in [name]!</span>")
 
 /obj/machinery/biogenerator/interact(mob/user)
 	if(stat & BROKEN || panel_open)
@@ -207,7 +207,7 @@
 /obj/machinery/biogenerator/proc/activate()
 	if (usr.stat != 0)
 		return
-	if (src.stat != 0) //NOPOWER etc
+	if (stat != 0) //NOPOWER etc
 		return
 	if(processing)
 		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
@@ -223,7 +223,7 @@
 		processing = 1
 		update_icon()
 		updateUsrDialog()
-		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+		playsound(loc, 'sound/machines/blender.ogg', 50, 1)
 		use_power(S*30)
 		sleep(S+15/productivity)
 		processing = 0
@@ -290,7 +290,7 @@
 
 /obj/machinery/biogenerator/proc/detach()
 	if(beaker)
-		beaker.loc = src.loc
+		beaker.loc = loc
 		beaker = null
 		update_icon()
 

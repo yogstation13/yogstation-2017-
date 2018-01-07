@@ -7,8 +7,8 @@
 
 /mob/living/silicon/proc/set_zeroth_law(law, law_borg)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)
-	src.laws_sanity_check()
-	src.laws.set_zeroth_law(law, law_borg)
+	laws_sanity_check()
+	laws.set_zeroth_law(law, law_borg)
 
 /mob/living/silicon/proc/add_inherent_law(law)
 	throw_alert("newlaw", /obj/screen/alert/newlaw)

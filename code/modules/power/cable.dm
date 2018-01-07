@@ -77,7 +77,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	d2 = text2num( copytext( icon_state, dash+1 ) )
 
-	var/turf/T = src.loc			// hide if turf is not intact
+	var/turf/T = loc			// hide if turf is not intact
 
 	if(level==1) hide(T.intact)
 	cable_list += src //add it to the global cable list
@@ -125,7 +125,7 @@ By design, d1 is the smallest direction and d2 is the highest
 //   - Multitool : get the power currently passing through the cable
 //
 /obj/structure/cable/attackby(obj/item/W, mob/user, params)
-	var/turf/T = src.loc
+	var/turf/T = loc
 	if(T.intact)
 		return
 	if(istype(W, /obj/item/weapon/wirecutters))
@@ -152,11 +152,11 @@ By design, d1 is the smallest direction and d2 is the highest
 			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
 		shock(user, 5, 0.2)
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
 // shock the user with probability prb
 /obj/structure/cable/proc/shock(mob/user, prb, siemens_coeff = 1)
-	if(!src.Adjacent(user))
+	if(!Adjacent(user))
 		return 0
 	if(!prob(prb))
 		return 0
@@ -479,7 +479,7 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil/attack_self(mob/user)
 	if(amount >= 15)
 		use(15)
-		var/obj/item/weapon/restraints/handcuffs/cable/O = new /obj/item/weapon/restraints/handcuffs/cable(src.loc)
+		var/obj/item/weapon/restraints/handcuffs/cable/O = new /obj/item/weapon/restraints/handcuffs/cable(loc)
 		user.put_in_hands(O)
 		O.item_color = item_color
 		O.update_icon()
@@ -497,14 +497,14 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
-		user.visible_message("<span class='suicide'>[user] is making a noose with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] is making a noose with the [name]! It looks like \he's trying to commit suicide.</span>")
 	else
-		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [name]! It looks like \he's trying to commit suicide.</span>")
 	return(OXYLOSS)
 
 /obj/item/stack/cable_coil/New(loc, amount = MAXCOIL, var/param_color = null)
 	..()
-	src.amount = amount
+	amount = amount
 	if(param_color)
 		item_color = param_color
 	pixel_x = rand(-2,2)
@@ -526,7 +526,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		if(!do_mob(user, H, 50))
 			return
 		item_heal_robotic(H, user, 0, 5)
-		src.use(1)
+		use(1)
 		return
 	else
 		return ..()
@@ -753,7 +753,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 /obj/item/stack/cable_coil/cut/New(loc)
 	..()
-	src.amount = rand(1,2)
+	amount = rand(1,2)
 	pixel_x = rand(-2,2)
 	pixel_y = rand(-2,2)
 	update_icon()

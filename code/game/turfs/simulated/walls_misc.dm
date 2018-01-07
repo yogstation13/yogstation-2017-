@@ -46,7 +46,7 @@
 
 /turf/closed/wall/mineral/cult/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/tome) && iscultist(user))
-		if(src.density == 1)
+		if(density == 1)
 			user <<"<span class='notice'>Your tome passes through the wall as if it's thin air.</span>"
 			alpha = 60
 			density = 0
@@ -62,7 +62,7 @@
 					alertthreshold += 500
 		else
 			user <<"<span class='notice'>Your tome solidly connects with the wall.</span>"
-			alpha = initial(src.alpha)
+			alpha = initial(alpha)
 			density = 1
 			opacity = 1
 		return

@@ -4,7 +4,7 @@
 
 /obj/effect/statclick/New(text, target)
 	name = text
-	src.target = target
+	target = target
 
 /obj/effect/statclick/proc/update(text)
 	name = text

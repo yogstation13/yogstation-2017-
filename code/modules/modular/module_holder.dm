@@ -54,7 +54,7 @@
 	if(owner.module_holder)
 		return FALSE
 	owner.module_holder = src
-	src.owner = owner
+	owner = owner
 	if(user)
 		user.drop_item() //Inventory code...need to drop before moving into the item
 	forceMove(owner)

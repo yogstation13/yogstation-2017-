@@ -273,7 +273,7 @@
 		else if(mode == SHUTTLE_ESCAPE)
 			destination = SSshuttle.getDock("emergency_away")
 		create_ripples(destination)
-		
+
 	switch(mode)
 		if(SHUTTLE_RECALL)
 			if(time_left <= 0)
@@ -289,7 +289,7 @@
 				timer = world.time
 				send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("The Emergency Shuttle has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, 'sound/AI/shuttledock.ogg', "Priority")
-				feedback_add_details("emergency_shuttle", src.name)
+				feedback_add_details("emergency_shuttle", name)
 
 				//Gangs only have one attempt left if the shuttle has docked with the station to prevent suffering from dominator delays
 				for(var/datum/gang/G in ticker.mode.gangs)
@@ -401,7 +401,7 @@
 	..()
 	var/list/turfs = get_area_turfs(target_area)
 	var/turf/T = pick(turfs)
-	src.loc = T
+	loc = T
 
 //Pod suits/pickaxes
 

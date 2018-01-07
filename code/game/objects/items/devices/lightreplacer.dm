@@ -80,11 +80,11 @@
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
 		if(uses >= max_uses)
-			to_chat(user, "<span class='warning'>[src.name] is full.</span>")
+			to_chat(user, "<span class='warning'>[name] is full.</span>")
 			return
 		else if(G.use(decrement))
 			AddUses(increment)
-			to_chat(user, "<span class='notice'>You insert a piece of glass into the [src.name]. You have [uses] light\s remaining.</span>")
+			to_chat(user, "<span class='notice'>You insert a piece of glass into the [name]. You have [uses] light\s remaining.</span>")
 			return
 		else
 			to_chat(user, "<span class='warning'>You need one sheet of glass to replace lights!</span>")
@@ -104,8 +104,8 @@
 			new_bulbs += AddShards(1)
 			qdel(L)
 		if(new_bulbs != 0)
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-		to_chat(user, "<span class='notice'>You insert the [L.name] into the [src.name]. " + status_string() + "</span>")
+			playsound(loc, 'sound/machines/ding.ogg', 50, 1)
+		to_chat(user, "<span class='notice'>You insert the [L.name] into the [name]. " + status_string() + "</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/storage))
@@ -117,7 +117,7 @@
 			if(istype(I,/obj/item/weapon/light))
 				var/obj/item/weapon/light/L = I
 				found_lightbulbs = TRUE
-				if(src.uses >= max_uses)
+				if(uses >= max_uses)
 					break
 				if(L.status == LIGHT_OK)
 					replaced_something = TRUE
@@ -133,7 +133,7 @@
 			to_chat(user, "<span class='warning'>\The [S] contains no bulbs.</span>")
 			return
 
-		if(!replaced_something && src.uses == max_uses)
+		if(!replaced_something && uses == max_uses)
 			to_chat(user, "<span class='warning'>\The [src] is full!</span>")
 			return
 
@@ -155,7 +155,7 @@
 
 /obj/item/device/lightreplacer/proc/Use(mob/user)
 
-	playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+	playsound(loc, 'sound/machines/click.ogg', 50, 1)
 	AddUses(-1)
 	return 1
 
@@ -188,7 +188,7 @@
 				var/new_bulbs = AddShards(1)
 				if(new_bulbs != 0)
 					to_chat(U, "<span class='notice'>\The [src] has fabricated a new bulb from the broken bulbs it has stored. It now has [uses] uses.</span>")
-					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+					playsound(loc, 'sound/machines/ding.ogg', 50, 1)
 
 				target.status = LIGHT_EMPTY
 				target.update()
@@ -216,7 +216,7 @@
 
 /obj/item/device/lightreplacer/proc/Emag()
 	emagged = !emagged
-	playsound(src.loc, "sparks", 100, 1)
+	playsound(loc, "sparks", 100, 1)
 	if(emagged)
 		name = "shortcircuited [initial(name)]"
 	else
@@ -226,7 +226,7 @@
 //Can you use it?
 
 /obj/item/device/lightreplacer/proc/CanUse(mob/living/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	//Not sure what else to check for. Maybe if clumsy?
 	if(uses > 0)
 		return 1

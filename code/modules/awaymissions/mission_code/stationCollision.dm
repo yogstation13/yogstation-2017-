@@ -47,7 +47,7 @@
 	name = "Safecode hint spawner"
 
 /obj/effect/landmark/sc_bible_spawner/New()
-	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(src.loc)
+	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(loc)
 	B.name = "The Holy book of the Geometer"
 	B.deity_name = "Narsie"
 	B.icon_state = "melted"
@@ -189,7 +189,7 @@ var/sc_safecode5 = "[rand(0,9)]"
 				if(O.level != 1)
 					continue
 				if(O.invisibility == INVISIBILITY_MAXIMUM)
-					src.consume(O)
+					consume(O)
 		T.ChangeTurf(/turf/open/space)
 	return
 

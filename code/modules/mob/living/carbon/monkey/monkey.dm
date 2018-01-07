@@ -318,8 +318,8 @@
 
 /mob/living/carbon/monkey/check_eye_prot()
 	var/number = ..()
-	if(istype(src.wear_mask, /obj/item/clothing/mask))
-		var/obj/item/clothing/mask/MFP = src.wear_mask
+	if(istype(wear_mask, /obj/item/clothing/mask))
+		var/obj/item/clothing/mask/MFP = wear_mask
 		number += MFP.flash_protect
 	return number
 

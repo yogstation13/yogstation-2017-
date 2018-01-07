@@ -39,10 +39,10 @@ var/global/list/rad_collectors = list()
 	if(..())
 		return
 	if(anchored)
-		if(!src.locked)
+		if(!locked)
 			toggle_power()
-			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
-			"<span class='notice'>You turn the [src.name] [active? "on":"off"].</span>")
+			user.visible_message("[user.name] turns the [name] [active? "on":"off"].", \
+			"<span class='notice'>You turn the [name] [active? "on":"off"].</span>")
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [loaded_tank?"Fuel: [round(loaded_tank.air_contents.gases["plasma"][MOLES]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
@@ -70,7 +70,7 @@ var/global/list/rad_collectors = list()
 		W.loc = src
 		update_icons()
 	else if(istype(W, /obj/item/weapon/crowbar))
-		if(loaded_tank && !src.locked)
+		if(loaded_tank && !locked)
 			eject()
 			return 1
 	else if(istype(W, /obj/item/weapon/wrench))
@@ -78,16 +78,16 @@ var/global/list/rad_collectors = list()
 			to_chat(user, "<span class='warning'>Remove the plasma tank first!</span>")
 			return 1
 		if(!anchored && !isinspace())
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 			anchored = 1
-			user.visible_message("[user.name] secures the [src.name].", \
+			user.visible_message("[user.name] secures the [name].", \
 				"<span class='notice'>You secure the external bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
 			connect_to_network()
 		else if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 			anchored = 0
-			user.visible_message("[user.name] unsecures the [src.name].", \
+			user.visible_message("[user.name] unsecures the [name].", \
 				"<span class='notice'>You unsecure the external bolts.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
 			disconnect_from_network()
@@ -114,12 +114,12 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/proc/eject()
 	locked = 0
-	var/obj/item/weapon/tank/internals/plasma/Z = src.loaded_tank
+	var/obj/item/weapon/tank/internals/plasma/Z = loaded_tank
 	if (!Z)
 		return
 	Z.loc = get_turf(src)
 	Z.layer = initial(Z.layer)
-	src.loaded_tank = null
+	loaded_tank = null
 	if(active)
 		toggle_power()
 	else

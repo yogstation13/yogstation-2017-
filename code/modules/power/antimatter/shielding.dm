@@ -35,7 +35,7 @@
 
 /obj/machinery/am_shielding/proc/controllerscan(priorscan = 0)
 	//Make sure we are the only one here
-	if(!istype(src.loc, /turf))
+	if(!istype(loc, /turf))
 		qdel(src)
 		return
 	for(var/obj/machinery/am_shielding/AMS in loc.contents)
@@ -69,7 +69,7 @@
 		control_unit.remove_shielding(src)
 	if(processing)
 		shutdown_core()
-	visible_message("<span class='danger'>The [src.name] melts!</span>")
+	visible_message("<span class='danger'>The [name] melts!</span>")
 	//Might want to have it leave a mess on the floor but no sprites for now
 	return ..()
 
@@ -96,9 +96,9 @@
 	stability -= 20
 	if(prob(100-stability))
 		if(prob(10))//Might create a node
-			new /obj/effect/blob/node(src.loc,150)
+			new /obj/effect/blob/node(loc,150)
 		else
-			new /obj/effect/blob(src.loc,60)
+			new /obj/effect/blob(loc,60)
 		qdel(src)
 		return
 	check_stability()
@@ -143,7 +143,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
 	if(damage >= 10)
@@ -228,8 +228,8 @@
 	materials = list(MAT_METAL=100)
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/device/multitool) && istype(src.loc,/turf))
-		new/obj/machinery/am_shielding(src.loc)
+	if(istype(I, /obj/item/device/multitool) && istype(loc,/turf))
+		new/obj/machinery/am_shielding(loc)
 		qdel(src)
 	else
 		return ..()

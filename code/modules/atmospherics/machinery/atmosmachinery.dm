@@ -137,7 +137,7 @@ Pipelines + Other Objects -> Pipe network
 			var/unsafe_wrenching = FALSE
 			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
 
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 			if (internal_pressure > 2*ONE_ATMOSPHERE)
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
@@ -182,7 +182,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/Deconstruct()
 	if(can_unwrench)
-		stored.loc = src.loc
+		stored.loc = loc
 		transfer_fingerprints_to(stored)
 		stored = null
 
@@ -213,7 +213,7 @@ Pipelines + Other Objects -> Pipe network
 	if(can_unwrench)
 		color = obj_color
 		pipe_color = obj_color
-		stored.dir = src.dir		  //need to define them here, because the obj directions...
+		stored.dir = dir		  //need to define them here, because the obj directions...
 		stored.pipe_type = pipe_type  //... were not set at the time the stored pipe was created
 		stored.color = obj_color
 	var/turf/T = loc
@@ -263,7 +263,7 @@ Pipelines + Other Objects -> Pipe network
 					playsound(src, 'sound/machines/ventcrawl.ogg', 50, 1, -3)
 	else
 		if((direction & initialize_directions) || is_type_in_list(src, ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
-			user.forceMove(src.loc)
+			user.forceMove(loc)
 			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
 	user.canmove = 0
 	spawn(1)

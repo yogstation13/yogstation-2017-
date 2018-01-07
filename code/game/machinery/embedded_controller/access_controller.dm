@@ -26,7 +26,7 @@
 		emagged = 1
 		req_access = list()
 		req_one_access = list()
-		playsound(src.loc, "sparks", 100, 1)
+		playsound(loc, "sparks", 100, 1)
 		to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/doorButtons/proc/removeMe()
@@ -255,7 +255,7 @@
 	if(..())
 		return
 	var/datum/browser/popup = new(user, "computer", name)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.set_content(returnText())
 	popup.open()
 

@@ -387,12 +387,12 @@
 		var/mob/M = loc
 		var/input = stripped_input(M,"What do you want your war cry to be? You will shout it when you hit someone in melee.", ,"", 50)
 		if(input)
-			src.war_cry = input
+			war_cry = input
 
 /obj/item/weapon/twohanded/spear/CheckParts(list/parts_list)
 	..()
 	if(explosive)
-		explosive.loc = get_turf(src.loc)
+		explosive.loc = get_turf(loc)
 		explosive = null
 	var/obj/item/weapon/grenade/G = locate() in contents
 	if(G)

@@ -10,7 +10,7 @@
 
 	var/obj/item/bodypart/affecting = H.get_bodypart("chest")
 	affecting.take_damage(Clamp(brute_dam/2, 15, 50), Clamp(burn_dam/2, 0, 50)) //Damage the chest based on limb's existing damage
-	H.visible_message("<span class='danger'><B>[H]'s [src.name] has been violently dismembered!</B></span>")
+	H.visible_message("<span class='danger'><B>[H]'s [name] has been violently dismembered!</B></span>")
 	H.emote("scream")
 	drop_limb()
 
@@ -97,7 +97,7 @@
 			O.transfer_to_limb(src, H)
 
 	update_icon_dropped()
-	src.loc = T
+	loc = T
 	H.update_health_hud() //update the healthdoll
 	H.update_body()
 	H.update_hair()
@@ -213,7 +213,7 @@
 /obj/item/bodypart/proc/replace_limb(mob/living/carbon/human/H, special)
 	if(!istype(H))
 		return
-	var/obj/item/bodypart/O = locate(src.type) in H.bodyparts
+	var/obj/item/bodypart/O = locate(type) in H.bodyparts
 
 	if(O)
 		O.drop_limb(1)
@@ -222,7 +222,7 @@
 /obj/item/bodypart/head/replace_limb(mob/living/carbon/human/H, special)
 	if(!istype(H))
 		return
-	var/obj/item/bodypart/head/O = locate(src.type) in H.bodyparts
+	var/obj/item/bodypart/head/O = locate(type) in H.bodyparts
 	if(O)
 		if(!special)
 			return

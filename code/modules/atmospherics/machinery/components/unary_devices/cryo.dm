@@ -125,7 +125,7 @@
 		if(occupant.health >= 100 || (istype(H) && H.dna && H.dna.species && (DAMAGE_CHEMICAL in H.dna.species.heal_immunities)) ) // Don't bother with fully healed people or people that cryo cannot heal.
 			on = FALSE
 			update_icon()
-			playsound(src.loc, 'sound/machines/ding.ogg', volume, 1) // Bug the doctors.
+			playsound(loc, 'sound/machines/ding.ogg', volume, 1) // Bug the doctors.
 			if(autoeject) // Eject if configured.
 				open_machine()
 			return

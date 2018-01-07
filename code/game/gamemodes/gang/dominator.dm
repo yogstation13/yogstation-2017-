@@ -63,7 +63,7 @@
 	switch(damage_type)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		if(BRUTE)
 			if(sound_effect)
 				if(damage)
@@ -86,7 +86,7 @@
 			set_broken()
 
 	if(health <= -100)
-		new /obj/item/stack/sheet/plasteel(src.loc)
+		new /obj/item/stack/sheet/plasteel(loc)
 		qdel(src)
 
 /obj/machinery/dominator/proc/set_broken()
@@ -183,7 +183,7 @@
 
 	var/time = round(get_domination_time(tempgang)/60,0.1)
 	if(alert(user,"With [round((tempgang.territory.len/start_state.num_territories)*100, 1)]% station control, a takeover will require [time] minutes.\nYour gang will be unable to gain influence while it is active.\nThe entire station will likely be alerted to it once it starts.\nYou have [tempgang.dom_attempts] attempt(s) remaining. Are you ready?","Confirm","Ready","Later") == "Ready")
-		if (isnum(tempgang.dom_timer) || !tempgang.dom_attempts || !in_range(src, user) || !istype(src.loc, /turf))
+		if (isnum(tempgang.dom_timer) || !tempgang.dom_attempts || !in_range(src, user) || !istype(loc, /turf))
 			return 0
 
 		var/area/A = get_area(loc)
@@ -193,7 +193,7 @@
 		gang.dom_attempts --
 		priority_announce("Network breach detected in [locname]. The [gang.name] Gang is attempting to seize control of the station!","Network Alert")
 		gang.domination()
-		src.name = "[gang.name] Gang [src.name]"
+		name = "[gang.name] Gang [name]"
 		operating = 1
 		icon_state = "dominator-[gang.color]"
 

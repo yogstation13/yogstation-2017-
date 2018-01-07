@@ -116,7 +116,7 @@
 	if(..())
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(processing==1)
 		to_chat(usr, "<span class='notice'>The machine is processing.</span>")
 		return
@@ -136,7 +136,7 @@
 					amt_iron -= coin_mat
 					coinsToProduce--
 					newCoins++
-					src.updateUsrDialog()
+					updateUsrDialog()
 					sleep(5);
 			if("gold")
 				while(amt_gold >= coin_mat && coinsToProduce > 0)
@@ -144,7 +144,7 @@
 					amt_gold -= coin_mat
 					coinsToProduce--
 					newCoins++
-					src.updateUsrDialog()
+					updateUsrDialog()
 					sleep(5);
 			if("silver")
 				while(amt_silver >= coin_mat && coinsToProduce > 0)
@@ -152,7 +152,7 @@
 					amt_silver -= coin_mat
 					coinsToProduce--
 					newCoins++
-					src.updateUsrDialog()
+					updateUsrDialog()
 					sleep(5);
 			if("diamond")
 				while(amt_diamond >= coin_mat && coinsToProduce > 0)
@@ -160,7 +160,7 @@
 					amt_diamond -= coin_mat
 					coinsToProduce--
 					newCoins++
-					src.updateUsrDialog()
+					updateUsrDialog()
 					sleep(5);
 			if("plasma")
 				while(amt_plasma >= coin_mat && coinsToProduce > 0)
@@ -168,7 +168,7 @@
 					amt_plasma -= coin_mat
 					coinsToProduce--
 					newCoins++
-					src.updateUsrDialog()
+					updateUsrDialog()
 					sleep(5);
 			if("uranium")
 				while(amt_uranium >= coin_mat && coinsToProduce > 0)
@@ -176,7 +176,7 @@
 					amt_uranium -= coin_mat
 					coinsToProduce--
 					newCoins++
-					src.updateUsrDialog()
+					updateUsrDialog()
 					sleep(5)
 			if("clown")
 				while(amt_clown >= coin_mat && coinsToProduce > 0)
@@ -184,7 +184,7 @@
 					amt_clown -= coin_mat
 					coinsToProduce--
 					newCoins++
-					src.updateUsrDialog()
+					updateUsrDialog()
 					sleep(5);
 			if("adamantine")
 				while(amt_adamantine >= coin_mat && coinsToProduce > 0)
@@ -192,7 +192,7 @@
 					amt_adamantine -= coin_mat
 					coinsToProduce--
 					newCoins++
-					src.updateUsrDialog()
+					updateUsrDialog()
 					sleep(5);
 			if("mythril")
 				while(amt_adamantine >= coin_mat && coinsToProduce > 0)
@@ -200,12 +200,12 @@
 					amt_mythril -= coin_mat
 					coinsToProduce--
 					newCoins++
-					src.updateUsrDialog()
+					updateUsrDialog()
 					sleep(5);
 		icon_state = "coinpress0"
 		processing = 0;
 		coinsToProduce = temp_coins
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /obj/machinery/mineral/mint/proc/create_coins(P)

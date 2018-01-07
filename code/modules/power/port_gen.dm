@@ -71,7 +71,7 @@ display round(lastgen) and plasmatank amount
 	if(active && HasFuel() && !crit_fail && anchored && powernet)
 		add_avail(power_gen * power_output)
 		UseFuel()
-		src.updateDialog()
+		updateDialog()
 
 	else
 		active = 0
@@ -204,19 +204,19 @@ display round(lastgen) and plasmatank amount
 
 	if (current_heat > 0)
 		current_heat = max(current_heat - 2, 0)
-		src.updateDialog()
+		updateDialog()
 
 /obj/machinery/power/port_gen/pacman/proc/overheat()
-	explosion(src.loc, 2, 5, 2, -1)
+	explosion(loc, 2, 5, 2, -1)
 
 /obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, params)
 	if(istype(O, sheet_path))
 		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
-			to_chat(user, "<span class='notice'>The [src.name] is full!</span>")
+			to_chat(user, "<span class='notice'>The [name] is full!</span>")
 			return
-		to_chat(user, "<span class='notice'>You add [amount] sheets to the [src.name].</span>")
+		to_chat(user, "<span class='notice'>You add [amount] sheets to the [name].</span>")
 		sheets += amount
 		addstack.use(amount)
 		updateUsrDialog()
@@ -237,11 +237,11 @@ display round(lastgen) and plasmatank amount
 				to_chat(user, "<span class='notice'>You unsecure the generator from the floor.</span>")
 				anchored = 0
 
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			return
 		else if(istype(O, /obj/item/weapon/screwdriver))
 			panel_open = !panel_open
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if(panel_open)
 				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else
@@ -297,30 +297,30 @@ display round(lastgen) and plasmatank amount
 	if(..())
 		return
 
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["action"])
 		if(href_list["action"] == "enable")
 			if(!active && HasFuel() && !crit_fail)
 				active = 1
 				icon_state = "portgen1"
-				src.updateUsrDialog()
+				updateUsrDialog()
 		if(href_list["action"] == "disable")
 			if (active)
 				active = 0
 				icon_state = "portgen0"
-				src.updateUsrDialog()
+				updateUsrDialog()
 		if(href_list["action"] == "eject")
 			if(!active)
 				DropFuel()
-				src.updateUsrDialog()
+				updateUsrDialog()
 		if(href_list["action"] == "lower_power")
 			if (power_output > 1)
 				power_output--
-				src.updateUsrDialog()
+				updateUsrDialog()
 		if (href_list["action"] == "higher_power")
 			if (power_output < 4 || emagged)
 				power_output++
-				src.updateUsrDialog()
+				updateUsrDialog()
 		if (href_list["action"] == "close")
 			usr << browse(null, "window=port_gen")
 			usr.unset_machine()
@@ -333,7 +333,7 @@ display round(lastgen) and plasmatank amount
 	time_per_sheet = 85
 	board_path = /obj/item/weapon/circuitboard/machine/pacman/super
 	overheat()
-		explosion(src.loc, 3, 3, 3, -1)
+		explosion(loc, 3, 3, 3, -1)
 
 /obj/machinery/power/port_gen/pacman/mrs
 	name = "\improper M.R.S.P.A.C.M.A.N.-type portable generator"
@@ -343,4 +343,4 @@ display round(lastgen) and plasmatank amount
 	time_per_sheet = 80
 	board_path = /obj/item/weapon/circuitboard/machine/pacman/mrs
 	overheat()
-		explosion(src.loc, 4, 4, 4, -1)
+		explosion(loc, 4, 4, 4, -1)

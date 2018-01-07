@@ -108,7 +108,7 @@
 
 				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has trapped a [src] with [bomb] set to [bomb_timer * 2] seconds.")
 				log_game("[key_name(user)] has trapped a [src] with [bomb] set to [bomb_timer * 2] seconds.")
-				bomb.adminlog = "The [bomb.name] in [src.name] that [key_name(user)] activated has detonated!"
+				bomb.adminlog = "The [bomb.name] in [name] that [key_name(user)] activated has detonated!"
 
 				to_chat(user, "<span class='warning'>You trap [src] with [bomb].</span>")
 				update_icon()

@@ -82,7 +82,7 @@
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -112,7 +112,7 @@
 			if("card")
 				Dispense(/obj/item/weapon/card/id/syndicate/abductor)
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
@@ -206,7 +206,7 @@
 			flick("alien-pad", pad)
 			new item(pad.loc)
 		else
-			new item(src.loc)
+			new item(loc)
 	else
 		say("Insufficent data!")
 	return

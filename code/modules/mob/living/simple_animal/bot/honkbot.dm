@@ -65,7 +65,7 @@
 		return
 
 	//Making a honkbox.
-	if(src.contents.len >= 1)
+	if(contents.len >= 1)
 		to_chat(user, "<span class='notice'>You need to empty [src] out first if you want to attach the bike horn.</span>")
 		..()
 		return
@@ -99,19 +99,19 @@
 
 	..()
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
+		var/t = copytext(stripped_input(user, "Enter new robot name", name, created_name),1,MAX_NAME_LEN)
 		if (!t)
 			return
-		if (!in_range(src, usr) && src.loc != usr)
+		if (!in_range(src, usr) && loc != usr)
 			return
-		src.created_name = t
+		created_name = t
 	else
 		if(isprox(W))
 			user.drop_item()
 			qdel(W)
 			to_chat(user, "<span class='notice'>You complete the Honkbot! Beep boop.</span>")
 			var/mob/living/simple_animal/hostile/honkbot/S = new /mob/living/simple_animal/hostile/honkbot/(user.loc)
-			S.name = src.created_name
+			S.name = created_name
 			user.unEquip(src, 1)
 			qdel(src)
 
@@ -169,23 +169,23 @@
 	last_honk--
 	if(last_honk <= 0)
 		last_honk = honk_rate
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
 		visible_message("<span>[src] honks its horn.</span>")
 	if(emagged == 2)
 		last_banana--
 		if(last_banana <= 0)
-			new /obj/item/weapon/grown/bananapeel(src.loc,100)
+			new /obj/item/weapon/grown/bananapeel(loc,100)
 			last_banana = banana_rate
 		projectiletype = /obj/item/projectile/clownblast/syndicate
 
 /mob/living/simple_animal/hostile/honkbot/AttackingSelf()
 	if(last_honk <= 0)
 		last_honk = honk_rate
-		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+		playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
 		visible_message("<span>[src] honks its horn.</span>")
 
 /mob/living/simple_animal/hostile/honkbot/death(gibbed)
  	visible_message("<span class='danger'>[src] is destroyed!</span>")
- 	new /obj/effect/decal/cleanable/robot_debris(src.loc)
+ 	new /obj/effect/decal/cleanable/robot_debris(loc)
  	qdel(src)
  	..()

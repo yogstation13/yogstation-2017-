@@ -24,7 +24,7 @@
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
 	if(!silent)
-		playsound(src.loc, "rustle", 50, 1, -5)
+		playsound(loc, "rustle", 50, 1, -5)
 	return ..()
 
 /*
@@ -61,7 +61,7 @@
 					playsound(src, pshoom, 40, 1)
 				user.Beam(dest_object,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5,alphafade=1)
 				return 1
-		to_chat(user, "The [src.name] buzzes.")
+		to_chat(user, "The [name] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	return 0
 
@@ -84,7 +84,7 @@
 
 /obj/item/weapon/storage/backpack/holding/singularity_act(current_size)
 	var/dist = max((current_size - 2),1)
-	explosion(src.loc,(dist),(dist*2),(dist*4))
+	explosion(loc,(dist),(dist*2),(dist*4))
 	return
 
 
@@ -98,7 +98,7 @@
 	max_combined_w_class = 60
 
 /obj/item/weapon/storage/backpack/santabag/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] places the [src.name] over their head and pulls it tight! It looks like they aren't in the Christmas spirit...</span>")
+	user.visible_message("<span class='suicide'>[user] places the [name] over their head and pulls it tight! It looks like they aren't in the Christmas spirit...</span>")
 	return (OXYLOSS)
 
 /obj/item/weapon/storage/backpack/cultpack

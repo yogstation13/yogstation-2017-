@@ -63,7 +63,7 @@
 	if(user.bloodcrawl)
 		if(user.stat != CONSCIOUS)//no hiding in blood while KOed
 			return
-		for(var/obj/effect/decal/cleanable/B in src.contents)
+		for(var/obj/effect/decal/cleanable/B in contents)
 			if(istype(B, /obj/effect/decal/cleanable/blood) || istype(B, /obj/effect/decal/cleanable/trail_holder))
 				if(user.holder)
 					user.phasein(B)

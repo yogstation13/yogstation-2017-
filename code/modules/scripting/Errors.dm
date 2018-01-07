@@ -40,7 +40,7 @@
 		var/token/token
 		message = "Unexpected return statement outside of a function."
 		New(token/t)
-			src.token=t
+			token=t
 
 	EndOfFile
 		message = "Unexpected end of file."

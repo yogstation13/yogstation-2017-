@@ -55,7 +55,7 @@ insert ascii eagle on american flag background here
 			frying = I
 			frying.forceMove(src)
 			icon_state = "fryer_on"
-			playsound(src.loc, "hiss", 40, 1, 1)
+			playsound(loc, "hiss", 40, 1, 1)
 
 /obj/machinery/deepfryer/process()
 	..()
@@ -64,7 +64,7 @@ insert ascii eagle on american flag background here
 	if(frying)
 		cook_time++
 		if(cook_time == 30)
-			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+			playsound(loc, "sound/machines/ding.ogg", 50, 1)
 			visible_message("[src] dings!")
 		else if (cook_time == 60)
 			visible_message("[src] emits an acrid smell!")

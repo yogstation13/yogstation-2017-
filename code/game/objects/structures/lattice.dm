@@ -17,9 +17,9 @@
 
 /obj/structure/lattice/New()
 	..()
-	if(!(istype(src.loc, /turf/open/space)))
+	if(!(istype(loc, /turf/open/space)))
 		qdel(src)
-	for(var/obj/structure/lattice/LAT in src.loc)
+	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
 			qdel(LAT)
 	stored = new/obj/item/stack/rods(src)

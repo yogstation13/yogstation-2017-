@@ -326,8 +326,8 @@
 			// circulation, and without it, our tissues die and start
 			// gaining toxins
 			adjustBruteLoss(3)
-			if(src.reagents)
-				src.reagents.add_reagent("toxin", 2)
+			if(reagents)
+				reagents.add_reagent("toxin", 2)
 
 /*
 Alcohol Poisoning Chart

@@ -43,18 +43,18 @@
 		return
 	if(href_list["betraitor"])
 		if(charges < 1)
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return
 		var/mob/M = locate(href_list["traitormob"])
 		if(M.mind.special_role)
 			temptext = "<i>We have no need for you at this time. Have a pleasant day.</i><br>"
-			src.updateUsrDialog()
+			updateUsrDialog()
 			return
 		charges -= 1
 		switch(rand(1,2))
 			if(1)
 				temptext = "<font color=red><i><b>Double-crosser. You planned to betray us from the start. Allow us to repay the favor in kind.</b></i></font>"
-				src.updateUsrDialog()
+				updateUsrDialog()
 				spawn(rand(50,200)) selfdestruct()
 				return
 		if(istype(M, /mob/living/carbon/human))
@@ -92,13 +92,13 @@
 				to_chat(M, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
 				obj_count++
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 
 /obj/machinery/syndicate_beacon/proc/selfdestruct()
 	selfdestructing = 1
-	spawn() explosion(src.loc, rand(3,8), rand(1,3), 1, 10)
+	spawn() explosion(loc, rand(3,8), rand(1,3), 1, 10)
 
 ////////////////////////////////////////
 //Singularity beacon

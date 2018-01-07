@@ -26,7 +26,7 @@
 /obj/machinery/firealarm/New(loc, dir, building)
 	..()
 	if(dir)
-		src.dir = dir
+		dir = dir
 	if(building)
 		buildstage = 0
 		panel_open = 1
@@ -39,9 +39,9 @@
 	update_icon()
 
 /obj/machinery/firealarm/update_icon()
-	src.overlays = list()
+	overlays = list()
 
-	var/area/A = src.loc
+	var/area/A = loc
 	A = A.loc
 
 	if(panel_open)
@@ -76,7 +76,7 @@
 		if(user)
 			user.visible_message("<span class='warning'>Sparks fly out of the [src]!</span>",
 								"<span class='notice'>You emag [src], disabling its thermal sensors.</span>")
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+		playsound(loc, 'sound/effects/sparks4.ogg', 50, 1)
 
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(!emagged && detecting && !stat && temperature > T0C + 200)
@@ -87,7 +87,7 @@
 		return
 	var/area/A = get_area(src)
 	A.firealert(src)
-	playsound(src.loc, 'sound/ambience/signal.ogg', 75, 0)
+	playsound(loc, 'sound/ambience/signal.ogg', 75, 0)
 
 /obj/machinery/firealarm/proc/alarm_in(time)
 	addtimer(src, "alarm", time, FALSE)
@@ -133,7 +133,7 @@
 	add_fingerprint(user)
 
 	if(istype(W, /obj/item/weapon/screwdriver) && buildstage == 2)
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 		update_icon()
@@ -144,7 +144,7 @@
 			if(2)
 				if(istype(W, /obj/item/device/multitool))
 					detecting = !detecting
-					if (src.detecting)
+					if (detecting)
 						user.visible_message("[user] has reconnected [src]'s detecting unit!", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
 					else
 						user.visible_message("[user] has disconnected [src]'s detecting unit!", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
@@ -152,7 +152,7 @@
 
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					buildstage = 1
-					playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
 					var/obj/item/stack/cable_coil/coil = new /obj/item/stack/cable_coil()
 					coil.amount = 5
 					coil.loc = user.loc
@@ -172,8 +172,8 @@
 					return
 
 				else if(istype(W, /obj/item/weapon/crowbar))
-					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-					user.visible_message("[user.name] removes the electronics from [src.name].", \
+					playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+					user.visible_message("[user.name] removes the electronics from [name].", \
 										"<span class='notice'>You start prying out the circuit...</span>")
 					if(do_after(user, 20/W.toolspeed, target = src))
 						if(buildstage == 1)
@@ -198,7 +198,7 @@
 										 "<span class='notice'>You remove the fire alarm assembly from the wall.</span>")
 					var/obj/item/wallframe/firealarm/frame = new /obj/item/wallframe/firealarm()
 					frame.loc = user.loc
-					playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+					playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 					qdel(src)
 					return
 	return ..()
@@ -213,7 +213,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
 	if(!(stat & BROKEN) && buildstage != 0) //can't break the electronics if there isn't any inside.

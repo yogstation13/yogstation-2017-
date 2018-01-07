@@ -45,7 +45,7 @@
 
 /obj/machinery/light_construct/examine(mob/user)
 	..()
-	switch(src.stage)
+	switch(stage)
 		if(1)
 			to_chat(user, "It's an empty frame.")
 		if(2)
@@ -58,14 +58,14 @@
 	switch(stage)
 		if(1)
 			if(istype(W, /obj/item/weapon/wrench))
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 				to_chat(usr, "<span class='notice'>You begin deconstructing [src]...</span>")
 				if (!do_after(usr, 30/W.toolspeed, target = src))
 					return
-				new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
+				new /obj/item/stack/sheet/metal( get_turf(loc), sheets_refunded )
 				user.visible_message("[user.name] deconstructs [src].", \
 					"<span class='notice'>You deconstruct [src].</span>", "<span class='italics'>You hear a ratchet.</span>")
-				playsound(src.loc, 'sound/items/Deconstruct.ogg', 75, 1)
+				playsound(loc, 'sound/items/Deconstruct.ogg', 75, 1)
 				qdel(src)
 				return
 
@@ -285,7 +285,7 @@
 		if(status != LIGHT_EMPTY)
 			to_chat(user, "<span class='warning'>There is a [fitting] already inserted!</span>")
 		else
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 			var/obj/item/weapon/light/L = W
 			if(istype(L, light_type))
 				if(!user.drop_item())
@@ -308,19 +308,19 @@
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
 		if(istype(W, /obj/item/weapon/screwdriver)) //If it's a screwdriver open it.
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
 			user.visible_message("[user.name] opens [src]'s casing.", \
 				"<span class='notice'>You open [src]'s casing.</span>", "<span class='italics'>You hear a noise.</span>")
 			var/obj/machinery/light_construct/newlight = null
 			switch(fitting)
 				if("tube")
-					newlight = new /obj/machinery/light_construct(src.loc)
+					newlight = new /obj/machinery/light_construct(loc)
 					newlight.icon_state = "tube-construct-stage2"
 
 				if("bulb")
-					newlight = new /obj/machinery/light_construct/small(src.loc)
+					newlight = new /obj/machinery/light_construct/small(loc)
 					newlight.icon_state = "bulb-construct-stage2"
-			newlight.dir = src.dir
+			newlight.dir = dir
 			newlight.stage = 2
 			transfer_fingerprints_to(newlight)
 			qdel(src)
@@ -355,7 +355,7 @@
 						playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
 	health -= damage
@@ -366,7 +366,7 @@
 // returns whether this light has power
 // true if area has power and lightswitch is on
 /obj/machinery/light/proc/has_power()
-	var/area/A = src.loc.loc
+	var/area/A = loc.loc
 	return A.master.lightswitch && A.master.power_light
 
 /obj/machinery/light/proc/flicker(var/amount = rand(10, 20))
@@ -386,7 +386,7 @@
 // ai attack - make lights flicker, because why not
 
 /obj/machinery/light/attack_ai(mob/user)
-	src.flicker(1)
+	flicker(1)
 	return
 
 /obj/machinery/light/bullet_act(obj/item/projectile/P)
@@ -492,7 +492,7 @@
 
 	if(!skip_sound_and_sparks)
 		if(status == LIGHT_OK || status == LIGHT_BURNED)
-			playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(on)
 			var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 			s.set_up(3, 1, src)
@@ -538,7 +538,7 @@
 
 /obj/machinery/light/proc/explode()
 	set waitfor = 0
-	var/turf/T = get_turf(src.loc)
+	var/turf/T = get_turf(loc)
 	broken()	// break it first to give a warning
 	sleep(10)
 	explosion(T, 0, 1, 2, 2)
@@ -631,8 +631,8 @@
 
 /obj/item/weapon/light/proc/shatter()
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
-		src.visible_message("<span class='danger'>[name] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
+		visible_message("<span class='danger'>[name] shatters.</span>","<span class='italics'>You hear a small glass object shatter.</span>")
 		status = LIGHT_BROKEN
 		force = 5
-		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+		playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		update()

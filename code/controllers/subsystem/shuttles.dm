@@ -142,7 +142,7 @@ var/datum/subsystem/shuttle/SSshuttle
 /datum/subsystem/shuttle/proc/emergencyDeregister()
 	// When a new emergency shuttle is created, it will override the
 	// backup shuttle.
-	src.emergency = src.backup_shuttle
+	emergency = backup_shuttle
 
 /datum/subsystem/shuttle/proc/cancelEvac(mob/user)
 	if(canRecall())

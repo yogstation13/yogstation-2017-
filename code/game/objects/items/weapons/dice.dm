@@ -130,7 +130,7 @@
 		user.visible_message("[user] has thrown [src]. It lands on [result]. [comment]", \
 							 "<span class='notice'>You throw [src]. It lands on [result]. [comment]</span>", \
 							 "<span class='italics'>You hear [src] rolling.</span>")
-	else if(src.throwing == 0) //Dice was thrown and is coming to rest
+	else if(throwing == 0) //Dice was thrown and is coming to rest
 		visible_message("<span class='notice'>[src] rolls to a stop, landing on [result]. [comment]</span>")
 
 /obj/item/weapon/dice/d4/Crossed(mob/living/carbon/human/H)
@@ -143,4 +143,4 @@
 
 /obj/item/weapon/dice/update_icon()
 	overlays.Cut()
-	overlays += "[src.icon_state][src.result]"
+	overlays += "[icon_state][result]"

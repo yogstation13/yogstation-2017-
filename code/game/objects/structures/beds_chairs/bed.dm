@@ -48,7 +48,7 @@
 
 /obj/structure/bed/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		deconstruct()
 	else
 		return ..()
@@ -74,7 +74,7 @@
 		if(usr.incapacitated())
 			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return 0
-		usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
+		usr.visible_message("[usr] collapses \the [name].", "<span class='notice'>You collapse \the [name].</span>")
 		new foldabletype(get_turf(src))
 		qdel(src)
 

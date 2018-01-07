@@ -270,7 +270,7 @@
 			empty_object_contents()
 			spawn(1) //so the shreds aren't instantly deleted by the explosion
 				var/obj/effect/decal/cleanable/shreds/Shreds = new(loc)
-				Shreds.desc = "The sad remains of what used to be [src.name]."
+				Shreds.desc = "The sad remains of what used to be [name]."
 				qdel(src)
 		else
 			burn()

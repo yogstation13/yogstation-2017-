@@ -80,12 +80,12 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/attack_hand(mob/user)
 	..()
-	if( istype(src.loc, /mob) )
-		held_mob = src.loc
+	if( istype(loc, /mob) )
+		held_mob = loc
 		START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ghost_chili/process()
-	if(held_mob && src.loc == held_mob)
+	if(held_mob && loc == held_mob)
 		if( (held_mob.l_hand == src) || (held_mob.r_hand == src))
 			if(hasvar(held_mob,"gloves") && held_mob:gloves)
 				return

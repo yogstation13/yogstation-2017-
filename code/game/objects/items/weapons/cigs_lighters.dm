@@ -118,7 +118,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	heat = 1000
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is huffing the [src.name] as quickly as they can! It looks like \he's trying to give \himself cancer.</span>")
+	user.visible_message("<span class='suicide'>[user] is huffing the [name] as quickly as they can! It looks like \he's trying to give \himself cancer.</span>")
 	return (TOXLOSS|OXYLOSS)
 
 /obj/item/clothing/mask/cigarette/New()
@@ -299,8 +299,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/rollie/New()
 	..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 /obj/item/clothing/mask/cigarette/rollie/trippy/New()
 	..()
@@ -316,8 +316,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/weapon/cigbutt/roach/New()
 	..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 
 ////////////
@@ -591,9 +591,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return lit * heat
 
 /obj/item/weapon/lighter/attack(mob/living/carbon/human/H, mob/living/carbon/user)
-	if(src.lit && !H.bleedsuppress && user.a_intent == "help" && H.bleed_rate)
+	if(lit && !H.bleedsuppress && user.a_intent == "help" && H.bleed_rate)
 		var/hitzone = user.zone_selected
-		H.suppress_bloodloss(src.stop_bleeding)
+		H.suppress_bloodloss(stop_bleeding)
 		H.apply_damage(rand(5,10), BURN, hitzone)
 		if (H.bleed_rate >= 1.5) // a simple lighter won't fix your problems.
 			user.visible_message("<span class='alert'>There is too much blood coming out of the wound for you to fix it with [src] and you screw up!</span>")

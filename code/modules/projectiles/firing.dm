@@ -61,18 +61,18 @@
 
 /obj/item/projectile/proc/preparePixelProjectile(atom/target, var/turf/targloc, mob/living/user, params, spread)
 	var/turf/curloc = get_turf(user)
-	src.loc = get_turf(user)
-	src.starting = get_turf(user)
-	src.current = curloc
-	src.yo = targloc.y - curloc.y
-	src.xo = targloc.x - curloc.x
+	loc = get_turf(user)
+	starting = get_turf(user)
+	current = curloc
+	yo = targloc.y - curloc.y
+	xo = targloc.x - curloc.x
 
 	if(params)
 		var/list/mouse_control = params2list(params)
 		if(mouse_control["icon-x"])
-			src.p_x = text2num(mouse_control["icon-x"])
+			p_x = text2num(mouse_control["icon-x"])
 		if(mouse_control["icon-y"])
-			src.p_y = text2num(mouse_control["icon-y"])
+			p_y = text2num(mouse_control["icon-y"])
 		if(mouse_control["screen-loc"])
 			//Split screen-loc up into X+Pixel_X and Y+Pixel_Y
 			var/list/screen_loc_params = splittext(mouse_control["screen-loc"], ",")
@@ -94,6 +94,6 @@
 			// to_chat(world, "Pixel position: [x] [y]")
 			var/angle = Atan2(y - oy, x - ox)
 			// to_chat(world, "Angle: [angle]")
-			src.Angle = angle
+			Angle = angle
 	if(spread)
-		src.Angle += spread
+		Angle += spread

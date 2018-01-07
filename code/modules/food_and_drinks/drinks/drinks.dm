@@ -72,7 +72,7 @@
 			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
 		var/refill = reagents.get_master_reagent_id()
-		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		playsound(src, "pour", 50, 1)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
@@ -278,7 +278,7 @@
 	cracked = TRUE
 
 /obj/item/weapon/reagent_containers/food/drinks/soda_cans/attack(mob/M, mob/user)
-	if(M == user && !src.reagents.total_volume && user.a_intent == "harm" && user.zone_selected == "head")
+	if(M == user && !reagents.total_volume && user.a_intent == "harm" && user.zone_selected == "head")
 		user.visible_message("<span class='warning'>[user] crushes the can of [src] on \his forehead!</span>", "<span class='notice'>You crush the can of [src] on your forehead.</span>")
 		playsound(user.loc,'sound/weapons/pierce.ogg', rand(10,50), 1)
 		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(user.loc)

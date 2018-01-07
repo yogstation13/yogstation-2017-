@@ -79,7 +79,7 @@ var/list/announcement_systems = list()
 
 /obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>")
 		update_icon()
@@ -120,7 +120,7 @@ var/list/announcement_systems = list()
 /obj/machinery/announcement_system/interact(mob/user)
 	if(broken)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
+		playsound(loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return
 
 
@@ -148,12 +148,12 @@ var/list/announcement_systems = list()
 				investigate_log(log, "tcomms")
 	if(broken)
 		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='italics'>You hear a faint buzz.</span>")
-		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
+		playsound(loc, 'sound/machines/buzz-two.ogg', 50, 1)
 		return
 
 	if(href_list["ArrivalTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the arrivals announcement configuration.", "Arrivals Announcement Config", arrival)
-		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
+		if(!in_range(src, usr) && loc != usr && !isAI(usr))
 			return
 		if(NewMessage)
 			arrival = NewMessage
@@ -163,7 +163,7 @@ var/list/announcement_systems = list()
 			investigate_log(log, "tcomms")
 	else if(href_list["NewheadTopic"])
 		var/NewMessage = stripped_input(usr, "Enter in the departmental head announcement configuration.", "Head Departmental Announcement Config", newhead)
-		if(!in_range(src, usr) && src.loc != usr && !isAI(usr))
+		if(!in_range(src, usr) && loc != usr && !isAI(usr))
 			return
 		if(NewMessage)
 			newhead = NewMessage

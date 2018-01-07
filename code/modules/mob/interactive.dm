@@ -273,15 +273,15 @@
 	Path_ID.access = C.get_access()
 
 	MYID = new(src)
-	MYID.name = "[src.real_name]'s ID Card ([myjob.title])"
+	MYID.name = "[real_name]'s ID Card ([myjob.title])"
 	MYID.assignment = "[myjob.title]"
-	MYID.registered_name = src.real_name
+	MYID.registered_name = real_name
 	MYID.access = Path_ID.access // Automatons have strange powers... strange indeed
 
 	RPID = new(src)
-	RPID.name = "[src.real_name]'s ID Card ([myjob.title])"
+	RPID.name = "[real_name]'s ID Card ([myjob.title])"
 	RPID.assignment = "[myjob.title]"
-	RPID.registered_name = src.real_name
+	RPID.registered_name = real_name
 	RPID.access = myjob.get_access()
 
 	equip_to_slot_or_del(MYID, slot_wear_id)
@@ -677,10 +677,10 @@
 						spawn(5)
 							equip_to_appropriate_slot(C)
 				update_hands = 1
-				if(MYPDA in src.loc || MYID in src.loc)
-					if(MYPDA in src.loc)
+				if(MYPDA in loc || MYID in loc)
+					if(MYPDA in loc)
 						equip_to_appropriate_slot(MYPDA)
-					if(MYID in src.loc)
+					if(MYID in loc)
 						equip_to_appropriate_slot(MYID)
 		//THIEVING SKILLS END
 		//-------------TOUCH ME
@@ -906,7 +906,7 @@
 			knownStrings -= pick(chatmsg)
 
 	if(chatmsg != ";" && chatmsg != "")
-		src.say(chatmsg)
+		say(chatmsg)
 
 
 /mob/living/carbon/human/interactive/proc/getAllContents()
@@ -1114,7 +1114,7 @@
 			if(drinkChoice)
 				var/obj/item/weapon/reagent_containers/food/drinks/D = new drinkChoice(get_turf(src))
 				RT.attackby(D,src)
-				src.say("[pick("Something to wet your whistle!","Down the hatch, a tasty beverage!","One drink, coming right up!","Tasty liquid for your oral intake!","Enjoy!")]")
+				say("[pick("Something to wet your whistle!","Down the hatch, a tasty beverage!","One drink, coming right up!","Tasty liquid for your oral intake!","Enjoy!")]")
 				customEmote("[src] [pick("gibbers","drools","slobbers","claps wildly","spits")], serving up a [D]!")
 
 /mob/living/carbon/human/interactive/proc/shitcurity(obj)
@@ -1213,7 +1213,7 @@
 			if(istype(C,/mob/living/carbon/human)) //I haven't the foggiest clue why this is turning up non-carbons but sure here whatever
 				if(C.health <= 75)
 					if(get_dist(src,C) <= 2)
-						src.say("Wait, [C], let me heal you!")
+						say("Wait, [C], let me heal you!")
 						M.attack(C,src)
 						sleep(25)
 					else
@@ -1226,7 +1226,7 @@
 				if(istype(C,/mob/living/carbon/human))
 					if(C.health <= 75 && C.reagents.get_reagent_amount("tricordrazine") <= 0) // make sure they wont be overdosing
 						if(get_dist(src,C) <= 2)
-							src.say("Wait, [C], let me heal you!")
+							say("Wait, [C], let me heal you!")
 							HPS.attack(C,src)
 							sleep(25)
 						else

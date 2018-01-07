@@ -31,7 +31,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			damage = 0
 	health -= damage
@@ -175,7 +175,7 @@
 	to_chat(user, "[src] is now in [mode] mode.")
 
 /obj/item/weapon/grenade/barrier/prime()
-	new /obj/structure/barricade/security(get_turf(src.loc))
+	new /obj/structure/barricade/security(get_turf(loc))
 	switch(mode)
 		if(VERTICAL)
 			var/target_turf = get_step(src, NORTH)
@@ -238,7 +238,7 @@
 /obj/machinery/deployable/barrier/New()
 	..()
 
-	icon_state = "barrier[src.locked]"
+	icon_state = "barrier[locked]"
 	attachedradio = new /obj/item/device/radio(src)
 	attachedradio.listening = 0
 	initialdesc = desc
@@ -265,7 +265,7 @@
 					if("Lock")
 						locked = !locked
 						anchored = !anchored
-						icon_state = "barrier[src.locked]"
+						icon_state = "barrier[locked]"
 						if ((locked == 1.0) && (emagged < 2.0))
 							to_chat(user, "Barrier lock toggled on.")
 							return
@@ -299,27 +299,27 @@
 				return
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
-		if (health < src.maxhealth)
-			health = src.maxhealth
+		if (health < maxhealth)
+			health = maxhealth
 			emagged = 0
 			req_access = list(access_security)
 			visible_message("<span class='danger'>[user] repairs \the [src]!</span>")
 			return
-		else if (src.emagged > 0)
-			src.emagged = 0
-			src.req_access = list(access_security)
+		else if (emagged > 0)
+			emagged = 0
+			req_access = list(access_security)
 			visible_message("<span class='danger'>[user] repairs \the [src]!</span>")
 
-		src.req_access = list(access_security)
+		req_access = list(access_security)
 
 	else if (istype(W, /obj/item/weapon/screwdriver))
 
-		if (src.locked == 1.0)
+		if (locked == 1.0)
 			to_chat(user, "<span class='danger'>You can't eject anything from the barrier while it's locked!</span>")
 			return
 
 		if (SIGNALLER)
-			new /obj/item/device/assembly/signaler(src.loc)
+			new /obj/item/device/assembly/signaler(loc)
 			SIGNALLER = null
 			desc = "A deployable barrier. Swipe your ID card to lock/unlock it."
 			initialdesc = desc
@@ -330,7 +330,7 @@
 			return
 
 		if (installedkey)
-			var/turf/T = get_turf(src.loc)
+			var/turf/T = get_turf(loc)
 			if(T)
 				installedkey.loc = T
 				installedkey = null
@@ -345,7 +345,7 @@
 
 	else if (istype(W, /obj/item/device/encryptionkey))
 
-		if (src.locked == 1.0)
+		if (locked == 1.0)
 			to_chat(user, "<span class='danger'>You can't install anything while the barrier is locked!</span>")
 			return
 
@@ -392,7 +392,7 @@
 			user.visible_message( \
 						"[user] attaches the signaler to the barrier.", \
 						"<span class='notice'>You attach the signaler to the barrier.</span>")
-			desc = "[src.desc] It also appears to have a remote signaling device attatched to it."
+			desc = "[desc] It also appears to have a remote signaling device attatched to it."
 			initialdesc = desc
 			qdel(W)
 		return
@@ -401,24 +401,24 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		switch(W.damtype)
 			if("fire")
-				src.health -= W.force * 0.75
+				health -= W.force * 0.75
 			if("brute")
-				src.health -= W.force * 0.5
+				health -= W.force * 0.5
 			else
 
 		// examine damage notifiers.
-		if (src.health <= 99)
+		if (health <= 99)
 			desc_report()
 
 
-		if (src.health <= 0)
+		if (health <= 0)
 			attachedradio.talk_into(src, "Losing signal with the security channel!",radio_freq)
-			src.explode()
+			explode()
 		..()
 
 		// This will send a message to the security channel if the barrier's radio is connected to it's frequency
 
-		if (((attachedradio.frequency == SEC_FREQ || attachedradio.frequency == 1359)) && !src.emagged) // security currently. emagging will disable this.
+		if (((attachedradio.frequency == SEC_FREQ || attachedradio.frequency == 1359)) && !emagged) // security currently. emagging will disable this.
 			if(!W.force)
 				return
 
@@ -438,7 +438,7 @@
 			else if (!damagereport)
 				return
 
-			if(src.health <= 95 && src.health > 50 || src.health <= 50 && src.health > 25 || src.health <= 25 && src.health > 0)
+			if(health <= 95 && health > 50 || health <= 50 && health > 25 || health <= 25 && health > 0)
 				var/attack_report = "Alert! This barrier's systems are suffering [damagereport]"
 				if(healthreport)
 					attack_report += ". The barriers rate of functionality is at [health]%"
@@ -446,31 +446,31 @@
 
 /obj/machinery/deployable/barrier/proc/desc_report() // something to update the description of the barrier.
 
-	if (src.health >= 61)
+	if (health >= 61)
 		desc = "[initialdesc] <span class='danger'>The barrier is slightly damaged.</span>"
 		return
 
-	if (src.health <= 60 && src.health >= 31)
+	if (health <= 60 && health >= 31)
 		desc = "[initialdesc] <span class='danger'>The barrier seems to have taken a multitude of strong blows.</span>"
 		return
 
-	if (src.health <= 30 && src.health > 1)
+	if (health <= 30 && health > 1)
 		desc = "[initialdesc] <span class='danger'>The barrier appears to be severely damanged and in need of repair. </span>"
 		return
 
 
 /obj/machinery/deployable/emag_act(mob/user)
-	if (src.emagged == 0)
-		src.emagged = 1
-		src.req_access = null
+	if (emagged == 0)
+		emagged = 1
+		req_access = null
 		to_chat(user, "<span class='notice'>You break the ID authentication lock on \the [src].</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(2, 1, src)
 		s.start()
 		visible_message("<span class='danger'>BZZzZZzZZzZT</span>")
 		return
-	else if (src.emagged == 1)
-		src.emagged = 2
+	else if (emagged == 1)
+		emagged = 2
 		to_chat(user, "<span class='notice'>You short out the anchoring mechanism on \the [src].</span>")
 		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 		s.set_up(2, 1, src)
@@ -481,12 +481,12 @@
 /obj/machinery/deployable/barrier/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			src.explode()
+			explode()
 			return
 		if(2.0)
-			src.health -= 25
-			if (src.health <= 0)
-				src.explode()
+			health -= 25
+			if (health <= 0)
+				explode()
 			return
 
 /obj/machinery/deployable/barrier/emp_act(severity)
@@ -495,12 +495,12 @@
 	if(prob(50/severity))
 		locked = !locked
 		anchored = !anchored
-		icon_state = "barrier[src.locked]"
+		icon_state = "barrier[locked]"
 
 /obj/machinery/deployable/barrier/blob_act()
-	src.health -= 25
-	if (src.health <= 0)
-		src.explode()
+	health -= 25
+	if (health <= 0)
+		explode()
 	return
 
 /obj/machinery/deployable/barrier/CanPass(atom/movable/mover, turf/target, height=0)//So bullets will fly over and stuff.
@@ -523,7 +523,7 @@
 	s.set_up(3, 1, src)
 	s.start()
 
-	explosion(src.loc,-1,-1,0)
-	playsound(src.loc, 'sound/effects/Explosion1.ogg',100,1)
+	explosion(loc,-1,-1,0)
+	playsound(loc, 'sound/effects/Explosion1.ogg',100,1)
 	if(src)
 		qdel(src)

@@ -17,7 +17,7 @@
 /datum/software/antivirus/copy()
 	var/datum/software/antivirus/the_copy = ..()
 	if(the_copy)
-		the_copy.antivirus_strength = src.antivirus_strength
+		the_copy.antivirus_strength = antivirus_strength
 	return the_copy
 
 /datum/software/antivirus/proc/antivirus_check(datum/software/malware/M)

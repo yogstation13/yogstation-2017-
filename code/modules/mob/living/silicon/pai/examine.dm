@@ -14,14 +14,14 @@
 	else
 		msg += "\nA sleek card-shaped unit of carboncoat plastic, this unit is a container for an enigmatic personal AI unit. Who knows what being calls this humble shell its home?"
 
-	if (src.description)
-		msg += "\nA tag upon the unit's core reads: <i>[src.description]</i>."
+	if (description)
+		msg += "\nA tag upon the unit's core reads: <i>[description]</i>."
 	else
 		msg += "\nA plain, unmarked tag upon the unit's core is clearly visible, though it contains no text."
 
-	switch(src.stat)
+	switch(stat)
 		if(CONSCIOUS)
-			if(!src.client)	msg += "\nThe unit is unnaturally still, completely frozen in time.." //afk
+			if(!client)	msg += "\nThe unit is unnaturally still, completely frozen in time.." //afk
 		if(UNCONSCIOUS)		msg += "\n<span class='warning'>A blue diagnostics screen with hundreds of lines of scrolling text covers its screen.</span>"
 		if(DEAD)			msg += "\n<span class='deadsay'>An ominous red ring glowers out from its shattered display screen.</span>"
 	msg += "\n*---------*</span>"

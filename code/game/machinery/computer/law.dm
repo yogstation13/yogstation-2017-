@@ -8,7 +8,7 @@
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/aiModule))
 		var/obj/item/weapon/aiModule/M = O
-		if(src.stat & (NOPOWER|BROKEN|MAINT))
+		if(stat & (NOPOWER|BROKEN|MAINT))
 			return
 		if(!current)
 			to_chat(user, "<span class='caution'>You haven't selected anything to transmit laws to!</span>")
@@ -40,12 +40,12 @@
 	if(..())
 		return
 
-	src.current = select_active_ai(user)
+	current = select_active_ai(user)
 
-	if (!src.current)
+	if (!current)
 		to_chat(user, "<span class='caution'>No active AIs detected!</span>")
 	else
-		to_chat(user, "[src.current.name] selected for law changes.")
+		to_chat(user, "[current.name] selected for law changes.")
 
 /obj/machinery/computer/upload/ai/can_upload_to(mob/living/silicon/ai/A)
 	if(!A || !isAI(A))
@@ -64,12 +64,12 @@
 	if(..())
 		return
 
-	src.current = select_active_free_borg(user)
+	current = select_active_free_borg(user)
 
-	if(!src.current)
+	if(!current)
 		to_chat(user, "<span class='caution'>No active unslaved cyborgs detected!</span>")
 	else
-		to_chat(user, "[src.current.name] selected for law changes.")
+		to_chat(user, "[current.name] selected for law changes.")
 
 /obj/machinery/computer/upload/borg/can_upload_to(mob/living/silicon/robot/B)
 	if(!B || !isrobot(B))

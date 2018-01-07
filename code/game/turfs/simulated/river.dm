@@ -76,7 +76,7 @@
 		if((whitelist_area && !istype(A, whitelist_area)) || A.mapgen_protected)
 			continue
 		if(!F.density || istype(F, /turf/closed/mineral))
-			var/turf/L = new src.type(F)
+			var/turf/L = new type(F)
 
 			if(L && prob(probability))
 				L.Spread(probability - prob_loss)

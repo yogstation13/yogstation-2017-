@@ -29,7 +29,7 @@
 		return 1
 
 /obj/item/weapon/implant/storage/implant(mob/source)
-	var/obj/item/weapon/implant/storage/imp_e = locate(src.type) in source
+	var/obj/item/weapon/implant/storage/imp_e = locate(type) in source
 	if(imp_e)
 		imp_e.storage.storage_slots += storage.storage_slots
 		imp_e.storage.max_combined_w_class += storage.max_combined_w_class

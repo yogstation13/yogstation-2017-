@@ -291,7 +291,7 @@ var/next_mob_id = 0
 	set name = "Point To"
 	set category = "Object"
 
-	if(!src || !isturf(src.loc) || !(A in view(src.loc)))
+	if(!src || !isturf(loc) || !(A in view(loc)))
 		return 0
 	if(istype(A, /obj/effect/overlay/temp/point))
 		return 0
@@ -333,7 +333,7 @@ var/next_mob_id = 0
 
 	pulling = AM
 	AM.on_pulledby(src, supress_message)
-	playsound(src.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	update_pull_hud_icon()
 
 /mob/on_pulledby(mob/new_pulledby, supress_message)
@@ -841,12 +841,12 @@ var/next_mob_id = 0
 			client.prefs.afreeze = 0
 			to_chat(client, "<span class='userdanger'>You have been unfrozen.</span>")
 			log_admin("[key_name(admin)] unfroze [key_name(src)].")
-			message_admins("[key_name(admin, admin.client)] unfroze [key_name(src, src.client)].")
+			message_admins("[key_name(admin, admin.client)] unfroze [key_name(src, client)].")
 		else
 			client.prefs.afreeze = 1
 			to_chat(client, "<span class='userdanger'>You are frozen by an administrator.</span>")
 			log_admin("[key_name(admin)] froze [key_name(src)].")
-			message_admins("[key_name(admin, admin.client)] froze [key_name(src, src.client)].")
+			message_admins("[key_name(admin, admin.client)] froze [key_name(src, client)].")
 
 //Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()

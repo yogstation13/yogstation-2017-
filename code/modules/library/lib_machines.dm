@@ -65,7 +65,7 @@
 			dat += "<A href='?src=\ref[src];back=1'>\[Go Back\]</A><BR>"
 	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/Topic(href, href_list)
@@ -107,8 +107,8 @@
 	if(href_list["back"])
 		screenstate = 0
 
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
+	add_fingerprint(usr)
+	updateUsrDialog()
 	return
 
 /*
@@ -216,17 +216,17 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			dat += "<A href='?src=\ref[src];switchscreen=5'>5. Upload New Title to Archive</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=6'>6. Print a Bible</A><BR>"
 			dat += "<A href='?src=\ref[src];switchscreen=7'>7. Manage Printing Queue</A><BR>"
-			if(src.emagged)
+			if(emagged)
 				dat += "<A href='?src=\ref[src];switchscreen=8'>8. Access the Forbidden Lore Vault</A><BR>"
-			if(src.arcanecheckout)
-				new /obj/item/weapon/tome(src.loc)
+			if(arcanecheckout)
+				new /obj/item/weapon/tome(loc)
 				to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a dusty old tome sitting on the desk. You don't really remember printing it.</span>")
 				user.visible_message("[user] stares at the blank screen for a few moments, his expression frozen in fear. When he finally awakens from it, he looks a lot older.", 2)
-				src.arcanecheckout = 0
-			if(src.clearprintqueue)
+				arcanecheckout = 0
+			if(clearprintqueue)
 				print_queue.Cut()
 				say("The Printing Queue has been cleared.")
-				src.clearprintqueue = 0
+				clearprintqueue = 0
 		if(1)
 			// Inventory
 			dat += "<H3>Inventory</H3><BR>"
@@ -254,9 +254,9 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		if(3)
 			// Check Out a Book
 			dat += "<h3>Check Out a Book</h3><BR>"
-			dat += "Book: [src.buffer_book] "
+			dat += "Book: [buffer_book] "
 			dat += "<A href='?src=\ref[src];editbook=1'>\[Edit\]</A><BR>"
-			dat += "Recipient: [src.buffer_mob] "
+			dat += "Recipient: [buffer_mob] "
 			dat += "<A href='?src=\ref[src];editmob=1'>\[Edit\]</A><BR>"
 			dat += "Checkout Date : [world.time/600]<BR>"
 			dat += "Due Date: [(world.time + checkoutperiod)/600]<BR>"
@@ -309,7 +309,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 
 	var/datum/browser/popup = new(user, "library", name, 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/print_book(book_id)
@@ -333,13 +333,13 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		var/author = query.item[2]
 		var/title = query.item[3]
 		var/content = query.item[4]
-		var/obj/item/weapon/book/B = new(src.loc)
+		var/obj/item/weapon/book/B = new(loc)
 		B.name = "Book: [title]"
 		B.title = title
 		B.author = author
 		B.dat = content
 		B.icon_state = "book[rand(1,8)]"
-		src.visible_message("[src]'s printer hums as it produces a complete copy of [title]. How did it do that?")
+		visible_message("[src]'s printer hums as it produces a complete copy of [title]. How did it do that?")
 		break
 
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user, params)
@@ -378,7 +378,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 				screenstate = 5
 			if("6")
 				if(!print_busy)
-					var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(src.loc)
+					var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible(loc)
 					if(ticker && ( ticker.Bible_icon_state && ticker.Bible_item_state) )
 						B.icon_state = ticker.Bible_icon_state
 						B.item_state = ticker.Bible_item_state
@@ -395,9 +395,9 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if("8")
 				screenstate = 8
 	if(href_list["arccheckout"])
-		if(src.emagged)
-			src.arcanecheckout = 1
-		src.screenstate = 0
+		if(emagged)
+			arcanecheckout = 1
+		screenstate = 0
 	if(href_list["increasetime"])
 		checkoutperiod += 1
 	if(href_list["decreasetime"])
@@ -460,12 +460,12 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			say("Book has been sent to the printing queue!")
 			if(!print_busy && print_queue.len)
 				print_book(print_queue[1])
-				src.add_fingerprint(usr)
+				add_fingerprint(usr)
 				return
 		else
 			say("The printing queue is full!")
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
+	add_fingerprint(usr)
+	updateUsrDialog()
 	return
 
 /*
@@ -485,13 +485,13 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 			if(!istype(loc, /turf/open/floor))
 				to_chat(user, "<span class='warning'>A floor must be present to secure the scanner control interface!</span>")
 			else
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>You start securing the scanner control interface...</span>")
 				do_after(user, 20/W.toolspeed, target = src)
 				anchored = 1
 				to_chat(user, "<span class='notice'>You secure the scanner control interface.</span>")
 		else
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You start unsecuring the scanner control interface...</span>")
 			if (do_after(user, 20/W.toolspeed, target = src))
 				anchored = 0
@@ -522,7 +522,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	//onclose(user, "scanner")
 	var/datum/browser/popup = new(user, "scanner", name, 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/libraryscanner/Topic(href, href_list)
@@ -539,9 +539,9 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 		cache = null
 	if(href_list["eject"])
 		for(var/obj/item/weapon/book/B in contents)
-			B.loc = src.loc
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
+			B.loc = loc
+	add_fingerprint(usr)
+	updateUsrDialog()
 	return
 
 
@@ -581,7 +581,7 @@ var/global/list/datum/cachedbook/cachedbooks // List of our cached book datums
 	if(P)
 		if(!stat)
 			visible_message("[src] whirs as it prints and binds a new book.")
-			var/obj/item/weapon/book/B = new(src.loc)
+			var/obj/item/weapon/book/B = new(loc)
 			B.dat = P.info
 			B.name = "Print Job #" + "[rand(100, 999)]"
 			B.icon_state = "book[rand(1,7)]"

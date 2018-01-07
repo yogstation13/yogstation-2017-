@@ -5,10 +5,10 @@
 	var/max2
 
 /datum/tlv/New(min2 as num, min1 as num, max1 as num, max2 as num)
-	src.min2 = min2
-	src.min1 = min1
-	src.max1 = max1
-	src.max2 = max2
+	min2 = min2
+	min1 = min1
+	max1 = max1
+	max2 = max2
 
 /datum/tlv/proc/get_danger_level(val as num)
 	if(max2 != -1 && val >= max2)
@@ -358,7 +358,7 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start() //sparks always.
-	if(!src.Adjacent(user))
+	if(!Adjacent(user))
 		return 0
 	if (electrocute_mob(user, get_area(src), src))
 		return 1
@@ -616,7 +616,7 @@
 	switch(buildstage)
 		if(2)
 			if(istype(W, /obj/item/weapon/wirecutters) && panel_open && wires.is_all_cut())
-				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+				playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You cut the final wires.</span>")
 				var/obj/item/stack/cable_coil/cable = new /obj/item/stack/cable_coil(loc)
 				cable.amount = 5
@@ -624,7 +624,7 @@
 				update_icon()
 				return
 			else if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				panel_open = !panel_open
 				to_chat(user, "<span class='notice'>The wires have been [panel_open ? "exposed" : "unexposed"].</span>")
 				update_icon()
@@ -633,7 +633,7 @@
 				if(stat & (NOPOWER|BROKEN))
 					to_chat(user, "<span class='warning'>It does nothing!</span>")
 				else
-					if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
+					if(allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 						locked = !locked
 						to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the air alarm interface.</span>")
 					else
@@ -644,14 +644,14 @@
 				return
 		if(1)
 			if(istype(W, /obj/item/weapon/crowbar))
-				user.visible_message("[user.name] removes the electronics from [src.name].",\
+				user.visible_message("[user.name] removes the electronics from [name].",\
 									"<span class='notice'>You start prying out the circuit...</span>")
-				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
+				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if (do_after(user, 20/W.toolspeed, target = src))
 					if (buildstage == 1)
 						user <<"<span class='notice'>You remove the air alarm electronics.</span>"
-						new /obj/item/weapon/electronics/airalarm( src.loc )
-						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+						new /obj/item/weapon/electronics/airalarm( loc )
+						playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						buildstage = 0
 						update_icon()
 				return
@@ -687,7 +687,7 @@
 
 			if(istype(W, /obj/item/weapon/wrench))
 				to_chat(user, "<span class='notice'>You detach \the [src] from the wall.</span>")
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				new /obj/item/wallframe/airalarm( user.loc )
 				qdel(src)
 				return
@@ -703,4 +703,4 @@
 		return
 	emagged = TRUE
 	visible_message("<span class='warning'>Sparks fly out of the [src]!</span>", "<span class='notice'>You emag the [src], disabling its safeties.</span>")
-	playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 1)
+	playsound(loc, 'sound/effects/sparks4.ogg', 50, 1)

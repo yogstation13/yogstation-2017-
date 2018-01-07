@@ -91,7 +91,7 @@
 	else if(istype(W, /obj/item/weapon/weldingtool) && stage == 1)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+			playsound(loc, 'sound/items/Welder2.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 			if(do_after(user,20/WT.toolspeed, target = src))
 				if(!WT.isOn())
@@ -164,11 +164,11 @@
 	if(emagged)
 		if(mode == 0)
 			mode = 1
-			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+			playsound(loc, 'sound/effects/pop.ogg', 50, 0)
 			to_chat(user, "<span class='caution'>The telepad locator has become uncalibrated.</span>")
 		else
 			mode = 0
-			playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+			playsound(loc, 'sound/effects/pop.ogg', 50, 0)
 			to_chat(user, "<span class='caution'>You calibrate the telepad locator.</span>")
 
 /obj/item/weapon/rcs/emag_act(mob/user)

@@ -7,7 +7,7 @@
 	var/wait = 0
 
 /obj/machinery/pipedispenser/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/pipedispenser/attack_hand(mob/user)
 	if(..())
@@ -51,19 +51,19 @@
 		usr << browse(null, "window=pipedispenser")
 		return 1
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["make"])
 		if(!wait)
 			var/p_type = text2path(href_list["make"])
 			var/p_dir = text2num(href_list["dir"])
-			var/obj/item/pipe/P = new (src.loc, pipe_type=p_type, dir=p_dir)
+			var/obj/item/pipe/P = new (loc, pipe_type=p_type, dir=p_dir)
 			P.add_fingerprint(usr)
 			wait = 1
 			spawn(10)
 				wait = 0
 	if(href_list["makemeter"])
 		if(!wait)
-			new /obj/item/pipe_meter(src.loc)
+			new /obj/item/pipe_meter(loc)
 			wait = 1
 			spawn(15)
 				wait = 0
@@ -79,7 +79,7 @@
 		return
 	else if (istype(W, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You begin to fasten \the [src] to the floor...</span>")
 			if (do_after(user, 40/W.toolspeed, target = src))
 				add_fingerprint(user)
@@ -92,7 +92,7 @@
 				if (usr.machine==src)
 					usr << browse(null, "window=pipedispenser")
 		else if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>")
 			if (do_after(user, 20/W.toolspeed, target = src))
 				add_fingerprint(user)
@@ -163,11 +163,11 @@ Nah
 	if(..())
 		return 1
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["dmake"])
 		if(!wait)
 			var/p_type = text2num(href_list["dmake"])
-			var/obj/structure/disposalconstruct/C = new (src.loc,p_type)
+			var/obj/structure/disposalconstruct/C = new (loc,p_type)
 
 			if(!C.can_place())
 				to_chat(usr, "<span class='warning'>There's not enough room to build that here!</span>")
@@ -215,12 +215,12 @@ Nah
 	if(..())
 		return 1
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(!wait)
 		if(href_list["tube"])
 			var/tube_type = text2num(href_list["tube"])
 			if(tube_type <= 4)
-				var/obj/structure/c_transit_tube/C = new/obj/structure/c_transit_tube(src.loc)
+				var/obj/structure/c_transit_tube/C = new/obj/structure/c_transit_tube(loc)
 				switch(tube_type)
 					if(0)
 						C.icon_state = "E-W"
@@ -236,16 +236,16 @@ Nah
 			else
 				switch(tube_type)
 					if(5)
-						var/obj/structure/c_transit_tube/station/C = new/obj/structure/c_transit_tube/station(src.loc)
+						var/obj/structure/c_transit_tube/station/C = new/obj/structure/c_transit_tube/station(loc)
 						C.add_fingerprint(usr)
 					if(6)
-						var/obj/structure/c_transit_tube/station/reverse/C = new/obj/structure/c_transit_tube/station/reverse(src.loc)
+						var/obj/structure/c_transit_tube/station/reverse/C = new/obj/structure/c_transit_tube/station/reverse(loc)
 						C.add_fingerprint(usr)
 					if(7)
-						var/obj/structure/c_transit_tube/station/block/C = new/obj/structure/c_transit_tube/station/block(src.loc)
+						var/obj/structure/c_transit_tube/station/block/C = new/obj/structure/c_transit_tube/station/block(loc)
 						C.add_fingerprint(usr)
 					if(8)
-						var/obj/structure/c_transit_tube_pod/C = new/obj/structure/c_transit_tube_pod(src.loc)
+						var/obj/structure/c_transit_tube_pod/C = new/obj/structure/c_transit_tube_pod(loc)
 						C.add_fingerprint(usr)
 			wait = 1
 			spawn(15)

@@ -56,7 +56,7 @@ AI MODULES
 			message_admins("[key_name_admin(user)] tried to upload laws to [law_datum.owner ? key_name_admin(law_datum.owner) : "an AI core"] that would exceed the law cap.")
 			return
 
-	var/law2log = src.transmitInstructions(law_datum, user) //Freeforms return something extra we need to log
+	var/law2log = transmitInstructions(law_datum, user) //Freeforms return something extra we need to log
 	if(law_datum.owner)
 		to_chat(user, "<span class='notice'>Upload complete. [law_datum.owner]'s laws have been modified.</span>")
 		law_datum.owner.show_laws()
@@ -67,9 +67,9 @@ AI MODULES
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	var/ainame = law_datum.owner ? law_datum.owner.name : "empty AI core"
 	var/aikey = law_datum.owner ? law_datum.owner.ckey : "null"
-	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [law2log]" : ""]")
-	log_law("[user.key]/[user.name] used [src.name] on [aikey]/([ainame]).[law2log ? " The law specified [law2log]" : ""]")
-	message_admins("[key_name_admin(user)] used [src.name] on [key_name_admin(law_datum.owner)].[law2log ? " The law specified [law2log]" : ""]")
+	lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [name] on [ainame]([aikey]).[law2log ? " The law specified [law2log]" : ""]")
+	log_law("[user.key]/[user.name] used [name] on [aikey]/([ainame]).[law2log ? " The law specified [law2log]" : ""]")
+	message_admins("[key_name_admin(user)] used [name] on [key_name_admin(law_datum.owner)].[law2log ? " The law specified [law2log]" : ""]")
 
 //The proc that actually changes the silicon's laws.
 /obj/item/weapon/aiModule/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender)
@@ -466,7 +466,7 @@ AI MODULES
 	laws[1] = generate_ion_law()
 	to_chat(user, "<span class='notice'>You press the button on [src].</span>")
 	playsound(user, 'sound/machines/click.ogg', 20, 1)
-	src.loc.visible_message("<span class='warning'>\icon[src] [laws[1]]</span>")
+	loc.visible_message("<span class='warning'>\icon[src] [laws[1]]</span>")
 
 /******************** Mother Drone  ******************/
 

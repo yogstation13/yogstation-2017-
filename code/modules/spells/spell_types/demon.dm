@@ -143,10 +143,10 @@
 		return
 	dust_animation()
 	spawn_dust()
-	src.visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
+	visible_message("<span class='warning'>[src] disappears in a flashfire!</span>")
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
 	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
-	src.ExtinguishMob()
+	ExtinguishMob()
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 	if(has_buckled_mobs())
@@ -155,19 +155,19 @@
 		pulledby.stop_pulling()
 	if(pulling)
 		stop_pulling()
-	src.loc = holder
-	src.holder = holder
-	src.notransform = 0
+	loc = holder
+	holder = holder
+	notransform = 0
 	fakefireextinguish()
 
 /mob/living/proc/infernalphasein()
-	if(src.notransform)
+	if(notransform)
 		to_chat(src, "<span class='warning'>You're too busy to jaunt in.</span>")
 		return 0
 	fakefire()
-	src.loc = get_turf(src)
-	src.client.eye = src
-	src.visible_message("<span class='warning'><B>[src] appears in a firey blaze!</B>")
+	loc = get_turf(src)
+	client.eye = src
+	visible_message("<span class='warning'><B>[src] appears in a firey blaze!</B>")
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
 	addtimer(src, "fakefireextinguish" ,15,TRUE,get_turf(src))
 

@@ -65,7 +65,7 @@
 
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground</span>")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 	else
 		return ..()
 

@@ -25,8 +25,8 @@
 	current_cycle = times_fired
 
 	//cache some vars
-	var/datum/gas_mixture/air = src.air
-	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
+	var/datum/gas_mixture/air = air
+	var/list/atmos_adjacent_turfs = atmos_adjacent_turfs
 
 	for(var/direction in cardinal)
 		var/turf/open/enemy_tile = get_step(src, direction)

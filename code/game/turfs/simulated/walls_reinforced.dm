@@ -53,8 +53,8 @@
 			if(loc == null || MS.get_amount() < 1)
 				return 1
 			MS.use(1)
-			src.d_state = 0
-			src.icon_state = "r_wall"
+			d_state = 0
+			icon_state = "r_wall"
 			queue_smooth_neighbors(src)
 			to_chat(user, "<span class='notice'>You repair the last of the damage.</span>")
 			return 1
@@ -66,7 +66,7 @@
 		if(0)
 			if (istype(W, /obj/item/weapon/wirecutters))
 				playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
-				src.d_state = 1
+				d_state = 1
 				update_icon()
 				to_chat(user, "<span class='notice'>You cut the outer grille.</span>")
 				return 1
@@ -81,7 +81,7 @@
 						return 1
 
 					if( d_state == 1 && user.loc == T && user.get_active_hand() == W )
-						src.d_state = 2
+						d_state = 2
 						update_icon()
 						to_chat(user, "<span class='notice'>You remove the support lines.</span>")
 				return 1
@@ -90,9 +90,9 @@
 			else if(istype(W, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/O = W
 				if (O.use(1))
-					src.d_state = 0
+					d_state = 0
 					update_icon()
-					src.icon_state = "r_wall"
+					icon_state = "r_wall"
 					to_chat(user, "<span class='notice'>You replace the outer grille.</span>")
 				else
 					to_chat(user, "<span class='warning'>Report this to a coder: metal stack had less than one sheet in it when trying to repair wall</span>")
@@ -112,7 +112,7 @@
 							return 0
 
 						if( d_state == 2 && user.loc == T && user.get_active_hand() == WT )
-							src.d_state = 3
+							d_state = 3
 							update_icon()
 							to_chat(user, "<span class='notice'>You press firmly on the cover, dislodging it.</span>")
 				return 1
@@ -127,7 +127,7 @@
 						return 1
 
 					if( d_state == 2 && user.loc == T && user.get_active_hand() == W )
-						src.d_state = 3
+						d_state = 3
 						update_icon()
 						to_chat(user, "<span class='notice'>You press firmly on the cover, dislodging it.</span>")
 				return 1
@@ -143,7 +143,7 @@
 						return 1
 
 					if( d_state == 3 && user.loc == T && user.get_active_hand() == W )
-						src.d_state = 4
+						d_state = 4
 						update_icon()
 						to_chat(user, "<span class='notice'>You pry off the cover.</span>")
 				return 1
@@ -159,7 +159,7 @@
 						return 1
 
 					if( d_state == 4 && user.loc == T && user.get_active_hand() == W )
-						src.d_state = 5
+						d_state = 5
 						update_icon()
 						to_chat(user, "<span class='notice'>You remove the bolts anchoring the support rods.</span>")
 				return 1
@@ -177,7 +177,7 @@
 							return 1
 
 						if( d_state == 5 && user.loc == T && user.get_active_hand() == WT )
-							src.d_state = 6
+							d_state = 6
 							update_icon()
 							to_chat(user, "<span class='notice'>You slice through the support rods.</span>")
 				return 1
@@ -192,7 +192,7 @@
 						return 1
 
 					if( d_state == 5 && user.loc == T && user.get_active_hand() == W )
-						src.d_state = 6
+						d_state = 6
 						update_icon()
 						to_chat(user, "<span class='notice'>You slice through the support rods.</span>")
 				return 1
@@ -283,8 +283,8 @@
 			if(loc == null || MS.get_amount() < 1)
 				return 1
 			MS.use(1)
-			src.d_state = 0
-			src.icon_state = "r_wall"
+			d_state = 0
+			icon_state = "r_wall"
 			queue_smooth_neighbors(src)
 			to_chat(user, "<span class='notice'>You repair the last of the damage.</span>")
 			return 1
@@ -296,7 +296,7 @@
 		if(0)
 			if (istype(W, /obj/item/weapon/wirecutters))
 				playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
-				src.d_state = 1
+				d_state = 1
 				update_icon()
 				to_chat(user, "<span class='notice'>You cut the outer grille.</span>")
 				return 1
@@ -311,7 +311,7 @@
 						return 1
 
 					if( d_state == 1 && user.loc == T && user.get_active_hand() == W )
-						src.d_state = 2
+						d_state = 2
 						update_icon()
 						to_chat(user, "<span class='notice'>You remove the support lines.</span>")
 				return 1
@@ -320,9 +320,9 @@
 			else if(istype(W, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/O = W
 				if (O.use(1))
-					src.d_state = 0
+					d_state = 0
 					update_icon()
-					src.icon_state = "r_wall"
+					icon_state = "r_wall"
 					to_chat(user, "<span class='notice'>You replace the outer grille.</span>")
 				else
 					to_chat(user, "<span class='warning'>Report this to a coder: metal stack had less than one sheet in it when trying to repair wall</span>")
@@ -342,7 +342,7 @@
 							return 0
 
 						if( d_state == 2 && user.loc == T && user.get_active_hand() == WT )
-							src.d_state = 3
+							d_state = 3
 							update_icon()
 							to_chat(user, "<span class='notice'>You press firmly on the cover, dislodging it.</span>")
 				return 1
@@ -357,7 +357,7 @@
 						return 1
 
 					if( d_state == 2 && user.loc == T && user.get_active_hand() == W )
-						src.d_state = 3
+						d_state = 3
 						update_icon()
 						to_chat(user, "<span class='notice'>You press firmly on the cover, dislodging it.</span>")
 				return 1
@@ -373,7 +373,7 @@
 						return 1
 
 					if( d_state == 3 && user.loc == T && user.get_active_hand() == W )
-						src.d_state = 4
+						d_state = 4
 						update_icon()
 						to_chat(user, "<span class='notice'>You pry off the cover.</span>")
 				return 1
@@ -389,7 +389,7 @@
 						return 1
 
 					if( d_state == 4 && user.loc == T && user.get_active_hand() == W )
-						src.d_state = 5
+						d_state = 5
 						update_icon()
 						to_chat(user, "<span class='notice'>You remove the bolts anchoring the support rods.</span>")
 				return 1
@@ -407,7 +407,7 @@
 							return 1
 
 						if( d_state == 5 && user.loc == T && user.get_active_hand() == WT )
-							src.d_state = 6
+							d_state = 6
 							update_icon()
 							to_chat(user, "<span class='notice'>You slice through the support rods.</span>")
 				return 1
@@ -422,7 +422,7 @@
 						return 1
 
 					if( d_state == 5 && user.loc == T && user.get_active_hand() == W )
-						src.d_state = 6
+						d_state = 6
 						update_icon()
 						to_chat(user, "<span class='notice'>You slice through the support rods.</span>")
 				return 1

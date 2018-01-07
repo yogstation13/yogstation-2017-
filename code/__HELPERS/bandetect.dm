@@ -20,9 +20,9 @@
 
 
 /client/proc/findJoinDate()
-	var/http[] = world.Export("http://byond.com/members/[src.ckey]?format=text")
+	var/http[] = world.Export("http://byond.com/members/[ckey]?format=text")
 	if(!http)
-		world.log << "Failed to connect to byond age check for [src.ckey]"
+		world.log << "Failed to connect to byond age check for [ckey]"
 		return FALSE
 
 	var/F = file2text(http["CONTENT"])

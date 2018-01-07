@@ -442,7 +442,7 @@
 	if(pestlevel > 5)
 		visible_message("The pests seem to behave oddly...")
 		for(var/i=0, i<3, i++)
-			var/obj/effect/spider/spiderling/S = new(src.loc)
+			var/obj/effect/spider/spiderling/S = new(loc)
 			S.grow_as = /mob/living/simple_animal/hostile/poison/giant_spider/hunter
 	else
 		to_chat(usr, "The pests seem to behave oddly, but quickly settle down...")

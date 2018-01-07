@@ -53,14 +53,14 @@
 			light()
 
 /obj/item/candle/fire_act()
-	if(!src.lit)
+	if(!lit)
 		light() //honk
 	return
 
 /obj/item/candle/proc/light(show_message)
-	if(!src.lit)
-		src.lit = TRUE
-		//src.damtype = "fire"
+	if(!lit)
+		lit = TRUE
+		//damtype = "fire"
 		if(show_message)
 			usr.visible_message(
 				"<span class='danger'>[usr] lights the [name].</span>")
@@ -75,9 +75,9 @@
 	if(!infinite)
 		wax--
 	if(!wax)
-		new/obj/item/trash/candle(src.loc)
-		if(istype(src.loc, /mob))
-			var/mob/M = src.loc
+		new/obj/item/trash/candle(loc)
+		if(istype(loc, /mob))
+			var/mob/M = loc
 			M.unEquip(src, 1) //src is being deleted anyway
 		qdel(src)
 	update_icon()

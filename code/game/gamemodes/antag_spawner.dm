@@ -64,7 +64,7 @@
 			var/list/candidates = pollCandidates("Do you want to play as a [href_list["school"]]-school wizard apprentice?", ROLE_WIZARD, null, ROLE_WIZARD, 50)
 			polling = FALSE
 			if(candidates.len)
-				src.used = 1
+				used = 1
 				var/mob/dead/observer/O = pick(candidates)
 				var/client/C = O.client
 				spawn_antag(C, get_turf(H.loc), href_list["school"])
@@ -167,7 +167,7 @@
 		used = 1
 		var/mob/dead/observer/O = pick(nuke_candidates)
 		var/client/C = O.client
-		spawn_antag(C, get_turf(src.loc))
+		spawn_antag(C, get_turf(loc))
 		var/datum/effect_system/spark_spread/S = new /datum/effect_system/spark_spread
 		S.set_up(4, 1, src)
 		S.start()
@@ -267,7 +267,7 @@
 		used = 1
 		var/mob/dead/observer/O = pick(demon_candidates)
 		var/client/C = O.client
-		spawn_antag(C, get_turf(src.loc), initial(demon_type.name))
+		spawn_antag(C, get_turf(loc), initial(demon_type.name))
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
 		playsound(user.loc, 'sound/effects/Glassbr1.ogg', 100, 1)

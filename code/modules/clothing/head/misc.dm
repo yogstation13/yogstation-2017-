@@ -24,7 +24,7 @@
 
 /obj/item/clothing/head/canada
 	name = "striped red tophat"
-	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'érable</i>"
+	desc = " It feels sticky, like maple syrup - <i>il se sent collante, comme le sirop d'ï¿½rable</i>"
 	icon_state = "canada"
 	item_state = "canada"
 
@@ -312,10 +312,10 @@
 		return
 
 /obj/item/clothing/head/bombCollar/pickup(mob/living/carbon/user)
-	if(src.locked == 1 && flags & NODROP)
+	if(locked == 1 && flags & NODROP)
 		flags &= ~NODROP
 		to_chat(user, "<span class='notice'>[src] blares a sharp red light as if it's just come to realize something.</span>")
-		if(linked && linked.z == src.z)
+		if(linked && linked.z == z)
 			var/area/A = get_area(linked)
 			linked.audible_message("[src] begins to beep rapidly.")
 			linked.info = "<span class='notice'>A bomb collar has lost contact with it's captive target. The last known area is [A]."
@@ -351,7 +351,7 @@
 		to_chat(user, "<span class='warning'>You aren't sure how to use this...</span>")
 		return
 	for(var/obj/item/weapon/implant/bombcollar/I in user.contents)
-		I.linkedCollars = src.linkedCollars
+		I.linkedCollars = linkedCollars
 		to_chat(user, "Implant updated with the latest collars")
 	switch(alert("Select an option.","Bomb Collar Control","Locks","Detonation","Status"))
 		if("Locks")

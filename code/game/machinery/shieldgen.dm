@@ -11,7 +11,7 @@
 		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
 /obj/machinery/shield/New()
-	src.dir = pick(1,2,3,4)
+	dir = pick(1,2,3,4)
 	..()
 	air_update_turf(1)
 
@@ -202,7 +202,7 @@
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/screwdriver))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		panel_open = !panel_open
 		if(panel_open)
 			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
@@ -228,11 +228,11 @@
 			to_chat(user, "<span class='warning'>The bolts are covered! Unlocking this would retract the covers.</span>")
 			return
 		if(!anchored && !isinspace())
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You secure \the [src] to the floor!</span>")
 			anchored = 1
 		else if(anchored)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
 			to_chat(user, "<span class='notice'>You unsecure \the [src] from the floor!</span>")
 			if(active)
 				to_chat(user, "<span class='notice'>\The [src] shuts off!</span>")
@@ -287,7 +287,7 @@
 	if(!anchored)
 		power = 0
 		return 0
-	var/turf/T = src.loc
+	var/turf/T = loc
 
 	var/obj/structure/cable/C = T.get_cable_node()
 	var/datum/powernet/PN
@@ -353,10 +353,10 @@
 		setup_field(2)
 		setup_field(4)
 		setup_field(8)
-		src.active = 2
+		active = 2
 	if(active >= 1)
 		if(power == 0)
-			visible_message("<span class='danger'>The [src.name] shuts down due to lack of power!</span>", \
+			visible_message("<span class='danger'>The [name] shuts down due to lack of power!</span>", \
 				"<span class='italics'>You hear heavy droning fade out.</span>")
 			icon_state = "Shield_Gen"
 			active = 0
@@ -366,8 +366,8 @@
 			cleanup(8)
 
 /obj/machinery/shieldwallgen/proc/setup_field(NSEW = 0)
-	var/turf/T = src.loc
-	var/turf/T2 = src.loc
+	var/turf/T = loc
+	var/turf/T2 = loc
 	var/obj/machinery/shieldwallgen/G
 	var/steps = 0
 	var/oNSEW = 0
@@ -399,7 +399,7 @@
 	if(isnull(G))
 		return
 
-	T2 = src.loc
+	T2 = loc
 
 	for(var/dist = 0, dist < steps, dist += 1) // creates each field tile
 		var/field_dir = get_dir(T2,get_step(T2, NSEW))
@@ -417,13 +417,13 @@
 			return
 
 		else if(!anchored && !isinspace()) //Can't fasten this thing in space
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 			to_chat(user, "<span class='notice'>You secure the external reinforcing bolts to the floor.</span>")
 			anchored = 1
 			return
 
 		else //You can unfasten it tough, if you somehow manage to fasten it.
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+			playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 			to_chat(user, "<span class='notice'>You undo the external reinforcing bolts.</span>")
 			anchored = 0
 			return
@@ -431,7 +431,7 @@
 	if(W.GetID())
 		if (allowed(user))
 			locked = !locked
-			to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
+			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 
@@ -442,8 +442,8 @@
 /obj/machinery/shieldwallgen/proc/cleanup(NSEW)
 	var/obj/machinery/shieldwall/F
 	var/obj/machinery/shieldwallgen/G
-	var/turf/T = src.loc
-	var/turf/T2 = src.loc
+	var/turf/T = loc
+	var/turf/T2 = loc
 
 	for(var/dist = 0, dist <= 9, dist += 1) // checks out to 8 tiles away for fields
 		T = get_step(T2, NSEW)
@@ -490,11 +490,11 @@
 
 /obj/machinery/shieldwall/New(var/obj/machinery/shieldwallgen/A, var/obj/machinery/shieldwallgen/B)
 	..()
-	src.gen_primary = A
-	src.gen_secondary = B
+	gen_primary = A
+	gen_secondary = B
 	if(A && B)
 		needs_power = 1
-	for(var/mob/living/L in get_turf(src.loc))
+	for(var/mob/living/L in get_turf(loc))
 		visible_message("<span class='danger'>\The [src] is suddenly occupying the same space as \the [L]'s organs!</span>")
 		L.gib()
 
@@ -565,4 +565,4 @@
 		if (istype(mover, /obj/item/projectile))
 			return prob(10)
 		else
-			return !src.density
+			return !density

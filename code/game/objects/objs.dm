@@ -93,7 +93,7 @@
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
 				is_in_use = 1
-				src.interact(M)
+				interact(M)
 		var/ai_in_use = AutoUpdateAI(src)
 
 		if(!ai_in_use && !is_in_use)
@@ -121,16 +121,16 @@
 	return
 
 /mob/proc/set_machine(obj/O)
-	if(src.machine)
+	if(machine)
 		unset_machine()
-	src.machine = O
+	machine = O
 	if(istype(O))
 		O.in_use = 1
 
 /obj/item/proc/updateSelfDialog()
-	var/mob/M = src.loc
+	var/mob/M = loc
 	if(istype(M) && M.client && M.machine == src)
-		src.attack_self(M)
+		attack_self(M)
 
 
 /obj/proc/alter_health()
@@ -185,8 +185,8 @@
 		return 1
 
 /obj/proc/burn()
-	empty_object_contents(1, src.loc)
-	var/obj/effect/decal/cleanable/ash/A = new(src.loc)
+	empty_object_contents(1, loc)
+	var/obj/effect/decal/cleanable/ash/A = new(loc)
 	A.desc = "Looks like this used to be a [name] some time ago."
 	SSobj.burning -= src
 	qdel(src)
@@ -197,7 +197,7 @@
 		overlays -= fire_overlay
 		SSobj.burning -= src
 
-/obj/proc/empty_object_contents(burn = 0, new_loc = src.loc)
+/obj/proc/empty_object_contents(burn = 0, new_loc = loc)
 	for(var/obj/item/Item in contents) //Empty out the contents
 		Item.loc = new_loc
 		if(burn)

@@ -65,7 +65,7 @@
 				if(world.time - mecha.occupant.last_bumped <= 10)
 					return
 				mecha.occupant.last_bumped = world.time
-			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access) || emergency == 1))
+			if(mecha.occupant && (allowed(mecha.occupant) || check_access_list(mecha.operation_req_access) || emergency == 1))
 				open()
 			else
 				do_animate("deny")
@@ -91,12 +91,12 @@
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)
 		return
-	src.add_fingerprint(user)
-	if(!src.requiresID())
+	add_fingerprint(user)
+	if(!requiresID())
 		user = null
 
 	if(density && !emagged)
-		if(allowed(user) || src.emergency == 1)
+		if(allowed(user) || emergency == 1)
 			open()
 		else
 			do_animate("deny")
@@ -104,12 +104,12 @@
 
 
 /obj/machinery/door/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 
 /obj/machinery/door/attack_paw(mob/user)
 	if(user.a_intent != "harm")
-		return src.attack_hand(user)
+		return attack_hand(user)
 	else
 		attack_generic(user, 5)
 
@@ -118,8 +118,8 @@
 		return
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='danger'>[user] smashes against the [src.name]!</span>", \
-				"<span class='userdanger'>You smash against the [src.name]!</span>")
+	user.visible_message("<span class='danger'>[user] smashes against the [name]!</span>", \
+				"<span class='userdanger'>You smash against the [name]!</span>")
 	take_damage(damage, damage_type)
 
 /obj/machinery/door/attack_slime(mob/living/simple_animal/slime/S)
@@ -183,7 +183,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 					playsound(loc, 'sound/weapons/smash.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 
 
 /obj/machinery/door/blob_act(obj/effect/blob/B)

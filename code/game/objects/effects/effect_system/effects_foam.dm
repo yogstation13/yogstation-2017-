@@ -43,7 +43,7 @@
 /obj/effect/particle_effect/foam/proc/kill_foam()
 	STOP_PROCESSING(SSfastprocess, src)
 	if(metal)
-		var/obj/structure/foamedmetal/M = new(src.loc)
+		var/obj/structure/foamedmetal/M = new(loc)
 		M.metal = metal
 		M.updateicon()
 	animate(src, alpha = 0, time = 5)
@@ -59,7 +59,7 @@
 
 	var/fraction = 1/initial(reagent_divisor)
 	for(var/obj/O in range(0,src))
-		if(O.type == src.type)
+		if(O.type == type)
 			continue
 		if(isturf(O.loc))
 			var/turf/T = O.loc
@@ -109,7 +109,7 @@
 
 		for(var/mob/living/L in T)
 			foam_mob(L)
-		var/obj/effect/particle_effect/foam/F = PoolOrNew(src.type, T)
+		var/obj/effect/particle_effect/foam/F = PoolOrNew(type, T)
 		F.amount = amount
 		reagents.copy_to(F, (reagents.total_volume))
 		F.color = color
@@ -236,7 +236,7 @@
 /obj/structure/foamedmetal/attack_animal(mob/living/simple_animal/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/tap.ogg', 100, 1)
 	if(user.environment_smash >= 1)
 		user.do_attack_animation(src)
 		to_chat(user, "<span class='notice'>You smash apart the foam wall.</span>")
@@ -244,7 +244,7 @@
 
 /obj/structure/foamedmetal/attack_hulk(mob/living/carbon/human/user)
 	..(user, 1)
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/tap.ogg', 100, 1)
 	if(prob(75 - metal*25))
 		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
 						"<span class='danger'>You smash through the metal foam wall!</span>")
@@ -254,7 +254,7 @@
 /obj/structure/foamedmetal/attack_alien(mob/living/carbon/alien/humanoid/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/tap.ogg', 100, 1)
 	if(prob(75 - metal*25))
 		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
 						"<span class='danger'>You smash through the metal foam wall!</span>")
@@ -263,7 +263,7 @@
 /obj/structure/foamedmetal/attack_slime(mob/living/simple_animal/slime/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/tap.ogg', 100, 1)
 	if(!user.is_adult)
 		attack_hand(user)
 		return
@@ -276,11 +276,11 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	to_chat(user, "<span class='warning'>You hit the metal foam but bounce off it!</span>")
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/tap.ogg', 100, 1)
 
 
 /obj/structure/foamedmetal/attacked_by(obj/item/I, mob/living/user)
-	playsound(src.loc, 'sound/weapons/tap.ogg', 100, 1) //the item attack sound is muffled by the foam.
+	playsound(loc, 'sound/weapons/tap.ogg', 100, 1) //the item attack sound is muffled by the foam.
 	if(prob(I.force*20 - metal*25))
 		user.visible_message("<span class='danger'>[user] smashes through the foamed metal!</span>", \
 						"<span class='danger'>You smash through the foamed metal with \the [I]!</span>")

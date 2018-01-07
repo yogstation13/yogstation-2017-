@@ -75,7 +75,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	return
 
 /obj/effect/hallucination/simple/proc/GetImage()
-	var/image/I = image(image_icon,loc,image_state,image_layer,dir=src.dir)
+	var/image/I = image(image_icon,loc,image_state,image_layer,dir=dir)
 	I.pixel_x = px
 	I.pixel_y = py
 	if(col_mod)
@@ -125,11 +125,11 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	target = T
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/U in orange(7,target))
 		if(!U.welded)
-			src.loc = U.loc
+			loc = U.loc
 			break
 	image_state = pick("plasma","nitrous_oxide")
 	flood_images += image(image_icon,src,image_state,MOB_LAYER)
-	flood_turfs += get_turf(src.loc)
+	flood_turfs += get_turf(loc)
 	if(target.client) target.client.images |= flood_images
 	next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
 	START_PROCESSING(SSobj, src)
@@ -378,7 +378,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	my_target.visible_message("<span class='danger'>[my_target] flails around wildly.</span>", \
 							"<span class='danger'>[my_target] has attacked [src]!</span>")
 
-	src.health -= P.force
+	health -= P.force
 	return
 
 /obj/effect/fake_attacker/Crossed(mob/M, somenumber)
@@ -399,38 +399,38 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 
 /obj/effect/fake_attacker/proc/updateimage()
-//	del src.currentimage
-	if(src.dir == NORTH)
-		del src.currentimage
-		src.currentimage = new /image(up,src)
-	else if(src.dir == SOUTH)
-		del src.currentimage
-		src.currentimage = new /image(down,src)
-	else if(src.dir == EAST)
-		del src.currentimage
-		src.currentimage = new /image(right,src)
-	else if(src.dir == WEST)
-		del src.currentimage
-		src.currentimage = new /image(left,src)
+//	del currentimage
+	if(dir == NORTH)
+		del currentimage
+		currentimage = new /image(up,src)
+	else if(dir == SOUTH)
+		del currentimage
+		currentimage = new /image(down,src)
+	else if(dir == EAST)
+		del currentimage
+		currentimage = new /image(right,src)
+	else if(dir == WEST)
+		del currentimage
+		currentimage = new /image(left,src)
 	to_chat(my_target, currentimage)
 
 
 /obj/effect/fake_attacker/proc/attack_loop()
 	while(1)
 		sleep(rand(5,10))
-		if(src.health < 0)
+		if(health < 0)
 			collapse()
 			continue
 		if(get_dist(src,my_target) > 1)
-			src.dir = get_dir(src,my_target)
+			dir = get_dir(src,my_target)
 			step_towards(src,my_target)
 			updateimage()
 		else
 			if(prob(15))
-				src.do_attack_animation(my_target)
+				do_attack_animation(my_target)
 				if(weapon_name)
 					my_target << sound(pick('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg'))
-					my_target.show_message("<span class='danger'>[src.name] has attacked [my_target] with [weapon_name]!</span>", 1)
+					my_target.show_message("<span class='danger'>[name] has attacked [my_target] with [weapon_name]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(20))
 						my_target.blur_eyes(3)
@@ -439,7 +439,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							fake_blood(my_target)
 				else
 					my_target << sound(pick('sound/weapons/punch1.ogg','sound/weapons/punch2.ogg','sound/weapons/punch3.ogg','sound/weapons/punch4.ogg'))
-					my_target.show_message("<span class='userdanger'>[src.name] has punched [my_target]!</span>", 1)
+					my_target.show_message("<span class='userdanger'>[name] has punched [my_target]!</span>", 1)
 					my_target.staminaloss += 30
 					if(prob(33))
 						if(!locate(/obj/effect/overlay) in my_target.loc)
@@ -547,25 +547,25 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 /mob/living/carbon/proc/hallucinate(hal_type) // Todo -> proc / defines
 	switch(hal_type)
 		if("xeno")
-			new /obj/effect/hallucination/xeno_attack(src.loc,src)
+			new /obj/effect/hallucination/xeno_attack(loc,src)
 		if("singulo")
-			new /obj/effect/hallucination/singularity_scare(src.loc,src)
+			new /obj/effect/hallucination/singularity_scare(loc,src)
 		if("battle")
-			new /obj/effect/hallucination/battle(src.loc,src)
+			new /obj/effect/hallucination/battle(loc,src)
 		if("flood")
-			new /obj/effect/hallucination/fake_flood(src.loc,src)
+			new /obj/effect/hallucination/fake_flood(loc,src)
 		if("delusion")
-			new /obj/effect/hallucination/delusion(src.loc,src)
+			new /obj/effect/hallucination/delusion(loc,src)
 		if("fake")
-			new /obj/effect/hallucination/fakeattacker(src.loc,src)
+			new /obj/effect/hallucination/fakeattacker(loc,src)
 		if("bolts")
-			new /obj/effect/hallucination/bolts(src.loc,src)
+			new /obj/effect/hallucination/bolts(loc,src)
 		if("bolts_minor")
-			new /obj/effect/hallucination/bolts(src.loc,src,rand(1,2))
+			new /obj/effect/hallucination/bolts(loc,src,rand(1,2))
 		if("whispers")
-			new /obj/effect/hallucination/whispers(src.loc,src)
+			new /obj/effect/hallucination/whispers(loc,src)
 		if("message")
-			new /obj/effect/hallucination/message(src.loc,src)
+			new /obj/effect/hallucination/message(loc,src)
 		if("sounds")
 			//Strange audio
 			//to_chat(src, "Strange Audio")

@@ -64,14 +64,14 @@
 	removing_airlock = TRUE
 	to_chat(user, "<span class='notice'>You start tearing apart the airlock...</span>")
 
-	playsound(src.loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
+	playsound(loc, 'sound/machines/airlock_alien_prying.ogg', 100, 1)
 	A.audible_message("<span class='italics'>You hear a loud metallic \
 		grinding sound.</span>")
 
 	addtimer(src, "growl", 20, unique=FALSE, user)
 
 	if(do_after(user, delay=160, needhand=FALSE, target=A, progress=TRUE))
-		playsound(src.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
+		playsound(loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 		A.audible_message("<span class='danger'>With a screech, [A] is torn \
 			apart!</span>")
 		var/obj/structure/door_assembly/door = new A.doortype(get_turf(A))
@@ -85,7 +85,7 @@
 
 /obj/item/zombie_hand/proc/growl(mob/user)
 	if(removing_airlock)
-		playsound(src.loc, 'sound/hallucinations/growl3.ogg', 50, 1)
+		playsound(loc, 'sound/hallucinations/growl3.ogg', 50, 1)
 		user.audible_message("<span class='warning'>[user] growls as \
 			their claws dig into the metal frame...</span>")
 

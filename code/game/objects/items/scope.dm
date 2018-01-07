@@ -8,7 +8,7 @@
 
 /obj/item/scope/New()
 	..()
-	for(var/datum/action/item_action/toggle_scope_zoom/zoom in src.actions)
+	for(var/datum/action/item_action/toggle_scope_zoom/zoom in actions)
 		zoom.scope = src
 
 /obj/item/scope/Destroy()

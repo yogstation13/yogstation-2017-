@@ -14,35 +14,35 @@
 
 	switch(act) //Alphabetical please
 		if("bounce","bounces")
-			message = "<B>The [src.name]</B> bounces in place."
+			message = "<B>The [name]</B> bounces in place."
 			m_type = 1
 
 		if("jiggle","jiggles")
-			message = "<B>The [src.name]</B> jiggles!"
+			message = "<B>The [name]</B> jiggles!"
 			m_type = 1
 
 		if("light","lights")
-			message = "<B>The [src.name]</B> lights up for a bit, then stops."
+			message = "<B>The [name]</B> lights up for a bit, then stops."
 			m_type = 1
 
 		if("moan","moans")
-			message = "<B>The [src.name]</B> moans."
+			message = "<B>The [name]</B> moans."
 			m_type = 2
 
 		if("shiver","shivers")
-			message = "<B>The [src.name]</B> shivers."
+			message = "<B>The [name]</B> shivers."
 			m_type = 2
 
 		if("sway","sways")
-			message = "<B>The [src.name]</B> sways around dizzily."
+			message = "<B>The [name]</B> sways around dizzily."
 			m_type = 1
 
 		if("twitch","twitches")
-			message = "<B>The [src.name]</B> twitches."
+			message = "<B>The [name]</B> twitches."
 			m_type = 1
 
 		if("vibrate","vibrates")
-			message = "<B>The [src.name]</B> vibrates!"
+			message = "<B>The [name]</B> vibrates!"
 			m_type = 1
 
 		if("noface") //mfw I have no face

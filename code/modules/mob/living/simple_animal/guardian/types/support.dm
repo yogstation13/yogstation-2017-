@@ -44,7 +44,7 @@
 					med_hud_set_status()
 
 /mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
-	if(src.loc == summoner)
+	if(loc == summoner)
 		if(toggle)
 			a_intent = "harm"
 			speed = 0
@@ -75,7 +75,7 @@
 		to_chat(src, "<span class='danger'><B>Your power is on cooldown. You must wait five minutes between placing beacons.</span></B>")
 		return
 
-	var/turf/beacon_loc = get_turf(src.loc)
+	var/turf/beacon_loc = get_turf(loc)
 	if(!istype(beacon_loc, /turf/open/floor))
 		return
 
@@ -111,7 +111,7 @@
 /mob/living/simple_animal/hostile/guardian/healer/AltClickOn(atom/movable/A)
 	if(!istype(A))
 		return
-	if(src.loc == summoner)
+	if(loc == summoner)
 		to_chat(src, "<span class='danger'><B>You must be manifested to warp a target!</span></B>")
 		return
 	if(!beacon)

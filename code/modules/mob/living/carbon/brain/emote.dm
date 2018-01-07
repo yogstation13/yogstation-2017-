@@ -7,7 +7,7 @@
 		act = copytext(act, 1, t1)
 
 
-	if(src.stat == DEAD)
+	if(stat == DEAD)
 		return
 	switch(act)
 		if ("alarm")

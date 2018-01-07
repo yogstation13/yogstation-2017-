@@ -27,7 +27,7 @@
 //return -1 if the implant fails to inject
 //return 0 if there is no room for implant
 /obj/item/weapon/implant/proc/implant(var/mob/source, var/mob/user)
-	var/obj/item/weapon/implant/imp_e = locate(src.type) in source
+	var/obj/item/weapon/implant/imp_e = locate(type) in source
 	if(!allow_multiple && imp_e && imp_e != src)
 		if(imp_e.uses < initial(imp_e.uses)*2)
 			if(uses == -1)
@@ -39,7 +39,7 @@
 		else
 			return 0
 
-	src.loc = source
+	loc = source
 	imp_in = source
 	implanted = 1
 	if(activated)
@@ -56,7 +56,7 @@
 	return 1
 
 /obj/item/weapon/implant/proc/removed(var/mob/source)
-	src.loc = null
+	loc = null
 	imp_in = null
 	implanted = 0
 	for(var/X in actions)

@@ -75,14 +75,14 @@
 	options - An object used for configuration.
 */
 	New(tokens[], n_scriptOptions/options)
-		src.tokens=tokens
-		src.options=options
+		tokens=tokens
+		options=options
 		curBlock=global_block
 		return ..()
 
 	Parse()
 		ASSERT(tokens)
-		for(,src.index<=src.tokens.len, src.index++)
+		for(,index<=tokens.len, index++)
 			curToken=tokens[index]
 			switch(curToken.type)
 				if(/token/keyword)

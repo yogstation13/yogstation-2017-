@@ -59,7 +59,7 @@
 	set name = "Jump to Core"
 	set desc = "Move your camera to your core."
 	if(blob_core)
-		src.loc = blob_core.loc
+		loc = blob_core.loc
 
 /mob/camera/blob/verb/jump_to_node()
 	set category = "Blob"
@@ -72,7 +72,7 @@
 		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") as anything in nodes
 		var/obj/effect/blob/node/chosen_node = nodes[node_name]
 		if(chosen_node)
-			src.loc = chosen_node.loc
+			loc = chosen_node.loc
 
 /mob/camera/blob/proc/createSpecial(price, blobType, nearEquals, needsNode, turf/T)
 	if(!T)

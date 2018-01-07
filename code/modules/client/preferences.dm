@@ -430,7 +430,7 @@ var/list/preferences_datums = list()
 
 			if(jobban_isbanned(user, "Syndicate"))
 				dat += "<font color=red><b>You are banned from antagonist roles.</b></font>"
-				src.be_special = list()
+				be_special = list()
 
 
 			for (var/i in special_roles)
@@ -445,7 +445,7 @@ var/list/preferences_datums = list()
 
 					if(days_remaining)
 						dat += "<b>Be [capitalize(i)]:</b> <font color=red> \[IN [days_remaining] DAYS]</font><br>"
-					else if(src.toggles & QUIET_ROUND)
+					else if(toggles & QUIET_ROUND)
 						dat += "<b>Be [capitalize(i)]:</b> <font color=blue><b>\[QUIET ROUND\]</b></font><br>"
 					else
 						dat += "<b>Be [capitalize(i)]:</b> <a href='?_src_=prefs;preference=be_special;be_special_type=[i]'>[(i in be_special) ? "Yes" : "No"]</a><br>"
@@ -456,7 +456,7 @@ var/list/preferences_datums = list()
 			dat += "<table><tr><td width='500px' height='300px' valign='top'>"
 			dat += "<h2>Donator Preferences</h2>"
 			if(is_donator(user.client))
-				dat += "<b>Quiet round:</b> <a href='?_src_=prefs;preference=donor;task=quiet_round'>[(src.toggles & QUIET_ROUND) ? "Yes" : "No"]</a><br>"
+				dat += "<b>Quiet round:</b> <a href='?_src_=prefs;preference=donor;task=quiet_round'>[(toggles & QUIET_ROUND) ? "Yes" : "No"]</a><br>"
 				dat += "<b>Fancy Hat:</b> "
 				var/type = donor_hat ? donor_start_items[donor_hat] : null
 				var/temp_hat = donor_hat ? (new type()) : "None selected"
@@ -542,7 +542,7 @@ var/list/preferences_datums = list()
 			else
 				HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[NON-HUMAN\]</b></font></td></tr>"
 			continue
-		if(((rank in command_positions) || (rank in nonhuman_positions)) && (src.toggles & QUIET_ROUND))
+		if(((rank in command_positions) || (rank in nonhuman_positions)) && (toggles & QUIET_ROUND))
 			HTML += "<font color=blue>[rank]</font></td><td><font color=blue><b> \[QUIET\]</b></font></td></tr>"
 			continue
 		if((rank in command_positions) || (rank == "AI"))//Bold head jobs

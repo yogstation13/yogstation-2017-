@@ -43,7 +43,7 @@
 
 	spray(A, user)
 
-	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	playsound(loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(A, user))
 	var/turf/T = get_turf(src)
@@ -148,10 +148,10 @@
 		return
 	if (alert(usr, "Are you sure you want to empty that?", "Empty Bottle:", "Yes", "No") != "Yes")
 		return
-	if(isturf(usr.loc) && src.loc == usr)
+	if(isturf(usr.loc) && loc == usr)
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
 		reagents.reaction(usr.loc)
-		src.reagents.clear_reagents()
+		reagents.clear_reagents()
 
 //space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner

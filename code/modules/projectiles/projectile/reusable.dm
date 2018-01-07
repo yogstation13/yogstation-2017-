@@ -14,7 +14,7 @@
 
 /obj/item/projectile/bullet/reusable/proc/handle_drop()
 	if(!dropped)
-		new ammo_type(src.loc)
+		new ammo_type(loc)
 		dropped = 1
 
 /obj/item/projectile/bullet/reusable/magspear
@@ -40,7 +40,7 @@
 	if(dropped)
 		return
 	dropped = 1
-	var/obj/item/ammo_casing/caseless/foam_dart/newdart = new ammo_type(src.loc)
+	var/obj/item/ammo_casing/caseless/foam_dart/newdart = new ammo_type(loc)
 	var/obj/item/ammo_casing/caseless/foam_dart/old_dart = ammo_casing
 	newdart.modified = old_dart.modified
 	if(pen)

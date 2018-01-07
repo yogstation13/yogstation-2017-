@@ -12,8 +12,8 @@
 	anchored = 1
 
 /obj/machinery/artillerycontrol/process()
-	if(src.reload<ARTILLERY_RELOAD_TIME)
-		src.reload++
+	if(reload<ARTILLERY_RELOAD_TIME)
+		reload++
 
 /obj/structure/artilleryplaceholder
 	name = "artillery"
@@ -42,8 +42,8 @@
 	A = input("Area to jump bombard", "Open Fire", A) as anything in teleportlocs
 	var/area/thearea = teleportlocs[A]
 	if (usr.stat || usr.restrained()) return
-	if(src.reload < ARTILLERY_RELOAD_TIME) return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if(reload < ARTILLERY_RELOAD_TIME) return
+	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		priority_announce("Bluespace artillery fire detected. Brace for impact.")
 		message_admins("[key_name_admin(usr)] has launched an artillery strike.")
 		var/list/L = list()

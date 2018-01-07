@@ -44,9 +44,9 @@
 	add_to_proximity_list(src, 1) //1 was default of everything
 	/* // Use this to look for cameras that have the same c_tag.
 	for(var/obj/machinery/camera/C in cameranet.cameras)
-		var/list/tempnetwork = C.network&src.network
-		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
-			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
+		var/list/tempnetwork = C.network&network
+		if(C != src && C.c_tag == c_tag && tempnetwork.len)
+			world.log << "[c_tag] [x] [y] [z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
 
 /obj/machinery/camera/initialize()
@@ -64,7 +64,7 @@
 		qdel(assembly)
 		assembly = null
 	if(bug)
-		bug.bugged_cameras -= src.c_tag
+		bug.bugged_cameras -= c_tag
 		if(bug.current == src)
 			bug.current = null
 		bug = null
@@ -109,7 +109,7 @@
 
 
 /obj/machinery/camera/ex_act(severity, target)
-	if(src.invuln)
+	if(invuln)
 		return
 	switch(severity)
 		if(1)
@@ -120,11 +120,11 @@
 			take_damage(rand(30,60), BRUTE, 0)
 
 /obj/machinery/camera/proc/setViewRange(num = 7)
-	src.view_range = num
+	view_range = num
 	cameranet.updateVisibility(src, 0)
 
 /obj/machinery/camera/proc/shock(mob/living/user)
-	if(!src.Adjacent(user))
+	if(!Adjacent(user))
 		return 0
 	if(!istype(user))
 		return
@@ -138,7 +138,7 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		panel_open = !panel_open
 		to_chat(user, "<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		return
 
 	if(panel_open)
@@ -157,9 +157,9 @@
 				visible_message("<span class='warning'>[user] unwelds [src], leaving it as just a frame screwed to the wall.</span>", "<span class='warning'>You unweld [src], leaving it as just a frame screwed to the wall</span>")
 				if(!assembly)
 					assembly = new()
-				assembly.loc = src.loc
+				assembly.loc = loc
 				assembly.state = 1
-				assembly.dir = src.dir
+				assembly.dir = dir
 				assembly = null
 				qdel(src)
 			return
@@ -230,12 +230,12 @@
 			return
 		if(bug)
 			to_chat(user, "<span class='notice'>Camera bug removed.</span>")
-			bug.bugged_cameras -= src.c_tag
+			bug.bugged_cameras -= c_tag
 			bug = null
 		else
 			to_chat(user, "<span class='notice'>Camera bugged.</span>")
 			bug = W
-			bug.bugged_cameras[src.c_tag] = src
+			bug.bugged_cameras[c_tag] = src
 		return
 
 	else if(istype(W, /obj/item/weapon/pai_cable))
@@ -255,7 +255,7 @@
 					playsound(src, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
 	if(damage < 10) //camera has a damage resistance threshold
@@ -290,7 +290,7 @@
 		else
 			visible_message("<span class='danger'>\The [src] [change_msg]!</span>")
 
-		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 
 	// now disconnect anyone using the camera
 	//Apparently, this will disconnect anyone even if the camera was re-activated.
@@ -336,13 +336,13 @@
 			//If someone knows a better way to do this, let me know. -Giacom
 			switch(i)
 				if(NORTH)
-					src.dir = SOUTH
+					dir = SOUTH
 				if(SOUTH)
-					src.dir = NORTH
+					dir = NORTH
 				if(WEST)
-					src.dir = EAST
+					dir = EAST
 				if(EAST)
-					src.dir = WEST
+					dir = WEST
 			break
 
 //Return a working camera that can see a given mob
@@ -369,7 +369,7 @@
 		return 0
 
 	to_chat(user, "<span class='notice'>You start to weld [src]...</span>")
-	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+	playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 	busy = 1
 	if(do_after(user, 100, target = src))
 		busy = 0
@@ -385,9 +385,9 @@
 			if(cam == src)
 				return
 	if(on)
-		src.SetLuminosity(AI_CAMERA_LUMINOSITY)
+		SetLuminosity(AI_CAMERA_LUMINOSITY)
 	else
-		src.SetLuminosity(0)
+		SetLuminosity(0)
 
 /obj/machinery/camera/bullet_act(obj/item/projectile/P)
 	. = ..()

@@ -7,7 +7,7 @@
 
 	switch(act)//01000001011011000111000001101000011000010110001001100101011101000110100101111010011001010110010000100001 (Seriously please keep it that way.)
 		if ("aflap")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> flaps \his wings ANGRILY!"
 				m_type = 2
 			m_type = 1
@@ -26,11 +26,11 @@
 				message = "<B>[src]</B> beeps at [param]."
 			else
 				message = "<B>[src]</B> beeps."
-			playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 0)
+			playsound(loc, 'sound/machines/twobeep.ogg', 50, 0)
 			m_type = 2
 
 		if ("bow","bows")
-			if (!src.buckled)
+			if (!buckled)
 				var/M = null
 				if (param)
 					for (var/mob/A in view(1, src))
@@ -59,7 +59,7 @@
 				message = "<B>[src]</B> buzzes at [param]."
 			else
 				message = "<B>[src]</B> buzzes."
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
+			playsound(loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 			m_type = 2
 
 		if ("buzz2")
@@ -77,7 +77,7 @@
 			m_type = 2
 
 		if ("clap","claps")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> claps."
 				m_type = 2
 
@@ -85,7 +85,7 @@
 			if(jobban_isbanned(src, "emote"))
 				to_chat(src, "You cannot send custom emotes (banned)")
 				return
-			if(src.client)
+			if(client)
 				if(client.prefs.muted & MUTE_IC)
 					to_chat(src, "You cannot send IC messages (muted).")
 					return
@@ -107,7 +107,7 @@
 			m_type = 1
 
 		if ("flap","flaps")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> flaps \his wings."
 				m_type = 2
 
@@ -148,11 +148,11 @@
 			if(jobban_isbanned(src, "emote"))
 				to_chat(src, "You cannot send custom emotes (banned)")
 				return
-			if (src.client)
+			if (client)
 				if(client.prefs.muted & MUTE_IC)
 					to_chat(src, "You cannot send IC messages (muted).")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if (client.handle_spam_prevention(message,MUTE_IC))
 					return
 			if (stat)
 				return
@@ -178,7 +178,7 @@
 				message = "<B>[src]</B> pings at [param]."
 			else
 				message = "<B>[src]</B> pings."
-			playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+			playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 			m_type = 2
 
 		if ("sad") //When words cannot express...
@@ -187,7 +187,7 @@
 			m_type = 2
 
 		if ("salute","salutes")
-			if (!src.buckled)
+			if (!buckled)
 				var/M = null
 				if (param)
 					for (var/mob/A in view(1, src))
@@ -236,7 +236,7 @@
 		else
 			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
 
-	if (message && src.stat == CONSCIOUS)
+	if (message && stat == CONSCIOUS)
 		log_emote("[name]/[key] : [message]")
 		if (m_type & 1)
 			visible_message(message)

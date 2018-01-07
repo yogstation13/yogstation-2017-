@@ -80,13 +80,13 @@
 		spawn(timetoburst)
 			playsound(src,'sound/weapons/resonator_blast.ogg',50,1)
 			if(creator)
-				for(var/mob/living/L in src.loc)
+				for(var/mob/living/L in loc)
 					add_logs(creator, L, "used a resonator field on", "resonator")
-					to_chat(L, "<span class='danger'>The [src.name] ruptured with you in it!</span>")
+					to_chat(L, "<span class='danger'>The [name] ruptured with you in it!</span>")
 					L.adjustBruteLoss(resonance_damage)
 			else
-				for(var/mob/living/L in src.loc)
-					to_chat(L, "<span class='danger'>The [src.name] ruptured with you in it!</span>")
+				for(var/mob/living/L in loc)
+					to_chat(L, "<span class='danger'>The [name] ruptured with you in it!</span>")
 					L.adjustBruteLoss(resonance_damage)
 			qdel(src)
 

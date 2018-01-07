@@ -43,12 +43,12 @@
 				m_type = 2
 
 		if ("roll","rolls")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<span class='name'>[src]</span> rolls."
 				m_type = 1
 
 		if ("scratch","scratches")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<span class='name'>[src]</span> scratches."
 				m_type = 1
 
@@ -62,7 +62,7 @@
 			m_type = 2
 
 		if ("sign","signs")
-			if (!src.restrained())
+			if (!restrained())
 				message = text("<span class='name'>[src]</span> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
 
@@ -76,16 +76,16 @@
 		else
 			..(act)
 
-	if ((message && src.stat == 0))
+	if ((message && stat == 0))
 		log_emote("[name]/[key] : [message]")
 		if (act == "roar")
-			playsound(src.loc, 'sound/voice/hiss5.ogg', 40, 1, 1)
+			playsound(loc, 'sound/voice/hiss5.ogg', 40, 1, 1)
 
 		if (act == "hiss")
-			playsound(src.loc, "hiss", 40, 1, 1)
+			playsound(loc, "hiss", 40, 1, 1)
 
 		if (act == "deathgasp")
-			playsound(src.loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
+			playsound(loc, 'sound/voice/hiss6.ogg', 80, 1, 1)
 
 		if (m_type & 1)
 			visible_message(message)

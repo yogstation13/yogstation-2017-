@@ -13,19 +13,19 @@
 			if(0)
 				anchored = 1
 				icon_state = icon_state + "_w"
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] secures [src] to the floor.", \
 				"<span class='notice'>You secure [src] to the floor.</span>", \
 			"	<span class='italics'>You hear a ratchet</span>")
-				src.anchored = 1
+				anchored = 1
 			if(1)
 				anchored = 0
 				icon_state = initial(icon_state)
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 				user.visible_message("[user.name] unsecures [src]  from the floor.", \
 				"<span class='notice'>You unwrench [src] from the floor.</span>", \
 				"<span class='italics'>You hear a ratchet.</span>")
-				src.anchored = 0
+				anchored = 0
 
 /obj/machinery/golfhole/CanPass(atom/movable/mover, turf/target, height=0)
 	if (contents.len >= 3)
@@ -49,7 +49,7 @@
 	var/obj/item/golfball/ball = locate(/obj/item/golfball) in contents
 	if (ball)
 		visible_message("<span class='notice'>The golfball is removed from the hole.</span>")
-		ball.loc = get_turf(src.loc)
+		ball.loc = get_turf(loc)
 
 
 /obj/machinery/golfhole/proc/hole_place_item_in(obj/item/golfball, mob/user)

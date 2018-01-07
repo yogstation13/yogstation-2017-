@@ -65,9 +65,9 @@
 
 /mob/living/simple_animal/hostile/construct/examine(mob/user)
 	var/msg = "<span cass='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n[desc]\n"
-	if (src.health < src.maxHealth)
+	if (health < maxHealth)
 		msg += "<span class='warning'>"
-		if (src.health >= src.maxHealth/2)
+		if (health >= maxHealth/2)
 			msg += "It looks slightly dented.\n"
 		else
 			msg += "<b>It looks severely dented!</b>\n"
@@ -102,7 +102,7 @@
 
 /mob/living/simple_animal/construct/examine(mob/user)
 	. = ..()
-	if((iscultist(user) || iswizard(user)) && (!src.key || !src.client))
+	if((iscultist(user) || iswizard(user)) && (!key || !client))
 		to_chat(user, "<span class='danger'>You can tell that they've lost all concious awareness and have become as engaging as a blank wall.</span>")
 
 

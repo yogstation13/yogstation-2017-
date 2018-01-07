@@ -18,12 +18,12 @@
 
 	message = "[message]"
 
-	if (src.client)
-		if (src.client.prefs.muted & MUTE_IC)
+	if (client)
+		if (client.prefs.muted & MUTE_IC)
 			to_chat(src, "<span class='danger'>You cannot whisper (muted).</span>")
 			return
 
-	log_whisper("[src.name]/[src.key] : [message]")
+	log_whisper("[name]/[key] : [message]")
 
 	var/alt_name = get_alt_name()
 
@@ -66,7 +66,7 @@
 
 	var/rendered
 
-	rendered = "<span class='game say'><span class='name'>[src.name]</span> [whispers] something.</span>"
+	rendered = "<span class='game say'><span class='name'>[name]</span> [whispers] something.</span>"
 	for(var/mob/M in watching)
 		M.show_message(rendered, 2)
 

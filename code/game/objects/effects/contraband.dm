@@ -136,7 +136,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 
 
 /*/obj/item/weapon/contraband/poster/attack(mob/M as mob, mob/user as mob)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(resulting_poster)
 		resulting_poster.add_fingerprint(user)
 	..()*/
@@ -176,7 +176,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	desc = "A large piece of space-resistant printed paper."
 	icon = 'icons/obj/contraband.dmi'
 	anchored = 1
-	var/serial_number	//Will hold the value of src.loc if nobody initialises it
+	var/serial_number	//Will hold the value of loc if nobody initialises it
 	var/ruined = 0
 	var/official = 0
 	var/placespeed = 37 // don't change this, otherwise the animation will not sync to the progress bar
@@ -218,7 +218,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	if((user.loc != temp_loc) || ruined )
 		return
 	visible_message("[user] rips [src] in a single, decisive motion!" )
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 100, 1)
+	playsound(loc, 'sound/items/poster_ripped.ogg', 100, 1)
 	ruined = 1
 	icon_state = "poster_ripped"
 	name = "ripped poster"

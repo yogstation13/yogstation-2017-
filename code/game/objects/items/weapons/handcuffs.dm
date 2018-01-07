@@ -35,8 +35,8 @@
 		return
 
 	add_logs(user, C, "attempted to handcuff")
-	C.visible_message("<span class='danger'>[user] is trying to put [src.name] on [C]!</span>", \
-						"<span class='userdanger'>[user] is trying to put [src.name] on [C]!</span>")
+	C.visible_message("<span class='danger'>[user] is trying to put [name] on [C]!</span>", \
+						"<span class='userdanger'>[user] is trying to put [name] on [C]!</span>")
 
 	if(can_cuff(C, user))
 		playsound(loc, cuffsound, cuffspeed, 1, -2)
@@ -232,7 +232,7 @@
 	icon_state = "[initial(icon_state)][armed]"
 
 /obj/item/weapon/restraints/legcuffs/beartrap/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is sticking \his head in the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is sticking \his head in the [name]! It looks like \he's trying to commit suicide.</span>")
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return (BRUTELOSS)
 
@@ -244,7 +244,7 @@
 		to_chat(user, "<span class='notice'>[src] is now [armed ? "armed" : "disarmed"]</span>")
 
 /obj/item/weapon/restraints/legcuffs/beartrap/Crossed(AM as mob|obj)
-	if(armed && isturf(src.loc))
+	if(armed && isturf(loc))
 		if(isliving(AM))
 			var/mob/living/L = AM
 			var/snap = 0
@@ -256,7 +256,7 @@
 					def_zone = pick("l_leg", "r_leg")
 					if(!C.legcuffed && C.get_num_legs() >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 						C.legcuffed = src
-						src.loc = C
+						loc = C
 						C.update_inv_legcuffed()
 						feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 			else if(isanimal(L))
@@ -266,7 +266,7 @@
 			if(snap)
 				armed = 0
 				icon_state = "[initial(icon_state)][armed]"
-				playsound(src.loc, 'sound/effects/snap.ogg', 50, 1)
+				playsound(loc, 'sound/effects/snap.ogg', 50, 1)
 				L.visible_message("<span class='danger'>[L] triggers \the [src].</span>", \
 						"<span class='userdanger'>You trigger \the [src]!</span>")
 				L.apply_damage(trap_damage,BRUTE, def_zone)
@@ -312,7 +312,7 @@
 	if(!C.legcuffed && C.get_num_legs() >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src
-		src.loc = C
+		loc = C
 		C.update_inv_legcuffed()
 		feedback_add_details("handcuffs","B")
 		to_chat(C, "<span class='userdanger'>\The [src] ensnares you!</span>")

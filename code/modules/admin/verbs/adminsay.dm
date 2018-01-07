@@ -26,4 +26,4 @@
 	set name = "asay"
 	set category = "Admin"
 	set hidden = 1
-	src.cmd_admin_say(message)
+	cmd_admin_say(message)

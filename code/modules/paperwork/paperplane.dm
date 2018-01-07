@@ -19,7 +19,7 @@
 	pixel_x = rand(-9, 9)
 	if(newPaper)
 		internalPaper = newPaper
-		src.flags = newPaper.flags
+		flags = newPaper.flags
 		stamped = internalPaper.stamped
 		newPaper.forceMove(src)
 	else

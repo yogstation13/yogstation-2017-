@@ -98,10 +98,10 @@
 		var/obj/item/weapon/flamethrower/F = W
 		if ((!F.status)||(F.ptank))
 			return
-		src.master = F
+		master = F
 		F.ptank = src
 		user.unEquip(src)
-		src.loc = F
+		loc = F
 		F.update_icon()
 	else
 		return ..()

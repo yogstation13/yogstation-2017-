@@ -170,7 +170,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 	return 0
 
 /mob/living/simple_animal/hostile/guardian/AttackingTarget()
-	if(src.loc == summoner)
+	if(loc == summoner)
 		to_chat(src, "<span class='danger'><B>You must be manifested to attack!</span></B>")
 		return 0
 	if(target == summoner && !(istype(src,/mob/living/simple_animal/hostile/guardian/healer)))
@@ -284,7 +284,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 			var/link = FOLLOW_LINK(M, src)
 			to_chat(M, "[link] [my_message]")
 
-		log_say("[src.real_name]/[src.key] (TO SUMMONER): [input]")
+		log_say("[real_name]/[key] (TO SUMMONER): [input]")
 
 /mob/living/proc/guardian_comm()
 	set name = "Communicate"
@@ -306,7 +306,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		var/link = FOLLOW_LINK(M, src)
 		to_chat(M, "[link] [my_message]")
 
-	log_say("[src.real_name]/[src.key] (TO GUARDIAN): [input]")
+	log_say("[real_name]/[key] (TO GUARDIAN): [input]")
 
 //FORCE RECALL/RESET
 
@@ -329,7 +329,7 @@ var/global/list/parasites = list() //all currently existing/living guardians
 		var/mob/living/simple_animal/hostile/guardian/G = input(src, "Pick the guardian you wish to reset", "Guardian Reset") as null|anything in guardians
 		if(G)
 			to_chat(src, "<span class='holoparasite'>You attempt to reset <font color=\"[G.namedatum.colour]\"><b>[G.real_name]</b></font>'s personality...</span>")
-			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [src.real_name]'s [G.real_name]?", "pAI", null, FALSE, 100)
+			var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as [real_name]'s [G.real_name]?", "pAI", null, FALSE, 100)
 			var/mob/dead/observer/new_stand = null
 			if(candidates.len)
 				new_stand = pick(candidates)
