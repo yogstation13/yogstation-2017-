@@ -30,6 +30,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	var/const/STATE_ALERT_LEVEL = 8
 	var/const/STATE_CONFIRM_LEVEL = 9
 	var/const/STATE_TOGGLE_EMERGENCY = 10
+	var/const/STATE_PURCHASE = 11
 
 	var/status_display_freq = "1435"
 	var/stat_msg1
@@ -118,6 +119,40 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			else if (src.authenticated==2 && message_cooldown)
 				to_chat(usr, "Intercomms recharging. Please stand by.")
 
+		if("purchase_menu")
+			src.state = STATE_PURCHASE
+
+		if("buyshuttle")
+			if(src.authenticated==2)
+				var/list/shuttles = flatten_list(shuttle_templates)
+				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
+				if(S && istype(S))
+					if((SSshuttle.shuttle_purchased && !src.emagged) || SSshuttle.emag_shuttle_purchased)
+						usr << "A replacement shuttle has already been purchased."
+					else
+						if(SSshuttle.points >= S.credit_cost)
+							var/obj/machinery/shuttle_manipulator/M  = locate() in machines
+							if(M)
+								SSshuttle.shuttle_purchased = TRUE
+								if(src.emagged)
+									SSshuttle.emag_shuttle_purchased = TRUE
+								M.unload_preview()
+								M.load_template(S)
+								M.existing_shuttle = SSshuttle.emergency
+								M.action_load(S)
+								SSshuttle.points -= S.credit_cost
+								if(!src.emagged)
+									minor_announce("[usr.name] has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
+								else
+									minor_announce("Unknown has purchased [S.name] for [S.credit_cost] credits." , "Shuttle Purchase")
+								message_admins("[key_name_admin(usr)] purchased [S.name].")
+								feedback_add_details("shuttle_manipulator", S.name)
+							else
+								usr << "Something went wrong! The shuttle exchange system seems to be down."
+						else
+							usr << "Not enough credits."
+
+
 		if("callshuttle")
 			src.state = STATE_DEFAULT
 			if(check_auth())
@@ -204,11 +239,11 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 						post_status(href_list["statdisp"])
 
 		if("setmsg1")
-			if(check_auth())
+			if(check_auth() || check_silicon())
 				stat_msg1 = reject_bad_text(stripped_input(usr, "Line 1", "Enter Message Text", stat_msg1), 40)
 				src.updateDialog()
 		if("setmsg2")
-			if(check_auth())
+			if(check_auth() || check_silicon())
 				stat_msg2 = reject_bad_text(stripped_input(usr, "Line 2", "Enter Message Text", stat_msg2), 40)
 				src.updateDialog()
 
@@ -425,6 +460,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if (src.authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
+					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=purchase_menu'>Purchase Shuttle</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
@@ -488,6 +524,17 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			else
 				dat += "<b>Emergency Maintenance Access is currently <font color='green'>DISABLED</font></b>"
 				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=\ref[src];operation=enableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
+		if(STATE_PURCHASE)
+			dat += "Budget: [SSshuttle.points] Credits.<BR>"
+			for(var/shuttle_id in shuttle_templates)
+				var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+				if(!src.emagged && S.emag_buy)
+					continue
+				if(S.credit_cost < INFINITY)
+					dat += "[S.name] | [S.credit_cost] Credits<BR>"
+					if(S.description)
+						dat += "[S.description]<BR>"
+					dat += "<A href='?src=\ref[src];operation=buyshuttle;chosen_shuttle=\ref[S]'>(<font color=red><i>Purchase</i></font>)</A><BR><BR>"
 
 	dat += "<BR><BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	//user << browse(dat, "window=communications;size=400x500")

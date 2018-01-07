@@ -29,6 +29,7 @@ var/list/preferences_datums = list()
 
 	var/UI_style = "Midnight"
 	var/hotkeys = FALSE
+	var/hotkeysmode = FALSE		// FALSE = QWERTY, TRUE = AZERTY
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/toggles = TOGGLES_DEFAULT
@@ -62,6 +63,8 @@ var/list/preferences_datums = list()
 	var/list/features = list("mcolor" = "FFF", "tail_lizard" = "Smooth", "tail_human" = "None", "snout" = "Round", "horns" = "None", "ears" = "None", "wings" = "None", "frills" = "None", "spines" = "None", "body_markings" = "None")
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
+	var/prefered_security_department = "random"
+	
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -113,11 +116,6 @@ var/list/preferences_datums = list()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			unlock_content |= C.IsByondMember()
-			if(unlock_content)
-				max_save_slots = 8
-			else if(is_donator(C))
-				max_save_slots = DONOR_CHARACTER_SLOTS
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
@@ -187,13 +185,13 @@ var/list/preferences_datums = list()
 
 			dat += "<b>Special Names:</b><BR>"
 			dat += "<a href ='?_src_=prefs;preference=clown_name;task=input'><b>Clown:</b> [custom_names["clown"]]</a> "
-			dat += "<a href ='?_src_=prefs;preference=mime_name;task=input'><b>Mime:</b>[custom_names["mime"]]</a><BR>"
+			dat += "<a href ='?_src_=prefs;preference=mime_name;task=input'><b>Mime:</b> [custom_names["mime"]]</a><BR>"
 			dat += "<a href ='?_src_=prefs;preference=ai_name;task=input'><b>AI:</b> [custom_names["ai"]]</a> "
 			dat += "<a href ='?_src_=prefs;preference=cyborg_name;task=input'><b>Cyborg:</b> [custom_names["cyborg"]]</a><BR>"
 			dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
-			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR></td>"
-
-
+			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR>"
+			dat += "<a href ='?_src_=prefs;preference=sec_dept;task=input'><b>Security department:</b> [prefered_security_department]</a><BR></td>"
+			
 			dat += "<td valign='center'>"
 
 			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
@@ -360,6 +358,7 @@ var/list/preferences_datums = list()
 			dat += "<h2>General Settings</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
+			dat += "<b>Hotkeys mode:</b> <a href='?_src_=prefs;preference=hotkeysmode'>[(hotkeysmode) ? "AZERTY" : "QWERTY"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
@@ -1135,6 +1134,10 @@ var/list/preferences_datums = list()
 						custom_names["deity"] = new_deity_name
 					else
 						to_chat(user, "<font color='red'>Invalid name. Your name should be at least 2 and at most [MAX_NAME_LEN] characters long. It may only contain the characters A-Z, a-z, -, ' and .</font>")
+				if("sec_dept")
+					var/department = input(user, "Choose your preferred security department:", "Security Departments") as null|anything in security_depts_prefs
+					if(department)
+						prefered_security_department = department
 				if ("preferred_map")
 					var/maplist = list()
 					var/default = "Default"
@@ -1193,6 +1196,11 @@ var/list/preferences_datums = list()
 
 				if("hotkeys")
 					hotkeys = !hotkeys
+					user.client.sethotkeys(1)
+
+				if("hotkeysmode")
+					hotkeysmode = !hotkeysmode
+					user.client.sethotkeys(1)
 
 				if("tgui_fancy")
 					tgui_fancy = !tgui_fancy
@@ -1357,5 +1365,12 @@ var/list/preferences_datums = list()
 	if(character.dna)
 		features = character.dna.features.Copy()
 		pref_species = character.dna.species
+
+/datum/preferences/proc/update_character_slots(client/C)
+	unlock_content |= C.IsByondMember()
+	if(unlock_content)
+		max_save_slots = 8
+	else if(is_donator(C))
+		max_save_slots = DONOR_CHARACTER_SLOTS
 
 #undef DONOR_CHARACTER_SLOTS

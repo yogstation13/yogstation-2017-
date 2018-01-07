@@ -975,7 +975,7 @@
 	if(!istype(M)) //sanity check for drones.
 		return
 	if((M != H) && M.a_intent != "help" && H.check_shields(0, M.name, M, attack_type = UNARMED_ATTACK))
-		if(M.dna.check_mutation(HULK) && M.a_intent == "disarm")
+		if((M.dna.check_mutation(ACTIVE_HULK) || M.dna.check_mutation(HULK)) && M.a_intent == "disarm")
 			H.check_shields(0, M.name, attack_type = HULK_ATTACK) // We check their shields twice since we are a hulk. Also triggers hitreactions for HULK_ATTACK
 			M.visible_message("<span class='danger'>[M]'s punch knocks the shield out of [H]'s hand.</span>", \
 							"<span class='userdanger'>[M]'s punch knocks the shield out of [H]'s hand.</span>")

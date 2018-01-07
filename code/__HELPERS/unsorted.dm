@@ -1030,6 +1030,7 @@ B --><-- A
 //orbit() can run without it (swap orbiting for A)
 //but then you can never stop it and that's just silly.
 /atom/movable/var/atom/orbiting = null
+/atom/var/list/orbiters = list()
 
 //A: atom to orbit
 //radius: range to orbit at, radius of the circle formed by orbiting
@@ -1047,6 +1048,7 @@ B --><-- A
 		stop_orbit()
 
 	orbiting = A
+	orbiting.orbiters += src
 	var/matrix/initial_transform = matrix(transform)
 	var/lastloc = loc
 
@@ -1082,8 +1084,15 @@ B --><-- A
 
 
 /atom/movable/proc/stop_orbit()
+	orbiting.orbiters -= src
 	orbiting = null
 
+/atom/movable/proc/transfer_observers_to(atom/movable/target)
+	if(orbiters)
+		for(var/thing in orbiters)
+			if(isobserver(thing))
+				var/mob/dead/observer/D = thing
+				D.ManualFollow(target)
 
 //Center's an image.
 //Requires:

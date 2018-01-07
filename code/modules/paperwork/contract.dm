@@ -43,11 +43,6 @@
 		to_chat(M, "<span class='boldnotice'>You feel that your soul has returned to it's rightful owner, Nanotrasen.</span>")
 		M.return_soul()
 	else
-		if(ishuman(M))
-			var/mob/living/carbon/human/N = M
-			if(!istype(N.head, /obj/item/clothing/head/helmet))
-				N.adjustBrainLoss(10)
-				to_chat(N, "<span class='danger'>You feel dumber.</span>")
 		M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 			"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
 	return ..()

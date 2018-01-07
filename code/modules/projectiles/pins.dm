@@ -217,3 +217,17 @@
 	if(gun)
 		gun.pin = null
 	return ..()
+
+
+/obj/item/device/firing_pin/paintball
+	name = "Paintball firing pin"
+	icon_state = "firing_pin_blue"
+	desc = "This one-use firing pin cannot be inserted or removed from a gun. It can usually be found in paintball guns."
+
+/obj/item/device/firing_pin/paintball/gun_insert(mob/living/user, obj/item/weapon/gun/G)
+	user << "<span class='warning'>The [src] plops to the floor. Once removed, this pin cannot be inserted into anything.</span>"
+	return
+
+/obj/item/device/firing_pin/paintball/gun_remove(mob/living/user)
+	user << "<span class='warning'>If you attempt to remove this firing pin, it will not be useable again!</span>"
+	return

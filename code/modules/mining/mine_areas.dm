@@ -82,3 +82,43 @@
 /area/mine/laborcamp/security
 	name = "Labor Camp Security"
 	icon_state = "security"
+
+
+//LAVALAND STATION AREAS
+
+/area/mine/lava/lobby
+	name = "Lavaland mining station"
+
+/area/mine/lava/storage
+	name = "Lavaland Mining station Storage"
+
+/area/mine/lava/production
+	name = "Lavaland Mining Station Starboard Wing"
+	icon_state = "mining_production"
+
+/area/mine/lava/living_quarters
+	name = "Lavaland Mining Station Port Wing"
+	icon_state = "mining_living"
+
+/area/mine/lava/eva
+	name = "Lavaland Mining Station EVA"
+	icon_state = "mining_eva"
+
+/area/mine/lava/maintenance
+	name = "Lavaland Mining Station Communications"
+
+/area/mine/lava/cafeteria
+	name = "Lavaland Mining station Cafeteria"
+
+/area/mine/lava/hydroponics
+	name = "Lavaland Mining station Hydroponics"
+
+/area/mine/lava/sleeper
+	name = "Lavaland Mining station Emergency Sleeper"
+
+/area/mine/lava/laborcamp
+	name = "Lavaland Labor Camp"
+
+/area/mine/lava/laborcamp/security
+	name = "Lavaland Labor Camp Security"
+	icon_state = "security"

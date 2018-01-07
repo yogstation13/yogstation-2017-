@@ -31,6 +31,7 @@ var/ticket_counter_visible_to_everyone = 0
 
 /datum/ticket_log/proc/toSanitizedString()
 	return "[gametime] - [user] - [text]"
+
 /datum/ticket_log/proc/toString()
 	return "[gametime] - [isAdminComment() ? "<font color='red'>" : ""]<b>[istype(user, /client) ? key_name_params(user, 0, 0, null, parent) : user]</b>[isAdminComment() ? "</font>" : ""] - [text]"
 
@@ -39,8 +40,6 @@ var/ticket_counter_visible_to_everyone = 0
 
 /datum/ticket_log/proc/toLogString()
 	return "[isAdminComment() ? "COMMENT - " : ""][istype(user, /client) ? key_name_params(user, 0, 1, null, parent) : user] - [text]"
-
-
 
 /datum/admin_ticket
 	var/ticket_id
