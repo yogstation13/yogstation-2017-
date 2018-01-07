@@ -27,7 +27,7 @@
 	var/deity_name = "Christ"
 
 /obj/item/weapon/storage/book/bible/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is offering \himself to [src.deity_name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is offering \himself to [deity_name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/storage/book/bible/booze
@@ -168,12 +168,12 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 				for(var/obj/item/bodypart/affecting in H.bodyparts)
 					if(affecting.status == ORGAN_ORGANIC)
 						if(message_halt == 0)
-							M.visible_message("<span class='notice'>[user] heals [M] with the power of [src.deity_name]!</span>")
-							to_chat(M, "<span class='boldnotice'>May the power of [src.deity_name] compel you to be healed!</span>")
-							playsound(src.loc, "punch", 25, 1, -1)
+							M.visible_message("<span class='notice'>[user] heals [M] with the power of [deity_name]!</span>")
+							to_chat(M, "<span class='boldnotice'>May the power of [deity_name] compel you to be healed!</span>")
+							playsound(loc, "punch", 25, 1, -1)
 							message_halt = 1
 					else
-						to_chat(user, "<span class='warning'>[src.deity_name] refuses to heal this metallic taint!</span>")
+						to_chat(user, "<span class='warning'>[deity_name] refuses to heal this metallic taint!</span>")
 						return
 
 
@@ -185,12 +185,12 @@ var/global/list/bibleitemstates =	list("bible", "koran", "scrapbook", "bible", "
 				to_chat(M, "<span class='danger'>You feel dumber.</span>")
 			M.visible_message("<span class='danger'>[user] beats [M] over the head with [src]!</span>", \
 					"<span class='userdanger'>[user] beats [M] over the head with [src]!</span>")
-			playsound(src.loc, "punch", 25, 1, -1)
+			playsound(loc, "punch", 25, 1, -1)
 			add_logs(user, M, "attacked", src)
 
 	else if(M.stat == 2)
 		M.visible_message("<span class='danger'>[user] smacks [M]'s lifeless corpse with [src].</span>")
-		playsound(src.loc, "punch", 25, 1, -1)
+		playsound(loc, "punch", 25, 1, -1)
 	return
 
 /obj/item/weapon/storage/book/bible/afterattack(atom/A, mob/user, proximity)

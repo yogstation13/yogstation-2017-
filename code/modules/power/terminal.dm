@@ -16,7 +16,7 @@
 
 /obj/machinery/power/terminal/New()
 	..()
-	var/turf/T = src.loc
+	var/turf/T = loc
 	if(level==1) hide(T.intact)
 	return
 
@@ -60,7 +60,7 @@
 			user.visible_message("[user.name] dismantles the power terminal from [master].", \
 								"<span class='notice'>You begin to cut the cables...</span>")
 
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if(do_after(user, 50, target = src))
 				if(master && master.can_terminal_dismantle())
 					if(prob(50) && electrocute_mob(user, powernet, src))
@@ -87,7 +87,7 @@
 
 /obj/machinery/power/terminal/proc/add_wires()
 	if(istype(master, /obj/machinery/power/apc))
-		var/obj/machinery/power/apc/APC = src.master
+		var/obj/machinery/power/apc/APC = master
 		wiring_color = APC.wiring_color
 		var/image/I = new('icons/obj/power.dmi', "term_wire")
 		I.color = color2code(wiring_color)

@@ -39,7 +39,7 @@
 	return
 
 /obj/structure/bodycontainer/alter_health()
-	return src.loc
+	return loc
 
 /obj/structure/bodycontainer/relaymove(mob/user)
 	if(user.stat || !isturf(loc))
@@ -47,7 +47,7 @@
 	open()
 
 /obj/structure/bodycontainer/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/bodycontainer/attack_hand(mob/user)
 	if(locked)
@@ -68,7 +68,7 @@
 		var/t = stripped_input(user, "What would you like the label to be?", text("[]", name), null)
 		if (user.get_active_hand() != P)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if ((!in_range(src, usr) && loc != user))
 			return
 		if (t)
 			name = text("[]- '[]'", initial(name), t)
@@ -85,14 +85,14 @@
 	container_resist()
 
 /obj/structure/bodycontainer/proc/open()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	var/turf/T = get_step(src, opendir)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(T)
 	update_icon()
 
 /obj/structure/bodycontainer/proc/close()
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	for(var/atom/movable/AM in connected.loc)
 		if(!AM.anchored || AM == connected)
 			AM.forceMove(src)
@@ -110,14 +110,14 @@
 	qdel(src)
 
 /obj/structure/bodycontainer/mech_melee_attack(obj/mecha/M)
-	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
+	playsound(loc, 'sound/weapons/punch4.ogg', 50, 1)
 	visible_message("<span class='danger'>[M.name] smashes [src]!</span>")
 	qdel(src)
 
 /obj/structure/bodycontainer/attack_alien(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/weapons/bladeslice.ogg', 50, 1)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1)
 	visible_message("<span class='danger'>[user] slices [src]!</span>")
 	qdel(src)
 
@@ -128,7 +128,7 @@
 	if(user.environment_smash)
 		qdel(src)
 		visible_message("<span class='warning'>[user] smashes [src]!</span>")
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+		playsound(loc, 'sound/weapons/Genhit.ogg', 50, 1)
 /*
  * Morgue
  */
@@ -187,13 +187,13 @@ var/global/list/crematoriums = new/list()
 		icon_state = "crema0"
 	else
 
-		if(src.contents.len > 1)
-			src.icon_state = "crema2"
+		if(contents.len > 1)
+			icon_state = "crema2"
 		else
-			src.icon_state = "crema1"
+			icon_state = "crema1"
 
 		if(locked)
-			src.icon_state = "crema_active"
+			icon_state = "crema_active"
 
 	return
 
@@ -232,7 +232,7 @@ var/global/list/crematoriums = new/list()
 		sleep(30)
 		locked = 0
 		update_icon()
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
+		playsound(loc, 'sound/machines/ding.ogg', 50, 1) //you horrible people
 
 
 /*
@@ -256,10 +256,10 @@ var/global/list/crematoriums = new/list()
 	return ..()
 
 /obj/structure/tray/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/tray/attack_hand(mob/user)
-	if (src.connected)
+	if (connected)
 		connected.close()
 		add_fingerprint(user)
 	else
@@ -277,7 +277,7 @@ var/global/list/crematoriums = new/list()
 			return
 	if(!ismob(user) || user.lying || user.incapacitated())
 		return
-	O.loc = src.loc
+	O.loc = loc
 	if (user != O)
 		visible_message("<span class='warning'>[user] stuffs [O] into [src].</span>")
 	return

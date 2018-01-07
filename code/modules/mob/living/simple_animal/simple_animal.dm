@@ -90,8 +90,8 @@
 		stack_trace("Simple animal being instantiated in nullspace")
 
 /mob/living/simple_animal/Login()
-	if(src && src.client)
-		src.client.screen = list()
+	if(src && client)
+		client.screen = list()
 		client.screen += client.void
 	..()
 
@@ -133,7 +133,7 @@
 
 /mob/living/simple_animal/proc/handle_automated_movement()
 	if(!stop_automated_movement && wander)
-		if((isturf(src.loc) || allow_movement_on_non_turfs) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if((isturf(loc) || allow_movement_on_non_turfs) && !resting && !buckled && canmove)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				if(!(stop_automated_movement_when_pulled && pulledby)) //Some animals don't move when pulled
@@ -193,7 +193,7 @@
 	if(pulledby && pulledby.grab_state >= GRAB_KILL && atmos_requirements["min_oxy"])
 		atmos_suitable = 0 //getting choked
 
-	var/atom/A = src.loc
+	var/atom/A = loc
 	if(isturf(A))
 		var/turf/T = A
 		var/areatemp = get_temperature(environment)
@@ -252,7 +252,7 @@
 	if(butcher_results)
 		for(var/path in butcher_results)
 			for(var/i = 1; i <= butcher_results[path];i++)
-				new path(src.loc)
+				new path(loc)
 	..()
 
 /mob/living/simple_animal/gib_animation()

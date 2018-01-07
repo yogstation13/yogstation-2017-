@@ -32,7 +32,7 @@
 /obj/machinery/computer/shuttle/attack_hand(mob/user)
 	if(..(user))
 		return
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 
 	var/list/options = params2list(possible_destinations)
 	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
@@ -55,14 +55,14 @@
 
 	var/datum/browser/popup = new(user, "computer", M ? M.name : "shuttle", 300, 300)
 	popup.set_content("<center>[dat]</center>")
-	popup.set_title_image(usr.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(usr.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/computer/shuttle/Topic(href, href_list)
 	if(..())
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(!allowed(usr))
 		to_chat(usr, "<span class='danger'>Access denied.</span>")
 		return
@@ -141,7 +141,7 @@
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	if(!emagged)
-		src.req_access = list()
+		req_access = list()
 		emagged = 1
 		to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
 		error_chance = 5
@@ -152,7 +152,7 @@
 /obj/machinery/computer/shuttle/proc/findradio()
 	var/obj/item/device/radio/radio
 
-	for(var/obj/item/device/radio/R in src.contents)
+	for(var/obj/item/device/radio/R in contents)
 		if(R.frequency != notification)
 			R.frequency = notification
 		if(!radio)

@@ -112,7 +112,7 @@
 	set name = "Fireproof Core"
 	for(var/mob/living/silicon/ai/ai in player_list)
 		ai.fire_res_on_core = 1
-	src.verbs -= /mob/living/silicon/ai/proc/fireproof_core
+	verbs -= /mob/living/silicon/ai/proc/fireproof_core
 	to_chat(src, "<span class='notice'>Core fireproofed.</span>")
 
 /datum/AI_Module/large/upgrade_turrets
@@ -131,7 +131,7 @@
 	if(!canUseTopic())
 		return
 
-	src.verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
+	verbs -= /mob/living/silicon/ai/proc/upgrade_turrets
 	//Upgrade AI turrets around the world
 	for(var/obj/machinery/porta_turret/ai/turret in machines)
 		turret.health += 30
@@ -168,7 +168,7 @@
 					AL.close()
 					AL.bolt() //Bolt it!
 					AL.secondsElectrified = -1  //Shock it!
-					AL.actionstaken += "\[[time_stamp()]\][src]/[src.ckey] hostile locked down"
+					AL.actionstaken += "\[[time_stamp()]\][src]/[ckey] hostile locked down"
 			else if(!D.stat) //So that only powered doors are closed.
 				D.close() //Close ALL the doors!
 
@@ -277,7 +277,7 @@
 			continue
 		F.emagged = 1
 	to_chat(src, "<span class='notice'>All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized.</span>")
-	src.verbs -= /mob/living/silicon/ai/proc/break_fire_alarms
+	verbs -= /mob/living/silicon/ai/proc/break_fire_alarms
 
 /datum/AI_Module/large/break_air_alarms
 	module_name = "Air Alarm Safety Override"
@@ -301,7 +301,7 @@
 			continue
 		AA.emagged = 1
 	to_chat(src, "<span class='notice'>All air alarm safeties on the station have been overriden. Air alarms may now use the Flood environmental mode.")
-	src.verbs -= /mob/living/silicon/ai/proc/break_air_alarms
+	verbs -= /mob/living/silicon/ai/proc/break_air_alarms
 
 /datum/AI_Module/small/overload_machine
 	module_name = "Machine Overload"
@@ -399,7 +399,7 @@
 		to_chat(src, "<span class='warning'>You cannot shunt anymore.</span>")
 
 /mob/living/silicon/ai/proc/canPlaceTransformer()
-	if(!eyeobj || !isturf(src.loc) || !canUseTopic())
+	if(!eyeobj || !isturf(loc) || !canUseTopic())
 		return
 	var/datum/AI_Module/large/place_cyborg_transformer/PCT = locate() in current_modules
 	if(!PCT || PCT.uses < 1)
@@ -555,7 +555,7 @@
 	for(var/type in typesof(/datum/AI_Module))
 		var/datum/AI_Module/AM = new type
 		if(AM.power_type != null)
-			src.possible_modules += AM
+			possible_modules += AM
 
 /datum/module_picker/proc/remove_verbs(mob/living/silicon/ai/A)
 
@@ -565,17 +565,17 @@
 
 /datum/module_picker/proc/use(mob/user)
 	var/dat
-	dat = "<B>Select use of processing time: (currently #[src.processing_time] left.)</B><BR>"
+	dat = "<B>Select use of processing time: (currently #[processing_time] left.)</B><BR>"
 	dat += "<HR>"
 	dat += "<B>Install Module:</B><BR>"
 	dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
-	for(var/datum/AI_Module/large/module in src.possible_modules)
+	for(var/datum/AI_Module/large/module in possible_modules)
 		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=\ref[src];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
-	for(var/datum/AI_Module/small/module in src.possible_modules)
+	for(var/datum/AI_Module/small/module in possible_modules)
 		dat += "<A href='byond://?src=\ref[src];[module.mod_pick_name]=1'>[module.module_name]</A><A href='byond://?src=\ref[src];showdesc=[module.mod_pick_name]'>\[?\]</A> ([module.cost])<BR>"
 	dat += "<HR>"
-	if (src.temp)
-		dat += "[src.temp]"
+	if (temp)
+		dat += "[temp]"
 	var/datum/browser/popup = new(user, "modpicker", "Malf Module Menu")
 	popup.set_content(dat)
 	popup.open()
@@ -596,7 +596,7 @@
 		if (href_list[AM.mod_pick_name])
 
 			// Cost check
-			if(AM.cost > src.processing_time)
+			if(AM.cost > processing_time)
 				temp = "You cannot afford this module."
 				break
 
@@ -605,7 +605,7 @@
 			if(already_AM)
 				if(!AM.one_time)
 					already_AM.uses += AM.uses
-					src.processing_time -= AM.cost
+					processing_time -= AM.cost
 					temp = "Additional use added to [already_AM.module_name]"
 					break
 				else
@@ -617,12 +617,12 @@
 			A.verbs += AM.power_type
 			A.current_modules += new AM.type
 			temp = AM.description
-			src.processing_time -= AM.cost
+			processing_time -= AM.cost
 
 		if(href_list["showdesc"])
 			if(AM.mod_pick_name == href_list["showdesc"])
 				temp = AM.description
-	src.use(usr)
+	use(usr)
 	return
 
 /datum/AI_Module/large/eavesdrop

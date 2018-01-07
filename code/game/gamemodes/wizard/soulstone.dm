@@ -306,7 +306,7 @@
 	return 1
 
 /obj/item/device/soulstone/attack_ghost(mob/dead/observer/user)
-	for(var/mob/living/simple_animal/shade/S in src.contents)
+	for(var/mob/living/simple_animal/shade/S in contents)
 		if(S.name == user.name && S.real_name == user.real_name) // ghosts match. so that's our shade.
 			S.ckey = user.ckey
 			user.mind.transfer_to(S)

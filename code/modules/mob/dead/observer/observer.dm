@@ -61,12 +61,12 @@ var/list/image/ghost_images_simple = list() //this is a list of all ghost images
 	alpha = 0
 	verbs += /mob/dead/observer/proc/dead_tele
 
-	ghostimage = image(src.icon,src,src.icon_state)
+	ghostimage = image(icon,src,icon_state)
 	if(icon_state in ghost_forms_with_directions_list)
-		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
+		ghostimage_default = image(icon,src,icon_state + "_nodir")
 	else
-		ghostimage_default = image(src.icon,src,src.icon_state)
-	ghostimage_simple = image(src.icon,src,"ghost_nodir")
+		ghostimage_default = image(icon,src,icon_state)
+	ghostimage_simple = image(icon,src,"ghost_nodir")
 	ghost_images_full |= ghostimage
 	ghost_images_default |= ghostimage_default
 	ghost_images_simple |= ghostimage_simple

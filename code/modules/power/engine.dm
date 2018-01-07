@@ -1,5 +1,5 @@
 /turf/open/floor/engine/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/floor/engine/attack_hand(mob/user)
 	user.Move_Pulled(src)
@@ -8,9 +8,9 @@
 	contents_explosion(severity, target)
 	switch(severity)
 		if(1)
-			ChangeTurf(src.baseturf)
+			ChangeTurf(baseturf)
 		if(2)
 			if(prob(50))
-				ChangeTurf(src.baseturf)
+				ChangeTurf(baseturf)
 		else
 			return

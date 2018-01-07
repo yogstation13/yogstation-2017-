@@ -100,7 +100,7 @@
 		return
 
 	if(href_list["request"])
-		src.looking_for_personality = 1
+		looking_for_personality = 1
 		SSpai.findPAI(src, usr)
 		return
 
@@ -179,44 +179,44 @@
 //		WIRE_TRANSMIT = 4
 
 /obj/item/device/paicard/proc/setPersonality(mob/living/silicon/pai/personality)
-	src.pai = personality
-	src.overlays += "pai-null"
+	pai = personality
+	overlays += "pai-null"
 
 	playsound(loc, 'sound/effects/pai_boot.ogg', 50, 1, -1)
 	audible_message("\The [src] plays a cheerful startup noise!")
 
 /obj/item/device/paicard/proc/removePersonality()
-	src.pai = null
-	src.overlays.Cut()
-	src.overlays += "pai-off"
+	pai = null
+	overlays.Cut()
+	overlays += "pai-off"
 
 /obj/item/device/paicard/proc/setAlert()
-	src.overlays.Cut()
-	src.overlays += "pai-alert"
+	overlays.Cut()
+	overlays += "pai-alert"
 
 /obj/item/device/paicard/proc/setBaseOverlay()
 	if(SSpai && SSpai.availableRecruitsCount() != 0)
-		src.alertUpdate()
+		alertUpdate()
 	else
-		src.overlays += "pai-off"
+		overlays += "pai-off"
 
 /obj/item/device/paicard/proc/setEmotion(emotion)
 	if(pai)
-		src.overlays.Cut()
+		overlays.Cut()
 		switch(emotion)
-			if(1) src.overlays += "pai-happy"
-			if(2) src.overlays += "pai-cat"
-			if(3) src.overlays += "pai-extremely-happy"
-			if(4) src.overlays += "pai-face"
-			if(5) src.overlays += "pai-laugh"
-			if(6) src.overlays += "pai-off"
-			if(7) src.overlays += "pai-sad"
-			if(8) src.overlays += "pai-angry"
-			if(9) src.overlays += "pai-what"
-			if(10) src.overlays += "pai-null"
+			if(1) overlays += "pai-happy"
+			if(2) overlays += "pai-cat"
+			if(3) overlays += "pai-extremely-happy"
+			if(4) overlays += "pai-face"
+			if(5) overlays += "pai-laugh"
+			if(6) overlays += "pai-off"
+			if(7) overlays += "pai-sad"
+			if(8) overlays += "pai-angry"
+			if(9) overlays += "pai-what"
+			if(10) overlays += "pai-null"
 
 /obj/item/device/paicard/proc/alertUpdate()
-	src.setAlert()
+	setAlert()
 	visible_message("<span class ='info'>[src] flashes a message across its screen, \"Additional personalities available for download.\"", "<span class='notice'>[src] bleeps electronically.</span>")
 
 /obj/item/device/paicard/emp_act(severity)

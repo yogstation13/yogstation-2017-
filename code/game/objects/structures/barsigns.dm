@@ -44,12 +44,12 @@
 
 
 /obj/structure/sign/barsign/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 
 
 /obj/structure/sign/barsign/attack_hand(mob/user)
-	if (!src.allowed(user))
+	if (!allowed(user))
 		to_chat(user, "<span class='info'>Access denied.</span>")
 		return
 	if (broken)

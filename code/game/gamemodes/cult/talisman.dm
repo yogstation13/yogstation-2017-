@@ -102,8 +102,8 @@
 				if("veiling")
 					var/obj/item/weapon/paper/talisman/true_sight/T = new(usr)
 					usr.put_in_hands(T)
-			src.uses--
-			if(src.uses <= 0)
+			uses--
+			if(uses <= 0)
 				if(iscarbon(usr))
 					var/mob/living/carbon/C = usr
 					C.drop_item()

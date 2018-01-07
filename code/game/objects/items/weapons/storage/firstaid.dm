@@ -147,12 +147,12 @@
 					M.put_in_r_hand(src)
 				if(slot_l_hand)
 					M.put_in_l_hand(src)
-			src.add_fingerprint(usr)
+			add_fingerprint(usr)
 			return
 		if(over_object == usr && in_range(src, usr) || usr.contents.Find(src))
 			if(usr.s_active)
 				usr.s_active.close(usr)
-			src.show_to(usr)
+			show_to(usr)
 			return
 	return
 

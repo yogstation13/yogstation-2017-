@@ -44,7 +44,7 @@
 		new_tile.add_fingerprint(user)
 	else if(istype(W, /obj/item/stack/rods))
 		var/obj/item/stack/rods/V = W
-		if (V.get_amount() >= 1 && src.get_amount() >= 1)
+		if (V.get_amount() >= 1 && get_amount() >= 1)
 			var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 			RG.add_fingerprint(user)
 			var/obj/item/stack/sheet/glass/G = src
@@ -71,12 +71,12 @@
 	if(zero_amount())
 		return 0
 	var/title = "Sheet-Glass"
-	title += " ([src.get_amount()] sheet\s left)"
+	title += " ([get_amount()] sheet\s left)"
 	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))
 		if("One Direction")
 			if(!src)
 				return 1
-			if(src.loc != user)
+			if(loc != user)
 				return 1
 
 			var/list/directions = new/list(cardinal)
@@ -108,14 +108,14 @@
 			W.ini_dir = W.dir
 			W.anchored = 0
 			W.air_update_turf(1)
-			src.use(1)
+			use(1)
 			W.add_fingerprint(user)
 		if("Full Window")
 			if(!src)
 				return 1
-			if(src.loc != user)
+			if(loc != user)
 				return 1
-			if(src.get_amount() < 2)
+			if(get_amount() < 2)
 				to_chat(user, "<span class='warning'>You need more glass to do that!</span>")
 				return 1
 			if(locate(/obj/structure/window) in user.loc)
@@ -126,7 +126,7 @@
 			W.anchored = 0
 			W.air_update_turf(1)
 			W.add_fingerprint(user)
-			src.use(2)
+			use(2)
 	return 0
 
 
@@ -176,12 +176,12 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 0
 	var/title = "Sheet Reinf. Glass"
-	title += " ([src.get_amount()] sheet\s left)"
+	title += " ([get_amount()] sheet\s left)"
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
 			if(!src)
 				return 1
-			if(src.loc != user)
+			if(loc != user)
 				return 1
 			var/list/directions = new/list(cardinal)
 			var/i = 0
@@ -213,14 +213,14 @@
 			W.ini_dir = W.dir
 			W.anchored = 0
 			W.add_fingerprint(user)
-			src.use(1)
+			use(1)
 
 		if("Full Window")
 			if(!src)
 				return 1
-			if(src.loc != user)
+			if(loc != user)
 				return 1
-			if(src.get_amount() < 2)
+			if(get_amount() < 2)
 				to_chat(user, "<span class='warning'>You need more glass to do that!</span>")
 				return 1
 			if(locate(/obj/structure/window) in user.loc)
@@ -231,10 +231,10 @@
 			W.state = 0
 			W.anchored = 0
 			W.add_fingerprint(user)
-			src.use(2)
+			use(2)
 
 		if("Windoor")
-			if(!src || src.loc != user || !isturf(user.loc))
+			if(!src || loc != user || !isturf(user.loc))
 				return 1
 
 			for(var/obj/structure/windoor_assembly/WA in user.loc)
@@ -247,7 +247,7 @@
 					to_chat(user, "<span class='warning'>There is already a windoor in that location!</span>")
 					return 1
 
-			if(src.get_amount() < 5)
+			if(get_amount() < 5)
 				to_chat(user, "<span class='warning'>You need more glass to do that!</span>")
 				return 1
 
@@ -255,7 +255,7 @@
 			WD.state = "01"
 			WD.anchored = 0
 			WD.add_fingerprint(user)
-			src.use(5)
+			use(5)
 			switch(user.dir)
 				if(SOUTH)
 					WD.dir = SOUTH

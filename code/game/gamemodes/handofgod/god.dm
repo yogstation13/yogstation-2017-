@@ -82,7 +82,7 @@
 	if(ghostimage)
 		ghost_darkness_images -= ghostimage
 
-	ghostimage = image(src.icon,src,src.icon_state)
+	ghostimage = image(icon,src,icon_state)
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
@@ -183,7 +183,7 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if(src.client.handle_spam_prevention(msg,MUTE_IC))
+		if(client.handle_spam_prevention(msg,MUTE_IC))
 			return
 	if(stat)
 		return
@@ -198,7 +198,7 @@
 		return
 
 	msg = say_quote(msg, get_spans())
-	var/rendered = "<font color='[src.side]'><i><span class='game say'>Divine Telepathy,</i> <span class='name'>[name]</span> <span class='message'>[msg]</span></span></font>"
+	var/rendered = "<font color='[side]'><i><span class='game say'>Divine Telepathy,</i> <span class='name'>[name]</span> <span class='message'>[msg]</span></span></font>"
 	to_chat(src, rendered)
 
 	for(var/mob/M in mob_list)

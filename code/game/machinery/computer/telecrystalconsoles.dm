@@ -53,7 +53,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 /obj/machinery/computer/telecrystals/uplinker/proc/ejectuplink()
 	if(uplinkholder)
-		uplinkholder.loc = get_turf(src.loc)
+		uplinkholder.loc = get_turf(loc)
 		uplinkholder = null
 		update_icon()
 
@@ -78,7 +78,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/uplinker/attack_hand(mob/user)
 	if(..())
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	user.set_machine(src)
 
 	var/dat = ""
@@ -96,7 +96,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 	var/datum/browser/popup = new(user, "computer", "Telecrystal Upload/Receive Station", 700, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -113,7 +113,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	if(href_list["eject"])
 		ejectuplink()
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 
 /////////////////////////////////////////
@@ -135,7 +135,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 	transferlog += ("<b>[worldtime2text()]</b> [logmessage]")
 
 /obj/machinery/computer/telecrystals/boss/proc/scanUplinkers()
-	for(var/obj/machinery/computer/telecrystals/uplinker/A in urange(scanrange, src.loc))
+	for(var/obj/machinery/computer/telecrystals/uplinker/A in urange(scanrange, loc))
 		if(!A.linkedboss)
 			TCstations += A
 			A.linkedboss = src
@@ -158,7 +158,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/boss/attack_hand(mob/user)
 	if(..())
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	user.set_machine(src)
 
 
@@ -186,7 +186,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 
 	var/datum/browser/popup = new(user, "computer", "Team Telecrystal Management Console", 700, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -213,7 +213,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 			sanity++
 		logTransfer("[src] evenly distributed telecrystals.")
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 #undef NUKESCALINGMODIFIER

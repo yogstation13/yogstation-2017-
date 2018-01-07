@@ -90,7 +90,7 @@
 	Defend(M)
 
 /mob/living/simple_animal/hades/proc/Defend(var/mob/attacker)
-	src.visible_message("<span class='warning'>[src] rounds on the [attacker], gazing at them with a [pick("cold","frosty","freezing","dark")] [pick("glare","gaze","glower","stare")].</span>")
+	visible_message("<span class='warning'>[src] rounds on the [attacker], gazing at them with a [pick("cold","frosty","freezing","dark")] [pick("glare","gaze","glower","stare")].</span>")
 	var/chosenDefend = rand(1,3)
 	switch(chosenDefend)
 		if(1)
@@ -100,7 +100,7 @@
 			attacker.visible_message("<span class='warning'>[attacker] crackles with electricity, a bolt leaping from [src] to them.</span>")
 			sinLightning.Bolt(src,attacker,30,5,src)
 		if(3)
-			src.visible_message("<span class='warning'>[src] points his staff at [attacker], a swarm of eyeballs lurching fourth!</span>")
+			visible_message("<span class='warning'>[src] points his staff at [attacker], a swarm of eyeballs lurching fourth!</span>")
 			for(var/i in 1 to 4)
 				var/mob/living/simple_animal/hostile/carp/eyeball/E = new/mob/living/simple_animal/hostile/carp/eyeball(pick(orange(attacker,1)))
 				E.faction = faction
@@ -137,20 +137,20 @@
 				var/sinPersonchoice = pick(list("Greed","Gluttony","Pride","Lust","Envy","Sloth","Wrath"))
 				switch(sinPersonchoice)
 					if("Greed")
-						src.say("Your sin, [sinPerson], is Greed.")
+						say("Your sin, [sinPerson], is Greed.")
 						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
+							say("I will indulge your sin, [sinPerson].")
 							var/list/greed = list(/obj/item/stack/sheet/mineral/gold,/obj/item/stack/sheet/mineral/silver,/obj/item/stack/sheet/mineral/diamond)
 							for(var/i in 1 to 10)
 								var/greed_type = pick(greed)
 								new greed_type(get_turf(sinPerson))
 						else
-							src.say("Your sin will be punished, [sinPerson]!")
+							say("Your sin will be punished, [sinPerson]!")
 							new/obj/structure/closet/statue(get_turf(sinPerson),sinPerson)
 					if("Gluttony")
-						src.say("Your sin, [sinPerson], is Gluttony.")
+						say("Your sin, [sinPerson], is Gluttony.")
 						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
+							say("I will indulge your sin, [sinPerson].")
 							var/list/allTypes = list()
 							for(var/A in typesof(/obj/item/weapon/reagent_containers/food/snacks))
 								var/obj/item/weapon/reagent_containers/food/snacks/O = A
@@ -160,32 +160,32 @@
 								var/greed_type = pick(allTypes)
 								new greed_type(get_turf(sinPerson))
 						else
-							src.say("Your sin will be punished, [sinPerson]!")
+							say("Your sin will be punished, [sinPerson]!")
 							sinPerson.reagents.add_reagent("nutriment",1000)
 					if("Pride")
-						src.say("Your sin, [sinPerson], is Pride.")
+						say("Your sin, [sinPerson], is Pride.")
 						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
+							say("I will indulge your sin, [sinPerson].")
 							var/obj/item/weapon/twohanded/sin_pride/good = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
 							good.pride_direction = FALSE
 						else
-							src.say("Your sin will be punished, [sinPerson]!")
+							say("Your sin will be punished, [sinPerson]!")
 							var/obj/item/weapon/twohanded/sin_pride/bad = new/obj/item/weapon/twohanded/sin_pride(get_turf(sinPerson))
 							bad.pride_direction = TRUE
 					if("Lust")
-						src.say("Your sin, [sinPerson], is Lust.")
+						say("Your sin, [sinPerson], is Lust.")
 						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
+							say("I will indulge your sin, [sinPerson].")
 							var/obj/item/lovestone/good = new/obj/item/lovestone(get_turf(sinPerson))
 							good.lust_direction = FALSE
 						else
-							src.say("Your sin will be punished, [sinPerson]!")
+							say("Your sin will be punished, [sinPerson]!")
 							var/obj/item/lovestone/bad = new/obj/item/lovestone(get_turf(sinPerson))
 							bad.lust_direction = TRUE
 					if("Envy")
-						src.say("Your sin, [sinPerson], is Envy.")
+						say("Your sin, [sinPerson], is Envy.")
 						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
+							say("I will indulge your sin, [sinPerson].")
 							for(var/mob/living/carbon/human/H in player_list) // name lottery
 								if(H == sinPerson)
 									continue
@@ -198,25 +198,25 @@
 										sinPerson.updateappearance(mutcolor_update=1)
 										sinPerson.domutcheck()
 						else
-							src.say("Your sin will be punished, [sinPerson]!")
+							say("Your sin will be punished, [sinPerson]!")
 							var/sinPersonspecies = pick(species_list)
 							var/newtype = species_list[sinPersonspecies]
 							sinPerson.set_species(newtype)
 					if("Sloth")
-						src.say("Your sin, [sinPerson], is Sloth.")
+						say("Your sin, [sinPerson], is Sloth.")
 						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
+							say("I will indulge your sin, [sinPerson].")
 							sinPerson.drowsyness += 50
 						else
-							src.say("Your sin will be punished, [sinPerson]!")
+							say("Your sin will be punished, [sinPerson]!")
 							sinPerson.reagents.add_reagent("frostoil", 50)
 					if("Wrath")
-						src.say("Your sin, [sinPerson], is Wrath.")
+						say("Your sin, [sinPerson], is Wrath.")
 						if(prob(50))
-							src.say("I will indulge your sin, [sinPerson].")
+							say("I will indulge your sin, [sinPerson].")
 							sinPerson.reagents.add_reagent("bath_salts",100)
 						else
-							src.say("Your sin will be punished, [sinPerson]!")
+							say("Your sin will be punished, [sinPerson]!")
 							sinPerson.reagents.add_reagent("lexorin", 100)
 							sinPerson.reagents.add_reagent("mindbreaker", 100)
 

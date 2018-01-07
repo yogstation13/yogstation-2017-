@@ -48,7 +48,7 @@
 		crit_fail = 1
 		update_icon()
 		var/turf/T = get_turf(src)
-		T.visible_message("The [src.name] burns out!")
+		T.visible_message("The [name] burns out!")
 
 
 /obj/item/device/assembly/flash/proc/flash_recharge(interval=10)
@@ -70,7 +70,7 @@
 	if(crit_fail)
 		return 0
 
-	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/flash.ogg', 100, 1)
 	update_icon(1)
 	times_used++
 

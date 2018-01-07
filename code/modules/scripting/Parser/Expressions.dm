@@ -184,7 +184,7 @@
 			var/stack
 				opr=new
 				val=new
-			src.expecting=VALUE
+			expecting=VALUE
 			var/loop = 0
 			for()
 				loop++
@@ -215,7 +215,7 @@
 
 				else if(istype(curToken, /token/symbol))												//Operator found.
 					var/node/expression/operator/curOperator											//Figure out whether it is unary or binary and get a new instance.
-					if(src.expecting==OPERATOR)
+					if(expecting==OPERATOR)
 						curOperator=GetBinaryOperator(curToken)
 						if(!curOperator)
 							errors+=new/scriptError/ExpectedToken("operator", curToken)
@@ -232,7 +232,7 @@
 						Reduce(opr, val)
 						continue
 					opr.Push(curOperator)
-					src.expecting=VALUE
+					expecting=VALUE
 
 				else if(ntok && ntok.value=="(" && istype(ntok, /token/symbol)\
 											&& istype(curToken, /token/word))								//Parse function call
@@ -240,7 +240,7 @@
 					if(!check_functions)
 
 						var/token/preToken=curToken
-						var/old_expect=src.expecting
+						var/old_expect=expecting
 						var/fex=ParseFunctionExpression()
 						if(old_expect!=VALUE)
 							errors+=new/scriptError/ExpectedToken("operator", preToken)
@@ -270,7 +270,7 @@
 						NextToken()
 						continue
 					val.Push(GetExpression(curToken))
-					src.expecting=OPERATOR
+					expecting=OPERATOR
 
 				NextToken()
 

@@ -201,7 +201,7 @@ var/const/tk_maxrange = 15
 
 /*Not quite done likely needs to use something thats not get_step_to
 /obj/item/tk_grab/proc/check_path()
-	var/turf/ref = get_turf(src.loc)
+	var/turf/ref = get_turf(loc)
 	var/turf/target = get_turf(focus.loc)
 	if(!ref || !target)
 		return 0

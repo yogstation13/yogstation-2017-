@@ -38,7 +38,7 @@
 	user.set_machine(src)
 
 	var/dat = "Photocopier<BR><BR>"
-	if(copy || photocopy || doccopy || (ass && (ass.loc == src.loc)))
+	if(copy || photocopy || doccopy || (ass && (ass.loc == loc)))
 		dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
 		if(toner)
 			dat += "<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>"
@@ -177,7 +177,7 @@
 				copy.loc = usr.loc
 				usr.put_in_hands(copy)
 			else
-				copy.loc = src.loc
+				copy.loc = loc
 			to_chat(usr, "<span class='notice'>You take [copy] out of [src].</span>")
 			copy = null
 			updateUsrDialog()
@@ -186,7 +186,7 @@
 				photocopy.loc = usr.loc
 				usr.put_in_hands(photocopy)
 			else
-				photocopy.loc = src.loc
+				photocopy.loc = loc
 			to_chat(usr, "<span class='notice'>You take [photocopy] out of [src].</span>")
 			photocopy = null
 			updateUsrDialog()
@@ -331,7 +331,7 @@
 	check_ass() //Just to make sure that you can re-drag somebody onto it after they moved off.
 	if (!istype(target) || target.anchored || target.buckled || !Adjacent(user) || !Adjacent(target) || !user.canUseTopic(src, 1) || target == ass || copier_blocked())
 		return
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(target == user)
 		user.visible_message("[user] starts climbing onto the photocopier!", "<span class='notice'>You start climbing onto the photocopier...</span>")
 	else
@@ -350,12 +350,12 @@
 		ass = target
 
 		if(photocopy)
-			photocopy.loc = src.loc
+			photocopy.loc = loc
 			visible_message("<span class='warning'>[photocopy] is shoved out of the way by [ass]!</span>")
 			photocopy = null
 
 		else if(copy)
-			copy.loc = src.loc
+			copy.loc = loc
 			visible_message("<span class='warning'>[copy] is shoved out of the way by [ass]!</span>")
 			copy = null
 	updateUsrDialog()
@@ -363,7 +363,7 @@
 /obj/machinery/photocopier/proc/check_ass() //I'm not sure wether I made this proc because it's good form or because of the name.
 	if(!ass)
 		return 0
-	if(ass.loc != src.loc)
+	if(ass.loc != loc)
 		ass = null
 		updateUsrDialog()
 		return 0

@@ -69,7 +69,7 @@
 	var/list/outfit_browsers = null
 
 /datum/mind/New(var/key)
-	src.key = key
+	key = key
 	ckey = ckey(key)
 	soulOwner = src
 

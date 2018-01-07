@@ -15,12 +15,12 @@
 
 	switch(act)//Even carbon organisms want it alphabetically ordered..
 		if ("aflap")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> flaps \his wings ANGRILY!"
 				m_type = 2
 
 		if ("airguitar")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> is strumming the air and headbanging like a safari chimp."
 				m_type = 1
 
@@ -37,7 +37,7 @@
 			m_type = 1
 
 		if ("bow","bows")
-			if (!src.buckled)
+			if (!buckled)
 				var/M = null
 				if (param)
 					for (var/mob/A in view(1, src))
@@ -71,7 +71,7 @@
 				m_type = 2
 
 		if ("clap","claps")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> claps."
 				m_type = 2
 
@@ -87,7 +87,7 @@
 			m_type = 1
 
 		if ("flap","flaps")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> flaps \his wings."
 				m_type = 2
 

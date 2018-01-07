@@ -74,14 +74,14 @@
 
 /obj/structure/chair/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		deconstruct()
 	else if(istype(W, /obj/item/assembly/shock_kit))
 		if(!user.drop_item())
 			return
 		var/obj/item/assembly/shock_kit/SK = W
-		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(src.loc)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		var/obj/structure/chair/e_chair/E = new /obj/structure/chair/e_chair(loc)
+		playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		E.dir = dir
 		E.part = SK
 		SK.loc = E
@@ -253,12 +253,12 @@
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!item_chair || !ishuman(usr) || has_buckled_mobs() || src.flags & NODECONSTRUCT)
+		if(!item_chair || !ishuman(usr) || has_buckled_mobs() || flags & NODECONSTRUCT)
 			return
 		if(usr.incapacitated())
 			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return
-		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
+		usr.visible_message("<span class='notice'>[usr] grabs \the [name].</span>", "<span class='notice'>You grab \the [name].</span>")
 		var/C = new item_chair(loc)
 		usr.put_in_hands(C)
 		var/obj/item/whoopee/W = locate() in src
@@ -306,7 +306,7 @@
 			to_chat(user, "<span class='danger'>There is already something here.</span>")
 			return
 
-	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")
+	user.visible_message("<span class='notice'>[user] rights \the [name].</span>", "<span class='notice'>You right \the [name].</span>")
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
 	C.dir = dir
 	qdel(src)

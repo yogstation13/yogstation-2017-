@@ -21,15 +21,15 @@
 	append(order)
 
 /datum/resolve_order/proc/append(list/order)
-	if(!src.order)
-		src.order = list()
+	if(!order)
+		order = list()
 	if(!islist(order))
-		if((order in allowed) && (!(order in src.order) || allow_repeat_slots))
-			src.order += order
+		if((order in allowed) && (!(order in order) || allow_repeat_slots))
+			order += order
 	else
 		for(var/v in order)
-			if((v in allowed) && (!(v in src.order) || allow_repeat_slots))
-				src.order += v
+			if((v in allowed) && (!(v in order) || allow_repeat_slots))
+				order += v
 
 /datum/resolve_order/human/attack/default
 	order = list(slot_head, slot_wear_suit, slot_w_uniform, slot_gloves)

@@ -71,7 +71,7 @@
 	if(next_check < world.time)
 		if(!current_wizard)
 			for(var/mob/living/L in player_list)
-				if(L.z == src.z && L.stat != DEAD && !(faction in L.faction))
+				if(L.z == z && L.stat != DEAD && !(faction in L.faction))
 					summon_wizard()
 					break
 		else
@@ -100,7 +100,7 @@
 			current_wizard.key = chosen.key
 
 /obj/structure/academy_wizard_spawner/proc/summon_wizard()
-	var/turf/T = src.loc
+	var/turf/T = loc
 
 	var/mob/living/carbon/human/wizbody = new(T)
 	wizbody.equipOutfit(/datum/outfit/wizard/academy)
@@ -225,7 +225,7 @@
 			user.throw_at(throw_target, 200, 4)
 		if(8)
 			//Fueltank Explosion
-			explosion(src.loc,-1,0,2, flame_range = 2)
+			explosion(loc,-1,0,2, flame_range = 2)
 		if(9)
 			//Cold
 			var/datum/disease/D = new /datum/disease/cold

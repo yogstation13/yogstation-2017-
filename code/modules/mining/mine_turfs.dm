@@ -47,16 +47,16 @@
 	switch(severity)
 		if(3)
 			if (prob(75))
-				src.gets_drilled(null, 1)
+				gets_drilled(null, 1)
 		if(2)
 			if (prob(90))
-				src.gets_drilled(null, 1)
+				gets_drilled(null, 1)
 		if(1)
-			src.gets_drilled(null, 1)
+			gets_drilled(null, 1)
 	return
 
 /turf/closed/mineral/Spread(turf/T)
-	new src.type(T)
+	new type(T)
 
 /turf/closed/mineral/random
 	var/mineralSpawnChanceList = list(
@@ -76,9 +76,9 @@
 		if(T && istype(T, /turf/closed/mineral))
 			var/turf/closed/mineral/M = T
 			M.mineralAmt = rand(1, 5)
-			M.environment_type = src.environment_type
-			M.turf_type = src.turf_type
-			M.baseturf = src.baseturf
+			M.environment_type = environment_type
+			M.turf_type = turf_type
+			M.baseturf = baseturf
 			src = M
 			M.levelupdate()
 
@@ -225,7 +225,7 @@
 		stage = 2
 		if(det_time < 0)
 			det_time = 0
-		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [src.det_time] reactions left till the explosion!</span>")
+		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [det_time] reactions left till the explosion!</span>")
 
 /turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = 0)
 	if(stage == 0 && mineralAmt >= 1) //Gibtonite deposit is activated
@@ -273,9 +273,9 @@
 /turf/open/floor/plating/asteroid/airless/cave/New(loc, length, go_backwards = 1, exclude_dir = -1)
 	// If length (arg2) isn't defined, get a random length; otherwise assign our length to the length arg.
 	if(!length)
-		src.length = rand(25, 50)
+		length = rand(25, 50)
 	else
-		src.length = length
+		length = length
 
 	// Get our directiosn
 	var/forward_cave_dir = pick(alldirs - exclude_dir)
@@ -315,10 +315,10 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				new src.type(tunnel, rand(10, 15), 0, dir)
+				new type(tunnel, rand(10, 15), 0, dir)
 			else
 				SpawnFloor(tunnel)
-		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
+		else //if(!istype(tunnel, parent)) // We hit space/normal/wall, stop our tunnel.
 			break
 
 		// Chance to change our direction left or right.
@@ -378,7 +378,7 @@
 	return
 
 /turf/closed/mineral/proc/gets_drilled()
-	if (mineralType && (src.mineralAmt > 0) && (src.mineralAmt < 11))
+	if (mineralType && (mineralAmt > 0) && (mineralAmt < 11))
 		var/i
 		for (i=0;i<mineralAmt;i++)
 			new mineralType(src)
@@ -406,19 +406,19 @@
 	if(istype(AM,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = AM
 		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
-			src.attackby(H.l_hand,H)
+			attackby(H.l_hand,H)
 		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
-			src.attackby(H.r_hand,H)
+			attackby(H.r_hand,H)
 		return
 	else if(istype(AM,/mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active,/obj/item/weapon/pickaxe))
-			src.attackby(R.module_active,R)
+			attackby(R.module_active,R)
 			return
 /*	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM
 		if(istype(M.selected,/obj/item/mecha_parts/mecha_equipment/drill))
-			src.attackby(M.selected,M)
+			attackby(M.selected,M)
 			return*/
 //Aparantly mechs are just TOO COOL to call Bump(), so fuck em (for now)
 	else
@@ -491,9 +491,9 @@
 			return
 		if(2)
 			if (prob(20))
-				src.gets_dug()
+				gets_dug()
 		if(1)
-			src.gets_dug()
+			gets_dug()
 	return
 
 /turf/open/floor/plating/asteroid/attackby(obj/item/weapon/W, mob/user, params)
@@ -528,7 +528,7 @@
 	if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
 		if(S.collection_mode == 1)
-			for(var/obj/item/weapon/ore/O in src.contents)
+			for(var/obj/item/weapon/ore/O in contents)
 				O.attackby(W,user)
 				return
 

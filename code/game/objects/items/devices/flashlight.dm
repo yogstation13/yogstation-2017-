@@ -43,7 +43,7 @@
 	if(broken)
 		to_chat(user, "<spawn class='warning'>The [src] refuses to turn on!</span>")
 		return 0
-	playsound(src.loc, 'sound/effects/click.ogg', 50, 1, -1)
+	playsound(loc, 'sound/effects/click.ogg', 50, 1, -1)
 	on = !on
 	update_brightness(user)
 	for(var/X in actions)
@@ -220,8 +220,8 @@ obj/item/device/flashlight/lamp/bananalamp
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
-	force = initial(src.force)
-	damtype = initial(src.damtype)
+	force = initial(force)
+	damtype = initial(damtype)
 	if(ismob(loc))
 		var/mob/U = loc
 		update_brightness(U)
@@ -300,7 +300,7 @@ obj/item/device/flashlight/lamp/bananalamp
 	brightness_on = 6 //luminosity when on
 
 /obj/item/device/flashlight/emp
-	origin_tech = "magnets=3;syndicate=´1"
+	origin_tech = "magnets=3;syndicate=ï¿½1"
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0

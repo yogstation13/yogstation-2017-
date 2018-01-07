@@ -41,7 +41,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	switch(alert("Proc owned by something?",,"Yes","No"))
 		if("Yes")
 			targetselected = 1
-			if(src.holder && src.holder.marked_datum)
+			if(holder && holder.marked_datum)
 				class = input("Proc owned by...","Owner",null) as null|anything in list("Obj","Mob","Area or Turf","Client","Marked datum ([holder.marked_datum.type])")
 				if(class == "Marked datum ([holder.marked_datum.type])")
 					class = "Marked datum"
@@ -144,7 +144,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	while(argnum--)
 		var/class = null
 		// Make a list with each index containing one variable, to be given to the proc
-		if(src.holder && src.holder.marked_datum)
+		if(holder && holder.marked_datum)
 			class = input("What kind of variable?","Variable Type") as anything in list("text","num","type","reference","mob reference","icon","file","client","mob's area","Marked datum ([holder.marked_datum.type])","CANCEL")
 			if(holder.marked_datum && class == "Marked datum ([holder.marked_datum.type])")
 				class = "Marked datum"
@@ -489,8 +489,8 @@ var/global/list/g_fancy_list_of_types = null
 			ghost.ckey = M.ckey
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] assumed direct control of [M].</span>")
 	log_admin("[key_name(usr)] assumed direct control of [M].")
-	var/mob/adminmob = src.mob
-	M.ckey = src.ckey
+	var/mob/adminmob = mob
+	M.ckey = ckey
 	if( isobserver(adminmob) )
 		qdel(adminmob)
 	feedback_add_details("admin_verb","ADC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

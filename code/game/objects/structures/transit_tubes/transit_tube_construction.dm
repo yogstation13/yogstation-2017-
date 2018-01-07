@@ -88,8 +88,8 @@
 	tube_flip()
 
 /obj/structure/c_transit_tube/proc/buildtube()
-	var/obj/structure/transit_tube/R = new/obj/structure/transit_tube(src.loc)
-	R.icon_state = src.icon_state
+	var/obj/structure/transit_tube/R = new/obj/structure/transit_tube(loc)
+	R.icon_state = icon_state
 	R.init_dirs()
 	R.generate_automatic_corners(R.tube_dirs)
 	return R
@@ -97,12 +97,12 @@
 /obj/structure/c_transit_tube/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		to_chat(user, "<span class='notice'>You start attaching the [name]...</span>")
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 		if(do_after(user, 40/I.toolspeed, target = src))
 			if(!src) return
 			to_chat(user, "<span class='notice'>You attach the [name].</span>")
-			var/obj/structure/transit_tube/R = src.buildtube()
-			src.transfer_fingerprints_to(R)
+			var/obj/structure/transit_tube/R = buildtube()
+			transfer_fingerprints_to(R)
 			qdel(src)
 	else
 		return ..()
@@ -114,14 +114,14 @@
 	icon_state = "closed"
 
 /obj/structure/c_transit_tube/station/tube_turn(var/angle)
-	src.dir = turn(src.dir, angle)
+	dir = turn(dir, angle)
 
 /obj/structure/c_transit_tube/station/tube_flip()
-	src.tube_turn(180)
+	tube_turn(180)
 
 /obj/structure/c_transit_tube/station/buildtube()
-	var/obj/structure/transit_tube/station/R = new/obj/structure/transit_tube/station(src.loc)
-	R.dir = src.dir
+	var/obj/structure/transit_tube/station/R = new/obj/structure/transit_tube/station(loc)
+	R.dir = dir
 	R.init_dirs()
 	return R
 
@@ -130,8 +130,8 @@
 	name = "unattached terminus station"
 
 /obj/structure/c_transit_tube/station/reverse/buildtube()
-	var/obj/structure/transit_tube/station/reverse/R = new/obj/structure/transit_tube/station/reverse(src.loc)
-	R.dir = src.dir
+	var/obj/structure/transit_tube/station/reverse/R = new/obj/structure/transit_tube/station/reverse(loc)
+	R.dir = dir
 	R.init_dirs()
 	return R
 
@@ -144,9 +144,9 @@
 	icon_state = "Block"
 
 /obj/structure/c_transit_tube/station/block/buildtube()
-	var/obj/structure/transit_tube/R = new/obj/structure/transit_tube(src.loc)
-	R.icon_state = src.icon_state
-	R.dir = src.dir
+	var/obj/structure/transit_tube/R = new/obj/structure/transit_tube(loc)
+	R.icon_state = icon_state
+	R.dir = dir
 	R.init_dirs()
 	return R
 

@@ -27,7 +27,7 @@
 		if(2)
 			if(prob(50))
 				if(has_extinguisher)
-					has_extinguisher.loc = src.loc
+					has_extinguisher.loc = loc
 				qdel(src)
 				return
 		if(3)

@@ -148,7 +148,7 @@
 
 	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
 	user.forceMove(get_turf(linked))
-	feedback_add_details("warp_cube","[src.type]")
+	feedback_add_details("warp_cube","[type]")
 	PoolOrNew(/obj/effect/particle_effect/smoke, user.loc)
 
 /obj/item/device/warp_cube/red
@@ -159,7 +159,7 @@
 /obj/item/device/warp_cube/red/New()
 	..()
 	if(!linked)
-		var/obj/item/device/warp_cube/blue = new(src.loc)
+		var/obj/item/device/warp_cube/blue = new(loc)
 		linked = blue
 		blue.linked = src
 
@@ -227,7 +227,7 @@
 		feedback_add_details("immortality_talisman","U") // usage
 		cooldown = world.time + 600
 		user.visible_message("<span class='danger'>[user] vanishes from reality, leaving a a hole in their place!</span>")
-		var/obj/effect/immortality_talisman/Z = new(get_turf(src.loc))
+		var/obj/effect/immortality_talisman/Z = new(get_turf(loc))
 		Z.name = "hole in reality"
 		Z.desc = "It's shaped an awful lot like [user.name]."
 		Z.dir = user.dir
@@ -294,9 +294,9 @@
 	..()
 	if(!bag)
 		var/obj/item/weapon/storage/backpack/shared/S = new(src)
-		var/obj/item/device/shared_storage/blue = new(src.loc)
+		var/obj/item/device/shared_storage/blue = new(loc)
 
-		src.bag = S
+		bag = S
 		blue.bag = S
 
 
@@ -441,7 +441,7 @@
 					C.adjustBruteLoss(20)
 					C.emote("scream")
 				playsound(loc, 'sound/items/drink.ogg', 50, 1, -1)
-				src.used = TRUE
+				used = TRUE
 
 
 ///Bosses
@@ -767,7 +767,7 @@
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/summonsaw(src))
 
 /obj/item/weapon/chainsaw_bubblegum/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is feeding \himself to \the [src.name]! It looks like \he's trying to join Bubblegum!</span>")
+	user.visible_message("<span class='suicide'>[user] is feeding \himself to \the [name]! It looks like \he's trying to join Bubblegum!</span>")
 	visible_message("<span class='warning'><b>[src] devours [user]!</b></span>")
 	playsound(user.loc, 'sound/magic/Demon_consume.ogg', 100, 1)
 	qdel(user)

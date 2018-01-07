@@ -128,7 +128,7 @@ EMAGGED FUNCTIONS - TODO
 	t1 += text("<p><a href='?src=\ref[];close=1'>Close</a></p>\n", src)
 	var/datum/browser/popup = new(L, "airlock_electronics", "Access Control", 900, 500)
 	popup.set_content(t1)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	onclose(user, "airlock")
 
@@ -265,7 +265,7 @@ EMAGGED FUNCTIONS - TODO
 
 /obj/item/weapon/rtd/New()
 	..()
-	src.spark_system = new /datum/effect_system/spark_spread
+	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	rcd_list += src
@@ -315,7 +315,7 @@ EMAGGED FUNCTIONS - TODO
 			return
 		qdel(W)
 		matter += R.ammoamt
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(loc, 'sound/machines/click.ogg', 50, 1)
 		loaded = 1
 	else if(istype(W, /obj/item/weapon/ore/iron))
 		if((matter + ironoreworth) > maxmatter)
@@ -325,7 +325,7 @@ EMAGGED FUNCTIONS - TODO
 			return
 		qdel(W)
 		matter += ironoreworth
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(loc, 'sound/machines/click.ogg', 50, 1)
 		loaded = 1
 	else if(istype(W, /obj/item/stack/sheet/metal) || istype(W, /obj/item/stack/sheet/glass))
 		loaded = loadwithsheets(W, sheetmultiplier, user)
@@ -342,13 +342,13 @@ EMAGGED FUNCTIONS - TODO
 		if(S.amount > maxsheets)
 			S.use(maxsheets)
 			matter += value*maxsheets
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			playsound(loc, 'sound/machines/click.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You insert [maxsheets] [S.name] sheets into the RTD. </span>")
 		else
 			matter += value*(S.amount)
 			user.unEquip()
 			S.use(S.amount)
-			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			playsound(loc, 'sound/machines/click.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You insert [S.amount] [S.name] sheets into the RTD. </span>")
 		return 1
 	to_chat(user, "<span class='warning'>You can't insert any more [S.name] sheets into the RTD!")
@@ -356,7 +356,7 @@ EMAGGED FUNCTIONS - TODO
 
 /obj/item/weapon/rtd/attack_self(mob/user)
 	//Change the mode
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
+	playsound(loc, 'sound/effects/pop.ogg', 50, 0)
 	mode++
 	if(mode > 7)
 		mode = 1
@@ -377,11 +377,11 @@ EMAGGED FUNCTIONS - TODO
 			to_chat(user, "<span class='notice'>The Rapid Terraforming Device is now pressurizing with compressed air.</span>")
 
 	if(prob(50))
-		src.spark_system.start()
+		spark_system.start()
 	electrocute_check(15, user)
 
 /obj/item/weapon/rtd/proc/activate(mob/living/user)
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	electrocute_check(30, user)
 
 /obj/item/weapon/rtd/emag_act(mob/user)
@@ -434,13 +434,13 @@ EMAGGED FUNCTIONS - TODO
 
 					if(door_check)
 						to_chat(user, "<span class='notice'>You start building airlock...</span>")
-						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+						playsound(loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, airlockdelay, target = A))
 							if(!useResource(airlockcost, user)) return 0
 							activate(user)
 							var/obj/machinery/door/airlock/T = new airlock_type( A )
 
-							T.electronics = new/obj/item/weapon/electronics/airlock( src.loc )
+							T.electronics = new/obj/item/weapon/electronics/airlock( loc )
 
 							if(conf_access)
 								T.electronics.accesses = conf_access.Copy()
@@ -468,7 +468,7 @@ EMAGGED FUNCTIONS - TODO
 				var/turf/closed/mineral/M = A
 				if(checkResource(wallcost, user))
 					to_chat(user, "<span class='notice'>You start converting the [A] to a metal wall...</span>")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(loc, 'sound/machines/click.ogg', 50, 1)
 					activate(user)
 					if(do_after(user, walldelay, target = M))
 						if(useResource(wallcost, user))
@@ -480,7 +480,7 @@ EMAGGED FUNCTIONS - TODO
 				if(checkResource(membranecost, user))
 					var/turf/open/floor/F = A
 					to_chat(user, "<span class='notice'>You start fabricating an airtight membrane...</span>")
-					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+					playsound(loc, 'sound/machines/click.ogg', 50, 1)
 					activate(user)
 					for(var/obj/O in F.contents)
 						if(istype(O, /obj/structure/destructible/airwall))

@@ -18,11 +18,11 @@
 	if(mind)
 		miming=mind.miming
 
-	if(src.stat == 2 && (act != "deathgasp"))
+	if(stat == 2 && (act != "deathgasp"))
 		return
 	switch(act) //Please keep this alphabetically ordered when adding or changing emotes.
 		if ("aflap") //Any emote on human that uses miming must be left in, oh well.
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> flaps \his wings ANGRILY!"
 				m_type = 2
 
@@ -39,7 +39,7 @@
 				..(act)
 
 		if ("clap","claps")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> claps."
 				m_type = 2
 
@@ -72,7 +72,7 @@
 					m_type = 2
 		if ("dap","daps")
 			m_type = 1
-			if (!src.restrained())
+			if (!restrained())
 				var/M = null
 				if (param)
 					for (var/mob/A in view(1, src))
@@ -89,7 +89,7 @@
 			m_type = 1
 
 		if ("flap","flaps")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> flaps \his wings."
 				m_type = 2
 				if(((dna.features["wings"] != "None") && !("wings" in dna.species.mutant_bodyparts)))
@@ -98,7 +98,7 @@
 						CloseWings()
 
 		if ("wings")
-			if (!src.restrained())
+			if (!restrained())
 				if(dna && dna.species &&((dna.features["wings"] != "None") && ("wings" in dna.species.mutant_bodyparts)))
 					message = "<B>[src]</B> opens \his wings."
 					OpenWings()
@@ -140,7 +140,7 @@
 
 		if ("handshake")
 			m_type = 1
-			if (!src.restrained() && !src.r_hand)
+			if (!restrained() && !r_hand)
 				var/mob/M = null
 				if (param)
 					for (var/mob/A in view(1, src))
@@ -157,7 +157,7 @@
 
 		if ("hug","hugs")
 			m_type = 1
-			if (!src.restrained())
+			if (!restrained())
 				var/M = null
 				if (param)
 					for (var/mob/A in view(1, src))
@@ -177,11 +177,11 @@
 			if(jobban_isbanned(src, "emote"))
 				to_chat(src, "You cannot send custom emotes (banned)")
 				return
-			if (src.client)
+			if (client)
 				if (client.prefs.muted & MUTE_IC)
 					to_chat(src, "<span class='danger'>You cannot send IC messages (muted).</span>")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if (client.handle_spam_prevention(message,MUTE_IC))
 					return
 			if (stat)
 				return
@@ -218,12 +218,12 @@
 			m_type = 1
 
 		if ("raise")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> raises a hand."
 			m_type = 1
 
 		if ("salute","salutes")
-			if (!src.buckled)
+			if (!buckled)
 				var/M = null
 				if (param)
 					for (var/mob/A in view(1, src))
@@ -259,12 +259,12 @@
 				..(act)
 
 		if ("signal","signals")
-			if (!src.restrained())
+			if (!restrained())
 				var/t1 = round(text2num(param))
 				if (isnum(t1))
-					if (t1 <= 5 && (!src.r_hand || !src.l_hand))
+					if (t1 <= 5 && (!r_hand || !l_hand))
 						message = "<B>[src]</B> raises [t1] finger\s."
-					else if (t1 <= 10 && (!src.r_hand && !src.l_hand))
+					else if (t1 <= 10 && (!r_hand && !l_hand))
 						message = "<B>[src]</B> raises [t1] finger\s."
 			m_type = 1
 

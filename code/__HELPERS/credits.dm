@@ -22,12 +22,12 @@
 	var/credits
 
 /datum/credit/New(var/ckey, var/credits)
-	src.ckey = ckey
-	src.credits = text2num(credits)
+	ckey = ckey
+	credits = text2num(credits)
 
-	if(!src.ckey)
+	if(!ckey)
 		throw new /exception("InvalidParameterException: When creating a credits datum, a ckey is expected")
-	if(src.credits < 0)
+	if(credits < 0)
 		throw new /exception("InvalidParameterException: When creating a credits datum, a negative credits value is not expected")
 
 /*

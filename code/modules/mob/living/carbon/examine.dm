@@ -2,17 +2,17 @@
 	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
 
 	if (handcuffed)
-		msg += "It is \icon[src.handcuffed] handcuffed!\n"
+		msg += "It is \icon[handcuffed] handcuffed!\n"
 	if (head)
-		msg += "It has \icon[src.head] \a [src.head] on its head. \n"
+		msg += "It has \icon[head] \a [head] on its head. \n"
 	if (wear_mask)
-		msg += "It has \icon[src.wear_mask] \a [src.wear_mask] on its face.\n"
+		msg += "It has \icon[wear_mask] \a [wear_mask] on its face.\n"
 	if (l_hand)
-		msg += "It has \icon[src.l_hand] \a [src.l_hand] in its left hand.\n"
+		msg += "It has \icon[l_hand] \a [l_hand] in its left hand.\n"
 	if (r_hand)
-		msg += "It has \icon[src.r_hand] \a [src.r_hand] in its right hand.\n"
+		msg += "It has \icon[r_hand] \a [r_hand] in its right hand.\n"
 	if (back)
-		msg += "It has \icon[src.back] \a [src.back] on its back.\n"
+		msg += "It has \icon[back] \a [back] on its back.\n"
 	if (stat == DEAD)
 		msg += "<span class='deadsay'>It is limp and unresponsive, with no signs of life.</span>\n"
 	else

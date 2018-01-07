@@ -364,7 +364,7 @@
 
 
 /obj/item/projectile/kinetic/on_range()
-	new /obj/effect/kinetic_blast(src.loc)
+	new /obj/effect/kinetic_blast(loc)
 	..()
 
 /obj/item/projectile/kinetic/prehit()
@@ -466,7 +466,7 @@
 /obj/item/weapon/gun/energy/kinetic_accelerator/proc/reload()
 	power_supply.give(power_supply.maxcharge)
 	if(!suppressed)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+		playsound(loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
 		to_chat(loc, "<span class='warning'>[src] silently charges up.<span>")
 	overheat = FALSE
@@ -474,8 +474,8 @@
 
 /obj/item/weapon/gun/energy/kinetic_accelerator/suicide_act(mob/user)
 	if(!suppressed)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
-	user.visible_message("<span class='suicide'>[user] cocks the [src.name] and pretends to blow \his brains out! It looks like \he's trying to commit suicide!</b></span>")
+		playsound(loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+	user.visible_message("<span class='suicide'>[user] cocks the [name] and pretends to blow \his brains out! It looks like \he's trying to commit suicide!</b></span>")
 	shoot_live_shot()
 	return (OXYLOSS)
 

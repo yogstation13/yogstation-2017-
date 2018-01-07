@@ -1,7 +1,7 @@
 /obj/machinery/door/unpowered
 
 /obj/machinery/door/unpowered/Bumped(atom/AM)
-	if(src.locked)
+	if(locked)
 		return
 	..()
 	return

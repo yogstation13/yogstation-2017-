@@ -16,7 +16,7 @@
 
 		Copy()
 			var/stack/S=new()
-			S.contents=src.contents.Copy()
+			S.contents=contents.Copy()
 			return S
 
 		Clear()

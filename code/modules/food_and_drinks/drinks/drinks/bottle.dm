@@ -28,9 +28,9 @@
 	else
 		user.drop_item()
 		user.put_in_active_hand(B)
-	B.icon_state = src.icon_state
+	B.icon_state = icon_state
 
-	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
+	var/icon/I = new('icons/obj/drinks.dmi', icon_state)
 	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
 	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 	B.icon = I
@@ -44,7 +44,7 @@
 		B.force = 0
 		B.throwforce = 0
 		B.desc = "A carton with the bottom half burst open. Might give you a papercut."
-	src.transfer_fingerprints_to(B)
+	transfer_fingerprints_to(B)
 
 	qdel(src)
 
@@ -106,11 +106,11 @@
 
 	//Display an attack message.
 	if(target != user)
-		target.visible_message("<span class='danger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>", \
-				"<span class='userdanger'>[user] has hit [target][head_attack_message] with a bottle of [src.name]!</span>")
+		target.visible_message("<span class='danger'>[user] has hit [target][head_attack_message] with a bottle of [name]!</span>", \
+				"<span class='userdanger'>[user] has hit [target][head_attack_message] with a bottle of [name]!</span>")
 	else
-		user.visible_message("<span class='danger'>[target] hits \himself with a bottle of [src.name][head_attack_message]!</span>", \
-				"<span class='userdanger'>[target] hits \himself with a bottle of [src.name][head_attack_message]!</span>")
+		user.visible_message("<span class='danger'>[target] hits \himself with a bottle of [name][head_attack_message]!</span>", \
+				"<span class='userdanger'>[target] hits \himself with a bottle of [name][head_attack_message]!</span>")
 
 	//Attack logs
 	add_logs(user, target, "attacked", src)
@@ -119,12 +119,12 @@
 	SplashReagents(target)
 
 	//Finally, smash the bottle. This kills (del) the bottle.
-	src.smash(target, user)
+	smash(target, user)
 
 	return
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/SplashReagents(var/mob/M)
-	if(src.reagents.total_volume)
+	if(reagents.total_volume)
 		M.visible_message("<span class='danger'>The contents of \the [src] splashes all over [M]!</span>")
 		reagents.reaction(M, TOUCH)
 		reagents.clear_reagents()
@@ -375,7 +375,7 @@
 			spawn(50)
 				if(active)
 					var/counter
-					var/target = src.loc
+					var/target = loc
 					for(counter = 0, counter<2, counter++)
 						if(istype(target, /obj/item/weapon/storage))
 							var/obj/item/weapon/storage/S = target

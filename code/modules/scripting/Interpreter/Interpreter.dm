@@ -83,7 +83,7 @@
 		RaiseError(runtimeError/e)
 			e.stack=functions.Copy()
 			e.stack.Push(curFunction)
-			src.HandleError(e)
+			HandleError(e)
 
 		CreateScope(node/BlockDefinition/B)
 			var/scope/S = new(B, curScope)

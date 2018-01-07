@@ -225,7 +225,7 @@
 
 /obj/machinery/sleeper/emag_act(mob/user)
 	if(!emagged)
-		src.emagged = 1
+		emagged = 1
 		to_chat(user, "You breach the safety mechanics..")
 
 

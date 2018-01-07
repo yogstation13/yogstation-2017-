@@ -49,7 +49,7 @@
 	if(blob_core)
 		blob_core.update_icon()
 
-	ghostimage = image(src.icon,src,src.icon_state)
+	ghostimage = image(icon,src,icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
 	updateallghostimages()
 	..()
@@ -102,17 +102,17 @@
 /mob/camera/blob/proc/add_points(points)
 	if(points != 0)
 		blob_points = Clamp(blob_points + points, 0, max_blob_points)
-		hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(src.blob_points)]</font></div>"
+		hud_used.blobpwrdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[round(blob_points)]</font></div>"
 
 /mob/camera/blob/say(message)
 	if (!message)
 		return
 
-	if (src.client)
+	if (client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	if (stat)

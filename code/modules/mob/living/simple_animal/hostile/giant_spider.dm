@@ -172,16 +172,16 @@
 	set category = "Spider"
 	set desc = "Spread a sticky web to slow down prey."
 
-	var/T = src.loc
+	var/T = loc
 
 	if(stat == DEAD)
 		return
 	if(busy != SPINNING_WEB)
 		busy = SPINNING_WEB
-		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
+		visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance.</span>")
 		stop_automated_movement = 1
 		if(do_after(src, 40, target = T))
-			if(busy == SPINNING_WEB && src.loc == T)
+			if(busy == SPINNING_WEB && loc == T)
 				new /obj/effect/spider/stickyweb(T)
 		busy = 0
 		stop_automated_movement = 0
@@ -201,14 +201,14 @@
 				continue
 			if(Adjacent(L))
 				choices += L
-		for(var/obj/O in src.loc)
+		for(var/obj/O in loc)
 			if(Adjacent(O))
 				choices += O
 		cocoon_target = input(src,"What do you wish to cocoon?") as anything in null|choices
 
 	if(stat != DEAD && cocoon_target && busy != SPINNING_COCOON)
 		busy = SPINNING_COCOON
-		src.visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
+		visible_message("<span class='notice'>\the [src] begins to secrete a sticky substance around \the [cocoon_target].</span>")
 		stop_automated_movement = 1
 		walk(src,0)
 		if(do_after(src, 50, target = src))
@@ -259,13 +259,13 @@
 		to_chat(src, "<span class='warning'>You are too hungry to do this!</span>")
 	else if(busy != LAYING_EGGS)
 		busy = LAYING_EGGS
-		src.visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
+		visible_message("<span class='notice'>\the [src] begins to lay a cluster of eggs.</span>")
 		stop_automated_movement = 1
-		if(do_after(src, 50, target = src.loc))
+		if(do_after(src, 50, target = loc))
 			if(busy == LAYING_EGGS)
 				E = locate() in get_turf(src)
 				if(!E)
-					var/obj/effect/spider/eggcluster/C = new /obj/effect/spider/eggcluster(src.loc)
+					var/obj/effect/spider/eggcluster/C = new /obj/effect/spider/eggcluster(loc)
 					if(ckey)
 						C.player_spiders = 1
 					C.poison_type = poison_type

@@ -30,10 +30,10 @@ RPD
 	var/selected=0
 
 /datum/pipe_info/New(pid,direction,dt)
-	src.id=pid
-	src.icon_state=pipeID2State["[pid]"]
-	src.dir=direction
-	src.dirtype=dt
+	id=pid
+	icon_state=pipeID2State["[pid]"]
+	dir=direction
+	dirtype=dt
 
 /datum/pipe_info/proc/Render(dispenser,label)
 	return "<li><a href='?src=\ref[dispenser];makepipe=[id];dir=[dir];type=[dirtype]'>[label]</a></li>"
@@ -68,10 +68,10 @@ var/global/list/disposalpipeID2State=list(
 	icon_state = "meterX"
 
 /datum/pipe_info/disposal/New(var/pid,var/dt)
-	src.id=pid
-	src.icon_state=disposalpipeID2State[pid+1]
-	src.dir=2
-	src.dirtype=dt
+	id=pid
+	icon_state=disposalpipeID2State[pid+1]
+	dir=2
+	dirtype=dt
 	if(pid<DISP_END_BIN || pid>DISP_END_CHUTE)
 		icon_state = "con[icon_state]"
 
@@ -462,7 +462,7 @@ var/global/list/RPD_recipes=list(
 		handle_failed_topic(usr)
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	handle_topic(href, href_list)
 
 /obj/item/weapon/pipe_dispenser/proc/handle_topic(href, href_list)
@@ -470,7 +470,7 @@ var/global/list/RPD_recipes=list(
 		usr << browse(null, "window=pipedispenser")
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["screen"])
 		screen = text2num(href_list["screen"])
 		show_menu(usr)
@@ -484,7 +484,7 @@ var/global/list/RPD_recipes=list(
 		p_class = EATING_MODE
 		p_conntype=-1
 		p_dir=1
-		src.spark_system.start()
+		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
@@ -492,13 +492,13 @@ var/global/list/RPD_recipes=list(
 		p_class = PAINT_MODE
 		p_conntype = -1
 		p_dir = 1
-		src.spark_system.start()
+		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
 	if(href_list["set_color"])
 		paint_color = href_list["set_color"]
-		src.spark_system.start()
+		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
@@ -507,7 +507,7 @@ var/global/list/RPD_recipes=list(
 		p_dir = text2num(href_list["dir"])
 		p_conntype = text2num(href_list["type"])
 		p_class = ATMOS_MODE
-		src.spark_system.start()
+		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
@@ -515,7 +515,7 @@ var/global/list/RPD_recipes=list(
 		p_class = METER_MODE
 		p_conntype = -1
 		p_dir = 1
-		src.spark_system.start()
+		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 
@@ -524,7 +524,7 @@ var/global/list/RPD_recipes=list(
 		p_conntype = text2num(href_list["type"])
 		p_dir = 1
 		p_class = DISPOSALS_MODE
-		src.spark_system.start()
+		spark_system.start()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 50, 0)
 		show_menu(usr)
 

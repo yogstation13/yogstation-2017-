@@ -52,32 +52,32 @@ Buildable meters
 /obj/item/pipe/New(loc, pipe_type, dir, obj/machinery/atmospherics/make_from)
 	..()
 	if(make_from)
-		src.dir = make_from.dir
-		src.pipename = make_from.name
-		src.color = make_from.color
+		dir = make_from.dir
+		pipename = make_from.name
+		color = make_from.color
 
 		if(make_from.type in pipe_types)
-			src.pipe_type = make_from.type
+			pipe_type = make_from.type
 		else //make pipe_type a value we can work with
 			for(var/P in pipe_types)
 				if(istype(make_from, P))
-					src.pipe_type = P
+					pipe_type = P
 					break
 
 		var/obj/machinery/atmospherics/components/trinary/triP = make_from
 		if(istype(triP) && triP.flipped)
-			src.flipped = 1
-			src.dir = turn(src.dir, -45)
+			flipped = 1
+			dir = turn(dir, -45)
 	else
-		src.pipe_type = pipe_type
-		src.dir = dir
+		pipe_type = pipe_type
+		dir = dir
 
-	if(src.dir in diagonals)
+	if(dir in diagonals)
 		is_bent = 1
 
 	update()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 //update the name and icon of the pipe item depending on the type
 var/global/list/pipeID2State = list(
@@ -144,7 +144,7 @@ var/global/list/pipeID2State = list(
 	if ( usr.stat || usr.restrained() || !usr.canmove )
 		return
 
-	src.dir = turn(src.dir, -90)
+	dir = turn(dir, -90)
 
 	fixdir()
 
@@ -159,11 +159,11 @@ var/global/list/pipeID2State = list(
 		return
 
 	if (pipe_type in list(PIPE_GAS_FILTER, PIPE_GAS_MIXER))
-		src.dir = turn(src.dir, flipped ? 45 : -45)
+		dir = turn(dir, flipped ? 45 : -45)
 		flipped = !flipped
 		return
 
-	src.dir = turn(src.dir, -180)
+	dir = turn(dir, -180)
 
 	fixdir()
 
@@ -204,18 +204,18 @@ var/global/list/pipeID2State = list(
 /obj/item/pipe/attackby(obj/item/weapon/W, mob/user, params)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
-	if (!isturf(src.loc))
+	if (!isturf(loc))
 		return 1
 
 	fixdir()
 	if(pipe_type in list(PIPE_GAS_MIXER, PIPE_GAS_FILTER))
 		dir = unflip(dir)
 
-	var/obj/machinery/atmospherics/A = new pipe_type(src.loc)
-	A.dir = src.dir
+	var/obj/machinery/atmospherics/A = new pipe_type(loc)
+	A.dir = dir
 	A.SetInitDirections()
 
-	for(var/obj/machinery/atmospherics/M in src.loc)
+	for(var/obj/machinery/atmospherics/M in loc)
 		if(M == A) //we don't want to check to see if it interferes with itself
 			continue
 		if(M.GetInitDirections() & A.GetInitDirections())	// matches at least one direction on either type of pipe
@@ -233,7 +233,7 @@ var/global/list/pipeID2State = list(
 	A.construction(pipe_type, color)
 	A.placedby = user.ckey
 
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 	user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
@@ -267,10 +267,10 @@ var/global/list/pipeID2State = list(
 
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
-	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
+	if(!locate(/obj/machinery/atmospherics/pipe, loc))
 		to_chat(user, "<span class='warning'>You need to fasten it to a pipe!</span>")
 		return 1
-	new/obj/machinery/meter( src.loc )
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	new/obj/machinery/meter( loc )
+	playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You fasten the meter to the pipe.</span>")
 	qdel(src)

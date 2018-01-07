@@ -20,12 +20,12 @@
 	Radio = new/obj/item/device/radio(src)
 	Radio.listening = 0
 	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
+		machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
 		var/t
 		for(var/obj/machinery/door/airlock/d in range(5,src))
 			t = d.id_tag
-			if(t == src.door_tag)
-				src.release_door = d
+			if(t == door_tag)
+				release_door = d
 		if (machine && release_door)
 			machine.CONSOLE = src
 		else
@@ -73,7 +73,7 @@
 
 /obj/machinery/mineral/labor_claim_console/Topic(href, href_list)
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["choice"])
 		if(istype(inserted_id)) //Sanity check against href spoofs
 			if(href_list["choice"] == "eject")
@@ -120,7 +120,7 @@
 				else
 					to_chat(usr, "<span class='warning'>Prisoners are only allowed to be released while alone.</span>")
 
-		src.updateUsrDialog()
+		updateUsrDialog()
 	return
 
 

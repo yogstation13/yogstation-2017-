@@ -25,9 +25,9 @@
 	var/image/I = new('icons/mob/blob.dmi', "blob")
 	if(overmind)
 		I.color = overmind.blob_reagent_datum.color
-	src.overlays += I
+	overlays += I
 	var/image/C = new('icons/mob/blob.dmi', "blob_node_overlay")
-	src.overlays += C
+	overlays += C
 
 /obj/effect/blob/node/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return

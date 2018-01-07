@@ -124,8 +124,8 @@
 		mmi.icon_state = "mmi_full"
 		mmi.name = "Man-Machine Interface: [real_name]"
 		mmi.brainmob = new(mmi)
-		mmi.brainmob.name = src.real_name
-		mmi.brainmob.real_name = src.real_name
+		mmi.brainmob.name = real_name
+		mmi.brainmob.real_name = real_name
 		mmi.brainmob.container = mmi
 
 	updatename()
@@ -218,7 +218,7 @@
 	robot_skin = skinOptions[selected_skin]
 	if(robot_skin.transform_animation_length)
 		icon = robot_skin.transform_animation_icon
-		src.dir = SOUTH
+		dir = SOUTH
 		notransform = 1
 		flick(robot_skin.transform_animation_icon_state, src)
 		sleep(robot_skin.transform_animation_length)
@@ -568,7 +568,7 @@
 		var/obj/item/borg/upgrade/U = W
 		if(!opened)
 			to_chat(user, "<span class='warning'>You must access the borgs internals!</span>")
-		else if(!src.module && U.require_module)
+		else if(!module && U.require_module)
 			to_chat(user, "<span class='warning'>The borg must choose a module before it can be upgraded!</span>")
 		else if(U.locked)
 			to_chat(user, "<span class='warning'>The upgrade is locked and cannot be used yet!</span>")
@@ -887,15 +887,15 @@
 
 #define BORG_CAMERA_BUFFER 30
 /mob/living/silicon/robot/Move(a, b, flag)
-	var/oldLoc = src.loc
+	var/oldLoc = loc
 	. = ..()
 	if(.)
-		if(src.camera)
+		if(camera)
 			if(!updating)
 				updating = 1
 				spawn(BORG_CAMERA_BUFFER)
-					if(oldLoc != src.loc)
-						cameranet.updatePortableCamera(src.camera)
+					if(oldLoc != loc)
+						cameranet.updatePortableCamera(camera)
 					updating = 0
 	if(module)
 		if(module.type == /obj/item/weapon/robot_module/janitor)
@@ -943,24 +943,24 @@
 	if(emagged)
 		if(mmi)
 			qdel(mmi)
-		explosion(src.loc,1,2,4,flame_range = 2)
+		explosion(loc,1,2,4,flame_range = 2)
 	else
-		explosion(src.loc,-1,0,2)
+		explosion(loc,-1,0,2)
 	gib()
 	return
 
 /mob/living/silicon/robot/proc/UnlinkSelf()
-	if(src.connected_ai)
+	if(connected_ai)
 		connected_ai.connected_robots -= src
-		src.connected_ai = null
+		connected_ai = null
 	lawupdate = 0
 	lockcharge = 0
 	canmove = 1
 	scrambledcodes = 1
 	//Disconnect it's camera so it's not so easily tracked.
-	if(src.camera)
-		qdel(src.camera)
-		src.camera = null
+	if(camera)
+		qdel(camera)
+		camera = null
 		// I'm trying to get the Cyborg to not be listed in the camera list
 		// Instead of being listed as "deactivated". The downside is that I'm going
 		// to have to check if every camera is null or not before doing anything, to prevent runtime errors.
@@ -976,7 +976,7 @@
 	if(R)
 		R.UnlinkSelf()
 		to_chat(R, "Buffers flushed and reset. Camera system shutdown.  All systems operational.")
-		src.verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
+		verbs -= /mob/living/silicon/robot/proc/ResetSecurityCodes
 
 /mob/living/silicon/robot/mode()
 	set name = "Activate Held Object"
@@ -1004,8 +1004,8 @@
 /mob/living/silicon/robot/proc/SetEmagged(new_state)
 	emagged = new_state
 	if(new_state)
-		if(src.module)
-			src.module.on_emag()
+		if(module)
+			module.on_emag()
 	else
 		if (module)
 			uneq_module(module.emag)

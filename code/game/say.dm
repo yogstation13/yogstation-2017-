@@ -16,7 +16,7 @@ var/list/freqtospan = list(
 	"1337" = "centcomradio"
 	)
 
-/atom/movable/proc/say(message, languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
+/atom/movable/proc/say(message, languages = languages_spoken) //if you change languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	if(!can_speak())
 		return
 	if(message == "" || !message)
@@ -30,7 +30,7 @@ var/list/freqtospan = list(
 /atom/movable/proc/can_speak()
 	return 1
 
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
+/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, languages = languages_spoken) //if you change languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	var/rendered = compose_message(src, languages, message, , spans)
 	for(var/atom/movable/AM in get_hearers_in_view(range, src))
 		AM.Hear(rendered, src, languages, message, , spans)

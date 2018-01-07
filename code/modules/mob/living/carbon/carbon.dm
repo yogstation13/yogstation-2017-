@@ -19,7 +19,7 @@
 	return ..()
 
 /mob/living/carbon/relaymove(mob/user, direction)
-	if(user in src.stomach_contents)
+	if(user in stomach_contents)
 		if(prob(40))
 			if(prob(25))
 				audible_message("<span class='warning'>You hear something rumbling inside [src]'s stomach...</span>", \
@@ -37,16 +37,16 @@
 							H.update_damage_overlays(0)
 					H.updatehealth()
 				else
-					src.take_organ_damage(d)
+					take_organ_damage(d)
 				visible_message("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>", \
 									"<span class='userdanger'>[user] attacks your stomach wall with the [I.name]!</span>")
 				playsound(user.loc, 'sound/effects/attackblob.ogg', 50, 1)
 
-				if(prob(src.getBruteLoss() - 50))
+				if(prob(getBruteLoss() - 50))
 					for(var/atom/movable/A in stomach_contents)
 						A.loc = loc
 						stomach_contents.Remove(A)
-					src.gib()
+					gib()
 
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, override = 0, tesla_shock = 0)
@@ -60,8 +60,8 @@
 	if(reagents.has_reagent("teslium"))
 		shock_damage *= 1.5 //If the mob has teslium in their body, shocks are 50% more damaging!
 	take_overall_damage(0,shock_damage)
-	//src.adjustFireLoss(shock_damage)
-	//src.updatehealth()
+	//adjustFireLoss(shock_damage)
+	//updatehealth()
 	visible_message(
 		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock coursing through your body!</span>", \
@@ -84,23 +84,23 @@
 
 
 /mob/living/carbon/swap_hand()
-	var/obj/item/item_in_hand = src.get_active_hand()
+	var/obj/item/item_in_hand = get_active_hand()
 	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand,/obj/item/weapon/twohanded))
 			if(item_in_hand:wielded == 1)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
-	src.hand = !( src.hand )
+	hand = !( hand )
 	if(hud_used && hud_used.inv_slots[slot_l_hand] && hud_used.inv_slots[slot_r_hand])
 		var/obj/screen/inventory/hand/H
 		H = hud_used.inv_slots[slot_l_hand]
 		H.update_icon()
 		H = hud_used.inv_slots[slot_r_hand]
 		H.update_icon()
-	/*if (!( src.hand ))
-		src.hands.dir = NORTH
+	/*if (!( hand ))
+		hands.dir = NORTH
 	else
-		src.hands.dir = SOUTH*/
+		hands.dir = SOUTH*/
 	return
 
 /mob/living/carbon/activate_hand(selhand) //0 or "r" or "right" for right hand; 1 or "l" or "left" for left hand.
@@ -113,7 +113,7 @@
 		if(selhand == "left" || selhand == "l")
 			selhand = 1
 
-	if(selhand != src.hand)
+	if(selhand != hand)
 		swap_hand()
 	else
 		mode() // Activate held item
@@ -230,7 +230,7 @@
 		return
 
 	var/atom/movable/thrown_thing
-	var/obj/item/I = src.get_active_hand()
+	var/obj/item/I = get_active_hand()
 
 	if(!I)
 		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
@@ -318,7 +318,7 @@
 		loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
 
 /mob/living/carbon/is_muzzled()
-	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
+	return(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 
 /mob/living/carbon/blob_act(obj/effect/blob/B)
 	if (stat == DEAD)
@@ -764,7 +764,7 @@
 		drop_r_hand()
 		drop_l_hand()
 		stop_pulling()
-		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
+		throw_alert("handcuffed", /obj/screen/alert/restrained/handcuffed, new_master = handcuffed)
 	else
 		clear_alert("handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.

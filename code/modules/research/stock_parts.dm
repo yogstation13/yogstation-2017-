@@ -47,7 +47,7 @@
 				play_rped_sound()
 				user.Beam(dest_object,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5,alphafade=1)
 				return 1
-		to_chat(user, "The [src.name] buzzes.")
+		to_chat(user, "The [name] buzzes.")
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 0)
 	return 0
 
@@ -72,8 +72,8 @@
 
 /obj/item/weapon/stock_parts/New()
 	..()
-	src.pixel_x = rand(-5, 5)
-	src.pixel_y = rand(-5, 5)
+	pixel_x = rand(-5, 5)
+	pixel_y = rand(-5, 5)
 
 //Rating 1
 

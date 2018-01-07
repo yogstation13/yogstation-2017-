@@ -274,7 +274,7 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(!src.Adjacent(user))
+	if(!Adjacent(user))
 		return 0
 	if(user && electrocute_mob(user, src, src))
 		return 1

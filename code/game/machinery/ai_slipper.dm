@@ -24,17 +24,17 @@
 			stat |= NOPOWER
 
 /obj/machinery/ai_slipper/proc/setState(enabled, uses)
-	src.disabled = disabled
-	src.uses = uses
-	src.power_change()
+	disabled = disabled
+	uses = uses
+	power_change()
 
 /obj/machinery/ai_slipper/attackby(obj/item/weapon/W, mob/user, params)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if (issilicon(user))
-		return src.attack_hand(user)
+		return attack_hand(user)
 	else // trying to unlock the interface
-		if (src.allowed(user))
+		if (allowed(user))
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [ locked ? "lock" : "unlock"] the device.</span>")
 			if (locked)
@@ -43,7 +43,7 @@
 					user << browse(null, "window=ai_slipper")
 			else
 				if (user.machine==src)
-					src.attack_hand(user)
+					attack_hand(user)
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 
@@ -76,25 +76,25 @@
 /obj/machinery/ai_slipper/Topic(href, href_list)
 	if(..())
 		return
-	if (src.locked)
+	if (locked)
 		if (!(istype(usr, /mob/living/silicon)|| IsAdminGhost(usr)))
 			to_chat(usr, "Control panel is locked!")
 			return
 	if (href_list["toggleOn"])
-		src.disabled = !src.disabled
-		icon_state = src.disabled? "motion0":"motion3"
+		disabled = !disabled
+		icon_state = disabled? "motion0":"motion3"
 	if (href_list["toggleUse"])
 		if(cooldown_on || disabled)
 			return
 		else
 			PoolOrNew(/obj/effect/particle_effect/foam, loc)
-			src.uses--
+			uses--
 			cooldown_on = 1
 			cooldown_time = world.timeofday + 100
 			slip_process()
 			return
 
-	src.attack_hand(usr)
+	attack_hand(usr)
 	return
 
 /obj/machinery/ai_slipper/proc/slip_process()
@@ -111,5 +111,5 @@
 		return
 	if (uses >= 0)
 		cooldown_on = 0
-	src.power_change()
+	power_change()
 	return

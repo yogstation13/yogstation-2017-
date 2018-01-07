@@ -86,7 +86,7 @@
 
 /obj/machinery/computer/operating/interact(mob/user)
 	var/dat = ""
-	switch(src.menu)
+	switch(menu)
 		if(1)
 			dat += "<a href='byond://?src=\ref[src];refresh=1'>Refresh</a><BR>"
 			dat += "<a href='byond://?src=\ref[src];menu=2'><< Switch Mode >></a><br>"
@@ -115,7 +115,7 @@
 
 			if (case)
 				var/obj/item/weapon/implantcase/IC = new /obj/item/weapon/implantcase
-				if(src.case.imp)
+				if(case.imp)
 					usr << browse_rsc(icon(IC.icon,"implantcase-r"), "implantcase.png")
 				else
 					usr << browse_rsc(icon(IC.icon,"implantcase-0"), "implantcase.png")
@@ -125,7 +125,7 @@
 
 			dat += "<BR><a href='byond://?src=\ref[src];checkaccess=1'><< Open Database >></a>"
 
-			dat += "<BR>[src.scanmsg]"
+			dat += "<BR>[scanmsg]"
 		if(3)
 			var/something = get_database_info()
 			dat += "<a href='byond://?src=\ref[src];refresh=1'>Refresh</a><BR><BR>"
@@ -231,7 +231,7 @@
 
 			if("eject")
 				if(cube)
-					cube.loc = src.loc
+					cube.loc = loc
 					cube = null
 				updateUsrDialog()
 
@@ -239,20 +239,20 @@
 		switch(href_list["icase"])
 			if("scan")
 				if (!case)
-					src.scanmsg = "<BR><font class='bad'>Scan error.</font>"
-					src.updateUsrDialog()
+					scanmsg = "<BR><font class='bad'>Scan error.</font>"
+					updateUsrDialog()
 					return
 
 				if(!case.imp)
-					src.scanmsg = "<BR><font class='bad'>Scan error.</font>"
-					src.updateUsrDialog()
+					scanmsg = "<BR><font class='bad'>Scan error.</font>"
+					updateUsrDialog()
 					return
 
 				for(var/obj/item/weapon/implant/theimplant in case)
 
 					if(locate(case.imp) in implants)
-						src.scanmsg = "<font class='bad'><BR>Scan error. Implant is already in the database.</font>"
-						src.updateUsrDialog()
+						scanmsg = "<font class='bad'><BR>Scan error. Implant is already in the database.</font>"
+						updateUsrDialog()
 						return
 
 					theimplant = case.imp
@@ -264,23 +264,23 @@
 				updateUsrDialog()
 
 			if("eject")
-				if(src.case)
-					src.case.loc = src.loc
-					src.case = null
-				src.updateUsrDialog()
+				if(case)
+					case.loc = loc
+					case = null
+				updateUsrDialog()
 
 
 	else if (href_list["menu"])
-		src.menu = text2num(href_list["menu"])
-		src.updateUsrDialog()
+		menu = text2num(href_list["menu"])
+		updateUsrDialog()
 
 
 	else if (href_list["refresh"])
-		src.updateUsrDialog()
+		updateUsrDialog()
 
 	else if (href_list["checkaccess"])
 		if(ishuman(usr)) // AI's and borgs will surpass this check.
-			src.scanID()
+			scanID()
 		menu = 3
 		updateUsrDialog()
 
@@ -300,32 +300,32 @@
 	return
 
 /obj/machinery/computer/operating/attackby(obj/item/W, mob/user, params)
-	if(src.menu == 2)
+	if(menu == 2)
 		if (istype(W, /obj/item/weapon/storage/handcooler/cubicle) && !istype(W, /obj/item/weapon/storage/handcooler/cubicle/multi))
-			if(!src.cube)
+			if(!cube)
 				if(!user.drop_item())
 					return ..()
 				W.loc = src
-				src.cube = W
-				src.cube.loc = W.loc
+				cube = W
+				cube.loc = W.loc
 				to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
-				src.updateUsrDialog()
+				updateUsrDialog()
 				return
 
 		if (istype(W, /obj/item/weapon/implantcase))
-			if(!src.case)
+			if(!case)
 				if(!user.drop_item())
 					return ..()
 				W.loc = src
-				src.case = W
+				case = W
 				to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
-				src.updateUsrDialog()
+				updateUsrDialog()
 				return
 
 	else if (istype(W, /obj/item/weapon/storage/handcooler/cubicle) || istype(W, /obj/item/weapon/implantcase))
-		src.menu = 2
+		menu = 2
 		interact(user)
-		src.updateUsrDialog()
+		updateUsrDialog()
 
 	else
 		..()

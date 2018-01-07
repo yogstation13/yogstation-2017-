@@ -63,7 +63,7 @@
 
 /mob/living/simple_animal/shade/examine(mob/user)
 	. = ..()
-	if((iscultist(user) || iswizard(user)) && (!src.key || !src.client))
+	if((iscultist(user) || iswizard(user)) && (!key || !client))
 		to_chat(user, "<span class='danger'>You can also tell that they've lost all conscious awareness and have become as engaging as a blank wall.</span>")
 
 /mob/living/simple_animal/shade/proc/set_affiliation(var/_affiliation)

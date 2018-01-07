@@ -50,8 +50,8 @@
 	if(disguise == null)
 		return
 	stealth_active = 1
-	if(istype(src.loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = src.loc
+	if(istype(loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = loc
 		spawn(0)
 			anim(M.loc,M,'icons/mob/mob.dmi',,"cloak",,M.dir)
 
@@ -67,8 +67,8 @@
 	if(!stealth_active)
 		return
 	stealth_active = 0
-	if(istype(src.loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/M = src.loc
+	if(istype(loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/M = loc
 		spawn(0)
 			anim(M.loc,M,'icons/mob/mob.dmi',,"uncloak",,M.dir)
 		M.name_override = null
@@ -95,11 +95,11 @@
 				ActivateStealth()
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/Adrenaline()
-	if(istype(src.loc, /mob/living/carbon/human))
+	if(istype(loc, /mob/living/carbon/human))
 		if(combat_cooldown != initial(combat_cooldown))
-			to_chat(src.loc, "<span class='warning'>Combat injection is still recharging.</span>")
+			to_chat(loc, "<span class='warning'>Combat injection is still recharging.</span>")
 			return
-		var/mob/living/carbon/human/M = src.loc
+		var/mob/living/carbon/human/M = loc
 		M.adjustStaminaLoss(-75)
 		M.SetParalysis(0)
 		M.SetStunned(0)
@@ -654,9 +654,9 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/structure/table_frame/abductor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 30/I.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			for(var/i = 1, i <= framestackamount, i++)
 				new framestack(get_turf(src))
 			qdel(src)
@@ -669,7 +669,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
 		if(do_after(user, 50, target = src))
 			P.use(1)
-			new /obj/structure/table/abductor(src.loc)
+			new /obj/structure/table/abductor(loc)
 			qdel(src)
 		return
 
@@ -710,7 +710,7 @@ Congratulations! You are now trained for xenobiology research!"}
 		if(WT.remove_fuel(0,user))
 			user.visible_message("<span class='warning'>[user] disassembles the airlock assembly.</span>", \
 								"You start to disassemble the airlock assembly...")
-			playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+			playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 			if(do_after(user, 40/W.toolspeed, target = src))
 				if( !WT.isOn() )
 					return

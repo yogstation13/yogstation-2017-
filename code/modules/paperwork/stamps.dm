@@ -77,7 +77,7 @@
 
 /obj/item/weapon/stamp/chameleon/attack_self(mob/user)
 
-	var/list/stamp_types = typesof(/obj/item/weapon/stamp) - src.type // Get all stamp types except our own
+	var/list/stamp_types = typesof(/obj/item/weapon/stamp) - type // Get all stamp types except our own
 
 	var/list/stamp_names = list()
 	// Generate them into a list

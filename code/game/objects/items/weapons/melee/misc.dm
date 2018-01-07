@@ -17,7 +17,7 @@
 	materials = list(MAT_METAL = 1000)
 
 /obj/item/weapon/melee/chainofcommand/suicide_act(mob/user)
-		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [name]! It looks like \he's trying to commit suicide.</span>")
 		return (OXYLOSS)
 
 
@@ -63,7 +63,7 @@
 				playsound(get_turf(src), 'sound/effects/woodhit.ogg', 75, 1, -1)
 				target.Weaken(3)
 				add_logs(user, target, "stunned", src)
-				src.add_fingerprint(user)
+				add_fingerprint(user)
 				target.visible_message("<span class ='danger'>[user] has knocked down [target] with \the [src]!</span>", \
 					"<span class ='userdanger'>[user] has knocked down [target] with \the [src]!</span>")
 				if(!iscarbon(user))
@@ -97,7 +97,7 @@
 
 	user.visible_message("<span class='suicide'>[user] stuffs the [src] up their nose and presses the 'extend' button! It looks like they're trying to clear their mind.</span>")
 	if(!on)
-		src.attack_self(user)
+		attack_self(user)
 	else
 		playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
 		add_fingerprint(user)
@@ -128,7 +128,7 @@
 		force = 0 //not so robust now
 		attack_verb = list("hit", "poked")
 
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	add_fingerprint(user)
 
 /obj/item/weapon/melee/supermatter_sword
@@ -152,10 +152,10 @@
 	visible_message("<span class='warning'>\The [src] appears, balanced ever so perfectly on its hilt. This isn't ominous at all.</span>")
 
 /obj/item/weapon/melee/supermatter_sword/process()
-	if(balanced || throwing || ismob(src.loc) || isnull(src.loc))
+	if(balanced || throwing || ismob(loc) || isnull(loc))
 		return
-	if(!isturf(src.loc))
-		var/atom/target = src.loc
+	if(!isturf(loc))
+		var/atom/target = loc
 		loc = target.loc
 		consume_everything(target)
 	else
@@ -174,7 +174,7 @@
 	..()
 	if(ismob(target))
 		var/mob/M
-		if(src.loc == M)
+		if(loc == M)
 			M.drop_item()
 	consume_everything(target)
 

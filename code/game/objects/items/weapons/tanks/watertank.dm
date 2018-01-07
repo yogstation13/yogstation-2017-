@@ -74,13 +74,13 @@
 	return ..()
 
 /obj/item/weapon/watertank/attack_hand(mob/user)
-	if(src.loc == user)
+	if(loc == user)
 		ui_action_click()
 		return
 	..()
 
 /obj/item/weapon/watertank/MouseDrop(obj/over_object)
-	var/mob/M = src.loc
+	var/mob/M = loc
 	if(istype(M) && istype(over_object, /obj/screen/inventory/hand))
 		var/obj/screen/inventory/hand/H = over_object
 		switch(H.slot_id)
@@ -322,9 +322,9 @@
 
 /obj/effect/nanofrost_container/proc/Smoke()
 	var/datum/effect_system/smoke_spread/freezing/S = new
-	S.set_up(2, src.loc, blasting=1)
+	S.set_up(2, loc, blasting=1)
 	S.start()
-	var/obj/effect/decal/cleanable/flour/F = new /obj/effect/decal/cleanable/flour(src.loc)
+	var/obj/effect/decal/cleanable/flour/F = new /obj/effect/decal/cleanable/flour(loc)
 	F.color = "#B2FFFF"
 	F.name = "nanofrost residue"
 	F.desc = "Residue left behind from a nanofrost detonation. Perhaps there was a fire here?"

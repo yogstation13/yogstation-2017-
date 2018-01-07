@@ -63,7 +63,7 @@
 
 	// Set creator
 	if(creator)
-		src.creator = creator
+		creator = creator
 
 /mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
 	if(can_be_seen(NewLoc))

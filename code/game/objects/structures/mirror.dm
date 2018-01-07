@@ -97,7 +97,7 @@
 		if(damage)
 			shatter()
 	else if(sound_effect)
-		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+		playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 
 /obj/structure/mirror/proc/attack_generic(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)

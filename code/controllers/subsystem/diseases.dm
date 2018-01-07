@@ -15,9 +15,9 @@ var/datum/subsystem/diseases/SSdisease
 
 /datum/subsystem/diseases/fire(resumed = 0)
 	if(!resumed)
-		src.currentrun = processing.Copy()
+		currentrun = processing.Copy()
 	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
+	var/list/currentrun = currentrun
 
 	while(currentrun.len)
 		var/datum/thing = currentrun[currentrun.len]

@@ -42,39 +42,39 @@
 			C.put_in_hands(B1)
 			C.put_in_hands(B2)
 			C.regenerate_icons()
-		src.notransform = TRUE
+		notransform = TRUE
 		spawn(0)
 			bloodpool_sink(B)
-			src.notransform = FALSE
+			notransform = FALSE
 		return 1
 
 /mob/living/proc/bloodpool_sink(obj/effect/decal/cleanable/B)
-	var/turf/mobloc = get_turf(src.loc)
+	var/turf/mobloc = get_turf(loc)
 	var/obj/item/weapon/disk/nuclear/nukedisk = null
 	var/list/all_items = GetAllContents()
 
-	src.visible_message("<span class='warning'>[src] sinks into the pool of blood!</span>")
+	visible_message("<span class='warning'>[src] sinks into the pool of blood!</span>")
 	playsound(get_turf(src), 'sound/magic/enter_blood.ogg', 100, 1, -1)
 	for(var/obj/I in all_items) //Check for items
 		if(istype(I, /obj/item/weapon/disk/nuclear))
 			nukedisk = I
 			unEquip(nukedisk)
-			nukedisk.forceMove(get_turf(src.loc))
-			src.visible_message("<span class='warning'>[nukedisk] appears on the ground!</span>")
+			nukedisk.forceMove(get_turf(loc))
+			visible_message("<span class='warning'>[nukedisk] appears on the ground!</span>")
 	// Extinguish, unbuckle, stop being pulled, set our location into the
 	// dummy object
 	var/obj/effect/dummy/slaughter/holder = PoolOrNew(/obj/effect/dummy/slaughter,mobloc)
-	src.ExtinguishMob()
+	ExtinguishMob()
 
 	// Keep a reference to whatever we're pulling, because forceMove()
 	// makes us stop pulling
-	var/pullee = src.pulling
+	var/pullee = pulling
 
-	src.holder = holder
-	src.forceMove(holder)
+	holder = holder
+	forceMove(holder)
 
 	// if we're not pulling anyone, or we can't eat anyone
-	if(!pullee || src.bloodcrawl != BLOODCRAWL_EAT)
+	if(!pullee || bloodcrawl != BLOODCRAWL_EAT)
 		return
 
 	// if the thing we're pulling isn't alive
@@ -85,12 +85,12 @@
 	var/kidnapped = FALSE
 
 	if(victim.stat == CONSCIOUS)
-		src.visible_message("<span class='warning'>[victim] kicks free of the blood pool just before entering it!</span>", null, "<span class='notice'>You hear splashing and struggling.</span>")
+		visible_message("<span class='warning'>[victim] kicks free of the blood pool just before entering it!</span>", null, "<span class='notice'>You hear splashing and struggling.</span>")
 	else if(victim.reagents && victim.reagents.has_reagent("demonsblood"))
 		visible_message("<span class='warning'>Something prevents [victim] from entering the pool!</span>", "<span class='warning'>A strange force is blocking [victim] from entering!</span>", "<span class='notice'>You hear a splash and a thud.</span>")
 	else
 		victim.emote("scream")
-		src.visible_message("<span class='warning'><b>[src] drags [victim] into the pool of blood!</b></span>", null, "<span class='notice'>You hear a splash.</span>")
+		visible_message("<span class='warning'><b>[src] drags [victim] into the pool of blood!</b></span>", null, "<span class='notice'>You hear a splash.</span>")
 		victim.forceMove(src)
 		kidnapped = TRUE
 
@@ -136,7 +136,7 @@
 		return TRUE
 
 	to_chat(src, "<span class='danger'>You devour [victim]. Your health is fully restored.</span>")
-	src.revive(full_heal = 1)
+	revive(full_heal = 1)
 
 	// No defib possible after laughter
 	victim.adjustBruteLoss(1000)
@@ -155,18 +155,18 @@
 
 /mob/living/proc/exit_blood_effect(obj/effect/decal/cleanable/B)
 	playsound(get_turf(src), 'sound/magic/exit_blood.ogg', 100, 1, -1)
-	var/oldcolor = src.color
+	var/oldcolor = color
 	//Makes the mob have the color of the blood pool it came out of
 	if(istype(B, /obj/effect/decal/cleanable/xenoblood))
-		src.color = rgb(43, 186, 0)
+		color = rgb(43, 186, 0)
 	else
-		src.color = rgb(149, 10, 10)
+		color = rgb(149, 10, 10)
 	// but only for a few seconds
 	spawn(30)
-		src.color = oldcolor
+		color = oldcolor
 
 /mob/living/proc/phasein(obj/effect/decal/cleanable/B)
-	if(src.notransform)
+	if(notransform)
 		to_chat(src, "<span class='warning'>Finish eating first!</span>")
 		return 0
 	B.visible_message("<span class='warning'>[B] begins to bubble...</B>")

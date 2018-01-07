@@ -110,16 +110,16 @@
 	if(victim)
 		to_chat(src, "<span class='warning'>You cannot do this whilst you are infecting a host</span>")
 
-	if(src.stat != CONSCIOUS)
+	if(stat != CONSCIOUS)
 		return
 
-	if (src.layer != TURF_LAYER+0.2)
-		src.layer = TURF_LAYER+0.2
-		src.visible_message("<span class='name'>[src] scurries to the ground!</span>", \
+	if (layer != TURF_LAYER+0.2)
+		layer = TURF_LAYER+0.2
+		visible_message("<span class='name'>[src] scurries to the ground!</span>", \
 						"<span class='noticealien'>You are now hiding.</span>")
 	else
-		src.layer = MOB_LAYER
-		src.visible_message("[src] slowly peaks up from the ground...", \
+		layer = MOB_LAYER
+		visible_message("[src] slowly peaks up from the ground...", \
 					"<span class='noticealien'>You stop hiding.</span>")
 
 /mob/living/simple_animal/borer/verb/dominate_victim()
@@ -135,7 +135,7 @@
 		to_chat(src, "<span class='warning'>You cannot do that from within a host body.</span>")
 		return
 
-	if(src.stat != CONSCIOUS)
+	if(stat != CONSCIOUS)
 		to_chat(src, "<span class='warning'>You cannot do that in your current state.</span>")
 		return
 
@@ -158,7 +158,7 @@
 		to_chat(src, "<span class='warning'>You cannot paralyze someone who is already infected!</span>")
 		return
 
-	src.layer = MOB_LAYER
+	layer = MOB_LAYER
 
 	to_chat(src, "<span class='warning'>You focus your psychic lance on [M] and freeze their limbs with a wave of terrible dread.</span>")
 	to_chat(M, "<span class='userdanger'>You feel a creeping, horrible sense of dread come over you, freezing your limbs and setting your heart racing.</span>")
@@ -198,7 +198,7 @@
 		if(!leaving) return
 		if(controlling) return
 
-		if(src.stat != CONSCIOUS)
+		if(stat != CONSCIOUS)
 			to_chat(src, "<span class='userdanger'>You cannot release your host in your current state.</span>")
 			return
 
@@ -251,7 +251,7 @@
 		victim.med_hud_set_status()
 		victim.med_hud_set_health()
 		victim.stat = CONSCIOUS
-		log_game("[src]/([src.ckey]) has revived [victim]/([victim.ckey]")
+		log_game("[src]/([ckey]) has revived [victim]/([victim.ckey]")
 		chemicals -= 250
 		to_chat(src, "<span class='notice'>You send a jolt of energy to your host, reviving them!</span>")
 		victim.grab_ghost(force = TRUE) //brings the host back, no eggscape
@@ -266,7 +266,7 @@
 		to_chat(src, "<span class='warning'>You are not inside a host body.</span>")
 		return
 
-	if(src.stat != CONSCIOUS)
+	if(stat != CONSCIOUS)
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
@@ -300,7 +300,7 @@
 		else
 
 
-			log_game("[src]/([src.ckey]) assumed control of [victim]/([victim.ckey] with borer powers.")
+			log_game("[src]/([ckey]) assumed control of [victim]/([victim.ckey] with borer powers.")
 			to_chat(src, "<span class='warning'>You plunge your probosci deep into the cortex of the host brain, interfacing directly with their nervous system.</span>")
 			to_chat(victim, "<span class='userdanger'>You feel a strange shifting sensation behind your eyes as an alien consciousness displaces yours.</span>")
 
@@ -327,13 +327,13 @@
 				host_brain.lastKnownIP = h2b_ip
 
 			// self -> host
-			var/s2h_id = src.computer_id
-			var/s2h_ip= src.lastKnownIP
-			src.computer_id = null
-			src.lastKnownIP = null
+			var/s2h_id = computer_id
+			var/s2h_ip= lastKnownIP
+			computer_id = null
+			lastKnownIP = null
 
-			victim.ckey = src.ckey
-			victim.mind = src.mind
+			victim.ckey = ckey
+			victim.mind = mind
 
 			if(!victim.computer_id)
 				victim.computer_id = s2h_id
@@ -357,7 +357,7 @@
 		to_chat(src, "<span class='warning'>You are not inside a host body.</span>")
 		return
 
-	if(src.stat != CONSCIOUS)
+	if(stat != CONSCIOUS)
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
@@ -389,7 +389,7 @@
 		if("Stun")
 			victim.Weaken(10)
 
-	log_game("[src]/([src.ckey]) punished [victim]/([victim.ckey] with [punishment]")
+	log_game("[src]/([ckey]) punished [victim]/([victim.ckey] with [punishment]")
 
 	chemicals -= 75
 
@@ -442,7 +442,7 @@ mob/living/carbon/proc/release_control()
 		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 		visible_message("<span class='danger'>[src] heaves violently, expelling a rush of vomit and a wriggling, sluglike creature!</span>")
 
-		log_game("[src]/([src.ckey]) has spawned a new borer via reproducing.")
+		log_game("[src]/([ckey]) has spawned a new borer via reproducing.")
 		var/mob/living/simple_animal/borer/newborer = new(get_turf(src))
 		var/mob/dead/observer/O = pick(Bcandidates)
 		newborer.key = O.key

@@ -18,7 +18,7 @@
 	act = lowertext(act)
 	switch(act)//Hello, how would you like to order? Alphabetically!
 		if ("aflap")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> flaps its wings ANGRILY!"
 				m_type = 2
 
@@ -27,7 +27,7 @@
 			m_type = 1
 
 		if ("bow","bows")
-			if (!src.buckled)
+			if (!buckled)
 				var/M = null
 				if (param)
 					for (var/mob/A in view(1, src))
@@ -47,7 +47,7 @@
 			m_type = 2
 
 		if ("cwhistle", "catwhistle", "cat_whistle", "w_whistle", "whip-woo")
-			if(src.restrained()) // hah, no.
+			if(restrained()) // hah, no.
 				return
 			var/M = null
 			var/adjective = pick("slick", "smooth", "passionate", "flirtatious", "flirty")
@@ -86,7 +86,7 @@
 			m_type = 2
 
 		if ("dance","dances")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> dances around happily."
 				m_type = 1
 
@@ -106,13 +106,13 @@
 			m_type = 1
 
 		if ("flap","flaps")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> flaps its wings."
 				m_type = 2
 
 		if ("flip","flips")
 			if (!restrained() || !resting || !sleeping)
-				src.SpinAnimation(7,1)
+				SpinAnimation(7,1)
 				m_type = 2
 
 		if ("frown","frowns")
@@ -199,11 +199,11 @@
 			if(jobban_isbanned(src, "emote"))
 				to_chat(src, "You cannot send custom emotes (banned)")
 				return
-			if (src.client)
+			if (client)
 				if(client.prefs.muted & MUTE_IC)
 					to_chat(src, "You cannot send IC messages (muted).")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if (client.handle_spam_prevention(message,MUTE_IC))
 					return
 			if(!(message))
 				return
@@ -215,7 +215,7 @@
 			m_type = 1
 
 		if ("point","points")
-			if (!src.restrained())
+			if (!restrained())
 				var/atom/M = null
 				if (param)
 					for (var/atom/A as mob|obj|turf in view())

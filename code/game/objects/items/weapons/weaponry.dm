@@ -13,7 +13,7 @@
 	attack_verb = list("banned")
 
 /obj/item/weapon/banhammer/suicide_act(mob/user)
-		user.visible_message("<span class='suicide'>[user] is hitting \himself with the [src.name]! It looks like \he's trying to ban \himself from life.</span>")
+		user.visible_message("<span class='suicide'>[user] is hitting \himself with the [name]! It looks like \he's trying to ban \himself from life.</span>")
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
@@ -53,7 +53,7 @@
 	sharpness = IS_SHARP
 
 /obj/item/weapon/claymore/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is falling on the [name]! It looks like \he's trying to commit suicide.</span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/katana
@@ -75,7 +75,7 @@
 	slot_flags = null
 
 /obj/item/weapon/katana/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</span>")
+	user.visible_message("<span class='suicide'>[user] is slitting \his stomach open with the [name]! It looks like \he's trying to commit seppuku.</span>")
 	return(BRUTELOSS)
 
 /obj/item/weapon/wirerod
@@ -153,7 +153,7 @@
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
 	extended = !extended
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	if(extended)
 		force = 20
 		w_class = 3
@@ -172,7 +172,7 @@
 		sharpness = IS_BLUNT
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS)
 
 /obj/item/weapon/phone
@@ -190,9 +190,9 @@
 
 /obj/item/weapon/phone/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in user.loc)
-		user.visible_message("<span class='suicide'>[user] begins to tie a noose with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] begins to tie a noose with the [name]'s cord! It looks like \he's trying to commit suicide.</span>")
 	else
-		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [src.name]'s cord! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] is strangling \himself with the [name]'s cord! It looks like \he's trying to commit suicide.</span>")
 	return(OXYLOSS)
 
 /obj/item/weapon/cane
@@ -248,7 +248,7 @@
 	icon_state = "ectoplasm"
 
 /obj/item/weapon/ectoplasm/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is inhaling the [src.name]! It looks like \he's trying to visit the astral plane.</span>")
+	user.visible_message("<span class='suicide'>[user] is inhaling the [name]! It looks like \he's trying to visit the astral plane.</span>")
 	return (OXYLOSS)
 
 /obj/item/weapon/mounted_chainsaw

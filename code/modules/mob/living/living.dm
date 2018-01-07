@@ -207,7 +207,7 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/pointed(atom/A as mob|obj|turf in view())
 	if(incapacitated())
 		return 0
-	if(FAKEDEATH in src.status_flags)
+	if(FAKEDEATH in status_flags)
 		return 0
 	if(!..())
 		return 0
@@ -217,15 +217,15 @@ Sorry Giacom. Please don't be mad :(
 /mob/living/verb/succumb(whispered as null)
 	set hidden = 1
 	if (InCritical())
-		src.attack_log += "[src] has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!"
-		src.adjustOxyLoss(src.health - config.health_threshold_dead)
+		attack_log += "[src] has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!"
+		adjustOxyLoss(health - config.health_threshold_dead)
 		updatehealth()
 		if(!whispered)
 			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
 
 /mob/living/proc/InCritical()
-	return (src.health < 0 && src.health > -95 && stat == UNCONSCIOUS)
+	return (health < 0 && health > -95 && stat == UNCONSCIOUS)
 
 /mob/living/ex_act(severity, target)
 	..()
@@ -261,7 +261,7 @@ Sorry Giacom. Please don't be mad :(
 		if(actual < desired)
 			temperature = desired
 //	if(istype(src, /mob/living/carbon/human))
-//		to_chat(world, "[src] ~ [src.bodytemperature] ~ [temperature]")
+//		to_chat(world, "[src] ~ [bodytemperature] ~ [temperature]")
 	return temperature
 
 
@@ -425,17 +425,17 @@ Sorry Giacom. Please don't be mad :(
 		L += Storage.return_inv()
 		return L
 	else
-		L += src.contents
-		for(var/obj/item/weapon/storage/S in src.contents)	//Check for storage items
+		L += contents
+		for(var/obj/item/weapon/storage/S in contents)	//Check for storage items
 			L += get_contents(S)
-		for(var/obj/item/clothing/under/U in src.contents)	//Check for jumpsuit accessories
+		for(var/obj/item/clothing/under/U in contents)	//Check for jumpsuit accessories
 			L += U.contents
-		for(var/obj/item/weapon/folder/F in src.contents)	//Check for folders
+		for(var/obj/item/weapon/folder/F in contents)	//Check for folders
 			L += F.contents
 		return L
 
 /mob/living/proc/check_contents_for(A)
-	var/list/L = src.get_contents()
+	var/list/L = get_contents()
 
 	for(var/obj/B in L)
 		if(B.type == A)
@@ -447,7 +447,7 @@ Sorry Giacom. Please don't be mad :(
 	  return 0 //only carbon liveforms have this proc
 
 /mob/living/emp_act(severity)
-	var/list/L = src.get_contents()
+	var/list/L = get_contents()
 	for(var/obj/O in L)
 		O.emp_act(severity)
 	..()
@@ -618,26 +618,26 @@ Sorry Giacom. Please don't be mad :(
 		return
 	var/blood_exists = 0
 
-	for(var/obj/effect/decal/cleanable/trail_holder/C in src.loc) //checks for blood splatter already on the floor
+	for(var/obj/effect/decal/cleanable/trail_holder/C in loc) //checks for blood splatter already on the floor
 		blood_exists = 1
-	if (isturf(src.loc))
+	if (isturf(loc))
 		var/trail_type = getTrail()
 		if(trail_type)
 			var/brute_ratio = round(getBruteLoss()/maxHealth, 0.1)
 			if(blood_volume && blood_volume > max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
 				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
-				var/newdir = get_dir(T, src.loc)
-				if(newdir != src.dir)
-					newdir = newdir | src.dir
+				var/newdir = get_dir(T, loc)
+				if(newdir != dir)
+					newdir = newdir | dir
 					if(newdir == 3) //N + S
 						newdir = NORTH
 					else if(newdir == 12) //E + W
 						newdir = EAST
 				if((newdir in cardinal) && (prob(50)))
-					newdir = turn(get_dir(T, src.loc), 180)
+					newdir = turn(get_dir(T, loc), 180)
 				if(!blood_exists)
-					new /obj/effect/decal/cleanable/trail_holder(src.loc)
-				for(var/obj/effect/decal/cleanable/trail_holder/TH in src.loc)
+					new /obj/effect/decal/cleanable/trail_holder(loc)
+				for(var/obj/effect/decal/cleanable/trail_holder/TH in loc)
 					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 						TH.existing_dirs += newdir
 						TH.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
@@ -766,7 +766,7 @@ Sorry Giacom. Please don't be mad :(
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
 /mob/living/stripPanelEquip(obj/item/what, mob/who, where)
-	what = src.get_active_hand()
+	what = get_active_hand()
 	if(what && (what.flags & NODROP))
 		to_chat(src, "<span class='warning'>You can't put \the [what.name] on [who], it's stuck to your hand!</span>")
 		return
@@ -947,7 +947,7 @@ Sorry Giacom. Please don't be mad :(
 	if(butcher_results)
 		for(var/path in butcher_results)
 			for(var/i = 1; i <= butcher_results[path];i++)
-				new path(src.loc)
+				new path(loc)
 			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
 	visible_message("<span class='notice'>[user] butchers [src].</span>")
 	gib()
@@ -1003,8 +1003,8 @@ Sorry Giacom. Please don't be mad :(
 	return 1
 
 /mob/living/proc/check_acedia()
-	if(src.mind && src.mind.objectives)
-		for(var/datum/objective/sintouched/acedia/A in src.mind.objectives)
+	if(mind && mind.objectives)
+		for(var/datum/objective/sintouched/acedia/A in mind.objectives)
 			return 1
 	return 0
 

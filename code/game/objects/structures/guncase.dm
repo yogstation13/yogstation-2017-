@@ -28,7 +28,7 @@
 /obj/structure/guncase/update_icon()
 	overlays.Cut()
 	for(var/i = contents.len, i >= 1, i--)
-		overlays += image(icon = src.icon, icon_state = "[case_type]", pixel_x = 4 * (i -1) )
+		overlays += image(icon = icon, icon_state = "[case_type]", pixel_x = 4 * (i -1) )
 	if(open)
 		overlays += "[icon_state]_open"
 	else

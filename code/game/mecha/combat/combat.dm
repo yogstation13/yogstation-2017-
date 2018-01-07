@@ -31,8 +31,8 @@
 
 
 /obj/mecha/combat/go_out()
-	if(src.occupant && src.occupant.client)
-		src.occupant.client.mouse_pointer_icon = initial(src.occupant.client.mouse_pointer_icon)
+	if(occupant && occupant.client)
+		occupant.client.mouse_pointer_icon = initial(occupant.client.mouse_pointer_icon)
 	..()
 
 

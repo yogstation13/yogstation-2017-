@@ -223,10 +223,10 @@
 	var/dist_travelled = 0
 	var/next_sleep = 0
 
-	var/dist_x = abs(target.x - src.x)
-	var/dist_y = abs(target.y - src.y)
-	var/dx = (target.x > src.x) ? EAST : WEST
-	var/dy = (target.y > src.y) ? NORTH : SOUTH
+	var/dist_x = abs(target.x - x)
+	var/dist_y = abs(target.y - y)
+	var/dx = (target.x > x) ? EAST : WEST
+	var/dy = (target.y > y) ? NORTH : SOUTH
 
 	var/pure_diagonal = 0
 	if(dist_x == dist_y)
@@ -324,18 +324,18 @@
 	return
 
 /atom/movable/overlay/attackby(a, b, c)
-	if (src.master)
-		return src.master.attackby(a, b, c)
+	if (master)
+		return master.attackby(a, b, c)
 	return
 
 /atom/movable/overlay/attack_paw(a, b, c)
-	if (src.master)
-		return src.master.attack_paw(a, b, c)
+	if (master)
+		return master.attack_paw(a, b, c)
 	return
 
 /atom/movable/overlay/attack_hand(a, b, c)
-	if (src.master)
-		return src.master.attack_hand(a, b, c)
+	if (master)
+		return master.attack_hand(a, b, c)
 	return
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc,direct)

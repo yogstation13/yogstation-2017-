@@ -49,17 +49,17 @@ DBConnection
 	var/port = 3306
 
 DBConnection/New(dbi_handler,username,password_handler,cursor_handler)
-	src.dbi = dbi_handler
-	src.user = username
-	src.password = password_handler
-	src.default_cursor = cursor_handler
+	dbi = dbi_handler
+	user = username
+	password = password_handler
+	default_cursor = cursor_handler
 	_db_con = _dm_db_new_con()
 
-DBConnection/proc/Connect(dbi_handler=src.dbi,user_handler=src.user,password_handler=src.password,cursor_handler)
+DBConnection/proc/Connect(dbi_handler=dbi,user_handler=user,password_handler=password,cursor_handler)
 	if(!config.sql_enabled)
 		return 0
 	if(!src) return 0
-	cursor_handler = src.default_cursor
+	cursor_handler = default_cursor
 	if(!cursor_handler) cursor_handler = Default_Cursor
 	return _dm_db_connect(_db_con,dbi_handler,user_handler,password_handler,cursor_handler,null)
 
@@ -77,13 +77,13 @@ DBConnection/proc/SelectDB(database_name,dbi)
 	if(IsConnected()) Disconnect()
 	//return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[DB_SERVER]:[DB_PORT]"]",user,password)
 	return Connect("[dbi?"[dbi]":"dbi:mysql:[database_name]:[sqladdress]:[sqlport]"]",user,password)
-DBConnection/proc/NewQuery(sql_query,cursor_handler=src.default_cursor) return new/DBQuery(sql_query,src,cursor_handler)
+DBConnection/proc/NewQuery(sql_query,cursor_handler=default_cursor) return new/DBQuery(sql_query,src,cursor_handler)
 
 
 DBQuery/New(sql_query,DBConnection/connection_handler,cursor_handler)
-	if(sql_query) src.sql = sql_query
-	if(connection_handler) src.db_connection = connection_handler
-	if(cursor_handler) src.default_cursor = cursor_handler
+	if(sql_query) sql = sql_query
+	if(connection_handler) db_connection = connection_handler
+	if(cursor_handler) default_cursor = cursor_handler
 	_db_query = _dm_db_new_query()
 	return ..()
 
@@ -98,9 +98,9 @@ DBQuery
 	var/DBConnection/db_connection
 	var/_db_query
 
-DBQuery/proc/Connect(DBConnection/connection_handler) src.db_connection = connection_handler
+DBQuery/proc/Connect(DBConnection/connection_handler) db_connection = connection_handler
 
-DBQuery/proc/Execute(sql_query=src.sql,cursor_handler=default_cursor)
+DBQuery/proc/Execute(sql_query=sql,cursor_handler=default_cursor)
 	Close()
 	return _dm_db_execute(_db_query,sql_query,db_connection._db_con,cursor_handler,null)
 
@@ -125,7 +125,7 @@ DBQuery/proc/GetRowData()
 		for(var/C in columns)
 			results+=C
 			var/DBColumn/cur_col = columns[C]
-			results[C] = src.item[(cur_col.position+1)]
+			results[C] = item[(cur_col.position+1)]
 	return results
 
 DBQuery/proc/Close()
@@ -154,17 +154,17 @@ DBColumn
 	var/max_length
 
 DBColumn/New(name_handler,table_handler,position_handler,type_handler,flag_handler,length_handler,max_length_handler)
-	src.name = name_handler
-	src.table = table_handler
-	src.position = position_handler
-	src.sql_type = type_handler
-	src.flags = flag_handler
-	src.length = length_handler
-	src.max_length = max_length_handler
+	name = name_handler
+	table = table_handler
+	position = position_handler
+	sql_type = type_handler
+	flags = flag_handler
+	length = length_handler
+	max_length = max_length_handler
 	return ..()
 
 
-DBColumn/proc/SqlTypeName(type_handler=src.sql_type)
+DBColumn/proc/SqlTypeName(type_handler=sql_type)
 	switch(type_handler)
 		if(TINYINT) return "TINYINT"
 		if(SMALLINT) return "SMALLINT"

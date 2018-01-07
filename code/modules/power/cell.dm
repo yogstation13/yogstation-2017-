@@ -65,7 +65,7 @@
 		return 0
 	charge = (charge - amount)
 	if(!istype(loc, /obj/machinery/power/apc))
-		feedback_add_details("cell_used","[src.type]")
+		feedback_add_details("cell_used","[type]")
 	return 1
 
 // recharge the cell
@@ -92,10 +92,10 @@
 	if(rigged)
 		to_chat(user, "<span class='danger'>This power cell seems to be faulty!</span>")
 	else
-		to_chat(user, "The charge meter reads [round(src.percent() )]%.")
+		to_chat(user, "The charge meter reads [round(percent() )]%.")
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is licking the electrodes of the [name]! It looks like \he's trying to commit suicide.</span>")
 	return (FIRELOSS)
 
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user, params)
@@ -109,7 +109,7 @@
 
 
 /obj/item/weapon/stock_parts/cell/proc/explode()
-	var/turf/T = get_turf(src.loc)
+	var/turf/T = get_turf(loc)
 /*
  * 1000-cell	explosion(T, -1, 0, 1, 1)
  * 2500-cell	explosion(T, -1, 0, 1, 1)

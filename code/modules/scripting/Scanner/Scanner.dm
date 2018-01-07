@@ -110,12 +110,12 @@
 		.=..()
 		ignore+= ascii2text(13) //Carriage return
 		delim += ignore + options.symbols + end_stmt + string_delim
-		src.options=options
+		options=options
 		LoadCode(code)
 
 	Scan() //Creates a list of tokens from source code
 		var/list/tokens=new
-		for(, src.codepos<=lentext(code), src.codepos++)
+		for(, codepos<=lentext(code), codepos++)
 
 			var/char=copytext(code, codepos, codepos+1)
 			var/nextchar=copytext(code, codepos+1, codepos+2)

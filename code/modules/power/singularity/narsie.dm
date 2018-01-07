@@ -40,8 +40,8 @@
 
 
 /obj/singularity/narsie/large/attack_ghost(mob/dead/observer/user as mob)
-	makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/harvester, user, null, 0, loc_override = src.loc)
-	PoolOrNew(/obj/effect/particle_effect/smoke/sleeping, src.loc)
+	makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/harvester, user, null, 0, loc_override = loc)
+	PoolOrNew(/obj/effect/particle_effect/smoke/sleeping, loc)
 
 
 /obj/singularity/narsie/process()
@@ -71,7 +71,7 @@
 	for(var/mob/living/carbon/M in viewers(consume_range, src))
 		if(M.stat == CONSCIOUS)
 			if(!iscultist(M))
-				to_chat(M, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [src.name]...</span>")
+				to_chat(M, "<span class='cultsmall'>You feel conscious thought crumble away in an instant as you gaze upon [name]...</span>")
 				M.apply_effect(3, STUN)
 
 
@@ -94,7 +94,7 @@
 
 	for(var/mob/living/carbon/food in living_mob_list) //we don't care about constructs or cult-Ians or whatever. cult-monkeys are fair game i guess
 		var/turf/pos = get_turf(food)
-		if(pos.z != src.z)
+		if(pos.z != z)
 			continue
 
 		if(iscultist(food))
@@ -115,7 +115,7 @@
 		if(!ghost.client)
 			continue
 		var/turf/pos = get_turf(ghost)
-		if(pos.z != src.z)
+		if(pos.z != z)
 			continue
 		cultists += ghost
 	if(cultists.len)

@@ -250,6 +250,6 @@ var/global/say_disabled = 0
 
 	say_disabled = !say_disabled
 	if(say_disabled)
-		message_admins("[src.ckey] used 'Disable all communication verbs', killing all communication methods.")
+		message_admins("[ckey] used 'Disable all communication verbs', killing all communication methods.")
 	else
-		message_admins("[src.ckey] used 'Disable all communication verbs', restoring all communication methods.")
+		message_admins("[ckey] used 'Disable all communication verbs', restoring all communication methods.")

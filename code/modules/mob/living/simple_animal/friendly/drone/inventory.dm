@@ -18,7 +18,7 @@
 		if(selhand == "left" || selhand == "l")
 			selhand = 1
 
-	if(selhand != src.hand)
+	if(selhand != hand)
 		swap_hand()
 	else
 		mode()

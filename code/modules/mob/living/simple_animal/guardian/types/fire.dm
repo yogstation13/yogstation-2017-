@@ -41,4 +41,4 @@
 /mob/living/simple_animal/hostile/guardian/fire/proc/collision_hallucination(atom/movable/AM)
 	if(ishuman(AM) && AM != summoner)
 		spawn(0)
-			new /obj/effect/hallucination/delusion(AM.loc,AM,force_kind="custom",duration=200,skip_nearby=0, custom_icon = src.icon_state, custom_icon_file = src.icon)
+			new /obj/effect/hallucination/delusion(AM.loc,AM,force_kind="custom",duration=200,skip_nearby=0, custom_icon = icon_state, custom_icon_file = icon)

@@ -41,7 +41,7 @@
 		if(newgirder) //maybe we don't /want/ a girder!
 			transfer_fingerprints_to(newgirder)
 
-	for(var/obj/O in src.contents) //Eject contents!
+	for(var/obj/O in contents) //Eject contents!
 		if(istype(O,/obj/structure/sign/poster))
 			var/obj/structure/sign/poster/P = O
 			P.roll_and_drop(src)
@@ -66,7 +66,7 @@
 	switch(severity)
 		if(1)
 			//SN src = null
-			src.ChangeTurf(src.baseturf)
+			ChangeTurf(baseturf)
 			return
 		if(2)
 			if (prob(50))
@@ -97,14 +97,14 @@
 
 /turf/closed/wall/attack_paw(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 
 /turf/closed/wall/attack_animal(mob/living/simple_animal/M)
 	if(istype(M,/mob/living/simple_animal/hostile/construct/builder))
 		if(istype(src, /turf/closed/wall/mineral/cult))
 			return
-		src.ChangeTurf(/turf/closed/wall/mineral/cult/artificer)
+		ChangeTurf(/turf/closed/wall/mineral/cult/artificer)
 		M <<"<span class='notice'>You transfer some of your corrupt energy into the wall, causing it to transform.</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		return
@@ -133,7 +133,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	to_chat(user, "<span class='notice'>You push the wall but nothing happens!</span>")
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	..()
 	return
 
@@ -150,7 +150,7 @@
 
 	add_fingerprint(user)
 
-	//THERMITE related stuff. Calls src.thermitemelt() which handles melting simulated walls and the relevant effects
+	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if( thermite )
 		if(W.is_hot() && !unacidable)
 			thermitemelt(user)

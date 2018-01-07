@@ -109,7 +109,7 @@
 	update_desc()
 
 	//toggle the sprite and play animation, if necessary.
-	src.spark_system.start()
+	spark_system.start()
 
 /obj/item/weapon/rapid_engineering_device/verb/change_airlock_access()
 	set name = "Change Airlock Access"
@@ -130,7 +130,7 @@
 		rpd.handle_failed_topic(usr)//remove the window.
 		rcd.handle_failed_topic(usr)
 		return
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	switch(href_list["device_type"])
 		if("RCD")
 			rcd.handle_topic(href, href_list, src)

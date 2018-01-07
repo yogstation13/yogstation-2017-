@@ -81,7 +81,7 @@
 	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
 	s.set_up(5, 1, target.loc)
 	s.start()
-	target.visible_message("<span class='danger'>[target.name] was shocked by the [src.name]!</span>", \
+	target.visible_message("<span class='danger'>[target.name] was shocked by the [name]!</span>", \
 		"<span class='userdanger'>You feel a powerful shock course through your body sending you flying!</span>", \
 		"<span class='italics'>You hear a heavy electrical crack!</span>")
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
@@ -93,7 +93,7 @@
 	if(wielded)
 		//if(charged == 5)
 		//charged = 0
-		playsound(src.loc, "sparks", 50, 1)
+		playsound(loc, "sparks", 50, 1)
 		M.Stun(3)
 		shock(M)
 

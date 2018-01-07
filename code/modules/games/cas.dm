@@ -43,7 +43,7 @@ var/global/list/cards_against_space
 		var/datum/playingcard/P
 		P = new()
 		P.name = "[cardtext]"
-		P.card_icon = "[src.card_face]"
+		P.card_icon = "[card_face]"
 		cards += P
 	if(!blanks)
 		return
@@ -70,7 +70,7 @@ var/global/list/cards_against_space
 	H.icon_state = choice.card_icon
 	H.card_face = choice.card_icon
 	H.parentdeck = src
-	src.cards -= choice
+	cards -= choice
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("[user] draws a card from the deck.", "<span class='notice'>You draw a card from the deck.</span>")

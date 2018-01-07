@@ -273,7 +273,7 @@
 	if(!path || (!use_preloader && path == type)) //Sucks this is here but it would cause problems otherwise.
 		return ..()
 
-	for(var/obj/effect/decal/cleanable/decal in src.contents)
+	for(var/obj/effect/decal/cleanable/decal in contents)
 		qdel(decal)
 
 	if(light)
@@ -367,9 +367,9 @@
 
 /turf/proc/get_lumcount()
 	. = LIGHTING_CAP
-	var/area/A = src.loc
+	var/area/A = loc
 	if(IS_DYNAMIC_LIGHTING(A))
-		. = src.lighting_lumcount
+		. = lighting_lumcount
 
 /area
 	var/lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED	//Turn this flag off to make the area fullbright
@@ -383,7 +383,7 @@
 	if (lighting_use_dynamic == DYNAMIC_LIGHTING_DISABLED)
 		lighting_use_dynamic = DYNAMIC_LIGHTING_ENABLED
 	luminosity = 0
-	for(var/turf/T in src.contents)
+	for(var/turf/T in contents)
 		T.init_lighting()
 		T.update_lumcount(0)
 

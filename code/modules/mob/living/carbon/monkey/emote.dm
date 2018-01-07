@@ -27,7 +27,7 @@
 			m_type = 2
 
 		if ("paw")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> flails its paw."
 				m_type = 1
 
@@ -37,12 +37,12 @@
 				m_type = 2
 
 		if ("roll","rolls")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> rolls."
 				m_type = 1
 
 		if ("scratch","scratches")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<B>[src]</B> scratches."
 				m_type = 1
 
@@ -56,7 +56,7 @@
 			m_type = 2
 
 		if ("sign","signs")
-			if (!src.restrained())
+			if (!restrained())
 				message = text("<B>[src]</B> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
 
@@ -70,8 +70,8 @@
 		else
 			..()
 
-	if ((message && src.stat == 0))
-		if(src.client)
+	if ((message && stat == 0))
+		if(client)
 			log_emote("[name]/[key] : [message]")
 		if (m_type & 1)
 			visible_message(message)

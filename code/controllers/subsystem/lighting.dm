@@ -35,7 +35,7 @@ var/datum/subsystem/lighting/SSlighting
 	//split our tick allotment in half so we don't spend it all on lightshift checks
 	CURRENT_TICKLIMIT = world.tick_usage + ((ticklimit-world.tick_usage)/2)
 
-	var/list/changed_lights = src.changed_lights
+	var/list/changed_lights = changed_lights
 	if (!resumed)
 		changed_lights_workload = MC_AVERAGE(changed_lights_workload, changed_lights.len)
 	var/i = 1
@@ -48,7 +48,7 @@ var/datum/subsystem/lighting/SSlighting
 		changed_lights.Cut(1,i)
 
 	CURRENT_TICKLIMIT = ticklimit
-	var/list/changed_turfs = src.changed_turfs
+	var/list/changed_turfs = changed_turfs
 	if (!resumed)
 		changed_turfs_workload = MC_AVERAGE(changed_turfs_workload, changed_turfs.len)
 	i = 1

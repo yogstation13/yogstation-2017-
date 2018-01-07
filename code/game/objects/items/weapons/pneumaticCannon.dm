@@ -57,7 +57,7 @@
 		if((loadedWeightClass + IW.w_class) > maxWeightClass)
 			to_chat(user, "<span class='warning'>\The [IW] won't fit into \the [src]!</span>")
 			return
-		if(IW.w_class > src.w_class)
+		if(IW.w_class > w_class)
 			to_chat(user, "<span class='warning'>\The [IW] is too large to fit into \the [src]!</span>")
 			return
 		if(!user.unEquip(W))
@@ -103,7 +103,7 @@
 		user.visible_message("<span class='danger'>[user] fires \the [src]!</span>", \
 				    		 "<span class='danger'>You fire \the [src]!</span>")
 	add_logs(user, target, "fired at", src)
-	playsound(src.loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
+	playsound(loc, 'sound/weapons/sonic_jackhammer.ogg', 50, 1)
 	for(var/obj/item/ITD in loadedItems) //Item To Discharge
 		loadedItems.Remove(ITD)
 		loadedWeightClass -= ITD.w_class
@@ -136,26 +136,26 @@
 
 /obj/item/weapon/pneumatic_cannon/proc/updateTank(obj/item/weapon/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)
-		if(!src.tank)
+		if(!tank)
 			return
 		to_chat(user, "<span class='notice'>You detach \the [thetank] from \the [src].</span>")
-		src.tank.loc = get_turf(user)
+		tank.loc = get_turf(user)
 		user.put_in_hands(tank)
-		src.tank = null
+		tank = null
 	if(!removing)
-		if(src.tank)
+		if(tank)
 			to_chat(user, "<span class='warning'>\The [src] already has a tank.</span>")
 			return
 		if(!user.unEquip(thetank))
 			return
 		to_chat(user, "<span class='notice'>You hook \the [thetank] up to \the [src].</span>")
-		src.tank = thetank
+		tank = thetank
 		thetank.loc = src
-	src.update_icons()
+	update_icons()
 
 /obj/item/weapon/pneumatic_cannon/proc/update_icons()
-	src.overlays.Cut()
+	overlays.Cut()
 	if(!tank)
 		return
-	src.overlays += image('icons/obj/pneumaticCannon.dmi', "[tank.icon_state]")
-	src.update_icon()
+	overlays += image('icons/obj/pneumaticCannon.dmi', "[tank.icon_state]")
+	update_icon()

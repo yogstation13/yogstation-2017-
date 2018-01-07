@@ -172,10 +172,10 @@
 			new_slime.a_intent = "harm"
 			new_slime.languages_spoken = languages_spoken
 			new_slime.languages_understood = languages_understood
-			if(src.mind)
-				src.mind.transfer_to(new_slime)
+			if(mind)
+				mind.transfer_to(new_slime)
 			else
-				new_slime.key = src.key
+				new_slime.key = key
 			qdel(src)
 		else
 			to_chat(src, "<i>I am not ready to reproduce yet...</i>")

@@ -10,10 +10,10 @@
 	var/obj/machinery/teleport/station/power_station
 	var/calibrating
 	var/turf/target //Used for one-time-use teleport cards (such as clown planet coordinates.)
-						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
+						 //Setting this to 1 will set locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 
 /obj/machinery/computer/teleporter/New()
-	src.id = "[rand(1000, 9999)]"
+	id = "[rand(1000, 9999)]"
 	link_power_station()
 	..()
 	return
@@ -50,7 +50,7 @@
 		return ..()
 
 /obj/machinery/computer/teleporter/attack_ai(mob/user)
-	src.attack_hand(user)
+	attack_hand(user)
 
 /obj/machinery/computer/teleporter/attack_hand(mob/user)
 	if(..())
@@ -453,10 +453,10 @@
 		return ..()
 
 /obj/machinery/teleport/station/attack_paw()
-	src.attack_hand()
+	attack_hand()
 
 /obj/machinery/teleport/station/attack_ai()
-	src.attack_hand()
+	attack_hand()
 
 /obj/machinery/teleport/station/attack_hand(mob/user)
 	if(!panel_open)
@@ -469,14 +469,14 @@
 		if(teleporter_hub.panel_open || teleporter_hub.stat & (BROKEN|NOPOWER))
 			visible_message("<span class='alert'>The teleporter hub isn't responding.</span>")
 		else
-			src.engaged = !src.engaged
+			engaged = !engaged
 			use_power(5000)
 			visible_message("<span class='notice'>Teleporter [engaged ? "" : "dis"]engaged!</span>")
 	else
 		visible_message("<span class='alert'>No target detected.</span>")
-		src.engaged = 0
+		engaged = 0
 	teleporter_hub.update_icon()
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /obj/machinery/teleport/station/power_change()

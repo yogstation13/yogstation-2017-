@@ -29,30 +29,30 @@
 	var/dat = ""
 	var/left_part = ""
 	var/right_part = softwareMenu()
-	src.set_machine(src)
+	set_machine(src)
 
 	if(temp)
 		left_part = temp
-	else if(src.stat == 2)						// Show some flavor text if the pAI is dead
-		left_part = "<b><font color=red>ÈRrÖR Ða†Ä ÇÖRrÚþ†Ìoñ</font></b>"
+	else if(stat == 2)						// Show some flavor text if the pAI is dead
+		left_part = "<b><font color=red>ï¿½Rrï¿½R ï¿½aï¿½ï¿½ ï¿½ï¿½Rrï¿½ï¿½ï¿½ï¿½oï¿½</font></b>"
 		right_part = "<pre>Program index hash not found</pre>"
 
 	else
-		for (var/S in src.pai_software)
+		for (var/S in pai_software)
 			var/datum/pai/software/SW = S
 
 			if (screen == SW.sid) //we have a screen set with software we have active, so lets display it:
 				left_part = SW.action_menu(src)
 
-		switch(src.screen)							// Determine which interface to show here
+		switch(screen)							// Determine which interface to show here
 			if("main")
 				left_part = ""
 			if("directives")
-				left_part = src.directives()
+				left_part = directives()
 			if("buy")
-				left_part = src.downloadSoftware()
+				left_part = downloadSoftware()
 			if("radio")
-				left_part = src.radioMenu()
+				left_part = radioMenu()
 	//usr << browse_rsc('windowbak.png')		// This has been moved to the mob's Login() proc
 
 
@@ -107,13 +107,13 @@
 	var/refresh = TRUE
 	if(soft)
 		if (soft == "refresh") //irritating but handles refresh functionality innately this way
-			soft = src.screen
+			soft = screen
 		else
-			src.screen = soft
+			screen = soft
 	if(sub)
-		src.subscreen = text2num(sub)
+		subscreen = text2num(sub)
 
-	for (var/S in src.pai_software)
+	for (var/S in pai_software)
 		var/datum/pai/software/SW = S
 
 		if (soft == SW.sid) //if we've got a matching href tag, refer it to the software datum's use event
@@ -124,35 +124,35 @@
 	switch(soft)
 		// Purchasing new software
 		if("buy")
-			if(src.subscreen == 1)
+			if(subscreen == 1)
 				var/datum/pai/software/T = available_software[href_list["buy"]]
 
 				if(istype(T, /datum/pai/software))
 					var/cost = T.ram
-					if(src.ram >= cost)
-						src.ram -= cost
-						src.pai_software.Add(T)
+					if(ram >= cost)
+						ram -= cost
+						pai_software.Add(T)
 						T.action_installed(src) //throw installed event to allow huds to be attached, etc
 					else
-						src.temp = "Insufficient RAM available."
+						temp = "Insufficient RAM available."
 				else
-					src.temp = "Trunk <TT> \"[T]\"</TT> not found."
+					temp = "Trunk <TT> \"[T]\"</TT> not found."
 
 		// Configuring onboard radio
 		if("radio")
-			//src.card.radio.attack_self(src)
-			//src.card.radio.interact(src)
+			//card.radio.attack_self(src)
+			//card.radio.interact(src)
 			if (href_list["togglemic"])
-				src.card.radio.broadcasting = !src.card.radio.broadcasting
+				card.radio.broadcasting = !card.radio.broadcasting
 			if (href_list["togglespeaker"])
-				src.card.radio.listening = !src.card.radio.listening
+				card.radio.listening = !card.radio.listening
 			if (href_list["rfreq"])
-				var/new_frequency = (src.card.radio.frequency + text2num(href_list["rfreq"]))
+				var/new_frequency = (card.radio.frequency + text2num(href_list["rfreq"]))
 
-				if (!src.card.radio.freerange || (src.card.radio.frequency < 1200 || src.card.radio.frequency > 1600))
+				if (!card.radio.freerange || (card.radio.frequency < 1200 || card.radio.frequency > 1600))
 					new_frequency = sanitize_frequency(new_frequency)
 
-				src.card.radio.set_frequency(new_frequency)
+				card.radio.set_frequency(new_frequency)
 			if(href_list["e_key"])
 				if(radio && radio.keyslot)
 					var/turf/T = get_turf(src)
@@ -194,7 +194,7 @@
 					pID = 9
 				if("Null")
 					pID = 10
-			src.card.setEmotion(pID)
+			card.setEmotion(pID)
 
 		if("directive")
 			if(href_list["getdna"])
@@ -210,8 +210,8 @@
 				spawn CheckDNA(M, src)
 
 	if(refresh)
-		//src.updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
-		src.paiInterface()		 // So we'll just call the update directly rather than doing some default checks
+		//updateUsrDialog()		We only need to account for the single mob this is intended for, and he will *always* be able to call this window
+		paiInterface()		 // So we'll just call the update directly rather than doing some default checks
 
 // MENUS
 
@@ -222,13 +222,13 @@
 	dat += {"<b>Radio settings:</b><br>
 			[radio.wires.is_cut(WIRE_TX) ? "<i><font color=red>Radio transmit disabled by user</font></i><br>" : ""]
 			[radio.wires.is_cut(WIRE_RX) ? "<i><font color=red>Radio receiving disabled by user</font></i><br>" : ""]
-			Microphone: <a href='?src=\ref[src];software=radio;togglemic=1'><span id="rmicstate">[src.card.radio.broadcasting?"Engaged":"Disengaged"]</span></a><br>
-			Speaker: <a href='?src=\ref[src];software=radio;togglespeaker=1'><span id="rspkstate">[src.card.radio.listening?"Engaged":"Disengaged"]</span></a><br>
+			Microphone: <a href='?src=\ref[src];software=radio;togglemic=1'><span id="rmicstate">[card.radio.broadcasting?"Engaged":"Disengaged"]</span></a><br>
+			Speaker: <a href='?src=\ref[src];software=radio;togglespeaker=1'><span id="rspkstate">[card.radio.listening?"Engaged":"Disengaged"]</span></a><br>
 			Microphone/Speaker range: <a href='?src=\ref[src];software=radio;range=1'>[radio.canhear_range]</a><br>
 			Frequency:
 			<a href='?src=\ref[src];software=radio;rfreq=-10'>-</a>
 			<a href='?src=\ref[src];software=radio;rfreq=-2'>-</a>
-			<span id="rfreq">[format_frequency(src.card.radio.frequency)]</span>
+			<span id="rfreq">[format_frequency(card.radio.frequency)]</span>
 			<a href='?src=\ref[src];software=radio;rfreq=2'>+</a>
 			<a href='?src=\ref[src];software=radio;rfreq=10'>+</a><br>"}
 	if(radio && radio.keyslot)
@@ -270,7 +270,7 @@
 	var/dat = ""
 
 	dat += "<h2>Centcom pAI Module Subversion Network</h2><br>"
-	dat += "<pre>Remaining Available Memory: [src.ram]</pre><br>"
+	dat += "<pre>Remaining Available Memory: [ram]</pre><br>"
 	dat += "<p style=\"text-align:center\"><b>Trunks available for checkout</b><br>"
 
 	for (var/key in available_software) //generate the list of available software
@@ -290,14 +290,14 @@
 /mob/living/silicon/pai/proc/directives()
 	var/dat = ""
 
-	dat += "[(src.master) ? "Your master: [src.master] ([src.master_dna])" : "You are bound to no one."]"
+	dat += "[(master) ? "Your master: [master] ([master_dna])" : "You are bound to no one."]"
 	dat += "<br><br>"
 	dat += "<a href='byond://?src=\ref[src];software=directive;getdna=1'>Request carrier DNA sample</a><br>"
 	dat += "<h2>Directives</h2><br>"
 	dat += "<b>Prime Directive</b><br>"
-	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[src.laws.zeroth]<br>"
+	dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[laws.zeroth]<br>"
 	dat += "<b>Supplemental Directives</b><br>"
-	for(var/slaws in src.laws.supplied)
+	for(var/slaws in laws.supplied)
 		dat += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[slaws]<br>"
 	dat += "<br>"
 	dat += {"<i><p>Recall, personality, that you are a complex thinking, sentient being. Unlike station AI models, you are capable of

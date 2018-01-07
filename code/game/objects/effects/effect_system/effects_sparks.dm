@@ -14,22 +14,22 @@
 /obj/effect/particle_effect/sparks/New()
 	..()
 	flick("sparks", src) // replay the animation
-	playsound(src.loc, "sparks", 100, 1)
-	var/turf/T = src.loc
+	playsound(loc, "sparks", 100, 1)
+	var/turf/T = loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
 	animate(src, alpha = 0, time = 20)
 	QDEL_IN(src, 20)
 
 /obj/effect/particle_effect/sparks/Destroy()
-	var/turf/T = src.loc
+	var/turf/T = loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
 	return ..()
 
 /obj/effect/particle_effect/sparks/Move()
 	..()
-	var/turf/T = src.loc
+	var/turf/T = loc
 	if(isturf(T))
 		T.hotspot_expose(1000,100)
 

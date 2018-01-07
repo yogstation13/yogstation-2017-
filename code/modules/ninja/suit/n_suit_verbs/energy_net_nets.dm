@@ -24,10 +24,10 @@ It is possible to destroy the net by the occupant or someone else.
 	switch(damage_type)
 		if(BRUTE)
 			if(sound_effect)
-				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+				playsound(loc, 'sound/weapons/slash.ogg', 80, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+				playsound(loc, 'sound/weapons/slash.ogg', 80, 1)
 		else
 			return
 	health -= damage
@@ -151,7 +151,7 @@ It is possible to destroy the net by the occupant or someone else.
 /obj/effect/energy_net/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
+	playsound(loc, 'sound/weapons/slash.ogg', 80, 1)
 	user.visible_message("<span class='danger'>[user] slices the energy net apart!</span>", \
 						 "\green You slice the energy net to pieces.")
 	qdel(src)

@@ -67,7 +67,7 @@
 			var/R
 			var/viruslist = ""
 			if(reagents)
-				for(var/datum/reagent/A in src.reagents.reagent_list)
+				for(var/datum/reagent/A in reagents.reagent_list)
 					R += A.id + " ("
 					R += num2text(A.volume) + "),"
 					if(istype(A, /datum/reagent/blood))
@@ -85,7 +85,7 @@
 				investigate_log("[user.real_name] ([user.ckey]) injected [M.real_name] ([M.ckey]) with [viruslist]", "viro")
 				log_game("VIRO: [user.real_name] ([user.ckey]) injected [M.real_name] ([M.ckey]) with [viruslist]")
 
-		trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] unit\s of the solution.</span>")
 		update_icon()
 

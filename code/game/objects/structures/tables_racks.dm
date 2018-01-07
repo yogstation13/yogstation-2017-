@@ -35,7 +35,7 @@
 
 /obj/structure/table/New()
 	..()
-	for(var/obj/structure/table/T in src.loc)
+	for(var/obj/structure/table/T in loc)
 		if(T != src)
 			qdel(T)
 
@@ -59,20 +59,20 @@
 
 /obj/structure/table/narsie_act()
 	if(prob(20))
-		new /obj/structure/table/wood(src.loc)
+		new /obj/structure/table/wood(loc)
 
 /obj/structure/table/ratvar_act()
-	new /obj/structure/table/reinforced/brass(src.loc)
+	new /obj/structure/table/reinforced/brass(loc)
 
 /obj/structure/table/mech_melee_attack(obj/mecha/M)
-	playsound(src.loc, 'sound/weapons/punch4.ogg', 50, 1)
+	playsound(loc, 'sound/weapons/punch4.ogg', 50, 1)
 	visible_message("<span class='danger'>[M.name] smashes [src]!</span>")
 	take_damage(200, M.damtype, 0)
 
 /obj/structure/table/attack_alien(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/weapons/bladeslice.ogg', 50, 1)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1)
 	visible_message("<span class='danger'>[user] slices [src]!</span>")
 	take_damage(100, BRUTE, 0)
 
@@ -85,7 +85,7 @@
 		if(user.environment_smash)
 			dmg_dealt = 100
 		visible_message("<span class='warning'>[user] smashes [src]!</span>")
-		playsound(src.loc, 'sound/weapons/Genhit.ogg', 50, 1)
+		playsound(loc, 'sound/weapons/Genhit.ogg', 50, 1)
 		take_damage(dmg_dealt, user.melee_damage_type, 0)
 
 
@@ -147,7 +147,7 @@
 		. = . || mover.checkpass(PASSTABLE)
 
 /obj/structure/table/proc/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(src.loc)
+	pushed_mob.forceMove(loc)
 	pushed_mob.Weaken(2)
 	pushed_mob.visible_message("<span class='danger'>[user] pushes [pushed_mob] onto [src].</span>", \
 								"<span class='userdanger'>[user] pushes [pushed_mob] onto [src].</span>")
@@ -171,7 +171,7 @@
 			T.quick_empty()
 
 			for(var/obj/item/C in oldContents)
-				C.loc = src.loc
+				C.loc = loc
 
 			user.visible_message("[user] empties [I] on [src].")
 			return
@@ -234,17 +234,17 @@
 		return
 	if(disassembling)
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
-			new frame(src.loc)
+			new frame(loc)
 			for(var/i = 1, i <= buildstackamount, i++)
 				new buildstack(get_turf(src))
 			qdel(src)
 	else
 		to_chat(user, "<span class='notice'>You start deconstructing [src]...</span>")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40, target = src))
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			table_destroy()
 
 
@@ -338,7 +338,7 @@
 	buildstack = /obj/item/stack/tile/carpet
 
 /obj/structure/table/wood/poker/narsie_act()
-	new /obj/structure/table/wood(src.loc)
+	new /obj/structure/table/wood(loc)
 
 /*
  * Reinforced tables
@@ -357,7 +357,7 @@
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
-			playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
+			playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 			if(deconstruction_ready)
 				to_chat(user, "<span class='notice'>You start strengthening the reinforced table...</span>")
 				if (do_after(user, 50/W.toolspeed, target = src))
@@ -384,7 +384,7 @@
 	canSmoothWith = list(/obj/structure/table/reinforced/brass)
 
 /obj/structure/table/reinforced/brass/table_destroy()
-	new frame(src.loc)
+	new frame(loc)
 	qdel(src)
 
 /obj/structure/table/reinforced/brass/narsie_act()
@@ -423,7 +423,7 @@
 			break
 
 /obj/structure/table/optable/tablepush(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.forceMove(src.loc)
+	pushed_mob.forceMove(loc)
 	pushed_mob.resting = 1
 	pushed_mob.update_canmove()
 	visible_message("<span class='notice'>[user] has laid [pushed_mob] on [src].</span>")
@@ -479,7 +479,7 @@
 
 /obj/structure/rack/CanPass(atom/movable/mover, turf/target, height=0)
 	if(height==0) return 1
-	if(src.density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
+	if(density == 0) //Because broken racks -Agouri |TODO: SPRITE!|
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
@@ -497,13 +497,13 @@
 		return
 	if(!user.drop_item())
 		return
-	if(O.loc != src.loc)
+	if(O.loc != loc)
 		step(O, get_dir(O, src))
 
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		rack_destroy()
 		return
 	if(user.a_intent == "harm")
@@ -534,7 +534,7 @@
 /obj/structure/rack/attack_alien(mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/weapons/bladeslice.ogg', 50, 1)
+	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1)
 	visible_message("<span class='warning'>[user] slices [src] apart.</span>")
 	rack_destroy()
 

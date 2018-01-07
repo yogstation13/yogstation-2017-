@@ -62,7 +62,7 @@ var/list/department_radio_keys = list(
 
 var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
-/mob/living/say(message, bubble_type, var/list/spans = list(), languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
+/mob/living/say(message, bubble_type, var/list/spans = list(), languages = languages_spoken) //if you change languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 	if(!message)
 		return
@@ -162,7 +162,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	show_message(message, 2, deaf_message, deaf_type)
 	return message
 
-/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans, languages = src.languages_spoken) //if you change src.languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
+/mob/living/send_speech(message, message_range = 7, obj/source = src, bubble_type = bubble_icon, list/spans, languages = languages_spoken) //if you change languages_spoken to languages_spoken the proc will runtime due to an obscure byond bug
 	var/list/listening = get_hearers_in_view(message_range, source)
 	for(var/mob/M in player_list)
 		if(M.stat == DEAD && M.client && ((M.client.prefs.chat_toggles & CHAT_GHOSTEARS) || (get_dist(M, src) <= 7)) && client) // client is so that ghosts don't have to listen to mice
@@ -227,7 +227,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	if(message_mode == MODE_CHANGELING)
 		switch(lingcheck())
 			if(3)
-				var/msg = "<i><font color=#800040><b>[src.mind]:</b> [message]</font></i>"
+				var/msg = "<i><font color=#800040><b>[mind]:</b> [message]</font></i>"
 				for(var/mob/M in mob_list)
 					if(M in dead_mob_list)
 						var/link = FOLLOW_LINK(M, src)
@@ -243,7 +243,7 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 									to_chat(M, "<i><font color=#800080>We can faintly sense an outsider trying to communicate through the hivemind...</font></i>")
 			if(2)
 				var/msg = "<i><font color=#800080><b>[mind.changeling.changelingID]:</b> [message]</font></i>"
-				log_say("[mind.changeling.changelingID]/[src.key] : [message]")
+				log_say("[mind.changeling.changelingID]/[key] : [message]")
 				for(var/mob/M in mob_list)
 					if(M in dead_mob_list)
 						var/link = FOLLOW_LINK(M, src)

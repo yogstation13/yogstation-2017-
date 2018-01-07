@@ -505,7 +505,7 @@
 	//onclose(user, "")
 	var/datum/browser/popup = new(user, "vending", (name))
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 
@@ -544,7 +544,7 @@
 			dish_quants[N] = max(dish_quants[N] - 1, 0)
 			for(var/obj/O in contents)
 				if(O.name == N)
-					O.loc = src.loc
+					O.loc = loc
 					break
 			vend_ready = 1
 			updateUsrDialog()
@@ -709,7 +709,7 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if(!src.Adjacent(user))
+	if(!Adjacent(user))
 		return 0
 	if(electrocute_mob(user, get_area(src), src, 0.7))
 		return 1

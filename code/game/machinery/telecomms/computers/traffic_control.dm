@@ -184,7 +184,7 @@
 						create_log("has logged in.", usr)
 			else
 				create_log("has logged out.", usr)
-				auth.loc = src.loc
+				auth.loc = loc
 				C.put_in_hands(auth)
 				auth = null
 			updateUsrDialog()
@@ -301,11 +301,11 @@
 		create_log("has logged in.", usr)
 	else
 		..()
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/computer/telecomms/traffic/emag_act(mob/user)
 	if(!emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		playsound(loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		to_chat(user, "<span class='notice'>You you disable the security protocols.</span>")
 

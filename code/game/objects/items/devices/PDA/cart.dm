@@ -68,8 +68,8 @@
 	fire_alert_listeners -= src
 	burglar_alert_listeners -= src
 	motion_alert_listeners -= src
-	if(istype(src.loc, /obj/item/device/pda))
-		hotline_pdas -= src.loc
+	if(istype(loc, /obj/item/device/pda))
+		hotline_pdas -= loc
 	return ..()
 
 /obj/item/weapon/cartridge/engineering

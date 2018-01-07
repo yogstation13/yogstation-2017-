@@ -61,7 +61,7 @@
 
 	var/turf/T = A
 	if(istype(T) && get_dist(src,T) <= 1)
-		src.Move_Pulled(T)
+		Move_Pulled(T)
 
 /*
 	Animals & All Unspecified

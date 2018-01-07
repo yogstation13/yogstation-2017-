@@ -13,7 +13,7 @@
 /obj/machinery/mineral/stacking_unit_console/New()
 	..()
 	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
+		machine = locate(/obj/machinery/mineral/stacking_machine, get_step(src, machinedir))
 		if (machine)
 			machine.CONSOLE = src
 		else
@@ -41,7 +41,7 @@
 	if(..())
 		return
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["release"])
 		if(!(text2path(href_list["release"]) in machine.stack_list)) return //someone tried to spawn materials by spoofing hrefs
 		var/obj/item/stack/sheet/inp = machine.stack_list[text2path(href_list["release"])]
@@ -50,7 +50,7 @@
 		inp.amount = 0
 		machine.unload_mineral(out)
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 

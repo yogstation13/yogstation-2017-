@@ -23,9 +23,9 @@
 /obj/structure/table_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 30/I.toolspeed, target = src))
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			for(var/i = 1, i <= framestackamount, i++)
 				new framestack(get_turf(src))
 			qdel(src)
@@ -37,7 +37,7 @@
 		to_chat(user, "<span class='notice'>You start adding [P] to [src]...</span>")
 		if(do_after(user, 50, target = src))
 			P.use(1)
-			new /obj/structure/table/reinforced(src.loc)
+			new /obj/structure/table/reinforced(loc)
 			qdel(src)
 	else if(istype(I, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = I
@@ -47,7 +47,7 @@
 		to_chat(user, "<span class='notice'>You start adding [M] to [src]...</span>")
 		if(do_after(user, 20, target = src))
 			M.use(1)
-			new /obj/structure/table(src.loc)
+			new /obj/structure/table(loc)
 			qdel(src)
 	else if(istype(I, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = I
@@ -58,7 +58,7 @@
 		if(do_after(user, 20, target = src))
 			G.use(1)
 
-			new /obj/structure/table/glass(src.loc)
+			new /obj/structure/table/glass(loc)
 			qdel(src)
 	else if(istype(I, /obj/item/stack/sheet/mineral/silver))
 		var/obj/item/stack/sheet/mineral/silver/S = I
@@ -68,18 +68,18 @@
 		to_chat(user, "<span class='notice'>You start adding [S] to [src]...</span>")
 		if(do_after(user, 20, target = src))
 			S.use(1)
-			new /obj/structure/table/optable(src.loc)
+			new /obj/structure/table/optable(loc)
 			qdel(src)
 	else
 		return ..()
 
 /obj/structure/table_frame/narsie_act()
 	if(prob(20))
-		new /obj/structure/table_frame/wood(src.loc)
+		new /obj/structure/table_frame/wood(loc)
 		qdel(src)
 
 /obj/structure/table_frame/ratvar_act()
-	new /obj/structure/table_frame/brass(src.loc)
+	new /obj/structure/table_frame/brass(loc)
 	qdel(src)
 
 /*
@@ -103,7 +103,7 @@
 		to_chat(user, "<span class='notice'>You start adding [W] to [src]...</span>")
 		if(do_after(user, 20, target = src))
 			W.use(1)
-			new /obj/structure/table/wood(src.loc)
+			new /obj/structure/table/wood(loc)
 			qdel(src)
 		return
 	else if(istype(I, /obj/item/stack/tile/carpet))
@@ -114,7 +114,7 @@
 		to_chat(user, "<span class='notice'>You start adding [C] to [src]...</span>")
 		if(do_after(user, 20, target = src))
 			C.use(1)
-			new /obj/structure/table/wood/poker(src.loc)
+			new /obj/structure/table/wood/poker(loc)
 			qdel(src)
 	else
 		return ..()

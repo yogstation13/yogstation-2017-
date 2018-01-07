@@ -339,7 +339,7 @@
 	if(target == src)
 		return
 
-	if(src.z != ZLEVEL_STATION)
+	if(z != ZLEVEL_STATION)
 		to_chat(src, "<span class='warning'>Our bluespace transceiver cannot \
 			locate a viable bluespace link, our teleportation abilities \
 			are useless in this area.</span>")
@@ -413,7 +413,7 @@
 	duration = 10
 
 /obj/effect/overlay/temp/swarmer/disintegration/New()
-	playsound(src.loc, "sparks", 100, 1)
+	playsound(loc, "sparks", 100, 1)
 	..()
 
 /obj/effect/overlay/temp/swarmer/dismantle
@@ -436,7 +436,7 @@
 				playsound(loc, 'sound/weapons/Egloves.ogg', 80, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
 	health -= damage

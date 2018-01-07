@@ -14,7 +14,7 @@
 	..()
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
 		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
-		src.loc = OB
+		loc = OB
 		OB.brainmob = src
 
 

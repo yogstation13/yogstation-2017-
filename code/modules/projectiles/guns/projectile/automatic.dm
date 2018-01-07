@@ -36,7 +36,7 @@
 		if(istype(AM, mag_type))
 			if(magazine)
 				to_chat(user, "<span class='notice'>You perform a tactical reload on \the [src], replacing the magazine.</span>")
-				magazine.loc = get_turf(src.loc)
+				magazine.loc = get_turf(loc)
 				magazine.update_icon()
 				magazine = null
 			else
@@ -76,7 +76,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/proc/empty_alarm()
 	if(!chambered && !get_ammo() && !alarmed)
-		playsound(src.loc, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
+		playsound(loc, 'sound/weapons/smg_empty_alarm.ogg', 40, 1)
 		update_icon()
 		alarmed = 1
 	return
@@ -263,12 +263,12 @@
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/proc/update_magazine()
 	if(magazine)
-		src.overlays = 0
+		overlays = 0
 		overlays += "[magazine.icon_state]"
 		return
 
 /obj/item/weapon/gun/projectile/automatic/shotgun/bulldog/update_icon()
-	src.overlays = 0
+	overlays = 0
 	update_magazine()
 	icon_state = "bulldog[chambered ? "" : "-e"]"
 

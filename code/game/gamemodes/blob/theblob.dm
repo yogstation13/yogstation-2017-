@@ -25,8 +25,8 @@
 	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
 		blobs_legit += src
 	blobs += src //Keep track of the blob in the normal list either way
-	src.dir = pick(1, 2, 4, 8)
-	src.update_icon()
+	dir = pick(1, 2, 4, 8)
+	update_icon()
 	..(loc)
 	ConsumeTile()
 	if(atmosblock)
@@ -42,7 +42,7 @@
 		air_update_turf(1)
 	blobs_legit -= src  //if it was in the legit blobs list, it isn't now
 	blobs -= src //it's no longer in the all blobs list either
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
+	playsound(loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
 
 
@@ -104,7 +104,7 @@
 	return
 
 /obj/effect/blob/proc/Pulse_Area(pulsing_overmind = overmind, claim_range = 10, pulse_range = 2, expand_range = 1)
-	src.Be_Pulsed()
+	Be_Pulsed()
 	if(claim_range)
 		for(var/obj/effect/blob/B in urange(claim_range, src, 1))
 			if(!B.overmind && !istype(B, /obj/effect/blob/core) && prob(30))
@@ -115,7 +115,7 @@
 			B.Be_Pulsed()
 	if(expand_range)
 		if(prob(60))
-			src.expand()
+			expand()
 		for(var/obj/effect/blob/B in orange(expand_range, src))
 			if(prob(max(13 - get_dist(get_turf(src), get_turf(B)) * 3, 1))) //expand falls off with range but is faster near the blob causing the expansion
 				B.expand()
@@ -137,7 +137,7 @@
 		loc.blob_act(src) //don't ask how a wall got on top of the core, just eat it
 
 /obj/effect/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
-	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, src.loc)
+	var/obj/effect/overlay/temp/blob/O = PoolOrNew(/obj/effect/overlay/temp/blob, loc)
 	if(controller)
 		var/mob/camera/blob/BO = controller
 		O.color = BO.blob_reagent_datum.color
@@ -165,7 +165,7 @@
 
 	if(istype(T, /turf/open/space) && !(locate(/obj/structure/lattice) in T) && prob(80))
 		make_blob = FALSE
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
+		playsound(loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
 	if(!T.CanPass(src, T, 5)) //is the target turf impassable
@@ -177,7 +177,7 @@
 		A.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
-		var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
+		var/obj/effect/blob/B = new /obj/effect/blob/normal(loc)
 		if(controller)
 			B.overmind = controller
 		else
@@ -261,10 +261,10 @@
 /obj/effect/blob/attacked_by(obj/item/I, mob/living/user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	visible_message("<span class='danger'>[user] has attacked the [src.name] with \the [I]!</span>")
+	playsound(loc, 'sound/effects/attackblob.ogg', 50, 1)
+	visible_message("<span class='danger'>[user] has attacked the [name] with \the [I]!</span>")
 	if(I.damtype == BURN)
-		playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+		playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 	take_damage(I.force, I.damtype, user)
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
@@ -272,8 +272,8 @@
 		return
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	visible_message("<span class='danger'>\The [M] has attacked the [src.name]!</span>")
+	playsound(loc, 'sound/effects/attackblob.ogg', 50, 1)
+	visible_message("<span class='danger'>\The [M] has attacked the [name]!</span>")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 	take_damage(damage, M.melee_damage_type, M)
 	return
@@ -281,8 +281,8 @@
 /obj/effect/blob/attack_alien(mob/living/carbon/alien/humanoid/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
-	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	visible_message("<span class='danger'>[M] has slashed the [src.name]!</span>")
+	playsound(loc, 'sound/effects/attackblob.ogg', 50, 1)
+	visible_message("<span class='danger'>[M] has slashed the [name]!</span>")
 	var/damage = rand(35,50)
 	take_damage(damage, BRUTE, M)
 	return
@@ -307,7 +307,7 @@
 	if(!ispath(type))
 		throw EXCEPTION("change_to(): invalid type for blob")
 		return
-	var/obj/effect/blob/B = new type(src.loc)
+	var/obj/effect/blob/B = new type(loc)
 	if(controller)
 		B.overmind = controller
 	B.creation_action()

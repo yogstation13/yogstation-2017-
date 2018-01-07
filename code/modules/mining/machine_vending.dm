@@ -150,10 +150,10 @@
 			if(prize.cost > inserted_id.mining_points)
 			else
 				inserted_id.mining_points -= prize.cost
-				new prize.equipment_path(src.loc)
+				new prize.equipment_path(loc)
 				feedback_add_details("mining_equipment_bought",
-					"[src.type]|[prize.equipment_path]")
-				// Add src.type to keep track of free golem purchases
+					"[type]|[prize.equipment_path]")
+				// Add type to keep track of free golem purchases
 				// seperately.
 	updateUsrDialog()
 	return
@@ -184,16 +184,16 @@
 		return
 	switch(selection)
 		if("Survival Capsule")
-			new /obj/item/weapon/survivalcapsule(src.loc)
+			new /obj/item/weapon/survivalcapsule(loc)
 		if("Resonator")
-			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/weapon/resonator(loc)
 		if("Mining Drone")
-			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
-			new /obj/item/weapon/weldingtool/hugetank(src.loc)
+			new /mob/living/simple_animal/hostile/mining_drone(loc)
+			new /obj/item/weapon/weldingtool/hugetank(loc)
 		if("Advanced Scanner")
-			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
+			new /obj/item/device/t_scanner/adv_mining_scanner(loc)
 		if("Weather Detector")
-			new /obj/item/device/barometer(src.loc)
+			new /obj/item/device/barometer(loc)
 
 	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
@@ -287,14 +287,14 @@
 		return
 	switch(selection)
 		if("Kinetic Accelerator")
-			new /obj/item/weapon/gun/energy/kinetic_accelerator(src.loc)
+			new /obj/item/weapon/gun/energy/kinetic_accelerator(loc)
 		if("Resonator")
-			new /obj/item/weapon/resonator(src.loc)
+			new /obj/item/weapon/resonator(loc)
 		if("Mining Drone")
-			new /mob/living/simple_animal/hostile/mining_drone(src.loc)
-			new /obj/item/weapon/weldingtool/hugetank(src.loc)
+			new /mob/living/simple_animal/hostile/mining_drone(loc)
+			new /obj/item/weapon/weldingtool/hugetank(loc)
 		if("Advanced Scanner")
-			new /obj/item/device/t_scanner/adv_mining_scanner(src.loc)
+			new /obj/item/device/t_scanner/adv_mining_scanner(loc)
 	feedback_add_details("mining_voucher_redeemed", selection)
 	qdel(voucher)
 

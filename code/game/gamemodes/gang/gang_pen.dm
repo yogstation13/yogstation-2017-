@@ -56,7 +56,7 @@
 		cooldown = 0
 		icon_state = "pen"
 		var/mob/M = get(src, /mob)
-		to_chat(M, "<span class='notice'>\icon[src] [src][(src.loc == M)?(""):(" in your [src.loc]")] vibrates softly. It is ready to be used again.</span>")
+		to_chat(M, "<span class='notice'>\icon[src] [src][(loc == M)?(""):(" in your [loc]")] vibrates softly. It is ready to be used again.</span>")
 
 
 //////////////

@@ -185,7 +185,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		if(GRAV_NEEDS_SCREWDRIVER)
 			if(istype(I, /obj/item/weapon/screwdriver))
 				to_chat(user, "<span class='notice'>You secure the screws of the framework.</span>")
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				broken_state++
 				update_icon()
 				return
@@ -194,7 +194,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 				var/obj/item/weapon/weldingtool/WT = I
 				if(WT.remove_fuel(1, user))
 					to_chat(user, "<span class='notice'>You mend the damaged framework.</span>")
-					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
+					playsound(loc, 'sound/items/Welder2.ogg', 50, 1)
 					broken_state++
 					update_icon()
 				else if(WT.isOn())
@@ -206,7 +206,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 				if(PS.amount >= 10)
 					PS.use(10)
 					to_chat(user, "<span class='notice'>You add the plating to the framework.</span>")
-					playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
+					playsound(loc, 'sound/machines/click.ogg', 75, 1)
 					broken_state++
 					update_icon()
 				else
@@ -215,7 +215,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		if(GRAV_NEEDS_WRENCH)
 			if(istype(I, /obj/item/weapon/wrench))
 				to_chat(user, "<span class='notice'>You secure the plating to the framework.</span>")
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+				playsound(loc, 'sound/items/Ratchet.ogg', 75, 1)
 				set_fix()
 				return
 	return ..()
@@ -260,7 +260,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		breaker = !breaker
 		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [usr.key].", "gravity")
 		set_power()
-		src.updateUsrDialog()
+		updateUsrDialog()
 
 // Power and Icon States
 
@@ -312,7 +312,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 
 	update_icon()
 	update_list()
-	src.updateUsrDialog()
+	updateUsrDialog()
 	if(alert)
 		shake_everyone()
 
@@ -333,7 +333,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 				charge_count -= 2
 
 			if(charge_count % 4 == 0 && prob(75)) // Let them know it is charging/discharging.
-				playsound(src.loc, 'sound/effects/EMPulse.ogg', 100, 1)
+				playsound(loc, 'sound/effects/EMPulse.ogg', 100, 1)
 
 			updateDialog()
 			if(prob(25)) // To help stop "Your clothes feel warm." spam.
@@ -383,7 +383,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	return 0
 
 /obj/machinery/gravity_generator/main/proc/update_list()
-	var/turf/T = get_turf(src.loc)
+	var/turf/T = get_turf(loc)
 	if(T)
 		if(!gravity_generators["[T.z]"])
 			gravity_generators["[T.z]"] = list()

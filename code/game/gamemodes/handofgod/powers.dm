@@ -327,7 +327,7 @@
 		to_chat(M, "<span class='warning'>The air begins to shimmer...</span>")
 	if(do_after(src, 30, 0, src))
 		for(var/obj/structure/divine/R in orange(3,src))
-			if(istype(R, /obj/structure/divine/nexus)|| istype(R, /obj/structure/divine/trap)||(src.side != R.side))
+			if(istype(R, /obj/structure/divine/nexus)|| istype(R, /obj/structure/divine/trap)||(side != R.side))
 				continue
 			R.visible_message("<span class='danger'>[R] fades away.</span>")
 			R.invisibility = 55
@@ -351,7 +351,7 @@
 		to_chat(M, "<span class='warning'>The air begins to shimmer...</span>")
 	if(do_after(src, 40, 0, src))
 		for(var/obj/structure/divine/R in orange(3,src))
-			if(istype(R, /obj/structure/divine/nexus)|| istype(R, /obj/structure/divine/trap)||(src.side != R.side))
+			if(istype(R, /obj/structure/divine/nexus)|| istype(R, /obj/structure/divine/trap)||(side != R.side))
 				continue
 			R.visible_message("<span class='danger'>[R] suddenly appears!</span>")
 			R.invisibility = 0

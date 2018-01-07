@@ -46,7 +46,7 @@
 /mob/living/simple_animal/hostile/retaliate/dolphin/attackby(obj/item/weapon/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks/grown/apple) && stat == DEAD)
-		new /obj/item/weapon/reagent_containers/food/snacks/youmonster(src.loc)
+		new /obj/item/weapon/reagent_containers/food/snacks/youmonster(loc)
 		qdel(W)
 		qdel(src)
 

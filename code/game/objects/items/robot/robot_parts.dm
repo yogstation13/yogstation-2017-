@@ -75,27 +75,27 @@
 
 /obj/item/robot_parts/robot_suit/New()
 	..()
-	src.updateicon()
+	updateicon()
 
 /obj/item/robot_parts/robot_suit/proc/updateicon()
-	src.overlays.Cut()
-	if(src.l_arm)
-		src.overlays += "l_arm+o"
-	if(src.r_arm)
-		src.overlays += "r_arm+o"
-	if(src.chest)
-		src.overlays += "chest+o"
-	if(src.l_leg)
-		src.overlays += "l_leg+o"
-	if(src.r_leg)
-		src.overlays += "r_leg+o"
-	if(src.head)
-		src.overlays += "head+o"
+	overlays.Cut()
+	if(l_arm)
+		overlays += "l_arm+o"
+	if(r_arm)
+		overlays += "r_arm+o"
+	if(chest)
+		overlays += "chest+o"
+	if(l_leg)
+		overlays += "l_leg+o"
+	if(r_leg)
+		overlays += "r_leg+o"
+	if(head)
+		overlays += "head+o"
 
 /obj/item/robot_parts/robot_suit/proc/check_completion()
-	if(src.l_arm && src.r_arm)
-		if(src.l_leg && src.r_leg)
-			if(src.chest && src.head)
+	if(l_arm && r_arm)
+		if(l_leg && r_leg)
+			if(chest && head)
 				feedback_inc("cyborg_frames_built",1)
 				return 1
 	return 0
@@ -117,64 +117,64 @@
 				to_chat(user, "<span class='warning'>You need one sheet of metal to start building ED-209!</span>")
 				return
 	else if(istype(W, /obj/item/robot_parts/l_leg))
-		if(src.l_leg)
+		if(l_leg)
 			return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
-		src.l_leg = W
-		src.updateicon()
+		l_leg = W
+		updateicon()
 
 	else if(istype(W, /obj/item/robot_parts/r_leg))
-		if(src.r_leg)
+		if(r_leg)
 			return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
-		src.r_leg = W
-		src.updateicon()
+		r_leg = W
+		updateicon()
 
 	else if(istype(W, /obj/item/robot_parts/l_arm))
-		if(src.l_arm)
+		if(l_arm)
 			return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
-		src.l_arm = W
-		src.updateicon()
+		l_arm = W
+		updateicon()
 
 	else if(istype(W, /obj/item/robot_parts/r_arm))
-		if(src.r_arm)
+		if(r_arm)
 			return
 		if(!user.unEquip(W))
 			return
 		W.loc = src
-		src.r_arm = W
-		src.updateicon()
+		r_arm = W
+		updateicon()
 
 	else if(istype(W, /obj/item/robot_parts/chest))
-		if(src.chest)
+		if(chest)
 			return
 		if(W:wired && W:cell)
 			if(!user.unEquip(W))
 				return
 			W.loc = src
-			src.chest = W
-			src.updateicon()
+			chest = W
+			updateicon()
 		else if(!W:wired)
 			to_chat(user, "<span class='warning'>You need to attach wires to it first!</span>")
 		else
 			to_chat(user, "<span class='warning'>You need to attach a cell to it first!</span>")
 
 	else if(istype(W, /obj/item/robot_parts/head))
-		if(src.head)
+		if(head)
 			return
 		if(W:flash2 && W:flash1)
 			if(!user.unEquip(W))
 				return
 			W.loc = src
-			src.head = W
-			src.updateicon()
+			head = W
+			updateicon()
 		else
 			to_chat(user, "<span class='warning'>You need to attach a flash to it first!</span>")
 
@@ -272,7 +272,7 @@
 			if(pulledby)
 				pulledby.stop_pulling()
 
-			src.loc = O
+			loc = O
 			O.robot_suit = src
 
 			if(!locomotion)
@@ -311,8 +311,8 @@
 		return
 
 	if(href_list["Name"])
-		var/new_name = name_input(usr, "Enter new designation. Set to blank to reset to default.", "Cyborg Debug", src.created_name, TRUE)
-		if(!in_range(src, usr) && src.loc != usr)
+		var/new_name = name_input(usr, "Enter new designation. Set to blank to reset to default.", "Cyborg Debug", created_name, TRUE)
+		if(!in_range(src, usr) && loc != usr)
 			return
 		if(new_name)
 			created_name = new_name
@@ -339,22 +339,22 @@
 
 /obj/item/robot_parts/chest/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
-		if(src.cell)
+		if(cell)
 			to_chat(user, "<span class='warning'>You have already inserted a cell!</span>")
 			return
 		else
 			if(!user.unEquip(W))
 				return
 			W.loc = src
-			src.cell = W
+			cell = W
 			to_chat(user, "<span class='notice'>You insert the cell.</span>")
 	else if(istype(W, /obj/item/stack/cable_coil))
-		if(src.wired)
+		if(wired)
 			to_chat(user, "<span class='warning'>You have already inserted wire!</span>")
 			return
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.use(1))
-			src.wired = 1
+			wired = 1
 			to_chat(user, "<span class='notice'>You insert the wire.</span>")
 		else
 			to_chat(user, "<span class='warning'>You need one length of coil to wire it!</span>")
@@ -364,7 +364,7 @@
 /obj/item/robot_parts/head/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/assembly/flash/handheld))
 		var/obj/item/device/assembly/flash/handheld/F = W
-		if(src.flash1 && src.flash2)
+		if(flash1 && flash2)
 			to_chat(user, "<span class='warning'>You have already inserted the eyes!</span>")
 			return
 		else if(F.crit_fail)
@@ -374,10 +374,10 @@
 			if(!user.unEquip(W))
 				return
 			F.loc = src
-			if(src.flash1)
-				src.flash2 = F
+			if(flash1)
+				flash2 = F
 			else
-				src.flash1 = F
+				flash1 = F
 			to_chat(user, "<span class='notice'>You insert the flash into the eye socket.</span>")
 	else
 		return ..()

@@ -35,7 +35,7 @@
 /mob/living/simple_animal/hostile/guardian/bomb/AltClickOn(atom/movable/A)
 	if(!istype(A))
 		return
-	if(src.loc == summoner)
+	if(loc == summoner)
 		to_chat(src, "<span class='danger'><B>You must be manifested to create bombs!</span></B>")
 		return
 	if(istype(A, /obj/))
@@ -65,14 +65,14 @@
 	addtimer(src,"vanish", 1000)
 
 /obj/item/weapon/guardian_bomb/proc/vanish(var/obj/A)
-	stored_obj.loc = get_turf(src.loc)
+	stored_obj.loc = get_turf(loc)
 	to_chat(spawner, "<span class='danger'><B>Failure! Your trap didn't catch anyone this time.</span></B>")
 	qdel(src)
 
 /obj/item/weapon/guardian_bomb/proc/detonate(var/mob/living/user)
 	to_chat(user, "<span class='danger'><B>[src] was boobytrapped!</span></B>")
 	to_chat(spawner, "<span class='danger'><B>Success! Your trap caught [user]</span></B>")
-	stored_obj.loc = get_turf(src.loc)
+	stored_obj.loc = get_turf(loc)
 	playsound(get_turf(src),'sound/effects/Explosion2.ogg', 200, 1)
 	user.ex_act(2)
 	qdel(src)

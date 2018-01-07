@@ -124,7 +124,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/colossus/bullet_act(obj/item/projectile/P)
 	if(!stat)
-		var/obj/effect/overlay/temp/at_shield/AT = new(src.loc)
+		var/obj/effect/overlay/temp/at_shield/AT = new(loc)
 		AT.target = src
 		var/random_x = rand(-32, 32)
 		AT.pixel_x += random_x
@@ -204,8 +204,8 @@
 	P.firer = src
 	P.yo = marker.y - startloc.y
 	P.xo = marker.x - startloc.x
-	P.damage = round(P.damage * src.scaling, 1)
-	P.speed = P.speed / src.scaling
+	P.damage = round(P.damage * scaling, 1)
+	P.speed = P.speed / scaling
 	if(target)
 		P.original = target
 	else

@@ -301,7 +301,7 @@
 
 	//make local for sanic speed
 	var/list/A_gases = A.gases
-	var/list/turf_list = src.turf_list
+	var/list/turf_list = turf_list
 	var/turflen = turf_list.len
 	var/space_in_group = 0
 

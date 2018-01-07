@@ -137,8 +137,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	if(high_risk)
 		var/turf/T = get_turf(src)
 		if(high_risk_item_notifications)
-			message_admins("Antag objective item [src] deleted at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>). Last associated key is [src.fingerprintslast].")
-		log_game("Antag objective item [src] deleted at ([T.x],[T.y],[T.z]). Last associated key is [src.fingerprintslast].")
+			message_admins("Antag objective item [src] deleted at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>). Last associated key is [fingerprintslast].")
+		log_game("Antag objective item [src] deleted at ([T.x],[T.y],[T.z]). Last associated key is [fingerprintslast].")
 		antag_objective_items -= src
 	if(ismob(loc))
 		var/mob/m = loc
@@ -156,12 +156,12 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/turf/T = get_turf(src)
 		if(T)
 			if(high_risk_item_notifications)
-				message_admins("Antag objective item [src] changed z levels at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>). Last associated key is [src.fingerprintslast].")
-			log_game("Antag objective item [src] changed z levels at ([T.x],[T.y],[T.z]). Last associated key is [src.fingerprintslast].")
+				message_admins("Antag objective item [src] changed z levels at ([T.x],[T.y],[T.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>). Last associated key is [fingerprintslast].")
+			log_game("Antag objective item [src] changed z levels at ([T.x],[T.y],[T.z]). Last associated key is [fingerprintslast].")
 		else
 			if(high_risk_item_notifications)
-				message_admins("Antag objective item [src] changed z levels at (no loc). Last associated key is [src.fingerprintslast].")
-			log_game("Antag objective item [src] changed z levels at (no loc). Last associated key is [src.fingerprintslast].")
+				message_admins("Antag objective item [src] changed z levels at (no loc). Last associated key is [fingerprintslast].")
+			log_game("Antag objective item [src] changed z levels at (no loc). Last associated key is [fingerprintslast].")
 	..()
 
 /obj/item/blob_act(obj/effect/blob/B)
@@ -191,19 +191,19 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(src.loc, /turf) || usr.stat || usr.restrained() || !usr.canmove)
+	if(!istype(loc, /turf) || usr.stat || usr.restrained() || !usr.canmove)
 		return
 
-	var/turf/T = src.loc
+	var/turf/T = loc
 
-	src.loc = null
+	loc = null
 
-	src.loc = T
+	loc = T
 
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	..()
 	var/size
-	switch(src.w_class)
+	switch(w_class)
 		if(1)
 			size = "tiny"
 		if(2)
@@ -220,7 +220,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	//if ((CLUMSY in usr.mutations) && prob(50)) t = "funny-looking"
 
 	var/pronoun
-	if(src.gender == PLURAL)
+	if(gender == PLURAL)
 		pronoun = "They are"
 	else
 		pronoun = "It is"
@@ -336,7 +336,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	attack_paw(A)
 
 /obj/item/attack_ai(mob/user)
-	if(istype(src.loc, /obj/item/weapon/robot_module))
+	if(istype(loc, /obj/item/weapon/robot_module))
 		//If the item is part of a cyborg module, equip it
 		if(!isrobot(user))
 			return
@@ -352,13 +352,13 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect multiple items on a tile and we clicked on a valid one.
-				if(isturf(src.loc))
+				if(isturf(loc))
 					var/list/rejections = list()
 					var/success = 0
 					var/failure = 0
 
-					for(var/obj/item/I in src.loc)
-						if(S.collection_mode == 2 && !istype(I,src.type)) // We're only picking up items of the target type
+					for(var/obj/item/I in loc)
+						if(S.collection_mode == 2 && !istype(I,type)) // We're only picking up items of the target type
 							failure = 1
 							continue
 						if(I.type in rejections) // To limit bag spamming: any given type only complains once
@@ -526,9 +526,9 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 
-	playsound(loc, src.hitsound, 30, 1, -1)
+	playsound(loc, hitsound, 30, 1, -1)
 
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \
@@ -547,7 +547,7 @@ obj/item/proc/item_action_slot_check(slot, mob/user)
 	else
 		M.take_organ_damage(7)
 
-	add_logs(user, M, "attacked", "[src.name]", "(INTENT: [uppertext(user.a_intent)])")
+	add_logs(user, M, "attacked", "[name]", "(INTENT: [uppertext(user.a_intent)])")
 
 	M.adjust_blurriness(3)
 	M.adjust_eye_damage(rand(2,4))

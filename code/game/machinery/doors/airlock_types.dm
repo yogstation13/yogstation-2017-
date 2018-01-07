@@ -172,7 +172,7 @@
 
 /obj/machinery/door/airlock/plasma/proc/PlasmaBurn(temperature)
 	atmos_spawn_air("plasma=500;TEMP=1000")
-	new/obj/structure/door_assembly/door_assembly_0( src.loc )
+	new/obj/structure/door_assembly/door_assembly_0( loc )
 	qdel(src)
 
 /obj/machinery/door/airlock/plasma/BlockSuperconductivity() //we don't stop the heat~
@@ -325,7 +325,7 @@
 
 /obj/machinery/door/airlock/cult/New()
 	..()
-	PoolOrNew(openingoverlaytype, src.loc)
+	PoolOrNew(openingoverlaytype, loc)
 
 /obj/machinery/door/airlock/cult/allowed(mob/M)
 	if(!density)
@@ -334,10 +334,10 @@
 			iscultist(M) || \
 			istype(M, /mob/living/simple_animal/shade) || \
 			istype(M, /mob/living/simple_animal/hostile/construct))
-		PoolOrNew(openingoverlaytype, src.loc)
+		PoolOrNew(openingoverlaytype, loc)
 		return 1
 	else
-		PoolOrNew(/obj/effect/overlay/temp/cult/sac, src.loc)
+		PoolOrNew(/obj/effect/overlay/temp/cult/sac, loc)
 		var/atom/throwtarget
 		throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 		to_chat(M, pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50)))

@@ -14,15 +14,15 @@
 /obj/machinery/light_switch/New()
 	..()
 	spawn(5)
-		src.area = src.loc.loc
+		area = loc.loc
 
 		if(otherarea)
-			src.area = locate(text2path("/area/[otherarea]"))
+			area = locate(text2path("/area/[otherarea]"))
 
 		if(!name)
 			name = "light switch ([area.name])"
 
-		src.on = src.area.lightswitch
+		on = area.lightswitch
 		updateicon()
 
 
@@ -42,11 +42,11 @@
 
 
 /obj/machinery/light_switch/attack_paw(mob/user)
-	src.attack_hand(user)
+	attack_hand(user)
 
 /obj/machinery/light_switch/attack_hand(mob/user)
 
-	playsound(src.loc, 'sound/effects/click.ogg', 50, 1, -1)
+	playsound(loc, 'sound/effects/click.ogg', 50, 1, -1)
 
 	on = !on
 

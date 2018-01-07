@@ -38,7 +38,7 @@
 
 /obj/structure/filingcabinet/ex_act(severity, target)
 	for(var/obj/item/I in src)
-		I.loc = src.loc
+		I.loc = loc
 	qdel(src)
 	..()
 

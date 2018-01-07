@@ -42,10 +42,10 @@
 	if(spawn_delay > world.time)
 		return 0
 	spawn_delay = world.time + spawn_time
-	var/mob/living/simple_animal/L = new mob_type(src.loc)
+	var/mob/living/simple_animal/L = new mob_type(loc)
 	spawned_mobs += L
 	L.nest = src
-	L.faction = src.faction
+	L.faction = faction
 	visible_message("<span class='danger'>[L] [spawn_text] [src].</span>")
 
 /mob/living/simple_animal/hostile/spawner/syndicate

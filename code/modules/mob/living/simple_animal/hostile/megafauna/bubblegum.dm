@@ -128,7 +128,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Move()
 	if(!stat)
-		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
+		playsound(loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	if(charging)
 		PoolOrNew(/obj/effect/overlay/temp/decoy, list(loc,src))
 		DestroySurroundings()
@@ -194,7 +194,7 @@
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/blood_spray()
 	visible_message("<span class='danger'>[src] sprays a stream of gore!</span>")
 	spawn(0)
-		var/turf/E = get_edge_target_turf(src, src.dir)
+		var/turf/E = get_edge_target_turf(src, dir)
 		var/range = round(25 * scaling, 1)
 		for(var/turf/open/J in getline(src,E))
 			if(!range)

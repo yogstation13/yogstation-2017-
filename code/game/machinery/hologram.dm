@@ -97,7 +97,7 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 
 	var/datum/browser/popup = new(user, "holopad", name, 300, 130)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/hologram/holopad/Topic(href, href_list)
@@ -129,7 +129,7 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	/*There are pretty much only three ways to interact here.
 	I don't need to check for client since they're clicking on an object.
 	This may change in the future but for now will suffice.*/
-	if(user.eyeobj.loc != src.loc)//Set client eye on the object if it's not already.
+	if(user.eyeobj.loc != loc)//Set client eye on the object if it's not already.
 		user.eyeobj.setLoc(get_turf(src))
 	else if(!masters[user])//If there is no hologram, possibly make one.
 		activate_holo(user)
@@ -138,12 +138,12 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	return
 
 /obj/machinery/hologram/holopad/proc/activate_holo(mob/living/silicon/ai/user)
-	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it
+	if(!(stat & NOPOWER) && user.eyeobj.loc == loc)//If the projector has power and client eye is on it
 		if (istype(user.current, /obj/machinery/hologram/holopad))
 			to_chat(user, "<span class='danger'>ERROR:</span> \black Image feed in progress.")
 			return
 		create_holo(user)//Create one.
-		src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
+		visible_message("A holographic image of [user] flicks to life right before your eyes!")
 	else
 		to_chat(user, "<span class='danger'>ERROR:</span> \black Unable to project hologram.")
 	return

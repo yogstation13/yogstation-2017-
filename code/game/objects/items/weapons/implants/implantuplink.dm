@@ -11,7 +11,7 @@
 	..()
 
 /obj/item/weapon/implant/uplink/implant(mob/user)
-	var/obj/item/weapon/implant/imp_e = locate(src.type) in user
+	var/obj/item/weapon/implant/imp_e = locate(type) in user
 	if(imp_e && imp_e != src)
 		imp_e.hidden_uplink.telecrystals += hidden_uplink.telecrystals
 		qdel(src)

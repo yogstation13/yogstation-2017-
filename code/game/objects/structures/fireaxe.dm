@@ -27,7 +27,7 @@
 			if(!user.drop_item())
 				return
 			fireaxe = F
-			src.contents += F
+			contents += F
 			to_chat(user, "<span class='caution'>You place the [F.name] back in the [name].</span>")
 			update_icon()
 			return
@@ -52,7 +52,7 @@
 					playsound(loc, 'sound/effects/Glasshit.ogg', 90, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
 	if(damage < 10)
@@ -70,7 +70,7 @@
 			qdel(src)
 		if(2)
 			if(prob(50) && fireaxe)
-				fireaxe.loc = src.loc
+				fireaxe.loc = loc
 				qdel(src)
 			else
 				take_damage(rand(30,70), BRUTE, 0)
@@ -84,7 +84,7 @@
 
 /obj/structure/fireaxecabinet/blob_act(obj/effect/blob/B)
 	if(fireaxe)
-		fireaxe.loc = src.loc
+		fireaxe.loc = loc
 	qdel(src)
 
 /obj/structure/fireaxecabinet/attack_hand(mob/user)
@@ -93,7 +93,7 @@
 			user.put_in_hands(fireaxe)
 			fireaxe = null
 			to_chat(user, "<span class='caution'>You take the fire axe from the [name].</span>")
-			src.add_fingerprint(user)
+			add_fingerprint(user)
 			update_icon()
 			return
 	if(locked)

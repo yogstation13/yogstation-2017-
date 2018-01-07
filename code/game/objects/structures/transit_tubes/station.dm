@@ -52,8 +52,8 @@
 	var/obj/structure/transit_tube_pod/T = new/obj/structure/transit_tube_pod(src)
 	R.transfer_fingerprints_to(T)
 	T.add_fingerprint(user)
-	T.loc = src.loc
-	T.dir = turn(src.dir, -90)
+	T.loc = loc
+	T.dir = turn(dir, -90)
 	user.visible_message("[user] inserts the [R].", "<span class='notice'>You insert the [R].</span>")
 	qdel(R)
 
@@ -72,7 +72,7 @@
 						if(do_after(user, 15, target = src))
 							if(GM && user.grab_state >= GRAB_AGGRESSIVE && user.pulling == GM && !GM.buckled && !GM.has_buckled_mobs())
 								GM.Weaken(5)
-								src.Bumped(GM)
+								Bumped(GM)
 						break
 		else
 			for(var/obj/structure/transit_tube_pod/pod in loc)
@@ -103,7 +103,7 @@
 				to_chat(user, "<span class='warning'>Empty the pod first!</span>")
 				return
 			user.visible_message("[user] removes the [pod].", "<span class='notice'>You remove the [pod].</span>")
-			var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(src.loc)
+			var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(loc)
 			pod.transfer_fingerprints_to(R)
 			R.add_fingerprint(user)
 			qdel(pod)

@@ -29,7 +29,7 @@
 		return 0
 	if(!egged)
 		var/mob/living/Snake = null
-		for(var/mob/living/L in src.contents)
+		for(var/mob/living/L in contents)
 			Snake = L
 			break
 		if(Snake)

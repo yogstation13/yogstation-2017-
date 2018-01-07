@@ -103,9 +103,9 @@
 	if(!emagged)
 		emagged = 1
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
-		spark_system.set_up(4, 0, src.loc)
+		spark_system.set_up(4, 0, loc)
 		spark_system.start()
-		playsound(src.loc, "sparks", 50, 1)
+		playsound(loc, "sparks", 50, 1)
 
 /obj/machinery/computer/slot_machine/attack_hand(mob/living/user)
 	. = ..() //Sanity checks.

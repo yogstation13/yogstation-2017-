@@ -99,7 +99,7 @@
 /obj/structure/ore_box/proc/dump_contents()
 	for (var/obj/item/weapon/ore/O in contents)
 		contents -= O
-		O.loc = src.loc
+		O.loc = loc
 
 /obj/structure/ore_box/Topic(href, href_list)
 	if(..())
@@ -108,11 +108,11 @@
 		return
 
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 	if(href_list["removeall"])
 		dump_contents()
 		to_chat(usr, "<span class='notice'>You empty the box.</span>")
-	src.updateUsrDialog()
+	updateUsrDialog()
 	return
 
 /obj/structure/ore_box/ex_act(severity, target)

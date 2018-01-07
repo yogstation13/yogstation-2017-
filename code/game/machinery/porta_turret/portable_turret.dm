@@ -635,11 +635,11 @@
 /obj/machinery/porta_turret/proc/setState(on, emagged)
 	if(controllock)
 		return
-	src.on = on
-	src.emagged = emagged
+	on = on
+	emagged = emagged
 	if(emagged)
-		src.active_state = "Laser"
-	src.power_change()
+		active_state = "Laser"
+	power_change()
 
 
 
@@ -740,10 +740,10 @@
 			return
 
 	if (istype(user, /mob/living/silicon))
-		return src.attack_hand(user)
+		return attack_hand(user)
 
 	if( get_dist(src, user) == 0 )		// trying to unlock the interface
-		if (src.allowed(usr))
+		if (allowed(usr))
 			if(emagged)
 				to_chat(user, "<span class='notice'>The turret control is unresponsive.</span>")
 				return
@@ -756,7 +756,7 @@
 					user << browse(null, "window=turretid")
 			else
 				if (user.machine==src)
-					src.attack_hand(user)
+					attack_hand(user)
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
@@ -766,7 +766,7 @@
 		emagged = 1
 		locked = 0
 		if(user && user.machine==src)
-			src.attack_hand(user)
+			attack_hand(user)
 
 /obj/machinery/turretid/attack_ai(mob/user)
 	if(!ailock || IsAdminGhost(user))
@@ -783,7 +783,7 @@
 			return
 
 	user.set_machine(src)
-	var/loc = src.loc
+	var/loc = loc
 	if (istype(loc, /turf))
 		loc = loc:loc
 	if (!istype(loc, /area))
@@ -792,25 +792,25 @@
 	var/area/area = loc
 	var/t = ""
 
-	if(src.locked && (!(istype(user, /mob/living/silicon) || IsAdminGhost(user))))
+	if(locked && (!(istype(user, /mob/living/silicon) || IsAdminGhost(user))))
 		t += "<div class='notice icon'>Swipe ID card to unlock interface</div>"
 	else
 		if (!istype(user, /mob/living/silicon) && !IsAdminGhost(user))
 			t += "<div class='notice icon'>Swipe ID card to lock interface</div>"
-		t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
-		t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br>\n", src.lethal?"lethal":"stun repeatedly", src,  src.lethal?"Stun repeatedly":"Lethal")
+		t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", enabled?"activated":"deactivated", src, enabled?"Disable":"Enable")
+		t += text("Currently set for [] - <A href='?src=\ref[];toggleLethal=1'>Change to []?</a><br>\n", lethal?"lethal":"stun repeatedly", src,  lethal?"Stun repeatedly":"Lethal")
 
 	//user << browse(t, "window=turretid")
 	//onclose(user, "turretid")
 	var/datum/browser/popup = new(user, "turretid", "Turret Control Panel ([area.name])")
 	popup.set_content(t)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
 /obj/machinery/turretid/Topic(href, href_list)
 	if(..())
 		return
-	if (src.locked)
+	if (locked)
 		if (!(istype(usr, /mob/living/silicon) || IsAdminGhost(usr)))
 			to_chat(usr, "Control panel is locked!")
 			return
@@ -818,7 +818,7 @@
 		toggle_on()
 	else if (href_list["toggleLethal"])
 		toggle_lethal()
-	src.attack_hand(usr)
+	attack_hand(usr)
 
 /obj/machinery/turretid/proc/toggle_lethal()
 	lethal = !lethal
@@ -831,7 +831,7 @@
 /obj/machinery/turretid/proc/updateTurrets()
 	for (var/obj/machinery/porta_turret/aTurret in turrets)
 		aTurret.setState(enabled, lethal)
-	src.update_icon()
+	update_icon()
 
 /obj/machinery/turretid/power_change()
 	..()

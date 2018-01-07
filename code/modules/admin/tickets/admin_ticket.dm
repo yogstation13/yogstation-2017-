@@ -12,19 +12,19 @@ var/ticket_counter_visible_to_everyone = 0
 	var/for_admins
 
 /datum/ticket_log/New(var/datum/admin_ticket/parent, var/user, var/text, var/for_admins = 0)
-	src.gametime = gameTimestamp()
-	src.parent = parent
+	gametime = gameTimestamp()
+	parent = parent
 	if(istype(user, /client))
-		src.user_admin = is_admin(user)
+		user_admin = is_admin(user)
 	else
-		src.user_admin = text
-	src.for_admins = for_admins
+		user_admin = text
+	for_admins = for_admins
 	if(istype(user, /client))
-		src.user = get_fancy_key(user)
+		user = get_fancy_key(user)
 	else
-		src.user = user
-	src.text = text
-	src.text_admin = generate_admin_info(text)
+		user = user
+	text = text
+	text_admin = generate_admin_info(text)
 
 /datum/ticket_log/proc/isAdminComment()
 	return istype(user, /client) && (for_admins && !(compare_ckey(parent.owner_ckey, user) || compare_ckey(parent.handling_admin, user)) ? 1 : 0)

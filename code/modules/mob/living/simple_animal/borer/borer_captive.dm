@@ -4,14 +4,14 @@
 
 /mob/living/captive_brain/say(var/message)
 
-	if (src.client)
+	if (client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "\red You cannot speak in IC (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	if(istype(src.loc,/mob/living/simple_animal/borer))
+	if(istype(loc,/mob/living/simple_animal/borer))
 
 		message = sanitize(message)
 		if (!message)
@@ -20,7 +20,7 @@
 		if (stat == 2)
 			return say_dead(message)
 
-		var/mob/living/simple_animal/borer/B = src.loc
+		var/mob/living/simple_animal/borer/B = loc
 		to_chat(src, "You whisper silently, \"[message]\"")
 		to_chat(B.victim, "The captive mind of [src] whispers, \"[message]\"")
 
@@ -63,8 +63,8 @@
 	..()
 
 /mob/proc/getBorer(victim) // checks for the loc, nothing else
-	if(isborer(src.loc))
-		var/mob/living/simple_animal/borer/borer = src.loc
+	if(isborer(loc))
+		var/mob/living/simple_animal/borer/borer = loc
 		if(victim)
 			return borer.victim
 		else

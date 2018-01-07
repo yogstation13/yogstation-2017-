@@ -36,14 +36,14 @@
 
 
 /mob/living/simple_animal/mouse/proc/splat()
-	src.health = 0
-	src.icon_dead = "mouse_[body_color]_splat"
+	health = 0
+	icon_dead = "mouse_[body_color]_splat"
 	death()
 
 /mob/living/simple_animal/mouse/death(gibbed, toast)
 	if(!ckey)
 		..(1)
-		var/obj/item/weapon/reagent_containers/food/snacks/deadmouse/M = new(src.loc)
+		var/obj/item/weapon/reagent_containers/food/snacks/deadmouse/M = new(loc)
 		M.icon_state = icon_dead
 		if(toast)
 			M.color = "#3A3A3A"

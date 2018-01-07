@@ -6,5 +6,5 @@
 	var/voteweight = 1
 
 /datum/votablemap/New(name)
-	src.name = name
-	src.friendlyname = name
+	name = name
+	friendlyname = name

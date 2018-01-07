@@ -129,7 +129,7 @@
 			var/obj/effect/mob_spawn/human/golem/slaved/H = new(get_turf(src))
 			H.mob_species = golem
 			H.slaved_to = user
-			playsound(src.loc, 'sound/effects/meteorimpact.ogg', 100, 1)
+			playsound(loc, 'sound/effects/meteorimpact.ogg', 100, 1)
 			log_admin("[key_name(user)] created a custom golem shell. Species: [golem]")
 			notify_ghosts("Xenobiology golem shell created in [get_area(user)].", 'sound/effects/ghost2.ogg', source = user)
 			qdel(src)
@@ -197,7 +197,7 @@
 
 /obj/effect/golemrune/process()
 	var/mob/dead/observer/ghost
-	for(var/mob/dead/observer/O in src.loc)
+	for(var/mob/dead/observer/O in loc)
 		if(!O.client)
 			continue
 		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
@@ -215,7 +215,7 @@
 
 /obj/effect/golemrune/attack_hand(mob/living/user)
 	var/mob/dead/observer/ghost
-	for(var/mob/dead/observer/O in src.loc)
+	for(var/mob/dead/observer/O in loc)
 		if(!O.client)
 			continue
 		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
@@ -236,7 +236,7 @@
 	G.name = G.real_name
 	G.dna.unique_enzymes = G.dna.generate_unique_enzymes()
 	G.dna.species.auto_equip(G)
-	G.loc = src.loc
+	G.loc = loc
 	G.key = ghost.key
 	to_chat(G, "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost.")
 	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")

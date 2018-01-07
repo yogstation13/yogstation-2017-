@@ -133,7 +133,7 @@
 		return
 
 	if(istype(M, /mob/living/carbon/human) && M.stat != DEAD && M.ckey)
-		for(var/mob/O in viewers(world.view, src.loc))
+		for(var/mob/O in viewers(world.view, loc))
 		visible_message("<span class='warning'>[M] triggered the [src]!</span>")
 		triggered = 1
 

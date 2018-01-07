@@ -154,7 +154,7 @@
 			user.unEquip(src)
 			user.head = null
 			user.update_inv_head()
-			src.screen_loc = null
+			screen_loc = null
 			user.Weaken(1)
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/red

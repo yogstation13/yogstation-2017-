@@ -106,21 +106,21 @@
 
 /obj/machinery/computer/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/weapon/screwdriver/I)
 	if(circuit && !(flags & NODECONSTRUCT))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You start to disconnect the monitor...</span>")
 		if(do_after(user, 20/I.toolspeed, target = src))
 			deconstruction()
-			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(src.loc)
+			var/obj/structure/frame/computer/A = new /obj/structure/frame/computer(loc)
 			A.circuit = circuit
 			A.anchored = 1
 			circuit = null
 			erase_data()
 			for (var/obj/C in src)
-				C.loc = src.loc
-			if ((stat & BROKEN) || computer_health != initial(src.computer_health))
+				C.loc = loc
+			if ((stat & BROKEN) || computer_health != initial(computer_health))
 				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
-				new /obj/item/weapon/shard(src.loc)
-				new /obj/item/weapon/shard(src.loc)
+				new /obj/item/weapon/shard(loc)
+				new /obj/item/weapon/shard(loc)
 				A.state = 3
 				A.icon_state = "3"
 			else
@@ -139,13 +139,13 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(!W.isOn())
 			return ..()
-		else if(computer_health == initial(src.computer_health)) //This doesn't like |'s for some reason
+		else if(computer_health == initial(computer_health)) //This doesn't like |'s for some reason
 			to_chat(user, "<span class='notice'>No point in welding a pristine looking computer.</span>")
 			return 0
 		else if(!computer_health)
 			return 0
 		else
-			computer_health = initial(src.computer_health)
+			computer_health = initial(computer_health)
 			update_crack()
 			W.remove_fuel(1, user)
 
@@ -158,12 +158,12 @@
 		if(BRUTE)
 			if(sound_effect)
 				if(stat & BROKEN)
-					playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
+					playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 				else
-					playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+					playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
 	computer_health = max(computer_health - damage, 0)
@@ -183,7 +183,7 @@
 
 /obj/machinery/computer/proc/update_crack()
 	overlays -= crack_overlay
-	if(!(screen_crack && computer_health) || (computer_health == initial(src.computer_health)))
+	if(!(screen_crack && computer_health) || (computer_health == initial(computer_health)))
 		return 0
 	var/crack = round(computer_health / 5)
 	crack_overlay = image(icon = 'icons/obj/computer.dmi', icon_state = "[screen_crack]_[crack]")

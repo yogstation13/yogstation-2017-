@@ -70,9 +70,9 @@
 	var/K
 
 	if(key)
-		K = src.key
+		K = key
 
-	message = src.say_quote(message, get_spans())
+	message = say_quote(message, get_spans())
 	log_say("[name]/[ckey]: [oldmsg]", "DEAD")
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[message]</span></span>"
 

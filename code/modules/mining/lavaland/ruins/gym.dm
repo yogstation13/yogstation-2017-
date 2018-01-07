@@ -10,7 +10,7 @@
 
 /obj/structure/punching_bag/attack_hand(mob/user as mob)
 		flick("[icon_state]2", src)
-		playsound(src.loc, pick(src.hit_sounds), 25, 1, -1)
+		playsound(loc, pick(hit_sounds), 25, 1, -1)
 
 /obj/structure/stacklifter
 	name = "Weight Machine"
@@ -29,12 +29,12 @@
 		icon_state = "fitnesslifter2"
 		user.dir = SOUTH
 		user.Stun(4)
-		user.loc = src.loc
+		user.loc = loc
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 		user.visible_message("<B>[user] is [bragmessage]!</B>")
 		var/lifts = 0
 		while (lifts++ < 6)
-			if (user.loc != src.loc)
+			if (user.loc != loc)
 				break
 			sleep(3)
 			animate(user, pixel_y = -2, time = 3)
@@ -67,7 +67,7 @@
 		icon_state = "fitnessweight-c"
 		user.dir = SOUTH
 		user.Stun(4)
-		user.loc = src.loc
+		user.loc = loc
 		var/image/W = image('goon/icons/obj/fitness.dmi',"fitnessweight-w")
 		W.layer = WALL_OBJ_LAYER
 		overlays += W
@@ -76,7 +76,7 @@
 		var/reps = 0
 		user.pixel_y = 5
 		while (reps++ < 6)
-			if (user.loc != src.loc)
+			if (user.loc != loc)
 				break
 
 			for (var/innerReps = max(reps, 1), innerReps > 0, innerReps--)

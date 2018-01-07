@@ -38,7 +38,7 @@
 		//D.name = "PDA Style [colorlist.len+1]" //Gotta set the name, otherwise it all comes up as "PDA"
 		D.name = D.icon_state //PDAs don't have unique names, but using the sprite names works.
 
-		src.colorlist += D
+		colorlist += D
 
 
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/user, params)
@@ -91,7 +91,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
 	if(!(stat & BROKEN))
@@ -130,7 +130,7 @@
 		return
 
 	if(storedpda)
-		storedpda.loc = get_turf(src.loc)
+		storedpda.loc = get_turf(loc)
 		storedpda = null
 		update_icon()
 	else

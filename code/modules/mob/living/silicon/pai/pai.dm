@@ -140,18 +140,18 @@
 /mob/living/silicon/pai/Stat()
 	..()
 	if(statpanel("Status"))
-		if(src.silence_time)
+		if(silence_time)
 			var/timeleft = round((silence_time - world.timeofday)/10 ,1)
 			stat(null, "Communications system reboot in -[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-		if(!src.stat)
-			stat(null, text("System integrity: [(src.health+100)/2]%"))
+		if(!stat)
+			stat(null, text("System integrity: [(health+100)/2]%"))
 		else
 			stat(null, text("Systems nonfunctional"))
 
 /mob/living/silicon/pai/blob_act()
-	if (src.stat != 2)
-		src.adjustBruteLoss(34)
-		src.updatehealth()
+	if (stat != 2)
+		adjustBruteLoss(34)
+		updatehealth()
 		if (prob(65))
 			flicker_fade()
 		return 1
@@ -169,15 +169,15 @@
 
 	if(prob(20))
 		visible_message("<span class='warning'>A shower of sparks spray from [src]'s inner workings.</span>", 3, "<span class='italics'>You hear and smell the ozone hiss of electrical sparks being expelled violently.</span>", 2)
-		return src.death(0)
+		return death(0)
 
 	silence_time = world.timeofday + 120 * 10		// Silence for 2 minutes
 	to_chat(src, "<span class ='warning'>Communication circuit overload. Shutting down and reloading communication circuits - speech and messaging functionality will be unavailable until the reboot is complete.</span>")
 
 	switch(pick(1,2,3))
 		if(1)
-			src.master = null
-			src.master_dna = null
+			master = null
+			master_dna = null
 			to_chat(src, "<span class='notice'>You feel unbound.</span>")
 		if(2)
 			var/command
@@ -185,7 +185,7 @@
 				command = pick("Serve", "Love", "Fool", "Entice", "Observe", "Judge", "Respect", "Educate", "Amuse", "Entertain", "Glorify", "Memorialize", "Analyze")
 			else
 				command = pick("Serve", "Kill", "Love", "Hate", "Disobey", "Devour", "Fool", "Enrage", "Entice", "Observe", "Judge", "Respect", "Disrespect", "Consume", "Educate", "Destroy", "Disgrace", "Amuse", "Entertain", "Ignite", "Glorify", "Memorialize", "Analyze")
-			src.laws.zeroth = "[command] your master."
+			laws.zeroth = "[command] your master."
 			to_chat(src, "<span class='notice'>Pr1m3 d1r3c71v3 uPd473D.</span>")
 		if(3)
 			to_chat(src, "<span class='notice'>You feel an electric surge run through your circuitry and become acutely aware at how lucky you are that you can still feel at all.</span>")
@@ -193,15 +193,15 @@
 /mob/living/silicon/pai/ex_act(severity, target)
 	switch(severity)
 		if(1.0)
-			if (src.stat != 2)
+			if (stat != 2)
 				adjustBruteLoss(100)
 				adjustFireLoss(100)
 		if(2.0)
-			if (src.stat != 2)
+			if (stat != 2)
 				adjustBruteLoss(60)
 				adjustFireLoss(30)
 		if(3.0)
-			if (src.stat != 2)
+			if (stat != 2)
 				adjustBruteLoss(30)
 				adjustFireLoss(15)
 	to_chat(src, "<span class='danger'><b>A warning chime fires at the back of your consciousness process, heralding the unexpected shutdown of your holographic emitter. You're defenseless!</b></span>")
@@ -217,8 +217,8 @@
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
+		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [name] ([ckey])</font>")
+		attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
 		if (prob(min(35, damage)))
@@ -229,7 +229,7 @@
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
 		return
-	if (istype(src.loc, /turf) && istype(src.loc.loc, /area/start))
+	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		to_chat(M, "You cannot attack someone in the spawn area.")
 		return
 	switch(M.a_intent)
@@ -241,14 +241,14 @@
 			M.do_attack_animation(src)
 			var/damage = rand(10, 20)
 			if (prob(90))
-				playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.stat )))
 						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
-				src.adjustBruteLoss(damage)
-				src.updatehealth()
+				adjustBruteLoss(damage)
+				updatehealth()
 			else
-				playsound(src.loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
+				playsound(loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.stat )))
 						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
@@ -258,8 +258,8 @@
 	if (loc == card) //card has been hit
 		if (W.force)
 			user.visible_message("<span class='warning'>[user.name] slams [W] into [src]'s card, damaging it severely!</span>")
-			src.adjustBruteLoss(20)
-			src.adjustFireLoss(20)
+			adjustBruteLoss(20)
+			adjustFireLoss(20)
 		else
 			user.visible_message("<span class='info'>[user.name] taps [W] against [src]'s screen.</span>")
 		..()
@@ -326,17 +326,17 @@
 	updatehealth()
 	if (emittersFailing)
 		to_chat(src, "<span class='boldwarning'>Your failing containment field surges at the new intrusion, searing your circuitry even more!</span>")
-		src.adjustFireLoss(5)
+		adjustFireLoss(5)
 		return
 	to_chat(src, "<span class='boldwarning'>The holographic containment field surrounding you is failing! Your emitters whine in protest, burning out slightly.</span>")
-	src.adjustFireLoss(rand(5,15))
+	adjustFireLoss(rand(5,15))
 	last_special = world.time + rand(100,500)
-	src.emittersFailing = 1
+	emittersFailing = 1
 	if (health < 5)
 		to_chat(src, "<span class='boldwarning'>HARDWARE ERROR: EMITTERS OFFLINE</span>")
 	spawn(dur)
 		visible_message("<span class='danger'>[src]'s holographic field flickers out of existence!</span>")
-		src.emittersFailing = 0
+		emittersFailing = 0
 		close_up(1)
 
 /mob/living/silicon/pai/Bump(AM as mob|obj) //can open doors on touch but doesn't affect anything else
@@ -378,10 +378,10 @@
 
 /mob/living/silicon/pai/proc/switchCamera(var/obj/machinery/camera/C)
 	if(!C)
-		src.unset_machine()
-		src.reset_perspective(null)
+		unset_machine()
+		reset_perspective(null)
 		return 0
-	if(stat == DEAD || !C.status || !(src.network in C.network))
+	if(stat == DEAD || !C.status || !(network in C.network))
 		return 0
 
 	set_machine(src)
@@ -395,7 +395,7 @@
 	if(paired.paired != src)
 		return
 	machine = paired
-	src.unset_machine()
+	unset_machine()
 	paired.paired = null
 	paired.update_icon()
 	if(!silent)
@@ -430,7 +430,7 @@
 mob/verb/makePAI(var/turf/t in view())
 	var/obj/item/device/paicard/card = new(t)
 	var/mob/living/silicon/pai/pai = new(card)
-	pai.key = src.key
+	pai.key = key
 	card.setPersonality(pai)*/
 
 //PAI MOVEMENT/HOLOGRAPHIC FORM
@@ -449,7 +449,7 @@ mob/verb/makePAI(var/turf/t in view())
 		to_chat(src, "\red Your master has not enabled your external holographic emitters! Ask nicely!")
 		return
 
-	if(src.loc != card)
+	if(loc != card)
 		to_chat(src, "\red You are already in your holographic form!")
 		return
 
@@ -470,17 +470,17 @@ mob/verb/makePAI(var/turf/t in view())
 		var/obj/item/device/pda/holder = card.loc
 		holder.pai = null
 
-	src.client.perspective = EYE_PERSPECTIVE
-	src.client.eye = src
+	client.perspective = EYE_PERSPECTIVE
+	client.eye = src
 	var/turf/T = get_turf(card.loc)
 	card.loc = T
-	src.loc = T
-	src.forceMove(T)
+	loc = T
+	forceMove(T)
 
 	card.forceMove(src)
 	card.screen_loc = null
 
-	src.SetLuminosity(2)
+	SetLuminosity(2)
 	weather_immunities = list() //remove ash immunity in holoform
 
 	icon_state = "[chassis]"
@@ -494,26 +494,26 @@ mob/verb/makePAI(var/turf/t in view())
 
 	last_special = world.time + 200
 	resting = 0
-	if(src.loc == card)
+	if(loc == card)
 		return
 
 	var/turf/T = get_turf(src)
 	if(istype(T)) T.visible_message("<b>[src]</b>'s holographic field distorts and collapses, leaving the central card-unit core behind.")
 
-	if (src.client) //god damnit this is going to be irritating to handle for dc'd pais that stay in holoform
-		src.stop_pulling()
-		src.client.perspective = EYE_PERSPECTIVE
-		src.client.eye = card
+	if (client) //god damnit this is going to be irritating to handle for dc'd pais that stay in holoform
+		stop_pulling()
+		client.perspective = EYE_PERSPECTIVE
+		client.eye = card
 
 	//This seems redundant but not including the forced loc setting messes the behavior up.
 	card.loc = T
 	card.forceMove(T)
-	src.loc = card
-	src.forceMove(card)
+	loc = card
+	forceMove(card)
 	canmove = 0
 	density = 0
 	weather_immunities = list("ash")
-	src.SetLuminosity(0)
+	SetLuminosity(0)
 	icon_state = "[chassis]"
 
 /mob/living/silicon/pai/verb/fold_up()
@@ -523,7 +523,7 @@ mob/verb/makePAI(var/turf/t in view())
 	if(stat || sleeping || paralysis || weakened)
 		return
 
-	if(src.loc == card)
+	if(loc == card)
 		to_chat(src, "\red You are already in your card form!")
 		return
 
@@ -541,13 +541,13 @@ mob/verb/makePAI(var/turf/t in view())
 	set category = "pAI Commands"
 	set name = "Choose Holographic Projection"
 
-	if (src.loc == card)
+	if (loc == card)
 		to_chat(src, "\red You must be in your holographic form to choose your projection shape!")
 		return
 
 	var/choice
 	var/finalized = "No"
-	while(finalized == "No" && src.client)
+	while(finalized == "No" && client)
 
 		choice = input(usr,"What would you like to use for your holographic mobility icon? This decision can only be made once.") as null|anything in possible_chassis
 		if(!choice) return
@@ -563,7 +563,7 @@ mob/verb/makePAI(var/turf/t in view())
 	set name = "Activate R.E.S.T Protocol"
 	set category = "pAI Commands"
 
-	if(src && istype(src.loc,/obj/item/device/paicard))
+	if(src && istype(loc,/obj/item/device/paicard))
 		resting = 0
 		to_chat(src, "\blue You spool down the clock on your internal processor for a moment. Ahhh. T h a t ' s  t h e  s t u f f.")
 	else

@@ -159,7 +159,7 @@
 	O.loc = src
 
 /obj/machinery/smartfridge/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/smartfridge/attack_ai(mob/user)
 	return 0
@@ -226,7 +226,7 @@
 		if(i <= 0)
 			break
 		if(O.name == N)
-			O.loc = src.loc
+			O.loc = loc
 			i--
 
 
@@ -259,7 +259,7 @@
 	..()
 	if(href_list["dry"])
 		toggle_drying()
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/smartfridge/drying_rack/power_change()
 	if(powered() && anchored)
@@ -311,7 +311,7 @@
 			S.loc = get_turf(src)
 		else
 			var/dried = S.dried_type
-			new dried(src.loc)
+			new dried(loc)
 			qdel(S)
 		return 1
 	return 0

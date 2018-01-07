@@ -153,7 +153,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!emagged)
-		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
+		playsound(loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
 		to_chat(user, "<span class='notice'>You disable the security protocols</span>")
 
@@ -205,7 +205,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["eject_tech"]) //Eject the technology disk.
 		if(t_disk)
-			t_disk.loc = src.loc
+			t_disk.loc = loc
 			t_disk = null
 		screen = 1.0
 
@@ -248,7 +248,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 	else if(href_list["eject_design"]) //Eject the design disk.
 		if(d_disk)
-			d_disk.loc = src.loc
+			d_disk.loc = loc
 			d_disk = null
 		screen = 1.0
 
@@ -339,7 +339,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			updateUsrDialog()
 
 	else if(href_list["lock"]) //Lock the console from use by anyone without tox access.
-		if(src.allowed(usr))
+		if(allowed(usr))
 			screen = text2num(href_list["lock"])
 		else
 			to_chat(usr, "Unauthorized Access.")
@@ -570,8 +570,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		griefProtection()
 		var/choice = alert("R&D Console Database Reset", "Are you sure you want to reset the R&D console's database? Data lost cannot be recovered.", "Continue", "Cancel")
 		if(choice == "Continue")
-			message_admins("[key_name_admin(usr)] reset \the [src.name]'s database")
-			log_game("[key_name_admin(usr)] reset \the [src.name]'s database")
+			message_admins("[key_name_admin(usr)] reset \the [name]'s database")
+			log_game("[key_name_admin(usr)] reset \the [name]'s database")
 			screen = 0.0
 			qdel(files)
 			files = new /datum/research(src)

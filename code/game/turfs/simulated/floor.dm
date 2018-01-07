@@ -58,32 +58,32 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(severity != 1 && shielded && target != src)
 		return
 	if(target == src)
-		src.ChangeTurf(src.baseturf)
+		ChangeTurf(baseturf)
 	if(target != null)
 		ex_act(3)
 		return
 
 	switch(severity)
 		if(1)
-			src.ChangeTurf(src.baseturf)
+			ChangeTurf(baseturf)
 		if(2)
 			switch(pick(1,2;75,3))
 				if(1)
-					src.ReplaceWithLattice()
+					ReplaceWithLattice()
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 				if(2)
-					src.ChangeTurf(src.baseturf)
+					ChangeTurf(baseturf)
 				if(3)
 					if(prob(80))
-						src.break_tile_to_plating()
+						break_tile_to_plating()
 					else
-						src.break_tile()
-					src.hotspot_expose(1000,CELL_VOLUME)
+						break_tile()
+					hotspot_expose(1000,CELL_VOLUME)
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 		if(3)
 			if (prob(50))
-				src.break_tile()
-				src.hotspot_expose(1000,CELL_VOLUME)
+				break_tile()
+				hotspot_expose(1000,CELL_VOLUME)
 
 /turf/open/floor/is_shielded()
 	for(var/obj/structure/A in contents)
@@ -98,7 +98,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	return 1
 
 /turf/open/floor/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /turf/open/floor/proc/gets_drilled()
 	return
@@ -186,7 +186,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	if(istype(M,/mob/living/simple_animal/hostile/construct/builder))//only cult things can interact with floors so far
 		if(istype(src, /turf/open/floor/engine/cult))
 			return
-		src.ChangeTurf(/turf/open/floor/engine/cult)
+		ChangeTurf(/turf/open/floor/engine/cult)
 		M <<"<span class='notice'>You transfer some of your corrupt energy into the floor, causing it to transform.</span>"
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
 		return

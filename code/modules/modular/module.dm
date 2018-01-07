@@ -98,7 +98,7 @@
 /obj/item/module/proc/on_install(obj/item/module_holder/holder, obj/item/owner)
 	if(!holder)
 		return
-	src.holder = holder
+	holder = holder
 
 //Toggle off before removing, just in case
 /obj/item/module/proc/on_remove(obj/item/module_holder/holder, obj/item/owner)
@@ -106,7 +106,7 @@
 		return
 	if(active && can_be_toggled)
 		toggle()
-	src.holder = null
+	holder = null
 
 /obj/item/module/proc/toggle()
 	if(!holder)

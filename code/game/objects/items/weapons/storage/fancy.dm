@@ -27,16 +27,16 @@
 		new spawn_type(src)
 
 /obj/item/weapon/storage/fancy/update_icon(itemremoved = 0)
-	var/total_contents = src.contents.len - itemremoved
-	src.icon_state = "[src.icon_type]box[total_contents]"
+	var/total_contents = contents.len - itemremoved
+	icon_state = "[icon_type]box[total_contents]"
 	return
 
 /obj/item/weapon/storage/fancy/examine(mob/user)
 	..()
 	if(contents.len == 1)
-		to_chat(user, "There is one [src.icon_type] left.")
+		to_chat(user, "There is one [icon_type] left.")
 	else
-		to_chat(user, "There are [contents.len <= 0 ? "no" : "[src.contents.len]"] [src.icon_type]s left.")
+		to_chat(user, "There are [contents.len <= 0 ? "no" : "[contents.len]"] [icon_type]s left.")
 
 /*
  * Donut Box
@@ -144,7 +144,7 @@
 	else
 		overlays += "[icon_state]_open"
 		for(var/c = contents.len, c >= 1, c--)
-			overlays += image(icon = src.icon, icon_state = "cigarette", pixel_x = 1 * (c -1))
+			overlays += image(icon = icon, icon_state = "cigarette", pixel_x = 1 * (c -1))
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/remove_from_storage(obj/item/W, atom/new_location)
@@ -266,7 +266,7 @@
 	overlays.Cut()
 	overlays += "[icon_state]_open"
 	for(var/c = contents.len, c >= 1, c--)
-		overlays += image(icon = src.icon, icon_state = icon_type, pixel_x = 4 * (c -1))
+		overlays += image(icon = icon, icon_state = icon_type, pixel_x = 4 * (c -1))
 	return
 
 /obj/item/weapon/storage/fancy/cigarettes/cigars/cohiba

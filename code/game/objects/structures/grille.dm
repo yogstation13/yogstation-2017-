@@ -25,9 +25,9 @@
 
 /obj/structure/grille/ratvar_act()
 	if(destroyed)
-		new /obj/structure/grille/ratvar/broken(src.loc)
+		new /obj/structure/grille/ratvar/broken(loc)
 	else
-		new /obj/structure/grille/ratvar(src.loc)
+		new /obj/structure/grille/ratvar(loc)
 	qdel(src)
 
 /obj/structure/grille/blob_act(obj/effect/blob/B)
@@ -170,7 +170,7 @@
 				return
 			to_chat(user, "<span class='notice'>You start placing the window...</span>")
 			if(do_after(user,20, target = src))
-				if(!src.loc || !anchored) //Grille destroyed or unanchored while waiting
+				if(!loc || !anchored) //Grille destroyed or unanchored while waiting
 					return
 				for(var/obj/structure/window/WINDOW in loc) //Another window already installed on grille
 					return
@@ -259,7 +259,7 @@
 			var/turf/T = get_turf(src)
 			var/obj/structure/cable/C = T.get_cable_node()
 			if(C)
-				playsound(src.loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
+				playsound(loc, 'sound/magic/LightningShock.ogg', 100, 1, extrarange = 5)
 				tesla_zap(src, 3, C.powernet.avail * 0.08) //ZAP for 1/5000 of the amount of power, which is from 15-25 with 200000W
 	take_damage(tforce)
 

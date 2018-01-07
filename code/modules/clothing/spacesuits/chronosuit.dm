@@ -65,7 +65,7 @@
 	return ..()
 
 /obj/item/clothing/suit/space/chronos/emp_act(severity)
-	var/mob/living/carbon/human/user = src.loc
+	var/mob/living/carbon/human/user = loc
 	switch(severity)
 		if(1)
 			if(activated && user && ishuman(user) && (user.wear_suit == src))
@@ -73,7 +73,7 @@
 			deactivate(1, 1)
 
 /obj/item/clothing/suit/space/chronos/proc/finish_chronowalk()
-	var/mob/living/carbon/human/user = src.loc
+	var/mob/living/carbon/human/user = loc
 	if(istype(user))
 		user.SetStunned(0)
 		user.next_move = 1
@@ -96,7 +96,7 @@
 		teleport_now.UpdateButtonIcon()
 
 /obj/item/clothing/suit/space/chronos/proc/chronowalk(atom/location)
-	var/mob/living/carbon/human/user = src.loc
+	var/mob/living/carbon/human/user = loc
 	if(activated && !teleporting && user && istype(user) && location && user.loc && location.loc && user.wear_suit == src && user.stat == CONSCIOUS)
 		teleporting = 1
 		var/turf/from_turf = get_turf(user)
@@ -173,7 +173,7 @@
 
 /obj/item/clothing/suit/space/chronos/process()
 	if(activated)
-		var/mob/living/carbon/human/user = src.loc
+		var/mob/living/carbon/human/user = loc
 		if(user && ishuman(user) && (user.wear_suit == src))
 			if(camera && (user.remote_control == camera))
 				if(!teleporting)
@@ -190,7 +190,7 @@
 /obj/item/clothing/suit/space/chronos/proc/activate()
 	if(!activating && !activated && !teleporting)
 		activating = 1
-		var/mob/living/carbon/human/user = src.loc
+		var/mob/living/carbon/human/user = loc
 		if(user && ishuman(user))
 			if(user.wear_suit == src)
 				to_chat(user, "\nChronosuitMK4 login: root")
@@ -201,7 +201,7 @@
 					helmet = user.head
 					helmet.flags |= NODROP
 					helmet.suit = src
-					src.flags |= NODROP
+					flags |= NODROP
 					to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting brainwave scanner")
 					to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver")
 					to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view")
@@ -219,7 +219,7 @@
 /obj/item/clothing/suit/space/chronos/proc/deactivate(force = 0, silent = 0)
 	if(activated && (!teleporting || force))
 		activating = 1
-		var/mob/living/carbon/human/user = src.loc
+		var/mob/living/carbon/human/user = loc
 		if(user && ishuman(user))
 			if(user.wear_suit == src)
 				if(!silent)
@@ -239,7 +239,7 @@
 				if(!silent)
 					to_chat(user, "logout")
 			teleport_now.Remove(user)
-		src.flags &= ~NODROP
+		flags &= ~NODROP
 		cooldown = world.time + cooldowntime * 1.5
 		activated = 0
 		activating = 0
@@ -278,16 +278,16 @@
 			if(loc == user)
 				loc = get_turf(user)
 			if(user.client && user.client.eye != src)
-				src.loc = get_turf(user)
+				loc = get_turf(user)
 				user.reset_perspective(src)
 				user.set_machine(src)
 			var/atom/step = get_step(src, direction)
 			if(step)
 				if((step.x <= TRANSITIONEDGE) || (step.x >= (world.maxx - TRANSITIONEDGE - 1)) || (step.y <= TRANSITIONEDGE) || (step.y >= (world.maxy - TRANSITIONEDGE - 1)))
-					if(!src.Move(step))
-						src.loc = step
+					if(!Move(step))
+						loc = step
 				else
-					src.loc = step
+					loc = step
 				if((x == holder.x) && (y == holder.y) && (z == holder.z))
 					remove_target_ui()
 					loc = user

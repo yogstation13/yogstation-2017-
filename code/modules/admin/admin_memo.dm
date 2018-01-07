@@ -22,7 +22,7 @@
 	if(!dbcon.IsConnected())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
-	var/sql_ckey = sanitizeSQL(src.ckey)
+	var/sql_ckey = sanitizeSQL(ckey)
 	switch(task)
 		if("Write")
 			var/savefile/F = new(MEMOFILE)
@@ -32,8 +32,8 @@
 					if(null)
 						return
 					if("")
-						message_admins("<span class='admin'>[src.ckey] removed their own Memo</span>")
-						log_admin("[src.ckey] removed their own Memo")
+						message_admins("<span class='admin'>[ckey] removed their own Memo</span>")
+						log_admin("[ckey] removed their own Memo")
 						F.dir.Remove(ckey)
 						return
 				if( findtext(memo,"<script",1,0) )
@@ -97,10 +97,10 @@
 				if(check_rights(R_SERVER,0))	//high ranking admins can delete other admin's memos
 					ckey = input(src,"Whose memo shall we remove?","Remove Memo",null) as null|anything in F.dir
 				else
-					ckey = src.ckey
+					ckey = ckey
 				if(ckey)
-					message_admins("<span class='admin'>[src.ckey] removed [ckey]'s Memo.</span>")
-					log_admin("[src.ckey] removed Memo created by [ckey].")
+					message_admins("<span class='admin'>[ckey] removed [ckey]'s Memo.</span>")
+					log_admin("[ckey] removed Memo created by [ckey].")
 					for(var/memo in F.dir)
 						F.dir.Remove(ckey)
 

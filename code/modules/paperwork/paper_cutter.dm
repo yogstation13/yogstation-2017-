@@ -19,11 +19,11 @@
 
 /obj/item/weapon/papercutter/suicide_act(mob/user)
 	if(storedcutter)
-		user.visible_message("<span class='suicide'>[user] is beheading \himself with [src.name]! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] is beheading \himself with [name]! It looks like \he's trying to commit suicide.</span>")
 		playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 		return (BRUTELOSS)
 	else
-		user.visible_message("<span class='suicide'>[user] repeatedly bashes [src.name] against \his head! It looks like \he's trying to commit suicide.</span>")
+		user.visible_message("<span class='suicide'>[user] repeatedly bashes [name] against \his head! It looks like \he's trying to commit suicide.</span>")
 		playsound(loc, 'sound/items/gavel.ogg', 50, 1, -1)
 		return (BRUTELOSS)
 
@@ -63,7 +63,7 @@
 
 
 /obj/item/weapon/papercutter/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(!storedcutter)
 		to_chat(user, "<span class='notice'>The cutting blade is gone! You can't use \the [src] now.</span>")
 		return
@@ -75,7 +75,7 @@
 		update_icon()
 
 	if(storedpaper)
-		playsound(src.loc, 'sound/weapons/slash.ogg', 50, 1)
+		playsound(loc, 'sound/weapons/slash.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You neatly cut \the [storedpaper].</span>")
 		storedpaper = null
 		qdel(storedpaper)

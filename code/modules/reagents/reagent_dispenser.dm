@@ -59,12 +59,12 @@
 			return
 		if(2)
 			if (prob(50))
-				PoolOrNew(/obj/effect/particle_effect/water, src.loc)
+				PoolOrNew(/obj/effect/particle_effect/water, loc)
 				qdel(src)
 				return
 		if(3)
 			if (prob(5))
-				PoolOrNew(/obj/effect/particle_effect/water, src.loc)
+				PoolOrNew(/obj/effect/particle_effect/water, loc)
 				qdel(src)
 				return
 		else
@@ -105,7 +105,7 @@
 		boom()
 
 /obj/structure/reagent_dispensers/fueltank/proc/boom()
-	explosion(src.loc,0,1,5,7,10, flame_range = 5)
+	explosion(loc,0,1,5,7,10, flame_range = 5)
 	if(src)
 		qdel(src)
 
@@ -182,7 +182,7 @@
 	reagents.add_reagent("beer",1000)
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act(obj/effect/blob/B)
-	explosion(src.loc,0,3,5,7,10)
+	explosion(loc,0,3,5,7,10)
 
 
 /obj/structure/reagent_dispensers/virusfood

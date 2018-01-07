@@ -24,7 +24,7 @@
 /obj/item/weapon/airlock_painter/proc/use(mob/user)
 	if(can_use(user))
 		ink.charges--
-		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
+		playsound(loc, 'sound/effects/spray2.ogg', 50, 1)
 		return 1
 	else
 		return 0
@@ -116,13 +116,13 @@
 		W.loc = src
 		to_chat(user, "<span class='notice'>You install \the [W] into \the [name].</span>")
 		ink = W
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(loc, 'sound/machines/click.ogg', 50, 1)
 	else
 		return ..()
 
 /obj/item/weapon/airlock_painter/attack_self(mob/user)
 	if(ink)
-		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+		playsound(loc, 'sound/machines/click.ogg', 50, 1)
 		ink.loc = user.loc
 		user.put_in_hands(ink)
 		to_chat(user, "<span class='notice'>You remove \the [ink] from \the [name].</span>")

@@ -21,7 +21,7 @@
 			message = "<span class='name'>[src]</span> collapses!"
 			m_type = 2
 		if ("dance","dances")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<span class='name'>[src]</span> dances around happily."
 				m_type = 1
 		if ("deathgasp","deathgasps")
@@ -57,11 +57,11 @@
 				message = "<span class='name'>[src]</span> softly roars."
 				m_type = 2
 		if ("roll","rolls")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<span class='name'>[src]</span> rolls."
 				m_type = 1
 		if ("scratch","scratches")
-			if (!src.restrained())
+			if (!restrained())
 				message = "<span class='name'>[src]</span> scratches."
 				m_type = 1
 		if ("screech","screeches") //This orignally was called scretch, changing it. -Sum99
@@ -75,7 +75,7 @@
 			message = "<span class='name'>[src]</span> shivers."
 			m_type = 2
 		if ("sign","signs")
-			if (!src.restrained())
+			if (!restrained())
 				message = text("<span class='name'>[src]</span> signs[].", (text2num(param) ? text(" the number []", text2num(param)) : null))
 				m_type = 1
 		if ("snore","snores")
@@ -104,7 +104,7 @@
 		else
 			to_chat(src, "<span class='info'>Unusable emote '[act]'. Say *help for a list.</span>")
 
-	if ((message && src.stat == 0))
+	if ((message && stat == 0))
 		log_emote("[name]/[key] : [message]")
 		if (m_type & 1)
 			visible_message(message)

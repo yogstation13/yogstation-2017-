@@ -108,7 +108,7 @@
 /obj/item/weapon/gun/energy/crossbow/proc/reload()
 	power_supply.give(500)
 	if(!suppressed)
-		playsound(src.loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
+		playsound(loc, 'sound/weapons/kenetic_reload.ogg', 60, 1)
 	else
 		to_chat(loc, "<span class='warning'>[src] silently charges up.<span>")
 	overheat = FALSE

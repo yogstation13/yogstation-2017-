@@ -187,7 +187,7 @@
 		if(user.grab_state < GRAB_AGGRESSIVE)
 			to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 			return
-		L.loc = src.loc
+		L.loc = loc
 		L.Weaken(5)
 		visible_message("<span class='danger'>[user] dunks [L] into \the [src]!</span>")
 		user.stop_pulling()
@@ -200,7 +200,7 @@
 		if(istype(I, /obj/item/projectile))
 			return
 		if(prob(50))
-			I.loc = src.loc
+			I.loc = loc
 			visible_message("<span class='warning'> Swish! \the [I] lands in \the [src].</span>")
 		else
 			visible_message("<span class='danger'> \the [I] bounces off of \the [src]'s rim!</span>")
@@ -245,7 +245,7 @@
 		to_chat(user, "<span class='warning'>This device is not powered!</span>")
 		return
 
-	currentarea = get_area(src.loc)
+	currentarea = get_area(loc)
 	if(!currentarea)
 		qdel(src)
 

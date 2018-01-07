@@ -89,7 +89,7 @@
 		if(isliving(target))
 			var/mob/living/L = target
 			if(L.stat == DEAD)
-				src.visible_message(
+				visible_message(
 					"<span class='danger'>[src] devours [L]!</span>",
 					"<span class='userdanger'>You feast on [L], restoring your health!</span>")
 				adjustBruteLoss(-L.maxHealth/2)
@@ -134,7 +134,7 @@
 	spawn()
 		var/turf/T = get_turf(src)
 		playsound(get_turf(src),'sound/magic/Fireball.ogg', 200, 1)
-		var/obj/effect/overlay/temp/fireball/F = new(src.loc)
+		var/obj/effect/overlay/temp/fireball/F = new(loc)
 		animate(F, pixel_z = 0, time = 12)
 		sleep(12)
 		explosion(T, 0, 0, 1, 0, 0, 0, 1)
@@ -224,7 +224,7 @@
 	new/obj/effect/overlay/temp/dragon_swoop(tturf)
 	animate(src, pixel_x = 0, pixel_z = 0, time = round(10/scaling,1))
 	sleep(round(10/scaling,1))
-	playsound(src.loc, 'sound/effects/meteorimpact.ogg', 200, 1)
+	playsound(loc, 'sound/effects/meteorimpact.ogg', 200, 1)
 	for(var/mob/living/L in range(1,tturf))
 		if(L == src)
 			continue
@@ -256,7 +256,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/and_friends()
 	visible_message("<span class='danger'>[src] roars and calls for aid!</span>")
-	var/mob/living/simple_animal/hostile/megafauna/dragon/lesser/L = new(src.loc)
+	var/mob/living/simple_animal/hostile/megafauna/dragon/lesser/L = new(loc)
 	L.faction = list("mining")
 
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)

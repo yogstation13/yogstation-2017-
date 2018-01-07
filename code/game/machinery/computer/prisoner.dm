@@ -35,7 +35,7 @@
 		var/turf/Tr = null
 		for(var/obj/item/weapon/implant/chem/C in tracked_implants)
 			Tr = get_turf(C)
-			if((Tr) && (Tr.z != src.z))
+			if((Tr) && (Tr.z != z))
 				continue//Out of range
 			if(!C.implanted)
 				continue
@@ -52,7 +52,7 @@
 			if(!T.implanted)
 				continue
 			Tr = get_turf(T)
-			if((Tr) && (Tr.z != src.z))
+			if((Tr) && (Tr.z != z))
 				continue//Out of range
 
 			var/loc_display = "Unknown"
@@ -70,7 +70,7 @@
 	//onclose(user, "computer")
 	var/datum/browser/popup = new(user, "computer", "Prisoner Management Console", 400, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 	return
 
@@ -82,14 +82,14 @@
 
 /obj/machinery/computer/prisoner/process()
 	if(!..())
-		src.updateDialog()
+		updateDialog()
 	return
 
 
 /obj/machinery/computer/prisoner/Topic(href, href_list)
 	if(..())
 		return
-	if((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (istype(usr, /mob/living/silicon)))
+	if((usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf))) || (istype(usr, /mob/living/silicon)))
 		usr.set_machine(src)
 
 		if(href_list["id"])
@@ -129,7 +129,7 @@
 				I.activate(10)
 
 		else if(href_list["lock"])
-			if(src.allowed(usr))
+			if(allowed(usr))
 				screen = !screen
 			else
 				to_chat(usr, "Unauthorized Access.")
@@ -143,8 +143,8 @@
 				to_chat(R, "<span class='italics'>You hear a voice in your head saying: '[warning]'</span>")
 				log_say("[usr]/[usr.ckey] sent an implant message to [R]/[R.ckey]: '[warning]'")
 
-		src.add_fingerprint(usr)
-	src.updateUsrDialog()
+		add_fingerprint(usr)
+	updateUsrDialog()
 	return
 
 

@@ -11,7 +11,7 @@
 	var/reskinned = FALSE
 
 /obj/item/weapon/nullrod/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is killing \himself with \the [src.name]! It looks like \he's trying to get closer to god!</span>")
+	user.visible_message("<span class='suicide'>[user] is killing \himself with \the [name]! It looks like \he's trying to get closer to god!</span>")
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/weapon/nullrod/attack_self(mob/user)
@@ -132,7 +132,7 @@
 	qdel(src)
 
 /obj/item/weapon/nullrod/genesis/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is saying good bye to \the [src.name]! It looks like \he's trying to sing her away!s</span>")
+	user.visible_message("<span class='suicide'>[user] is saying good bye to \the [name]! It looks like \he's trying to sing her away!s</span>")
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		spawn(75) // gib three times, spill organs, drop genesis

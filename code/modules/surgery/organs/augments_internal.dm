@@ -9,7 +9,7 @@
 
 /obj/item/organ/cyberimp/New(var/mob/M = null)
 	if(iscarbon(M))
-		src.Insert(M, 1)
+		Insert(M, 1)
 	if(implant_overlay)
 		var/image/overlay = new /image(icon, implant_overlay)
 		overlay.color = implant_color

@@ -81,7 +81,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
 	health -= damage
@@ -100,15 +100,15 @@
 	user.do_attack_animation(src)
 	add_hiddenprint(user)
 	visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/slash.ogg', 100, 1)
 	take_damage(20, BRUTE, 0)
 
 /obj/machinery/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if(M.melee_damage_upper > 0)
-		M.visible_message("<span class='danger'>[M.name] smashes against \the [src.name].</span>",\
-		"<span class='danger'>You smash against the [src.name].</span>")
+		M.visible_message("<span class='danger'>[M.name] smashes against \the [name].</span>",\
+		"<span class='danger'>You smash against the [name].</span>")
 		take_damage(rand(M.melee_damage_lower,M.melee_damage_upper), M.melee_damage_type, 1)
 
 
@@ -260,7 +260,7 @@
 					playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
 		if(BURN)
 			if(sound_effect)
-				playsound(src.loc, 'sound/items/Welder.ogg', 100, 1)
+				playsound(loc, 'sound/items/Welder.ogg', 100, 1)
 		else
 			return
 	health -= damage

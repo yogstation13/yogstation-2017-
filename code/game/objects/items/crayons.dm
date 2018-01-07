@@ -62,7 +62,7 @@
 	var/post_noise = FALSE
 
 /obj/item/toy/crayon/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
+	user.visible_message("<span class='suicide'>[user] is jamming the [name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/New()
@@ -126,7 +126,7 @@
 	if(charges == -1)
 		. = FALSE
 	else if(!charges_left)
-		to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
+		to_chat(user, "<span class='warning'>There is no more of [name] left!</span>")
 		if(self_contained)
 			qdel(src)
 		. = TRUE
@@ -324,14 +324,14 @@
 
 /obj/item/toy/crayon/attack(mob/M, mob/user)
 	if(edible && (M == user))
-		to_chat(user, "<span class='notice'>You take a bite of the [src.name]. Delicious!</span>")
+		to_chat(user, "<span class='notice'>You take a bite of the [name]. Delicious!</span>")
 		eatcrayon(M, user)
 	if(edible && (M != user))
 		if(istype(M, /mob/living/carbon/human))
-			to_chat(user, "<span class='notice'>You start feeding [M.name] the [src.name]</span>")
-			to_chat(M, "<span class='warning'>[user.name] is feeding you the [src.name]!</span>")
+			to_chat(user, "<span class='notice'>You start feeding [M.name] the [name]</span>")
+			to_chat(M, "<span class='warning'>[user.name] is feeding you the [name]!</span>")
 			if(do_after(user, 30, target = M))
-				M.visible_message("<span class='notice'>[user.name] feeds [M.name] the [src.name]. Delicious!</span>")
+				M.visible_message("<span class='notice'>[user.name] feeds [M.name] the [name]. Delicious!</span>")
 				eatcrayon(M, user)
 		else
 			..()

@@ -193,7 +193,7 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 		to_chat(src, "<span class='warning'>[victim] does not posess the vital systems needed to support us.</span>")
 		return
 
-	src.victim = victim
+	victim = victim
 	victim.borer = src
 	var/obj/item/organ/borer_home/B = new/obj/item/organ/borer_home(victim)
 	B.Insert(victim)
@@ -201,7 +201,7 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 	vessel = B
 	loc = victim
 
-	log_game("[src]/([src.ckey]) has infected [victim]/([victim.ckey]")
+	log_game("[src]/([ckey]) has infected [victim]/([victim.ckey]")
 
 /mob/living/simple_animal/borer/proc/leave_victim()
 	if(!victim) return
@@ -290,7 +290,7 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 		if(!victim.lastKnownIP)
 			victim.lastKnownIP = b2h_ip
 
-	log_game("[src]/([src.ckey]) released control of [victim]/([victim.ckey]")
+	log_game("[src]/([ckey]) released control of [victim]/([victim.ckey]")
 
 	qdel(host_brain)
 

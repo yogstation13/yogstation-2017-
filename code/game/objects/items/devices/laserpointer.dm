@@ -52,7 +52,7 @@
 	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(diode)
 			to_chat(user, "<span class='notice'>You remove the [diode.name] from \the [src].</span>")
-			diode.loc = get_turf(src.loc)
+			diode.loc = get_turf(loc)
 			diode = null
 	else
 		return ..()

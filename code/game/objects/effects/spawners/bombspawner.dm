@@ -23,11 +23,11 @@
 /obj/effect/spawner/newbomb/New()
 	..()
 
-	switch (src.btype)
+	switch (btype)
 		// radio
 		if (0)
 
-			var/obj/item/device/transfer_valve/V = new(src.loc)
+			var/obj/item/device/transfer_valve/V = new(loc)
 			var/obj/item/weapon/tank/internals/plasma/PT = new(V)
 			var/obj/item/weapon/tank/internals/oxygen/OT = new(V)
 
@@ -50,7 +50,7 @@
 		// proximity
 		if (1)
 
-			var/obj/item/device/transfer_valve/V = new(src.loc)
+			var/obj/item/device/transfer_valve/V = new(loc)
 			var/obj/item/weapon/tank/internals/plasma/PT = new(V)
 			var/obj/item/weapon/tank/internals/oxygen/OT = new(V)
 
@@ -74,7 +74,7 @@
 
 		// timer
 		if (2)
-			var/obj/item/device/transfer_valve/V = new(src.loc)
+			var/obj/item/device/transfer_valve/V = new(loc)
 			var/obj/item/weapon/tank/internals/plasma/PT = new(V)
 			var/obj/item/weapon/tank/internals/oxygen/OT = new(V)
 

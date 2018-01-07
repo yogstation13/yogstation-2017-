@@ -47,7 +47,7 @@
 /mob/living/carbon/human/predator/assess_threat(var/obj/machinery/bot/secbot/judgebot, var/lasercolor)
 
 /mob/living/carbon/human/predator/say(message, bubble_type)
-	playsound(src.loc, 'sound/predators/predator_clicking.ogg', 100, 1)
+	playsound(loc, 'sound/predators/predator_clicking.ogg', 100, 1)
 	return ..(message, bubble_type)
 
 /mob/living/carbon/human/predator/say_quote(var/text)

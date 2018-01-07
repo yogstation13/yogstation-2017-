@@ -103,7 +103,7 @@
 	if(!state_open)
 		return 0
 
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 	..()
 
@@ -128,7 +128,7 @@
 	if(state_open)
 		return 0
 
-	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+	playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 	..()
 

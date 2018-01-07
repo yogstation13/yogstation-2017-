@@ -29,7 +29,7 @@
 	if(!built && !device && device_type)
 		device = new device_type(src)
 
-	src.check_access(null)
+	check_access(null)
 
 	if(req_access.len || req_one_access.len)
 		board = new(src)
@@ -99,14 +99,14 @@
 		return
 
 	if(user.a_intent != "harm" && !(W.flags & NOBLUDGEON))
-		return src.attack_hand(user)
+		return attack_hand(user)
 	else
 		return ..()
 
 /obj/machinery/button/emag_act(mob/user)
 	req_access = list()
 	req_one_access = list()
-	playsound(src.loc, "sparks", 100, 1)
+	playsound(loc, "sparks", 100, 1)
 
 /obj/machinery/button/attack_ai(mob/user)
 	if(!panel_open)
@@ -121,7 +121,7 @@
 /obj/machinery/button/attack_hand(mob/user)
 	if(!initialized)
 		setup_device()
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	if(panel_open)
 		if(device || board)
 			if(device)
@@ -143,7 +143,7 @@
 			to_chat(user, "<span class='notice'>You change the button frame's front panel.</span>")
 		return
 
-	playsound(src.loc, 'sound/effects/click.ogg', 50, 1, -1)
+	playsound(loc, 'sound/effects/click.ogg', 50, 1, -1)
 
 	if((stat & (NOPOWER|BROKEN)))
 		return

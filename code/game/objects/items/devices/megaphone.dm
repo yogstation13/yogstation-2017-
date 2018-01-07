@@ -35,7 +35,7 @@
 	if(oldmsg != message)
 		to_chat(usr, "<span class='notice'>You fumble over your words as you try to think of what to say into the megaphone. <a href='https://forums.yogstation.net/index.php?pages/rules/'>See rule 0.1.1</a>.</span>")
 		message_admins("[key_name(user)] just attempted to trip a pretty filter using a megaphone: '[oldmsg]'.")
-		log_say("[user.name]/[user.ckey]: [oldmsg] - via [src.name] / [src.type]")
+		log_say("[user.name]/[user.ckey]: [oldmsg] - via [name] / [type]")
 		return
 
 	message = capitalize(message)
@@ -43,7 +43,7 @@
 		to_chat(user, "<span class='warning'>You find yourself unable to speak at all!</span>")
 		return
 
-	if ((src.loc == user && user.stat == 0))
+	if ((loc == user && user.stat == 0))
 		if(spamcheck > world.time) //If multiple dialogue boxes are open, this will stop it from being spammable.
 			to_chat(user, "<span class='warning'>\The [src] needs to recharge!</span>")
 			return

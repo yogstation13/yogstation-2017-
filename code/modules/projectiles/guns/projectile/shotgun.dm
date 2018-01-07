@@ -147,20 +147,20 @@
 	..()
 	if(guns_left)
 		var/obj/item/weapon/gun/projectile/shotgun/boltaction/enchanted/GUN = new
-		GUN.guns_left = src.guns_left - 1
+		GUN.guns_left = guns_left - 1
 		user.drop_item()
 		user.swap_hand()
 		user.put_in_hands(GUN)
 	else
 		user.drop_item()
-	src.throw_at_fast(pick(oview(7,get_turf(user))),1,1)
+	throw_at_fast(pick(oview(7,get_turf(user))),1,1)
 	user.visible_message("<span class='warning'>[user] tosses aside the spent rifle!</span>")
 
 // Automatic Shotguns//
 
 /obj/item/weapon/gun/projectile/shotgun/automatic/shoot_live_shot(mob/living/user as mob|obj)
 	..()
-	src.pump(user)
+	pump(user)
 
 /obj/item/weapon/gun/projectile/shotgun/automatic/combat
 	name = "combat shotgun"

@@ -95,7 +95,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			return
 
 		if(!materials.has_space(sheet_material))
-			to_chat(user, "<span class='warning'>The [src.name]'s material bin is full! Please remove material before adding more.</span>")
+			to_chat(user, "<span class='warning'>The [name]'s material bin is full! Please remove material before adding more.</span>")
 			return 1
 
 		var/obj/item/stack/sheet/stack = O
@@ -107,7 +107,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			return 1
 		else
 			use_power(max(1000, (MINERAL_MATERIAL_AMOUNT*amount_inserted/10)))
-			to_chat(user, "<span class='notice'>You add [amount_inserted] sheets to the [src.name].</span>")
+			to_chat(user, "<span class='notice'>You add [amount_inserted] sheets to the [name].</span>")
 		updateUsrDialog()
 
 	else if(user.a_intent != "harm")

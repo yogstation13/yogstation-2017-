@@ -250,7 +250,7 @@
 			C.client.images -= chunk.obscured
 	C.remote_control = null
 	C.unset_machine()
-	src.Remove(C)
+	Remove(C)
 
 /datum/action/innate/taze
 	name = "Stun"

@@ -17,7 +17,7 @@
 		if(R.get_amount() >= 4)
 			R.use(4)
 			to_chat(user, "<span class='notice'>You add spikes to the frame.</span>")
-			var/obj/F = new /obj/structure/kitchenspike(src.loc,)
+			var/obj/F = new /obj/structure/kitchenspike(loc,)
 			transfer_fingerprints_to(F)
 			qdel(src)
 	else if(istype(I, /obj/item/weapon/screwdriver))
@@ -43,7 +43,7 @@
 
 
 /obj/structure/kitchenspike/attack_paw(mob/user)
-	return src.attack_hand(usr)
+	return attack_hand(usr)
 
 
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user, params)
@@ -53,7 +53,7 @@
 			if(do_after(user, 20/I.toolspeed, target = src))
 				to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
 				new /obj/item/stack/rods(loc, 4)
-				var/obj/F = new /obj/structure/kitchenspike_frame(src.loc,)
+				var/obj/F = new /obj/structure/kitchenspike_frame(loc,)
 				transfer_fingerprints_to(F)
 				qdel(src)
 		else
@@ -64,21 +64,21 @@
 /obj/structure/kitchenspike/attack_hand(mob/user)
 	if(user.pulling && isliving(user.pulling) && user.a_intent == "grab" && !has_buckled_mobs())
 		var/mob/living/L = user.pulling
-		var/old_loc = src.loc
+		var/old_loc = loc
 		if(L.buckled)
 			return
 
 		if(do_mob(user, L, 120))
-			if(src.loc != old_loc)
+			if(loc != old_loc)
 				return
 			if(has_buckled_mobs()) //to prevent spam/queing up attacks
 				return
 			if(L.buckled)
 				return
 
-			playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
+			playsound(loc, "sound/effects/splat.ogg", 25, 1)
 			L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
-			L.loc = src.loc
+			L.loc = loc
 			spiked = L
 			L.emote("scream")
 			L.add_splatter_floor()
@@ -103,21 +103,21 @@
 		return
 
 	var/mob/living/L = target
-	var/old_loc = src.loc
+	var/old_loc = loc
 	if(L.buckled)
 		return
 
 	if(do_mob(user, L, 120))
-		if(src.loc != old_loc)
+		if(loc != old_loc)
 			return
 		if(has_buckled_mobs()) //to prevent spam/queing up attacks
 			return
 		if(L.buckled)
 			return
 
-		playsound(src.loc, "sound/effects/splat.ogg", 25, 1)
+		playsound(loc, "sound/effects/splat.ogg", 25, 1)
 		L.visible_message("<span class='danger'>[user] slams [L] onto the meat spike!</span>", "<span class='userdanger'>[user] slams you onto the meat spike!</span>", "<span class='italics'>You hear a squishy wet noise.</span>")
-		L.loc = src.loc
+		L.loc = loc
 		spiked = L
 		L.emote("scream")
 		L.add_splatter_floor()
@@ -170,7 +170,7 @@
 		animate(M, transform = m180, time = 3)
 		M.pixel_y = M.get_standard_pixel_y_offset(180)
 		M.adjustBruteLoss(30)
-		src.visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
+		visible_message(text("<span class='danger'>[M] falls free of the [src]!</span>"))
 		unbuckle_mob(M, force=1)
 		spiked = 0
 		M.emote("scream")

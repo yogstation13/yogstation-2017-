@@ -47,7 +47,7 @@
 	timed_explosion()
 
 /obj/item/weapon/implant/explosive/implant(mob/source)
-	var/obj/item/weapon/implant/explosive/imp_e = locate(src.type) in source
+	var/obj/item/weapon/implant/explosive/imp_e = locate(type) in source
 	if(imp_e && imp_e != src)
 		imp_e.heavy += heavy
 		imp_e.medium += medium
@@ -87,7 +87,7 @@
 	delay = 70
 
 /obj/item/weapon/implant/explosive/macro/implant(mob/source)
-	var/obj/item/weapon/implant/explosive/imp_e = locate(src.type) in source
+	var/obj/item/weapon/implant/explosive/imp_e = locate(type) in source
 	if(imp_e && imp_e != src)
 		return 0
 	imp_e = locate(/obj/item/weapon/implant/explosive) in source

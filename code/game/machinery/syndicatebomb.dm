@@ -39,7 +39,7 @@
 
 /obj/machinery/syndicatebomb/New()
 	wires 	= new /datum/wires/syndicatebomb(src)
-	if(src.payload)
+	if(payload)
 		payload = new payload(src)
 	update_icon()
 	countdown = new(src)
@@ -60,7 +60,7 @@
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench))
 		if(!anchored)
-			if(!isturf(src.loc) || istype(src.loc, /turf/open/space))
+			if(!isturf(loc) || istype(loc, /turf/open/space))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it.</span>")
 			else
 				to_chat(user, "<span class='notice'>You firmly wrench the bomb to the floor.</span>")
@@ -148,14 +148,14 @@
 	newtime = Clamp(newtime, initial(timer), 60000)
 	if(in_range(src, user) && isliving(user)) //No running off and setting bombs from across the station
 		timer = newtime
-		src.loc.visible_message("<span class='notice'>\icon[src] timer set for [timer] seconds.</span>")
+		loc.visible_message("<span class='notice'>\icon[src] timer set for [timer] seconds.</span>")
 	if(alert(user,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active)
 			if(defused)
-				src.loc.visible_message("<span class='warning'>\icon[src] Device error: User intervention required.</span>")
+				loc.visible_message("<span class='warning'>\icon[src] Device error: User intervention required.</span>")
 			return
 		else
-			src.loc.visible_message("<span class='danger'>\icon[src] [timer] seconds until detonation, please clear the area.</span>")
+			loc.visible_message("<span class='danger'>\icon[src] [timer] seconds until detonation, please clear the area.</span>")
 			playsound(loc, 'sound/machines/click.ogg', 30, 1)
 			active = 1
 			update_icon()
@@ -166,7 +166,7 @@
 			if(payload && !istype(payload, /obj/item/weapon/bombcore/training))
 				message_admins("[key_name_admin(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[user]'>FLW</A>) has primed a [name] ([payload]) for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
 				log_game("[key_name(user)] has primed a [name] ([payload]) for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
-				payload.adminlog = "The [src.name] that [key_name(user)] had primed detonated!"
+				payload.adminlog = "The [name] that [key_name(user)] had primed detonated!"
 
 ///Bomb Subtypes///
 
@@ -293,7 +293,7 @@
 	var/amt_summon = 1
 
 /obj/item/weapon/bombcore/badmin/summon/detonate()
-	var/obj/machinery/syndicatebomb/B = src.loc
+	var/obj/machinery/syndicatebomb/B = loc
 	for(var/i = 0; i < amt_summon; i++)
 		var/atom/movable/X = new summon_path
 		X.loc = get_turf(src)
@@ -308,7 +308,7 @@
 	amt_summon 	= 100
 
 /obj/item/weapon/bombcore/badmin/summon/clown/defuse()
-	playsound(src.loc, 'sound/misc/sadtrombone.ogg', 50)
+	playsound(loc, 'sound/misc/sadtrombone.ogg', 50)
 	..()
 
 /obj/item/weapon/bombcore/badmin/explosion
@@ -329,7 +329,7 @@
 	if(adminlog)
 		message_admins(adminlog)
 		log_game(adminlog)
-	explosion(src.loc, 1, 2, 4, flame_range = 2) //Identical to a minibomb
+	explosion(loc, 1, 2, 4, flame_range = 2) //Identical to a minibomb
 	qdel(src)
 
 /obj/item/weapon/bombcore/chemical

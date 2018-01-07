@@ -56,7 +56,7 @@
 	if(!use_power)
 		return 1
 
-	var/area/A = src.loc.loc		// make sure it's in an area
+	var/area/A = loc.loc		// make sure it's in an area
 	if(!A || !isarea(A) || !A.master)
 		return 0					// if not, then not powered
 	if(chan == -1)
@@ -94,7 +94,7 @@
 
 // connect the machine to a powernet if a node cable is present on the turf
 /obj/machinery/power/proc/connect_to_network()
-	var/turf/T = src.loc
+	var/turf/T = loc
 	if(!T || !istype(T))
 		return 0
 

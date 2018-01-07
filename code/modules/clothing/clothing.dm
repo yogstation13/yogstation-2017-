@@ -172,7 +172,7 @@ BLIND     // can't see anything
 		return
 	mask_adjusted = !mask_adjusted
 	if(!mask_adjusted)
-		src.icon_state = initial(icon_state)
+		icon_state = initial(icon_state)
 		gas_transfer_coefficient = initial(gas_transfer_coefficient)
 		permeability_coefficient = initial(permeability_coefficient)
 		flags |= visor_flags
@@ -448,7 +448,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
-	switch(src.sensor_mode)
+	switch(sensor_mode)
 		if(0)
 			to_chat(user, "Its sensors appear to be disabled.")
 		if(1)
@@ -490,10 +490,10 @@ BLIND     // can't see anything
 		return
 	if (!can_use(M))
 		return
-	if(src.has_sensor >= 2)
+	if(has_sensor >= 2)
 		to_chat(usr, "The controls are locked.")
 		return 0
-	if(src.has_sensor <= 0)
+	if(has_sensor <= 0)
 		to_chat(usr, "This suit does not have any sensors.")
 		return 0
 
@@ -504,7 +504,7 @@ BLIND     // can't see anything
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
-	if (src.loc == usr)
+	if (loc == usr)
 		switch(sensor_mode)
 			if(0)
 				to_chat(usr, "<span class='notice'>You disable your suit's remote sensing equipment.</span>")
@@ -572,11 +572,11 @@ BLIND     // can't see anything
 	if (!can_use(M))
 		return
 
-	src.handle_tear(usr)
+	handle_tear(usr)
 
 /obj/item/clothing/under/examine(mob/user)
 	..()
-	if(src.adjusted)
+	if(adjusted)
 		to_chat(user, "Alt-click on [src] to wear it normally.")
 	else
 		to_chat(user, "Alt-click on [src] to wear it casually.")

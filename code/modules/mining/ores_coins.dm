@@ -11,7 +11,7 @@
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(15) && refined_type)
-			new refined_type(get_turf(src.loc))
+			new refined_type(get_turf(loc))
 			qdel(src)
 		else if(W.isOn())
 			to_chat(user, "<span class='info'>Not enough fuel to smelt [src].</span>")
@@ -229,11 +229,11 @@
 		spawn(det_time)
 		if(primed)
 			if(quality == 3)
-				explosion(src.loc,2,4,9,adminlog = notify_admins)
+				explosion(loc,2,4,9,adminlog = notify_admins)
 			if(quality == 2)
-				explosion(src.loc,1,2,5,adminlog = notify_admins)
+				explosion(loc,1,2,5,adminlog = notify_admins)
 			if(quality == 1)
-				explosion(src.loc,-1,1,3,adminlog = notify_admins)
+				explosion(loc,-1,1,3,adminlog = notify_admins)
 			qdel(src)
 
 /obj/item/weapon/ore/New()

@@ -39,12 +39,12 @@
 		if(!stat)
 			Aggro()
 		if(T.throwforce <= 20)
-			visible_message("<span class='notice'>The [T.name] [src.throw_message] [src.name]!</span>")
+			visible_message("<span class='notice'>The [T.name] [throw_message] [name]!</span>")
 			return
 	..()
 
 /mob/living/simple_animal/hostile/asteroid/death(gibbed)
-	feedback_add_details("mobs_killed_mining","[src.type]")
+	feedback_add_details("mobs_killed_mining","[type]")
 	..(gibbed)
 
 /mob/living/simple_animal/hostile/asteroid/basilisk
@@ -138,10 +138,10 @@
 	target = new_target
 	if(target != null)
 		if(istype(target, /obj/item/weapon/ore) && loot.len < 10)
-			visible_message("<span class='notice'>The [src.name] looks at [target.name] with hungry eyes.</span>")
+			visible_message("<span class='notice'>The [name] looks at [target.name] with hungry eyes.</span>")
 		else if(isliving(target))
 			Aggro()
-			visible_message("<span class='danger'>The [src.name] tries to flee from [target.name]!</span>")
+			visible_message("<span class='danger'>The [name] tries to flee from [target.name]!</span>")
 			retreat_distance = 10
 			minimum_distance = 10
 			if(will_burrow)
@@ -163,11 +163,11 @@
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!stat)
-		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
+		visible_message("<span class='danger'>The [name] buries into the ground, vanishing from sight!</span>")
 		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/item/projectile/P)
-	visible_message("<span class='danger'>The [P.name] was repelled by [src.name]'s girth!</span>")
+	visible_message("<span class='danger'>The [P.name] was repelled by [name]'s girth!</span>")
 	return
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(damage)
@@ -210,7 +210,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	if(world.time >= ranged_cooldown)
-		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(src.loc)
+		var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/A = new brood_type(loc)
 		A.GiveTarget(target)
 		A.friends = friends
 		A.faction = faction
@@ -243,12 +243,12 @@
 			go_inert()
 		else
 			preserved = TRUE
-			feedback_add_details("hivelord_core", "[src.type]|implanted")
+			feedback_add_details("hivelord_core", "[type]|implanted")
 
 /obj/item/organ/hivelord_core/proc/go_inert()
 	inert = TRUE
 	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
-	feedback_add_details("hivelord_core", "[src.type]|inert")
+	feedback_add_details("hivelord_core", "[type]|inert")
 
 /obj/item/organ/hivelord_core/ui_action_click()
 	var/spawn_amount = 1
@@ -294,10 +294,10 @@
 				return
 			if(H != user)
 				H.visible_message("[user] forces [H] to apply [src]... they quickly regenerate all injuries!")
-				feedback_add_details("hivelord_core","[src.type]|used|other")
+				feedback_add_details("hivelord_core","[type]|used|other")
 			else
 				to_chat(user, "<span class='notice'>You start to smear [src] on yourself. It feels and smells disgusting, but you feel amazingly refreshed in mere moments.</span>")
-				feedback_add_details("hivelord_core","[src.type]|used|self")
+				feedback_add_details("hivelord_core","[type]|used|self")
 			H.revive(full_heal = 1)
 			qdel(src)
 	..()
@@ -461,7 +461,7 @@
 	if(!(istype(tturf, /turf)))
 		return
 	if(get_dist(src, target) <= 7)//Screen range check, so you can't get tentacle'd offscreen
-		visible_message("<span class='warning'>The [src.name] digs its tentacles under [target.name]!</span>")
+		visible_message("<span class='warning'>The [name] digs its tentacles under [target.name]!</span>")
 		new /obj/effect/goliath_tentacle/original(tturf)
 		ranged_cooldown = world.time + ranged_cooldown_time
 		icon_state = icon_aggro
@@ -511,8 +511,8 @@
 	..()
 
 /obj/effect/goliath_tentacle/proc/Trip()
-	for(var/mob/living/M in src.loc)
-		visible_message("<span class='danger'>The [src.name] grabs hold of [M.name]!</span>")
+	for(var/mob/living/M in loc)
+		visible_message("<span class='danger'>The [name] grabs hold of [M.name]!</span>")
 		M.Stun(5)
 		M.adjustBruteLoss(15)
 		latched = 1
@@ -813,7 +813,7 @@
 					foundorgans++
 					qdel(O)
 			if(foundorgans)
-				src.visible_message(
+				visible_message(
 					"<span class='danger'>[src] drools some toxic goo into [L]'s innards...</span>",
 					"<span class='danger'>Before sucking out the slurry of bone marrow and flesh, healing itself!</span>",
 					"<span class-'userdanger>You liquefy [L]'s innards with your venom and suck out the resulting slurry, revitalizing yourself.</span>")
@@ -893,10 +893,10 @@
 	robust_searching = 1
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/Life()
-	if(isturf(src.loc))
+	if(isturf(loc))
 		for(var/mob/living/carbon/human/H in view(src,1)) //Only for corpse right next to/on same tile
 			if(H.stat == UNCONSCIOUS)
-				visible_message("<span class='warning'>[src.name] burrows into the flesh of [H]!</span>")
+				visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
 				var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L = new(H.loc)
 				visible_message("<span class='warning'>[L] staggers to their feet!</span>")
 				H.death()

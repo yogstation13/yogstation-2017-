@@ -195,10 +195,10 @@
 		return 0
 
 	if ( \
-			!isturf(src.loc) || \
-			!(locate(/obj/structure/table) in src.loc) && \
-			!(locate(/obj/structure/table/optable) in src.loc) && \
-			!(locate(/obj/item/weapon/storage/bag/tray) in src.loc) \
+			!isturf(loc) || \
+			!(locate(/obj/structure/table) in loc) && \
+			!(locate(/obj/structure/table/optable) in loc) && \
+			!(locate(/obj/item/weapon/storage/bag/tray) in loc) \
 		)
 		to_chat(user, "<span class='warning'>You cannot slice [src] here! You need a table or at least a tray.</span>")
 		return 1
@@ -229,7 +229,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/proc/update_overlays(obj/item/weapon/reagent_containers/food/snacks/S)
 	overlays.Cut()
-	var/image/I = new(src.icon, "[initial(icon_state)]_filling")
+	var/image/I = new(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
 		I.color = pick("#FF0000","#0000FF","#008000","#FFFF00")
 	else

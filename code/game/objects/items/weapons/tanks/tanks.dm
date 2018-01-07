@@ -65,15 +65,15 @@
 /obj/item/weapon/tank/examine(mob/user)
 	var/obj/icon = src
 	..()
-	if (istype(src.loc, /obj/item/assembly))
-		icon = src.loc
+	if (istype(loc, /obj/item/assembly))
+		icon = loc
 	if(!in_range(src, user))
 		if (icon == src) to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
 		return
 
-	to_chat(user, "<span class='notice'>The pressure gauge reads [src.air_contents.return_pressure()] kPa.</span>")
+	to_chat(user, "<span class='notice'>The pressure gauge reads [air_contents.return_pressure()] kPa.</span>")
 
-	var/celsius_temperature = src.air_contents.temperature-T0C
+	var/celsius_temperature = air_contents.temperature-T0C
 	var/descriptive
 
 	if (celsius_temperature < 20)
@@ -93,11 +93,11 @@
 
 /obj/item/weapon/tank/blob_act(obj/effect/blob/B)
 	if(prob(50))
-		var/turf/location = src.loc
+		var/turf/location = loc
 		if (!( istype(location, /turf) ))
 			qdel(src)
 
-		if(src.air_contents)
+		if(air_contents)
 			location.assume_air(air_contents)
 
 		qdel(src)
@@ -218,9 +218,9 @@
 
 	var/pressure = air_contents.return_pressure()
 	if(pressure > TANK_FRAGMENT_PRESSURE)
-		if(!istype(src.loc,/obj/item/device/transfer_valve))
-			message_admins("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
-			log_game("Explosive tank rupture! Last key to touch the tank was [src.fingerprintslast].")
+		if(!istype(loc,/obj/item/device/transfer_valve))
+			message_admins("Explosive tank rupture! Last key to touch the tank was [fingerprintslast].")
+			log_game("Explosive tank rupture! Last key to touch the tank was [fingerprintslast].")
 		//to_chat(world, "\blue[x],[y] tank is exploding: [pressure] kPa")
 		//Give the gas a chance to build up more pressure through reacting
 		air_contents.react()
@@ -233,8 +233,8 @@
 		//to_chat(world, "\blue Exploding Pressure: [pressure] kPa, intensity: [range]")
 
 		explosion(epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
-		if(istype(src.loc,/obj/item/device/transfer_valve))
-			qdel(src.loc)
+		if(istype(loc,/obj/item/device/transfer_valve))
+			qdel(loc)
 		else
 			qdel(src)
 
@@ -245,7 +245,7 @@
 			if(!T)
 				return
 			T.assume_air(air_contents)
-			playsound(src.loc, 'sound/effects/spray.ogg', 10, 1, -3)
+			playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
 			qdel(src)
 		else
 			integrity--
