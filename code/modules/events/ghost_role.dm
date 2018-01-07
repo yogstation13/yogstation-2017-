@@ -4,7 +4,6 @@
 	var/minimum_required = 1
 	var/role_name = "debug rat with cancer" // Q U A L I T Y  M E M E S
 	var/list/spawned_mobs = list()
-	direct_announce = FALSE
 
 /datum/round_event/ghost_role/start()
 	try_spawning()
@@ -30,8 +29,7 @@
 			signing up.")
 	else if(status == SUCCESSFUL_SPAWN)
 		message_admins("[role_name] spawned successfully.")
-		if(direct_announce)
-			addtimer(src,"announceGhost",10)
+		if(ghostAutoAnnounce) addtimer(src,"announceGhost",20)
 		if(!spawned_mobs.len)
 			message_admins("No mobs found in the `spawned_mobs` list, this is \
 				a bug.")

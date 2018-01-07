@@ -8,7 +8,8 @@
 	startWhen = 3
 	announceWhen = 20
 	endWhen = 120
-	direct_announce = "An Gravitational Anomaly has spawned."
+	ghost_announce = "An Gravitational Anomaly has spawned."
+	ghostAutoAnnounce = FALSE
 
 /datum/round_event/anomaly/anomaly_grav/announce()
 	priority_announce("Gravitational anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
@@ -18,3 +19,4 @@
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/grav(T)
 		interest = newAnomaly
+		announceGhost()

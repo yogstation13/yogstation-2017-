@@ -81,11 +81,10 @@
 	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
 	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
 
-	var/ghost_announce //Example = "An event has triggered." If no message, it wont announce anything. %special%
+	var/ghost_announce //Example = "An event has triggered." If no message, it wont announce anything.
 	var/special  //Replaces %special% in ghost_announce. For naming a virus or something
 	var/atom/movable/interest //Is there something about this event worth following?
-	var/direct_announce = TRUE /*Do we want it to be announced once the event is created, or do we want to call announceGhost() later?
-	For events that spawn all the cool stuf later, like revenant*/
+	var/ghostAutoAnnounce = TRUE //Only exceptions being anomolies, because fuck those take long
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -161,23 +160,19 @@
 
 //Sets up the event then adds the event to the the list of running events
 /datum/round_event/New(my_processing = TRUE)
-	world << "0"
-	if(setup() && (direct_announce && !istype(src, /datum/round_event/ghost_role)))
-		addtimer(src,"announceGhost",10)
+	setup()
+	if(!istype(src, /datum/round_event/ghost_role) && ghostAutoAnnounce)
+		addtimer(src,"announceGhost",20)
 	processing = my_processing
 	SSevent.running += src
 	return ..()
 
-/datum/round_event/proc/announceGhost(var/atom/movable/interesting, var/message)
-	world << "1"
-	if(!special) special = "ERROR"
-	world << "2"
+/datum/round_event/proc/announceGhost(atom/movable/interesting, message)
+	if(!special) special = "ERROR. THIS IS A BUG!!"
 	if(message) ghost_announce = message
-	world << "3"
 	if(interesting) interest = interesting
-	world << "4"
+	world << ghost_announce
 	if(!ghost_announce)
 		return
-		world << "5"
-	deadchat_broadcast(replacetext("<b>EVENT:</b>[ghost_announce]", "%special", special), follow_target = interest)
-	world << "6"
+	var/render = "<span class='game deadsay'><span class='prefix'>RANDOM EVENT: </span><span class='message'>[ghost_announce]</span></span>"
+	deadchat_broadcast(replacetext(render, "%special%", special), follow_target=interest)

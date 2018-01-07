@@ -8,7 +8,8 @@
 	startWhen = 3
 	announceWhen = 10
 	endWhen = 95
-	direct_announce = "A Bluespace Anomaly has spawned."
+	ghost_announce = "A Bluespace Anomaly has spawned."
+	ghostAutoAnnounce = FALSE
 
 /datum/round_event/anomaly/anomaly_bluespace/announce()
 	priority_announce("Unstable bluespace anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
@@ -19,7 +20,7 @@
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/bluespace(T)
 		interest = newAnomaly
-
+		announceGhost()
 
 /datum/round_event/anomaly/anomaly_bluespace/end()
 	if(newAnomaly.loc)//If it hasn't been neutralized, it's time to warp half the station away jeez

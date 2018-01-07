@@ -13,7 +13,7 @@
 	announceWhen	= 12
 	endWhen			= 120
 	var/new_rate = 2
-	direct_announce = TRUE //Update this aswell as the direct_announce proc if you inevitably make blob not force a random player
+	ghost_announce = TRUE //Update this aswell as the ghost_announce proc if you inevitably make blob not force a random player
 
 /datum/round_event/blob/New(var/strength)
 	..()

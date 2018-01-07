@@ -13,7 +13,7 @@
 /datum/round_event/ghost_role/abductor
 	minimum_required = 2
 	role_name = "abductor team"
-	direct_announce = "An Abductor team has spawned."
+	ghost_announce = "An Abductor team has spawned."
 
 /datum/round_event/ghost_role/abductor/spawn_role()
 	var/list/mob/dead/observer/candidates = get_candidates("abductor", null, ROLE_ABDUCTOR)

@@ -9,7 +9,7 @@
 	announceWhen	= 15
 
 	var/virus_type
-	ghost_announce = "i ded" //Gets overwritten in start(), this way we can have both the victim AND the virus
+	ghost_announce = null //Gets overwritten in start(), this way we can have both the victim AND the virus
 
 
 /datum/round_event/disease_outbreak/announce()

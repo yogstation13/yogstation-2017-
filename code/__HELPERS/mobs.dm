@@ -484,7 +484,7 @@ Proc for attack log creation, because really why not
 
 	return "Unknown"
 
-/proc/deadchat_broadcast(message, mob/follow_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
+/proc/deadchat_broadcast(message, atom/movable/follow_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
 	for(var/mob/M in player_list)
 		var/datum/preferences/prefs
 		if(M.client && M.client.prefs)

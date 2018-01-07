@@ -10,7 +10,6 @@
 	startWhen		= 1
 	endWhen			= 2
 	announceWhen	= 0
-	direct_announce = FALSE
 
 /datum/round_event/meteor_wave/dust/announce()
 	return

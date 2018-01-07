@@ -12,7 +12,7 @@
 
 	minimum_required = 1
 	role_name = "alien larva"
-	direct_announce = "One or more alien larva's have spawned."
+	ghost_announce = "One or more alien larva's have spawned."
 
 	// 50% chance of being incremented by one
 	var/spawncount = 1
