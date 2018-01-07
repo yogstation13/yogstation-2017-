@@ -48,4 +48,5 @@
 			D = new virus_type()
 		D.carrier = 1
 		ghost_announce = "[H.name] has been infected with [D.name]"
+		interest = H
 		break
