@@ -166,10 +166,12 @@
 	return ..()
 
 /datum/round_event/proc/announceGhost(atom/movable/interesting, message)
-	if(!special) special = "ERROR. THIS IS A BUG!!"
-	if(message) ghost_announce = message
-	if(interesting) interest = interesting
-	world << ghost_announce
+	if(!special) 
+		special = "ERROR. THIS IS A BUG!!"
+	if(message) 
+		ghost_announce = message
+	if(interesting) 
+		interest = interesting
 	if(!ghost_announce)
 		return
 	var/render = "<span class='game deadsay'><span class='prefix'>RANDOM EVENT: </span><span class='message'>[ghost_announce]</span></span>"
