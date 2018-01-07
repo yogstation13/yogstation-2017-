@@ -236,7 +236,7 @@ var/list/VVckey_edit = list("key", "ckey")
 
 	else if(isicon(variable))
 		to_chat(usr, "Variable appears to be <b>ICON</b>.")
-		variable = "\icon[variable]"
+		variable = "[icon2html(variable, usr)]"
 		default = "icon"
 
 	else if(istype(variable,/atom) || istype(variable,/datum))
@@ -464,7 +464,7 @@ var/list/VVckey_edit = list("key", "ckey")
 
 			else if(isicon(var_value))
 				to_chat(usr, "Variable appears to be <b>ICON</b>.")
-				var_value = "\icon[var_value]"
+				var_value = "[icon2html(var_value, usr)]"
 				class = "icon"
 
 			else if(istype(var_value,/atom) || istype(var_value,/datum))
@@ -528,7 +528,7 @@ var/list/VVckey_edit = list("key", "ckey")
 
 		else if(isicon(var_value))
 			to_chat(usr, "Variable appears to be <b>ICON</b>.")
-			var_value = "\icon[var_value]"
+			var_value = "[icon2html(var_value, usr)]"
 			default = "icon"
 
 		else if(istype(var_value,/atom) || istype(var_value,/datum))

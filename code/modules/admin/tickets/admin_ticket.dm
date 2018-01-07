@@ -98,14 +98,14 @@ var/ticket_counter_visible_to_everyone = 0
 		to_chat(handling_admin, "<span class='ticket-text-sent'>Ticket created by you for [is_admin(handling_admin) ? key_name_params(ntarget, 1, 1, null, src) : key_name_params(ntarget, 1, 0, null, src)]: \"[admin_title]\"</span>")
 		log += new /datum/ticket_log(src, usr, "Ticket created by <b>[handling_admin] for [ntarget]</b>", 0)
 		if(has_pref(owner, SOUND_ADMINHELP))
-			to_chat(owner, nullify_sound('sound/effects/adminhelp.ogg'))
+			owner << nullify_sound('sound/effects/adminhelp.ogg')
 		if(has_pref(handling_admin, SOUND_ADMINHELP))
-			to_chat(handling_admin, nullify_sound('sound/effects/adminhelp.ogg'))
+			handling_admin << nullify_sound('sound/effects/adminhelp.ogg')
 	else
 		log += new /datum/ticket_log(src, usr, "Ticket created by <b>[owner]</b>", 0)
 		to_chat(owner, "<span class='ticket-status'>Ticket created for Admins: \"[title]\"</span>")
 		if(has_pref(owner, SOUND_ADMINHELP))
-			to_chat(owner, nullify_sound('sound/effects/adminhelp.ogg'))
+			owner << nullify_sound('sound/effects/adminhelp.ogg')
 
 	if(usr.client.holder && owner && !owner.holder && compare_ckey(usr, handling_admin) && force_popup)
 		spawn()	//so we don't hold the caller proc up
@@ -135,7 +135,7 @@ var/ticket_counter_visible_to_everyone = 0
 			if(invalid)
 				admin_number_decrease++
 			if(has_pref(X, SOUND_ADMINHELP))
-				to_chat(X, nullify_sound('sound/effects/adminhelp.ogg'))
+				X << nullify_sound('sound/effects/adminhelp.ogg')
 			to_chat(X, msg)
 
 	var/admin_number_present = admin_number_total - admin_number_decrease	//Number of admins who are neither afk nor invalid

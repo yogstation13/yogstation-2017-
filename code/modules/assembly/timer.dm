@@ -45,7 +45,7 @@
 	if((!secured)||(cooldown > 0))
 		return 0
 	pulse(0)
-	audible_message("\icon[src] *beep* *beep*", null, 3)
+	audible_message("[icon2html(src, viewers(src))] *beep* *beep*", null, 3)
 	cooldown = 2
 	spawn(10)
 		process_cooldown()

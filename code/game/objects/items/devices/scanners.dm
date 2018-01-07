@@ -535,16 +535,16 @@ DIAGNOSTIC ANALYZER
 /proc/diagnosticscan(mob/living/user, mob/living/M)
 	if(isrobot(M))
 		var/mob/living/silicon/robot/R = M
-		to_chat(user, "<span class='notice'>Diagnostic results for \icon[R] [R.name]:</span>")
+		to_chat(user, "<span class='notice'>Diagnostic results for [icon2html(R, user)] [R.name]:</span>")
 		to_chat(user, "<span class='notice'>Overall status: <b>[round(M.health/M.maxHealth*100)]%</b></span>")
 		to_chat(user, "<span class='notice'>Damage:<font color='red'>Brute</font>-<font color='#FE5800'>Burn</font></span>")
 		to_chat(user, "     <font color='red'>[R.getBruteLoss()]</font> - <font color='#FE5800'>[R.getFireLoss()]</font>")
 		if(R.cell)
-			to_chat(user, "<span class='notice'> \icon[R.cell] [R.cell.name] at [round(R.cell.charge/R.cell.maxcharge*100)]%.</span>")
+			to_chat(user, "<span class='notice'> [icon2html(R.cell, user)] [R.cell.name] at [round(R.cell.charge/R.cell.maxcharge*100)]%.</span>")
 		to_chat(user, "<span class='notice'>Designation: <b>[R.designation]</b></span>")
 		to_chat(user, "<span class='notice'>Upgrades:</span>")
 		for(var/obj/item/borg/upgrade/U in R.contents)
-			to_chat(user, "<span class='notice'>  \icon[U] [U.name]</span>")
+			to_chat(user, "<span class='notice'>  [icon2html(U, user)] [U.name]</span>")
 		var/healthstat
 		if(R.health == R.maxHealth)
 			healthstat = "<font color='green'>Healthy</font>"

@@ -140,12 +140,12 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 /obj/machinery/hologram/holopad/proc/activate_holo(mob/living/silicon/ai/user)
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it
 		if (istype(user.current, /obj/machinery/hologram/holopad))
-			to_chat(user, "<span class='danger'>ERROR:</span> \black Image feed in progress.")
+			to_chat(user, "<span class='danger'>ERROR: </span> <font color='black'>Image feed in progress.</font>")
 			return
 		create_holo(user)//Create one.
 		src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
 	else
-		to_chat(user, "<span class='danger'>ERROR:</span> \black Unable to project hologram.")
+		to_chat(user, "<span class='danger'>ERROR: </span><font color='black'>Unable to project hologram.</font>")
 	return
 
 /*This is the proc for special two-way communication between AI and holopad/people talking near holopad.

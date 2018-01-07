@@ -17,7 +17,7 @@
 
 /datum/game_mode/wizard/announce()
 	to_chat(world, "<B>The current game mode is - Wizard!</B>")
-	to_chat(world, "<B>There is a <span class='danger'>SPACE WIZARD</span>\black on the station. You can't let him achieve his objective!</B>")
+	to_chat(world, "<B>There is a <span class='danger'>SPACE WIZARD</span><font color='black'> on the station. You can't let him achieve his objective!</font></B>")
 
 /datum/game_mode/wizard/pre_setup()
 	//Potential here, people. Magin' Rages Light

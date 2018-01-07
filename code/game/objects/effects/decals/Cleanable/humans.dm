@@ -293,7 +293,7 @@
 			if(S.flags & ABSTRACT)
 				. += "an unidentifiable footprint"
 			else
-				. += "some <B>[initial(S.name)]</B> \icon[S]\n"
+				. += "some <B>[initial(S.name)]</B> [icon2html(S, user)]\n"
 
 	to_chat(user, .)
 
@@ -306,4 +306,3 @@
 	if((blood_state != BLOOD_STATE_OIL) && (blood_state != BLOOD_STATE_NOT_BLOODY))
 		return 1
 	return 0
-

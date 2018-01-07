@@ -29,7 +29,7 @@
 /datum/pai/software/signaller/action_use(mob/living/silicon/pai/user, var/args)
 	if(args["send"])
 		user.sradio.send_signal("ACTIVATE")
-		user.audible_message("\icon[user] *beep* *beep*")
+		user.audible_message("[icon2html(user, viewers(user))] *beep* *beep*")
 	if(args["freq"])
 		var/new_frequency = (user.sradio.frequency + text2num(args["freq"]))
 		if(new_frequency < 1200 || new_frequency > 1600)
