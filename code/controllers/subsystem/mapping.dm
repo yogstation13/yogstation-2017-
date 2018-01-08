@@ -22,7 +22,7 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping/Initialize(timeofday)
 	if(config.defaulted)
-		world << "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>"
+		to_chat(world, "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>")
 	loadWorld()
 	SortAreas()
 	process_teleport_locs()
@@ -80,7 +80,7 @@ var/datum/subsystem/mapping/SSmapping
 		CHECK_TICK
 		new /turf/open/space(T)
 
-#define INIT_ANNOUNCE(X) world << "<span class='boldannounce'>[X]</span>"; world.log << X
+#define INIT_ANNOUNCE(X) to_chat("<span class='boldannounce'>[X]</span>"); world.log << X
 
 /datum/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong
@@ -149,7 +149,7 @@ var/datum/subsystem/mapping/SSmapping
 	message_admins("Randomly rotating map to [VM.map_name]")
 	. = changemap(VM)
 	if (.)
-		world << "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>"
+		to_chat(world, "<span class='boldannounce'>Map rotation has chosen [VM.map_name] for next round!</span>")
 
 /datum/subsystem/mapping/proc/changemap(var/datum/map_config/VM)
 	if(!VM.MakeNextMap())
