@@ -139,6 +139,7 @@ There are several things that need to be remembered:
 		update_inv_shoes()
 		update_inv_s_store()
 		update_inv_wear_mask()
+		update_inv_neck()
 		update_inv_head()
 		update_inv_belt()
 		update_inv_back()
@@ -246,8 +247,25 @@ There are several things that need to be remembered:
 
 	apply_overlay(GLOVES_LAYER)
 
+/mob/living/carbon/human/update_inv_neck()
+	remove_overlay(NECK_LAYER)
 
+	if(client && hud_used)
+		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_neck]
+		inv.update_icon()
+	
+	if(wear_neck)
+		if(client && hud_used && hud_used.hud_shown)
+			if(hud_used.inventory_shown)			//if the inventory is open ...
+				wear_neck.screen_loc = ui_neck		//...draw the item in the inventory screen
+			client.screen += wear_neck					//Either way, add the item to the HUD
 
+		var/image/standing = wear_neck.build_worn_icon(state = wear_neck.icon_state, default_layer = NECK_LAYER, default_icon_file = 'icons/mob/neck.dmi')
+
+		overlays_standing[NECK_LAYER]	= standing
+		
+	apply_overlay(NECK_LAYER)
+	
 /mob/living/carbon/human/update_inv_glasses()
 	remove_overlay(GLASSES_LAYER)
 
@@ -475,6 +493,12 @@ There are several things that need to be remembered:
 	if(client && hud_used && hud_used.hud_shown)
 		if(hud_used.inventory_shown)
 			I.screen_loc = ui_mask
+		client.screen += I
+
+/mob/living/carbon/human/update_hud_neck(obj/item/I)
+	if(client && hud_used && hud_used.hud_shown)
+		if(hud_used.inventory_shown)
+			I.screen_loc = ui_neck
 		client.screen += I
 
 //update whether our back item appears on our hud.

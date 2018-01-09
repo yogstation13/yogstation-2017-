@@ -14,6 +14,14 @@
 			if( !(I.slot_flags & SLOT_MASK) )
 				return 0
 			return 1
+		if(slot_neck)
+			if(istype(I, /obj/item/weapon/bedsheet))
+				return 0
+			if(wear_neck)
+				return 0
+			if( !(I.slot_flags & SLOT_NECK) )
+				return 0
+			return 1
 		if(slot_head)
 			if(head)
 				return 0
