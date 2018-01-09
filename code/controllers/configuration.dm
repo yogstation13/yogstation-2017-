@@ -212,6 +212,7 @@
 	var/client_error_message = "Your version of byond is too old, may have issues, and is blocked from accessing this server."
 
 	var/cross_name = "Other server"
+	var/roundlength
 
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
@@ -442,6 +443,8 @@
 					webhook_key = value
 				if("check_randomizer")
 					config.check_randomizer = 1
+				if("roundlength")
+					config.roundlength = text2num(value)
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"
