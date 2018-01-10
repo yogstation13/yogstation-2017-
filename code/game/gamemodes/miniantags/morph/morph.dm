@@ -195,9 +195,9 @@
 			return
 	target.attack_animal(src)
 
-//Spawn Event
+//Spawn Event --- Commented out as it spawned despite being weight 0 :thonk:
 
-/datum/round_event_control/morph
+/*/datum/round_event_control/morph
 	name = "Spawn Morph"
 	typepath = /datum/round_event/ghost_role/morph
 	weight = 0 //Admin only
@@ -229,3 +229,4 @@
 	log_game("[selected.key] was spawned as a morph by an event.")
 	spawned_mobs += S
 	return SUCCESSFUL_SPAWN
+*/
