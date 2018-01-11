@@ -68,6 +68,12 @@
 			to_chat(user, "<span class='warning'>You need a tighter grip!</span>")
 	else
 		..()
+/obj/structure/urinal/attackby(obj/item/weapon/W, mob/user, params)
+	if(istype(W, /obj/item/weapon/reagent_containers/glass))
+		var/obj/item/weapon/reagent_containers/glass/G = W
+		if(G.reagents.has_reagent("water"))
+			to_chat(user, "<span class='notice'>You flush the urinal.</span>)
+			playsound(src,'sound/mecha/mechmove01.ogg',40,1)
 
 /obj/machinery/shower
 	name = "shower"
