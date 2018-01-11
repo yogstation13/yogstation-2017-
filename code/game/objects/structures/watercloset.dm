@@ -73,6 +73,7 @@
 		var/obj/item/weapon/reagent_containers/glass/G = W
 		if(G.reagents.has_reagent("water"))
 			to_chat(user, "<span class='notice'>You flush the urinal.</span>)
+			playsound(src,'sound/mecha/mechmove01.ogg',40,1)
 
 /obj/machinery/shower
 	name = "shower"
