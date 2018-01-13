@@ -115,6 +115,8 @@
 		if(obscuredTurfs[t])
 			if(!t.obscured)
 				t.obscured = image('icons/effects/cameravis.dmi', t, null, 16)
+				t.obscured.pixel_x = -t.pixel_x
+				t.obscured.pixel_y = -t.pixel_y
 				t.obscured.plane = PLANE_AI_STATIC
 
 			obscured += t.obscured
@@ -171,6 +173,8 @@
 		var/turf/t = turf
 		if(!t.obscured)
 			t.obscured = image('icons/effects/cameravis.dmi', t, null, 16)
+			t.obscured.pixel_x = -t.pixel_x
+			t.obscured.pixel_y = -t.pixel_y
 			t.obscured.plane = PLANE_AI_STATIC
 		obscured += t.obscured
 

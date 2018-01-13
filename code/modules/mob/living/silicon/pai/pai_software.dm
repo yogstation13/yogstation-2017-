@@ -162,7 +162,7 @@
 					radio.recalculateChannels()
 			if(href_list["range"])
 				if(radio)
-					var/newrange = input("Set radio/microphone range", "Radio Range", 3) in list(0, 1, 2, 3, 4)
+					var/newrange = input("Set radio/microphone range", "Radio Range", 3) as anything in list(0, 1, 2, 3, 4)
 					if(radio)
 						radio.canhear_range = newrange
 			if(href_list["channel"])
@@ -171,7 +171,7 @@
 					radio.channels[channel] ^= radio.FREQ_LISTENING
 
 		if("image")
-			var/newImage = input("Select your new display image.", "Display Image", "Happy") in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
+			var/newImage = input("Select your new display image.", "Display Image", "Happy") as anything in list("Happy", "Cat", "Extremely Happy", "Face", "Laugh", "Off", "Sad", "Angry", "What")
 			var/pID = 1
 			switch(newImage)
 				if("Happy")
@@ -205,7 +205,7 @@
 					M = M.loc
 					count++
 					if(count >= 6)
-						src << "You are not being carried by anyone!"
+						to_chat(src, "You are not being carried by anyone!")
 						return 0
 				spawn CheckDNA(M, src)
 
@@ -311,18 +311,21 @@
 	return dat
 
 /mob/living/silicon/pai/proc/CheckDNA(mob/living/carbon/M, mob/living/silicon/pai/P)
-	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") in list("Yes", "No")
+	if(!P.master_dna)
+		to_chat(P, "<span class='warning'>You haven't been bound to anyone yet!</span>")
+		return
+	var/answer = input(M, "[P] is requesting a DNA sample from you. Will you allow it to confirm your identity?", "[P] Check DNA", "No") as anything in list("Yes", "No")
 	if(answer == "Yes")
 		M.visible_message("<span class='notice'>[M] presses \his thumb against [P].</span>",\
 						"<span class='notice'>You press your thumb against [P].</span>",\
 						"<span class='notice'>[P] makes a sharp clicking sound as it extracts DNA material from [M].</span>")
 		if(!M.has_dna())
-			P << "<b>No DNA detected</b>"
+			to_chat(P, "<b>No DNA detected</b>")
 			return
-		P << "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>"
+		to_chat(P, "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>")
 		if(M.dna.unique_enzymes == P.master_dna)
-			P << "<b>DNA is a match to stored Master DNA.</b>"
+			to_chat(P, "<b>DNA is a match to stored Master DNA.</b>")
 		else
-			P << "<b>DNA does not match stored Master DNA.</b>"
+			to_chat(P, "<b>DNA does not match stored Master DNA.</b>")
 	else
-		P << "[M] does not seem like \he is going to provide a DNA sample willingly."
+		to_chat(P, "[M] does not seem like \he is going to provide a DNA sample willingly.")

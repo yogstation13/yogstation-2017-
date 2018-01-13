@@ -83,18 +83,18 @@
 			cur_acc[i] = "n"
 
 		for(var/line in lines)
-			//world << line
+			//to_chat(world, line)
 			for(var/beat in splittext(lowertext(line), ","))
-				//world << "beat: [beat]"
+				//to_chat(world, "beat: [beat]")
 				var/list/notes = splittext(beat, "/")
 				for(var/note in splittext(notes[1], "-"))
-					//world << "note: [note]"
+					//to_chat(world, "note: [note]")
 					if(!playing || shouldStopPlaying(user))//If the instrument is playing, or special case
 						playing = 0
 						return
 					if(lentext(note) == 0)
 						continue
-					//world << "Parse: [copytext(note,1,2)]"
+					//to_chat(world, "Parse: [copytext(note,1,2)]")
 					var/cur_note = text2ascii(note) - 96
 					if(cur_note < 1 || cur_note > 7)
 						continue
@@ -192,15 +192,15 @@
 	else if(href_list["import"])
 		var/t = ""
 		do
-			t = html_encode(input(usr, "Please paste the entire song, formatted:", text("[]", name), t)  as message)
+			t = stripped_multiline_input(usr, "Please paste the entire song, formatted:", "[name]", t, 3072)
 			if(!in_range(instrumentObj, usr))
 				return
 
-			if(lentext(t) >= 3072)
-				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") in list("yes", "no")
+			if(lentext(t) >= 3071)
+				var/cont = input(usr, "Your message is too long! Would you like to continue editing it?", "", "yes") as anything in list("yes", "no")
 				if(cont == "no")
 					break
-		while(lentext(t) > 3072)
+		while(lentext(t) >= 3071)
 
 		//split into lines
 		spawn()
@@ -211,12 +211,12 @@
 			else
 				tempo = sanitize_tempo(5) // default 120 BPM
 			if(lines.len > 50)
-				usr << "Too many lines!"
+				to_chat(usr, "Too many lines!")
 				lines.Cut(51)
 			var/linenum = 1
 			for(var/l in lines)
 				if(lentext(l) > 50)
-					usr << "Line [linenum] too long!"
+					to_chat(usr, "Line [linenum] too long!")
 					lines.Remove(l)
 				else
 					linenum++
@@ -246,7 +246,7 @@
 			playsong(usr)
 
 	else if(href_list["newline"])
-		var/newline = html_encode(input("Enter your line: ", instrumentObj.name) as text|null)
+		var/newline = stripped_input(usr, "Enter your line: ", instrumentObj.name)
 		if(!newline || !in_range(instrumentObj, usr))
 			return
 		if(lines.len > 50)
@@ -263,7 +263,7 @@
 
 	else if(href_list["modifyline"])
 		var/num = round(text2num(href_list["modifyline"]),1)
-		var/content = html_encode(input("Enter your line: ", instrumentObj.name, lines[num]) as text|null)
+		var/content = stripped_input(usr, "Enter your line: ", instrumentObj.name, lines[num])
 		if(!content || !in_range(instrumentObj, usr))
 			return
 		if(lentext(content) > 50)
@@ -330,7 +330,7 @@
 
 /obj/structure/piano/attack_hand(mob/user)
 	if(!user.IsAdvancedToolUser())
-		user << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 	interact(user)
 
@@ -348,7 +348,7 @@
 	if (istype(O, /obj/item/weapon/wrench))
 		if (!anchored && !isinspace())
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "<span class='notice'> You begin to tighten \the [src] to the floor...</span>"
+			to_chat(user, "<span class='notice'> You begin to tighten \the [src] to the floor...</span>")
 			if (do_after(user, 20/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] tightens \the [src]'s casters.", \
@@ -357,7 +357,7 @@
 				anchored = 1
 		else if(anchored)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			user << "<span class='notice'> You begin to loosen \the [src]'s casters...</span>"
+			to_chat(user, "<span class='notice'> You begin to loosen \the [src]'s casters...</span>")
 			if (do_after(user, 40/O.toolspeed, target = src))
 				user.visible_message( \
 					"[user] loosens \the [src]'s casters.", \

@@ -79,7 +79,7 @@ There are several things that need to be remembered:
 	dna.species.handle_mutant_bodyparts(src)
 
 
-/mob/living/carbon/human/proc/update_body()
+/mob/living/carbon/human/update_body()
 	remove_overlay(BODY_LAYER)
 	dna.species.handle_body(src)
 	update_body_parts()
@@ -576,7 +576,7 @@ var/global/list/limb_icon_cache = list()
 /mob/living/carbon/human/proc/generate_icon_render_key()
 	. = "[dna.species.limbs_id]"
 
-	if(dna.check_mutation(HULK))
+	if(dna.check_mutation(HULK) || dna.check_mutation(ACTIVE_HULK))
 		. += "-coloured-hulk"
 	else if(dna.species.use_skintones)
 		. += "-coloured-[skin_tone]"

@@ -1,6 +1,6 @@
 /client/proc/watchlist_add(target_ckey, browse = 0)
 	if(!target_ckey)
-		var/new_ckey = ckey(input(usr,"Who would you like to add to the watchlist?","Enter a ckey",null) as text)
+		var/new_ckey = ckey(stripped_input(usr,"Who would you like to add to the watchlist?","Enter a ckey",null))
 		if(!new_ckey)
 			return
 		new_ckey = sanitizeSQL(new_ckey)
@@ -15,9 +15,9 @@
 		target_ckey = new_ckey
 	var/target_sql_ckey = sanitizeSQL(target_ckey)
 	if(check_watchlist(target_sql_ckey))
-		usr << "<span class='redtext'>[target_sql_ckey] is already on the watchlist.</span>"
+		to_chat(usr, "<span class='redtext'>[target_sql_ckey] is already on the watchlist.</span>")
 		return
-	var/reason = input(usr,"Please State Reason","Reason") as message
+	var/reason = stripped_multiline_input(usr,"Please State Reason","Reason")
 	if(!reason)
 		return
 	reason = sanitizeSQL(reason)
@@ -57,7 +57,7 @@
 		return
 	if(query_watchreason.NextRow())
 		var/watch_reason = query_watchreason.item[1]
-		var/new_reason = input("Input new reason", "New Reason", "[watch_reason]") as message
+		var/new_reason = stripped_multiline_input("Input new reason", "New Reason", "[watch_reason]")
 		new_reason = sanitizeSQL(new_reason)
 		if(!new_reason)
 			return

@@ -22,7 +22,7 @@
 			if (prob(3))
 				affected_mob.hallucination = max(30, affected_mob.hallucination + increment)
 			if (prob(4))
-				affected_mob << "<span class='info'>The world sways and warbles about you, as if caught in a desert heat.</span>"
+				to_chat(affected_mob, "<span class='info'>The world sways and warbles about you, as if caught in a desert heat.</span>")
 				increment += 5
 				affected_mob.emote("twitch")
 		if (2) //2% chance to move to the next stage 3
@@ -31,7 +31,7 @@
 			if (prob(5))
 				affected_mob.hallucination = max(40, affected_mob.hallucination + increment)
 			if (prob(3))
-				affected_mob << "<span class='warning'>You feel gravely ill. Something is terribly wrong.</span>"
+				to_chat(affected_mob, "<span class='warning'>You feel gravely ill. Something is terribly wrong.</span>")
 				increment += 8 //Get this disease fixed asap
 				affected_mob.emote("moan")
 		if (3) //1% chance to move to stage 4
@@ -43,10 +43,10 @@
 				increment += 15 //Silent increment
 			if (prob(3))
 				increment += 30
-				affected_mob << "<span class='info'>You feel like you're being hunted.</span>"
+				to_chat(affected_mob, "<span class='info'>You feel like you're being hunted.</span>")
 				affected_mob.emote("scream")
 			if(affected_mob.hallucination > 500)
-				affected_mob << "<span class='boldwarning'>The stress begins to wear away at your sanity. Your mouth falls open, hung wide in a silent scream.</span>"
+				to_chat(affected_mob, "<span class='boldwarning'>The stress begins to wear away at your sanity. Your mouth falls open, hung wide in a silent scream.</span>")
 				affected_mob.emote("scream")
 				affected_mob.visible_message("<span class='boldwarning'>[affected_mob] shrieks manically and begins to tear at their hair.</span>")
 				affected_mob.hallucination = 400
@@ -56,6 +56,6 @@
 				stage = 3
 				increment = 20
 			if (affected_mob.hallucination <= 20) //20 is when Hallucination processing actually ends in handle_hallucinations()
-				affected_mob << "<span class='info'>A wave of sudden, palpable relief washes over you as the feeling of intense discomfort fades, and the fog over your mind is lifted.</span>"
+				to_chat(affected_mob, "<span class='info'>A wave of sudden, palpable relief washes over you as the feeling of intense discomfort fades, and the fog over your mind is lifted.</span>")
 				cure()
 				return

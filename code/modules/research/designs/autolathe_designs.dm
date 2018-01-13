@@ -526,7 +526,7 @@
 	materials = list(MAT_METAL = 14000, MAT_GLASS = 8000)
 	build_path = /obj/item/wallframe/newscaster
 	category = list("initial", "Construction")
-	
+
 /datum/design/conveyor_belt
 	name = "Conveyor belt"
 	id = "conveyor_belt"
@@ -694,6 +694,14 @@
 	build_type = AUTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	build_path = /obj/item/toy/crayon/spraycan
+	category = list("initial", "Tools")
+
+/datum/design/spray_bottle
+	name = "Spray Bottle"
+	id = "spraybottle"
+	build_type = AUTOLATHE
+	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
+	build_path = /obj/item/weapon/reagent_containers/spray
 	category = list("initial", "Tools")
 
 /datum/design/desttagger

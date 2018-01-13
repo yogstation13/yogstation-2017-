@@ -200,7 +200,7 @@
 		if( abs(areatemp - bodytemperature) > 40 )
 			var/diff = areatemp - bodytemperature
 			diff = diff / 5
-			//world << "changed from [bodytemperature] by [diff] to [bodytemperature + diff]"
+			//to_chat(world, "changed from [bodytemperature] by [diff] to [bodytemperature + diff]")
 			bodytemperature += diff
 
 		if(istype(T,/turf/open))
@@ -525,14 +525,14 @@
 
 /mob/living/simple_animal/stripPanelUnequip(obj/item/what, mob/who, where, child_override)
 	if(!child_override)
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	else
 		..()
 
 /mob/living/simple_animal/stripPanelEquip(obj/item/what, mob/who, where, child_override)
 	if(!child_override)
-		src << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(src, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	else
 		..()
@@ -607,9 +607,9 @@
 	if(health >= maxHealth)
 		if(user)
 			if(user == src)
-				user << "<span class='warning'>You do not need to eat \the [snack] right now.</span>"
+				to_chat(user, "<span class='warning'>You do not need to eat \the [snack] right now.</span>")
 			else
-				user << "<span class='warning'>\The [src] refuses to eat \the [snack]!</span>"
+				to_chat(user, "<span class='warning'>\The [src] refuses to eat \the [snack]!</span>")
 	else
 		if(user == src)
 			user.visible_message("<span class='warning'>[src] eats \the [snack].</span>", "<span class='warning'>You eat \the [snack].</span>")
@@ -639,7 +639,7 @@
 			var/obj/item/weapon/storage/tactical_harness/the_harness = A
 			if(the_harness.canWear(src))
 				if(harness)
-					usr << "<span class='warning'>You are already wearing a harness!</span>"
+					to_chat(usr, "<span class='warning'>You are already wearing a harness!</span>")
 					return
 				else
 					visible_message("<span class='danger'>\The [src] begins to wriggle into \the [A].</span>", "<span class='warning'>You begin to wriggle into \the [A]. You must stay still.</span>")
@@ -647,7 +647,7 @@
 						the_harness.add_harness(src, src)
 					return
 			else
-				usr << "<span class='warning'>You can't wear that type of harness.</span>"
+				to_chat(usr, "<span class='warning'>You can't wear that type of harness.</span>")
 				return
 	AttackingTarget(A)
 
@@ -676,14 +676,14 @@
 			var/obj/item/weapon/storage/tactical_harness/the_harness = W
 			if(the_harness.canWear(src))
 				if(harness)
-					user << "<span class='warning'>\The [src] is already wearing a harness!</span>"
+					to_chat(user, "<span class='warning'>\The [src] is already wearing a harness!</span>")
 				else
 					user.visible_message("<span class='warning'>[user] starts putting \the [W] on \the [src].</span>", "<span class='notice'>You start putting \the [W] on \the [src].</span>")
 					if(do_after(user, 40, target = src))
 						the_harness.add_harness(src, user)
 					return
 			else
-				user << "<span class='warning'>\The [src] cannot wear that type of harness.</span>"
+				to_chat(user, "<span class='warning'>\The [src] cannot wear that type of harness.</span>")
 		else
 			..()
 
@@ -725,7 +725,7 @@
 				if(harness.allowed(usr) || (stat & DEAD))
 					harness.open_inventory(usr)
 				else
-					usr << "<span class='warning'>Access Denied</span>"
+					to_chat(usr, "<span class='warning'>Access Denied</span>")
 		if("add_inventory")
 			if(harness)
 				harness.attackby(usr.get_active_hand(), usr)

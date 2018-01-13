@@ -40,7 +40,7 @@
 /obj/item/weapon/grown/corncob/attackby(obj/item/weapon/grown/W, mob/user, params)
 	..()
 	if(W.is_sharp())
-		user << "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>"
+		to_chat(user, "<span class='notice'>You use [W] to fashion a pipe out of the corn cob!</span>")
 		new /obj/item/clothing/mask/cigarette/pipe/cobpipe (user.loc)
 		user.unEquip(src)
 		qdel(src)
@@ -75,7 +75,7 @@
 
 /obj/item/weapon/grown/snapcorn/attack_self(mob/user)
 	..()
-	user << "<span class='notice'>You pick up a snap pops from the cob.</span>"
+	to_chat(user, "<span class='notice'>You pick up a snap pops from the cob.</span>")
 	var/obj/item/toy/snappop/S = new /obj/item/toy/snappop(user.loc)
 	if(ishuman(user))
 		user.put_in_hands(S)

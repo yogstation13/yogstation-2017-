@@ -23,7 +23,7 @@
 			var/distance = max(1,get_dist(usr,H))
 			if(istype(H.ears, /obj/item/clothing/ears/earmuffs))//only the true power of earmuffs may block the power of the screech
 				continue
-			M << "<span class='userdanger'>You freeze in terror, your blood turning cold from the sound of the scream!</span>"
+			to_chat(M, "<span class='userdanger'>You freeze in terror, your blood turning cold from the sound of the scream!</span>")
 			M.Stun(max(7/distance, 1))
 		for(var/mob/living/silicon/M in T.contents)
 			M.Weaken(10)
@@ -66,36 +66,39 @@
 	panel = "Abomination"
 	charge_max = 0
 	clothes_req = 0
-	range = 1
+	range = -1
+	include_user = 1
 
 
-/obj/effect/proc_holder/spell/targeted/abomination/devour/cast(list/targets,mob/user)
+/obj/effect/proc_holder/spell/targeted/abomination/devour/cast(list/targets, mob/user)
 	if(!isabomination(user))
 		return
 	var/datum/changeling/changeling = user.mind.changeling
 	if(changeling.isabsorbing)
-		user << "<span class='warning'>We are already absorbing!</span>"
+		to_chat(user, "<span class='warning'>We are already absorbing!</span>")
 		return
-	if(!user.pulling || !iscarbon(user.pulling))
-		user << "<span class='warning'>We must be grabbing a valid creature to devour them!</span>"
-		return
-	if(user.grab_state < GRAB_AGGRESSIVE)
-		user << "<span class='warning'>We must have a tighter grip to devour this creature!</span>"
+	if(!user.pulling || !ishuman(user.pulling))
+		to_chat(user, "<span class='warning'>We must be grabbing a valid creature to devour them!</span>")
 		return
 	var/mob/living/carbon/target = user.pulling
-	changeling.can_absorb_dna(user,target)
+	if(!changeling.can_absorb_dna(user,target))
+		return
+	if(user.grab_state < GRAB_AGGRESSIVE)
+		to_chat(user, "<span class='warning'>We must have a tighter grip to devour this creature!</span>")
+		return
 
 	changeling.isabsorbing = 1
-	user << "<span class='notice'>This creature is compatible. We must hold still...</span>"
+	to_chat(user, "<span class='notice'>This creature is compatible. We must hold still...</span>")
 	user.visible_message("<span class='warning'><b>[user] opens their mouth wide, lifting up [target]!</span>", "<span class='notice'>We prepare to devour [target].</span>")
 
+//copied from absorb code
 	if(!do_mob(user, target, 30))
-		user << "<span class='warning'>Our devouring of [target] has been interrupted!</span>"
+		to_chat(user, "<span class='warning'>Our devouring of [target] has been interrupted!</span>")
 		changeling.isabsorbing = 0
 		return
 
 	user.visible_message("<span class='danger'>[user] devours [target], vomiting up some things!</span>", "<span class='notice'>We have devoured [target].</span>")
-	target << "<span class='userdanger'>You are devoured by the abomination!</span>"
+	to_chat(target, "<span class='userdanger'>You are devoured by the abomination!</span>")
 
 	if(changeling.has_dna(target.dna))
 		changeling.remove_profile(target)
@@ -123,12 +126,12 @@
 
 		if(recent_speech.len)
 			user.mind.store_memory("<B>Some of [target]'s speech patterns, we should study these to better impersonate them!</B>")
-			user << "<span class='boldnotice'>Some of [target]'s speech patterns, we should study these to better impersonate them!</span>"
+			to_chat(user, "<span class='boldnotice'>Some of [target]'s speech patterns, we should study these to better impersonate them!</span>")
 			for(var/spoken_memory in recent_speech)
 				user.mind.store_memory("\"[spoken_memory]\"")
-				user << "<span class='notice'>\"[spoken_memory]\"</span>"
+				to_chat(user, "<span class='notice'>\"[spoken_memory]\"</span>")
 			user.mind.store_memory("<B>We have no more knowledge of [target]'s speech patterns.</B>")
-			user << "<span class='boldnotice'>We have no more knowledge of [target]'s speech patterns.</span>"
+			to_chat(user, "<span class='boldnotice'>We have no more knowledge of [target]'s speech patterns.</span>")
 
 		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
@@ -145,9 +148,11 @@
 	changeling.isabsorbing = 0
 	changeling.canrespec = 1
 	changeling.absorbedcount++
+
 	for(var/obj/item/I in target) //drops all items
 		target.unEquip(I)
 	new /obj/effect/decal/remains/human(target.loc)
+	user.stop_pulling()
 	qdel(target)
 
 
@@ -168,11 +173,11 @@
 	var/transform_or_no=alert(user,"Are you sure you want to revert?",,"Yes","No")
 	switch(transform_or_no)
 		if("No")
-			user << "<span class='warning'>You decide not to revert."
+			to_chat(user, "<span class='warning'>You decide not to revert.")
 			return
 		if("Yes")
 			if(!isabomination(usr))
-				user << "<span class='warning'>You're already reverted!</span>"
+				to_chat(user, "<span class='warning'>You're already reverted!</span>")
 				for(var/spell in user.mind.spell_list)
 					if(istype(spell, /obj/effect/proc_holder/spell/targeted/abomination)|| istype(spell, /obj/effect/proc_holder/spell/aoe_turf/abomination))
 						user.mind.RemoveSpell(spell)
@@ -183,5 +188,5 @@
 			if(H.dna && H.dna.mutations)
 				HM.force_lose(H)
 			changeling.reverting = 1
-			changeling.geneticdamage += 10
+			changeling.geneticdamage += 5
 

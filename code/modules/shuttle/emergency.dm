@@ -61,12 +61,11 @@
 	var/obj/item/weapon/card/id/ID = user.get_idcard()
 
 	if(!ID)
-		user << "<span class='warning'>You don't have an ID.</span>"
+		to_chat(user, "<span class='warning'>You don't have an ID.</span>")
 		return
 
 	if(!(access_heads in ID.access))
-		user << "<span class='warning'>The access level of \
-			your card is not high enough.</span>"
+		to_chat(user, "<span class='warning'>The access level of your card is not high enough.</span>")
 		return
 
 	var/old_len = authorized.len
@@ -158,8 +157,7 @@
 
 	if(ENGINES_STARTED)
 		// Give them a message anyway
-		user << "<span class='warning'>The shuttle is already \
-			about to launch!</span>"
+		to_chat(user, "<span class='warning'>The shuttle is already about to launch!</span>")
 	else
 		process()
 
@@ -196,6 +194,9 @@
 			SSshuttle.emergencyDeregister()
 
 	. = ..()
+
+/obj/docking_port/mobile/emergency/canDock(obj/docking_port/stationary/S)
+	return FALSE //If the emergency shuttle can't move, the whole game breaks, so it will force itself to land even if it has to crush a few departments in the process
 
 /obj/docking_port/mobile/emergency/timeLeft(divisor)
 	if(divisor <= 0)
@@ -262,6 +263,17 @@
 		return
 
 	var/time_left = timeLeft(1)
+
+	// The emergency shuttle doesn't work like others so this
+	// ripple check is slightly different
+	if(!ripples.len && (time_left <= SHUTTLE_RIPPLE_TIME) && ((mode == SHUTTLE_CALL) || (mode == SHUTTLE_ESCAPE)))
+		var/destination
+		if(mode == SHUTTLE_CALL)
+			destination = SSshuttle.getDock("emergency_home")
+		else if(mode == SHUTTLE_ESCAPE)
+			destination = SSshuttle.getDock("emergency_away")
+		create_ripples(destination)
+		
 	switch(mode)
 		if(SHUTTLE_RECALL)
 			if(time_left <= 0)
@@ -411,7 +423,7 @@
 
 /obj/item/weapon/storage/pod
 	name = "emergency space suits"
-	desc = "A wall mounted safe containing space suits. Will only open in emergencies."
+	desc = "A wall-mounted safe containing space suits. Will only open in emergencies."
 	anchored = 1
 	density = 0
 	icon = 'icons/obj/storage.dmi'
@@ -438,7 +450,7 @@
 	if(security_level == SEC_LEVEL_RED || security_level == SEC_LEVEL_DELTA)
 		return ..()
 	else
-		usr << "The storage unit will only unlock during a Red or Delta security alert."
+		to_chat(usr, "The storage unit will only unlock during a Red or Delta security alert.")
 
 /obj/item/weapon/storage/pod/attack_hand(mob/user)
 	return

@@ -112,7 +112,14 @@
 	eye_icon_state = "eyes-secborg"
 	headlight_icon_state = "eyes-secborg-lights"
 	modules = list(/obj/item/weapon/robot_module/security)
-
+	
+//Red
+/datum/robot_skin/secred
+ 	name = "Red"
+ 	icon_state = "secborg-red"		//Probably a donor sprite.
+ 	eye_icon_state = "eyes-standard"
+ 	headlight_icon_state = "eyes-standard-lights"
+ 	modules = list(/obj/item/weapon/robot_module/security)
 
 //Peacekeeper
 /datum/robot_skin/peaceborg
@@ -123,7 +130,7 @@
 	eye_icon_state = "eyes-peaceborg"
 	headlight_icon_state = "eyes-peaceborg-lights"
 	modules = list(/obj/item/weapon/robot_module/peacekeeper)
-
+	
 //Janitor
 /datum/robot_skin/janiborg
 	name = "Janiborg"

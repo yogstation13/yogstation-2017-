@@ -79,7 +79,7 @@
 	options["The Rainbow Color"] ="rainbow"
 	options["The Mascot"] = "ronald"
 
-	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in options
+	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") as anything in options
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
@@ -87,7 +87,7 @@
 		for(var/X in actions)
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
-		user << "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>"
+		to_chat(user, "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>")
 		return 1
 
 /obj/item/clothing/mask/gas/sexyclown
@@ -126,7 +126,7 @@
 	for(var/X in actions)
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
-	user << "<span class='notice'>You adjust your mask to portray a different emotion.</span>"
+	to_chat(user, "<span class='notice'>You adjust your mask to portray a different emotion.</span>")
 	return 1
 
 /obj/item/clothing/mask/gas/monkeymask

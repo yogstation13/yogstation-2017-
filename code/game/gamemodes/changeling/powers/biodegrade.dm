@@ -12,7 +12,7 @@
 /obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
 	var/used = 0
 	if(!user.restrained() && !istype(user.loc, /obj/structure/closet))
-		user << "<span class='warning'>We are already free!</span>"
+		to_chat(user, "<span class='warning'>We are already free!</span>")
 		return 0
 
 	if(user.handcuffed)
@@ -49,7 +49,7 @@
 		if(!C || !istype(C)) //The !C check slightly scares me, but...
 			return 0
 		C.visible_message("<span class='warning'>[C]'s hinges suddenly begin to melt and run!</span>")
-		user << "<span class='warning'>We vomit acidic goop onto the interior of [C]!</span>"
+		to_chat(user, "<span class='warning'>We vomit acidic goop onto the interior of [C]!</span>")
 		spawn(70)
 			if(C && user.loc == C)
 				C.visible_message("<span class='warning'>[C]'s door breaks and opens!</span>")
@@ -57,7 +57,7 @@
 				C.locked = 0
 				C.broken = 1
 				C.open()
-				user << "<span class='warning'>We open the container restraining us!</span>"
+				to_chat(user, "<span class='warning'>We open the container restraining us!</span>")
 
 	feedback_add_details("changeling_powers","BD")
 	return 1

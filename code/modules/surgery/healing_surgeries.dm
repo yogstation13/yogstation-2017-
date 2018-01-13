@@ -39,7 +39,7 @@
 				if ("both")
 					heal_limb.heal_damage(65, 65, 0) //both
 		else
-			user << "There's no limb there to dress!"
+			to_chat(user, "There's no limb there to dress!")
 			return 0
 
 		if(locate(/datum/surgery_step/debride) in surgery.steps)

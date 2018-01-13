@@ -142,7 +142,7 @@
 
 		if("clear_virus")
 
-			var/choice = input("Are you sure you want to cure all disease?") in list("Yes", "Cancel")
+			var/choice = input("Are you sure you want to cure all disease?") as anything in list("Yes", "Cancel")
 			if(choice == "Yes")
 				message_admins("[key_name_admin(usr)] has cured all diseases.")
 				for(var/datum/disease/D in SSdisease.processing)
@@ -334,7 +334,7 @@
 			if(!ticker || !ticker.mode)
 				alert("The game hasn't started yet!")
 				return
-			var/objective = copytext(sanitize(input("Enter an objective")),1,MAX_MESSAGE_LEN)
+			var/objective = stripped_input(usr, "Enter an objective", null, null, null, MAX_MESSAGE_LEN)
 			if(!objective)
 				return
 			feedback_inc("admin_secrets_fun_used",1)
@@ -428,7 +428,7 @@
 					H.equip_to_slot_or_del(I, slot_w_uniform)
 					I.flags |= NODROP
 				else
-					H << "You're not kawaii enough for this."
+					to_chat(H, "You're not kawaii enough for this.")
 
 		if("whiteout")
 			if(!check_rights(R_FUN))
@@ -464,7 +464,7 @@
 			feedback_inc("admin_secrets_fun_used",1)
 			feedback_add_details("admin_secrets_fun_used","RET")
 			for(var/mob/living/carbon/human/H in player_list)
-				H << "<span class='boldannounce'>You suddenly feel stupid.</span>"
+				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>")
 				H.setBrainLoss(60)
 			message_admins("[key_name_admin(usr)] made everybody retarded")
 
@@ -611,4 +611,4 @@
 	if (usr)
 		log_admin("[key_name(usr)] used secret [item]")
 		if (ok)
-			world << text("<B>A secret has been activated by []!</B>", usr.key)
+			to_chat(world, text("<B>A secret has been activated by []!</B>", usr.key))

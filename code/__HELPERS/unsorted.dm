@@ -266,7 +266,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/borgs = active_free_borgs()
 	if(borgs.len)
 		if(user)
-			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in borgs
+			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) as anything in borgs
 		else
 			. = pick(borgs)
 	return .
@@ -275,7 +275,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	var/list/ais = active_ais()
 	if(ais.len)
 		if(user)
-			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in ais
+			. = input(user,"AI signals detected:", "AI Selection", ais[1]) as anything in ais
 		else
 			. = pick(ais)
 	return .
@@ -886,20 +886,20 @@ var/list/WALLITEMS_INVERSE = list(
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
-	user << "<span class='notice'>Results of analysis of \icon[icon] [target].</span>"
+	to_chat(user, "<span class='notice'>Results of analysis of \icon[icon] [target].</span>")
 	if(total_moles>0)
-		user << "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>"
+		to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
 
 		var/list/cached_gases = air_contents.gases
 
 		for(var/id in cached_gases)
 			var/gas_concentration = cached_gases[id][MOLES]/total_moles
 			if(gas_concentration > 0.001)
-				user << "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>"
+				to_chat(user, "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] %</span>")
 
-		user << "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>"
+		to_chat(user, "<span class='notice'>Temperature: [round(air_contents.temperature-T0C)] &deg;C</span>")
 	else
-		user << "<span class='notice'>[target] is empty!</span>"
+		to_chat(user, "<span class='notice'>[target] is empty!</span>")
 	return
 
 /proc/check_target_facings(mob/living/initator, mob/living/target)
@@ -1030,6 +1030,7 @@ B --><-- A
 //orbit() can run without it (swap orbiting for A)
 //but then you can never stop it and that's just silly.
 /atom/movable/var/atom/orbiting = null
+/atom/var/list/orbiters = list()
 
 //A: atom to orbit
 //radius: range to orbit at, radius of the circle formed by orbiting
@@ -1047,6 +1048,7 @@ B --><-- A
 		stop_orbit()
 
 	orbiting = A
+	orbiting.orbiters += src
 	var/matrix/initial_transform = matrix(transform)
 	var/lastloc = loc
 
@@ -1082,8 +1084,15 @@ B --><-- A
 
 
 /atom/movable/proc/stop_orbit()
+	orbiting.orbiters -= src
 	orbiting = null
 
+/atom/movable/proc/transfer_observers_to(atom/movable/target)
+	if(orbiters)
+		for(var/thing in orbiters)
+			if(isobserver(thing))
+				var/mob/dead/observer/D = thing
+				D.ManualFollow(target)
 
 //Center's an image.
 //Requires:
@@ -1542,3 +1551,11 @@ proc/pick_closest_path(value)
 			spawn(25)
 				message_admins(msg)
 		stack_trace(msg)
+
+//easy conversion to goonchat later on
+/proc/to_chat(target, msg)
+	if(istype(target, /datum/mind))
+		var/datum/mind/M = target
+		M.current << msg
+	else
+		target << msg

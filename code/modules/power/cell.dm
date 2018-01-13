@@ -85,14 +85,14 @@
 		if(maybedroid.dna && maybedroid.dna.species && (CONSUMEPOWER in maybedroid.dna.species.specflags) )
 			maybedroid.dna.species.species_drain_act(maybedroid, src)
 			return
-	user << "<span class='info'>You turn the cell about in your hands, carefully avoiding the terminals on either end. Cyborgs and androids could probably use this.</span>"
+	to_chat(user, "<span class='info'>You turn the cell about in your hands, carefully avoiding the terminals on either end. Cyborgs and androids could probably use this.</span>")
 
 /obj/item/weapon/stock_parts/cell/examine(mob/user)
 	..()
 	if(rigged)
-		user << "<span class='danger'>This power cell seems to be faulty!</span>"
+		to_chat(user, "<span class='danger'>This power cell seems to be faulty!</span>")
 	else
-		user << "The charge meter reads [round(src.percent() )]%."
+		to_chat(user, "The charge meter reads [round(src.percent() )]%.")
 
 /obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</span>")
@@ -102,7 +102,7 @@
 	..()
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W
-		user << "<span class='notice'>You inject the solution into the power cell.</span>"
+		to_chat(user, "<span class='notice'>You inject the solution into the power cell.</span>")
 		if(S.reagents.has_reagent("plasma", 5))
 			rigged = 1
 		S.reagents.clear_reagents()
@@ -296,7 +296,7 @@
 	if(!card)
 		return
 	if(!AI.mind)
-		user << "<span class='warning'>No intelligence patterns detected.</span>"    //No more magical carding of empty cores, AI RETURN TO BODY!!!11
+		to_chat(user, "<span class='warning'>No intelligence patterns detected.</span>"    )
 		return
 
 	if(interaction == AI_TRANS_FROM_CARD)
@@ -306,10 +306,10 @@
 		AI.control_disabled = 1
 		AI.radio_enabled = 0
 		AI.forceMove(src)
-		AI << "You are a potato."
+		to_chat(AI, "You are a potato.")
 		name = AI.name
 		desc = "This isn't your average potato..."
-		user << "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully in a potato."
+		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [AI.name] ([rand(1000,9999)].exe) installed and executed successfully in a potato.")
 		card.AI = null
 		card.update_icon()
 
@@ -320,8 +320,8 @@
 		AI.forceMove(card)
 		AI.loc = card
 		card.AI = AI
-		AI << "You have been downloaded to a mobile storage device. Remote device connection severed."
-		user << "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory."
+		to_chat(AI, "You have been downloaded to a mobile storage device. Remote device connection severed.")
+		to_chat(user, "<span class='boldnotice'>Transfer successful</span>: [name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
 		card.update_icon()
 
 /obj/item/weapon/stock_parts/cell/high/slime

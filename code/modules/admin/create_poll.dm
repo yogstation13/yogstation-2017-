@@ -4,7 +4,7 @@
 	if(!check_rights(R_PERMISSIONS))
 		return
 	if(!dbcon.IsConnected())
-		src << "<span class='danger'>Failed to establish database connection.</span>"
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/returned = create_poll_function()
 	if(returned)
@@ -26,7 +26,7 @@
 				log_admin("[key_name(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"] - Question: [question]")
 				message_admins("[key_name_admin(usr)] has created a new server poll. Poll type: [polltype] - Admin Only: [adminonly ? "Yes" : "No"]<br>Question: [question]")
 		else
-			src << "Poll question created without any options, poll will be deleted."
+			to_chat(src, "Poll question created without any options, poll will be deleted.")
 			var/DBQuery/query_del_poll = dbcon.NewQuery("DELETE FROM [format_table_name("poll_question")] WHERE id = [returned]")
 			if(!query_del_poll.Execute())
 				var/err = query_del_poll.ErrorMsg()
@@ -34,7 +34,7 @@
 				return
 
 /client/proc/create_poll_function()
-	var/polltype = input("Choose poll type.","Poll Type") in list("Single Option","Text Reply","Rating","Multiple Choice")
+	var/polltype = input("Choose poll type.","Poll Type") as anything in list("Single Option","Text Reply","Rating","Multiple Choice")
 	var/choice_amount = 0
 	switch(polltype)
 		if("Single Option")
@@ -49,7 +49,7 @@
 			if(!choice_amount)
 				return
 	var/starttime = SQLtime()
-	var/endtime = input("Set end time for poll as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than starting time for obvious reasons.", "Set end time", SQLtime()) as text
+	var/endtime = stripped_input(usr, "Set end time for poll as format YYYY-MM-DD HH:MM:SS. All times in server time. HH:MM:SS is optional and 24-hour. Must be later than starting time for obvious reasons.", "Set end time", SQLtime())
 	if(!endtime)
 		return
 	endtime = sanitizeSQL(endtime)
@@ -61,7 +61,7 @@
 	if(query_validate_time.NextRow())
 		endtime = query_validate_time.item[1]
 		if(!endtime)
-			src << "Datetime entered is invalid."
+			to_chat(src, "Datetime entered is invalid.")
 			return
 	var/DBQuery/query_time_later = dbcon.NewQuery("SELECT TIMESTAMP('[endtime]') < NOW()")
 	if(!query_time_later.Execute())
@@ -71,7 +71,7 @@
 	if(query_time_later.NextRow())
 		var/checklate = text2num(query_time_later.item[1])
 		if(checklate)
-			src << "Datetime entered is not later than current server time."
+			to_chat(src, "Datetime entered is not later than current server time.")
 			return
 	var/adminonly
 	switch(alert("Admin only poll?",,"Yes","No","Cancel"))
@@ -82,7 +82,7 @@
 		else
 			return
 	var/sql_ckey = sanitizeSQL(ckey)
-	var/question = input("Write your question","Question") as message|null
+	var/question = stripped_multiline_input("Write your question","Question")
 	if(!question)
 		return
 	question = sanitizeSQL(question)
@@ -105,7 +105,7 @@
 		pollid = query_get_id.item[1]
 	var/add_option = 1
 	while(add_option)
-		var/option = input("Write your option","Option") as message|null
+		var/option = stripped_multiline_input("Write your option","Option")
 		if(!option)
 			return pollid
 		option = sanitizeSQL(option)
@@ -130,19 +130,19 @@
 			if(!maxval)
 				return pollid
 			if(minval >= maxval)
-				src << "Minimum rating value can't be more than maximum rating value"
+				to_chat(src, "Minimum rating value can't be more than maximum rating value")
 				return pollid
-			descmin = input("Optional: Set description for minimum rating","Minimum rating description") as message|null
+			descmin = stripped_multiline_input("Optional: Set description for minimum rating","Minimum rating description")
 			if(descmin)
 				descmin = sanitizeSQL(descmin)
 			else if(descmin == null)
 				return pollid
-			descmid = input("Optional: Set description for median rating","Median rating description") as message|null
+			descmid = stripped_multiline_input("Optional: Set description for median rating","Median rating description")
 			if(descmid)
 				descmid = sanitizeSQL(descmid)
 			else if(descmid == null)
 				return pollid
-			descmax = input("Optional: Set description for maximum rating","Maximum rating description") as message|null
+			descmax = stripped_multiline_input("Optional: Set description for maximum rating","Maximum rating description")
 			if(descmax)
 				descmax = sanitizeSQL(descmax)
 			else if(descmax == null)
