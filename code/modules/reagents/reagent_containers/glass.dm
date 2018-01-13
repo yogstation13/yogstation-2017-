@@ -84,10 +84,10 @@
 			if(reagents.total_volume >= reagents.maximum_volume)
 				to_chat(user,"<span class='notice'>[src] is full.</span>")
 				return
-			
+				
 			var/trans = C.reagents.trans_to(src, amount_per_transfer_from_this)
 			playsound(src, "pour", 50, 1)
-      to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
+			to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
       
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
