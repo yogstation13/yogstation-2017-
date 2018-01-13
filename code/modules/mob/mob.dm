@@ -789,6 +789,8 @@ var/next_mob_id = 0
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	mob_spell_list += S
 	S.action.Grant(src)
+	if(mind)
+		mind.spell_list += S
 
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
