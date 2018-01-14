@@ -36,7 +36,9 @@
 		else
 			to_chat(user, "<span class='warning'>You need a tighter grip!</span>")
 	else
-		return ..()
+		if(mode == 2)
+			user.changeNext_move(CLICK_CD_MELEE)
+			flush()
 
 /obj/machinery/disposal/bin/toilet/attackby(obj/item/I, mob/living/user, params)
 	return ..()
