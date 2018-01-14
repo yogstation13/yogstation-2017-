@@ -116,6 +116,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	//Need it for hit_reaction() and check_for_positions() calls.
 	var/thrower_dir
 
+	var/anthrax_laced = FALSE
+
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!istype(target.loc, /turf) && !istype(target, /turf) && not_inside))
@@ -399,6 +401,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		if(holder.install_holder(src, user))
 			to_chat(user, "<span class='notice>You install the module holder into [src].</span>")
 
+	if(istype(W, /obj/item/anthrax_packet))
+		var/obj/item/anthrax_packet/A = W
+		A.apply(src, user)
+
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, atom/movable/AT)
@@ -423,6 +429,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(anthrax_laced && (!H.gloves || istype(H.gloves, /obj/item/clothing/gloves/fingerless)))
+			H.ForceContractDisease(new /datum/disease/anthrax)
 	return
 
 
