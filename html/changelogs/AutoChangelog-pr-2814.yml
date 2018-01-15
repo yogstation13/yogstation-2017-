@@ -1,0 +1,8 @@
+author: "Altoids1"
+delete-after: true 
+changes: 
+  - rscadd: "Added two new on-boot NTSL variables, $aiprivate and $centcom"
+  - bugfix: "NTSL will now properly handle having $content be set to a number value."
+  - bugfix: "NTSL should now parse comments correctly."
+  - bugfix: "Optimized how NTSL deals with numeric operators and comments. Should run/compile 1% faster or something. *shrug"
+  - spellcheck: "Fixed minor typoes within some of the telecomms computers"
