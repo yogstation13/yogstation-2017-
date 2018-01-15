@@ -369,7 +369,7 @@ var/next_external_rsc = 0
 	return ..()
 
 /client/proc/sync_logout_with_db(number)
-	if(!number || !isnum(number))
+	if(!number)
 		return
 	establish_db_connection()
 	if (!dbcon.IsConnected())
