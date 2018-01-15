@@ -786,6 +786,12 @@
 			// +75% faster surgery speed, for killing your patient in those less-than-perfect conditions faster
 	..()
 
+/datum/reagent/space_cleaner/sterilizine/reaction_obj(obj/O, amount)
+	if(!istype(O, /obj/item))
+		return
+	var/obj/item/I = O
+	I.anthrax_laced = FALSE
+
 /datum/reagent/iron
 	name = "Iron"
 	id = "iron"
