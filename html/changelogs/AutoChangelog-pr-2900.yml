@@ -1,0 +1,4 @@
+author: "kiripirin"
+delete-after: true 
+changes: 
+  - tweak: "Use gameTimestamp instead of time_stamp on attack_log entries"
