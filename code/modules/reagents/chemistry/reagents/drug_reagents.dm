@@ -340,3 +340,54 @@
 		M.adjustOxyLoss(1, 0, DAMAGE_CHEMICAL)
 	..()
 	. = 1
+
+/datum/reagent/drug/yespowder
+	name = "Yes Powder"
+	id = "yespowder"
+	description = "Powder that makes you say yes."
+	color = "#fffae0"
+	reagent_state = LIQUID
+
+/datum/reagent/drug/yespowder/on_mob_life(mob/living/M)
+	var/high_message = pick("Agreement fills your mind.", "'No' is so last year. 'Yes' is in.", "Yes.")
+	if(prob(5))
+		to_chat(M, "<span class='notice'>[high_message]</span>")
+	if(prob(40))
+		M.say("Yes.")
+	..()
+
+/datum/reagent/drug/tastepowder
+	name = "Taste Powder"
+	id = "tastepowder"
+	description = "This is powder? Doesn't taste like it."
+	color = "#d6d6d6"
+	reagent_state = LIQUID
+
+/datum/reagent/drug/tastepowder/on_mob_life(mob/living/M)
+	var/high_message = pick("This couldn't taste more powdery if it tried.", "Oh boy, powder flavour!", "I can't believe it's not powder!")
+	if(prob(5))
+		M.say("[high_message]")
+	if(prob(20))
+		M.say("This tastes exactly like powder.") //Sometime before this point powder stopped feeling like a real word. - Rory.
+	if(prob(1))
+		M.say("This tastes nothing like powder, I have no idea what I expected.")
+	..()
+
+/datum/reagent/drug/honkpowder
+	name = "Honk Powder"
+	id = "honkpowder"
+	description = "This is powder? Are you joking?"
+	color = "#ff5bff" //Neon Pink
+	reagent_state = LIQUID
+
+/datum/reagent/drug/honkpowder/on_mob_life(mob/living/M)
+	var/high_message = pick("Henk.", "HENK!!", "HONK!!!!!")
+	if(prob(30))
+		M.say("[high_message]")
+	if(prob(40))
+		M.say("Honk.")
+	if(prob(1))
+		M.say("END MY SUFFERING.")
+	if(prob(5))
+		to_chat(M, "<span class='notice'>Your funny bone itches.</span>")
+	..()

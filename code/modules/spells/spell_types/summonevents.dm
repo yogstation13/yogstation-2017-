@@ -20,7 +20,7 @@
 			var/datum/objective/survive/survive = new
 			survive.owner = H.mind
 			H.mind.objectives += survive
-			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into a survivalist, and trusts no one!</font>"
+			H.attack_log += "\[[gameTimestamp()]\] <font color='red'>Was made into a survivalist, and trusts no one!</font>"
 			to_chat(H, "<B>You are the survivalist! Your own safety matters above all else, and the only way to ensure your safety is to stockpile weapons! Grab as many guns as possible, by any means necessary. Kill anyone who gets in your way.</B>")
 			H.mind.show_memory()
 
@@ -135,7 +135,7 @@
 			obj.owner = H.mind
 			H.mind.objectives += obj
 			H.mind.special_role = "adept"
-			H.attack_log += "\[[time_stamp()]\] <font color='red'>Was made into an adept, and trusts no one!</font>"
+			H.attack_log += "\[[gameTimestamp()]\] <font color='red'>Was made into an adept, and trusts no one!</font>"
 			to_chat(H, "<B>You are an adept! Collect magical artifacts and defeat all other adepts on the station, marked by the yellow and red hud icon, and perhaps a space wizard will take you as an apprentice.</B>")
 			H.mind.show_memory()
 

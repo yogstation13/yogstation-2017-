@@ -142,7 +142,8 @@
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
 				I.throw_at_fast(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
-
+		for(var/mob/living/L in T)
+			L.pummel(epicenter, throw_dist/2)
 		CHECK_TICK
 
 	var/took = (world.timeofday-start)/10

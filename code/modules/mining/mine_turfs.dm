@@ -575,6 +575,8 @@
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface
 
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
+	if(!AM)
+		return
 	if(!AM.invisibility)
 		AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \
 		into the enveloping dark.</span>")

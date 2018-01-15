@@ -295,6 +295,13 @@
 	icon_state = "rubberducky"
 	item_state = "rubberducky"
 
+/obj/item/device/assembly/bikehorn/rubberducky/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] tells [src] that they don't want to live anymore! It looks like they're trying to commit suicide.</span>")
+	playsound(get_turf(src), honksound, 50, 1)
+	sleep(20)
+	user.visible_message("<span class='suicide'>[src] points a gun at [user]!</span>")
+	playsound(get_turf(src), 'sound/weapons/Gunshot.ogg', 50, 1, -1)
+	return (BRUTELOSS)
 
 
 /obj/structure/sink

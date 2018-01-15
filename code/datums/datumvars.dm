@@ -13,7 +13,7 @@
 	//set src in world
 
 
-	if(!usr.client || !usr.client.holder)
+	if(!usr.client || !usr.client.holder || !check_rights_for(usr.client, R_BASIC))
 		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>")
 		return
 
@@ -281,6 +281,7 @@
 			body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
 			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
 			body += "<option value='?_src_=vars;purrbation=\ref[D]'>Toggle Purrbation</option>"
+			body += "<option value='?_src_=vars;makecluwne=\ref[D]'>Make cluwne</option>"
 		body += "<option value>---</option>"
 		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
 	if(isobj(D))
@@ -488,6 +489,16 @@ body
 			return
 		M.regenerate_icons()
 
+	else if(href_list["offer_control"])
+		if(!check_rights(0))
+			return
+
+		var/mob/M = locate(href_list["offer_control"])
+		if(!istype(M))
+			to_chat(usr, "This can only be used on instances of type /mob")
+			return
+		offer_control(M)
+
 //Needs +VAREDIT past this point
 
 	else if(check_rights(R_VAREDIT))
@@ -627,16 +638,6 @@ body
 
 			if(usr.client)
 				usr.client.cmd_assume_direct_control(M)
-
-		else if(href_list["offer_control"])
-			if(!check_rights(0))
-				return
-
-			var/mob/M = locate(href_list["offer_control"])
-			if(!istype(M))
-				to_chat(usr, "This can only be used on instances of type /mob")
-				return
-			offer_control(M)
 
 		else if(href_list["delall"])
 			if(!check_rights(R_DEBUG|R_SERVER))
@@ -967,6 +968,14 @@ body
 				message_admins("<span class='notice'>[key_name(usr)] dealt [amount] amount of [Text] damage to [L] </span>")
 				href_list["datumrefresh"] = href_list["mobToDamage"]
 
-
+		else if(href_list["makecluwne"])
+			if(!check_rights(R_SPAWN))
+				return
+			var/mob/living/carbon/human/H = locate(href_list["makecluwne"])
+			if(!H)
+				to_chat(usr, "Mob doesn't exist anymore")
+				return
+			H.cluwneify()
+			message_admins("<span class='notice'>[key_name(usr)] has made [key_name(H)] into a Cluwne.</span>")
+			return
 	return
-

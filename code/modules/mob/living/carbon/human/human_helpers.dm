@@ -154,7 +154,7 @@
 	. = ..()
 
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		if(src.dna.check_mutation(HULK))
+		if(src.dna.check_mutation(HULK) || src.dna.check_mutation(ACTIVE_HULK))
 			to_chat(src, "<span class='warning'>Your meaty finger is much too large for the trigger guard!</span>")
 			return 0
 		if(NOGUNS in src.dna.species.specflags)

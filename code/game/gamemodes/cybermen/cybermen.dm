@@ -110,7 +110,7 @@ var/datum/cyberman_network/cyberman_network
 	for(var/A in cyberman.cyberman.abilities)
 		var/datum/action/cyberman/ability = A
 		ability.Grant(cyberman.current)
-	cyberman.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a cyberman</span>"
+	cyberman.current.attack_log += "\[[gameTimestamp()]\] <span class='danger'>Became a cyberman</span>"
 
 	update_cybermen_icons_add(cyberman)
 	var/datum/atom_hud/data/cybermen/hud = huds[DATA_HUD_CYBERMEN_HACK]
@@ -144,7 +144,7 @@ var/datum/cyberman_network/cyberman_network
 	qdel(cyberman.cyberman)
 	cyberman.cyberman = null//redundant but doesn't hurt to be safe.
 	cyberman_network.cybermen -= cyberman
-	cyberman.current.attack_log += "\[[time_stamp()]\] <span class='danger'>De-Cybermanized</span>"
+	cyberman.current.attack_log += "\[[gameTimestamp()]\] <span class='danger'>De-Cybermanized</span>"
 	cyberman.special_role = null
 
 	update_cybermen_icons_remove(cyberman)
@@ -379,6 +379,8 @@ datum/game_mode/proc/update_cybermen_icons_remove(datum/mind/cyberman)
 /datum/cyberman_network/proc/message_all_cybermen(message)
 	for(var/datum/mind/cyberman in cybermen)
 		to_chat(cyberman.current, message)
+	for(var/mob/dead/observer in dead_mob_list)
+		to_chat(observer, message)
 
 /datum/cyberman_network/proc/is_cyberman_or_being_converted(mob/living/carbon/human/H)//this one accepts mobs instead of minds, because conversion hacks target mobs, not minds.
 	if(!istype(H))

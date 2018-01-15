@@ -117,7 +117,7 @@
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
 
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	//msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	if(!msg)	return
 
 	msg = emoji_parse(msg)
@@ -138,8 +138,8 @@
 				return
 
 			if(!T.resolved)
-				msg = replacetext(msg, "'", "�")
-				msg = replacetext(msg, "&#39;", "�")
+				//msg = replacetext(msg, "'", "�")
+				//msg = replacetext(msg, "&#39;", "�")
 				T.add_log(msg, get_client(src))
 
 				if(holder && !C.holder && T.force_popup)
@@ -147,8 +147,8 @@
 						var/sender = src
 						var/sendername = key
 						var/reply = stripped_input(C, msg,"Admin PM from-[sendername]", "")		//show message and await a reply
-						reply = replacetext(reply, "'", "�")
-						reply = replacetext(reply, "&#39;", "�")
+						//reply = replacetext(reply, "'", "�")
+						//reply = replacetext(reply, "&#39;", "�")
 						if(C && reply)
 							if(sender)
 								C.cmd_admin_pm(src,reply)										//sender is still about, let's reply to them

@@ -104,6 +104,8 @@
 		if(loc.vars[A] == src)
 			loc.vars[A] = O
 
+	transfer_observers_to(O)
+
 	. = O
 
 	qdel(src)
@@ -226,6 +228,8 @@
 	if (tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
 
+	transfer_observers_to(O)
+
 	. = O
 
 	for(var/A in loc.vars)
@@ -310,7 +314,7 @@
 	O.rename_self("ai")
 	. = O
 	qdel(src)
-	return
+	return O
 
 
 //human -> robot

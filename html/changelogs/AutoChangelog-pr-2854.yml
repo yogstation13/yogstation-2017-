@@ -1,0 +1,4 @@
+author: "morrowwolf"
+delete-after: true 
+changes: 
+  - rscadd: "Adds admin command to turn people into cluwnes."
