@@ -187,20 +187,21 @@ var/allowed_translateable_langs = ALL
 	interpreter.SetProc("insert", /proc/n_listinsert)
 	interpreter.SetProc("pick", /proc/n_pick)
 	interpreter.SetProc("prob", /proc/n_prob)
-	interpreter.SetProc("substr", /proc/n_substr)
+	interpreter.SetProc("substr", /proc/utf8_copy)
 	interpreter.SetProc("find", /proc/n_smartfind)
 	interpreter.SetProc("length", /proc/n_smartlength)
 
 	// Strings
-	interpreter.SetProc("lower", /proc/n_lower)
-	interpreter.SetProc("upper", /proc/n_upper)
+	interpreter.SetProc("lower", /proc/utf8_lowercase)
+	interpreter.SetProc("upper", /proc/utf8_uppercase)
 	interpreter.SetProc("explode", /proc/n_explode)
 	interpreter.SetProc("implode", /proc/n_implode)
 	interpreter.SetProc("repeat", /proc/n_repeat)
-	interpreter.SetProc("reverse", /proc/n_reverse)
+	interpreter.SetProc("reverse", /proc/utf8_reverse)
 	interpreter.SetProc("tonum", /proc/n_str2num)
-	interpreter.SetProc("replace", /proc/n_replace)
+	interpreter.SetProc("replace", /proc/utf8_replace)
 	interpreter.SetProc("proper", /proc/n_proper)
+	interpreter.SetProc("capitalize", /proc/utf8_capitalize)
 
 	// Numbers
 	interpreter.SetProc("tostring", /proc/n_num2str)

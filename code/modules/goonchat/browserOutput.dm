@@ -84,6 +84,22 @@ var/global/savefile/iconCache = new("data/iconCache.sav") //Cache of icons for t
 		if("setMusicVolume")
 			data = setMusicVolume(arglist(params))
 
+		if("encoding")
+			var/encoding = href_list["encoding"]
+			var/static/regex/RE = regex("windows-(874|125\[0-8])")
+			if (RE.Find(encoding))
+				owner.encoding = RE.group[1]
+
+			else if (encoding == "gb2312")
+				owner.encoding = "2312"
+
+			// This seems to be the result on Japanese locales, but the client still seems to accept 1252.
+			else if (encoding == "_autodetect")
+				owner.encoding = "1252"
+
+			else
+				stack_trace("Unknown encoding received from client: \"[sanitize(encoding)]\". Please report this as a bug.")
+
 	if(data)
 		ehjax_send(data = data)
 
@@ -214,9 +230,8 @@ var/global/savefile/iconCache = new("data/iconCache.sav") //Cache of icons for t
 	message = replacetext(message, "\proper", "")
 	message = replacetext(message, "\n", "<br>")
 	message = replacetext(message, "\t", "[TAB][TAB]")
-	message = replacetext(message, "’", "`")
-	message = replacetext(message, "“", "\"") //that probably looks like a box in Dream Maker, but it's some shitty unicode quote.
-	message = replacetext(message, "”", "\"") //yet another shitty unicode quote
+
+	message = utf8_sanitize(message, target, MAX_MESSAGE_LEN)
 
 	for(var/I in targets)
 		//Grab us a client if possible

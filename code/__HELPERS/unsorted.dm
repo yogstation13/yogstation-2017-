@@ -1493,11 +1493,3 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 			spawn(25)
 				message_admins(msg)
 		stack_trace(msg)
-
-//easy conversion to goonchat later on
-/proc/to_chat(target, msg)
-	if(istype(target, /datum/mind))
-		var/datum/mind/M = target
-		M.current << msg
-	else
-		target << msg

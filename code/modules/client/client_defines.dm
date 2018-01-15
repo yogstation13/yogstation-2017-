@@ -64,3 +64,6 @@
 	var/list/rejectedRoles = list() //Mid-round ghost roles they hit NEVER on
 
 	var/datum/chatOutput/chatOutput
+	
+	// This gets set by goonchat.
+	var/encoding = "1252"

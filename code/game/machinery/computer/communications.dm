@@ -415,7 +415,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		return
 	if(z_lock)
 		if (z != ZLEVEL_STATION)
-			to_chat(user, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
+			to_chat(usr, "<span class='boldannounce'>Unable to establish a connection</span>: <font color='black'>You're too far away from the station!</font>")
 			return
 
 	user.set_machine(src)
