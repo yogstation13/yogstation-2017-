@@ -257,7 +257,7 @@ var/datum/subsystem/ticker/ticker
 
 		var/list/adm = get_admin_counts()
 		if(!adm["present"])
-			send2irc("Server", "Round just started with no active admins online!")
+			webhook_send("adminless", "Round just started with no active admins online!")
 
 	return 1
 

@@ -837,6 +837,8 @@ var/list/admin_verbs_hideable = list(
 	log_admin("[src] deadmined themself.")
 	message_admins("[src] deadmined themself.")
 	feedback_add_details("admin_verb","DAS")
+	if(!admins.len)
+		webhook_send("adminless", "The last admin has de-adminned!")
 
 /client/proc/readmin()
 	set name = "Readmin"
