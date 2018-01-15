@@ -1,5 +1,0 @@
-author: "Kmc2000"
-delete-after: true 
-changes: 
-  - tweak: "Paintballs are now cleanable, they will make your clothes appear bloody."
-  - tweak: "Paintball ammo can now be squashed by walking over it, getting rid of the pellet and staining the floor below with a small chance to splat paint everywhere when you do."
