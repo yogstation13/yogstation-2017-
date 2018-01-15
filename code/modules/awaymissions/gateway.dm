@@ -164,7 +164,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 
 /obj/machinery/gateway/centerstation/attackby(obj/item/device/W, mob/user, params)
 	if(istype(W,/obj/item/device/multitool))
-		to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
+		to_chat(user, "<font color='black'>The gate is already calibrated, there is no work for you to do here.</font>")
 		return
 
 
@@ -258,7 +258,7 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 	if(istype(AM, /mob/living/carbon))
 		for(var/obj/item/weapon/implant/exile/E in AM)//Checking that there is an exile implant in the contents
 			if(E.imp_in == AM)//Checking that it's actually implanted vs just in their pocket
-				to_chat(AM, "\black The station gate has detected your exile implant and is blocking your entry.")
+				to_chat(AM, "<font color='black'>The station gate has detected your exile implant and is blocking your entry.</font>")
 				return
 	AM.forceMove(get_step(stationgate.loc, SOUTH))
 	AM.dir = SOUTH
@@ -271,9 +271,9 @@ var/obj/machinery/gateway/centerstation/the_gateway = null
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user, params)
 	if(istype(W,/obj/item/device/multitool))
 		if(calibrated)
-			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
+			to_chat(user, "<font color='black'>The gate is already calibrated, there is no work for you to do here.</font>")
 			return
 		else
-			to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
+			to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: <font color='black'>This gate's systems have been fine tuned.  Travel to this gate will now be on target.</font>")
 			calibrated = 1
 			return

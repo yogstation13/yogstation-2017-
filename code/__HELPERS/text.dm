@@ -59,6 +59,8 @@
 /proc/adminscrub(t,limit=MAX_MESSAGE_LEN)
 	return copytext((html_encode(strip_html_simple(t))),1,limit)
 
+/proc/sanitize_filename(t)
+	return sanitize_simple(t, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))
 
 //Returns null if there is any bad text in the string
 /proc/reject_bad_text(text, max_length=512)

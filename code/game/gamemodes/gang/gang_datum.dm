@@ -214,7 +214,7 @@
 		var/mob/living/mob = get(tool.loc,/mob/living)
 		if(mob && mob.mind && mob.stat == CONSCIOUS)
 			if(mob.mind.gang_datum == src)
-				to_chat(mob, "<span class='[warning ? "warning" : "notice"]'>\icon[tool] [message]</span>")
+				to_chat(mob, "<span class='[warning ? "warning" : "notice"]'>[icon2html(tool, mob)] [message]</span>")
 				if(beep)
 					mob << sound('sound/machines/twobeep.ogg')
 			return

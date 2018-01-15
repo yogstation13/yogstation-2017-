@@ -795,11 +795,11 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	if (!silent)
 		if(exempt) //re-using exempt from my watches / phones to make an appropriate ringtone
 			playsound(loc, 'sound/machines/vibrate.ogg', 50, 1)
-			audible_message("\icon[src] *[ttone]*", null, 3)
+			audible_message("[icon2html(src, viewers(src))] *[ttone]*", null, 3)
 
 		else
 			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
-			audible_message("\icon[src] *[ttone]*", null, 3)
+			audible_message("[icon2html(src, viewers(src))] *[ttone]*", null, 3)
 	//Search for holder of the PDA.
 	var/mob/living/L = null
 	if(loc && isliving(loc))
@@ -815,7 +815,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 			hrefstart = "<a href='?src=\ref[L];track=[html_encode(source.owner)]'>"
 			hrefend = "</a>"
 
-		to_chat(L, "\icon[src.icon] <b>Message from [hrefstart][source.owner] ([source.ownjob])[hrefend], </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
+		to_chat(L, "[icon2html(src, L)] <b>Message from [hrefstart][source.owner] ([source.ownjob])[hrefend], </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
 
 	overlays.Cut()
 	overlays += image(icon, icon_alert)
@@ -1012,7 +1012,7 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 
 				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
 				if(C.radiation)
-					user.show_message("\green Radiation Level: \black [C.radiation]")
+					user.show_message("<font color='green'>Radiation Level: </font><font color='black'>[C.radiation]</font>")
 				else
 					user.show_message("<span class='notice'>No radiation detected.</span>")
 

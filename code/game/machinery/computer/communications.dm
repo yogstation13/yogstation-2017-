@@ -52,7 +52,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		return
 	if(z_lock) //Can only be used on SS13 unless z_lock is changed..
 		if(z != ZLEVEL_STATION)
-			to_chat(usr, "<span class='boldannounce'>Unable to establish a connection</span>: \black You're too far away from the station!")
+			to_chat(usr, "<span class='boldannounce'>Unable to establish a connection</span>: <font color='black'>You're too far away from the station!</font>")
 			return
 	usr.set_machine(src)
 

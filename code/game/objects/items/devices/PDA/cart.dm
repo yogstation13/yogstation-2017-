@@ -325,7 +325,7 @@
 		var/obj/item/device/pda/pda = loc
 		if(!pda.silent && msg)
 			playsound(pda.loc, 'sound/machines/twobeep.ogg', 50, 1)
-			pda.audible_message("\icon[pda] [msg]", null, 3)
+			pda.audible_message("[icon2html(pda, viewers(pda))] [msg]", null, 3)
 
 /obj/item/weapon/cartridge/proc/cancelAlarm(class, area/A, obj/alarmsource)
 	var/msg
@@ -369,7 +369,7 @@
 		var/obj/item/device/pda/pda = loc
 		if(!pda.silent && msg)
 			playsound(pda.loc, 'sound/machines/twobeep.ogg', 50, 1)
-			pda.audible_message("\icon[pda] [msg]", null, 3)
+			pda.audible_message("[icon2html(pda, viewers(pda))] [msg]", null, 3)
 
 /obj/item/weapon/cartridge/proc/post_status(command, data1, data2)
 

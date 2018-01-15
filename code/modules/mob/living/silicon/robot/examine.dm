@@ -1,5 +1,5 @@
 /mob/living/silicon/robot/examine(mob/user)
-	var/msg = "<span class='info'>*---------*\nThis is \icon[src] \a <EM>[src]</EM>!\n"
+	var/msg = "<span class='info'>*---------*\nThis is [icon2html(src, user)] \a <EM>[src]</EM>!\n"
 	if(module)
 		msg += "It appears to have loaded \the [module.name]\n"
 	if(desc)
@@ -7,7 +7,7 @@
 
 	var/obj/act_module = get_active_hand()
 	if(act_module)
-		msg += "It is holding \icon[act_module] \a [act_module].\n"
+		msg += "It is holding [icon2html(act_module, user)] \a [act_module].\n"
 	msg += "<span class='warning'>"
 	if (src.getBruteLoss())
 		if (src.getBruteLoss() < maxHealth*0.5)

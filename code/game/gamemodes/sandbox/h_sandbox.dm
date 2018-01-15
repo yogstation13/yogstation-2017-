@@ -115,11 +115,11 @@ var/hsboxspawn = 1
 			if("hsbtobj")
 				if(!admin) return
 				if(hsboxspawn)
-					to_chat(world, "<span class='boldannounce'>Sandbox:</span> <b>\black[usr.key] has disabled object spawning!</b>")
+					to_chat(world, "<span class='boldannounce'>Sandbox:</span> <font color='black'><b>[usr.key] has disabled object spawning!</b></font>")
 					hsboxspawn = 0
 					return
 				else
-					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black[usr.key] has enabled object spawning!</b>")
+					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <font color='black'><b>[usr.key] has enabled object spawning!</b></font>")
 					hsboxspawn = 1
 					return
 			//
@@ -128,10 +128,10 @@ var/hsboxspawn = 1
 			if("hsbtac")
 				if(!admin) return
 				if(config.sandbox_autoclose)
-					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <b>\black [usr.key] has removed the object spawn limiter.</b>")
+					to_chat(world, "<span class='boldnotice'>Sandbox:</span> <font color='black'><b>[usr.key] has removed the object spawn limiter.</b></font>")
 					config.sandbox_autoclose = 0
 				else
-					to_chat(world, "<span class='danger'>Sandbox:</span> <b>\black [usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b>")
+					to_chat(world, "<span class='danger'>Sandbox:</span> <font color='black'><b>[usr.key] has added a limiter to object spawning.  The window will now auto-close after use.</b></font>")
 					config.sandbox_autoclose = 1
 				return
 			//

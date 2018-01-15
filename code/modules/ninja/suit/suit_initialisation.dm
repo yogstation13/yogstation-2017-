@@ -40,7 +40,7 @@
 						break
 					lock_suit(U,1)//Check for icons.
 					U.regenerate_icons()
-					to_chat(U, "<span class='notice'>Linking neural-net interface...\nPattern</span>\green <B>GREEN</B><span class='notice'>, continuing operation.</span>")
+					to_chat(U, "<span class='notice'>Linking neural-net interface...\nPattern</span><font color='green'><B>GREEN</B></font><span class='notice'>, continuing operation.</span>")
 				if(4)
 					to_chat(U, "<span class='notice'>VOID-shift device status: <B>ONLINE</B>.\nCLOAK-tech device status: <B>ONLINE</B>.</span>")
 				if(5)
@@ -89,9 +89,9 @@
 					to_chat(U, "<span class='notice'>VOID-shift device status: <B>OFFLINE</B>.\nCLOAK-tech device status: <B>OFFLINE</B>.</span>")
 					cancel_stealth()//Shutdowns stealth.
 				if(4)
-					to_chat(U, "<span class='notice'>Disconnecting neural-net interface...</span>\green<B>Success</B><span class='notice'>.</span>")
+					to_chat(U, "<span class='notice'>Disconnecting neural-net interface...</span><font color='green'><B>Success</B></font><span class='notice'>.</span>")
 				if(5)
-					to_chat(U, "<span class='notice'>Disengaging neural-net interface...</span>\green<B>Success</B><span class='notice'>.</span>")
+					to_chat(U, "<span class='notice'>Disengaging neural-net interface...</span><font color='green'><B>Success</B></font><span class='notice'>.</span>")
 				if(6)
 					to_chat(U, "<span class='notice'>Unsecuring external locking mechanism...\nNeural-net abolished.\nOperation status: <B>FINISHED</B>.</span>")
 					remove_equip_verbs()

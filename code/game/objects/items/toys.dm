@@ -246,12 +246,12 @@
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if (src.bullets < 1)
-			user.show_message("\red *click* *click*", 2)
+			user.show_message("<font color='red'>*click* *click*</font>", 2)
 			return
 		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 		src.bullets--
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red <B>[] fires the [src] at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+			O.show_message(text("<font color='red'><B>[] fires the [src] at []!</B></font>", user, target), 1, "<font color='red'>You hear a gunshot</font>", 2)
 
 /obj/item/toy/toyflaregun
 	name = "toy flare gun"
@@ -270,12 +270,12 @@
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if (src.bullets < 1)
-			user.show_message("\red *click* *click*", 2)
+			user.show_message("<font color='red'>*click* *click*</font>", 2)
 			return
 		playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
 		src.bullets--
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red <B>[] fires the [src] at []!</B>", user, target), 1, "\red You hear a gunshot", 2)
+			O.show_message(text("<font color='red'><B>[] fires the [src] at []!</B></font>", user, target), 1, "<font color='red'>You hear a gunshot</font>", 2)
 
 
 /*
@@ -452,7 +452,7 @@
 		s.set_up(3, 1, src)
 		s.start()
 		new /obj/effect/decal/cleanable/ash(src.loc)
-		src.visible_message("\red The [src.name] explodes!","\red You hear a snap!")
+		src.visible_message("<font color='red'>The [src.name] explodes!</font>","<font color='red'>You hear a snap!</font>")
 		playsound(src, 'sound/effects/snap.ogg', 50, 1)
 		qdel(src)
 
@@ -523,7 +523,7 @@
 	return list(pick(messages))
 
 /obj/item/toy/talking/proc/toy_talk(mob/user, message)
-	user.loc.visible_message("<span class='[span]'>\icon[src] [message]</span>")
+	user.loc.visible_message("<span class='[span]'>[icon2html(src, user)] [message]</span>")
 	if(chattering)
 		chatter(message, phomeme, user)
 
@@ -1249,7 +1249,7 @@
 		user.visible_message("<span class='notice'>[user] pulls back the string on [src].</span>")
 		icon_state = "[initial(icon_state)]_used"
 		sleep(5)
-		audible_message("<span class='danger'>\icon[src] Hiss!</span>")
+		audible_message("<span class='danger'>[icon2html(src, viewers(src))] Hiss!</span>")
 		var/list/possible_sounds = list('sound/voice/hiss1.ogg', 'sound/voice/hiss2.ogg', 'sound/voice/hiss3.ogg', 'sound/voice/hiss4.ogg')
 		var/chosen_sound = pick(possible_sounds)
 		playsound(get_turf(src), chosen_sound, 50, 1)
