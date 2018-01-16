@@ -12,7 +12,7 @@
 	var/escapeTime = 200 //20 seconds to wiggle out of it
 	var/strapTime = 150 // 15 seconds to strap someone in properly. This is an instakill after all!
 	layer = 4.5
-	var/upgraded = 0
+	var/upgraded = FALSE
 	var/target_mode = "head"
 
 /obj/structure/guillotine/user_buckle_mob(mob/living/M, mob/user)
@@ -41,6 +41,7 @@
 			to_chat(user, "You haphazardly wind [I] around [src], increasing its revolutions per minute as well as the time that it will take to free someone from it.")
 			desc += "-it seems to have some cables woven around the stocks. It'll take extra time to escape from it."
 			escapeTime += 30
+			upgraded = TRUE
 			return 1
 	if(istype(I, /obj/item/weapon/screwdriver))
 		switch(target_mode)
