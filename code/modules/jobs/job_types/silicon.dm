@@ -40,4 +40,3 @@ Cyborg
 /datum/job/cyborg/equip(mob/living/carbon/human/H)
 	if(!H)
 		return 0
-	return H.Robotize()
