@@ -392,6 +392,17 @@ var/datum/subsystem/ticker/ticker
 						var/obj/screen/splash/S = new(living.client, TRUE)
 						S.Fade(TRUE)
 					livings += living
+			else if(player.mind.assigned_role=="Cyborg")
+				var/mob/living/carbon/human/living = player.create_character()
+				if(living)
+					qdel(player)
+					var/mob/twat = living.Robotize()
+					twat.notransform = TRUE
+					SSjob.EquipRank(twat, "Cyborg")
+					if(twat.client)
+						var/obj/screen/splash/S = new(twat.client, TRUE)
+						S.Fade(TRUE)
+					livings += twat
 			else
 				var/mob/living = player.create_character()
 				if(living)
