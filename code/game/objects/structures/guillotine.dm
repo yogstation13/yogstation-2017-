@@ -128,6 +128,10 @@
 					S.color = "#[L.dna.features["mcolor"]]"
 					S.markings = "[L.dna.features["tail_lizard"]]"
 					L.update_body()
+					var/obj/item/bodypart/B = L.get_bodypart("l_leg")
+					var/obj/item/bodypart/C = L.get_bodypart("r_leg")
+					B.dismember()
+					C.dismember()
 					return 1
 			else
 				src.visible_message("The blade slides past [restrained_mob], whizzing past their non-existent [target_mode]!.")
