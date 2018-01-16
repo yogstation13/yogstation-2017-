@@ -95,12 +95,17 @@
 		return 0
 
 /obj/structure/guillotine/AltClick(mob/living/user)
-	if(user == restrained_mob)
-		to_chat(user, "You knock the guillotine with your hand, causing its blade to fall")
-		Kill()
+	if(restrained_mob)
+		if(user == restrained_mob)
+			to_chat(user, "You knock the guillotine with your hand, causing its blade to fall")
+			Kill()
+		else
+			to_chat(user, "You knock [src], causing its blade to fall down on [restrained_mob]!")
+			Kill()
 	else
-		to_chat(user, "You knock [src], causing its blade to fall down on [restrained_mob]!")
-		Kill()
+		to_chat(user, "Put your victim in first")
+
+
 /obj/structure/guillotine/proc/Kill(mob/living/user)
 	if(restrained_mob)
 		icon_state = initial(icon_state)
