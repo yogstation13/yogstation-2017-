@@ -71,6 +71,9 @@
 	return 0
 
 /obj/item/weapon/melee/energy/attack_self(mob/living/carbon/user)
+	activate(user)
+
+/obj/item/weapon/melee/energy/proc/activate(mob/living/carbon/user)
 	if(clumsy_check && (user.disabilities & CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_organ_damage(5,5)
@@ -82,13 +85,11 @@
 		throw_speed = 4
 		if(attack_verb_on.len)
 			attack_verb = attack_verb_on
-		if(!item_color)
-			icon_state = icon_state_on
-		else
-			icon_state = "sword[item_color]"
 		w_class = w_class_on
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1) //changed it from 50% volume to 35% because deafness
+		setIcon()
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
+
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
@@ -96,12 +97,23 @@
 		throw_speed = initial(throw_speed)
 		if(attack_verb_on.len)
 			attack_verb = list()
-		icon_state = initial(icon_state)
+		setIcon()
 		w_class = initial(w_class)
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)  //changed it from 50% volume to 35% because deafness
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	add_fingerprint(user)
+	user.update_inv_l_hand()
+	user.update_inv_r_hand()
 	return
+
+/obj/item/weapon/melee/energy/proc/setIcon()
+	if(active)
+		if(!item_color)
+			icon_state = icon_state_on
+		else
+			icon_state = "sword[item_color]"
+	else
+		icon_state = initial(icon_state)
 
 /obj/item/weapon/melee/energy/is_hot()
 	return active * heat
@@ -226,3 +238,66 @@
 
 /obj/item/weapon/melee/energy/blade/attack_self(mob/user)
 	return
+
+/obj/item/weapon/melee/energy/sword/bikehorn
+	name = ""
+	desc = "An energy blade extends from the bikehorn. Where's your god now?"
+	var/canSword = FALSE
+	var/obj/item/device/assembly/bikehorn/horn = new()
+
+/obj/item/weapon/melee/energy/sword/bikehorn/New()
+	..()
+	name = horn.name
+	icon_state = horn.icon_state
+	icon = horn.icon
+	horn.forceMove(src)
+
+/obj/item/weapon/melee/energy/sword/bikehorn/examine(mob/user)
+	if(!active)
+		horn.examine(user)
+	else
+		..()
+
+/obj/item/weapon/melee/energy/sword/bikehorn/attack_self(mob/living/carbon/L)
+	if(canSword)
+		activate(L)
+		playsound(loc, 'sound/items/bikehorn.ogg', 80, 1)
+	else
+		horn.attack_self(L)
+
+
+/obj/item/weapon/melee/energy/sword/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(!active)
+		horn.attack(M,user)
+	else
+		playsound(loc, 'sound/items/bikehorn.ogg', 80, 1)
+		..()
+
+
+/obj/item/weapon/melee/energy/sword/bikehorn/Crossed(mob/living/L)
+	if(!active)
+		horn.Crossed(L)
+	else
+		..()
+
+/obj/item/weapon/melee/energy/sword/bikehorn/setIcon()
+	if(active)
+		item_state = "swordpink"
+		icon = 'icons/obj/weapons.dmi'
+		icon_state = "ehonk"
+	else
+		item_state = horn.item_state
+		icon = horn.icon
+		icon_state = horn.icon_state
+
+
+
+/obj/item/weapon/melee/energy/sword/bikehorn/AltClick(mob/living/carbon/L)
+	if(L.mind.special_role)
+		canSword = !canSword
+		if(canSword)
+			to_chat(L,"<span class='notice'>You squeeze the [name]. Honking it will now extend an esword.</span>")
+		else
+			to_chat(L,"<span class='notice'>You squeeze the [name]. It functions like a normal bikehorn again.</span>")
+		if(active)
+			activate(L)

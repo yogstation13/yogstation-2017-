@@ -155,7 +155,31 @@
 	new /obj/item/weapon/book/manual/research_and_development(src)
 	update_icon()
 
+/obj/structure/bookcase/manuals/rpg
+	name = "role-playing manuals bookcase"
 
+/obj/structure/bookcase/manuals/rpg/New()
+	..()
+	new /obj/item/weapon/book/manual/rpg(src)
+	new /obj/item/weapon/book/manual/rpg/packs(src)
+	new /obj/item/weapon/book/manual/rpg/guide(src)
+	new /obj/item/weapon/book/manual/rpg/spells(src)
+	new /obj/item/weapon/book/manual/rpg/equipment(src)
+	update_icon()
+	
+/obj/structure/bookcase/manuals/rpg/dwarf
+	name = "role-playing manuals bookcase"
+ 
+/obj/structure/bookcase/manuals/rpg/dwarf/New()
+	..()
+	new /obj/item/weapon/book/manual/rpg(src)
+	new /obj/item/weapon/book/manual/rpg/packs(src)
+	new /obj/item/weapon/book/manual/rpg/guide(src)
+	new /obj/item/weapon/book/manual/rpg/spells(src)
+	new /obj/item/weapon/book/manual/rpg/equipment(src)
+	new /obj/item/weapon/storage/book/dwarfism(src)
+	update_icon()
+	
 /*
  * Book
  */

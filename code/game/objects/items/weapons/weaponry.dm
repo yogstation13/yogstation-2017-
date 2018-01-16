@@ -21,6 +21,15 @@
 	to_chat(user, "<font color='red'>You have <b>BANNED</b> [M]</font>")
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
 
+/obj/item/weapon/banhammer/pummel
+	name = "pummelhammer"
+	desc = "An ancient warhammer infused with enough power to blow someone back to the stone age."
+	force = 10
+
+/obj/item/weapon/banhammer/pummel/attack(mob/living/L, mob/user)
+	L.pummel(user,force)
+	playsound(loc, 'sound/effects/adminhelp.ogg', 15*force)
+
 /obj/item/weapon/sord
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."

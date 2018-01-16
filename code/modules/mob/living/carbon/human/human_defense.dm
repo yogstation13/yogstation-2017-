@@ -273,6 +273,7 @@
 				hair_style = "Bald"
 				update_hair()
 				status_flags |= DISFIGURED
+				update_face_dependant_huds()
 
 		update_damage_overlays()
 
