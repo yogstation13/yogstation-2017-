@@ -13,7 +13,7 @@ body {
 	background: #fff;
     font-family: Verdana, sans-serif;
     font-size: 9pt;
-    line-height: 1.4;
+    line-height: 1.2;
 	overflow-x: hidden;
 	overflow-y: scroll;
 	word-wrap: break-word;
@@ -37,6 +37,20 @@ img.icon {
 	width: auto;
 	vertical-align: bottom;
 }
+
+
+.r:before { /* "repeated" badge class for combined messages */
+	content: 'x';
+}
+.r {
+		display: inline;
+		padding: .2em .6em .3em;
+		font-size: 75%;
+		font-weight: 700;
+		line-height: 1;
+		color: #f00;
+}
+
 
 a {color: #0000ff;}
 a.visited {color: #ff00ff;}

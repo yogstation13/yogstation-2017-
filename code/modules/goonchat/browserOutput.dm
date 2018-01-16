@@ -231,7 +231,7 @@ var/global/savefile/iconCache = new("data/iconCache.sav") //Cache of icons for t
 	message = replacetext(message, "\n", "<br>")
 	message = replacetext(message, "\t", "[TAB][TAB]")
 
-	message = utf8_sanitize(message, target, MAX_MESSAGE_LEN)
+	message = to_utf8(message, target)
 
 	for(var/I in targets)
 		//Grab us a client if possible
