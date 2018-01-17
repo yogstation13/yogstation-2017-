@@ -134,7 +134,7 @@
 	toner = tonermax
 	diag_hud_set_borgcell()
 	sleep(30)
-		playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
+	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
