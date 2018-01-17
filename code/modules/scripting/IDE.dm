@@ -198,7 +198,6 @@
 				var/obj/machinery/telecomms/server/Server = Machine.SelectedServer
 				Server.memory = list() // clear the memory
 				// Show results
-				//// Write shitty code comments
 				src << output(null, "tcserror")
 				src << output("<font color = blue>Server memory cleared!</font color>", "tcserror")
 				for(var/mob/M in Machine.viewingcode)
