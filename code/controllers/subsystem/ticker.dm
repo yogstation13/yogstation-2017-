@@ -396,9 +396,8 @@ var/datum/subsystem/ticker/ticker
 				var/mob/living/carbon/human/living = player.create_character()
 				if(living)
 					qdel(player)
-					var/mob/twat = living.Robotize()
+					var/mob/twat = living.Robotize(FALSE, TRUE) //borgs then teleports to upload access
 					twat.notransform = TRUE
-					SSjob.EquipRank(twat, "Cyborg")
 					if(twat.client)
 						var/obj/screen/splash/S = new(twat.client, TRUE)
 						S.Fade(TRUE)
