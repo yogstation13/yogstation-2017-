@@ -53,7 +53,7 @@
 #define ADMIN_CENTCOM_REPLY(user) "(<a href='?_src_=holder;CentComReply=\ref[user]'>RPLY</a>)"
 #define ADMIN_SYNDICATE_REPLY(user) "(<a href='?_src_=holder;SyndicateReply=\ref[user]'>RPLY</a>)"
 #define ADMIN_SC(user) "(<a href='?_src_=holder;ref[user]'>SC</a>)"
-#define ADMIN_SMITE(user) "(<a href='?_src_=holder;adminsmite=\ref[user]'>SMITE</a>)"
+#define ADMIN_SMITE(user) "(<a href='?_src_=holder;BlueSpaceArtillery=\ref[user]'>BSA</a>)"
 #define ADMIN_LOOKUP(user) "[key_name_admin(user)][ADMIN_QUE(user)]"
 #define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)]"
 #define ADMIN_SET_SD_CODE "(<a href='?_src_=holder;set_selfdestruct_code=1'>SETCODE</a>)"
