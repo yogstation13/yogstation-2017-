@@ -56,7 +56,7 @@
 	The scanner's position in the source code.
 */
 		codepos				 = 1
-		line					 = 1
+		line				 = 1
 		linepos 			 = 0 										 //column=codepos-linepos
 		n_scriptOptions/nS_Options/options
 
@@ -114,10 +114,9 @@
 	Scan() //Creates a list of tokens from source code
 		var/list/tokens=new
 		for(, src.codepos<=lentext(code), src.codepos++)
-
-			var/char=copytext(code, codepos, codepos+1)
-			var/twochar=copytext(code, codepos+1, codepos+2) // For finding comment syntax
-			if(char=="\n")
+			var/char = copytext(code, codepos, codepos + 1)
+			var/twochar = copytext(code, codepos, codepos + 2) // For finding comment syntax
+			if(char == "\n")
 				line++
 				linepos=codepos
 
@@ -246,23 +245,25 @@
 
 	Parameters:
 		isshort - a variable that stores how this comment started
-			i.e., if it was a // or a /*
+			i.e., if it was a // or a / *
 */
 
 		ReadComment(isshort)
 			// Remember that we still have that $codepos pointer variable to use.
+			codepos += 2 // Eat the current comment start
+
 			if(isshort) // If line comment
-				++codepos // To skip over the second slash
-				while(++codepos>lentext(code))
-					if(copytext(code, codepos, codepos+1) == "\n") // then stop on the newline
+				while(++codepos <= lentext(code))
+					if(copytext(code, codepos, codepos + 1) == "\n") // then stop on the newline
 						break
-			else
+			else		// If long comment
 				var/noend = TRUE
-				++codepos // To prevent /*/ from being valid syntax
-				while(++codepos>lentext(code)) // If long comment
-					if(copytext(code, codepos, codepos+2) == "*/") // then stop on any */ 's'
+				while(++codepos <= lentext(code))
+					if(copytext(code, codepos, codepos + 2) == "*/") // then stop on any */ 's'
+						codepos += 2 // Eat the comment end
 						noend = FALSE
 						break
+
 				if(noend) // If the comment wasn't completed
-					errors+=new/scriptError/UnterminatedComment()
+					errors += new/scriptError/UnterminatedComment()
 
