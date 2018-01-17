@@ -990,6 +990,7 @@ $(function() {
 	$('#toggleCombine').click(function(e) {
 		opts.messageCombining = !opts.messageCombining;
 		setCookie('messagecombining', (opts.messageCombining ? 'true' : 'false'), 365);
+		internalOutput('<span class="internal boldnshit">Message combining has been ' + (opts.messageCombining ? 'enabled' : 'disabled') + '</span>', 'internal');
 	});
 
 	$('img.icon').error(iconError);
