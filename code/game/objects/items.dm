@@ -458,7 +458,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 			A.Grant(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(anthrax_laced && ((slot != slot_l_hand && slot != slot_r_hand) || (!H.gloves || istype(H.gloves, /obj/item/clothing/gloves/fingerless))))
+		if(anthrax_laced && ((slot != slot_l_hand && slot != slot_r_hand && (slot == slot_head || slot == slot_wear_mask || slot == slot_w_uniform || slot == slot_gloves || slot == slot_shoes)) || (!H.gloves || istype(H.gloves, /obj/item/clothing/gloves/fingerless))))
 			H.ForceContractDisease(new /datum/disease/anthrax)
 			H.attack_log += "\[[time_stamp()]\] <font color='red'>Has been infected by anthrax by touching <a href='?_src_=vars;Vars=\ref[src]'>[src]</a>.</font>"
 			log_attack("[H]/[H.ckey] has been infected by anthrax by touching [src].")
