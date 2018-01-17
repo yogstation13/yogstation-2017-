@@ -318,7 +318,7 @@
 
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(delete_items = FALSE, teleport = TRUE)
+/mob/living/carbon/human/proc/Robotize(delete_items = FALSE, teleport = FALSE)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
