@@ -281,7 +281,7 @@
 
 		if(newnet && canAccess(usr))
 			if(length(newnet) > 15)
-				temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LONG -</font color>"
+				temp = "<font color = #D70B00>- FAILED: NETWORK TAG STRING TOO LENGHTLY -</font color>"
 
 			else
 
