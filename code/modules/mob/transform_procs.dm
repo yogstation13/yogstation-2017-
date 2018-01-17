@@ -105,7 +105,7 @@
 			loc.vars[A] = O
 
 	transfer_observers_to(O)
-	
+
 	. = O
 
 	qdel(src)
@@ -314,11 +314,11 @@
 	O.rename_self("ai")
 	. = O
 	qdel(src)
-	return
+	return O
 
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(delete_items = 0)
+/mob/living/carbon/human/proc/Robotize(delete_items = FALSE, teleport = FALSE)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -327,8 +327,8 @@
 		else
 			unEquip(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
+	canmove = FALSE
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -364,7 +364,14 @@
 			R.mmi.brainmob.real_name = real_name //the name of the brain inside the cyborg is the robotized human's name.
 			R.mmi.brainmob.name = real_name
 
-	R.loc = loc
+	if(teleport)
+		for(var/obj/effect/landmark/start/sloc in start_landmarks_list)
+			if(sloc.name != "Cyborg")
+				continue
+			R.loc = sloc.loc
+			break
+	else
+		R.loc = loc
 	R.job = "Cyborg"
 	R.notify_ai(1)
 

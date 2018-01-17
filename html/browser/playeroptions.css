@@ -1,13 +1,11 @@
 .jobs
 {
-	width: 400px;
 	margin: 0 auto;
 }
 
 .jobsColumn
 {
-	float: left;
-	width: 200px;
+	display: inline-block;
 	text-align: center;
 }
 
@@ -18,5 +16,5 @@
 
 .otherPosition
 {
-	
+
 }

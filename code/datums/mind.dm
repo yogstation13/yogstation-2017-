@@ -967,7 +967,8 @@
 					ticker.mode.update_rev_icons_removed(src)
 					to_chat(current, "<span class='userdanger'>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</span>")
 				else if(!(src in ticker.mode.revolutionaries))
-					to_chat(current, "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
+					to_chat(current, "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. Help them kill the heads to win the revolution!</FONT></span>")
+					ticker.mode.explain_rev_hud(current)
 				else
 					return
 				ticker.mode.revolutionaries += src
@@ -980,9 +981,10 @@
 				if(src in ticker.mode.revolutionaries)
 					ticker.mode.revolutionaries -= src
 					ticker.mode.update_rev_icons_removed(src)
-					to_chat(current, "<span class='userdanger'>You have proved your devotion to revoltion! Yea are a head revolutionary now!</span>")
+					to_chat(current, "<span class='userdanger'>You have proved your devotion to revoltion! You are a head revolutionary now!</span>")
 				else if(!(src in ticker.mode.head_revolutionaries))
 					to_chat(current, "<span class='userdanger'>You are a member of the revolutionaries' leadership now!</span>")
+					ticker.mode.explain_rev_hud(current)
 				else
 					return
 				if (ticker.mode.head_revolutionaries.len>0)
