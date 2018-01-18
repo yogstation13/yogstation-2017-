@@ -528,7 +528,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		if(STATE_PURCHASE)
 			dat += "Budget: [SSshuttle.points] Credits.<BR>"
 			for(var/shuttle_id in SSmapping.shuttle_templates)
-				var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+				var/datum/map_template/shuttle/S = SSmapping.shuttle_templates[shuttle_id]
 				if(!emagged && S.emag_buy)
 					continue
 				if(S.credit_cost < INFINITY)
