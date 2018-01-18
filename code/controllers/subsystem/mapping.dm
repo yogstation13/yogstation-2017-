@@ -34,10 +34,11 @@ var/datum/subsystem/mapping/SSmapping
 /datum/subsystem/mapping/Initialize(timeofday)
 	if(config.defaulted)
 		to_chat(world, "<span class='boldannounce'>Unable to load next map config, defaulting to Box Station</span>")
+	preloadTemplates()
 	loadWorld()
 	SortAreas()
 	process_teleport_locs()
-	preloadTemplates()
+	
 	// Pick a random away mission.
 	createRandomZlevel()
 	// Generate mining.
@@ -108,7 +109,7 @@ var/datum/subsystem/mapping/SSmapping
 	INIT_ANNOUNCE("Loaded station!")
 
 	INIT_ANNOUNCE("Loading mining level...")
-	TryLoadZ("_maps/map_files/generic/[config.minetype].dmm", FailedZs, ZLEVEL_MINING)
+	TryLoadZ("_maps/map_files/generic/[config.minetype].dmm", FailedZs, ZLEVEL_MINING, TRUE)
 	INIT_ANNOUNCE("Loaded mining level!")
 
 	for(var/I in (ZLEVEL_MINING + 1) to ZLEVEL_SPACEMAX)
@@ -194,14 +195,15 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping/proc/preloadRuinTemplates()
 	// Still supporting bans by filename
-	var/list/banned = generateMapList("config/lavaruinblacklist.txt")
-	banned += generateMapList("config/spaceruinblacklist.txt")
+	var/list/banned = generateMapList("config/lavaRuinBlacklist.txt")
+	banned += generateMapList("config/spaceRuinBlacklist.txt")
 
 	for(var/item in subtypesof(/datum/map_template/ruin))
 		var/datum/map_template/ruin/ruin_type = item
 		// screen out the abstract subtypes
-		if(!initial(ruin_type.id))
+		if(!(initial(ruin_type.id)))
 			continue
+
 		var/datum/map_template/ruin/R = new ruin_type()
 
 		if(banned.Find(R.mappath))
