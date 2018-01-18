@@ -35483,6 +35483,14 @@
 	c_tag = "Robotics Lab";
 	dir = 4
 	},
+/obj/item/stack/sheet/metal{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50;
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel,
 /area/assembly/robotics)
 "btt" = (
@@ -54328,14 +54336,6 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50;
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/open/floor/plasteel,
 /area/toxins/misc_lab)
 "ccR" = (
@@ -54345,7 +54345,6 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 8
 	},
-/obj/machinery/droneDispenser,
 /turf/open/floor/plasteel,
 /area/toxins/misc_lab)
 "ccS" = (

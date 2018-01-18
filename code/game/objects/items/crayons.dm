@@ -223,7 +223,7 @@
 			out += a
 	return jointext(out,"")
 
-/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity)
+/obj/item/toy/crayon/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity || !check_allowed_items(target))
 		return
 
@@ -279,6 +279,15 @@
 			else
 				graf_rot = 0
 
+
+	var/list/click_params = params2list(params)
+	var/clickx
+	var/clicky
+
+	if(click_params && click_params["icon-x"] && click_params["icon-y"])
+		clickx = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
+		clicky = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+
 	to_chat(user, "<span class='notice'>You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name]...</span>")
 
 	if(pre_noise)
@@ -305,6 +314,8 @@
 		else
 			var/obj/effect/decal/cleanable/Q = new /obj/effect/decal/cleanable/crayon(target, paint_color,
 				drawing, temp, graf_rot)
+			Q.pixel_x = clickx
+			Q.pixel_y = clicky
 			Q.placedby = user.ckey
 
 	to_chat(user, "<span class='notice'>You finish [instant ? "spraying" : "drawing"] \the [temp].</span>")

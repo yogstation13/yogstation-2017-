@@ -266,10 +266,7 @@ var/last_irc_status = 0
 			log << "#[count]\t[index]"
 #endif
 	spawn(0)
-		if(ticker && ticker.round_end_sound)
-			world << sound(ticker.round_end_sound)
-		else
-			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
+		RoundEndAnimation()
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
@@ -477,5 +474,18 @@ var/failed_db_connections = 0
 		return setup_database_connection()
 	else
 		return 1
+
+/world/proc/RoundEndAnimation()
+	set waitfor = FALSE
+
+	var/titlescreen = TITLESCREEN
+	if(!titlescreen)
+		titlescreen = "title"
+
+	for(var/thing in clients)
+		var/obj/screen/splash/S = new(thing, FALSE)
+		S.Fade(FALSE,FALSE)
+
+	world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg'))
 
 #undef FAILED_DB_CONNECTION_CUTOFF

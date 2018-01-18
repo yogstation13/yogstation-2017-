@@ -51,7 +51,11 @@
 		"TURBIN IS BEST ENGIENE",
 		"SOLIRS CAN POWER THE HOLE STATION ANEWAY",
 		"parasteng was best",
-		"Tajaran has warrrres, if you have coin"
+		"Tajaran has warrrres, if you have coin",
+		"MAEK IT A PWEFEREENCE!!!",
+		"MAKE FART COMM SCRIPT XDXDXDDXXDDD",
+		"X-X-X-ENO E-V-V-ENT P-P-P-LS!!",
+		"ahelp\" how do u maek pasta"
 	],
 
 	"mutations": [
@@ -90,10 +94,11 @@
 	],
 
 	"servers": [
-		"bager",
-		"sybl",
-		"mrs sybil",
-		"mr basil"
+		"Yogastation",
+		"TeeGee",
+		"Tator DEDmach",
+		"hippy",
+		"lifeWeeb"
 	],
 
 	"create_verbs": [
@@ -107,25 +112,31 @@
 		"ayleins",
 		"treaitors",
 		"sheadow lings",
-		"abdoocters"
+		"abdoocters",
+		"vampyr",
+		"Cibermans",
+		"Cultics"
 	]
-	
+
 	"CODEBASE": [
 		"YOGS",
 		"TEE GEE",
 		"GOON",
 		"VORE",
 		"FALLOUT 13",
-		"BAY"
+		"BAY",
+		"LIFEWEB",
+		"FTL 13",
+		"OLD YOGS"
 	]
-	
+
 	"rp_level": [
 		"low rp",
 		"high rp",
 		"med rp",
 		"no rp",
 	]
-	
+
 	"DEPARTMENT": [
 		"BOTANY",
 		"TRAITOR",
@@ -140,7 +151,7 @@
 		"SILICONS",
 		"BLOB"
 	]
-	
+
 	"salt": [
 		"ReBase TO @pick(CODEBASE)",
 		"REVIRT TO OLD @pick(CODEBASE)",

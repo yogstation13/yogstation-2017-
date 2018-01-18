@@ -72,6 +72,9 @@
 	speed = 0
 	boost = world.time + 20
 
+/mob/living/simple_animal/slaughter/bloodpool_sink(obj/effect/decal/cleanable/B)
+	if(boost<world.time) //Wait till the boost has ended before re-entering a period
+		..()
 
 //The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
 /obj/item/organ/heart/demon
@@ -170,7 +173,6 @@
 /mob/living/simple_animal/slaughter/laughter/proc/release_friends()
 	if(!consumed_mobs)
 		return
-
 	for(var/mob/living/M in consumed_mobs)
 		if(!M)
 			continue

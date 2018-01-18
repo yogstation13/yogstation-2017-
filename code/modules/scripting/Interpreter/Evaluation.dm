@@ -112,55 +112,39 @@
 		BitwiseXor(a, b)		return a^b
 		//Arithmetic Operators
 		Add(a, b)
-			if(istext(a)&&!istext(b)) 		 b="[b]"
-			else if(istext(b)&&!istext(a)) a="[a]"
-			if(isobject(a) && !isobject(b))
-				RaiseError(new/runtimeError/TypeMismatch("+", a, b))
-				return null
-			else if(isobject(b) && !isobject(a))
+			//if(istext(a)&&!istext(b)) 		 b="[b]" //Unnecessary; DM does this by default.
+			if(istext(b)&&!istext(a)) a="[a]"
+			if(!isobject(a) || !isobject(b))
 				RaiseError(new/runtimeError/TypeMismatch("+", a, b))
 				return null
 			return a+b
 		Subtract(a, b)
-			if(isobject(a) && !isobject(b))
-				RaiseError(new/runtimeError/TypeMismatch("-", a, b))
-				return null
-			else if(isobject(b) && !isobject(a))
+			if(!isobject(a) || !isobject(b))
 				RaiseError(new/runtimeError/TypeMismatch("-", a, b))
 				return null
 			return a-b
 		Divide(a, b)
-			if(isobject(a) && !isobject(b))
+			if(!isobject(a) || !isobject(b))
 				RaiseError(new/runtimeError/TypeMismatch("/", a, b))
 				return null
-			else if(isobject(b) && !isobject(a))
-				RaiseError(new/runtimeError/TypeMismatch("/", a, b))
-				return null
-			if(b==0 || b==null)
-				RaiseError(new/runtimeError/DivisionByZero())
-				return null
-			return a/b
+			if(b) 
+				return a/b
+			// If $b is 0 or Null or whatever, then we got a divison by zero.
+			RaiseError(new/runtimeError/DivisionByZero())
+			//ReleaseSingularity()
+			return null
 		Multiply(a, b)
-			if(isobject(a) && !isobject(b))
-				RaiseError(new/runtimeError/TypeMismatch("*", a, b))
-				return null
-			else if(isobject(b) && !isobject(a))
+			if(!isobject(a) || !isobject(b))
 				RaiseError(new/runtimeError/TypeMismatch("*", a, b))
 				return null
 			return a*b
 		Modulo(a, b)
-			if(isobject(a) && !isobject(b))
-				RaiseError(new/runtimeError/TypeMismatch("%", a, b))
-				return null
-			else if(isobject(b) && !isobject(a))
+			if(!isobject(a) || !isobject(b))
 				RaiseError(new/runtimeError/TypeMismatch("%", a, b))
 				return null
 			return a%b
 		Power(a, b)
-			if(isobject(a) && !isobject(b))
-				RaiseError(new/runtimeError/TypeMismatch("**", a, b))
-				return null
-			else if(isobject(b) && !isobject(a))
+			if(!isobject(a) || !isobject(b))
 				RaiseError(new/runtimeError/TypeMismatch("**", a, b))
 				return null
 			return a**b
