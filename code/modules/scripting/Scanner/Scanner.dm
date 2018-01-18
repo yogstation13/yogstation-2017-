@@ -247,16 +247,18 @@
 
 			if(copytext(code, codepos, codepos+2) == "//") // If line comment
 				++codepos // Eat the current comment start, halfway
-				while(++codepos < longeur) // Second half of the eating, on the first eval
+				while(++codepos <= longeur) // Second half of the eating, on the first eval
 					if(copytext(code, codepos, codepos+1) == "\n") // then stop on the newline
-						//Can't eat the newline,
-						//  since it's used to count linenumbers in the main Scan() proc
+						line++
+						linepos=codepos
 						return
 			else // If long comment
 				++codepos // Eat the current comment start, halfway
-				while(++codepos < longeur) // Ditto, on the first eval
+				while(++codepos <= longeur) // Ditto, on the first eval
 					if(copytext(code, codepos, codepos+2) == "*/") // then stop on any */ 's'
-						codepos += 2 // Eat the comment end
+						++codepos // Eat the comment end
+						//but not all of it, because the for-loop this is in
+						//will increment it again later.
 						return
 					else if(copytext(code, codepos, codepos+1)=="\n") // We still have to count line numbers!
 						line++
