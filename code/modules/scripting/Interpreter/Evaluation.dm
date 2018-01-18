@@ -1,3 +1,4 @@
+
 /proc/isobject(x)
 	return (istype(x, /datum) || istype(x, /list) || istype(x, /savefile) || istype(x, /client) || (x==world))
 
@@ -25,7 +26,7 @@
 					else
 						D=v.object
 					D=Eval(D)
-					if(!isobject(D))
+					if(isnull(D))
 						return null
 					if(!D.vars.Find(v.id.id_name))
 						RaiseError(new/runtimeError/UndefinedVariable("[v.object.ToString()].[v.id.id_name]"))
@@ -112,39 +113,42 @@
 		BitwiseXor(a, b)		return a^b
 		//Arithmetic Operators
 		Add(a, b)
-			//if(istext(a)&&!istext(b)) 		 b="[b]" //Unnecessary; DM does this by default.
-			if(istext(b)&&!istext(a)) a="[a]"
-			if(!isobject(a) || !isobject(b))
+			if(istext(a)&&!istext(b))
+				b="[b]"
+			else if(istext(b)&&!istext(a))
+				a="[a]"
+			if(isnull(a) || isnull(b))
 				RaiseError(new/runtimeError/TypeMismatch("+", a, b))
 				return null
 			return a+b
 		Subtract(a, b)
-			if(!isobject(a) || !isobject(b))
+			if(isnull(a) || isnull(b))
 				RaiseError(new/runtimeError/TypeMismatch("-", a, b))
 				return null
 			return a-b
 		Divide(a, b)
-			if(!isobject(a) || !isobject(b))
+			if(isnull(a) || isnull(b))
 				RaiseError(new/runtimeError/TypeMismatch("/", a, b))
 				return null
-			if(b) 
+			if(b)
 				return a/b
-			// If $b is 0 or Null or whatever, then we got a divison by zero.
+			// If $b is 0 or Null or whatever, then the above if statement fails,
+			// and we got a divison by zero.
 			RaiseError(new/runtimeError/DivisionByZero())
 			//ReleaseSingularity()
 			return null
 		Multiply(a, b)
-			if(!isobject(a) || !isobject(b))
+			if(isnull(a) || isnull(b))
 				RaiseError(new/runtimeError/TypeMismatch("*", a, b))
 				return null
 			return a*b
 		Modulo(a, b)
-			if(!isobject(a) || !isobject(b))
+			if(isnull(a) || isnull(b))
 				RaiseError(new/runtimeError/TypeMismatch("%", a, b))
 				return null
 			return a%b
 		Power(a, b)
-			if(!isobject(a) || !isobject(b))
+			if(isnull(a) || isnull(b))
 				RaiseError(new/runtimeError/TypeMismatch("**", a, b))
 				return null
 			return a**b
