@@ -8,6 +8,17 @@ var/datum/subsystem/mapping/SSmapping
 	var/datum/map_config/previous_map_config
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
+	
+	//List of preloaded templates
+	var/list/datum/map_template/map_templates = list()
+	
+	var/list/datum/map_template/ruins_templates = list()
+	var/list/datum/map_template/space_ruins_templates = list()
+	var/list/datum/map_template/lava_ruins_templates = list()
+	var/list/datum/map_template/maint_room_templates = list()
+	
+	var/list/datum/map_template/shuttle_templates = list()
+	var/list/datum/map_template/shelter_templates = list()
 
 /datum/subsystem/mapping/New()
 	NEW_SS_GLOBAL(SSmapping)
@@ -62,6 +73,12 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
+	map_templates = SSmapping.map_templates
+	ruins_templates = SSmapping.ruins_templates
+	space_ruins_templates = SSmapping.space_ruins_templates
+	lava_ruins_templates = SSmapping.lava_ruins_templates
+	shuttle_templates = SSmapping.shuttle_templates
+	shelter_templates = SSmapping.shelter_templates
 
 /datum/subsystem/mapping/proc/TryLoadZ(filename, errorList, forceLevel, last)
 	var/static/dmm_suite/loader
@@ -91,7 +108,7 @@ var/datum/subsystem/mapping/SSmapping
 	INIT_ANNOUNCE("Loaded station!")
 
 	INIT_ANNOUNCE("Loading mining level...")
-	TryLoadZ("_maps/map_files/generic/[config.minetype].dmm", FailedZs, ZLEVEL_MINING, TRUE)
+	TryLoadZ("_maps/map_files/generic/[config.minetype].dmm", FailedZs, ZLEVEL_MINING)
 	INIT_ANNOUNCE("Loaded mining level!")
 
 	for(var/I in (ZLEVEL_MINING + 1) to ZLEVEL_SPACEMAX)

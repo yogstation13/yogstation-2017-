@@ -25,8 +25,11 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 /datum/subsystem/icon_smooth/Initialize()
 	smooth_zlevel(1,TRUE)
 	smooth_zlevel(2,TRUE)
+	smooth_zlevel(5,TRUE)
 	for(var/V in smooth_queue)
 		var/atom/A = V
 		if(A.z == 1 || A.z == 2)
 			smooth_queue -= A
+			continue
+		smooth_icon(A)
 	..()
