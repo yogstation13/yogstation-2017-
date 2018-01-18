@@ -55,7 +55,7 @@
 	The scanner's position in the source code.
 */
 		codepos				 = 1
-		line					 = 1
+		line				 = 1
 		linepos 			 = 0 										 //column=codepos-linepos
 		n_scriptOptions/nS_Options/options
 
@@ -109,10 +109,9 @@
 	Scan() //Creates a list of tokens from source code
 		var/list/tokens=new
 		for(, src.codepos<=lentext(code), src.codepos++)
-
-			var/char=copytext(code, codepos, codepos+1)
-			var/twochar=copytext(code, codepos, codepos+2) // For finding comment syntax
-			if(char=="\n")
+			var/char = copytext(code, codepos, codepos + 1)
+			var/twochar = copytext(code, codepos, codepos + 2) // For finding comment syntax
+			if(char == "\n")
 				line++
 				linepos=codepos
 
@@ -240,7 +239,6 @@
 	 since it's just "reading" comments.
 	All it does is just pass var/codepos through the comments until it reaches the end of'em.
 */
-
 		ReadComment()
 			// Remember that we still have that $codepos "pointer" variable to use.
 			var/longeur = lentext(code) // So I don't call for var/code's length every while loop
@@ -265,3 +263,5 @@
 						linepos=codepos
 				//Else if the longcomment didn't end, do an error
 				errors += new/scriptError/UnterminatedComment()
+
+
