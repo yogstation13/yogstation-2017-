@@ -128,7 +128,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 
 	var/datum/objective/absorb/absorb_objective = new
 	absorb_objective.owner = changeling
-	absorb_objective.gen_amount_goal(6, 8)
+	absorb_objective.gen_amount_goal(10)
 	changeling.objectives += absorb_objective
 
 	if(prob(60))
@@ -511,4 +511,3 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CHANGELING]
 	hud.leave_hud(changling_mind.current)
 	set_antag_hud(changling_mind.current, null)
-

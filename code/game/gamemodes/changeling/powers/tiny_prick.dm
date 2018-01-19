@@ -161,6 +161,7 @@
 	target.update_inv_l_hand()
 	target.update_inv_r_hand()
 
+/* EXTRACT DNA STING REMOVED, TO ALLOW AND ENCOURAGE LINGS TO ABSORB INSTEAD
 /obj/effect/proc_holder/changeling/sting/extract_dna
 	name = "Extract DNA Sting"
 	desc = "We stealthily sting a target and extract their DNA."
@@ -187,6 +188,7 @@
 	user.mind.changeling.add_new_profile(target, user, protect)
 	feedback_add_details("changeling_powers","ED")
 	return 1
+*/
 
 /obj/effect/proc_holder/changeling/sting/mute
 	name = "Mute Sting"

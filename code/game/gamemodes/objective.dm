@@ -687,8 +687,7 @@ var/global/list/possible_items_special = list()
 /datum/objective/absorb
 	dangerrating = 10
 
-/datum/objective/absorb/proc/gen_amount_goal(lowbound = 4, highbound = 6)
-	target_amount = rand (lowbound,highbound)
+/datum/objective/absorb/proc/gen_amount_goal(maximum = 10)
 	if (ticker)
 		var/n_p = 1 //autowin
 		if (ticker.current_state == GAME_STATE_SETTING_UP)
@@ -699,7 +698,7 @@ var/global/list/possible_items_special = list()
 			for(var/mob/living/carbon/human/P in player_list)
 				if(P.client && !(P.mind in ticker.mode.changelings) && P.mind!=owner)
 					n_p ++
-		target_amount = min(target_amount, n_p)
+		target_amount = min(10, max(2, round(n_p/5))) //
 
 	explanation_text = "Extract [target_amount] compatible genome\s."
 	return target_amount
@@ -940,6 +939,3 @@ var/global/list/possible_items_special = list()
 /datum/objective/changeling_team_objective/impersonate_department/impersonate_heads
 	explanation_text = "Have X or more heads of staff escape on the shuttle disguised as heads, while the real heads are dead"
 	command_staff_only = TRUE
-
-
-
