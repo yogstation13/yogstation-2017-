@@ -127,10 +127,7 @@
 	if(!chosen_name)
 		return
 
-	if(chosen_name == "Drop Flesh Disguise")
-		for(var/slot in slots)
-			if(istype(user.vars[slot], slot2type[slot]))
-				qdel(user.vars[slot])
+
 
 	var/datum/changelingprofile/prof = get_dna(chosen_name)
 	return prof

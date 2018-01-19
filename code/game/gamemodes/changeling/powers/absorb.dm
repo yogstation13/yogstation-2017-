@@ -116,7 +116,8 @@
 //datum/changeling/proc/store_dna(datum/dna/new_dna, mob/user)
 
 
-
+//BELOW IS DISABLED DUE TO COUNCIL VOTE, TOO MUCH GRIEF
+/*
 /obj/effect/proc_holder/changeling/swap_form
 	name = "Swap Forms"
 	desc = "We force ourselves into the body of another form, pushing their consciousness into the form we left behind."
@@ -168,3 +169,4 @@
 
 	user.Paralyse(2)
 	to_chat(target, "<span class='warning'>Our genes cry out as we swap our [user] form for [target].</span>")
+*/
