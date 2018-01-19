@@ -376,21 +376,6 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	prof.undershirt = H.undershirt
 	prof.socks = H.socks
 
-	var/list/slots = list("head", "wear_mask", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
-	for(var/slot in slots)
-		if(slot in H.vars)
-			var/obj/item/I = H.vars[slot]
-			if(!I)
-				continue
-			prof.name_list[slot] = I.name
-			prof.appearance_list[slot] = I.appearance
-			prof.flags_cover_list[slot] = I.flags_cover
-			prof.item_color_list[slot] = I.item_color
-			prof.item_state_list[slot] = I.item_state
-			prof.exists_list[slot] = 1
-		else
-			continue
-
 	return prof
 
 /datum/changeling/proc/add_profile(datum/changelingprofile/prof)
@@ -511,4 +496,3 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/datum/atom_hud/antag/hud = huds[ANTAG_HUD_CHANGELING]
 	hud.leave_hud(changling_mind.current)
 	set_antag_hud(changling_mind.current, null)
-
