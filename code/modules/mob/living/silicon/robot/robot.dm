@@ -130,10 +130,13 @@
 
 	updatename()
 
-	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 	aicamera = new/obj/item/device/camera/siliconcam/robot_camera(src)
 	toner = tonermax
 	diag_hud_set_borgcell()
+	addtimer(src, "playSpawnNoise", 30, FALSE)
+
+/mob/living/silicon/robot/proc/playSpawnNoise()
+	playsound(loc, 'sound/voice/liveagain.ogg', 75, 1)
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 /mob/living/silicon/robot/Destroy()
