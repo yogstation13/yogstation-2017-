@@ -31,7 +31,7 @@ Use your git application of choice to look at the differences between revisions 
 ## 8. Commit
 Your map is now ready to be committed, rejoice and wait for conflicts. 
 
-### Common pitfalls
+# Common pitfalls
 Open the map in dreameditor before committing the results of the mapmerger - this can cause dreameditor to resave the map back to
 dmm, if you're having issues with your map getting stuck in dmm mode, try comitting and pushing the mapmerger changes before 
 reopening in dreameditor.
