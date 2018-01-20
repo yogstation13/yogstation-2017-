@@ -34282,6 +34282,7 @@
 	},
 /obj/item/weapon/hand_labeler,
 /obj/item/stack/packageWrap,
+/obj/item/weapon/book/manual/hop,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads)
 "brp" = (
