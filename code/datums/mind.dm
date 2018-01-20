@@ -67,6 +67,7 @@
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 	var/quiet_round = 0 //Won't be picked as target in most cases
 	var/list/outfit_browsers = null
+	var/killstreak = 0
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -1856,6 +1857,30 @@
 	. = G
 	if(G)
 		G.reenter_corpse()
+
+/datum/mind/proc/killstreak_act()
+	switch(killstreak)
+		if(3)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] is on a killing spree!</B>")
+		if(5)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] is dominating!</B>")
+		if(7)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] got a MEGA KILL!</B>")
+		if(9)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] is UNSTOPPABLE!</B>")
+		if(11)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] is WICKED SICK!!</B>")
+		if(13)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] is GODLIKE!</B>")
+		if(15)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] is a KILLIONAIRE!</B>")
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
