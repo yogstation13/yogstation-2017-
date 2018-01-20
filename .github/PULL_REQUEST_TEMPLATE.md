@@ -1,8 +1,14 @@
-Refer to issue #0.
-
 ### Intent of your Pull Request
 
-Type here what the purpose of your PR is. Also set the issue number above, or delete the line if this PR is not related to an issue. You can type "Fixes issue #6" and issue 6 will be automatically closed as your pull request is merged. Much easier for everyone if you do that.
+Type here what the purpose of your PR is.
+Mention if you tested your changes.
+
+Mention if your PR is related to an issue.
+You can type "Fixes issue #6" and issue 6 will be automatically closed when your pull request is merged. This is much easier for everyone.
+
+Edit the changelog at the bottom for changes that are noticeable by the players. Remove it if this isn't the case.
+If you add a name after the ':cl', that name will be used in the changelog. Leave it empty to use your GitHub name.
+Include [admin] in the title if it's something admin related.
 
 #### Changelog
 
