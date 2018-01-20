@@ -16,6 +16,7 @@ var/datum/subsystem/objects/SSobj
 	var/list/processing = list()
 	var/list/currentrun = list()
 	var/list/burning = list()
+	var/allowVineGrowth = TRUE
 
 /datum/subsystem/objects/New()
 	NEW_SS_GLOBAL(SSobj)
