@@ -1,7 +1,7 @@
 ### Intent of your Pull Request
 
 Type here what the purpose of your PR is.
-Mention if you tested your changes.
+Mention if you tested your changes. If you changed a map, make sure you used the mapmerge tool.
 
 Mention if your PR is related to an issue.
 You can type "Fixes issue #6" and issue 6 will be automatically closed when your pull request is merged. This is much easier for everyone.
