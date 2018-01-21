@@ -341,6 +341,33 @@
 		user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(null))
 	return .
 
+/datum/spellbook_entry/item/soulstones/TryRefund(mob/user,obj/item/summoned_item)
+	if(!..())
+		return 0
+
+	if(!istype(summoned_item,/obj/item/weapon/storage/belt/soulstone/full))
+		return 0
+
+	var/obj/item/weapon/storage/belt/soulstone/belt = summoned_item
+	var/stone_count = 0
+	for(var/obj/item/belt_item in belt)
+		if(istype(belt_item,/obj/item/device/soulstone))
+			stone_count++
+
+	if(stone_count < 6)
+		to_chat(user,"<span class='warning'>You cannot refund a soul stone belt that's missing stones!</span>")
+		return 0
+
+	if(!istype(user,/mob/living/carbon/human))
+		return 0
+
+	var/mob/living/carbon/human/wiz = user
+	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
+		if("Artificer" == aspell.name)
+			wiz.mind.spell_list.Remove(aspell)
+
+	return 1
+
 /datum/spellbook_entry/item/necrostone
 	name = "A Necromantic Stone"
 	desc = "A Necromantic stone is able to resurrect three dead individuals as skeletal thralls for you to command."
@@ -406,15 +433,6 @@
 		return 0
 	return 1
 
-/datum/spellbook_entry/item/bloodbottle
-	name = "Bottle of Blood"
-	desc = "A bottle of magically infused blood, the smell of which will attract extradimensional beings when broken. Be careful though, the kinds of creatures summoned by blood magic are indiscriminate in their killing, and you yourself may become a victim."
-	item_path = /obj/item/weapon/antag_spawner/slaughter_demon
-	log_name = "BB"
-	limit = 3
-	category = "Assistance"
-	refund_message = "On second thought, maybe summoning a demon is a bad idea.  You refund the bottle."
-
 /datum/spellbook_entry/item/hugbottle
 	name = "Bottle of Tickles"
 	desc = "A bottle of magically infused fun, the smell of which will \
@@ -429,6 +447,15 @@
 	log_name = "HB"
 	limit = 3
 	category = "Assistance"
+
+/datum/spellbook_entry/item/bloodbottle
+	name = "Bottle of Blood"
+	desc = "A bottle of magically infused blood, the smell of which will attract extradimensional beings when broken. Be careful though, the kinds of creatures summoned by blood magic are indiscriminate in their killing, and you yourself may become a victim."
+	item_path = /obj/item/weapon/antag_spawner/slaughter_demon
+	log_name = "BB"
+	limit = 3
+	category = "Assistance"
+	refund_message = "On second thought, maybe summoning a demon is a bad idea.  You refund the bottle."
 
 /datum/spellbook_entry/item/mjolnir
 	name = "Mjolnir"
