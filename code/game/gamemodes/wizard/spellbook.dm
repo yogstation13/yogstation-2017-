@@ -67,9 +67,9 @@
 	return 0
 
 /datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return point value or -1 for failure
-	var/area/wizard_station/A = locate()
-	if(!(user in A.contents))
-		to_chat(user, "<span clas=='warning'>You can only refund spells at the wizard lair</span>")
+	var/canRefund = book.RefundAllowed(user)
+	if(!canRefund)
+		to_chat(user, "<span class='warning'>You can only refund spells at the wizard lair!</span>")
 		return -1
 	if(!S)
 		S = new spell_type()
@@ -237,6 +237,7 @@
 	refundable = 0
 	buy_word = "Summon"
 	var/item_path= null
+	var/refund_message = "You refund the item."
 
 
 /datum/spellbook_entry/item/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
@@ -253,26 +254,34 @@
 		dat += "[surplus] left.<br>"
 	return dat
 
-/datum/spellbook_entry/item/staffchange
+//This function should return 1 if the item should be refunded, and 0 if it can't be for some reason.
+/datum/spellbook_entry/item/proc/TryRefund(mob/user, obj/item/summoned_item)
+	return 1
+
+/datum/spellbook_entry/item/staff
+	name = "Staff of Errors"
+	refund_message = "You refund the staff."
+
+/datum/spellbook_entry/item/staff/change
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/weapon/gun/magic/staff/change
 	log_name = "ST"
 
-/datum/spellbook_entry/item/staffanimation
+/datum/spellbook_entry/item/staff/animation
 	name = "Staff of Animation"
 	desc = "An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines."
 	item_path = /obj/item/weapon/gun/magic/staff/animate
 	log_name = "SA"
 	category = "Assistance"
 
-/datum/spellbook_entry/item/staffchaos
+/datum/spellbook_entry/item/staff/chaos
 	name = "Staff of Chaos"
 	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
 	item_path = /obj/item/weapon/gun/magic/staff/chaos
 	log_name = "SC"
 
-/datum/spellbook_entry/item/staffdoor
+/datum/spellbook_entry/item/staff/door
 	name = "Staff of Door Creation"
 	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
 	item_path = /obj/item/weapon/gun/magic/staff/door
@@ -280,7 +289,7 @@
 	cost = 1
 	category = "Mobility"
 
-/datum/spellbook_entry/item/staffhealing
+/datum/spellbook_entry/item/staff/healing
 	name = "Staff of Healing"
 	desc = "An altruistic staff that can heal the lame and raise the dead."
 	item_path = /obj/item/weapon/gun/magic/staff/healing
@@ -294,6 +303,20 @@
 	item_path = /obj/item/weapon/scrying
 	log_name = "SO"
 	category = "Defensive"
+
+//If the wizard refunds the scrying orb, they don't get to keep the xray vision it gives
+/datum/spellbook_entry/item/scryingorb/TryRefund(mob/user,obj/item/summoned_item)
+	if(!..())
+		return 0
+
+	if(!istype(user,/mob/living/carbon/human))
+		return 0
+
+	var/mob/living/carbon/human/wiz = user
+	if (wiz.dna.check_mutation(XRAY))
+		wiz.dna.remove_mutation(XRAY)
+	return 1
+
 
 /datum/spellbook_entry/item/scryingorb/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
 	if(..())
@@ -336,6 +359,25 @@
 	log_name = "WA"
 	category = "Defensive"
 
+/datum/spellbook_entry/item/contract/TryRefund(mob/user,obj/item/summoned_item)
+	if(!..())
+		return 0
+
+	if(!istype(summoned_item,/obj/item/weapon/storage/belt/wands/full))
+		return 0
+
+	var/obj/item/weapon/storage/belt/wands/belt = summoned_item
+	var/wand_count = 0
+	for(var/obj/item/belt_item in belt)
+		if(istype(belt_item,/obj/item/weapon/gun/magic/wand))
+			wand_count++
+
+	if(wand_count < 6)
+		to_chat(user,"<span class='warning'>You cannot refund a wand belt that's missing wands!</span>")
+		return 0
+
+	return 1
+
 /datum/spellbook_entry/item/armor
 	name = "Mastercrafted Armor Set"
 	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
@@ -355,6 +397,18 @@
 	item_path = /obj/item/weapon/antag_spawner/contract
 	log_name = "CT"
 	category = "Assistance"
+	refund_message = "You dispel the contract of apprenticeship."
+
+/datum/spellbook_entry/item/contract/TryRefund(mob/user,obj/item/summoned_item)
+	if(!..())
+		return 0
+	if(!istype(summoned_item,/obj/item/weapon/antag_spawner/contract))
+		return 0
+	var/obj/item/weapon/antag_spawner/contract/apprentice_contract = summoned_item
+	if(apprentice_contract.used)
+		to_chat(user,"<span class='warning'>You cannot refund a contract that has been used!</span>")
+		return 0
+	return 1
 
 /datum/spellbook_entry/item/bloodbottle
 	name = "Bottle of Blood"
@@ -363,6 +417,7 @@
 	log_name = "BB"
 	limit = 3
 	category = "Assistance"
+	refund_message = "On second thought, maybe summoning a demon is a bad idea.  You refund the bottle."
 
 /datum/spellbook_entry/item/hugbottle
 	name = "Bottle of Tickles"
@@ -493,6 +548,9 @@
 		. += "You cast it [times] times.<br>"
 	return .
 
+#define REFUND_FLAG_SHIP 1
+#define REFUND_FLAG_ALWAYS 2
+
 /obj/item/weapon/spellbook
 	name = "spell book"
 	desc = "An unearthly tome that glows with power."
@@ -508,6 +566,7 @@
 	var/mob/living/carbon/human/owner
 	var/list/datum/spellbook_entry/entries = list()
 	var/list/categories = list()
+	var/refund_rules = REFUND_FLAG_SHIP
 
 /obj/item/weapon/spellbook/examine(mob/user)
 	..()
@@ -531,26 +590,34 @@
 	..()
 	Initialize()
 
+/obj/item/weapon/spellbook/proc/RefundAllowed(mob/user)
+	if(refund_rules & REFUND_FLAG_ALWAYS)
+		return 1
+
+	var/area/wizard_station/A = locate()
+	if(!(user in A.contents))
+		return 0
+	return 1
+
 
 /obj/item/weapon/spellbook/attackby(obj/item/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/antag_spawner/contract))
-		var/obj/item/weapon/antag_spawner/contract/contract = O
-		if(contract.used)
-			to_chat(user, "<span class='warning'>The contract has been used, you can't get your points back now!</span>")
-		else
-			to_chat(user, "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>")
-			uses++
-			for(var/datum/spellbook_entry/item/contract/CT in entries)
-				if(!isnull(CT.limit))
-					CT.limit++
-			qdel(O)
-	else if(istype(O, /obj/item/weapon/antag_spawner/slaughter_demon))
-		to_chat(user, "<span class='notice'>On second thought, maybe summoning a demon is a bad idea. You refund your points.</span>")
-		uses++
-		for(var/datum/spellbook_entry/item/bloodbottle/BB in entries)
-			if(!isnull(BB.limit))
-				BB.limit++
-		qdel(O)
+	if(!RefundAllowed(user))
+		to_chat(user, "<span class='warning'>Without the power of your ship availible, you can't refund that.</span>")
+		return
+
+	var/list/datum/spellbook_entry/item/item_types = subtypesof(/datum/spellbook_entry/item) - /datum/spellbook_entry/item - /datum/spellbook_entry/item/staff
+
+	for(var/datum/spellbook_entry/item/type in item_types)
+		if(istype(O, type.item_path))
+			var/can_refund = type.TryRefund(user,O)
+			if(can_refund)
+				to_chat(user, "<span class='notice'>[type.refund_message]</span>")
+				uses = uses + type.cost
+				qdel(O)
+				return
+			else
+				to_chat(user, "<span class='warning'>You fail to refund the item.</span>")
+				return
 
 /obj/item/weapon/spellbook/proc/GetCategoryHeader(category)
 	var/dat = ""
@@ -654,7 +721,7 @@
 		return 1
 
 	if(H.mind.special_role == "apprentice")
-		temp = "If you got caught sneaking a peak from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
+		temp = "If you got caught sneaking a peek from your teacher's spellbook, you'd likely be expelled from the Wizard Academy. Better not."
 		return
 
 	var/datum/spellbook_entry/E = null
