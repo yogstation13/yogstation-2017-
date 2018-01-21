@@ -258,30 +258,26 @@
 /datum/spellbook_entry/item/proc/TryRefund(mob/user, obj/item/summoned_item)
 	return 1
 
-/datum/spellbook_entry/item/staff
-	name = "Staff of Errors"
-	refund_message = "You refund the staff."
-
-/datum/spellbook_entry/item/staff/change
+/datum/spellbook_entry/item/change
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/weapon/gun/magic/staff/change
 	log_name = "ST"
 
-/datum/spellbook_entry/item/staff/animation
+/datum/spellbook_entry/item/animation
 	name = "Staff of Animation"
 	desc = "An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines."
 	item_path = /obj/item/weapon/gun/magic/staff/animate
 	log_name = "SA"
 	category = "Assistance"
 
-/datum/spellbook_entry/item/staff/chaos
+/datum/spellbook_entry/item/chaos
 	name = "Staff of Chaos"
 	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
 	item_path = /obj/item/weapon/gun/magic/staff/chaos
 	log_name = "SC"
 
-/datum/spellbook_entry/item/staff/door
+/datum/spellbook_entry/item/door
 	name = "Staff of Door Creation"
 	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
 	item_path = /obj/item/weapon/gun/magic/staff/door
@@ -289,7 +285,7 @@
 	cost = 1
 	category = "Mobility"
 
-/datum/spellbook_entry/item/staff/healing
+/datum/spellbook_entry/item/healing
 	name = "Staff of Healing"
 	desc = "An altruistic staff that can heal the lame and raise the dead."
 	item_path = /obj/item/weapon/gun/magic/staff/healing
@@ -359,7 +355,7 @@
 	log_name = "WA"
 	category = "Defensive"
 
-/datum/spellbook_entry/item/contract/TryRefund(mob/user,obj/item/summoned_item)
+/datum/spellbook_entry/item/wands/TryRefund(mob/user,obj/item/summoned_item)
 	if(!..())
 		return 0
 
@@ -605,14 +601,15 @@
 		to_chat(user, "<span class='warning'>Without the power of your ship availible, you can't refund that.</span>")
 		return
 
-	var/list/datum/spellbook_entry/item/item_types = subtypesof(/datum/spellbook_entry/item) - /datum/spellbook_entry/item - /datum/spellbook_entry/item/staff
+	var/list/datum/spellbook_entry/item/item_types = subtypesof(/datum/spellbook_entry/item) - /datum/spellbook_entry/item
 
-	for(var/datum/spellbook_entry/item/type in item_types)
-		if(istype(O, type.item_path))
-			var/can_refund = type.TryRefund(user,O)
+	for(var/type in item_types)
+		var/datum/spellbook_entry/item/entry_type = new type
+		if(istype(O, entry_type.item_path))
+			var/can_refund = entry_type.TryRefund(user,O)
 			if(can_refund)
-				to_chat(user, "<span class='notice'>[type.refund_message]</span>")
-				uses = uses + type.cost
+				to_chat(user, "<span class='notice'>[entry_type.refund_message]</span>")
+				uses = uses + entry_type.cost
 				qdel(O)
 				return
 			else
