@@ -62,6 +62,8 @@ var/datum/subsystem/ticker/ticker
 	var/identification_console_message
 	var/id_console_msg_lock
 
+	var/list/livings = list()
+
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
@@ -379,7 +381,6 @@ var/datum/subsystem/ticker/ticker
 
 
 /datum/subsystem/ticker/proc/create_characters()
-	var/list/livings = list()
 	for(var/mob/new_player/player in player_list)
 		if(player.ready && player.mind)
 			joined_player_list += player.ckey
@@ -392,16 +393,6 @@ var/datum/subsystem/ticker/ticker
 						var/obj/screen/splash/S = new(living.client, TRUE)
 						S.Fade(TRUE)
 					livings += living
-			else if(player.mind.assigned_role=="Cyborg")
-				var/mob/living/carbon/human/living = player.create_character()
-				if(living)
-					qdel(player)
-					var/mob/twat = living.Robotize(FALSE, TRUE) //borgs then teleports to upload access
-					twat.notransform = TRUE
-					if(twat.client)
-						var/obj/screen/splash/S = new(twat.client, TRUE)
-						S.Fade(TRUE)
-					livings += twat
 			else
 				var/mob/living = player.create_character()
 				if(living)
