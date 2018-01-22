@@ -52,8 +52,8 @@
 						aspell.name = "Instant [aspell.name]"
 				if(aspell.spell_level >= aspell.level_max)
 					to_chat(user, "<span class='notice'>This spell cannot be strengthened any further.</span>")
-				else
-					levels_owned++
+
+				levels_owned++
 				return 1
 	//No same spell found - just learn it
 	feedback_add_details("wizard_spell_learned",log_name)
@@ -93,7 +93,7 @@
 	if(!S)
 		S = new spell_type()
 	var/dat =""
-	dat += "<b>[S.name_at_level(levels_owned+1)]</b>"
+	dat += "<b>[S.name_at_level(levels_owned)]</b>"
 	if(S.charge_type == "recharge")
 		dat += " Cooldown:[S.charge_max/10] - Next Level: [S.cost_at_level(levels_owned+1)]"
 	dat += " Cost:[cost]<br>"

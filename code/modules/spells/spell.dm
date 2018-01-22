@@ -69,6 +69,10 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 /obj/effect/proc_holder/spell/proc/cost_at_level(level = 0)
 	if(level_max == 0)
 		return charge_max
+
+	if(level > level_max)
+		return cost_at_level(level_max)
+
 	return (round(initial(charge_max) - level * (initial(charge_max) - cooldown_min)/ level_max)/10)
 
 /obj/effect/proc_holder/spell/proc/name_at_level(level = 0)
