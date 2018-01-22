@@ -66,6 +66,25 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	var/action_icon_state = "spell_default"
 	var/action_background_icon_state = "bg_spell"
 
+/obj/effect/proc_holder/spell/proc/cost_at_level(level = 0)
+	if(level_max == 0)
+		return charge_max
+	return (round(initial(charge_max) - level * (initial(charge_max) - cooldown_min)/ level_max)/10)
+
+/obj/effect/proc_holder/spell/proc/name_at_level(level = 0)
+	switch(level)
+		if(0)
+			return "[initial(name)]"
+		if(1)
+			return "Efficient [initial(name)]"
+		if(2)
+			return "Quickened [initial(name)]"
+		if(3)
+			return "Free [initial(name)]"
+		if(4)
+			return "Instant [initial(name)]"
+	return "[initial(name)]"
+
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
 
 	if(player_lock)

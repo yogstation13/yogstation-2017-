@@ -11,13 +11,16 @@
 	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
 	var/buy_word = "Learn"
 	var/limit //used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
+	var/levels_owned = -1 //For compatibility with existing spell code, levels run 0-4
 
 /datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
 	return 1
+
 /datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) // Specific circumstances
 	if(book.uses<cost || limit == 0)
 		return 0
 	return 1
+
 /datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
 	if(!S || qdeleted(S))
 		S = new spell_type()
@@ -30,8 +33,8 @@
 				return 0
 			else
 				aspell.name = initial(aspell.name)
-				aspell.spell_level++
-				aspell.charge_max = round(initial(aspell.charge_max) - aspell.spell_level * (initial(aspell.charge_max) - aspell.cooldown_min)/ aspell.level_max)
+				aspell.charge_max = aspell.cost_at_level(++aspell.spell_level)*10
+
 				if(aspell.charge_max < aspell.charge_counter)
 					aspell.charge_counter = aspell.charge_max
 				switch(aspell.spell_level)
@@ -49,11 +52,14 @@
 						aspell.name = "Instant [aspell.name]"
 				if(aspell.spell_level >= aspell.level_max)
 					to_chat(user, "<span class='notice'>This spell cannot be strengthened any further.</span>")
+				else
+					levels_owned++
 				return 1
 	//No same spell found - just learn it
 	feedback_add_details("wizard_spell_learned",log_name)
 	user.mind.AddSpell(S)
 	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
+	levels_owned++
 	return 1
 
 /datum/spellbook_entry/proc/CanRefund(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
@@ -79,15 +85,17 @@
 			spell_levels = aspell.spell_level
 			user.mind.spell_list.Remove(aspell)
 			qdel(S)
+			levels_owned = -1
 			return cost * (spell_levels+1)
 	return -1
+
 /datum/spellbook_entry/proc/GetInfo()
 	if(!S)
 		S = new spell_type()
 	var/dat =""
-	dat += "<b>[initial(S.name)]</b>"
+	dat += "<b>[S.name_at_level(levels_owned+1)]</b>"
 	if(S.charge_type == "recharge")
-		dat += " Cooldown:[S.charge_max/10]"
+		dat += " Cooldown:[S.charge_max/10] - Next Level: [S.cost_at_level(levels_owned+1)]"
 	dat += " Cost:[cost]<br>"
 	dat += "<i>[S.desc][desc]</i><br>"
 	dat += "[S.clothes_req?"Needs wizard garb":"Can be cast without wizard garb"]<br>"
