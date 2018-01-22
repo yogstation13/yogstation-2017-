@@ -69769,91 +69769,6 @@
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
 "Zmn" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f6";
-	dir = 2
-	},
-/area/space)
-"Zmo" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall12";
-	dir = 2
-	},
-/area/space)
-"Zmp" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	dir = 2;
-	icon_state = "swall_f10";
-	layer = 2
-	},
-/area/space)
-"Zmq" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Escape Pod Airlock"
-	},
-/obj/docking_port/mobile/pod{
-	dir = 4;
-	id = "pod3";
-	name = "escape pod 3"
-	},
-/turf/open/floor/plasteel/shuttle,
-/area/space)
-"Zmr" = (
-/obj/item/device/radio/intercom{
-	pixel_y = 25
-	},
-/obj/item/weapon/storage/pod{
-	pixel_x = 6;
-	pixel_y = -32
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/shuttle,
-/area/space)
-"Zms" = (
-/obj/machinery/computer/shuttle/pod{
-	pixel_y = -32;
-	possible_destinations = "pod_asteroid3";
-	shuttleId = "pod3"
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	density = 0;
-	layer = 3;
-	pixel_x = 0;
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel/shuttle,
-/area/space)
-"Zmt" = (
-/obj/structure/grille,
-/obj/structure/window/shuttle,
-/turf/open/floor/plating,
-/area/space)
-"Zmu" = (
-/obj/structure/shuttle/engine/propulsion/burst{
-	dir = 4
-	},
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f5";
-	dir = 2
-	},
-/area/space)
-"Zmv" = (
-/turf/open/space,
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f9";
-	dir = 2
-	},
-/area/space)
-"Zmw" = (
 /obj/structure/closet/secure_closet/injection,
 /obj/machinery/light/small{
 	dir = 1
@@ -69862,12 +69777,12 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Zmx" = (
+"Zmo" = (
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Zmy" = (
+"Zmp" = (
 /obj/structure/table,
 /obj/item/device/electropack,
 /obj/machinery/button/door{
@@ -69881,14 +69796,14 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Zmz" = (
+"Zmq" = (
 /obj/structure/window/reinforced,
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmA" = (
+"Zmr" = (
 /obj/machinery/door/window/brigdoor/eastright{
 	tag = "icon-rightsecure";
 	name = "Prisoner Transfer Accessories";
@@ -69900,7 +69815,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmB" = (
+"Zms" = (
 /obj/structure/table,
 /obj/item/weapon/screwdriver,
 /obj/item/weapon/wrench,
@@ -69911,7 +69826,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/transfer)
-"ZmC" = (
+"Zmt" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-2";
 	d2 = 2
@@ -69920,7 +69835,7 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/security/prison)
-"ZmD" = (
+"Zmu" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-2";
 	d2 = 2
@@ -69929,19 +69844,19 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/security/processing)
-"ZmE" = (
+"Zmv" = (
 /obj/structure/bodycontainer/morgue,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmF" = (
+"Zmw" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmG" = (
+"Zmx" = (
 /obj/structure/chair,
 /obj/machinery/airalarm{
 	pixel_y = 25
@@ -69953,7 +69868,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmH" = (
+"Zmy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1
@@ -69962,19 +69877,19 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmI" = (
+"Zmz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
 /area/security/transfer)
-"ZmJ" = (
+"ZmA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
 /area/security/prison)
-"ZmK" = (
+"ZmB" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
@@ -69995,7 +69910,7 @@
 	dir = 1
 	},
 /area/security/processing)
-"ZmL" = (
+"ZmC" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
@@ -70013,7 +69928,30 @@
 	dir = 4
 	},
 /area/security/processing)
-"ZmM" = (
+"ZmD" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 4
+	},
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f6";
+	dir = 2
+	},
+/area/space)
+"ZmE" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
+	},
+/area/space)
+"ZmF" = (
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	dir = 2;
+	icon_state = "swall_f10";
+	layer = 2
+	},
+/area/space)
+"ZmG" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
@@ -70024,7 +69962,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmN" = (
+"ZmH" = (
 /obj/structure/chair,
 /obj/structure/cable/yellow{
 	d1 = 4;
@@ -70035,7 +69973,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmO" = (
+"ZmI" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -70051,7 +69989,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmP" = (
+"ZmJ" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -70061,7 +69999,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmQ" = (
+"ZmK" = (
 /obj/machinery/door/airlock/security{
 	aiControlDisabled = 0;
 	icon_state = "door_closed";
@@ -70080,7 +70018,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmR" = (
+"ZmL" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -70088,7 +70026,7 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
-"ZmS" = (
+"ZmM" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -70099,7 +70037,7 @@
 	dir = 4
 	},
 /area/security/prison)
-"ZmT" = (
+"ZmN" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -70113,27 +70051,73 @@
 	dir = 1
 	},
 /area/security/processing)
-"ZmU" = (
+"ZmO" = (
 /turf/open/floor/plasteel/red/corner{
 	tag = "icon-redcorner (EAST)";
 	icon_state = "redcorner";
 	dir = 4
 	},
 /area/security/processing)
-"ZmV" = (
+"ZmP" = (
 /obj/machinery/door/airlock/external{
 	name = "Security Escape Pod";
 	req_access_txt = "63"
 	},
 /turf/open/floor/plating,
 /area/security/processing)
-"ZmW" = (
+"ZmQ" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Escape Pod Airlock"
+	},
+/obj/docking_port/mobile/pod{
+	dir = 4;
+	id = "pod3";
+	name = "escape pod 3"
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"ZmR" = (
+/obj/item/device/radio/intercom{
+	pixel_y = 25
+	},
+/obj/item/weapon/storage/pod{
+	pixel_x = 6;
+	pixel_y = -32
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"ZmS" = (
+/obj/machinery/computer/shuttle/pod{
+	pixel_y = -32;
+	possible_destinations = "pod_asteroid3";
+	shuttleId = "pod3"
+	},
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/status_display{
+	density = 0;
+	layer = 3;
+	pixel_x = 0;
+	pixel_y = 32
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/space)
+"ZmT" = (
+/obj/structure/grille,
+/obj/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/space)
+"ZmU" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmX" = (
+"ZmV" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -70145,7 +70129,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmY" = (
+"ZmW" = (
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Prisoner Transfer Centre APC";
@@ -70156,7 +70140,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmZ" = (
+"ZmX" = (
 /obj/structure/flora/kirbyplants{
 	desc = "A plastic potted plant.";
 	layer = 4.1;
@@ -70166,7 +70150,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Zna" = (
+"ZmY" = (
 /obj/structure/table,
 /obj/item/weapon/pen/red,
 /obj/item/weapon/paper_bin,
@@ -70174,7 +70158,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Znb" = (
+"ZmZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
@@ -70191,20 +70175,36 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Znc" = (
+"Zna" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	adminlog = 1;
 	dir = 4
 	},
 /turf/closed/wall,
 /area/security/transfer)
-"Znd" = (
+"Znb" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	adminlog = 1;
 	dir = 4
 	},
 /turf/closed/wall,
 /area/security/prison)
+"Znc" = (
+/obj/structure/shuttle/engine/propulsion/burst{
+	dir = 4
+	},
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f5";
+	dir = 2
+	},
+/area/space)
+"Znd" = (
+/turf/open/space,
+/turf/closed/wall/shuttle{
+	icon_state = "swall_f9";
+	dir = 2
+	},
+/area/space)
 "Zne" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -97633,7 +97633,7 @@ aaa
 aaa
 aaF
 aaF
-ZmC
+Zmt
 ZpC
 aaF
 aaF
@@ -97888,7 +97888,7 @@ ZnY
 Zop
 aaF
 aaa
-ZmC
+Zmt
 agH
 afP
 ail
@@ -99159,9 +99159,9 @@ aaa
 aaa
 aaa
 abb
-ZmE
-ZmE
-ZmE
+Zmv
+Zmv
+Zmv
 abb
 aaa
 aaa
@@ -99416,9 +99416,9 @@ aaa
 aaa
 aaa
 abb
-Zmx
-Zmx
-Zmx
+Zmo
+Zmo
+Zmo
 abb
 Znh
 Znh
@@ -99673,13 +99673,13 @@ aaa
 aaa
 aaa
 abb
-ZmF
-ZmF
-ZmW
+Zmw
+Zmw
+ZmU
 Zne
 Zni
 Znn
-Zmx
+Zmo
 abb
 acw
 ZnP
@@ -99930,11 +99930,11 @@ aaa
 aaa
 aaa
 abb
+Zmx
 ZmG
-ZmM
-ZmX
+ZmV
 Znf
-ZmX
+ZmV
 Zno
 Zns
 abb
@@ -100187,13 +100187,13 @@ aaa
 aaa
 aaa
 abb
-ZmF
-ZmN
-Zmx
+Zmw
+ZmH
+Zmo
 acW
-Zmx
+Zmo
 abq
-Zmx
+Zmo
 abb
 acy
 acY
@@ -100444,9 +100444,9 @@ aaa
 abb
 acW
 abb
-Zmx
-ZmO
-ZmY
+Zmo
+ZmI
+ZmW
 abb
 abb
 abb
@@ -100699,11 +100699,11 @@ aaa
 aaa
 aaa
 abb
-Zmw
-Zmz
-Zmx
-ZmP
-ZmZ
+Zmn
+Zmq
+Zmo
+ZmJ
+ZmX
 abb
 aiP
 abs
@@ -100956,11 +100956,11 @@ aaa
 aaa
 aaa
 acW
-Zmx
-ZmA
-Zmx
-ZmP
-Zna
+Zmo
+Zmr
+Zmo
+ZmJ
+ZmY
 abb
 aiT
 ajG
@@ -101213,11 +101213,11 @@ aaa
 aaa
 aaa
 abb
+Zmp
+Zms
 Zmy
-ZmB
-ZmH
-ZmP
-Znb
+ZmJ
+ZmZ
 abb
 aiR
 ajH
@@ -101472,9 +101472,9 @@ aaa
 abb
 acW
 abb
-ZmI
-ZmQ
-Znc
+Zmz
+ZmK
+Zna
 abb
 aiS
 ajI
@@ -101729,9 +101729,9 @@ aaa
 aaa
 aaa
 adI
-ZmJ
-ZmR
-Znd
+ZmA
+ZmL
+Znb
 adI
 Znj
 abt
@@ -101986,9 +101986,9 @@ aaa
 aaa
 aaa
 adI
-ZmJ
-ZmS
-Znd
+ZmA
+ZmM
+Znb
 adI
 aiq
 aiq
@@ -102242,7 +102242,7 @@ aaa
 aaa
 aaa
 aaa
-ZmC
+Zmt
 ZxL
 aaJ
 aaS
@@ -102499,7 +102499,7 @@ aaa
 aaa
 aaa
 aaa
-ZmC
+Zmt
 aaG
 aaK
 aaK
@@ -103279,7 +103279,7 @@ apL
 aqe
 aqx
 aqV
-ZmD
+Zmu
 adg
 Zoe
 Zov
@@ -103536,7 +103536,7 @@ apo
 apo
 aqx
 aqV
-ZmD
+Zmu
 adh
 adN
 aeq
@@ -103793,7 +103793,7 @@ apM
 apo
 aqx
 aqV
-ZmD
+Zmu
 ZnS
 Zoe
 Zov
@@ -104555,10 +104555,10 @@ aaa
 aaa
 aaa
 aaa
-ZmD
-ZmK
-ZmT
-ZmT
+Zmu
+ZmB
+ZmN
+ZmN
 Zng
 Znl
 Znp
@@ -104812,11 +104812,11 @@ aaa
 aaa
 aaa
 aaa
-ZmD
-ZmL
-ZmU
-ZmU
-ZmU
+Zmu
+ZmC
+ZmO
+ZmO
+ZmO
 Znm
 Znq
 abJ
@@ -105071,7 +105071,7 @@ aaa
 aaa
 amJ
 amJ
-ZmV
+ZmP
 amJ
 amJ
 amJ
@@ -105327,9 +105327,9 @@ aaa
 aaa
 aaa
 aaa
-Zmn
-Zmq
-Zmu
+ZmD
+ZmQ
+Znc
 aaa
 aaa
 aaa
@@ -105584,9 +105584,9 @@ aaa
 aaa
 aaa
 aaa
-Zmo
-Zmr
-Zmo
+ZmE
+ZmR
+ZmE
 aaa
 aaa
 aaa
@@ -105841,9 +105841,9 @@ aaa
 aaa
 aaa
 aaa
-Zmo
-Zms
-Zmo
+ZmE
+ZmS
+ZmE
 aaa
 aaa
 aaa
@@ -106098,9 +106098,9 @@ aaa
 aaa
 aaa
 aaa
-Zmp
-Zmt
-Zmv
+ZmF
+ZmT
+Znd
 aaa
 aaa
 aaa
@@ -132036,9 +132036,9 @@ aaa
 aaa
 aaa
 aaa
-Zmn
-Zmq
-Zmu
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -132293,9 +132293,9 @@ aaa
 aaa
 aaa
 aaa
-Zmo
-Zmr
-Zmo
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -132550,9 +132550,9 @@ aaa
 aaa
 aaa
 aaa
-Zmo
-Zms
-Zmo
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -132807,9 +132807,9 @@ aaa
 aaa
 aaa
 aaa
-Zmp
-Zmt
-Zmv
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -133065,7 +133065,7 @@ aaa
 aaa
 aaa
 aaa
-cFB
+aaa
 aaa
 aaa
 aaa
