@@ -916,10 +916,10 @@ var/next_mob_id = 0
 		if( search_id && istype(A,/obj/item/weapon/card/id) )
 			var/obj/item/weapon/card/id/ID = A
 			if(ID.registered_name == oldname)
-				ID.registered_name = newname
-				ID.update_label()
+				ID.update_label(newname)
 				if(!search_pda)
 					break
+
 				search_id = 0
 
 		else if( search_pda && istype(A,/obj/item/device/pda) )
@@ -929,6 +929,7 @@ var/next_mob_id = 0
 				PDA.update_label()
 				if(!search_id)
 					break
+
 				search_pda = 0
 
 /mob/proc/update_stat()
