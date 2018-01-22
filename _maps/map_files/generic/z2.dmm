@@ -6374,7 +6374,7 @@
 "vT" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/pen/fourcolor,
-/obj/item/weapon/reagent_containers/food/drinks/britcup,
+/obj/item/weapon/reagent_containers/food/drinks/mug/britmug,
 /turf/open/floor/bluespace,
 /area/centcom/control)
 "vU" = (

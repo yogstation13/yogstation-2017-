@@ -69587,7 +69587,7 @@
 "cie" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/item/weapon/reagent_containers/food/drinks/britcup,
+/obj/item/weapon/reagent_containers/food/drinks/mug/britmug,
 /turf/open/floor/plasteel{
 	icon_state = "whitegreenfull"
 	},

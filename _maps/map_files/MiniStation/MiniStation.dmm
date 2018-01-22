@@ -8437,7 +8437,7 @@
 /area/medical/medbay)
 "rj" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
+/obj/item/weapon/reagent_containers/food/drinks/mug/britmug{
 	desc = "Kingston's personal cup."
 	},
 /obj/machinery/camera/autoname,

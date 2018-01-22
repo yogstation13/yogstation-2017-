@@ -1100,6 +1100,11 @@
 /area/ai_monitored/security/armory)
 "acj" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/drinks/mug/amerimug{
+	desc = "A mug with the american flag emblazoned on it. You can almost taste the freedom.";
+	list_reagents = list("coffee" = 30);
+	pixel_x = 0
+	},
 /turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
@@ -4833,7 +4838,10 @@
 /area/security/warden)
 "aiy" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law{
+	pixel_x = 0;
+	pixel_y = 4
+	},
 /turf/open/floor/plasteel{
 	icon_state = "showroomfloor"
 	},
@@ -32905,9 +32913,6 @@
 	network = list("SS13");
 	pixel_x = 0;
 	pixel_y = 0
-	},
-/obj/item/weapon/reagent_containers/food/drinks/britcup{
-	desc = "Kingston's personal cup."
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -69737,6 +69742,17 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zsq" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/drinks/mug/canmug{
+	desc = "A mug with the canadian flag emblazoned on it. It's cold now.";
+	list_reagents = list("coffee" = 30)
+	},
+/turf/open/floor/plasteel{
+	icon_state = "arrival";
+	dir = 4
+	},
+/area/quartermaster/office)
 "Zsr" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -72685,12 +72701,15 @@
 /turf/open/space,
 /area/maintenance/incinerator)
 "ZxJ" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 4
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/drinks/mug/britmug{
+	desc = "Kingston's personal mug.";
+	list_reagents = list("coffee" = 30)
 	},
-/turf/open/space,
-/area/maintenance/incinerator)
+/turf/open/floor/plasteel{
+	icon_state = "white"
+	},
+/area/medical/medbay)
 "ZxK" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate,
 /turf/open/floor/plasteel/shuttle{
@@ -96956,7 +96975,7 @@ bfA
 bgD
 bhZ
 bjt
-bjt
+Zsq
 Zss
 bnX
 bpH
@@ -109294,7 +109313,7 @@ biu
 bjX
 bjX
 bmT
-boy
+ZxJ
 bqe
 brI
 btd
