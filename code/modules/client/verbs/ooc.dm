@@ -22,6 +22,7 @@
 		return
 
 	if(!holder)
+		return
 		if(!ooc_allowed)
 			to_chat(src, "<span class='danger'>OOC is globally muted.</span>")
 			return
