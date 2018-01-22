@@ -2205,11 +2205,14 @@
 /turf/open/floor/carpet,
 /area/security/hos)
 "aec" = (
-/obj/structure/sign/securearea{
-	pixel_y = -32
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4";
+	tag = ""
 	},
-/turf/open/space,
-/area/space)
+/turf/open/floor/plasteel,
+/area/security/main)
 "aed" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -69765,7451 +69768,7 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
-"Zag" = (
-/turf/closed/wall/r_wall,
-/area/space)
-"Zah" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zai" = (
-/obj/machinery/seed_extractor,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zaj" = (
-/obj/structure/flora/kirbyplants{
-	desc = "A plastic potted plant.";
-	layer = 4.1;
-	pixel_y = 3
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zak" = (
-/obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink";
-	pixel_y = 28
-	},
-/turf/open/floor/plating,
-/area/space)
-"Zal" = (
-/obj/machinery/biogenerator,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Prison Hydroponics";
-	network = list("SS13","Prison")
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zam" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zan" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/seeds/ambrosia,
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zao" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zap" = (
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zaq" = (
-/obj/item/weapon/reagent_containers/glass/bucket,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zar" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/seeds/glowshroom,
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,
-/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,
-/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,
-/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zas" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zat" = (
-/obj/machinery/door/poddoor{
-	id = "execution";
-	name = "space door"
-	},
-/turf/open/floor/plating{
-	icon_state = "warnplate";
-	dir = 1
-	},
-/area/space)
-"Zau" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/weapon/cultivator{
-	force = 0;
-	name = "safety cultivator"
-	},
-/obj/item/seeds/carrot,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zav" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zaw" = (
-/turf/open/floor/plasteel,
-/area/space)
-"Zax" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zay" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/device/plant_analyzer,
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zaz" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/cable/yellow,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZaA" = (
-/obj/machinery/door/airlock/glass{
-	id_tag = "permahydro";
-	name = "Hydroponics Module"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZaB" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/cable/yellow,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZaC" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZaD" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/chair,
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 8;
-	frequency = 0;
-	id = null;
-	pixel_y = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZaE" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZaF" = (
-/obj/machinery/computer/libraryconsole/bookmanagement{
-	pixel_y = 0
-	},
-/obj/structure/table,
-/obj/machinery/newscaster{
-	pixel_x = -32;
-	pixel_y = 0
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZaG" = (
-/obj/machinery/computer/arcade,
-/obj/machinery/computer/security/telescreen/entertainment{
-	pixel_x = 0;
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZaH" = (
-/obj/machinery/camera{
-	c_tag = "Prison Chamber";
-	network = list("SS13","Prison")
-	},
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. It looks like it has been modified to not broadcast.";
-	dir = 2;
-	name = "Prison Intercom (General)";
-	pixel_x = 0;
-	pixel_y = 24;
-	prison_radio = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZaI" = (
-/obj/machinery/status_display{
-	density = 0;
-	layer = 4;
-	pixel_x = 0;
-	pixel_y = 32
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "barber"
-	},
-/area/space)
-"ZaJ" = (
-/obj/machinery/washing_machine,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8";
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "barber"
-	},
-/area/space)
-"ZaK" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel,
-/area/space)
-"ZaL" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZaM" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/donkpockets,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZaN" = (
-/obj/structure/chair/stool,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZaO" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
-	},
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZaP" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/weapon/pen,
-/turf/open/floor/plasteel,
-/area/space)
-"ZaQ" = (
-/obj/structure/chair/stool,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZaR" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "barber"
-	},
-/area/space)
-"ZaS" = (
-/obj/structure/table,
-/obj/structure/bedsheetbin,
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "barber"
-	},
-/area/space)
-"ZaT" = (
-/obj/structure/sign/securearea{
-	pixel_y = -32
-	},
-/turf/closed/wall/r_wall,
-/area/space)
-"ZaU" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZaV" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/general/visible,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plasteel,
-/area/space)
-"ZaW" = (
-/obj/machinery/door/window/brigdoor{
-	name = "Transfer Room";
-	req_access_txt = "2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZaX" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plasteel,
-/area/space)
-"ZaY" = (
-/obj/structure/table,
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23;
-	pixel_y = 0
-	},
-/obj/item/weapon/book/manual/chef_recipes{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/obj/item/clothing/head/chefhat,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZaZ" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zba" = (
-/obj/structure/chair/stool,
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zbb" = (
-/obj/structure/table,
-/obj/item/weapon/folder,
-/obj/item/weapon/paper/hydroponics,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/toy/cards/deck,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zbc" = (
-/obj/structure/table,
-/obj/item/weapon/storage/pill_bottle/dice,
-/turf/open/floor/plasteel,
-/area/space)
-"Zbd" = (
-/obj/structure/chair/stool,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zbe" = (
-/obj/machinery/vending/coffee,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zbf" = (
-/obj/machinery/vending/sustenance{
-	desc = "A vending machine normally reserved for work camps.";
-	name = "\improper sustenance vendor";
-	product_slogans = "Enjoy your meal.;Enough calories to support any worker."
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zbg" = (
-/obj/structure/closet/secure_closet/collars,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zbh" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zbi" = (
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zbj" = (
-/obj/structure/flora/kirbyplants{
-	desc = "A plastic potted plant.";
-	layer = 4.1;
-	pixel_y = 3
-	},
-/obj/machinery/camera/motion{
-	c_tag = "Armory Motion Sensor";
-	name = "motion-sensitive security camera"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zbk" = (
-/obj/structure/filingcabinet/chestdrawer,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zbl" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/closet/secure_closet/lethalshots,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zbm" = (
-/obj/structure/closet/secure_closet/brig,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zbn" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/obj/structure/rack,
-/obj/item/weapon/storage/lockbox/loyalty,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"Zbo" = (
-/obj/structure/bed,
-/obj/item/weapon/bedsheet/red,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zbp" = (
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zbq" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/structure/bed,
-/obj/item/weapon/bedsheet/red,
-/obj/machinery/camera{
-	c_tag = "Security Dormitory";
-	network = list("SS13","Prison")
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zbr" = (
-/obj/machinery/airalarm{
-	dir = 4;
-	pixel_x = -23;
-	pixel_y = 0
-	},
-/obj/structure/closet/secure_closet/injection,
-/turf/open/floor/plasteel,
-/area/space)
-"Zbs" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zbt" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zbu" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
-	},
-/obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plasteel,
-/area/space)
-"Zbv" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/space)
-"Zbw" = (
-/obj/structure/flora/kirbyplants{
-	desc = "A plastic potted plant.";
-	layer = 4.1;
-	pixel_y = 3
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zbx" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zby" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zbz" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZbA" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZbB" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4";
-	tag = "90Curve"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZbC" = (
-/obj/machinery/hologram/holopad,
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZbD" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4";
-	tag = "90Curve"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4;
-	initialize_directions = 11
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZbE" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZbF" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZbG" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/turf/open/floor/plasteel{
-	icon_state = "freezerfloor"
-	},
-/area/space)
-"ZbH" = (
-/obj/machinery/shower{
-	dir = 8
-	},
-/obj/item/weapon/soap/nanotrasen,
-/turf/open/floor/plasteel{
-	icon_state = "freezerfloor"
-	},
-/area/space)
-"ZbI" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZbJ" = (
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZbK" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZbL" = (
-/obj/structure/bed,
-/obj/item/weapon/bedsheet/red,
-/obj/structure/window/reinforced{
-	layer = 4.1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZbM" = (
-/obj/machinery/door/window/southleft{
-	name = "Security Dormitory";
-	req_access_txt = "1"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZbN" = (
-/obj/machinery/door/window/brigdoor/eastright{
-	name = "Prisoner Transfer Accessories";
-	req_access_txt = "58"
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZbO" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZbP" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZbQ" = (
-/obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -3;
-	pixel_y = 6
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZbR" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/obj/machinery/light,
-/turf/open/floor/plasteel,
-/area/space)
-"ZbS" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1;
-	initialize_directions = 11
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZbT" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZbU" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZbV" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZbW" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
-	},
-/obj/machinery/light,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZbX" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZbY" = (
-/obj/machinery/door/window/westleft{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
-	name = "Unisex Showers";
-	req_access_txt = "0"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "freezerfloor"
-	},
-/area/space)
-"ZbZ" = (
-/turf/open/floor/plasteel{
-	icon_state = "freezerfloor"
-	},
-/area/space)
-"Zca" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/suit/armor/bulletproof,
-/obj/item/clothing/head/helmet/alt,
-/obj/item/clothing/head/helmet/alt,
-/obj/item/clothing/head/helmet/alt,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"Zcb" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"Zcc" = (
-/obj/structure/rack,
-/obj/item/weapon/shield/riot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/shield/riot,
-/obj/item/weapon/shield/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"Zcd" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/bodybags,
-/obj/item/weapon/storage/box/evidence{
-	pixel_x = 2;
-	pixel_y = -2
-	},
-/obj/item/weapon/storage/box/teargas{
-	pixel_x = 4;
-	pixel_y = -4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"Zce" = (
-/obj/structure/closet/ammunitionlocker,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"Zcf" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/gun/advtaser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/gun/advtaser,
-/obj/item/weapon/gun/energy/gun/advtaser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"Zcg" = (
-/obj/structure/closet/secure_closet/security/sec,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zch" = (
-/obj/effect/landmark{
-	name = "secequipment"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zci" = (
-/obj/structure/closet/secure_closet/security/sec,
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zcj" = (
-/obj/machinery/requests_console{
-	announcementConsole = 1;
-	department = "Head of Security's Desk";
-	departmentType = 5;
-	name = "Head of Security RC";
-	pixel_x = 0;
-	pixel_y = 30
-	},
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = -31
-	},
-/obj/machinery/suit_storage_unit/hos,
-/turf/open/floor/carpet,
-/area/space)
-"Zck" = (
-/obj/machinery/computer/secure_data,
-/turf/open/floor/carpet,
-/area/space)
-"Zcl" = (
-/obj/machinery/computer/security,
-/turf/open/floor/carpet,
-/area/space)
-"Zcm" = (
-/obj/machinery/computer/card/minor/hos,
-/turf/open/floor/carpet,
-/area/space)
-"Zcn" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 30;
-	pixel_y = 0
-	},
-/obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/badminka,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/shotglass,
-/turf/open/floor/carpet,
-/area/space)
-"Zco" = (
-/obj/structure/table,
-/obj/item/device/electropack,
-/obj/machinery/button/door{
-	id = "execution";
-	name = "Space door control";
-	pixel_x = 6;
-	pixel_y = -24;
-	req_access_txt = "58"
-	},
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zcp" = (
-/obj/structure/table,
-/obj/item/weapon/screwdriver,
-/obj/item/weapon/wrench,
-/obj/item/clothing/head/helmet,
-/obj/item/device/assembly/signaler,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zcq" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "Prisoner Transfer Centre APC";
-	pixel_y = -24
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zcr" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zcs" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zct" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "permacell3";
-	name = "cell blast door"
-	},
-/obj/machinery/door/airlock/glass{
-	id_tag = "permabolt3";
-	name = "Cell 3"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zcu" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall,
-/area/space)
-"Zcv" = (
-/obj/machinery/door/poddoor/preopen{
-	id = "permacell2";
-	name = "cell blast door"
-	},
-/obj/machinery/door/airlock/glass{
-	id_tag = "permabolt2";
-	name = "Cell 2"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zcw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall,
-/area/space)
-"Zcx" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "permacell1";
-	name = "cell blast door"
-	},
-/obj/machinery/door/airlock/glass{
-	id_tag = "permabolt1";
-	name = "Cell 1"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zcy" = (
-/obj/machinery/door/airlock{
-	name = "Unisex Restroom";
-	req_access_txt = "0"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "freezerfloor"
-	},
-/area/space)
-"Zcz" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZcA" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZcB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZcC" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZcD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	on = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZcE" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "armory";
-	name = "armory shutters"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZcF" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
-/obj/effect/landmark{
-	name = "secequipment"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZcG" = (
-/obj/machinery/newscaster/security_unit{
-	pixel_x = -30;
-	pixel_y = 0
-	},
-/obj/machinery/camera{
-	c_tag = "Head of Security's Office";
-	dir = 4;
-	network = list("SS13")
-	},
-/turf/open/floor/carpet,
-/area/space)
-"ZcH" = (
-/obj/structure/chair/comfy/black,
-/turf/open/floor/carpet,
-/area/space)
-"ZcI" = (
-/turf/open/floor/carpet,
-/area/space)
-"ZcJ" = (
-/obj/machinery/hologram/holopad,
-/turf/open/floor/carpet,
-/area/space)
-"ZcK" = (
-/obj/machinery/keycard_auth{
-	pixel_x = 24;
-	pixel_y = 10
-	},
-/obj/structure/table/wood,
-/obj/item/device/radio/off,
-/obj/item/device/taperecorder{
-	pixel_y = 0
-	},
-/turf/open/floor/carpet,
-/area/space)
-"ZcL" = (
-/obj/machinery/door/airlock/security{
-	aiControlDisabled = 0;
-	icon_state = "door_closed";
-	id_tag = null;
-	locked = 0;
-	name = "Prisoner Transfer Centre";
-	req_access = null;
-	req_access_txt = "2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZcM" = (
-/obj/structure/bed,
-/obj/machinery/camera{
-	c_tag = "Prison Cell 3";
-	network = list("SS13","Prison")
-	},
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. It looks like it has been modified to not broadcast.";
-	dir = 2;
-	name = "Prison Intercom (General)";
-	pixel_x = 0;
-	pixel_y = 24;
-	prison_radio = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZcN" = (
-/obj/structure/chair/stool,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/button/door{
-	id = "permabolt3";
-	name = "Cell Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 0;
-	pixel_y = 25;
-	req_access_txt = "0";
-	specialfunctions = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZcO" = (
-/obj/structure/bed,
-/obj/machinery/camera{
-	c_tag = "Prison Cell 2";
-	network = list("SS13","Prison")
-	},
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. It looks like it has been modified to not broadcast.";
-	dir = 2;
-	name = "Prison Intercom (General)";
-	pixel_x = 0;
-	pixel_y = 24;
-	prison_radio = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZcP" = (
-/obj/structure/chair/stool,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/button/door{
-	id = "permabolt2";
-	name = "Cell Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 0;
-	pixel_y = 25;
-	req_access_txt = "0";
-	specialfunctions = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZcQ" = (
-/obj/structure/bed,
-/obj/machinery/camera{
-	c_tag = "Prison Cell 1";
-	network = list("SS13","Prison")
-	},
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. It looks like it has been modified to not broadcast.";
-	dir = 2;
-	name = "Prison Intercom (General)";
-	pixel_x = 0;
-	pixel_y = 24;
-	prison_radio = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZcR" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZcS" = (
-/obj/structure/chair/stool,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/button/door{
-	id = "permabolt1";
-	name = "Cell Bolt Control";
-	normaldoorcontrol = 1;
-	pixel_x = 0;
-	pixel_y = 25;
-	req_access_txt = "0";
-	specialfunctions = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZcT" = (
-/obj/structure/sink{
-	icon_state = "sink";
-	dir = 8;
-	pixel_x = -12;
-	pixel_y = 2
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "freezerfloor"
-	},
-/area/space)
-"ZcU" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/ionrifle{
-	pin = /obj/item/device/firing_pin
-	},
-/obj/item/clothing/suit/armor/laserproof,
-/obj/item/clothing/head/helmet/laserproof,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZcV" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZcW" = (
-/obj/structure/rack,
-/obj/item/weapon/gun/energy/gun{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/gun,
-/obj/item/weapon/gun/energy/gun{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZcX" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZcY" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZcZ" = (
-/obj/item/weapon/gun/projectile/shotgun/riot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/weapon/gun/projectile/shotgun/riot,
-/obj/structure/guncase/shotgun,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"Zda" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/chemimp{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/item/weapon/storage/box/trackimp,
-/obj/item/weapon/storage/box/flashes{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"Zdb" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/seccarts{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/box/handcuffs,
-/obj/item/weapon/storage/box/flashbangs{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"Zdc" = (
-/obj/structure/closet/bombcloset,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zdd" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark{
-	name = "secequipment"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zde" = (
-/obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
-	on = 0;
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/device/radio/security,
-/turf/open/floor/carpet,
-/area/space)
-"Zdf" = (
-/obj/structure/table/wood,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/stamp/hos,
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/turf/open/floor/carpet,
-/area/space)
-"Zdg" = (
-/obj/structure/table/wood,
-/obj/machinery/recharger,
-/turf/open/floor/carpet,
-/area/space)
-"Zdh" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/obj/structure/table/wood,
-/obj/item/weapon/storage/box/seccarts{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/box/deputy,
-/obj/item/device/radio,
-/turf/open/floor/carpet,
-/area/space)
-"Zdi" = (
-/obj/machinery/door/airlock/external{
-	name = "Security External Airlock";
-	req_access_txt = "63"
-	},
-/turf/open/floor/plating,
-/area/space)
-"Zdj" = (
-/obj/effect/landmark{
-	name = "blobstart"
-	},
-/turf/open/floor/plasteel{
-	tag = "icon-plasma_dam (NORTH)";
-	icon_state = "plasma_dam";
-	dir = 1
-	},
-/area/space)
-"Zdk" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plating,
-/area/space)
-"Zdl" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
-/obj/machinery/flasher{
-	id = "PCell 3";
-	pixel_x = -28
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zdm" = (
-/obj/structure/table,
-/obj/item/weapon/paper,
-/obj/item/weapon/pen,
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zdn" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4;
-	initialize_directions = 11
-	},
-/turf/closed/wall,
-/area/space)
-"Zdo" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
-/obj/machinery/flasher{
-	id = "PCell 2";
-	pixel_x = -28
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zdp" = (
-/obj/structure/table,
-/obj/item/weapon/paper,
-/obj/item/weapon/pen,
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zdq" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
-/obj/machinery/flasher{
-	id = "PCell 1";
-	pixel_x = -28
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zdr" = (
-/obj/machinery/disposal/bin/toilet{
-	dir = 1
-	},
-/obj/effect/landmark{
-	name = "blobstart"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "freezerfloor"
-	},
-/area/space)
-"Zds" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/closed/wall/r_wall,
-/area/space)
-"Zdt" = (
-/obj/machinery/door/airlock/glass_security{
-	icon_state = "door_closed";
-	locked = 0;
-	name = "Armory";
-	req_access_txt = "3"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zdu" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zdv" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zdw" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zdx" = (
-/obj/structure/closet/l3closet/security,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zdy" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
-/turf/open/floor/carpet,
-/area/space)
-"Zdz" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/carpet,
-/area/space)
-"ZdA" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/carpet,
-/area/space)
-"ZdB" = (
-/obj/item/weapon/storage/secure/safe/HoS{
-	pixel_x = 35
-	},
-/obj/structure/closet/secure_closet/hos,
-/turf/open/floor/carpet,
-/area/space)
-"ZdC" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_x = -32;
-	pixel_y = 0
-	},
-/turf/open/floor/plating,
-/area/space)
-"ZdD" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "isolspess";
-	name = "space protection seal"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZdE" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "isolspess";
-	name = "space protection seal"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZdF" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "isolspess";
-	name = "space protection seal"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZdG" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "isolspess";
-	name = "space protection seal"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZdH" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plating{
-	icon_state = "warnplate"
-	},
-/area/space)
-"ZdI" = (
-/obj/machinery/door/airlock/glass_security{
-	name = "Long-Term Cell 3";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZdJ" = (
-/obj/machinery/door/airlock/glass_security{
-	name = "Long-Term Cell 2";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZdK" = (
-/obj/machinery/door/airlock/glass_security{
-	name = "Long-Term Cell 1";
-	req_access_txt = "2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZdL" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4";
-	tag = "90Curve"
-	},
-/obj/machinery/deployable/barrier,
-/obj/machinery/deployable/barrier,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZdM" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/table,
-/obj/item/key/security,
-/obj/item/weapon/storage/box/barriers,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZdN" = (
-/obj/structure/rack,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/item/weapon/storage/box/firingpins{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/weapon/storage/box/firingpins,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZdO" = (
-/obj/structure/rack,
-/obj/item/clothing/mask/gas{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZdP" = (
-/obj/structure/table,
-/obj/machinery/syndicatebomb/training,
-/obj/item/weapon/gun/energy/laser/practice,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZdQ" = (
-/obj/machinery/suit_storage_unit/security,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZdR" = (
-/obj/machinery/suit_storage_unit/security,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZdS" = (
-/obj/machinery/vending/security,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZdT" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Head of Security's Office APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/carpet,
-/area/space)
-"ZdU" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/carpet,
-/area/space)
-"ZdV" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/carpet,
-/area/space)
-"ZdW" = (
-/obj/machinery/light_switch{
-	pixel_y = -23
-	},
-/turf/open/floor/carpet,
-/area/space)
-"ZdX" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk,
-/turf/open/floor/carpet,
-/area/space)
-"ZdY" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "isolspess";
-	name = "space protection seal"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/cable/yellow,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZdZ" = (
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. It looks like it has been modified to not broadcast.";
-	dir = 2;
-	name = "Prison Intercom (General)";
-	pixel_x = 0;
-	pixel_y = 0;
-	prison_radio = 1
-	},
-/obj/structure/table/reinforced,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zea" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
-	},
-/obj/structure/chair/stool,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zeb" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/disposal/bin/toilet{
-	layer = 3.5;
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zec" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "isolspess";
-	name = "space protection seal"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zed" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zee" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "isolaccess";
-	name = "space protection seal"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zef" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel{
-	dir = 9;
-	icon_state = "escape"
-	},
-/area/space)
-"Zeg" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
-	dir = 1
-	},
-/area/space)
-"Zeh" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/plasteel{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
-	dir = 1
-	},
-/area/space)
-"Zei" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8;
-	initialize_directions = 11
-	},
-/turf/open/floor/plasteel{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
-	dir = 1
-	},
-/area/space)
-"Zej" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
-	dir = 1
-	},
-/area/space)
-"Zek" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Permabrig APC";
-	pixel_y = 24
-	},
-/turf/open/floor/plasteel{
-	icon_state = "redcorner";
-	dir = 1
-	},
-/area/space)
-"Zel" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zem" = (
-/obj/machinery/button/door{
-	id = "permacell3";
-	name = "Cell 3 Lockdown";
-	pixel_x = -4;
-	pixel_y = 25;
-	req_access_txt = "2"
-	},
-/obj/machinery/button/flasher{
-	id = "PCell 3";
-	pixel_x = 6;
-	pixel_y = 24
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "redcorner";
-	dir = 4
-	},
-/area/space)
-"Zen" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching Prison Wing holding areas.";
-	name = "Prison Monitor";
-	network = list("Prison");
-	pixel_x = 0;
-	pixel_y = 30
-	},
-/obj/machinery/camera{
-	c_tag = "Prison Hallway West";
-	network = list("SS13","Prison")
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zeo" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "redcorner";
-	dir = 1
-	},
-/area/space)
-"Zep" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1;
-	initialize_directions = 11
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zeq" = (
-/obj/machinery/button/door{
-	id = "permacell2";
-	name = "Cell 2 Lockdown";
-	pixel_x = -4;
-	pixel_y = 25;
-	req_access_txt = "2"
-	},
-/obj/machinery/button/flasher{
-	id = "PCell 2";
-	pixel_x = 6;
-	pixel_y = 24
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "redcorner";
-	dir = 4
-	},
-/area/space)
-"Zer" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching Prison Wing holding areas.";
-	name = "Prison Monitor";
-	network = list("Prison");
-	pixel_x = 0;
-	pixel_y = 30
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zes" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zet" = (
-/obj/machinery/button/door{
-	id = "permacell1";
-	name = "Cell 1 Lockdown";
-	pixel_x = -4;
-	pixel_y = 25;
-	req_access_txt = "2"
-	},
-/obj/machinery/button/flasher{
-	id = "PCell 1";
-	pixel_x = 6;
-	pixel_y = 24
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "redcorner";
-	dir = 4
-	},
-/area/space)
-"Zeu" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zev" = (
-/obj/machinery/firealarm{
-	dir = 2;
-	pixel_y = 24
-	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Prison Wing APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 5
-	},
-/area/space)
-"Zew" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/obj/machinery/deployable/barrier,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"Zex" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel{
-	dir = 9;
-	icon_state = "warning"
-	},
-/area/space)
-"Zey" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
-	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "warning"
-	},
-/area/space)
-"Zez" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "warning"
-	},
-/area/space)
-"ZeA" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "warning"
-	},
-/area/space)
-"ZeB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "warning"
-	},
-/area/space)
-"ZeC" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "warning"
-	},
-/area/space)
-"ZeD" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	tag = "icon-manifold-r-f (EAST)";
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	tag = ""
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	dir = 5;
-	icon_state = "warning"
-	},
-/area/space)
-"ZeE" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor{
-	base_state = "rightsecure";
-	dir = 8;
-	icon_state = "rightsecure";
-	name = "Armory Desk";
-	req_access_txt = "3"
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZeF" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZeG" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZeH" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 30;
-	pixel_y = 0
-	},
-/obj/machinery/camera{
-	c_tag = "Security Storage";
-	dir = 8;
-	network = list("SS13")
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZeI" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZeJ" = (
-/obj/machinery/door/airlock/glass_command{
-	name = "Head of Security";
-	req_access_txt = "58"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/carpet,
-/area/space)
-"ZeK" = (
-/obj/structure/grille,
-/obj/structure/disposalpipe/segment,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZeL" = (
-/obj/structure/table,
-/obj/item/stack/packageWrap,
-/obj/item/weapon/pen,
-/turf/open/floor/plasteel,
-/area/space)
-"ZeM" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk,
-/turf/open/floor/plasteel{
-	dir = 5;
-	icon_state = "warning"
-	},
-/area/space)
-"ZeN" = (
-/obj/machinery/camera{
-	c_tag = "Security Escape Pod";
-	dir = 4;
-	network = list("SS13")
-	},
-/turf/open/floor/plating,
-/area/space)
-"ZeO" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "isolspess";
-	name = "space protection seal"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/cable/yellow,
-/obj/machinery/flasher{
-	id = "ICell";
-	pixel_x = -24;
-	range = 4
-	},
-/obj/machinery/camera/emp_proof{
-	c_tag = "Solitary";
-	dir = 4;
-	network = list("SS13");
-	pixel_y = -10
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZeP" = (
-/obj/effect/landmark{
-	name = "blobstart"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZeQ" = (
-/obj/machinery/door/airlock/glass_security{
-	name = "Isolation Cell";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZeR" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4";
-	tag = "90Curve"
-	},
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "escape"
-	},
-/area/space)
-"ZeS" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZeT" = (
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZeU" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8";
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZeV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZeW" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel,
-/area/space)
-"ZeX" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/space)
-"ZeY" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/space)
-"ZeZ" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zfa" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/camera{
-	c_tag = "Prison Hallway East";
-	dir = 1;
-	network = list("SS13","Prison");
-	pixel_x = 0;
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zfb" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zfc" = (
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 27
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 4
-	},
-/area/space)
-"Zfd" = (
-/obj/machinery/flasher/portable,
-/obj/machinery/camera{
-	c_tag = "Armory";
-	dir = 4;
-	network = list("SS13")
-	},
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"Zfe" = (
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4";
-	tag = "90Curve"
-	},
-/turf/open/floor/plasteel{
-	dir = 10;
-	icon_state = "warning"
-	},
-/area/space)
-"Zff" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "warning"
-	},
-/area/space)
-"Zfg" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "warning"
-	},
-/area/space)
-"Zfh" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "warning"
-	},
-/area/space)
-"Zfi" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8";
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "warningcorner";
-	dir = 1
-	},
-/area/space)
-"Zfj" = (
-/turf/open/floor/plasteel{
-	icon_state = "warningcorner";
-	dir = 2
-	},
-/area/space)
-"Zfk" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/obj/structure/cable/yellow,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Armory APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
-/obj/vehicle/secway,
-/turf/open/floor/plasteel{
-	dir = 6;
-	icon_state = "warning"
-	},
-/area/space)
-"Zfl" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/space)
-"Zfm" = (
-/obj/structure/closet/wardrobe/red,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zfn" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4;
-	initialize_directions = 11
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zfo" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/item/device/radio/intercom{
-	freerange = 0;
-	frequency = 1459;
-	name = "Station Intercom (General)";
-	pixel_x = 29
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zfp" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 9
-	},
-/area/space)
-"Zfq" = (
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zfr" = (
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zfs" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zft" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zfu" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zfv" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 5
-	},
-/area/space)
-"Zfw" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	dir = 4;
-	icon_state = "warning"
-	},
-/area/space)
-"Zfx" = (
-/obj/machinery/door/airlock/external{
-	name = "Security Escape Pod";
-	req_access_txt = "63"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/space)
-"Zfy" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/space)
-"Zfz" = (
-/obj/machinery/door/airlock/external{
-	name = "Security Escape Pod";
-	req_access_txt = "63"
-	},
-/turf/open/floor/plating,
-/area/space)
-"ZfA" = (
-/obj/structure/bed,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZfB" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZfC" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/sink{
-	dir = 4;
-	icon_state = "sink";
-	pixel_x = 11;
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZfD" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "isolspess";
-	name = "space protection seal"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZfE" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZfF" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "isolaccess";
-	name = "space protection seal"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZfG" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/button/flasher{
-	id = "ICell";
-	pixel_x = 0;
-	pixel_y = -23;
-	req_access_txt = "2"
-	},
-/obj/machinery/button/door{
-	id = "isolspess";
-	name = "Space-side Blast Doors";
-	pixel_x = -6;
-	pixel_y = -32;
-	req_access_txt = "2"
-	},
-/obj/machinery/button/door{
-	id = "isolaccess";
-	name = "Station-side Blast Doors";
-	pixel_x = 6;
-	pixel_y = -32;
-	req_access_txt = "2"
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1;
-	initialize_directions = 11
-	},
-/turf/open/floor/plasteel{
-	dir = 10;
-	icon_state = "escape"
-	},
-/area/space)
-"ZfH" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "escape"
-	},
-/area/space)
-"ZfI" = (
-/obj/machinery/button/flasher{
-	id = "insaneflash";
-	pixel_y = -26
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "escape"
-	},
-/area/space)
-"ZfJ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/obj/machinery/light,
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "escape"
-	},
-/area/space)
-"ZfK" = (
-/obj/structure/closet/secure_closet/brig,
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "escape"
-	},
-/area/space)
-"ZfL" = (
-/obj/structure/table,
-/obj/item/weapon/restraints/handcuffs,
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "escape"
-	},
-/area/space)
-"ZfM" = (
-/turf/open/floor/plasteel{
-	icon_state = "whitehall";
-	dir = 2
-	},
-/area/space)
-"ZfN" = (
-/obj/structure/table,
-/obj/item/device/electropack,
-/turf/open/floor/plasteel{
-	icon_state = "whitehall";
-	dir = 2
-	},
-/area/space)
-"ZfO" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/obj/item/weapon/razor{
-	pixel_x = -6
-	},
-/obj/item/weapon/reagent_containers/syringe/epinephrine{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/turf/open/floor/plasteel{
-	icon_state = "whitehall";
-	dir = 2
-	},
-/area/space)
-"ZfP" = (
-/obj/structure/table,
-/obj/item/device/assembly/signaler,
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "escape"
-	},
-/area/space)
-"ZfQ" = (
-/obj/structure/closet/secure_closet/brig{
-	anchored = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"ZfR" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/glass_security{
-	name = "Prison Wing";
-	req_access_txt = "2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 9
-	},
-/area/space)
-"ZfS" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/glass_security{
-	name = "Prison Wing";
-	req_access_txt = "2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 5
-	},
-/area/space)
-"ZfT" = (
-/obj/machinery/flasher/portable,
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
-/obj/structure/window/reinforced,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZfU" = (
-/obj/machinery/flasher/portable,
-/obj/structure/window/reinforced,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZfV" = (
-/obj/structure/closet{
-	name = "Contraband Locker"
-	},
-/obj/structure/window/reinforced,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZfW" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
-/obj/structure/window/reinforced,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZfX" = (
-/obj/structure/rack,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs{
-	pixel_x = -3;
-	pixel_y = -2
-	},
-/obj/item/clothing/glasses/sunglasses{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/sunglasses,
-/obj/structure/window/reinforced,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"ZfY" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/window/southleft{
-	name = "Armory";
-	req_access_txt = "3"
-	},
-/turf/open/floor/plasteel{
-	dir = 10;
-	icon_state = "warning"
-	},
-/area/space)
-"ZfZ" = (
-/obj/machinery/door/window/southleft{
-	base_state = "right";
-	icon_state = "right";
-	name = "Armory";
-	req_access_txt = "3"
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/turf/open/floor/plasteel{
-	dir = 6;
-	icon_state = "warning"
-	},
-/area/space)
-"Zga" = (
-/obj/structure/reagent_dispensers/peppertank,
-/turf/closed/wall,
-/area/space)
-"Zgb" = (
-/obj/structure/grille,
-/obj/structure/sign/securearea{
-	pixel_x = -32
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zgc" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/door/airlock/glass_security{
-	name = "Equipment Room";
-	req_access_txt = "1"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zgd" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 8
-	},
-/area/space)
-"Zge" = (
-/obj/structure/table,
-/obj/item/weapon/restraints/handcuffs,
-/obj/item/device/assembly/timer,
-/turf/open/floor/plasteel,
-/area/space)
-"Zgf" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/effect/landmark/start{
-	name = "Head of Security"
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zgg" = (
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel,
-/area/space)
-"Zgh" = (
-/obj/structure/table,
-/obj/item/device/radio/off,
-/obj/item/weapon/screwdriver{
-	pixel_y = 10
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zgi" = (
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zgj" = (
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 4
-	},
-/area/space)
-"Zgk" = (
-/obj/structure/sign/pods{
-	pixel_x = 32;
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel{
-	dir = 6;
-	icon_state = "warning"
-	},
-/area/space)
-"Zgl" = (
-/obj/structure/closet/emcloset,
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/turf/open/floor/plating,
-/area/space)
-"Zgm" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "isolspess";
-	name = "space protection seal"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zgn" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "isolspess";
-	name = "space protection seal"
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zgo" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "isolspess";
-	name = "space protection seal"
-	},
-/obj/machinery/light/small,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zgp" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "isolspess";
-	name = "space protection seal"
-	},
-/obj/structure/cable/yellow,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zgq" = (
-/obj/machinery/door/airlock/glass_security{
-	name = "Insanity Ward";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/space)
-"Zgr" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 1;
-	name = "Firelock North"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/sign/securearea{
-	pixel_x = -32;
-	pixel_y = 0
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "Prison Gate";
-	name = "prison blast door"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "delivery";
-	name = "floor"
-	},
-/area/space)
-"Zgs" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 1;
-	name = "Firelock North"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "Prison Gate";
-	name = "prison blast door"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "delivery";
-	name = "floor"
-	},
-/area/space)
-"Zgt" = (
-/obj/machinery/requests_console{
-	department = "Security";
-	departmentType = 5;
-	pixel_x = -30;
-	pixel_y = 3
-	},
-/obj/machinery/camera{
-	c_tag = "Brig Control Room";
-	dir = 4
-	},
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/obj/structure/rack,
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/machinery/light_switch{
-	pixel_x = -20;
-	pixel_y = -10
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zgu" = (
-/obj/machinery/computer/prisoner,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zgv" = (
-/obj/machinery/computer/security,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zgw" = (
-/obj/machinery/computer/secure_data,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zgx" = (
-/obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zgy" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zgz" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZgA" = (
-/obj/structure/table,
-/obj/item/device/radio,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 9
-	},
-/area/space)
-"ZgB" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"ZgC" = (
-/obj/machinery/requests_console{
-	department = "Security";
-	departmentType = 5;
-	pixel_y = 30
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"ZgD" = (
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/turf/open/floor/plasteel{
-	icon_state = "redcorner";
-	dir = 1
-	},
-/area/space)
-"ZgE" = (
-/obj/structure/table,
-/obj/item/device/assembly/flash/handheld,
-/obj/item/device/radio/security,
-/turf/open/floor/plasteel,
-/area/space)
-"ZgF" = (
-/obj/machinery/hologram/holopad,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZgG" = (
-/obj/structure/table,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen,
-/turf/open/floor/plasteel,
-/area/space)
-"ZgH" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZgI" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 4
-	},
-/area/space)
-"ZgJ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/bodycontainer/morgue,
-/turf/open/floor/plasteel{
-	dir = 9;
-	icon_state = "warnwhite"
-	},
-/area/space)
-"ZgK" = (
-/turf/open/floor/plasteel{
-	icon_state = "warnwhite";
-	dir = 1
-	},
-/area/space)
-"ZgL" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/bed,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/mask/muzzle,
-/obj/item/clothing/glasses/sunglasses/blindfold,
-/turf/open/floor/plasteel{
-	icon_state = "warnwhite";
-	dir = 5
-	},
-/area/space)
-"ZgM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 2;
-	on = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZgN" = (
-/obj/machinery/camera{
-	c_tag = "Brig Interrogation";
-	dir = 2;
-	network = list("SS13","Interrogation")
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZgO" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZgP" = (
-/obj/item/weapon/cigbutt,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZgQ" = (
-/obj/structure/table,
-/obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 1;
-	pixel_y = 1
-	},
-/obj/item/weapon/storage/firstaid/brute{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/turf/open/floor/plasteel{
-	dir = 9;
-	icon_state = "whitered"
-	},
-/area/space)
-"ZgR" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	canhear_range = 3;
-	frequency = 1482;
-	name = "Brig Medical Intercom";
-	pixel_x = 0;
-	pixel_y = 20
-	},
-/obj/structure/table,
-/obj/item/weapon/storage/box/syringes,
-/obj/item/weapon/reagent_containers/glass/bottle/epinephrine,
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "whitered"
-	},
-/area/space)
-"ZgS" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Brig Medical APC";
-	pixel_y = 24
-	},
-/obj/structure/closet/l3closet/security,
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "whitered"
-	},
-/area/space)
-"ZgT" = (
-/obj/machinery/camera{
-	c_tag = "Brig Evidence Storage"
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	dir = 1;
-	icon_state = "whitered"
-	},
-/area/space)
-"ZgU" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/obj/structure/table,
-/obj/item/weapon/storage/box/bodybags,
-/turf/open/floor/plasteel{
-	dir = 5;
-	icon_state = "whitered"
-	},
-/area/space)
-"ZgV" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 9
-	},
-/area/space)
-"ZgW" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 5
-	},
-/area/space)
-"ZgX" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZgY" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZgZ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zha" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zhb" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/hologram/holopad,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zhc" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zhd" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zhe" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zhf" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/table,
-/obj/item/weapon/storage/fancy/donut_box,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 8
-	},
-/area/space)
-"Zhg" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zhh" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1;
-	initialize_directions = 11
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zhi" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zhj" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zhk" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/table,
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/turf/open/floor/plasteel,
-/area/space)
-"Zhl" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/space)
-"Zhm" = (
-/obj/structure/disposalpipe/sortjunction{
-	dir = 4;
-	icon_state = "pipe-j2s";
-	sortType = 8
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zhn" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zho" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/effect/landmark/start{
-	name = "Security Officer"
-	},
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zhp" = (
-/obj/structure/disposalpipe/sortjunction{
-	dir = 4;
-	icon_state = "pipe-j2s";
-	sortType = 7
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 4
-	},
-/area/space)
-"Zhq" = (
-/obj/machinery/door/window/eastright{
-	base_state = "left";
-	dir = 8;
-	icon_state = "left";
-	name = "Security Delivery";
-	req_access_txt = "1"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "delivery"
-	},
-/area/space)
-"Zhr" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	freq = 1400;
-	location = "Security"
-	},
-/obj/structure/plasticflaps{
-	opacity = 1
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "bot"
-	},
-/area/space)
-"Zhs" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/landmark{
-	name = "blobstart"
-	},
-/turf/open/floor/plating,
-/area/space)
-"Zht" = (
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/space)
-"Zhu" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/obj/structure/bodycontainer/morgue,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/space)
-"Zhv" = (
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/space)
-"Zhw" = (
-/obj/machinery/flasher{
-	id = "insaneflash";
-	pixel_x = 26
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
-	},
-/obj/structure/bed,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/mask/muzzle,
-/obj/item/clothing/glasses/sunglasses/blindfold,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/space)
-"Zhx" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zhy" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zhz" = (
-/obj/structure/table,
-/obj/item/device/flashlight/lamp,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZhA" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZhB" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Interrogation APC";
-	pixel_x = 25
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZhC" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/space)
-"ZhD" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/obj/structure/table,
-/obj/structure/table,
-/obj/item/weapon/storage/box/masks{
-	pixel_y = 3
-	},
-/obj/item/clothing/gloves/color/latex,
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "whitered"
-	},
-/area/space)
-"ZhE" = (
-/turf/open/floor/plasteel{
-	icon_state = "white";
-	temperature = 273.15
-	},
-/area/space)
-"ZhF" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "white";
-	temperature = 273.15
-	},
-/area/space)
-"ZhG" = (
-/obj/machinery/hologram/holopad,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "white";
-	temperature = 273.15
-	},
-/area/space)
-"ZhH" = (
-/obj/structure/bed/roller,
-/turf/open/floor/plasteel{
-	dir = 4;
-	icon_state = "whitered"
-	},
-/area/space)
-"ZhI" = (
-/obj/machinery/door/airlock/glass_security{
-	name = "Brig Control";
-	req_access_txt = "3"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZhJ" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZhK" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZhL" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZhM" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZhN" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZhO" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZhP" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZhQ" = (
-/obj/machinery/door/airlock/glass_security{
-	name = "Brig Control";
-	req_access_txt = "3"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZhR" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 8
-	},
-/area/space)
-"ZhS" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZhT" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZhU" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZhV" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (NORTH)";
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZhW" = (
-/obj/structure/disposalpipe/junction{
-	icon_state = "pipe-y";
-	dir = 1
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/chair,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4";
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZhX" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZhY" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZhZ" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Security Office APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 4
-	},
-/area/space)
-"Zia" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	name = "Secure Subsystem Pump";
-	on = 1
-	},
-/turf/open/floor/plating,
-/area/space)
-"Zib" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/space)
-"Zic" = (
-/obj/structure/bodycontainer/morgue,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/space)
-"Zid" = (
-/obj/effect/landmark{
-	name = "blobstart"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/space)
-"Zie" = (
-/obj/structure/bed,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/glasses/sunglasses/blindfold,
-/obj/item/clothing/mask/muzzle,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/space)
-"Zif" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zig" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zih" = (
-/obj/structure/table,
-/obj/item/weapon/folder/red,
-/obj/item/device/taperecorder{
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zii" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zij" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zik" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/table,
-/obj/item/weapon/defibrillator/loaded,
-/turf/open/floor/plasteel{
-	dir = 10;
-	icon_state = "whitered"
-	},
-/area/space)
-"Zil" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "whitered"
-	},
-/area/space)
-"Zim" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel{
-	tag = "icon-whitered";
-	icon_state = "whitered";
-	dir = 2
-	},
-/area/space)
-"Zin" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
-/turf/open/floor/plasteel{
-	tag = "icon-whitered";
-	icon_state = "whitered";
-	dir = 2
-	},
-/area/space)
-"Zio" = (
-/obj/structure/bed/roller,
-/turf/open/floor/plasteel{
-	dir = 6;
-	icon_state = "whitered"
-	},
-/area/space)
-"Zip" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 9
-	},
-/area/space)
-"Ziq" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zir" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/closet/secure_closet/warden,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zis" = (
-/obj/structure/table,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zit" = (
-/obj/structure/chair/office/dark,
-/obj/effect/landmark/start{
-	name = "Warden"
-	},
-/obj/machinery/button/door{
-	id = "Prison Gate";
-	name = "Prison Wing Lockdown";
-	pixel_x = -38;
-	pixel_y = 8;
-	req_access_txt = "2"
-	},
-/obj/machinery/button/door{
-	id = "Secure Gate";
-	name = "Cell Shutters";
-	pixel_x = -27;
-	pixel_y = 8;
-	req_access_txt = "0"
-	},
-/obj/machinery/button/door{
-	id = "briggate";
-	name = "Desk Shutters";
-	pixel_x = -27;
-	pixel_y = -2;
-	req_access_txt = "0"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Ziu" = (
-/obj/structure/table,
-/obj/item/device/radio/intercom{
-	dir = 4;
-	name = "Station Intercom (General)";
-	pixel_x = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Ziv" = (
-/obj/structure/table,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/pen,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Ziw" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/device/radio/security{
-	pixel_x = -8
-	},
-/obj/item/device/radio{
-	pixel_x = 8
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zix" = (
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "Brig Control APC";
-	pixel_y = -24
-	},
-/obj/structure/cable/yellow,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Ziy" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/newscaster/security_unit{
-	pixel_y = -27
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Ziz" = (
-/obj/structure/grille,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/structure/cable/yellow,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZiA" = (
-/obj/structure/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -24
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 10
-	},
-/area/space)
-"ZiB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"ZiC" = (
-/obj/structure/noticeboard{
-	dir = 1;
-	pixel_y = -27
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"ZiD" = (
-/obj/machinery/light_switch{
-	pixel_y = -23
-	},
-/obj/structure/flora/kirbyplants,
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"ZiE" = (
-/obj/machinery/light,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"ZiF" = (
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"ZiG" = (
-/obj/machinery/camera{
-	c_tag = "Security Office";
-	dir = 1;
-	network = list("SS13")
-	},
-/obj/machinery/computer/secure_data,
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"ZiH" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
-/obj/machinery/computer/security,
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"ZiI" = (
-/obj/structure/filingcabinet,
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"ZiJ" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 5;
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"ZiK" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"ZiL" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 6
-	},
-/area/space)
-"ZiM" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Security Maintenance";
-	req_access_txt = "63"
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/space)
-"ZiN" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/space)
-"ZiO" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/space)
-"ZiP" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/space)
-"ZiQ" = (
-/obj/machinery/camera{
-	c_tag = "Prison Sanitatium";
-	dir = 1;
-	network = list("SS13","Prison");
-	pixel_x = 0;
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/space)
-"ZiR" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/syringe,
-/turf/open/floor/plasteel{
-	icon_state = "white"
-	},
-/area/space)
-"ZiS" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZiT" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 1;
-	canhear_range = 4;
-	frequency = 1482;
-	listening = 0;
-	name = "Interrogation Intercom";
-	pixel_x = 0;
-	pixel_y = -25
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZiU" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4;
-	initialize_directions = 11
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZiV" = (
-/obj/machinery/door/airlock/security{
-	name = "Brig Medical";
-	req_access = null;
-	req_access_txt = "63"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"ZiW" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZiX" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZiY" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZiZ" = (
-/obj/structure/table/reinforced,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	name = "Armory Desk";
-	req_access_txt = "3"
-	},
-/obj/machinery/door/window/southleft{
-	name = "Reception Desk";
-	req_access_txt = "63"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "showroomfloor"
-	},
-/area/space)
-"Zja" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/security{
-	name = "Security Office";
-	req_access = null;
-	req_access_txt = "63"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zjb" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/closed/wall/r_wall,
-/area/space)
-"Zjc" = (
-/obj/machinery/door/airlock/security{
-	name = "Interrogation";
-	req_access = null;
-	req_access_txt = "63"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zjd" = (
-/obj/machinery/recharge_station,
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 8
-	},
-/area/space)
-"Zje" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 5;
-	pixel_y = 30
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zjf" = (
-/obj/machinery/camera{
-	c_tag = "Brig West"
-	},
-/turf/open/floor/plasteel{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
-	dir = 1
-	},
-/area/space)
-"Zjg" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
-	dir = 1
-	},
-/area/space)
-"Zjh" = (
-/obj/machinery/airalarm{
-	pixel_y = 23
-	},
-/turf/open/floor/plasteel{
-	tag = "icon-escape (NORTH)";
-	icon_state = "escape";
-	dir = 1
-	},
-/area/space)
-"Zji" = (
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zjj" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "redcorner";
-	dir = 1
-	},
-/area/space)
-"Zjk" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 8;
-	initialize_directions = 11
-	},
-/turf/open/floor/plasteel{
-	icon_state = "redcorner";
-	dir = 4
-	},
-/area/space)
-"Zjl" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 8;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zjm" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zjn" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	on = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zjo" = (
-/obj/structure/sign/goldenplaque{
-	pixel_y = 32
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zjp" = (
-/obj/machinery/camera{
-	c_tag = "Brig East"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zjq" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zjr" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zjs" = (
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 5
-	},
-/area/space)
-"Zjt" = (
-/obj/machinery/computer/prisoner,
-/turf/open/floor/plasteel,
-/area/space)
-"Zju" = (
-/obj/machinery/computer/security{
-	name = "Labor Camp Monitoring";
-	network = list("Labor")
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zjv" = (
-/obj/machinery/camera{
-	c_tag = "Labor Shuttle Dock North"
-	},
-/obj/structure/table,
-/obj/item/weapon/storage/box/prisoner,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zjw" = (
-/obj/structure/sign/securearea{
-	pixel_x = 32;
-	pixel_y = 0
-	},
-/obj/structure/closet/emcloset,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zjx" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Brig APC";
-	pixel_y = 24
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 9
-	},
-/area/space)
-"Zjy" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"Zjz" = (
-/obj/machinery/firealarm{
-	dir = 2;
-	pixel_y = 24
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 1
-	},
-/area/space)
-"ZjA" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "redcorner";
-	dir = 1
-	},
-/area/space)
-"ZjB" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	tag = "icon-manifold-r-f (NORTH)";
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZjC" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZjD" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8";
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZjE" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	tag = "icon-manifold-r-f (NORTH)";
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZjF" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	req_access_txt = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZjG" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/space)
-"ZjH" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	tag = "icon-manifold-r-f (NORTH)";
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZjI" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel,
-/area/space)
-"ZjJ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZjK" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZjL" = (
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/space)
-"ZjM" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 4
-	},
-/area/space)
-"ZjN" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4;
-	name = "Firelock East"
-	},
-/obj/machinery/door/airlock/security{
-	name = "Brig";
-	req_access = null;
-	req_access_txt = "63; 42"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZjO" = (
-/obj/machinery/light{
-	icon_state = "tube1";
-	dir = 8
-	},
-/turf/open/floor/plasteel{
-	icon_state = "warningcorner";
-	dir = 1
-	},
-/area/space)
-"ZjP" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZjQ" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/space)
-"ZjR" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZjS" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4;
-	name = "Firelock East"
-	},
-/obj/machinery/door/airlock/security{
-	name = "Labor Shuttle";
-	req_access = null;
-	req_access_txt = "2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZjT" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8";
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 8
-	},
-/area/space)
-"ZjU" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8";
-	tag = ""
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8";
-	tag = ""
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZjV" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "redcorner"
-	},
-/area/space)
-"ZjW" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"ZjX" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "redcorner"
-	},
-/area/space)
-"ZjY" = (
-/obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "redcorner"
-	},
-/area/space)
-"ZjZ" = (
-/obj/machinery/light,
-/obj/machinery/door_timer{
-	id = "Cell 1";
-	name = "Cell 1";
-	pixel_y = -32
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"Zka" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "redcorner"
-	},
-/area/space)
-"Zkb" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (NORTH)";
-	dir = 1
-	},
-/turf/open/floor/plasteel{
-	dir = 2;
-	icon_state = "redcorner"
-	},
-/area/space)
-"Zkc" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/door_timer{
-	id = "Cell 2";
-	name = "Cell 2";
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"Zkd" = (
-/obj/machinery/camera{
-	c_tag = "Brig Central";
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/door_timer{
-	id = "Cell 3";
-	name = "Cell 3";
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"Zke" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"Zkf" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 9
-	},
-/area/space)
-"Zkg" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 5
-	},
-/area/space)
-"Zkh" = (
-/obj/machinery/light,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/door_timer{
-	id = "Cell 4";
-	name = "Cell 4";
-	pixel_y = -32
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"Zki" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "redcorner"
-	},
-/area/space)
-"Zkj" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (NORTH)";
-	dir = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 4
-	},
-/area/space)
-"Zkk" = (
-/obj/structure/grille,
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
-	pixel_y = 32
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zkl" = (
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "warning"
-	},
-/area/space)
-"Zkm" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zkn" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/space)
-"Zko" = (
-/obj/machinery/light_switch{
-	pixel_x = 27
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (EAST)";
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"Zkp" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "freezerfloor"
-	},
-/area/space)
-"Zkq" = (
-/obj/machinery/door/window/northright{
-	name = "Evidence Storage";
-	req_access_txt = "63"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0;
-	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "freezerfloor"
-	},
-/area/space)
-"Zkr" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zks" = (
-/obj/machinery/door/window/brigdoor{
-	id = "Cell 1";
-	name = "Cell 1";
-	req_access_txt = "2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"Zkt" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zku" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/closed/wall,
-/area/space)
-"Zkv" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zkw" = (
-/obj/machinery/door/window/brigdoor{
-	id = "Cell 2";
-	name = "Cell 2";
-	req_access_txt = "2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"Zkx" = (
-/obj/machinery/door/window/brigdoor{
-	id = "Cell 3";
-	name = "Cell 3";
-	req_access_txt = "2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"Zky" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zkz" = (
-/obj/machinery/door/airlock/glass_security{
-	name = "Brig Desk";
-	req_access_txt = "1"
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZkA" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/space)
-"ZkB" = (
-/obj/machinery/door/airlock/glass_security{
-	id_tag = "innerbrig";
-	name = "Brig";
-	req_access_txt = "63"
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 9
-	},
-/area/space)
-"ZkC" = (
-/obj/machinery/door/airlock/glass_security{
-	id_tag = "innerbrig";
-	name = "Brig";
-	req_access_txt = "63"
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 5
-	},
-/area/space)
-"ZkD" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZkE" = (
-/obj/machinery/door/window/brigdoor{
-	id = "Cell 4";
-	name = "Cell 4";
-	req_access_txt = "2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "red"
-	},
-/area/space)
-"ZkF" = (
-/obj/structure/grille,
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZkG" = (
-/obj/machinery/door/airlock/external{
-	name = "Labor Camp Shuttle Airlock";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plating,
-/area/space)
-"ZkH" = (
-/turf/open/floor/plating,
-/area/space)
-"ZkI" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/space)
-"ZkJ" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/space)
-"ZkK" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
-/obj/machinery/airalarm{
-	dir = 4;
-	icon_state = "alarm0";
-	pixel_x = -22
-	},
-/turf/open/floor/plasteel{
-	icon_state = "freezerfloor"
-	},
-/area/space)
-"ZkL" = (
-/obj/structure/cable/yellow,
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "Holding Cell APC";
-	pixel_y = -24
-	},
-/turf/open/floor/plasteel{
-	icon_state = "freezerfloor"
-	},
-/area/space)
-"ZkM" = (
-/obj/structure/closet{
-	name = "Evidence Closet"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "freezerfloor"
-	},
-/area/space)
-"ZkN" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. It looks like it has been modified to not broadcast.";
-	dir = 2;
-	name = "Prison Intercom (General)";
-	pixel_x = -25;
-	pixel_y = -2;
-	prison_radio = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZkO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZkP" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 1;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. It looks like it has been modified to not broadcast.";
-	dir = 2;
-	name = "Prison Intercom (General)";
-	pixel_x = -25;
-	pixel_y = -2;
-	prison_radio = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZkQ" = (
-/obj/effect/landmark/event_spawn,
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZkR" = (
-/obj/machinery/button/door{
-	id = "briggate";
-	name = "Desk Shutters";
-	pixel_x = -26;
-	pixel_y = 6;
-	req_access_txt = "0"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/button/flasher{
-	id = "brigentry";
-	pixel_x = -28;
-	pixel_y = -8
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZkS" = (
-/obj/machinery/computer/secure_data,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZkT" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "briggate";
-	name = "security shutters"
-	},
-/obj/machinery/door/window/eastleft{
-	name = "Brig Desk";
-	req_access_txt = "1"
-	},
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/weapon/pen,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"ZkU" = (
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 9
-	},
-/area/space)
-"ZkV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 1;
-	external_pressure_bound = 101.325;
-	on = 1;
-	pressure_checks = 1
-	},
-/obj/machinery/flasher{
-	id = "Cell 4";
-	pixel_x = 28
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"ZkW" = (
-/obj/machinery/computer/shuttle/labor,
-/turf/open/floor/plasteel{
-	dir = 8;
-	icon_state = "warning"
-	},
-/area/space)
-"ZkX" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZkY" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	tag = "icon-manifold-r-f (EAST)";
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZkZ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel,
-/area/space)
-"Zla" = (
-/obj/structure/bed,
-/obj/item/weapon/bedsheet,
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/flasher{
-	id = "Cell 1";
-	pixel_x = -28
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zlb" = (
-/obj/structure/closet/secure_closet/brig{
-	id = "Cell 1";
-	name = "Cell 1 Locker"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zlc" = (
-/obj/structure/bed,
-/obj/item/weapon/bedsheet,
-/obj/machinery/flasher{
-	id = "Cell 2";
-	pixel_x = -28
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zld" = (
-/obj/structure/closet/secure_closet/brig{
-	id = "Cell 2";
-	name = "Cell 2 Locker"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zle" = (
-/obj/structure/bed,
-/obj/item/weapon/bedsheet,
-/obj/machinery/flasher{
-	id = "Cell 3";
-	pixel_x = -28
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zlf" = (
-/obj/structure/closet/secure_closet/brig{
-	id = "Cell 3";
-	name = "Cell 3 Locker"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zlg" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
-/obj/machinery/button/door{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "outerbrig";
-	name = "Brig Exterior Doors Control";
-	normaldoorcontrol = 1;
-	pixel_x = -26;
-	pixel_y = -5;
-	req_access_txt = "63"
-	},
-/obj/machinery/button/door{
-	desc = "A remote control switch for the medbay foyer.";
-	id = "innerbrig";
-	name = "Brig Interior Doors Control";
-	normaldoorcontrol = 1;
-	pixel_x = -26;
-	pixel_y = 5;
-	req_access_txt = "63"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zlh" = (
-/obj/structure/chair/office/dark{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zli" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "briggate";
-	name = "security shutters"
-	},
-/obj/machinery/door/window/eastright{
-	name = "Brig Desk";
-	req_access_txt = "2"
-	},
-/obj/item/weapon/restraints/handcuffs,
-/obj/item/device/radio/off,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zlj" = (
-/obj/machinery/flasher{
-	id = "brigentry";
-	pixel_x = 28
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 5
-	},
-/area/space)
-"Zlk" = (
-/obj/structure/closet/secure_closet/brig{
-	id = "Cell 4";
-	name = "Cell 4 Locker"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zll" = (
-/obj/structure/bed,
-/obj/item/weapon/bedsheet,
-/obj/item/device/radio/intercom{
-	desc = "Talk through this. It looks like it has been modified to not broadcast.";
-	dir = 2;
-	name = "Prison Intercom (General)";
-	pixel_x = 25;
-	pixel_y = -2;
-	prison_radio = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/space)
-"Zlm" = (
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
-	name = "KEEP CLEAR: DOCKING AREA";
-	pixel_y = 0
-	},
-/turf/closed/wall,
-/area/space)
-"Zln" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/space)
-"Zlo" = (
-/obj/machinery/door/airlock/glass_security{
-	name = "Prisoner Processing";
-	req_access_txt = "2"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/space)
-"Zlp" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/space)
-"Zlq" = (
-/obj/machinery/vending/coffee,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zlr" = (
-/obj/machinery/vending/snack,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zls" = (
-/obj/machinery/vending/cigarette,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zlt" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/grille,
-/obj/structure/cable/yellow,
-/obj/machinery/door/poddoor/preopen{
-	id = "Secure Gate";
-	name = "brig shutters"
-	},
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/space)
-"Zlu" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "Secure Gate";
-	name = "brig shutters"
-	},
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/space)
-"Zlv" = (
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/closed/wall/r_wall,
-/area/space)
-"Zlw" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "briggate";
-	name = "security shutters"
-	},
-/obj/machinery/door/window/southleft{
-	name = "Brig Desk";
-	req_access_txt = "1"
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zlx" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "briggate";
-	name = "security shutters"
-	},
-/obj/machinery/door/window/southleft{
-	base_state = "right";
-	icon_state = "right";
-	name = "Brig Desk";
-	req_access_txt = "1"
-	},
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/space)
-"Zly" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "briggate";
-	name = "security blast door"
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"Zlz" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/glass_security{
-	id_tag = "outerbrig";
-	name = "Brig";
-	req_access_txt = "63"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 9
-	},
-/area/space)
-"ZlA" = (
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/glass_security{
-	id_tag = "outerbrig";
-	name = "Brig";
-	req_access_txt = "63"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 5
-	},
-/area/space)
-"ZlB" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/plasteel{
-	dir = 9;
-	icon_state = "warning"
-	},
-/area/space)
-"ZlC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 5
-	},
-/area/space)
-"ZlD" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 5
-	},
-/area/space)
-"ZlE" = (
-/obj/machinery/button/door{
-	desc = "A remote control switch for the exit.";
-	id = "laborexit";
-	name = "exit button";
-	normaldoorcontrol = 1;
-	pixel_x = 26;
-	pixel_y = -6;
-	req_access_txt = "0"
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 5
-	},
-/area/space)
-"ZlF" = (
-/obj/machinery/door/airlock/external{
-	name = "Labor Camp Shuttle Airlock"
-	},
-/turf/open/floor/plating,
-/area/space)
-"ZlG" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 8;
-	name = "Firelock West"
-	},
-/obj/machinery/door/airlock/security{
-	id_tag = "laborexit";
-	name = "Labor Shuttle";
-	req_access = null;
-	req_access_txt = "63"
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZlH" = (
-/obj/structure/grille,
-/obj/structure/sign/securearea{
-	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
-	icon_state = "space";
-	layer = 4;
-	name = "EXTERNAL AIRLOCK";
-	pixel_x = 0;
-	pixel_y = -32
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/space)
-"ZlI" = (
-/turf/open/floor/plasteel{
-	dir = 10;
-	icon_state = "warning"
-	},
-/area/space)
-"ZlJ" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 6
-	},
-/area/space)
-"ZlK" = (
-/obj/structure/cable/yellow{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4";
-	tag = "90Curve"
-	},
-/obj/machinery/camera{
-	c_tag = "Labor Shuttle Dock South";
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 6
-	},
-/area/space)
-"ZlL" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/open/floor/plasteel{
-	icon_state = "red";
-	dir = 6
-	},
-/area/space)
-"ZlM" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Security Maintenance";
-	req_access_txt = "2"
-	},
-/turf/open/space,
-/area/space)
-"ZlN" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 1;
-	name = "Firelock North"
-	},
-/obj/machinery/door/airlock/glass_security{
-	name = "Detective";
-	req_access_txt = "4"
-	},
-/turf/open/floor/plasteel,
-/area/space)
-"ZlO" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Labor Shuttle Dock APC";
-	pixel_y = 24
-	},
-/turf/open/space,
-/area/space)
-"ZlP" = (
-/obj/item/weapon/storage/secure/safe{
-	pixel_x = -23
-	},
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"ZlQ" = (
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"ZlR" = (
-/obj/structure/rack{
-	dir = 8;
-	layer = 2.9
-	},
-/obj/item/weapon/storage/briefcase,
-/obj/machinery/light_switch{
-	pixel_y = 28
-	},
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"ZlS" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/obj/structure/filingcabinet,
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"ZlT" = (
-/obj/structure/table/wood,
-/obj/item/weapon/storage/fancy/cigarettes,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/device/paicard,
-/turf/open/floor/carpet,
-/area/space)
-"ZlU" = (
-/obj/structure/table/wood,
-/obj/item/weapon/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/weapon/pen,
-/turf/open/floor/carpet,
-/area/space)
-"ZlV" = (
-/obj/structure/table/wood,
-/obj/item/device/flashlight/lamp/green{
-	on = 0;
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/weapon/book/manual/wiki/security_space_law,
-/obj/item/weapon/restraints/handcuffs,
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"ZlW" = (
-/obj/structure/closet/secure_closet/detective,
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"ZlX" = (
-/obj/structure/table/wood,
-/obj/item/weapon/folder/red,
-/obj/item/weapon/ashtray,
-/obj/item/weapon/hand_labeler/det,
-/turf/open/floor/carpet,
-/area/space)
-"ZlY" = (
-/obj/effect/landmark/start{
-	name = "Detective"
-	},
-/obj/structure/chair/office/dark{
-	dir = 8
-	},
-/turf/open/floor/carpet,
-/area/space)
-"ZlZ" = (
-/obj/machinery/computer/security/wooden_tv,
-/obj/machinery/newscaster{
-	pixel_x = 28
-	},
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"Zma" = (
-/obj/machinery/requests_console{
-	department = "Detective's office";
-	pixel_x = -30;
-	pixel_y = 0
-	},
-/obj/structure/table/wood,
-/obj/item/device/camera{
-	desc = "A one use - polaroid camera. 30 photos left.";
-	name = "detectives camera";
-	pictures_left = 30
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"Zmb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4;
-	on = 1
-	},
-/turf/open/floor/carpet,
-/area/space)
-"Zmc" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/space)
-"Zmd" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	icon_state = "alarm0";
-	pixel_x = 24
-	},
-/obj/machinery/computer/secure_data,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"Zme" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/space)
-"Zmf" = (
-/obj/structure/table/wood,
-/obj/item/device/taperecorder{
-	pixel_y = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"Zmg" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber{
-	dir = 4;
-	on = 1;
-	scrub_N2O = 0;
-	scrub_Toxins = 0
-	},
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"Zmh" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"Zmi" = (
-/obj/machinery/camera{
-	c_tag = "Detective's Office";
-	dir = 1
-	},
-/obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"Zmj" = (
-/obj/machinery/computer/med_data,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel{
-	icon_state = "grimy"
-	},
-/area/space)
-"Zmk" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Detective Maintenance";
-	req_access_txt = "4"
-	},
-/turf/open/floor/plating,
-/area/space)
-"Zml" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Detective APC";
-	pixel_x = -24
-	},
-/turf/open/space,
-/area/space)
-"Zmm" = (
+"Zmn" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4
 	},
@@ -77218,13 +69777,13 @@
 	dir = 2
 	},
 /area/space)
-"Zmn" = (
+"Zmo" = (
 /turf/closed/wall/shuttle{
 	icon_state = "swall12";
 	dir = 2
 	},
 /area/space)
-"Zmo" = (
+"Zmp" = (
 /turf/open/space,
 /turf/closed/wall/shuttle{
 	dir = 2;
@@ -77232,7 +69791,7 @@
 	layer = 2
 	},
 /area/space)
-"Zmp" = (
+"Zmq" = (
 /obj/machinery/door/airlock/shuttle{
 	name = "Escape Pod Airlock"
 	},
@@ -77243,7 +69802,7 @@
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/space)
-"Zmq" = (
+"Zmr" = (
 /obj/item/device/radio/intercom{
 	pixel_y = 25
 	},
@@ -77256,7 +69815,7 @@
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/space)
-"Zmr" = (
+"Zms" = (
 /obj/machinery/computer/shuttle/pod{
 	pixel_y = -32;
 	possible_destinations = "pod_asteroid3";
@@ -77273,12 +69832,12 @@
 	},
 /turf/open/floor/plasteel/shuttle,
 /area/space)
-"Zms" = (
+"Zmt" = (
 /obj/structure/grille,
 /obj/structure/window/shuttle,
 /turf/open/floor/plating,
 /area/space)
-"Zmt" = (
+"Zmu" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 4
 	},
@@ -77287,14 +69846,14 @@
 	dir = 2
 	},
 /area/space)
-"Zmu" = (
+"Zmv" = (
 /turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f9";
 	dir = 2
 	},
 /area/space)
-"Zmv" = (
+"Zmw" = (
 /obj/structure/closet/secure_closet/injection,
 /obj/machinery/light/small{
 	dir = 1
@@ -77303,12 +69862,12 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Zmw" = (
+"Zmx" = (
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Zmx" = (
+"Zmy" = (
 /obj/structure/table,
 /obj/item/device/electropack,
 /obj/machinery/button/door{
@@ -77322,14 +69881,14 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Zmy" = (
+"Zmz" = (
 /obj/structure/window/reinforced,
 /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Zmz" = (
+"ZmA" = (
 /obj/machinery/door/window/brigdoor/eastright{
 	tag = "icon-rightsecure";
 	name = "Prisoner Transfer Accessories";
@@ -77341,7 +69900,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmA" = (
+"ZmB" = (
 /obj/structure/table,
 /obj/item/weapon/screwdriver,
 /obj/item/weapon/wrench,
@@ -77352,15 +69911,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/transfer)
-"ZmB" = (
-/obj/structure/cable/yellow{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/security/prison)
 "ZmC" = (
 /obj/structure/cable/yellow{
 	icon_state = "0-2";
@@ -77369,20 +69919,29 @@
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
-/area/security/processing)
+/area/security/prison)
 "ZmD" = (
+/obj/structure/cable/yellow{
+	icon_state = "0-2";
+	d2 = 2
+	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/security/processing)
+"ZmE" = (
 /obj/structure/bodycontainer/morgue,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmE" = (
+"ZmF" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmF" = (
+"ZmG" = (
 /obj/structure/chair,
 /obj/machinery/airalarm{
 	pixel_y = 25
@@ -77394,7 +69953,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmG" = (
+"ZmH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1
@@ -77403,19 +69962,19 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmH" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/security/transfer)
 "ZmI" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/closed/wall,
-/area/security/prison)
+/area/security/transfer)
 "ZmJ" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall,
+/area/security/prison)
+"ZmK" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
@@ -77436,7 +69995,7 @@
 	dir = 1
 	},
 /area/security/processing)
-"ZmK" = (
+"ZmL" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
@@ -77454,39 +70013,23 @@
 	dir = 4
 	},
 /area/security/processing)
-"ZmL" = (
+"ZmM" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4";
 	tag = ""
-	},
-/turf/open/floor/plasteel{
-	icon_state = "floorgrime"
-	},
-/area/security/transfer)
-"ZmM" = (
-/obj/structure/chair,
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
 "ZmN" = (
+/obj/structure/chair,
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	tag = ""
 	},
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
@@ -77498,11 +70041,27 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/structure/cable/yellow{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4";
+	tag = ""
+	},
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
 "ZmP" = (
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/open/floor/plasteel{
+	icon_state = "floorgrime"
+	},
+/area/security/transfer)
+"ZmQ" = (
 /obj/machinery/door/airlock/security{
 	aiControlDisabled = 0;
 	icon_state = "door_closed";
@@ -77521,7 +70080,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmQ" = (
+"ZmR" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -77529,7 +70088,7 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
-"ZmR" = (
+"ZmS" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -77540,7 +70099,7 @@
 	dir = 4
 	},
 /area/security/prison)
-"ZmS" = (
+"ZmT" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -77554,27 +70113,27 @@
 	dir = 1
 	},
 /area/security/processing)
-"ZmT" = (
+"ZmU" = (
 /turf/open/floor/plasteel/red/corner{
 	tag = "icon-redcorner (EAST)";
 	icon_state = "redcorner";
 	dir = 4
 	},
 /area/security/processing)
-"ZmU" = (
+"ZmV" = (
 /obj/machinery/door/airlock/external{
 	name = "Security Escape Pod";
 	req_access_txt = "63"
 	},
 /turf/open/floor/plating,
 /area/security/processing)
-"ZmV" = (
+"ZmW" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmW" = (
+"ZmX" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -77586,7 +70145,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmX" = (
+"ZmY" = (
 /obj/machinery/power/apc{
 	dir = 2;
 	name = "Prisoner Transfer Centre APC";
@@ -77597,7 +70156,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmY" = (
+"ZmZ" = (
 /obj/structure/flora/kirbyplants{
 	desc = "A plastic potted plant.";
 	layer = 4.1;
@@ -77607,7 +70166,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"ZmZ" = (
+"Zna" = (
 /obj/structure/table,
 /obj/item/weapon/pen/red,
 /obj/item/weapon/paper_bin,
@@ -77615,7 +70174,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Zna" = (
+"Znb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	on = 1
@@ -77632,27 +70191,27 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Znb" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	adminlog = 1;
-	dir = 4
-	},
-/turf/closed/wall,
-/area/security/transfer)
 "Znc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	adminlog = 1;
 	dir = 4
 	},
 /turf/closed/wall,
-/area/security/prison)
+/area/security/transfer)
 "Znd" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	adminlog = 1;
+	dir = 4
+	},
+/turf/closed/wall,
+/area/security/prison)
+"Zne" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plating,
 /area/security/transfer)
-"Zne" = (
+"Znf" = (
 /obj/machinery/door/window/brigdoor{
 	name = "Transfer Room";
 	req_access_txt = "2"
@@ -77668,7 +70227,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Znf" = (
+"Zng" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -77686,7 +70245,7 @@
 	dir = 1
 	},
 /area/security/processing)
-"Zng" = (
+"Znh" = (
 /obj/machinery/door/poddoor{
 	id = "execution";
 	name = "space door"
@@ -77696,13 +70255,13 @@
 	dir = 8
 	},
 /area/security/transfer)
-"Znh" = (
+"Zni" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Zni" = (
+"Znj" = (
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -77712,7 +70271,7 @@
 	icon_state = "dark"
 	},
 /area/security/interrogation)
-"Znj" = (
+"Znk" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -77734,7 +70293,7 @@
 	dir = 1
 	},
 /area/security/prison)
-"Znk" = (
+"Znl" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -77751,7 +70310,7 @@
 	dir = 1
 	},
 /area/security/processing)
-"Znl" = (
+"Znm" = (
 /obj/machinery/light{
 	dir = 4
 	},
@@ -77761,7 +70320,7 @@
 	dir = 4
 	},
 /area/security/processing)
-"Znm" = (
+"Znn" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 5
 	},
@@ -77769,7 +70328,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Znn" = (
+"Zno" = (
 /obj/structure/chair{
 	dir = 1
 	},
@@ -77784,7 +70343,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Zno" = (
+"Znp" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
@@ -77807,7 +70366,7 @@
 	dir = 1
 	},
 /area/security/processing)
-"Znp" = (
+"Znq" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -77825,7 +70384,7 @@
 	dir = 4
 	},
 /area/security/processing)
-"Znq" = (
+"Znr" = (
 /obj/structure/cable/yellow{
 	d2 = 8;
 	icon_state = "0-8"
@@ -77834,13 +70393,13 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/security/processing)
-"Znr" = (
+"Zns" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/transfer)
-"Zns" = (
+"Znt" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -77858,7 +70417,7 @@
 	dir = 1
 	},
 /area/security/prison)
-"Znt" = (
+"Znu" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor/preopen{
 	id = "isolspess";
@@ -77875,31 +70434,11 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/security/prison)
-"Znu" = (
-/obj/structure/grille,
-/obj/machinery/door/poddoor/preopen{
-	id = "isolspess";
-	name = "space protection seal"
-	},
-/obj/structure/cable/yellow{
-	icon_state = "0-4";
-	d2 = 4
-	},
-/obj/structure/cable/yellow{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating,
-/area/security/prison)
 "Znv" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor/preopen{
 	id = "isolspess";
 	name = "space protection seal"
-	},
-/obj/machinery/light/small{
-	dir = 1
 	},
 /obj/structure/cable/yellow{
 	icon_state = "0-4";
@@ -77918,6 +70457,26 @@
 	id = "isolspess";
 	name = "space protection seal"
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/cable/yellow{
+	icon_state = "0-4";
+	d2 = 4
+	},
+/obj/structure/cable/yellow{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/security/prison)
+"Znx" = (
+/obj/structure/grille,
+/obj/machinery/door/poddoor/preopen{
+	id = "isolspess";
+	name = "space protection seal"
+	},
 /obj/structure/cable/yellow{
 	icon_state = "0-2";
 	d2 = 2
@@ -77929,7 +70488,7 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/security/prison)
-"Znx" = (
+"Zny" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -77951,7 +70510,7 @@
 	icon_state = "dark"
 	},
 /area/security/interrogation)
-"Zny" = (
+"Znz" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
 /obj/structure/cable/yellow{
@@ -77960,7 +70519,7 @@
 	},
 /turf/open/floor/plating,
 /area/security/main)
-"Znz" = (
+"ZnA" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor/preopen{
 	id = "isolspess";
@@ -77974,7 +70533,7 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/security/prison)
-"ZnA" = (
+"ZnB" = (
 /obj/item/device/radio/intercom{
 	desc = "Talk through this. It looks like it has been modified to not broadcast.";
 	dir = 2;
@@ -77988,7 +70547,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/prison)
-"ZnB" = (
+"ZnC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 4;
 	external_pressure_bound = 101.325;
@@ -78000,7 +70559,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/prison)
-"ZnC" = (
+"ZnD" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -78013,7 +70572,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/prison)
-"ZnD" = (
+"ZnE" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor/preopen{
 	id = "isolspess";
@@ -78030,7 +70589,7 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/security/prison)
-"ZnE" = (
+"ZnF" = (
 /obj/machinery/computer/security,
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -78051,7 +70610,7 @@
 	},
 /turf/open/floor/carpet,
 /area/security/hos)
-"ZnF" = (
+"ZnG" = (
 /obj/structure/table,
 /obj/machinery/recharger,
 /obj/structure/reagent_dispensers/peppertank{
@@ -78063,27 +70622,27 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
-"ZnG" = (
+"ZnH" = (
 /obj/structure/closet/l3closet/security,
 /obj/machinery/camera,
 /turf/open/floor/plasteel/bot,
 /area/security/main)
-"ZnH" = (
+"ZnI" = (
 /obj/structure/closet/bombcloset,
 /turf/open/floor/plasteel/bot,
 /area/security/main)
-"ZnI" = (
+"ZnJ" = (
 /obj/structure/weightlifter,
 /turf/open/floor/plasteel,
 /area/security/main)
-"ZnJ" = (
+"ZnK" = (
 /obj/structure/weightlifter,
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
-"ZnK" = (
+"ZnL" = (
 /obj/vehicle/secway,
 /obj/structure/window{
 	tag = "icon-window (WEST)";
@@ -78092,7 +70651,7 @@
 	},
 /turf/open/floor/plasteel/bot,
 /area/security/main)
-"ZnL" = (
+"ZnM" = (
 /obj/vehicle/secway,
 /obj/structure/window{
 	tag = "icon-window (EAST)";
@@ -78101,7 +70660,7 @@
 	},
 /turf/open/floor/plasteel/bot,
 /area/security/main)
-"ZnM" = (
+"ZnN" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor/preopen{
 	id = "isolspess";
@@ -78126,7 +70685,7 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/security/prison)
-"ZnN" = (
+"ZnO" = (
 /obj/effect/landmark{
 	name = "blobstart"
 	},
@@ -78134,7 +70693,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/prison)
-"ZnO" = (
+"ZnP" = (
 /obj/structure/cable/yellow{
 	d1 = 2;
 	d2 = 4;
@@ -78148,7 +70707,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"ZnP" = (
+"ZnQ" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -78159,7 +70718,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"ZnQ" = (
+"ZnR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	adminlog = 1;
 	dir = 4
@@ -78171,7 +70730,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"ZnR" = (
+"ZnS" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -78187,7 +70746,7 @@
 /obj/item/weapon/storage/box/prisoner,
 /turf/open/floor/plasteel,
 /area/security/processing)
-"ZnS" = (
+"ZnT" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -78205,13 +70764,13 @@
 	dir = 1
 	},
 /area/security/processing)
-"ZnT" = (
+"ZnU" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/security/armory)
-"ZnU" = (
+"ZnV" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -78219,7 +70778,7 @@
 	},
 /turf/open/floor/carpet,
 /area/security/hos)
-"ZnV" = (
+"ZnW" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -78234,13 +70793,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
-"ZnW" = (
+"ZnX" = (
 /obj/structure/bed,
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
 	},
 /area/security/prison)
-"ZnX" = (
+"ZnY" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 4;
 	on = 1;
@@ -78251,7 +70810,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/prison)
-"ZnY" = (
+"ZnZ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -78265,7 +70824,7 @@
 	icon_state = "floorgrime"
 	},
 /area/security/prison)
-"ZnZ" = (
+"Zoa" = (
 /obj/structure/grille,
 /obj/machinery/door/poddoor/preopen{
 	id = "isolspess";
@@ -78285,7 +70844,7 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plating,
 /area/security/prison)
-"Zoa" = (
+"Zob" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 1;
 	external_pressure_bound = 140;
@@ -78294,7 +70853,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"Zob" = (
+"Zoc" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -78310,7 +70869,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
-"Zoc" = (
+"Zod" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -78334,7 +70893,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
-"Zod" = (
+"Zoe" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -78348,7 +70907,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
-"Zoe" = (
+"Zof" = (
 /obj/structure/cable/yellow{
 	d1 = 4;
 	d2 = 8;
@@ -78362,7 +70921,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/processing)
-"Zof" = (
+"Zog" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 8;
@@ -78380,7 +70939,7 @@
 	dir = 1
 	},
 /area/security/processing)
-"Zog" = (
+"Zoh" = (
 /obj/structure/table/wood,
 /obj/item/device/flashlight/lamp/green{
 	on = 0;
@@ -78398,7 +70957,7 @@
 	},
 /turf/open/floor/carpet,
 /area/security/hos)
-"Zoh" = (
+"Zoi" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/box/seccarts{
 	pixel_x = 3;
@@ -78408,7 +70967,7 @@
 /obj/item/device/radio,
 /turf/open/floor/carpet,
 /area/security/hos)
-"Zoi" = (
+"Zoj" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -78421,7 +70980,7 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
-"Zoj" = (
+"Zok" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
 	d2 = 2;
@@ -78434,19 +70993,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
-"Zok" = (
+"Zol" = (
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	on = 1
-	},
-/turf/open/floor/plasteel,
-/area/security/main)
-"Zol" = (
-/obj/structure/cable/yellow{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-4";
-	tag = ""
 	},
 /turf/open/floor/plasteel,
 /area/security/main)
@@ -86515,7 +79065,7 @@ aaa
 aaa
 aaa
 aaa
-aaC
+aaa
 aaa
 aaa
 aaa
@@ -86772,7 +79322,6 @@ aaa
 aaa
 aaa
 aaa
-aaA
 aaa
 aaa
 aaa
@@ -86788,7 +79337,8 @@ aaa
 aaa
 aaa
 aaa
-aaA
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -87029,7 +79579,6 @@ aaa
 aaa
 aaa
 aaa
-aaA
 aaa
 aaa
 aaa
@@ -87040,12 +79589,13 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaa
-aaA
 aaa
 aaa
-aaA
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -87286,25 +79836,25 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaa
-aaa
-aaa
-aaa
-Zag
 aaa
 aaa
 aaa
 aaa
 aaa
-aaA
-aaA
-aaA
-aaA
-aaA
-aaA
-aaA
-aaA
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -87543,18 +80093,18 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaa
-aaa
-ZdD
-ZdY
-ZeO
-ZdY
-Zgm
 aaa
 aaa
 aaa
-aaA
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -87800,18 +80350,18 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaa
-aaa
-ZdE
-ZdZ
-Zap
-ZfA
-Zgn
 aaa
 aaa
 aaa
-aaA
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -88057,18 +80607,18 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaa
-Zag
-ZdF
-Zea
-ZeP
-ZfB
-Zgo
-Zag
 aaa
 aaa
-aaA
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -88314,18 +80864,18 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaa
-aaa
-ZdE
-Zeb
-Zap
-ZfC
-Zgn
 aaa
 aaa
 aaa
-aaA
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -88571,18 +81121,18 @@ aaa
 aaa
 aaa
 aaa
-adC
-aaa
-aaa
-ZdG
-Zec
-ZeQ
-ZfD
-Zgp
 aaa
 aaa
 aaa
-aaA
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -88828,18 +81378,18 @@ aaa
 aaa
 aaa
 aaa
-adC
 aaa
 aaa
 aaa
-Zed
-Zap
-ZfE
 aaa
 aaa
 aaa
-aaA
-aaA
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -89082,31 +81632,31 @@ aaa
 aaa
 aaa
 aaa
-adC
-adC
-ZaU
-adC
-adC
-aaa
-aaa
-Zed
-Zap
-ZfE
 aaa
 aaa
 aaa
 aaa
-aaA
 aaa
 aaa
 aaa
-ZaU
-ZkG
-ZaU
 aaa
-ZaU
-ZlF
-ZaU
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -89339,31 +81889,31 @@ aaa
 aaa
 aaa
 aaa
-adC
-Zbr
-Zaw
-Zco
-adC
-aaC
-adC
-Zee
-ZeQ
-ZfF
-Zag
-Zag
-Zag
-Zag
-Zag
-Zag
 aaa
 aaa
-ZaU
-ZkH
-ZaU
 aaa
-ZaU
-ZkH
-ZaU
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -89591,36 +82141,36 @@ aaa
 aaa
 aaa
 aaa
-aaA
-adC
-adC
-adC
-adC
-adC
-Zbs
-ZbN
-Zcp
-adC
-adC
-adC
-Zef
-ZeR
-ZfG
-Zcu
-ZgJ
-Zhu
-Zic
-Zic
-Zag
-aaA
-aaA
-ZaU
-ZkH
-ZaU
 aaa
-ZaU
-ZkH
-ZaU
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -89849,35 +82399,35 @@ aaa
 aaa
 aaa
 aaa
-Zat
-Zaw
-ZaC
-ZaK
-ZaV
-Zbt
-ZbO
-Zcq
-adC
-Zdj
-adC
-Zeg
-ZeS
-ZfH
-Zgq
-ZgK
-Zhv
-Zid
-ZiQ
-Zag
-adC
-Zag
-Zkk
-ZkG
-ZaU
-Zlm
-ZaU
-ZlF
-ZlH
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -90106,35 +82656,35 @@ aaa
 aaa
 aaa
 aaa
-Zat
-Zaw
-ZaD
-ZaL
-ZaW
-ZaZ
-ZaL
-Zcr
-adC
-adC
-adC
-Zeh
-ZeT
-ZfI
-Zcw
-ZgL
-Zhw
-Zie
-ZiR
-Zag
-Zjt
-ZjO
-Zkl
-Zkl
-ZkW
-adC
-ZlB
-Zkl
-ZlI
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -90363,35 +82913,35 @@ aaa
 aaa
 aaa
 aaa
-Zat
-Zaw
-ZaE
-Zaw
-ZaX
-Zbu
-ZbP
-Zcs
-ZcL
-Zdk
-ZdH
-Zei
-ZeU
-ZfJ
-adC
-adC
-adC
-adC
-adC
-Zag
-Zju
-ZjP
-Zkm
-Zaw
-ZkX
-Zln
-ZlC
-Zaw
-ZlJ
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -90619,38 +83169,38 @@ aaa
 aaa
 aaa
 aaa
-aaC
-adC
-adC
-Zag
-Zag
-Zag
-Zbv
-Zag
-Zag
-Zag
-Zag
-Zag
-Zej
-ZeV
-ZfK
-adC
-ZgM
-Zhx
-Zif
-ZiS
-Zag
-Zjv
-ZjQ
-Zkn
-ZkI
-ZkY
-Zlo
-ZlD
-ZkI
-ZlK
 aaa
-ZlO
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -90876,37 +83426,37 @@ aaa
 aaa
 aaa
 aaa
-aaA
 aaa
 aaa
-Zag
-ZaM
-ZaY
-Zbw
-ZbQ
-adC
-ZcM
-Zdl
-Zcw
-Zek
-ZeW
-ZfL
-adC
-ZgN
-Zhy
-Zig
-ZcY
-Zag
-Zjw
-ZjR
-Zko
-ZkJ
-ZkZ
-Zlp
-ZlE
-Zaw
-ZlL
-ZlM
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -91131,38 +83681,38 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaA
-aaA
 aaa
-Zag
-Zag
-Zap
-Zap
-Zbx
-Zap
-Zct
-Zap
-Zap
-ZdI
-Zel
-ZeV
-ZfM
-adC
-ZgO
-Zhz
-Zih
-ZiT
-Zag
-Zfl
-ZjS
-Zag
-Zag
-Zag
-Zag
-Zag
-ZlG
-adC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -91389,44 +83939,44 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaa
-aaa
-Zah
-ZaF
-ZaN
-ZaZ
-Zby
-ZbR
-adC
-ZcN
-Zdm
-adC
-Zem
-ZeV
-ZfM
-adC
-ZgP
-ZhA
-Zii
-ZcY
-adC
-Zjx
-ZjT
-Zkp
-ZkK
-Zag
-Zlq
 aaa
 aaa
 aaa
-adC
-adC
-adC
-adC
-adC
-adC
-adC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -91645,45 +84195,45 @@ aaa
 aaa
 aaa
 aaa
-Zag
-Zag
-Zam
-Zag
-Zag
-ZaG
-Zap
-Zap
-Zbz
-ZbS
-Zcu
-Zcu
-Zdn
-Zcu
-Zen
-ZeV
-ZfM
-adC
-ZbJ
-ZhB
-Zij
-ZiU
-Zjc
-Zjy
-ZjU
-Zkq
-ZkL
-Zag
-Zlr
 aaa
 aaa
 aaa
-adC
-ZlP
-ZlS
-ZlW
-Zma
-Zmf
-adC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -91900,47 +84450,47 @@ aaa
 (32,1,1) = {"
 aaa
 aaa
-aaA
-aaA
-Zag
-Zai
-Zan
-Zau
-Zag
-ZaH
-Zap
-Zba
-ZbA
-ZbT
-adC
-ZcO
-Zdo
-Zcw
-Zeo
-ZeX
-ZfN
-adC
-adC
-ZhC
-adC
-adC
-adC
-Zjz
-ZjV
-Zkp
-ZkM
-Zag
-Zls
 aaa
 aaa
 aaa
-Zln
-ZlQ
-ZcI
-ZcI
-Zmb
-Zmg
-adC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -92158,46 +84708,46 @@ aaa
 aaa
 aaa
 aaa
-aaC
-Zah
-Zaj
-Zao
-Zav
-Zaz
-Zav
-ZaO
-Zbb
-ZbB
-ZbU
-Zcv
-Zap
-Zap
-ZdJ
-Zep
-ZeY
-ZfO
-adC
-ZgQ
-ZhD
-Zik
-adC
-Zjd
-ZjA
-ZjW
-adC
-adC
-Zag
-Zag
 aaa
 aaa
 aaa
-ZlN
-ZlQ
-ZlT
-ZlX
-Zmc
-Zmh
-Zmk
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -92415,46 +84965,46 @@ aaa
 aaa
 aaa
 aaa
-aaA
-Zag
-Zak
-Zap
-Zaw
-ZaA
-Zap
-ZaP
-Zbc
-ZbC
-Zaw
-adC
-ZcP
-Zdp
-Zcu
-Zeq
-ZeV
-ZfP
-adC
-ZgR
-ZhE
-Zil
-adC
-Zje
-ZjB
-ZjX
-Zkr
-ZkN
-Zla
-Zlt
 aaa
 aaa
 aaa
-Zln
-ZlQ
-ZlU
-ZlY
-Zmc
-Zmi
-adC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -92673,45 +85223,45 @@ aaa
 aaa
 aaa
 aaa
-Zah
-Zaj
-Zaq
-Zax
-ZaB
-Zax
-ZaQ
-Zbd
-ZbD
-ZbV
-Zcw
-Zcw
-Zcw
-Zcw
-Zer
-ZeW
-ZfQ
-adC
-ZgS
-ZhF
-Zim
-ZaU
-Zjf
-ZjC
-ZeV
-Zks
-Zap
-Zap
-Zlu
 aaa
 aaa
 aaa
-adC
-ZlR
-ZlV
-ZlZ
-Zmd
-Zmj
-adC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -92930,45 +85480,45 @@ aaa
 aaa
 aaa
 aaa
-Zag
-Zal
-Zar
-Zay
-Zag
-Zap
-Zap
-Zap
-ZbE
-ZbW
-adC
-ZcQ
-Zdq
-Zcw
-Zeo
-ZeW
-ZfQ
-adC
-ZgT
-ZhG
-Zin
-ZiV
-Zjg
-ZjD
-ZjY
-Zkt
-ZkO
-Zlb
-Zlu
 aaa
 aaa
 aaa
-adC
-adC
-adC
-adC
-Zme
-ZhC
-adC
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -93187,35 +85737,6 @@ aaa
 aaa
 aaa
 aaa
-Zag
-Zag
-Zas
-Zag
-Zag
-ZaI
-ZaR
-Zbe
-ZbF
-ZbX
-Zcx
-ZcR
-ZcR
-ZdK
-Zes
-ZeZ
-ZfQ
-adC
-ZgU
-ZhH
-Zio
-adC
-Zjh
-ZjC
-ZjZ
-Zku
-adC
-adC
-Zlv
 aaa
 aaa
 aaa
@@ -93225,7 +85746,36 @@ aaa
 aaa
 aaa
 aaa
-Zml
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -93445,34 +85995,34 @@ aaa
 aaa
 aaa
 aaa
-aaA
 aaa
 aaa
-Zah
-ZaJ
-ZaS
-Zbf
-Zap
-Zap
-adC
-ZcS
-Zdp
-Zcu
-Zet
-Zfa
-adC
-adC
-adC
-adC
-adC
-adC
-Zji
-ZjE
-Zka
-Zkv
-ZkP
-Zlc
-Zlu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -93702,34 +86252,34 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaA
-aaA
-Zag
-Zag
-Zag
-Zag
-ZbG
-ZbY
-adC
-adC
-adC
-adC
-Zeu
-Zfb
-ZfR
-Zgr
-ZgV
-ZgV
-Zip
-Zip
-Zjj
-ZjF
-ZeW
-Zkw
-ZkQ
-Zap
-Zlu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -93961,32 +86511,32 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaA
 aaa
 aaa
-Zag
-ZbH
-ZbZ
-Zcy
-ZcT
-Zdr
-adC
-Zev
-Zfc
-ZfS
-Zgs
-ZgW
-ZgW
-ZgW
-ZgW
-Zjk
-ZjG
-Zkb
-Zkt
-ZkO
-Zld
-Zlu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -94213,37 +86763,37 @@ aaa
 (41,1,1) = {"
 aaa
 aaa
-aaA
-aaA
-aaA
-aaA
-aaA
-aaA
-aaA
-aaA
-ZaT
-Zag
-Zag
-Zag
-Zag
-Zag
-Zag
-Zag
-Zag
-Zag
-Zag
-Zag
-Zam
-ZhI
-Ziq
-ZiW
-Zjl
-Zhi
-Zkc
-Zku
-adC
-adC
-Zlv
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -94478,29 +87028,29 @@ aaa
 aaa
 aaa
 aaa
-Zag
-Zbg
-ZbI
-Zca
-Zcz
-ZcU
-Zah
-ZdL
-Zew
-Zfd
-ZfT
-Zgt
-ZgX
-ZhJ
-Zir
-ZiX
-Zji
-ZjH
-Zka
-Zkv
-ZkP
-Zle
-Zlu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -94735,29 +87285,29 @@ aaa
 aaa
 aaa
 aaa
-Zag
-Zbh
-ZbJ
-Zcb
-ZbJ
-ZcV
-Zah
-ZdM
-Zex
-Zfe
-ZfU
-Zgu
-ZgY
-ZhK
-Zis
-ZiY
-Zji
-Zhi
-ZeV
-Zkx
-Zap
-Zap
-Zlu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -94992,29 +87542,29 @@ aaa
 aaa
 aaa
 aaa
-Zag
-Zbi
-ZbJ
-Zcc
-ZcA
-ZcW
-Zah
-ZdN
-Zey
-Zff
-ZfV
-Zgv
-Zbp
-ZhL
-Zit
-ZiZ
-Zji
-ZjI
-Zkb
-Zky
-ZkO
-Zlf
-Zlu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -95248,30 +87798,30 @@ aaa
 aaa
 aaa
 aaa
-cES
-Zag
-Zbj
-ZbJ
-ZbJ
-ZcB
-ZcX
-Zds
-ZdO
-Zez
-Zfg
-ZfW
-Zgw
-ZgZ
-ZhL
-Ziu
-ZiY
-Zji
-Zhi
-Zkd
-Zku
-adC
-adC
-Zlv
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -95506,29 +88056,29 @@ aaa
 aaa
 aaa
 aaa
-Zag
-Zbk
-ZbJ
-ZbJ
-ZcC
-ZcY
-Zdt
-ZbJ
-ZeA
-Zfh
-ZfX
-Zgx
-Zha
-ZhM
-Ziv
-ZiY
-Zji
-Zhi
-Zke
-Zkz
-ZkR
-Zlg
-Zlw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -95763,29 +88313,29 @@ aaa
 aaa
 aaa
 aaa
-Zag
-Zbl
-ZbJ
-Zcd
-ZcD
-ZcZ
-Zdu
-ZdP
-ZeB
-Zfi
-ZfY
-Zgy
-Zhb
-ZhN
-Ziw
-Zas
-Zji
-Zhi
-Zke
-ZkA
-ZkS
-Zlh
-Zlx
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -96020,29 +88570,29 @@ aaa
 aaa
 aaa
 aaa
-Zag
-Zbm
-ZbJ
-Zce
-ZbJ
-Zda
-Zdv
-ZdQ
-ZeC
-Zfj
-ZfZ
-Zbp
-Zhc
-ZhO
-Zix
-Zag
-Zjm
-Zhi
-Zke
-Zku
-ZkT
-Zli
-Zly
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -96277,29 +88827,29 @@ aaa
 aaa
 aaa
 aaa
-Zag
-Zbn
-ZbK
-Zcf
-ZbJ
-Zdb
-Zdw
-ZdR
-ZeD
-Zfk
-Zga
-Zgz
-Zhd
-ZhP
-Ziy
-Zag
-Zjn
-ZjJ
-Zkf
-ZkB
-ZkU
-ZkU
-Zlz
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -96531,32 +89081,32 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaA
-aaA
-Zag
-Zag
-Zag
-Zag
-ZcE
-Zag
-Zag
-Zag
-ZeE
-Zfl
-Zag
-Zag
-Zhe
-ZhQ
-Ziz
-Zag
-Zjo
-Zhi
-Zkg
-ZkC
-Zjs
-Zlj
-ZlA
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -96790,30 +89340,30 @@ aaa
 aaa
 aaa
 aaa
-aaA
-adC
-Zbo
-ZbL
-Zcg
-Zbp
-Zdc
-Zdx
-ZdS
-ZeF
-Zfm
-Zgb
-ZgA
-Zhf
-ZhR
-ZiA
-Zag
-Zjp
-Zhi
-Zkh
-Zku
-adC
-adC
-Zag
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -97048,29 +89598,29 @@ aaa
 aaa
 aaa
 aaa
-ZaU
-Zbp
-ZbM
-Zbp
-Zbp
-Zbp
-Zbp
-Zbp
-ZeG
-Zfn
-Zgc
-Zfs
-Zhg
-ZhS
-ZiB
-Zja
-Zjq
-ZjK
-Zki
-ZkD
-ZfB
-Zlk
-Zlu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -97305,29 +89855,29 @@ aaa
 aaa
 aaa
 aaa
-adC
-Zbq
-ZbL
-Zch
-ZcF
-Zdd
-Zdd
-Zdd
-ZeH
-Zfo
-ZeI
-ZgB
-Zhh
-ZhT
-ZiC
-Zjb
-Zjr
-ZjL
-ZeY
-ZkE
-ZbU
-Zap
-Zlu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -97560,31 +90110,31 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaA
-adC
-ZaU
-adC
-Zci
-Zcg
-Zcg
-Zcg
-Zcg
-adC
-adC
-adC
-ZgC
-Zhi
-ZhU
-ZiD
-Zag
-Zjs
-ZjM
-Zkj
-ZkF
-ZkV
-Zll
-Zlu
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -97820,28 +90370,28 @@ aaa
 aaa
 aaa
 aaa
-aaA
-adC
-adC
-adC
-ZaU
-ZaU
-adC
-adC
-Zfp
-Zgd
-ZgD
-Zhj
-ZhV
-ZiE
-Zag
-Zag
-ZjN
-Zbv
-Zag
-Zag
-Zag
-Zag
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -98073,25 +90623,25 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaA
-aaA
-aaA
-aaA
-adC
-Zcj
-ZcG
-Zde
-Zdy
-ZdT
-ZeI
-Zfq
-Zge
-ZgE
-Zhk
-ZhU
-ZiF
-Zag
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -98334,21 +90884,21 @@ aaa
 aaa
 aaa
 aaa
-aaA
-ZaU
-Zck
-ZcH
-Zdf
-Zdz
-ZdU
-adC
-Zfr
-Zaw
-Zaw
-Zhi
-ZhU
-ZiG
-Zag
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -98587,25 +91137,25 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaA
-aaA
-aaA
-aaA
-ZaU
-Zcl
-ZcI
-Zdg
-ZdA
-ZdV
-ZeJ
-Zfs
-Zgf
-ZgF
-Zhl
-ZhW
-ZiH
-Zag
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -98848,21 +91398,21 @@ aaa
 aaa
 aaa
 aaa
-aaA
-ZaU
-Zcm
-ZcJ
-ZcI
-ZcI
-ZdW
-adC
-Zft
-Zgg
-Zgg
-Zhm
-ZhX
-ZiI
-Zag
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -99106,20 +91656,20 @@ aaa
 aaa
 aaa
 aaa
-adC
-Zcn
-ZcK
-Zdh
-ZdB
-ZdX
-ZeK
-Zfu
-Zgh
-ZgG
-Zhn
-ZhX
-ZiJ
-Zag
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -99363,20 +91913,20 @@ aaa
 aaa
 aaa
 aaa
-adC
-adC
-adC
-adC
-adC
-adC
-adC
-Zfr
-Zgi
-ZgH
-Zho
-ZhY
-ZiK
-Zag
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -99624,16 +92174,16 @@ aaa
 aaa
 aaa
 aaa
-aaA
-ZaU
-ZeL
-Zfv
-Zgj
-ZgI
-Zhp
-ZhZ
-ZiL
-Zag
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -99879,18 +92429,18 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaA
-aaA
-adC
-ZeM
-Zfw
-Zgk
-adC
-Zhq
-adC
-ZiM
-Zag
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -100136,17 +92686,17 @@ aaa
 aaa
 aaa
 aaa
-aec
-adC
-adC
-Zag
-adC
-Zfx
-adC
-Zag
-Zhr
-adC
-ZiN
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -100392,18 +92942,18 @@ aaa
 aaa
 aaa
 aaa
-ady
-ady
-Zdi
-ZdC
-Zdi
-ZeN
-Zfy
-Zgl
-Zcw
-Zhs
-Zia
-ZiO
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -100651,16 +93201,16 @@ aaa
 aaa
 aaa
 aaa
-adC
-adC
-adC
-adC
-Zfz
-adC
-adC
-Zht
-Zib
-ZiP
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -100900,24 +93450,24 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaA
-aaC
-aaC
-aaC
-aaC
-aaA
-aaA
-aaA
-aaA
-adC
 aaa
 aaa
 aaa
-adC
-adC
-adC
-ZaU
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -101164,14 +93714,14 @@ aaa
 aaa
 aaa
 aaa
-aaA
-aaa
-aaa
-Zag
 aaa
 aaa
 aaa
-Zag
+aaa
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -104817,10 +97367,10 @@ aaa
 aaa
 aaa
 aaa
-Znt
-Znz
-ZnM
-Znz
+Znu
+ZnA
+ZnN
+ZnA
 Zon
 aaa
 aaa
@@ -105074,16 +97624,16 @@ aaa
 aaa
 aaa
 aaa
-Znu
-ZnA
+Znv
+ZnB
 aaU
-ZnW
+ZnX
 Zoo
 aaa
 aaa
 aaF
 aaF
-ZmB
+ZmC
 ZpC
 aaF
 aaF
@@ -105331,14 +97881,14 @@ aaa
 aaa
 aaa
 aaF
-Znv
-ZnB
-ZnN
-ZnX
+Znw
+ZnC
+ZnO
+ZnY
 Zop
 aaF
 aaa
-ZmB
+ZmC
 agH
 afP
 ail
@@ -105588,10 +98138,10 @@ aaa
 aaa
 aaa
 aaa
-Znu
-ZnC
+Znv
+ZnD
 aaU
-ZnY
+ZnZ
 Zoo
 aaa
 aaa
@@ -105845,10 +98395,10 @@ aaa
 aaa
 aaa
 aaa
-Znw
-ZnD
+Znx
+ZnE
 agJ
-ZnZ
+Zoa
 Zoq
 aaa
 aaF
@@ -106609,9 +99159,9 @@ aaa
 aaa
 aaa
 abb
-ZmD
-ZmD
-ZmD
+ZmE
+ZmE
+ZmE
 abb
 aaa
 aaa
@@ -106866,13 +99416,13 @@ aaa
 aaa
 aaa
 abb
-Zmw
-Zmw
-Zmw
+Zmx
+Zmx
+Zmx
 abb
-Zng
-Zng
-Zng
+Znh
+Znh
+Znh
 abb
 afV
 agJ
@@ -107123,16 +99673,16 @@ aaa
 aaa
 aaa
 abb
-ZmE
-ZmE
-ZmV
-Znd
-Znh
-Znm
-Zmw
+ZmF
+ZmF
+ZmW
+Zne
+Zni
+Znn
+Zmx
 abb
 acw
-ZnO
+ZnP
 adD
 aaF
 ZoG
@@ -107380,13 +99930,13 @@ aaa
 aaa
 aaa
 abb
-ZmF
-ZmL
-ZmW
-Zne
-ZmW
-Znn
-Znr
+ZmG
+ZmM
+ZmX
+Znf
+ZmX
+Zno
+Zns
 abb
 acx
 acX
@@ -107637,13 +100187,13 @@ aaa
 aaa
 aaa
 abb
-ZmE
-ZmM
-Zmw
+ZmF
+ZmN
+Zmx
 acW
-Zmw
+Zmx
 abq
-Zmw
+Zmx
 abb
 acy
 acY
@@ -107894,9 +100444,9 @@ aaa
 abb
 acW
 abb
-Zmw
-ZmN
-ZmX
+Zmx
+ZmO
+ZmY
 abb
 abb
 abb
@@ -108149,11 +100699,11 @@ aaa
 aaa
 aaa
 abb
-Zmv
-Zmy
 Zmw
-ZmO
-ZmY
+Zmz
+Zmx
+ZmP
+ZmZ
 abb
 aiP
 abs
@@ -108406,19 +100956,19 @@ aaa
 aaa
 aaa
 acW
-Zmw
-Zmz
-Zmw
-ZmO
-ZmZ
+Zmx
+ZmA
+Zmx
+ZmP
+Zna
 abb
 aiT
 ajG
 ako
 ale
 aiq
-ZnP
-Zoa
+ZnQ
+Zob
 Zor
 aaF
 aaF
@@ -108663,11 +101213,11 @@ aaa
 aaa
 aaa
 abb
-Zmx
-ZmA
-ZmG
-ZmO
-Zna
+Zmy
+ZmB
+ZmH
+ZmP
+Znb
 abb
 aiR
 ajH
@@ -108678,13 +101228,13 @@ ada
 ZxN
 ael
 aaF
-ZnW
+ZnX
 ZxQ
 agP
 ahF
 ZpI
 ZpW
-ZnW
+ZnX
 aaF
 ZqB
 alu
@@ -108922,16 +101472,16 @@ aaa
 abb
 acW
 abb
-ZmH
-ZmP
-Znb
+ZmI
+ZmQ
+Znc
 abb
 aiS
 ajI
 akq
 ale
 aiq
-ZnQ
+ZnR
 adJ
 Zos
 aaF
@@ -109179,16 +101729,16 @@ aaa
 aaa
 aaa
 adI
-ZmI
-ZmQ
-Znc
+ZmJ
+ZmR
+Znd
 adI
-Zni
+Znj
 abt
 abC
 aca
 aiq
-ZnQ
+ZnR
 ZxN
 aem
 aaF
@@ -109436,14 +101986,14 @@ aaa
 aaa
 aaa
 adI
-ZmI
-ZmR
-Znc
+ZmJ
+ZmS
+Znd
 adI
 aiq
 aiq
 ZxM
-Znx
+Zny
 aiq
 adc
 ZxO
@@ -109692,18 +102242,18 @@ aaa
 aaa
 aaa
 aaa
-ZmB
+ZmC
 ZxL
 aaJ
 aaS
 abd
-Znj
+Znk
 abv
-Zns
+Znt
 acc
 acG
 add
-Zob
+Zoc
 aen
 aeS
 aeS
@@ -109949,7 +102499,7 @@ aaa
 aaa
 aaa
 aaa
-ZmB
+ZmC
 aaG
 aaK
 aaK
@@ -110217,7 +102767,7 @@ aaF
 aaF
 amJ
 abf
-Zoc
+Zod
 aeo
 aci
 aci
@@ -110729,9 +103279,9 @@ apL
 aqe
 aqx
 aqV
-ZmC
+ZmD
 adg
-Zod
+Zoe
 Zov
 aci
 ZoY
@@ -110986,7 +103536,7 @@ apo
 apo
 aqx
 aqV
-ZmC
+ZmD
 adh
 adN
 aeq
@@ -111243,9 +103793,9 @@ apM
 apo
 aqx
 aqV
-ZmC
-ZnR
-Zod
+ZmD
+ZnS
+Zoe
 Zov
 aci
 ZoZ
@@ -111502,7 +104052,7 @@ anv
 aqW
 amJ
 adi
-Zoe
+Zof
 Zow
 aci
 Zpa
@@ -111759,7 +104309,7 @@ amJ
 amJ
 amJ
 abf
-Zoc
+Zod
 aeo
 aci
 Zpb
@@ -112005,18 +104555,18 @@ aaa
 aaa
 aaa
 aaa
-ZmC
-ZmJ
-ZmS
-ZmS
-Znf
-Znk
-Zno
-Zno
-Znk
-Znk
-ZnS
-Zof
+ZmD
+ZmK
+ZmT
+ZmT
+Zng
+Znl
+Znp
+Znp
+Znl
+Znl
+ZnT
+Zog
 Zox
 aci
 Zpc
@@ -112262,13 +104812,13 @@ aaa
 aaa
 aaa
 aaa
-ZmC
-ZmK
-ZmT
-ZmT
-ZmT
-Znl
-Znp
+ZmD
+ZmL
+ZmU
+ZmU
+ZmU
+Znm
+Znq
 abJ
 aad
 acO
@@ -112521,12 +105071,12 @@ aaa
 aaa
 amJ
 amJ
-ZmU
+ZmV
 amJ
 amJ
 amJ
-Znq
-Znq
+Znr
+Znr
 amJ
 aci
 aci
@@ -112777,9 +105327,9 @@ aaa
 aaa
 aaa
 aaa
-Zmm
-Zmp
-Zmt
+Zmn
+Zmq
+Zmu
 aaa
 aaa
 aaa
@@ -113034,16 +105584,16 @@ aaa
 aaa
 aaa
 aaa
-Zmn
-Zmq
-Zmn
+Zmo
+Zmr
+Zmo
 aaa
 aaa
 aaa
 aaa
 aaa
 aci
-ZnT
+ZnU
 adR
 adR
 aeX
@@ -113291,9 +105841,9 @@ aaa
 aaa
 aaa
 aaa
-Zmn
-Zmr
-Zmn
+Zmo
+Zms
+Zmo
 aaa
 aaa
 aaa
@@ -113548,9 +106098,9 @@ aaa
 aaa
 aaa
 aaa
-Zmo
-Zms
-Zmu
+Zmp
+Zmt
+Zmv
 aaa
 aaa
 aaa
@@ -113815,7 +106365,7 @@ aaa
 acn
 adt
 adX
-Zog
+Zoh
 aez
 afa
 acp
@@ -114327,8 +106877,8 @@ aaa
 aaa
 aaa
 acp
-ZnE
-ZnU
+ZnF
+ZnV
 Zym
 Zoy
 ZoL
@@ -114843,7 +107393,7 @@ aaa
 acn
 acR
 acr
-Zoh
+Zoi
 Zoz
 ZoM
 Zpf
@@ -115355,7 +107905,7 @@ aaa
 aaa
 aaa
 afK
-ZnF
+ZnG
 ads
 adq
 ZoA
@@ -115611,10 +108161,10 @@ aaa
 aaa
 aaa
 aaa
-Zny
+Znz
 acS
 acS
-Zoi
+Zoj
 ZoB
 ZoO
 Zph
@@ -115868,10 +108418,10 @@ aaa
 aaa
 aaa
 aaa
-Zny
+Znz
 acS
-ZnV
-Zoj
+ZnW
+Zok
 aeD
 afd
 afK
@@ -116383,7 +108933,7 @@ aaa
 aaa
 aaa
 afK
-ZnG
+ZnH
 aib
 aib
 ZoC
@@ -116640,7 +109190,7 @@ aaa
 aaa
 aaa
 afK
-ZnH
+ZnI
 aib
 aib
 ZoC
@@ -116897,7 +109447,7 @@ aaa
 aaa
 aaa
 afK
-ZnI
+ZnJ
 aib
 aib
 ZoC
@@ -117154,7 +109704,7 @@ aaa
 aaa
 aaa
 afK
-ZnJ
+ZnK
 aib
 aib
 ZoC
@@ -117411,9 +109961,9 @@ aaa
 aaa
 aaa
 afK
-ZnI
+ZnJ
 aib
-Zok
+Zol
 ZoD
 afd
 afK
@@ -117668,8 +110218,8 @@ aaa
 aaa
 aaa
 afK
-ZnK
-ZnK
+ZnL
+ZnL
 aib
 ZoE
 afd
@@ -117925,9 +110475,9 @@ aaa
 aaa
 aaa
 afK
-ZnL
-ZnL
-Zol
+ZnM
+ZnM
+aec
 ZoF
 ZoS
 afK
@@ -139486,9 +132036,9 @@ aaa
 aaa
 aaa
 aaa
-Zmm
-Zmp
-Zmt
+Zmn
+Zmq
+Zmu
 aaa
 aaa
 aaa
@@ -139743,9 +132293,9 @@ aaa
 aaa
 aaa
 aaa
-Zmn
-Zmq
-Zmn
+Zmo
+Zmr
+Zmo
 aaa
 aaa
 aaa
@@ -140000,9 +132550,9 @@ aaa
 aaa
 aaa
 aaa
-Zmn
-Zmr
-Zmn
+Zmo
+Zms
+Zmo
 aaa
 aaa
 aaa
@@ -140257,9 +132807,9 @@ aaa
 aaa
 aaa
 aaa
-Zmo
-Zms
-Zmu
+Zmp
+Zmt
+Zmv
 aaa
 aaa
 aaa
