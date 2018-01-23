@@ -228,6 +228,10 @@
 		return 0
 	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
 		return 0
+	for(var/obj/machinery/door/poddoor/door in loc)	// Don't get shocked if there's a closed poddoor
+		if(door.density)
+			return
+
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()
 	if(C)
