@@ -238,6 +238,12 @@ var/last_irc_status = 0
 							to_chat(ticket.owner, "<span class='ticket-text-received'>-- [input["admin"]] -> [key_name_params(ticket.owner, 0, 0, null, src)]: [log_item.text]</span>")
 				return msg
 
+	else if("toggleooc" in input)
+		config.ooc_during_round = !config.ooc_during_round
+		to_chat(world, "OOC has been turned [config.ooc_during_round? "on":"off"] from discord!")
+		return "OOC has been turned [config.ooc_during_round? "on":"off"]."
+
+
 
 /world/Reboot(var/reason, var/feedback_c, var/feedback_r, var/time)
 	if (reason == 1) //special reboot, do none of the normal stuff
