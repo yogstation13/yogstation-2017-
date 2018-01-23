@@ -1161,7 +1161,6 @@
 #include "code\modules\events\spider_infestation.dm"
 #include "code\modules\events\spontaneous_appendicitis.dm"
 #include "code\modules\events\vent_clog.dm"
-#include "code\modules\events\weightless.dm"
 #include "code\modules\events\wormholes.dm"
 #include "code\modules\events\holiday\aprilfools.dm"
 #include "code\modules\events\holiday\halloween.dm"
