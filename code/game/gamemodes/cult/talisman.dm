@@ -62,7 +62,7 @@
 	dat += "<A href='?src=\ref[src];rune=metal'>Ar'Tee ess!</A> - Provides 5 runed metal.<BR>"
 	dat += "<A href='?src=\ref[src];rune=teleport'>Sas'so c'arta forbici!</A> - Allows you to move to a selected teleportation rune.<BR>"
 	dat += "<A href='?src=\ref[src];rune=emp'>Ta'gh fara'qha fel d'amar det!</A> - Allows you to destroy technology in a short range.<BR>"
-	//dat += "<A href='?src=\ref[src];rune=runestun'>Fuu ma'jin!</A> - Allows you to stun a person by attacking them with the talisman.<BR>"
+	dat += "<A href='?src=\ref[src];rune=runestun'>Fuu ma'jin!</A> - Allows you to stun a person by attacking them with the talisman.<BR>"
 	dat += "<A href='?src=\ref[src];rune=veiling'>Kla'atu barada nikt'o!</A> - Two use talisman, first use makes all nearby runes invisible, second use reveals nearby hidden runes.<BR>"
 	dat += "<A href='?src=\ref[src];rune=soulstone'>Kal'om neth!</A> - Summons a soul stone, used to capure the spirits of dead or dying humans.<BR>"
 	dat += "<A href='?src=\ref[src];rune=construct'>Daa'ig osk!</A> - Summons a construct shell for use with soulstone-captured souls. It is too large to carry on your person.<BR>"
@@ -91,9 +91,9 @@
 				if("emp")
 					var/obj/item/weapon/paper/talisman/emp/T = new(usr)
 					usr.put_in_hands(T)
-				/*if("runestun")
+				if("runestun")
 					var/obj/item/weapon/paper/talisman/stun/T = new(usr)
-					usr.put_in_hands(T)*/
+					usr.put_in_hands(T)
 				if("soulstone")
 					var/obj/item/device/soulstone/T = new(usr)
 					usr.put_in_hands(T)
@@ -225,7 +225,7 @@
 						 "<span class='cultitalic'>You speak the words of the talisman, emitting an EMP blast.</span>")
 	empulse(src, 4, 8)
 
-/*
+
 //Rite of Disorientation: Stuns and inhibit speech on a single target for quite some time
 /obj/item/weapon/paper/talisman/stun
 	cultist_name = "Talisman of Stunning"
@@ -253,25 +253,19 @@
 			target.visible_message("<span class='warning'>[target]'s holy weapon absorbs the talisman's light!</span>", \
 								   "<span class='userdanger'>Your holy weapon absorbs the blinding light!</span>")
 		else
-			target.Weaken(10)
-			target.Stun(10)
+			target.Weaken(5)
+			target.Stun(5)
 			target.flash_eyes(1,1)
 			if(issilicon(target))
 				var/mob/living/silicon/S = target
 				S.emp_act(1)
-			else if(iscarbon(target))
-				var/mob/living/carbon/C = target
-				C.silent += 5
-				C.stuttering += 15
-				C.cultslurring += 15
-				C.Jitter(15)
 			if(is_servant_of_ratvar(target))
 				target.adjustBruteLoss(15)
 		user.drop_item()
 		qdel(src)
 		return
 	..()
-*/
+
 
 //Rite of Arming: Equips cultist armor on the user, where available
 /obj/item/weapon/paper/talisman/armor
