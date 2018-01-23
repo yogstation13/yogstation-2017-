@@ -4698,7 +4698,7 @@
 	name = "mission launch control";
 	pixel_x = -26;
 	pixel_y = 0;
-	req_access_txt = "151"
+	req_access_txt = "150"
 	},
 /turf/open/floor/plasteel/bar{
 	dir = 2
