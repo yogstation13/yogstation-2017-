@@ -719,3 +719,13 @@
 	result = "laughter"
 	required_reagents = list("banana" = 1, "sugar" = 1)
 	result_amount = 2
+	
+/datum/chemical_reaction/plastic_polymers
+	name = "plastic polymers"
+	id = "plastic_polymers"
+	required_reagents = list("oil" = 5, "sodiumchloride" = 2, "ash" = 3)
+	required_temp = 374 //lazily consistent with soap & other crafted objects generically created with heat.
+
+/datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, created_volume)
+	var/location = get_turf(holder.my_atom)
+	new /obj/item/stack/sheet/plastic(location, 10)

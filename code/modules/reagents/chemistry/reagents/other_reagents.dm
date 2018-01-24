@@ -1474,3 +1474,9 @@ datum/reagent/romerol
 
 /datum/reagent/laughter/overdose_process(mob/living/M)
 	M.emote(pick(list("laugh","giggle")))
+
+/datum/reagent/plastic_polymers
+	name = "plastic polymers"
+	id = "plastic_polymers"
+	description = "the petroleum based components of plastic."
+	color = "#f7eded"
