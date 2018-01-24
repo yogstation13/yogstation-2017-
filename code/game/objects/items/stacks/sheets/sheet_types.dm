@@ -305,6 +305,7 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
  * Plastc
  */
 var/global/list/datum/stack_recipe/plastic_recipes = list(
+	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \
 	new /datum/stack_recipe("water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/empty), \
 	new /datum/stack_recipe("large water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large/empty,3), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/weapon/caution, 2))
