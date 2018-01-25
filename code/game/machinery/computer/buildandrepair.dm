@@ -374,28 +374,40 @@
 /obj/item/weapon/circuitboard/computer/labor_shuttle
 	name = "circuit board (Labor Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/labor
+
 /obj/item/weapon/circuitboard/computer/labor_shuttle/one_way
 	name = "circuit board (Prisoner Shuttle Console)"
 	build_path = /obj/machinery/computer/shuttle/labor/one_way
+
 /obj/item/weapon/circuitboard/computer/ferry
 	name = "circuit board (Transport Ferry)"
 	build_path = /obj/machinery/computer/shuttle/ferry
+
 /obj/item/weapon/circuitboard/computer/ferry/request
 	name = "circuit board (Transport Ferry Console)"
 	build_path = /obj/machinery/computer/shuttle/ferry/request
+
 /obj/item/weapon/circuitboard/computer/mining_shuttle
 	name = "circuit board (Mining Shuttle)"
 	build_path = /obj/machinery/computer/shuttle/mining
+
+/obj/item/weapon/circuitboard/computer/asteroid_shuttle
+	name = "circuit board (Asteroid Mining Shuttle)"
+	build_path = /obj/machinery/computer/shuttle/mining/asteroid
+
 /obj/item/weapon/circuitboard/computer/white_ship
 	name = "circuit board (White Ship)"
 	build_path = /obj/machinery/computer/shuttle/white_ship
+
 /obj/item/weapon/circuitboard/computer/white_ship/miner
 	name = "circuit board (Free Miner Ship)"
 	build_path = /obj/machinery/computer/shuttle/white_ship/miner
+
 /obj/item/weapon/circuitboard/computer/holodeck// Not going to let people get this, but it's just here for future
 	name = "circuit board (Holodeck Control)"
 	build_path = /obj/machinery/computer/holodeck
 	origin_tech = "programming=4"
+
 /obj/item/weapon/circuitboard/computer/aifixer
 	name = "circuit board (AI Integrity Restorer)"
 	build_path = /obj/machinery/computer/aifixer
