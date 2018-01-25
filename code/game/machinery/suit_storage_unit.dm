@@ -178,7 +178,7 @@
 	mask = null
 	shoes = null
 	occupant = null
-	extra_items = null
+	extra_items = list()
 
 /obj/machinery/suit_storage_unit/ex_act(severity, target)
 	switch(severity)
@@ -253,6 +253,7 @@
 			qdel(shoes)
 			extra_items = null
 			qdel(extra_items)
+			extra_items = list()
 			// The wires get damaged too.
 			wires.cut_all()
 		else
