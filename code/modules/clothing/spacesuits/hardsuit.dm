@@ -35,6 +35,8 @@
 	if(on)
 		user.AddLuminosity(brightness_on)
 		SetLuminosity(0)
+	if(suit)
+		qdel(src)
 
 /obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)
 	..()
