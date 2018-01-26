@@ -423,7 +423,8 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/proc/release_characters(list/livings)
 	for(var/I in livings)
 		var/mob/living/L = I
-		L.notransform = FALSE
+		if(L)
+			L.notransform = FALSE
 
 /datum/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)

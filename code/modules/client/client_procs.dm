@@ -360,8 +360,8 @@ var/next_external_rsc = 0
 		adminGreet(1)
 		holder.owner = null
 		admins -= src
-		if(!admins.len)
-			webhook_send("adminless", "The last admin has left the server!")
+		if(!admins.len && !ticker.server_reboot_in_progress)
+			webhook_send("adminless", "The last admin, [src], has left the server!")
 	sync_logout_with_db(connection_number)
 	directory -= ckey
 	clients -= src

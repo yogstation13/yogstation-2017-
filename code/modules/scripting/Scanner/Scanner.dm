@@ -12,7 +12,6 @@
 /*
 	Var: errors
 	A list of fatal errors found by the scanner. If there are any items in this list, then it is not safe to parse the returned tokens.
-
 	See Also:
 	- <scriptError>
 */
@@ -56,16 +55,14 @@
 	The scanner's position in the source code.
 */
 		codepos				 = 1
-		line					 = 1
+		line				 = 1
 		linepos 			 = 0 										 //column=codepos-linepos
 		n_scriptOptions/nS_Options/options
-
 
 		list
 /*
 	Variable: ignore
 	A list of characters that are ignored by the scanner.
-
 	Default Value:
 	Whitespace
 */
@@ -73,7 +70,6 @@
 /*
 	Variable: end_stmt
 	A list of characters that end a statement. Each item may only be one character long.
-
 	Default Value:
 	Semicolon
 */
@@ -81,7 +77,6 @@
 /*
 	Variable: string_delim
 	A list of characters that can start and end strings.
-
 	Default Value:
 	Double and single quotes.
 */
@@ -114,17 +109,16 @@
 	Scan() //Creates a list of tokens from source code
 		var/list/tokens=new
 		for(, src.codepos<=lentext(code), src.codepos++)
-
-			var/char=copytext(code, codepos, codepos+1)
-			var/twochar=copytext(code, codepos+1, codepos+2) // For finding comment syntax
-			if(char=="\n")
+			var/char = copytext(code, codepos, codepos + 1)
+			var/twochar = copytext(code, codepos, codepos + 2) // For finding comment syntax
+			if(char == "\n")
 				line++
 				linepos=codepos
 
 			if(ignore.Find(char))
 				continue
 			else if(twochar == "//" || twochar == "/*")
-				ReadComment(twochar == "//") // Feeds whether it's a short comment or not to ReadComment()
+				ReadComment()
 			else if(end_stmt.Find(char))
 				tokens+=new /token/end(char, line, COL)
 			else if(string_delim.Find(char))
@@ -147,13 +141,11 @@
 /*
 	Proc: ReadString
 	Reads a string in the source code into a token.
-
 	Parameters:
 	start - The character used to start the string.
 */
 		ReadString(start)
-			var
-				buf
+			var/buf
 			for(, codepos <= lentext(code), codepos++)//codepos to lentext(code))
 				var/char=copytext(code, codepos, codepos+1)
 				switch(char)
@@ -243,26 +235,33 @@
 	Proc: ReadComment
 	Reads a comment. Wow.
 	 I'm glad I wrote this proc description for you to explain that.
-
-	Parameters:
-		isshort - a variable that stores how this comment started
-			i.e., if it was a // or a /*
+	Unlike the other Read functions, this one doesn't have to return any tokens,
+	 since it's just "reading" comments.
+	All it does is just pass var/codepos through the comments until it reaches the end of'em.
 */
+		ReadComment()
+			// Remember that we still have that $codepos "pointer" variable to use.
+			var/longeur = lentext(code) // So I don't call for var/code's length every while loop
 
-		ReadComment(isshort)
-			// Remember that we still have that $codepos pointer variable to use.
-			if(isshort) // If line comment
-				++codepos // To skip over the second slash
-				while(++codepos>lentext(code))
+			if(copytext(code, codepos, codepos+2) == "//") // If line comment
+				++codepos // Eat the current comment start, halfway
+				while(++codepos <= longeur) // Second half of the eating, on the first eval
 					if(copytext(code, codepos, codepos+1) == "\n") // then stop on the newline
-						break
-			else
-				var/noend = TRUE
-				++codepos // To prevent /*/ from being valid syntax
-				while(++codepos>lentext(code)) // If long comment
+						line++
+						linepos=codepos
+						return
+			else // If long comment
+				++codepos // Eat the current comment start, halfway
+				while(++codepos <= longeur) // Ditto, on the first eval
 					if(copytext(code, codepos, codepos+2) == "*/") // then stop on any */ 's'
-						noend = FALSE
-						break
-				if(noend) // If the comment wasn't completed
-					errors+=new/scriptError/UnterminatedComment()
+						++codepos // Eat the comment end
+						//but not all of it, because the for-loop this is in
+						//will increment it again later.
+						return
+					else if(copytext(code, codepos, codepos+1)=="\n") // We still have to count line numbers!
+						line++
+						linepos=codepos
+				//Else if the longcomment didn't end, do an error
+				errors += new/scriptError/UnterminatedComment()
+
 
