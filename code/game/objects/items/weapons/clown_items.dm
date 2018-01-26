@@ -168,7 +168,7 @@
 				var/mob/living/carbon/human/H = M
 				if((istype(H.ears, /obj/item/clothing/ears/earmuffs)) || H.ear_deaf)
 					continue
-			M.emote("flip")
+			M.SpinAnimation(7,1)
 
 /obj/item/device/assembly/bikehorn/rubber_pigeon
 	name = "rubber pigeon"

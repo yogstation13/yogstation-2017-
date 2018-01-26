@@ -112,8 +112,23 @@
 
 		if ("flip","flips")
 			if (!restrained() || !resting || !sleeping)
-				src.SpinAnimation(7,1)
-				m_type = 2
+				if(istype(src, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = src
+					if(H.wear_suit && H.wear_suit.w_class >= 4 && prob(6))
+						message = "<B>[src]</B> attempts a flip, but the weight of \his suit crashes \him to the floor!"
+					else if(H.mind.assigned_role == "Clown" && prob(6))
+						message = "<B>[src]</B> attempts a flip, but \his clownish nature crashes \him to the floor!"
+					else if(nutrition >= NUTRITION_LEVEL_FAT && prob(6))
+						message = "<B>[src]</B> attempts a flip, but \his weight crashes \him to the floor!"
+					else if(prob(3))
+						message = "<B>[src]</B> attempts a flip and crashes to the floor!"
+				if(message)
+					SpinAnimation(5,1)
+					sleep(3)
+					Weaken(2)
+				else
+					src.SpinAnimation(7,1)
+					m_type = 2
 
 		if ("frown","frowns")
 			message = "<B>[src]</B> frowns."

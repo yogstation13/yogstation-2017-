@@ -321,7 +321,7 @@
 	if(!D)
 		return
 	A.emote("scream")
-	A.emote("flip")
+	A.SpinAnimation(7,1)
 	A.dir = turn(A.dir, 90)
 
 	A.visible_message("<span class = 'danger'><B>[A] roundhouse-kicks [D]!</B></span>")
