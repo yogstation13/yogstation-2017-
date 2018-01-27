@@ -724,6 +724,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 2
 	surplus = 30
 
+/datum/uplink_item/stealthy_tools/deadringer
+	name = "Dead Ringer"
+	desc = "Tired of getting arrested over and over again? This handy device will allow you to escape be leaving behind a fake body. \
+			Simply have it in your hand, and the moment you take damage or get stunned, you will leave behind a fake body with fake items."
+	item = /obj/item/device/deadringer
+	cost = 8
+	surplus = 30
+
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
 	category = "Space Suits and Hardsuits"
