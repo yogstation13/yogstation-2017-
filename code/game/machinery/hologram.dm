@@ -40,9 +40,11 @@ var/const/HOLOPAD_MODE = RANGE_BASED
 	languages_spoken = ROBOT | HUMAN
 	languages_understood = ROBOT | HUMAN
 	var/list/masters = list()//List of AIs that use the holopad
+	var/list/holorays = list() //Holoray-mob link.
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
 	var/temp = ""
+	var/obj/effect/overlay/holoray/ray
 
 /obj/machinery/hologram/holopad/New()
 	..()
@@ -165,17 +167,21 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	h.name = "[A.name] (Hologram)"//If someone decides to right click.
 	h.SetLuminosity(2)	//hologram lighting
 	masters[A] = h
+	holorays[A] = new /obj/effect/overlay/holoray(loc)
 	SetLuminosity(2)			//pad lighting
+	move_hologram()
 	icon_state = "holopad1"
 	A.current = src
 	use_power += HOLOGRAM_POWER_USAGE
 	return 1
 
 /obj/machinery/hologram/holopad/proc/clear_holo(mob/living/silicon/ai/user)
-	if(user.current == src)
+	if(!user.current || user.current == src)
 		user.current = null
 	qdel(masters[user])//Get rid of user's hologram
+	qdel(holorays[user])//get rid of the user's holoray
 	masters -= user //Discard AI from the list of those who use holopad
+	holorays -= user
 	use_power = max(HOLOPAD_PASSIVE_POWER_USAGE, use_power - HOLOGRAM_POWER_USAGE)//Reduce power usage
 	if (!masters.len)//If no users left
 		SetLuminosity(0)			//pad lighting (hologram lighting will be handled automatically since its owner was deleted)
@@ -204,12 +210,33 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/hologram/holopad/proc/move_hologram(mob/living/silicon/ai/user)
 	if(masters[user])
-		step_to(masters[user], user.eyeobj) // So it turns.
-		var/obj/effect/overlay/holo_pad_hologram/H = masters[user]
-		H.loc = get_turf(user.eyeobj)
-		masters[user] = H
+		var/obj/effect/overlay/holo_pad_hologram/holo = masters[user]
+		var/obj/effect/overlay/holoray/ray = holorays[user]
+		var/turf/T = holo.loc
+		step_to(holo, get_turf(user.eyeobj))
+		holo.forceMove(get_turf(user.eyeobj))
+		var/disty = holo.y - ray.y
+		var/distx = holo.x - ray.x
+		var/newangle
+		if(!disty)
+			if(distx >= 0)
+				newangle = 90
+			else
+				newangle = 270
+		else
+			newangle = arctan(distx/disty)
+			if(disty < 0)
+				newangle += 180
+			else if(distx < 0)
+				newangle += 360
+		var/matrix/M = matrix()
+		if (get_dist(T, holo.loc) <= 1)
+			animate(ray, transform = turn(M.Scale(1,sqrt(distx*distx+disty*disty)),newangle),time = 1)
+		else
+			ray.transform = turn(M.Scale(1,sqrt(distx*distx+disty*disty)),newangle)
+	else
+		clear_holo(user)
 	return 1
-
 
 /obj/effect/overlay/holo_pad_hologram/Process_Spacemove(movement_dir = 0)
 	return 1
@@ -248,6 +275,17 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		clear_holo(master)
 	return ..()
 
+/obj/effect/overlay/holoray
+	name = "holoray"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "holoray"
+	layer = FLY_LAYER
+	density = FALSE
+	anchored = TRUE
+	mouse_opacity = 0
+	pixel_x = -32
+	pixel_y = -32
+	alpha = 100
 
 
 #undef RANGE_BASED
