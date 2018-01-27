@@ -1,3 +1,5 @@
+#define EVENT_NEW -1
+
 //this datum is used by the events controller to dictate how it selects events
 /datum/round_event_control
 	var/name					//The human-readable name of the event
@@ -71,12 +73,12 @@
 	var/processing = TRUE
 	var/datum/round_event_control/control
 
-	var/startWhen		= 0	//When in the lifetime to call start().
-	var/announceWhen	= 0	//When in the lifetime to call announce(). Set an event's announceWhen to >0 if there is an announcement.
-	var/endWhen			= 0	//When in the lifetime the event should end.
+	var/startWhen		= 0		//When in the lifetime to call start().
+	var/announceWhen	= 0		//When in the lifetime to call announce(). Set an event's announceWhen to >0 if there is an announcement.
+	var/endWhen			= 0		//When in the lifetime the event should end.
 
-	var/activeFor		= 0	//How long the event has existed. You don't need to change this.
-	var/current_players	= 0 //Amount of of alive, non-AFK human players on server at the time of event start
+	var/activeFor		= EVENT_NEW	//How long the event has existed. You don't need to change this.
+	var/current_players	= 0		//Amount of of alive, non-AFK human players on server at the time of event start
 
 //Called first before processing.
 //Allows you to setup your event, such as randomly
@@ -123,6 +125,8 @@
 /datum/round_event/process()
 	if(!processing)
 		return
+	
+	activeFor++			// We increment the age of the event at the start incase any functions down the line runtime error
 
 	if(activeFor == startWhen)
 		start()
@@ -139,8 +143,6 @@
 	// Everything is done, let's clean up.
 	if(activeFor >= endWhen && activeFor >= announceWhen && activeFor >= startWhen)
 		kill()
-
-	activeFor++
 
 
 //Garbage collects the event by removing it from the global events list,

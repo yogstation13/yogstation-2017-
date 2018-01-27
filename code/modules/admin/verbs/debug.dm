@@ -257,29 +257,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!ticker || !ticker.mode)
 		alert("Wait until the game starts")
 		return
+
 	var/selection = alert("Are you sure you want to make [M.real_name] a blob?", "Make Blob", "Yes", "No")
 	if(selection == "No")
-		return
-	selection = alert("Where should the blob go?", "Make Blob", "Where mob is", "Where you are", "Let them choose")
-	if(selection == "Cancel")
 		return
 
 	if(istype(M, /mob/living/carbon/human))
 		log_admin("[key_name(src)] has blobized [M.key].")
 		var/mob/living/carbon/human/H = M
-		spawn(0)
-			var/mob/camera/blob/B = H.become_overmind()
-			switch(selection)
-				if("Where mob is")
-					B.place_blob_core(B.base_point_rate, -1)
-				if("Where you are")
-					B.forceMove(get_turf(usr))
-					B.place_blob_core(B.base_point_rate, -1)
-				if("Let them choose")
-					B.manualplace_min_time = 0
-					return
-
-
+		H.become_overmind()
 	else
 		alert("Invalid mob")
 

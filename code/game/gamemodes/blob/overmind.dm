@@ -1,3 +1,9 @@
+var/global/list/overminds = list()
+var/global/list/blobs = list()
+var/global/list/blob_cores = list()
+var/global/list/blob_nodes = list()
+
+
 /mob/camera/blob
 	name = "Blob Overmind"
 	real_name = "Blob Overmind"
@@ -25,18 +31,15 @@
 	var/base_point_rate = 2 //for blob core placement
 	var/manualplace_min_time = 600 //in deciseconds //a minute, to get bearings
 	var/autoplace_max_time = 3600 //six minutes, as long as should be needed
+	var/overmind_get_delay = 0 //we don't want to constantly try to find an overmind, this var tracks when we'll try to get an overmind again 
+	var/list/blobs_legit = list()
+	var/blobwincount = 400
+	var/victory_in_progress = FALSE
 
-/mob/camera/blob/New(loc, pre_placed = 0, mode_made = 0)
-	if(pre_placed) //we already have a core!
-		manualplace_min_time = 0
-		autoplace_max_time = 0
-		placed = 1
-	else
-		if(mode_made)
-			manualplace_min_time = world.time + BLOB_NO_PLACE_TIME
-		else
-			manualplace_min_time += world.time
-		autoplace_max_time += world.time
+/mob/camera/blob/New(loc)
+	manualplace_min_time += world.time
+	autoplace_max_time += world.time
+
 	overminds += src
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
@@ -45,9 +48,12 @@
 	var/list/possible_reagents = list()
 	for(var/type in (subtypesof(/datum/reagent/blob)))
 		possible_reagents.Add(new type)
+
 	blob_reagent_datum = pick(possible_reagents)
 	if(blob_core)
 		blob_core.update_icon()
+	
+	SSshuttle.emergencyNoEscape = 1
 
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the blob cursor when they disable darkness
@@ -65,7 +71,46 @@
 				place_blob_core(base_point_rate, 1)
 		else
 			qdel(src)
+	else if(!victory_in_progress && (blobs.len >= blobwincount))
+		victory_in_progress = TRUE
+		priority_announce("Biohazard has reached critical mass. Station loss is imminent.", "Biohazard Alert")
+		set_security_level(SEC_LEVEL_DELTA)
+		max_blob_points = INFINITY
+		blob_points = INFINITY
+		addtimer(src, "victory", 660)
 	..()
+	
+/mob/camera/blob/proc/victory()
+	for(var/mob/living/L in mob_list)
+		var/turf/T = get_turf(L)
+		if(!T || !(T.z == ZLEVEL_STATION))
+			continue
+
+		if(L in overminds || L.checkpass(PASSBLOB))
+			continue
+
+		var/area/Ablob = get_area(T)
+		if(!Ablob.blob_allowed)
+			continue
+
+		playsound(L, 'sound/effects/splat.ogg', 50, 1)
+		L.death()
+		new/mob/living/simple_animal/hostile/blob/blobspore(T)
+		for(var/V in sortedAreas)
+			var/area/A = V
+			if(!A.blob_allowed)
+				continue
+
+			A.color = blob_reagent_datum.color
+			A.name = "blob"
+			A.icon = 'icons/mob/blob.dmi'
+			A.icon_state = "blob_shield"
+			A.layer = BELOW_MOB_LAYER
+			A.invisibility = 0
+			A.blend_mode = 0
+
+	to_chat(world, "<B>[real_name] consumed the station in an unstoppable tide!</B>")
+	ticker.force_ending = 1
 
 /mob/camera/blob/Destroy()
 	for(var/BL in blobs)
@@ -78,6 +123,8 @@
 		BM.overmind = null
 		BM.update_icons()
 	overminds -= src
+	SSshuttle.emergencyNoEscape = 0
+
 	if(ghostimage)
 		ghost_darkness_images -= ghostimage
 		qdel(ghostimage)
@@ -93,7 +140,7 @@
 	update_health_hud()
 
 /mob/camera/blob/update_health_hud()
-	if(blob_core)
+	if(blob_core && hud_used)
 		hud_used.healths.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_core.health)]</font></div>"
 		for(var/mob/living/simple_animal/hostile/blob/blobbernaut/B in blob_mobs)
 			if(B.hud_used && B.hud_used.blobpwrdisplay)
@@ -149,7 +196,8 @@
 	if(statpanel("Status"))
 		if(blob_core)
 			stat(null, "Core Health: [blob_core.health]")
-		stat(null, "Power Stored: [blob_points]/[max_blob_points]")
+			stat(null, "Power Stored: [blob_points]/[max_blob_points]")
+			stat(null, "Blobs to Win: [blobs.len]/[blobwincount]")
 		if(free_chem_rerolls)
 			stat(null, "You have [free_chem_rerolls] Free Chemical Reroll\s Remaining")
 		if(!placed)
@@ -173,3 +221,17 @@
 
 /mob/camera/blob/proc/can_attack()
 	return (world.time > (last_attack + CLICK_CD_RANGE))
+
+/mob/camera/blob/proc/find_overmind(override_delay)
+	overmind_get_delay = world.time + 150	// If this fails, we'll try again in 15 seconds
+
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a blob?", ROLE_BLOB, null, FALSE, 200)
+	if(!candidates.len)
+		return null
+	
+	for(var/client/C in candidates)
+		if(!(C.prefs.toggles & MIDROUND_ANTAG))
+			candidates -= C
+
+	if(candidates.len)
+		return pick(candidates)

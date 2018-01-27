@@ -20,10 +20,12 @@
 	var/mob/camera/blob/overmind
 
 
-/obj/effect/blob/New(loc)
+/obj/effect/blob/New(loc, owner_overmind)
+	overmind = owner_overmind
 	var/area/Ablob = get_area(loc)
-	if(Ablob.blob_allowed) //Is this area allowed for winning as blob?
-		blobs_legit += src
+	if(Ablob.blob_allowed && overmind) //Is this area allowed for winning as blob?
+		overmind.blobs_legit += src
+
 	blobs += src //Keep track of the blob in the normal list either way
 	src.dir = pick(1, 2, 4, 8)
 	src.update_icon()
@@ -38,9 +40,12 @@
 
 /obj/effect/blob/Destroy()
 	if(atmosblock)
-		atmosblock = 0
+		atmosblock = FALSE
 		air_update_turf(1)
-	blobs_legit -= src  //if it was in the legit blobs list, it isn't now
+
+	if(overmind)
+		overmind.blobs_legit -= src //if it was in the legit blobs list, it isn't now
+
 	blobs -= src //it's no longer in the all blobs list either
 	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
 	return ..()
@@ -177,12 +182,8 @@
 		A.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
-		var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc)
-		if(controller)
-			B.overmind = controller
-		else
-			B.overmind = overmind
-		B.density = 1
+		var/obj/effect/blob/B = new /obj/effect/blob/normal(src.loc, (controller || overmind))
+		B.density = TRUE
 		if(T.Enter(B,src)) //NOW we can attempt to move into the tile
 			B.density = initial(B.density)
 			B.loc = T
@@ -240,6 +241,7 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
 		user << 'sound/machines/ping.ogg'
+		to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[blobs.len]/[overmind.blobwincount].</span>")
 		chemeffectreport(user)
 		typereport(user)
 	else
@@ -307,9 +309,7 @@
 	if(!ispath(type))
 		throw EXCEPTION("change_to(): invalid type for blob")
 		return
-	var/obj/effect/blob/B = new type(src.loc)
-	if(controller)
-		B.overmind = controller
+	var/obj/effect/blob/B = new type(src.loc, controller)
 	B.creation_action()
 	B.update_icon()
 	qdel(src)
@@ -320,9 +320,13 @@
 	var/datum/atom_hud/hud_to_check = huds[DATA_HUD_MEDICAL_ADVANCED]
 	if(user.research_scanner || (user in hud_to_check.hudusers))
 		to_chat(user, "<b>Your HUD displays an extensive report...</b><br>")
+		to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[blobs.len]/[overmind.blobwincount].</span>")
 		chemeffectreport(user)
 		typereport(user)
 	else
+		if(isobserver(user))
+			to_chat(user, "<b>Progress to Critical Mass:</b> <span class='notice'>[blobs.len]/[overmind.blobwincount].</span>")
+
 		to_chat(user, "It seems to be made of [get_chem_name()].")
 
 /obj/effect/blob/proc/scannerreport()

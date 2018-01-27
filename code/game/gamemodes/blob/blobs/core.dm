@@ -10,8 +10,8 @@
 	atmosblock = 1
 	heatblock = 1
 	health_regen = 0 //we regen in Life() instead of when pulsed
-	var/core_regen = 2
 	var/overmind_get_delay = 0 //we don't want to constantly try to find an overmind, this var tracks when we'll try to get an overmind again
+	var/core_regen = 2
 	var/resource_delay = 0
 	var/point_rate = 2
 
@@ -22,9 +22,11 @@
 	poi_list |= src
 	update_icon() //so it atleast appears
 	if(!placed && !overmind)
-		create_overmind(new_overmind)
+		qdel(src)
+
 	if(overmind)
 		update_icon()
+
 	point_rate = new_rate
 	..()
 
@@ -45,6 +47,7 @@
 	blob_cores -= src
 	if(overmind)
 		overmind.blob_core = null
+
 	overmind = null
 	STOP_PROCESSING(SSobj, src)
 	poi_list -= src
@@ -63,50 +66,20 @@
 		overmind.update_health_hud()
 
 /obj/effect/blob/core/Life()
-	if(!overmind || !overmind.client)
-		create_overmind()
+	if(!overmind)
+		qdel(src)
 	else
 		if(resource_delay <= world.time)
 			resource_delay = world.time + 10 // 1 second
 			overmind.add_points(point_rate)
+
 	health = min(maxhealth, health+core_regen)
 	if(overmind)
 		overmind.update_health_hud()
+
 	Pulse_Area(overmind, 12, 4, 3)
 	for(var/obj/effect/blob/normal/B in range(1, src))
 		if(prob(5))
 			B.change_to(/obj/effect/blob/shield/core, overmind)
+
 	..()
-
-
-/obj/effect/blob/core/proc/create_overmind(client/new_overmind, override_delay)
-	if(overmind_get_delay > world.time && !override_delay)
-		return
-
-	overmind_get_delay = world.time + 150 //if this fails, we'll try again in 15 seconds
-
-	if(overmind)
-		qdel(overmind)
-
-	var/client/C = null
-	var/list/candidates = list()
-
-	if(!new_overmind)
-		for(var/mob/dead/observer/O in player_list)
-			if(O.client && !O.client.is_afk() && (ROLE_BLOB in O.client.prefs.be_special))
-				candidates += O
-		if(candidates.len)
-			C = pick(candidates)
-	else
-		C = new_overmind
-
-	if(C)
-		var/mob/camera/blob/B = new(src.loc, 1)
-		B.key = C.key
-		B.blob_core = src
-		src.overmind = B
-		update_icon()
-		if(B.mind && !B.mind.special_role)
-			B.mind.special_role = "Blob Overmind"
-		return 1
-	return 0

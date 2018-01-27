@@ -441,12 +441,12 @@
 	. = new_slime
 	qdel(src)
 
-/mob/proc/become_overmind(mode_made = 0)
-	var/mob/camera/blob/B = new /mob/camera/blob(loc, 0, mode_made)
+/mob/proc/become_overmind()
+	var/mob/camera/blob/B = new /mob/camera/blob(loc)
 	if(mind)
 		mind.transfer_to(B)
-	else
-		B.key = key
+
+	B.key = key
 	. = B
 	qdel(src)
 
