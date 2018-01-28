@@ -8,9 +8,13 @@
 
 /datum/round_event/borer
 	announceWhen = 3000 //Borers get 5 minutes till the crew tries to murder them.
+	endWhen = 2
 	var/spawned = 0
 
-	var/spawncount
+	var/spawncount = 0
+
+	var/borersSpawned = 0
+	var/list/vents = list()
 
 /datum/round_event/borer/announce()
 	if(spawned)
@@ -18,8 +22,6 @@
 
 
 /datum/round_event/borer/start()
-
-	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
 		if(qdeleted(temp_vent))
 			continue
@@ -36,26 +38,34 @@
 		if(H.stat != DEAD)
 			total_humans++
 
-	var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a borer?", ROLE_BORER, null, 200)
-
 	total_borer_hosts_needed = round(6 + total_humans/7)
+
 	spawncount += total_borer_hosts_needed
 
-	while(spawncount >= 1)
-		var/obj/vent = pick_n_take(vents)
-		for(var/client/C in candidates)
-			if(!(C.prefs.toggles & MIDROUND_ANTAG))
-				candidates -= C
-		if(!candidates.len)
-			return kill()
-		var/client/C = pick(candidates)
-		if(!C)
-			return kill()
 
-		candidates -= C
-		var/mob/living/simple_animal/borer/borer = new(vent.loc)
-		borer.transfer_personality(C)
-		spawned = 1
-		spawncount--
-		log_game("[borer]/([borer.ckey]) was spawned as a cortical borer.")
-		message_admins("[borer]/[borer.ckey] was spawned as a cortical borer.")
+
+/datum/round_event/borer/tick()
+	if(!borersSpawned) //Has the event tried to spawn borers yet?
+		borersSpawned = 1
+
+		var/list/mob/dead/observer/candidates = pollCandidates("Do you want to play as a borer?", ROLE_BORER, null, ROLE_BORER, 300)
+		if(!candidates.len)
+			kill()
+			return
+
+		spawncount = Clamp(spawncount, 0, candidates.len)
+		spawncount = Clamp(spawncount, 0, vents.len)
+
+		while(spawncount > 0)
+			var/obj/vent = pick_n_take(vents)
+			var/mob/dead/observer/C = pick_n_take(candidates) //So as to not spawn the same person twice
+
+			var/mob/living/simple_animal/borer/borer = new(vent.loc)
+			borer.transfer_personality(C.client)
+
+			spawned++
+			spawncount--
+
+			log_game("[borer]/([borer.ckey]) was spawned as a cortical borer.")
+			message_admins("[borer]/[borer.ckey] was spawned as a cortical borer.")
+
