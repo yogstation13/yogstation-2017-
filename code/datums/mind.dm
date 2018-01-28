@@ -1390,7 +1390,7 @@
 					else if (istype(M) && length(M.viruses))
 						for(var/datum/disease/D in M.viruses)
 							D.cure(0)
-						sleep(0) //because deleting of virus is done through spawn(0)
+						stoplag() //because deleting of virus is done through spawn(0)
 			if("infected")
 				if (check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current
