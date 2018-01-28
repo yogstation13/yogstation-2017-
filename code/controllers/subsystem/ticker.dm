@@ -147,20 +147,6 @@ var/datum/subsystem/ticker/ticker
 				ticket_counter_visible_to_everyone = 1
 				toggle_ooc(1) // Turn it on
 				declare_completion(force_ending)
-				spawn(50)
-					var/admins_online = total_admins_active()
-					var/unresolved_tickets = total_unresolved_tickets()
-
-					if(unresolved_tickets && admins_online)
-						delay_end = 1
-						message_admins("Not all tickets have been resolved. Server restart delayed.")
-					else if(unresolved_tickets && !admins_online)
-						world.Reboot("Round ended, but there were still active tickets. Please submit a player complaint if you did not receive a response.", "end_proper", "ended with open tickets")
-					else
-						if(mode.station_was_nuked)
-							world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
-						else
-							world.Reboot("Round ended.", "end_proper", "proper completion")
 
 		if(GAME_STATE_FINISHED)
 			if(!server_reboot_in_progress && !delay_end)
@@ -170,6 +156,8 @@ var/datum/subsystem/ticker/ticker
 
 
 /datum/subsystem/ticker/proc/setup()
+	world << "<span class='boldannounce'>Starting game...</span>"
+	var/init_start = world.timeofday
 		//Create and announce mode
 	var/list/datum/game_mode/runnable_modes
 	if(master_mode == "random" || master_mode == "secret")
@@ -199,10 +187,13 @@ var/datum/subsystem/ticker/ticker
 			SSjob.ResetOccupations()
 			return 0
 
+	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
 	can_continue = src.mode.pre_setup()		//Choose antagonists
+	CHECK_TICK
 	SSjob.DivideOccupations() 				//Distribute jobs
+	CHECK_TICK
 
 	if(!Debug2)
 		if(!can_continue)
@@ -218,6 +209,7 @@ var/datum/subsystem/ticker/ticker
 	else
 		to_chat(world, "<span class='notice'>DEBUG: Bypassing prestart checks...")
 
+	CHECK_TICK
 	if(hide_mode)
 		var/list/modes = new
 		for (var/datum/game_mode/M in runnable_modes)
@@ -228,18 +220,26 @@ var/datum/subsystem/ticker/ticker
 	else
 		mode.announce()
 
+	CHECK_TICK
 	current_state = GAME_STATE_PLAYING
 	if(!config.ooc_during_round)
 		toggle_ooc(0) // Turn it off
 	round_start_time = world.time
 
+	CHECK_TICK
 	start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
+	CHECK_TICK
 	collect_minds()
+	CHECK_TICK
 	equip_characters()
+	CHECK_TICK
 	data_core.manifest()
+	CHECK_TICK
 
-	Master.RoundStart()
+	Master.RoundStart()	//let the party begin...
+	
+	world.log << "Game start took [(world.timeofday - init_start)/10]s."
 
 	to_chat(world, "<FONT color='blue'><B>Welcome to [station_name()], enjoy your stay!</B></FONT>")
 	world << sound('sound/AI/welcome.ogg')
@@ -410,6 +410,7 @@ var/datum/subsystem/ticker/ticker
 					player.disclaimer()
 				else
 					player.new_player_panel()
+				CHECK_TICK
 	if(livings.len)
 		addtimer(src, "release_characters", 30, FALSE, livings)
 
@@ -423,6 +424,7 @@ var/datum/subsystem/ticker/ticker
 	for(var/mob/living/player in player_list)
 		if(player.mind)
 			ticker.minds += player.mind
+		CHECK_TICK
 
 
 /datum/subsystem/ticker/proc/equip_characters()
@@ -433,10 +435,12 @@ var/datum/subsystem/ticker/ticker
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(player, player.mind.assigned_role, 0)
+		CHECK_TICK
 	if(captainless)
 		for(var/mob/M in player_list)
-			if(!istype(M,/mob/new_player))
+			if(!isnewplayer(M))
 				to_chat(M, "Captainship not forced on anyone.")
+			CHECK_TICK
 
 
 
@@ -463,6 +467,8 @@ var/datum/subsystem/ticker/ticker
 			else
 				to_chat(Player, "<font color='red'><b>You did not survive the events on [station_name()]...</b></FONT>")
 
+		CHECK_TICK
+
 	//Round statistics report
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
@@ -476,6 +482,8 @@ var/datum/subsystem/ticker/ticker
 			to_chat(world, "<BR>[TAB]Evacuation Rate: <B>[num_escapees] ([round((num_escapees/joined_player_list.len)*100, 0.1)]%)</B>")
 		to_chat(world, "<BR>[TAB]Survival Rate: <B>[num_survivors] ([round((num_survivors/joined_player_list.len)*100, 0.1)]%)</B>")
 	to_chat(world, "<BR>")
+	
+	CHECK_TICK
 
 	//Silicon laws report
 	for (var/mob/living/silicon/ai/aiPlayer in mob_list)
@@ -494,6 +502,9 @@ var/datum/subsystem/ticker/ticker
 				if(robo.mind)
 					robolist += "[robo.name][robo.stat?" (Deactivated) (Played by: [robo.mind.key]), ":" (Played by: [robo.mind.key]), "]"
 			to_chat(world, "[robolist]")
+	
+	CHECK_TICK
+	
 	for (var/mob/living/silicon/robot/robo in mob_list)
 		if (!robo.connected_ai && robo.mind)
 			if (robo.stat != 2)
@@ -504,12 +515,18 @@ var/datum/subsystem/ticker/ticker
 			if(robo) //How the hell do we lose robo between here and the world messages directly above this?
 				robo.laws.show_laws(world)
 
+	CHECK_TICK
+
 	mode.declare_completion()//To declare normal completion.
+	
+	CHECK_TICK
 
 	//calls auto_declare_completion_* for all modes
 	for(var/handler in typesof(/datum/game_mode/proc))
 		if (findtext("[handler]","auto_declare_completion_"))
 			call(mode, handler)(force_ending)
+
+	CHECK_TICK
 
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
@@ -523,10 +540,14 @@ var/datum/subsystem/ticker/ticker
 				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
 				total_antagonists[temprole] += ": [Mind.name]([Mind.key])"
 
+	CHECK_TICK
+
 	//Now print them all into the log!
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
+
+	CHECK_TICK
 
 	mode.declare_station_goal_completion()
 
@@ -538,12 +559,28 @@ var/datum/subsystem/ticker/ticker
 			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
 		world.log << dellog
 
+	CHECK_TICK
+
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
 		if(!CTF.ctf_enabled)
 			CTF.ctf_enabled = !CTF.ctf_enabled
 			CTF.TellGhost()
 
-	return 1
+	sleep(50)
+
+	var/admins_online = total_admins_active()
+	var/unresolved_tickets = total_unresolved_tickets()
+
+	if(unresolved_tickets && admins_online)
+		delay_end = 1
+		message_admins("Not all tickets have been resolved. Server restart delayed.")
+	else if(unresolved_tickets && !admins_online)
+		world.Reboot("Round ended, but there were still active tickets. Please submit a player complaint if you did not receive a response.", "end_proper", "ended with open tickets")
+	else
+		if(mode.station_was_nuked)
+			world.Reboot("Station destroyed by Nuclear Device.", "end_proper", "nuke")
+		else
+			world.Reboot("Round ended.", "end_proper", "proper completion")
 
 /datum/subsystem/ticker/proc/send_random_tip()
 	var/list/randomtips = file2list("config/tips.txt")
