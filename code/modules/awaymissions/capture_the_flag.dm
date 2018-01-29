@@ -25,6 +25,7 @@
 	var/obj/effect/landmark/reset
 
 /obj/item/weapon/twohanded/ctf/New()
+	..()
 	if(!reset)
 		reset = new /obj/effect/landmark(get_turf(src))
 
