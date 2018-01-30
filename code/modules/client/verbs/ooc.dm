@@ -217,28 +217,19 @@ var/global/normal_ooc_colour = OOC_COLOR
 			return "\[Council\]"
 
 		if("Moderator")
-			return "\[Moderator\]"
+			return "\[Mod\]"
 
 		if("Administrator")
 			return "\[Admin\]"
 
-		if("PrimaryAdmin")
-			return "\[PrimaryAdmin\]"
-
-		if("Tribunal")
-			return "\[Tribunal\]"
-
-		if("HeadCoder")
-			return "\[HeadCoder\]"
-
 		if("ModeratorOnProbation")
 			return "\[ModOnProbation\]"
-
-		if("Coder")
-			return "\[Coder\]"
 
 		if("Bot")
 			return "\[YogBot\]"
 
 		if("RetiredAdmin")
 			return "\[Retmin\]"
+
+		else
+			return "\[[C.holder.rank.name]\]"
