@@ -25,8 +25,7 @@ var/datum/subsystem/icon_smooth/SSicon_smooth
 /datum/subsystem/icon_smooth/Initialize()
 	smooth_zlevel(1,TRUE)
 	smooth_zlevel(2,TRUE)
-	smooth_zlevel(5,TRUE)
-	
+
 	var/queue = smooth_queue
 	smooth_queue = list()
 	for(var/V in queue)
