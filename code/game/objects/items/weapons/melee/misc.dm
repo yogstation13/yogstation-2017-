@@ -159,7 +159,7 @@
 
 /obj/item/weapon/twohanded/dual_telebaton/examine(mob/user)
 	. = ..()
-	to_chat(user, "<span class='notice'>This item has a combo, to use this combo attack with the following intents in the following order (whilst the item is in-hand): harm, harm, disarm, grab, grab</span>")
+	to_chat(user, "<span class='notice'>This item has a combo, to use this combo attack with the following intents in the following order (whilst the item is wielded in-hand): harm, harm, disarm, grab</span>")
 
 /obj/item/weapon/twohanded/dual_telebaton/update_icon()
 	if(wielded)
@@ -188,7 +188,7 @@
 				if(1)
 					if(user.a_intent == "harm")
 						H.visible_message("<span class='warning'>[user] punts their [src] into [H]'s stomach, winding them!</span>")
-						H.adjustStaminaLoss(rand(10,15))
+						H.adjustStaminaLoss(rand(5,10))
 						H.Stun(1)
 						return
 					else
@@ -203,11 +203,10 @@
 					else
 						current_target = null
 						streak = 0
-						src.say("lol")
 				if(3)
 					if(user.a_intent == "disarm")
 						H.visible_message("<span class='warning'>[user] quickly slaps [H]'s hands with their [src] disarming them!</span>")
-						H.apply_damage(force, BRUTE, "head")
+						H.apply_damage(force, BRUTE, "chest")
 						H.drop_item()
 						return
 					else
