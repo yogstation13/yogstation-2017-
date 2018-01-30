@@ -192,8 +192,7 @@
 						H.Stun(1)
 						return
 					else
-						current_target = null
-						streak = 0
+						reset_target()
 				if(2)
 					if(user.a_intent == "harm")
 						H.visible_message("<span class='warning'>[user] thwacks [H] in the chin with their [src]!</span>")
@@ -201,8 +200,7 @@
 						H.Dizzy(1)
 						return
 					else
-						current_target = null
-						streak = 0
+						reset_target()
 				if(3)
 					if(user.a_intent == "disarm")
 						H.visible_message("<span class='warning'>[user] quickly slaps [H]'s hands with their [src] disarming them!</span>")
@@ -210,8 +208,7 @@
 						H.drop_item()
 						return
 					else
-						current_target = null
-						streak = 0
+						reset_target()
 				if(4)
 					if(user.a_intent == "grab")
 						user.emote("flip")
@@ -234,22 +231,22 @@
 							H.apply_damage(force, BRUTE, "head")
 							playsound(H.loc,'sound/effects/knockout.ogg',40,0)
 							H.Weaken(6)
-							current_target = null
-							streak = 0
+							reset_target()
 						else
 							H.visible_message("<span class='warning'>[user] completely misses [H] and falls flat on their face!</span>")
 							user.Weaken(5)
-							current_target = null
-							streak = 0
+							reset_target()
 						return
 					else
-						current_target = null
-						streak = 0
+						reset_target()
 		..()
 	else
 		streak = 0
 		current_target = null
 		return ..()
+/obj/item/weapon/twohanded/dual_telebaton/proc/reset_target()
+	current_target = null
+	streak = 0
 
 /datum/crafting_recipe/dualbaton
 	name = "Double ended telescopic baton"
