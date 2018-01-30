@@ -1,8 +1,7 @@
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
-
-/datum/wires/airlock/secure
-	randomize = TRUE
+	var/wireType = "regular"
+	var/list/wire_color_airlock_directory = list()
 
 /datum/wires/airlock/New(atom/holder)
 	wires = list(
@@ -13,7 +12,12 @@
 		WIRE_ZAP1, WIRE_ZAP2
 	)
 	add_duds(2)
-	..()
+	src.holder = holder
+	if(!wire_color_airlock_directory[wireType])
+		randomize()
+		wire_color_airlock_directory[wireType] = colors
+	else
+		colors = wire_color_airlock_directory[wireType]
 
 /datum/wires/airlock/interactable(mob/user)
 	var/obj/machinery/door/airlock/A = holder
@@ -165,3 +169,18 @@
 			A.update_icon()
 		if(WIRE_ZAP1, WIRE_ZAP2) // Ouch.
 			A.shock(usr, 50)
+
+/datum/wires/airlock/security
+	wireType = "security"
+
+/datum/wires/airlock/command
+	wireType = "command"
+
+/datum/wires/airlock/engineering
+	wireType = "engineering"
+
+/datum/wires/airlock/science
+	wireType = "science"
+
+/datum/wires/airlock/medical
+	wireType = "medical"
