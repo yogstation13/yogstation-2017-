@@ -61,7 +61,7 @@
  	result = "yespowder"
  	required_reagents = list("itching_powder" = 1, "morphine" = 1)
  	required_temp = 374
-	result = 2
+ 	result_amount = 2
 
  /datum/chemical_reaction/tastepowder
  	name = "Taste Powder"
@@ -69,7 +69,7 @@
  	result = "tastepowder"
  	required_reagents = list("itching_powder" = 1, "sugar" = 1)
  	required_temp = 374
-	result = 2
+ 	result_amount = 2
 
 /datum/chemical_reaction/honkpowder
  	name = "Honk Powder"
@@ -77,4 +77,4 @@
  	result = "honkpowder"
  	required_reagents = list("itching_powder" = 1, "bananium" = 1)
  	required_temp = 374
-	result = 2
+ 	result_amount = 2
