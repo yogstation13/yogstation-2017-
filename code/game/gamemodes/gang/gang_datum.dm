@@ -36,7 +36,8 @@
 		/datum/gang_item/equipment/pen,
 		/datum/gang_item/equipment/gangtool,
 		/datum/gang_item/equipment/necklace,
-		/datum/gang_item/equipment/dominator
+		/datum/gang_item/equipment/dominator,
+		/datum/gang_item/equipment/pinpointer
 	)
 
 /datum/gang/New(loc,gangname)
