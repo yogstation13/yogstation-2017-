@@ -1,0 +1,4 @@
+author: "ThatLing"
+delete-after: true 
+changes: 
+  - tweak: "Certain browsers should open a little faster now."
