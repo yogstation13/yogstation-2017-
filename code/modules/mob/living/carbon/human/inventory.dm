@@ -179,7 +179,7 @@
 		internal = null
 	if(C.flags_inv & HIDEEYES)
 		update_inv_glasses()
-	sec_hud_set_security_status()
+	update_face_dependant_huds()
 	..()
 
 /mob/living/carbon/human/head_update(obj/item/I, forced)
@@ -189,7 +189,7 @@
 		update_inv_glasses()
 	if(I.flags_inv & HIDEEARS || forced)
 		update_body()
-	sec_hud_set_security_status()
+	update_face_dependant_huds()
 	..()
 
 

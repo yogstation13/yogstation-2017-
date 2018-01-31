@@ -24,6 +24,7 @@
 			return
 
 	log_whisper("[src.name]/[src.key] : [message]")
+	say_log += "\[[gameTimestamp()]\] [message]"
 
 	var/alt_name = get_alt_name()
 

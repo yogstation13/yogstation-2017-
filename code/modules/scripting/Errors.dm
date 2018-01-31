@@ -99,6 +99,10 @@
 	TypeMismatch
 		name="TypeMismatchError"
 		New(op, a, b)
+			if(isnull(a))
+				a = "NULL"
+			if(isnull(b))
+				b = "NULL"
 			message="Type mismatch: '[a]' [op] '[b]'"
 
 	UnexpectedReturn
@@ -134,7 +138,7 @@
 
 	DivisionByZero
 		name="DivideByZeroError"
-		message="Division by zero attempted."
+		message="Division by zero (or a NULL value) attempted."
 
 	MaxCPU
 		name="MaxComputationalUse"

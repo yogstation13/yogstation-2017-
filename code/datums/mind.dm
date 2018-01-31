@@ -67,6 +67,7 @@
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 	var/quiet_round = 0 //Won't be picked as target in most cases
 	var/list/outfit_browsers = null
+	var/killstreak = 0
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -967,7 +968,8 @@
 					ticker.mode.update_rev_icons_removed(src)
 					to_chat(current, "<span class='userdanger'>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</span>")
 				else if(!(src in ticker.mode.revolutionaries))
-					to_chat(current, "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
+					to_chat(current, "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. Help them kill the heads to win the revolution!</FONT></span>")
+					ticker.mode.explain_rev_hud(current)
 				else
 					return
 				ticker.mode.revolutionaries += src
@@ -980,9 +982,10 @@
 				if(src in ticker.mode.revolutionaries)
 					ticker.mode.revolutionaries -= src
 					ticker.mode.update_rev_icons_removed(src)
-					to_chat(current, "<span class='userdanger'>You have proved your devotion to revoltion! Yea are a head revolutionary now!</span>")
+					to_chat(current, "<span class='userdanger'>You have proved your devotion to revoltion! You are a head revolutionary now!</span>")
 				else if(!(src in ticker.mode.head_revolutionaries))
 					to_chat(current, "<span class='userdanger'>You are a member of the revolutionaries' leadership now!</span>")
+					ticker.mode.explain_rev_hud(current)
 				else
 					return
 				if (ticker.mode.head_revolutionaries.len>0)
@@ -1812,6 +1815,15 @@
 			qdel(S)
 			spell_list -= S
 
+//Check if there is a specific spell in mind
+/datum/mind/proc/CheckSpell(var/obj/effect/proc_holder/spell/spell)
+	if(!spell) return
+	for(var/X in spell_list)
+		var/obj/effect/proc_holder/spell/S = X
+		if(istype(S, spell))
+			return 1
+	return 0
+
 /datum/mind/proc/transfer_actions(mob/living/new_character)
 	if(current && current.actions)
 		for(var/datum/action/A in current.actions)
@@ -1845,6 +1857,30 @@
 	. = G
 	if(G)
 		G.reenter_corpse()
+
+/datum/mind/proc/killstreak_act()
+	switch(killstreak)
+		if(3)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] is on a killing spree!</B>")
+		if(5)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] is dominating!</B>")
+		if(7)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] got a MEGA KILL!</B>")
+		if(9)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] is UNSTOPPABLE!</B>")
+		if(11)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] is WICKED SICK!!</B>")
+		if(13)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] is GODLIKE!</B>")
+		if(15)
+			for(var/mob/dead/observer/o in player_list)
+				to_chat(o, "<B>[FOLLOW_LINK(src, o)][name] is a KILLIONAIRE!</B>")
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

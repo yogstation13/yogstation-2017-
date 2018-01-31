@@ -790,8 +790,20 @@ var/list/ai_list = list()
 
 /mob/living/silicon/ai/proc/relay_speech(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)
 	raw_message = lang_treat(speaker, message_langs, raw_message, spans)
-	var/name_used = speaker.GetVoice()
-	var/rendered = "<i><span class='game say'>Relayed Speech: <span class='name'>[name_used]</span> <span class='message'>[raw_message]</span></span></i>"
+	var/start = "Relayed Speech: "
+	var/namepart = "[speaker.GetVoice()][speaker.get_alt_name()]"
+	var/hrefpart = "<a href='?src=\ref[src];track=[html_encode(namepart)]'>"
+	var/jobpart
+
+	if (iscarbon(speaker))
+		var/mob/living/carbon/S = speaker
+		if(S.job)
+			jobpart = "[S.job]"
+	else
+		jobpart = "Unknown"
+
+	var/rendered = "<i><span class='game say'>[start]<span class='name'>[hrefpart][namepart] ([jobpart])</a> </span><span class='message'>[raw_message]</span></span></i>"
+
 	show_message(rendered, 2)
 
 /mob/living/silicon/ai/fully_replace_character_name(oldname,newname)

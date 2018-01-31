@@ -26,7 +26,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	new /obj/effect/immovablerod(startT, endT)
 
 /obj/effect/immovablerod
-	name = "Immovable Rod"
+	name = "immovable rod"
 	desc = "What the fuck is that?"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "immrod"
@@ -51,7 +51,33 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/ex_act(test)
 	return 0
 
+/obj/effect/immovablerod/proc/check_suplex(mob/living/carbon/human/H)
+	if(!istype(H) || !H.mind || H.mind.assigned_role != "Research Director" || !H.in_throw_mode)
+		return FALSE
+	var/obj/structure/flora/kirbyplants/K = locate() in range(1, H)
+	if(!K)
+		return FALSE
+
+	var/turf/open/floor/T = get_turf(K)
+	H.forceMove(T)
+
+	H.visible_message("<span class='userdanger'>[H] suplexes \the [src] into [K]!</span>","<span class='userdanger'>You suplex \the [src] into [K]!</span>")
+	var/obj/structure/festivus/P = new(T)
+	P.desc = "During this year's Feats of Strength the Research Director was able to suplex this passing immovable rod into a planter."
+	if(istype(T))
+		T.break_tile()
+	playsound(T, "explosion", 100)
+	for(var/mob/bystander in urange(10, src))
+		shake_camera(bystander, 7, 2)
+
+	qdel(src)
+	qdel(K)
+	return TRUE
+
 /obj/effect/immovablerod/Bump(atom/clong)
+	if(qdeleted(src))
+		return
+
 	if(prob(10))
 		playsound(src, 'sound/effects/bang.ogg', 50, 1)
 		audible_message("CLANG")
@@ -67,8 +93,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	else if (istype(clong, /mob))
 		if(istype(clong, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = clong
-			H.visible_message("<span class='danger'>[H.name] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
-			H.adjustBruteLoss(160)
-		if(clong.density || prob(10))
+			if(!check_suplex(H))
+				H.visible_message("<span class='danger'>[H.name] is penetrated by an immovable rod!</span>" , "<span class='userdanger'>The rod penetrates you!</span>" , "<span class ='danger'>You hear a CLANG!</span>")
+				H.adjustBruteLoss(160)
+		else if(clong.density || prob(10))
 			clong.ex_act(2)
 	return
+

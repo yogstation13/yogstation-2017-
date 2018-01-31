@@ -391,6 +391,13 @@
 	item_path = /obj/item/weapon/twohanded/singularityhammer
 	log_name = "SI"
 
+/datum/spellbook_entry/item/pouch_of_holding
+	name = "Pouch of Holding"
+	desc = "An unassuming pouch worn around the waist that holds in it a pocket dimmension for storing items"
+	item_path = /obj/item/weapon/storage/belt/fannypack/holding/pouch
+	log_name = "PH"
+	category = "Assistance"
+
 // /datum/spellbook_entry/item/cursed_heart
 //	name = "Cursed Heart"
 //	desc = "A heart that has been revived by dark magicks, the user must \
@@ -705,7 +712,7 @@
 	else
 		user.mind.AddSpell(S)
 		user <<"<span class='notice'>you rapidly read through the arcane book. Suddenly you realize you understand [spellname]!</span>"
-		user.attack_log += text("\[[time_stamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
+		user.attack_log += text("\[[gameTimestamp()]\] <font color='orange'>[user.real_name] ([user.ckey]) learned the spell [spellname] ([S]).</font>")
 		onlearned(user)
 
 /obj/item/weapon/spellbook/oneuse/proc/recoil(mob/user)
@@ -884,4 +891,3 @@
 	icon_state ="bookcharge"
 	desc = "This version has no limits unlike the roundstart mimes!"
 	color = "#000000"
-

@@ -1,0 +1,87 @@
+"aa" = (/turf/open/space,/area/space)
+"ab" = (/turf/closed/wall/shuttle/smooth,/area/shuttle/escape)
+"ac" = (/obj/structure/grille,/obj/structure/window/shuttle/tinted,/turf/open/floor/plating,/area/shuttle/escape)
+"ad" = (/turf/closed/wall/shuttle/smooth/nodiagonal,/area/shuttle/escape)
+"ae" = (/obj/structure/table/wood,/turf/open/floor/carpet,/area/shuttle/escape)
+"af" = (/obj/structure/chair/comfy/brown{tag = "icon-comfychair (NORTH)"; icon_state = "comfychair"; dir = 1},/turf/open/floor/carpet,/area/shuttle/escape)
+"ag" = (/obj/machinery/computer/emergency_shuttle,/turf/open/floor/carpet,/area/shuttle/escape)
+"ah" = (/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/obj/structure/table/wood,/turf/open/floor/carpet,/area/shuttle/escape)
+"ai" = (/obj/machinery/computer/atmos_alert,/turf/open/floor/carpet,/area/shuttle/escape)
+"aj" = (/obj/structure/chair/comfy/brown{tag = "icon-comfychair (WEST)"; icon_state = "comfychair"; dir = 8},/turf/open/floor/carpet,/area/shuttle/escape)
+"ak" = (/turf/open/floor/carpet,/area/shuttle/escape)
+"al" = (/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/obj/structure/window/reinforced,/obj/structure/chair/comfy/brown{tag = "icon-comfychair (EAST)"; icon_state = "comfychair"; dir = 4},/turf/open/floor/carpet,/area/shuttle/escape)
+"am" = (/obj/machinery/computer/crew,/turf/open/floor/carpet,/area/shuttle/escape)
+"an" = (/obj/structure/table/wood/poker,/obj/machinery/light,/turf/open/floor/carpet,/area/shuttle/escape)
+"ao" = (/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/turf/open/floor/carpet,/area/shuttle/escape)
+"ap" = (/obj/machinery/door/airlock/shuttle{req_access_txt = "2"},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"aq" = (/obj/machinery/door/airlock/glass{name = "Emergency Shuttle Cockpit"; req_access_txt = "19"},/turf/open/floor/carpet,/area/shuttle/escape)
+"ar" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"as" = (/obj/structure/chair,/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"at" = (/obj/machinery/flasher{id = "cockpit_flasher"; pixel_x = 7; pixel_y = 25},/obj/machinery/button/flasher{id = "cockpit_flasher"; pixel_x = -7; pixel_y = 25},/turf/open/floor/plasteel/bar,/area/shuttle/escape)
+"au" = (/turf/open/floor/plasteel/bar,/area/shuttle/escape)
+"av" = (/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"aw" = (/obj/machinery/light/small{tag = "icon-bulb1 (WEST)"; icon_state = "bulb1"; dir = 8},/obj/machinery/flasher{id = "shuttle_flasher"; pixel_x = -25; pixel_y = 7},/obj/machinery/button/flasher{id = "shuttle_flasher"; pixel_x = -25; pixel_y = -7},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"ax" = (/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"ay" = (/obj/structure/grille,/turf/open/floor/plating,/area/shuttle/escape)
+"az" = (/obj/structure/grille/broken{tag = "icon-brokengrille"; icon_state = "brokengrille"},/turf/open/floor/plasteel,/area/shuttle/escape)
+"aA" = (/obj/machinery/door/airlock/shuttle{req_access_txt = "2"},/turf/open/floor/plating,/area/shuttle/escape)
+"aB" = (/obj/structure/table,/obj/structure/extinguisher_cabinet{pixel_y = -30},/obj/item/weapon/extinguisher,/obj/item/weapon/crowbar,/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"aC" = (/obj/structure/chair{tag = "icon-chair (NORTH)"; icon_state = "chair"; dir = 1},/turf/open/floor/plasteel/shuttle/red,/area/shuttle/escape)
+"aD" = (/obj/structure/flora/kirbyplants,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aE" = (/obj/structure/chair,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aF" = (/obj/structure/chair,/obj/machinery/light{tag = "icon-tube1 (NORTH)"; icon_state = "tube1"; dir = 1},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aG" = (/obj/structure/table,/obj/item/weapon/storage/firstaid,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aH" = (/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aI" = (/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"aJ" = (/obj/machinery/door/airlock/shuttle,/obj/docking_port/mobile/emergency{timid = 1},/turf/open/floor/plating,/area/shuttle/escape)
+"aK" = (/obj/structure/chair{tag = "icon-chair (NORTH)"; icon_state = "chair"; dir = 1},/obj/machinery/light{tag = "icon-tube1 (NORTH)"; icon_state = "tube1"; dir = 1},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aL" = (/obj/structure/chair{tag = "icon-chair (NORTH)"; icon_state = "chair"; dir = 1},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aM" = (/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/obj/structure/chair{tag = "icon-chair (EAST)"; icon_state = "chair"; dir = 4},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aN" = (/obj/structure/table/wood,/obj/item/toy/cards/deck/cas/black,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aO" = (/obj/structure/table/wood,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aP" = (/obj/structure/table/wood,/obj/item/toy/cards/deck/cas,/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"aQ" = (/obj/structure/chair/comfy/brown{tag = "icon-comfychair (WEST)"; icon_state = "comfychair"; dir = 8},/turf/open/floor/plasteel/shuttle/white,/area/shuttle/escape)
+"aR" = (/obj/structure/table_frame,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aS" = (/obj/structure/table/wood,/obj/item/weapon/storage/firstaid/fire,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aT" = (/obj/structure/chair{tag = "icon-chair (NORTH)"; icon_state = "chair"; dir = 1},/obj/structure/extinguisher_cabinet{pixel_y = -30},/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aU" = (/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aV" = (/obj/structure/table,/obj/machinery/recharger,/turf/open/floor/plasteel/shuttle,/area/shuttle/escape)
+"aW" = (/turf/open/floor/plasteel/grimy,/area/shuttle/escape)
+"aX" = (/obj/structure/chair/wood{tag = "icon-wooden_chair (NORTH)"; icon_state = "wooden_chair"; dir = 1},/turf/open/floor/plasteel/grimy,/area/shuttle/escape)
+"aY" = (/obj/machinery/door/airlock/shuttle,/turf/open/floor/plating,/area/shuttle/escape)
+"aZ" = (/obj/structure/extinguisher_cabinet{pixel_y = -30},/turf/open/floor/plasteel/bar,/area/shuttle/escape)
+"ba" = (/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/obj/structure/barricade/wooden,/obj/machinery/light,/turf/open/floor/plasteel/bar,/area/shuttle/escape)
+"bb" = (/obj/machinery/status_display,/turf/closed/wall/shuttle/smooth,/area/shuttle/escape)
+"bc" = (/obj/machinery/door/airlock,/turf/open/floor/plasteel/freezer,/area/shuttle/escape)
+"bd" = (/turf/open/floor/plasteel/freezer,/area/shuttle/escape)
+"be" = (/obj/machinery/light/small{tag = "icon-bulb1 (NORTH)"; icon_state = "bulb1"; dir = 1},/obj/structure/extinguisher_cabinet{pixel_y = 30},/turf/open/floor/plasteel/freezer,/area/shuttle/escape)
+"bf" = (/obj/machinery/disposal/bin/toilet{tag = "icon-toilet10 (EAST)"; icon_state = "toilet10"; dir = 4},/obj/machinery/light/small{tag = "icon-bulb1 (EAST)"; icon_state = "bulb1"; dir = 4},/turf/open/floor/plasteel/freezer,/area/shuttle/escape)
+"bg" = (/obj/machinery/recharge_station,/obj/machinery/light/small{tag = "icon-bulb1 (EAST)"; icon_state = "bulb1"; dir = 4},/turf/open/floor/plasteel/freezer,/area/shuttle/escape)
+"bh" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{tag = "icon-rwindow (NORTH)"; icon_state = "rwindow"; dir = 1},/turf/open/floor/plating,/area/shuttle/escape)
+"bi" = (/obj/structure/shuttle/engine/heater,/obj/structure/window/reinforced{tag = "icon-rwindow (NORTH)"; icon_state = "rwindow"; dir = 1},/obj/structure/window/reinforced{tag = "icon-rwindow (EAST)"; icon_state = "rwindow"; dir = 4},/turf/open/floor/plating,/area/shuttle/escape)
+"bj" = (/obj/structure/shuttle/engine/propulsion,/turf/open/floor/plating,/area/shuttle/escape)
+
+(1,1,1) = {"
+aaaaabacacacacacaaaaaa
+aaabadaeafagafahaaaaaa
+aaabaiajakakakalaaaaaa
+aaabamakakanaoaaaaaaaa
+abacapacababaqacaracaa
+abacasacacatauacavacaa
+abawaxaxayazacabavabab
+aAaBaCaCacaDaEaFavaGaH
+ababababadavavavavavaI
+aJaKaLaLaLavaLaLaLaLaM
+abazacacacavacacacacaM
+acaEaNaOaEavaEaEaEaEaM
+acavaPaQavavavavavavaI
+acaRaSaOaLaLaLaTaUaVaH
+abaWaXaXacacacabababab
+aYauaZauauaubaaaaaaaaa
+ababababbbbcadaaaaaaaa
+aYbdbdbebdbdabaaaaaaaa
+abbcabbcabbcabaaaaaaaa
+abbfabbfabbgabaaaaaaaa
+ababbhbhbhbhbiaaaaaaaa
+aaabbjbjbjbjbjaaaaaaaa
+"}
