@@ -50,4 +50,9 @@
 		D.carrier = 1
 		ghost_announce = "[H.name] has been infected with [D.name]"
 		interest = H
+    
+		message_admins("[H.real_name]/([H.key]) has been infected with [D.name] by an event.")
+		log_game("[H.real_name]/([H.key]) has been infected with [D.name] by an event.")
+		H.investigate_log("[H.real_name]/([H.key]) has been infected with [D.name] by an event.", "viro")
+
 		break

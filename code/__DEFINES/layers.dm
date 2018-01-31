@@ -40,6 +40,7 @@
 #define SPACEVINE_LAYER 4.8
 #define SPACEVINE_MOB_LAYER 4.9
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
+#define RIPPLE_LAYER 5.1
 
 #define GHOST_LAYER 6
 #define AREA_LAYER 10
@@ -56,3 +57,6 @@
 #define HUD_LAYER 19
 #define HUD_PLANE 19
 #define ABOVE_HUD_LAYER 19.1
+
+#define SPLASHSCREEN_LAYER 21
+#define SPLASHSCREEN_PLANE 21

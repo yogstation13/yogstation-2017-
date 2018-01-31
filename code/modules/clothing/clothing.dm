@@ -396,14 +396,23 @@ BLIND     // can't see anything
 		else
 			//no more cloth left on the item, so nix it
 			user.visible_message("[src] falls away to tatters, stripped to its barest seams.")
-			removetie() //remove accessories before qdel
-			qdel(src)
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				H.update_inv_w_uniform()
+			teardown(user)
 		return 1
 	else
 		return 0
+
+/obj/item/clothing/under/proc/teardown(mob/user)
+	removetie() //remove accessories before qdel
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_w_uniform()
+	if (tearhealth >= 20)
+		if (user)
+			if (user.loc)
+				while(tearhealth >= 20)
+					new /obj/item/clothing/torncloth(user.loc)
+					tearhealth -= 40 //make less cloth scraps if tearing down jumpsuit with some cloth potential left
+	qdel(src)
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	attachTie(I, user)

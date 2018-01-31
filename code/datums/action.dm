@@ -108,10 +108,14 @@
 /datum/action/item_action/New(Target)
 	..()
 	var/obj/item/I = target
+	if(!I.actions)
+		I.actions = list()
 	I.actions += src
 
 /datum/action/item_action/Destroy()
 	var/obj/item/I = target
+	if(!I.actions)
+		I.actions = list()
 	I.actions -= src
 	return ..()
 

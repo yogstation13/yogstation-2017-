@@ -169,13 +169,13 @@ Proc for attack log creation, because really why not
 		var/mob/living/L = target
 		newhealthtxt = " (NEWHP: [L.health])"
 	if(user && ismob(user))
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
+		user.attack_log += text("\[[gameTimestamp()]\] <font color='red'>Has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
 		if(user.mind)
-			user.mind.attack_log += text("\[[time_stamp()]\] <font color='red'>[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
+			user.mind.attack_log += text("\[[gameTimestamp()]\] <font color='red'>[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has [what_done] [target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
 	if(target && ismob(target))
-		target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
+		target.attack_log += text("\[[gameTimestamp()]\] <font color='orange'>Has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
 		if(target.mind)
-			target.mind.attack_log += text("\[[time_stamp()]\] <font color='orange'>[target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
+			target.mind.attack_log += text("\[[gameTimestamp()]\] <font color='orange'>[target ? "[target.name][(ismob(target) && target.ckey) ? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] has been [what_done] by [user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]</font>")
 	log_attack("[user ? "[user.name][(ismob(user) && user.ckey) ? "([user.ckey])" : ""]" : "NON-EXISTANT SUBJECT"] [what_done] [target ? "[target.name][(ismob(target) && target.ckey)? "([target.ckey])" : ""]" : "NON-EXISTANT SUBJECT"][object ? " with [object]" : " "][addition][newhealthtxt][coordinates]")
 
 
@@ -200,7 +200,7 @@ Proc for attack log creation, because really why not
 	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
-		stoplag()
+		stoplag(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 		if(!user || !target)
@@ -247,7 +247,7 @@ Proc for attack log creation, because really why not
 	var/starttime = world.time
 	. = 1
 	while (world.time < endtime)
-		stoplag()
+		stoplag(1)
 		if (progress)
 			progbar.update(world.time - starttime)
 
@@ -301,7 +301,7 @@ Proc for attack log creation, because really why not
 	. = 1
 	mainloop:
 		while(world.time < endtime)
-			sleep(1)
+			stoplag(1)
 			if(progress)
 				progbar.update(world.time - starttime)
 			if(!user || !targets)

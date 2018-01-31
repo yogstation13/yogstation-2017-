@@ -198,7 +198,7 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	before_cast(targets)
 	invocation(user)
 	if(user && user.ckey)
-		user.attack_log += text("\[[time_stamp()]\] <span class='danger'>[user.real_name] ([user.ckey]) cast the spell [name].</span>")
+		user.attack_log += text("\[[gameTimestamp()]\] <span class='danger'>[user.real_name] ([user.ckey]) cast the spell [name].</span>")
 	spawn(0)
 		if(charge_type == "recharge" && recharge)
 			start_recharge()
