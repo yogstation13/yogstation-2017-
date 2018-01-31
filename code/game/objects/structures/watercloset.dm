@@ -36,7 +36,11 @@
 		else
 			to_chat(user, "<span class='warning'>You need a tighter grip!</span>")
 	else
-		return ..()
+		if(mode == 2)
+			user.changeNext_move(CLICK_CD_MELEE)
+			flush()
+			to_chat(user,"<span class='notice'>You flush the toilet.</span>")
+			playsound(src, 'sound/items/Toilet_Flush.ogg', 50, 1)
 
 /obj/machinery/disposal/bin/toilet/attackby(obj/item/I, mob/living/user, params)
 	return ..()
