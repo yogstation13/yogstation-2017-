@@ -460,7 +460,6 @@ mob/verb/makePAI(var/turf/t in view())
 	last_special = world.time + 200
 
 	canmove = 1
-	density = 1
 
 	//I'm not sure how much of this is necessary, but I would rather avoid issues.
 	if(istype(card.loc,/mob))
@@ -511,7 +510,6 @@ mob/verb/makePAI(var/turf/t in view())
 	src.loc = card
 	src.forceMove(card)
 	canmove = 0
-	density = 0
 	weather_immunities = list("ash")
 	src.SetLuminosity(0)
 	icon_state = "[chassis]"
