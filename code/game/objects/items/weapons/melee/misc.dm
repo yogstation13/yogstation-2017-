@@ -189,7 +189,6 @@
 					if(user.a_intent == "harm")
 						H.visible_message("<span class='warning'>[user] punts their [src] into [H]'s stomach, winding them!</span>")
 						H.adjustStaminaLoss(rand(5,10))
-						H.Stun(1)
 						return
 					else
 						reset_target()
@@ -197,7 +196,7 @@
 					if(user.a_intent == "harm")
 						H.visible_message("<span class='warning'>[user] thwacks [H] in the chin with their [src]!</span>")
 						H.apply_damage(force, BRUTE, "head")
-						H.Dizzy(1)
+						H.Dizzy(2)
 						return
 					else
 						reset_target()
@@ -206,6 +205,7 @@
 						H.visible_message("<span class='warning'>[user] quickly slaps [H]'s hands with their [src] disarming them!</span>")
 						H.apply_damage(force, BRUTE, "chest")
 						H.drop_item()
+						H.Stun(2)
 						return
 					else
 						reset_target()
@@ -227,7 +227,7 @@
 						sleep(5) //Give it a bit to throw them at the target
 						if(user in orange(2,H))
 							H.visible_message("<span class='warning'>[user] rams [H] with [src] as they land!</span>")
-							H.SetSleeping(20)
+							H.Stun(9)
 							H.apply_damage(force, BRUTE, "head")
 							playsound(H.loc,'sound/effects/knockout.ogg',40,0)
 							H.Weaken(6)
