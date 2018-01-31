@@ -1,6 +1,6 @@
 //TODO: Flash range does nothing currently
 
-/proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0)
+/proc/explosion(turf/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog = 1, ignorecap = 0, flame_range = 0 ,silent = 0, pummel = 1)
 	set waitfor = 0
 	src = null	//so we don't abort once src is deleted
 	epicenter = get_turf(epicenter)
@@ -142,8 +142,9 @@
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
 				I.throw_at_fast(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
-		for(var/mob/living/L in T)
-			L.pummel(epicenter, throw_dist/2)
+		if(pummel)
+			for(var/mob/living/L in T)
+				L.pummel(epicenter, throw_dist/2)
 		CHECK_TICK
 
 	var/took = (world.timeofday-start)/10
