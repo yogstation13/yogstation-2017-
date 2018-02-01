@@ -208,7 +208,7 @@
 /datum/gang_item/equipment/pinpointer
 	name = "Pinpointer"
 	id= "pinpointer"
-	cost = 30
+	cost = 10
 	item_path = /obj/item/weapon/pinpointer
 
 // APRIL FOOLS START
