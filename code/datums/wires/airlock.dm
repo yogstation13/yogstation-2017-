@@ -1,9 +1,8 @@
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
-	var/wireType = "regular"
 	var/list/wire_color_airlock_directory = list()
 
-/datum/wires/airlock/New(atom/holder)
+/datum/wires/airlock/New(atom/holder, wireType)
 	wires = list(
 		WIRE_POWER1, WIRE_POWER2,
 		WIRE_BACKUP1, WIRE_BACKUP2,
