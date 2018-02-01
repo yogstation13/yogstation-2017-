@@ -360,6 +360,8 @@ var/next_external_rsc = 0
 		adminGreet(1)
 		holder.owner = null
 		admins -= src
+		if(!admins.len && !ticker.server_reboot_in_progress)
+			webhook_send("adminless", "The last admin, [src], has left the server!")
 	sync_logout_with_db(connection_number)
 	directory -= ckey
 	clients -= src
@@ -369,7 +371,7 @@ var/next_external_rsc = 0
 	return ..()
 
 /client/proc/sync_logout_with_db(number)
-	if(!number || !isnum(number))
+	if(!number)
 		return
 	establish_db_connection()
 	if (!dbcon.IsConnected())
@@ -474,10 +476,9 @@ var/next_external_rsc = 0
 /client/Stat()
 	. = ..()
 	if (holder)
-		sleep(1)
+		stoplag(1)
 	else
-		sleep(5)
-		stoplag()
+		stoplag(5)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()

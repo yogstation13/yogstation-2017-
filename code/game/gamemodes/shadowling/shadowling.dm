@@ -149,7 +149,7 @@ Made by Xhuis
 		update_shadow_icons_added(new_thrall_mind)
 		thralls += new_thrall_mind
 		new_thrall_mind.special_role = "thrall"
-		new_thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Became a thrall</span>"
+		new_thrall_mind.current.attack_log += "\[[gameTimestamp()]\] <span class='danger'>Became a thrall</span>"
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadowling_hivemind(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadow/lesser_glare(null))
 		new_thrall_mind.AddSpell(new /obj/effect/proc_holder/spell/self/lesser_shadow_walk(null))
@@ -168,7 +168,7 @@ Made by Xhuis
 	if(!istype(thrall_mind) || !(thrall_mind in thralls) || !isliving(thrall_mind.current)) return 0 //If there is no mind, the mind isn't a thrall, or the mind's mob isn't alive, return
 	update_shadow_icons_removed(thrall_mind)
 	thralls.Remove(thrall_mind)
-	thrall_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Dethralled</span>"
+	thrall_mind.current.attack_log += "\[[gameTimestamp()]\] <span class='danger'>Dethralled</span>"
 	thrall_mind.special_role = null
 	for(var/obj/effect/proc_holder/spell/S in thrall_mind.spell_list)
 		thrall_mind.RemoveSpell(S)
@@ -192,7 +192,7 @@ Made by Xhuis
 	if(!istype(ling_mind) || !(ling_mind in shadows)) return 0
 	update_shadow_icons_removed(ling_mind)
 	shadows.Remove(ling_mind)
-	ling_mind.current.attack_log += "\[[time_stamp()]\] <span class='danger'>Deshadowlinged</span>"
+	ling_mind.current.attack_log += "\[[gameTimestamp()]\] <span class='danger'>Deshadowlinged</span>"
 	ling_mind.special_role = null
 	for(var/obj/effect/proc_holder/spell/S in ling_mind.spell_list)
 		ling_mind.RemoveSpell(S)

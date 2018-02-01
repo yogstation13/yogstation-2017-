@@ -47,7 +47,7 @@
 	icon_state = "apc0"
 	anchored = 1
 	use_power = 0
-	req_access = list(access_engine_equip)
+	req_access = null
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -104,6 +104,8 @@
 		terminal.connect_to_network()
 
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
+	if(!req_access)
+		req_access = list(access_engine_equip)
 	..()
 	apcs_list += src
 
@@ -120,17 +122,14 @@
 
 	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
 	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
-	if (building==0)
-		init()
-	else
+	if(building)
 		area = src.loc.loc:master
 		opened = 1
 		operating = 0
 		name = "[area.name] APC"
 		stat |= MAINT
 		src.update_icon()
-		spawn(5)
-			src.update()
+		addtimer(src, "update", 5)
 
 /obj/machinery/power/apc/Destroy()
 	apcs_list -= src
@@ -163,7 +162,7 @@
 	terminal.dir = tdir
 	terminal.master = src
 
-/obj/machinery/power/apc/proc/init()
+/obj/machinery/power/apc/initialize()
 	has_electronics = 2 //installed and secured
 	// is starting with a power cell installed, create it and set its charge level
 	if(cell_type)
@@ -182,8 +181,7 @@
 
 	make_terminal()
 
-	spawn(5)
-		src.update()
+	addtimer(src, "update", 5)
 
 /obj/machinery/power/apc/examine(mob/user)
 	..()
@@ -211,17 +209,11 @@
 /obj/machinery/power/apc/update_icon()
 	if (!status_overlays)
 		status_overlays = 1
-		status_overlays_lock = new
-		status_overlays_charging = new
-		status_overlays_equipment = new
-		status_overlays_lighting = new
-		status_overlays_environ = new
-
-		status_overlays_lock.len = 2
-		status_overlays_charging.len = 3
-		status_overlays_equipment.len = 4
-		status_overlays_lighting.len = 4
-		status_overlays_environ.len = 4
+		status_overlays_lock = new(2)
+		status_overlays_charging = new(3)
+		status_overlays_equipment = new(4)
+		status_overlays_lighting = new(4)
+		status_overlays_environ = new(4)
 
 		status_overlays_lock[1] = image(icon, "apcox-0")    // 0=blue 1=red
 		status_overlays_lock[2] = image(icon, "apcox-1")
@@ -281,13 +273,14 @@
 		if(overlays.len)
 			overlays.len = 0
 		if(!(stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
-			overlays += status_overlays_lock[locked+1]
-			overlays += status_overlays_charging[charging+1]
+			var/list/O = list(
+				status_overlays_lock[locked+1],
+				status_overlays_charging[charging+1])
 			if(operating)
-				overlays += status_overlays_equipment[equipment+1]
-				overlays += status_overlays_lighting[lighting+1]
-				overlays += status_overlays_environ[environ+1]
-
+				O += status_overlays_equipment[equipment+1]
+				O += status_overlays_lighting[lighting+1]
+				O += status_overlays_environ[environ+1]
+			overlays += O
 
 /obj/machinery/power/apc/proc/check_updates()
 
@@ -361,13 +354,7 @@
 
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
-
-	if(!updating_icon)
-		updating_icon = 1
-		// Start the update
-		spawn(APC_UPDATE_ICON_COOLDOWN)
-			update_icon()
-			updating_icon = 0
+	addtimer(src, "update_icon", APC_UPDATE_ICON_COOLDOWN)
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 

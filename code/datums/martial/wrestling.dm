@@ -201,7 +201,7 @@
 	spawn (0)
 		if (D)
 			animate(D, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
-		sleep (15)
+		sleep(15)
 		if (D)
 			animate(D, transform = null, time = 1, loop = 0)
 
@@ -246,7 +246,7 @@
 				D.pixel_y = 0
 			return 0
 
-		sleep (1)
+		sleep(1)
 
 	if (A && D)
 		A.pixel_x = 0
