@@ -39,7 +39,6 @@ var/list/blobs_legit = list() //used for win-score calculations, contains only b
 	blobwincount = initial(blobwincount) * cores_to_spawn
 
 	var/list/datum/mind/infestators = pick_candidate(amount = cores_to_spawn)
-	update_not_chosen_candidates()
 
 	for(var/v in infestators)
 		var/datum/mind/blob = v

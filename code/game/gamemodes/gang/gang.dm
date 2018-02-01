@@ -54,7 +54,6 @@ var/list/gang_colors_pool = list("red","orange","yellow","green","blue","purple"
 		gangs_to_create ++
 
 	var/list/datum/mind/mafiosos = pick_candidate(amount = gangs_to_create)
-	update_not_chosen_candidates()
 
 	for(var/v in mafiosos)
 		//Create the gang

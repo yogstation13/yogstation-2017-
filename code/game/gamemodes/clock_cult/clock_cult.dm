@@ -109,7 +109,6 @@ This file's folder contains:
 	roundstart_player_count = num_players()
 
 	var/list/datum/mind/followers_of_holy_light = pick_candidate(amount = starter_servants)
-	update_not_chosen_candidates()
 
 	for(var/v in followers_of_holy_light)
 		var/datum/mind/servant = v
