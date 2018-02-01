@@ -168,18 +168,3 @@
 			A.update_icon()
 		if(WIRE_ZAP1, WIRE_ZAP2) // Ouch.
 			A.shock(usr, 50)
-
-/datum/wires/airlock/security
-	wireType = "security"
-
-/datum/wires/airlock/command
-	wireType = "command"
-
-/datum/wires/airlock/engineering
-	wireType = "engineering"
-
-/datum/wires/airlock/science
-	wireType = "science"
-
-/datum/wires/airlock/medical
-	wireType = "medical"
