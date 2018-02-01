@@ -199,7 +199,7 @@
 			to_chat(user, "<span class='notice'>The camera turns away as you hold up the paper.</span>")
 			return
 
-		last_paper_time = world.time + 300		// 30 second cooldown between showing paper
+		last_paper_time = world.time + 100		// 10 second cooldown between showing paper
 
 		var/mob/living/U = user
 		var/obj/item/weapon/paper/X = null
