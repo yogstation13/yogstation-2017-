@@ -64,7 +64,7 @@ var/list/preferences_datums = list()
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 	var/prefered_security_department = "random"
-	
+
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -105,6 +105,7 @@ var/list/preferences_datums = list()
 
 	var/soundenv = TRUE
 	var/clientfps = 0
+	var/uplink_spawn_loc = UPLINK_PDA
 
 /datum/preferences/New(client/C)
 	custom_names["ai"] = pick(ai_names)
@@ -189,7 +190,7 @@ var/list/preferences_datums = list()
 			dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
 			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR>"
 			dat += "<a href ='?_src_=prefs;preference=sec_dept;task=input'><b>Security department:</b> [prefered_security_department]</a><BR></td>"
-			
+
 			dat += "<td valign='center'>"
 
 			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
@@ -210,7 +211,8 @@ var/list/preferences_datums = list()
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
-			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR></td>"
+			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR>"
+			dat += "<b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
 
 			if(pref_species.use_skintones)
 
@@ -483,7 +485,7 @@ var/list/preferences_datums = list()
 	dat += "</center>"
 
 	//user << browse(dat, "window=preferences;size=560x560")
-	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 750)
+	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 770)
 	popup.set_content(dat)
 	popup.open(0)
 
@@ -1088,6 +1090,11 @@ var/list/preferences_datums = list()
 					var/new_backbag = input(user, "Choose your character's style of bag:", "Character Preference")  as null|anything in backbaglist
 					if(new_backbag)
 						backbag = new_backbag
+
+				if("uplink_loc")
+					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in uplink_spawn_loc_list
+					if(new_loc)
+						uplink_spawn_loc = new_loc
 
 				if("clown_name")
 					var/new_clown_name = name_input(user, "Choose your character's clown name:", "Character Preference")
