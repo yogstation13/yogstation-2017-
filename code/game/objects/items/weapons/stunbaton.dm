@@ -166,7 +166,7 @@
 /obj/item/weapon/melee/baton/throw_impact(atom/target)
 	..()
 
-	if(!isliving(target) || !status || loc == target)
+	if(!isliving(target) || !status || loc == target || !prob(50))
 		return
 	var/mob/living/L = target
 	baton_stun(L)
