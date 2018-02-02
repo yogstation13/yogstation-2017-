@@ -66,6 +66,9 @@
 
 
 /obj/item/weapon/pen/attack_self(mob/living/carbon/user)
+	if(hidden_uplink && hidden_uplink.active)
+		hidden_uplink.interact(user)
+		return
 	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
 	if(deg && (deg > 0 && deg <= 360))
 		degrees = deg
@@ -80,6 +83,7 @@
 	if(hidden_uplink)
 		return hidden_uplink.attackby(I, user, params)
 	else
+		return ..()
 
 /obj/item/weapon/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))

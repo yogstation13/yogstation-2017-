@@ -117,6 +117,9 @@
 		return
 	if(b_stat && !istype(user, /mob/living/silicon/ai))
 		wires.interact(user)
+	else if(hidden_uplink && hidden_uplink.active)
+		hidden_uplink.interact(user)
+		return
 	else
 		ui_interact(user)
 
