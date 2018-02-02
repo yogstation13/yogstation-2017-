@@ -13,6 +13,7 @@
 	var/status = 0
 	var/obj/item/weapon/stock_parts/cell/high/bcell = null
 	var/hitcost = 1000
+	var/throw_hit_chance = 50
 
 /obj/item/weapon/melee/baton/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is putting the live [name] in \his mouth! It looks like \he's trying to commit suicide.</span>")
@@ -166,7 +167,7 @@
 /obj/item/weapon/melee/baton/throw_impact(atom/target)
 	..()
 
-	if(!isliving(target) || !status || loc == target || !prob(50))
+	if(!isliving(target) || !status || loc == target || prob(throw_hit_chance))
 		return
 	var/mob/living/L = target
 	baton_stun(L)
@@ -186,6 +187,7 @@
 	hitcost = 2500
 	slot_flags = null
 	var/obj/item/device/assembly/igniter/sparkler = 0
+	throw_hit_chance = 10
 
 /obj/item/weapon/melee/baton/cattleprod/New()
 	..()
