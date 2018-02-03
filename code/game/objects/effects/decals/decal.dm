@@ -14,7 +14,7 @@
 
 //in case we need some special decals
 /obj/effect/turf_decal/proc/get_decal()
-	return image(icon='icons/turf/decals.dmi',icon_state=icon_state,dir=dir,layer=TURF_LAYER)
+	return image(icon='icons/turf/decals.dmi',icon_state=icon_state,dir=dir,layer=TURF_LAYER,color=color)
 
 /obj/effect/turf_decal/initialize()
 	..()

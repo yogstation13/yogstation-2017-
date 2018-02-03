@@ -347,7 +347,5 @@
 	LAZYINITLIST(decals)
 	if(!decals[group])
 		decals[group] = list()
-	if(color)
-		decals.color = color
 	decals[group] += decal
 	add_overlay(decals[group])
