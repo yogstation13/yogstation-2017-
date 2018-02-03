@@ -209,6 +209,23 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
+/datum/outfit/centcom_commander/german
+	name = "Centcom Kommander"
+
+	uniform = /obj/item/clothing/under/rank/centcom_commander/alt
+	suit = /obj/item/clothing/suit/armor/hos
+	shoes = /obj/item/clothing/shoes/combat/swat
+	gloves = /obj/item/clothing/gloves/combat
+	ears = /obj/item/device/radio/headset/headset_cent/commander
+	glasses = /obj/item/clothing/glasses/eyepatch
+	mask = /obj/item/clothing/mask/cigarette/cigar/cohiba
+	head = /obj/item/clothing/head/warden
+	belt = /obj/item/weapon/gun/projectile/revolver/mateba
+	r_pocket = /obj/item/weapon/lighter
+	l_pocket = /obj/item/ammo_box/a357
+	back = /obj/item/weapon/storage/backpack/satchel
+	id = /obj/item/weapon/card/id
+
 /datum/outfit/spec_ops
 	name = "Special Ops Officer"
 
