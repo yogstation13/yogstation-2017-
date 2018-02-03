@@ -373,6 +373,9 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 
+	if(!(src in U.contents))
+		return
+
 	if(usr.canUseTopic(src) && !href_list["close"])
 		add_fingerprint(U)
 		U.set_machine(src)
@@ -806,7 +809,13 @@ var/list/obj/item/device/pda/hotline_pdas = list()
 		L = get(src, /mob/living/silicon)
 
 	if(L && L.stat != UNCONSCIOUS)
-		to_chat(L, "\icon[src] <b>Message from [source.owner] ([source.ownjob]), </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
+		var/hrefstart
+		var/hrefend
+		if (isAI(L))
+			hrefstart = "<a href='?src=\ref[L];track=[html_encode(source.owner)]'>"
+			hrefend = "</a>"
+
+		to_chat(L, "\icon[src.icon] <b>Message from [hrefstart][source.owner] ([source.ownjob])[hrefend], </b>\"[msg.message]\"[msg.get_photo_ref()] (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[source]'>Reply</a>)")
 
 	overlays.Cut()
 	overlays += image(icon, icon_alert)

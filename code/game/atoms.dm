@@ -21,6 +21,19 @@
 	//overlays that should remain on top and not normally be removed, like c4.
 	var/list/priority_overlays
 
+/atom/New()
+	//atom creation method that preloads variables at creation
+	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+		_preloader.load(src)
+
+	//lighting stuff
+	if(opacity && isturf(loc))
+		loc.UpdateAffectingLights()
+
+	if(luminosity)
+		light = new(src)
+
+	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
 
 /atom/Destroy()
 	if(alternate_appearances)
@@ -30,7 +43,9 @@
 		alternate_appearances = null
 
 	return ..()
-
+	
+/atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5)
+	return (!density || !height)
 
 /atom/proc/onCentcom()
 	var/turf/T = get_turf(src)

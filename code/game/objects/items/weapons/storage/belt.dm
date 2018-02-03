@@ -414,6 +414,14 @@
 		return 0
 	return ..()
 
+/obj/item/weapon/storage/belt/fannypack/holding/pouch
+	name = "pouch of holding"
+	desc = "This small belt pouch appears completely mundane, save for the oversized compartment inside it. This compartment is an extradimensional space, about two cubic feet in volume and holding up to twenty pounds. Retrieving an item from the pouch is a move action."
+	icon = 'icons/obj/dice.dmi'
+	icon_state = "magicdicebag"
+	item_state = "magicdicebag"
+	storage_slots = 12
+
 /obj/item/weapon/storage/belt/fannypack/black
 	name = "black fannypack"
 	icon_state = "fannypack_black"

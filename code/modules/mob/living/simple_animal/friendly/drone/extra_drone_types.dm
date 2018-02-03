@@ -111,7 +111,6 @@
 	access_card = null
 	verbs -= /mob/living/verb/pulled //don't pull them onto the stun rune pls
 	verbs -= /mob/living/simple_animal/drone/verb/check_laws
-	verbs -= /mob/living/simple_animal/drone/verb/toggle_light
 	verbs -= /mob/living/simple_animal/drone/verb/drone_ping
 
 /mob/living/simple_animal/drone/cogscarab/Login()

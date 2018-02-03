@@ -19,6 +19,8 @@
 	var/nextstate = null
 	sub_door = 1
 	closingLayer = CLOSED_FIREDOOR_LAYER
+	
+	CanAtmosPass = ATMOS_PASS_PROC
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
 	if(panel_open || operating)

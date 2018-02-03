@@ -71,6 +71,25 @@
 	if(!proximity && prox_check)
 		return
 	A.emag_act(user)
+	
+//Don't let Nich touch my baby
+/obj/item/weapon/card/emag/emag_act(mob/user)
+	var/otherEmag
+	if(user.l_hand)
+		if(istype(user.l_hand, /obj/item/weapon/card/emag))
+			if(user.l_hand != src)
+				otherEmag = user.l_hand
+	if(!otherEmag)
+		if(user.r_hand)
+			if(istype(user.r_hand, /obj/item/weapon/card/emag))
+				if(user.r_hand != src)
+					otherEmag = user.r_hand
+	if(!otherEmag)
+		return
+	to_chat(user, "<span class='notice'>The cryptographic sequencers attempt to override each other and destroy themselves in the process.</span>")
+	playsound(src.loc, "sparks", 50, 1)
+	qdel(otherEmag)
+	qdel(src)
 
 /obj/item/weapon/card/id
 	name = "identification card"
@@ -328,7 +347,7 @@ update_label("John Doe", "Clowny")
 	"Cargo Technician" = list("cargo","brown"),
 	"Shaft Miner" = list("cargo","black"),
 	"Mining Medic" = list("cargo","blue"),
-	"Bartender" = list("civillian,","black"),
+	"Bartender" = list("civillian","black"),
 	"Botanist" = list("civillian","blue"),
 	"Cook" = list("civillian","white"),
 	"Janitor" = list("civillian","purple"),

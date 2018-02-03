@@ -302,7 +302,7 @@
 /mob/living/carbon/handle_status_effects()
 	..()
 
-	if(staminaloss)
+	if(staminaloss || dna.species.stamina_recover_normal < 0)
 		regenStamina()
 
 	if(sleeping)
