@@ -324,9 +324,11 @@
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)
 
-/turf/proc/add_decal(decal,group)
+/turf/proc/add_decal(decal, group, color)
 	LAZYINITLIST(decals)
 	if(!decals[group])
 		decals[group] = list()
+	if(color)
+		decals.color = color
 	decals[group] += decal
 	add_overlay(decals[group])
