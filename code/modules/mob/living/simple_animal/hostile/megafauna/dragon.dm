@@ -234,7 +234,7 @@
 		else
 			var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
 			L.adjustBruteLoss(75)
-			L.throw_at_fast(throwtarget)
+			L.throw_at(throwtarget)
 			visible_message("<span class='danger'>[L] is thrown clear of [src]!</span>")
 	for(var/mob/M in range(7,src))
 		shake_camera(M, 15, 1)

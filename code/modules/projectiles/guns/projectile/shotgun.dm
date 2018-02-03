@@ -153,7 +153,7 @@
 		user.put_in_hands(GUN)
 	else
 		user.drop_item()
-	src.throw_at_fast(pick(oview(7,get_turf(user))),1,1)
+	src.throw_at(pick(oview(7,get_turf(user))),1,1)
 	user.visible_message("<span class='warning'>[user] tosses aside the spent rifle!</span>")
 
 // Automatic Shotguns//

@@ -95,7 +95,7 @@
 	switch(chosenDefend)
 		if(1)
 			attacker.visible_message("<span class='warning'>[attacker] is lifted from the ground, shadowy powers tossing them aside.</span>")
-			attacker.throw_at_fast(pick(orange(src,7)),10,1)
+			attacker.throw_at(pick(orange(src,7)),10,1)
 		if(2)
 			attacker.visible_message("<span class='warning'>[attacker] crackles with electricity, a bolt leaping from [src] to them.</span>")
 			sinLightning.Bolt(src,attacker,30,5,src)
@@ -278,7 +278,7 @@
 						throwAt.Add(AM)
 				for(var/counter = 1, counter < throwAt.len, ++counter)
 					var/atom/movable/cast = throwAt[counter]
-					cast.throw_at_fast(user,10,1)
+					cast.throw_at(user,10,1)
 			else if(lust_direction == 1)
 				var/mob/living/carbon/human/H = user
 				to_chat(H, "As you hold the stone, your heart feels heavy and you struggle to breath.")

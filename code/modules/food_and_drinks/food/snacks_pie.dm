@@ -26,24 +26,30 @@
 	foodtype = GRAIN | DAIRY
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom)
-	if(!..()) //was it caught by a mob?
-		var/turf/T = get_turf(hit_atom)
-		new/obj/effect/decal/cleanable/pie_smudge(T)
-		reagents.reaction(hit_atom, TOUCH)
+	. = ..()
+	if(!.) //if we're not being caught
+		splat(hit_atom)
 
-		if(ishuman(hit_atom))
-			var/mob/living/carbon/human/H = hit_atom
-			var/image/creamoverlay = image('icons/effects/creampie.dmi')
-			if(H.dna.species.id == "lizard")
-				creamoverlay.icon_state = "creampie_lizard"
-			else
-				creamoverlay.icon_state = "creampie_human"
-			H.Weaken(1) //splat!
-			H.adjust_blurriness(1)
-			visible_message("<span class='userdanger'>[H] was creamed by [src]!!</span>")
-			H.overlays += creamoverlay
+/obj/item/weapon/reagent_containers/food/snacks/pie/cream/proc/splat(atom/movable/hit_atom)
+	if(isliving(loc)) //someone caught us!
+		return
+	var/turf/T = get_turf(hit_atom)
+	new/obj/effect/decal/cleanable/pie_smudge(T)
+	reagents.reaction(hit_atom, TOUCH)
 
-		qdel(src)
+	if(ishuman(hit_atom))
+		var/mob/living/carbon/human/H = hit_atom
+		var/image/creamoverlay = image('icons/effects/creampie.dmi')
+		if(H.dna.species.id == "lizard")
+			creamoverlay.icon_state = "creampie_lizard"
+		else
+			creamoverlay.icon_state = "creampie_human"
+		H.Weaken(1) //splat!
+		H.adjust_blurriness(1)
+		visible_message("<span class='userdanger'>[H] was creamed by [src]!!</span>")
+		H.overlays += creamoverlay
+
+	qdel(src)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/berryclafoutis

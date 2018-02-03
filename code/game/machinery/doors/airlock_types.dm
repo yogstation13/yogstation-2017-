@@ -343,7 +343,7 @@
 		to_chat(M, pick(sound('sound/hallucinations/turn_around1.ogg',0,1,50), sound('sound/hallucinations/turn_around2.ogg',0,1,50)))
 		flash_color(M, color="#960000", time=20)
 		M.Weaken(2)
-		M.throw_at_fast(throwtarget, 5, 1,src)
+		M.throw_at(throwtarget, 5, 1, src)
 		return 0
 
 /obj/machinery/door/airlock/cult/narsie_act()

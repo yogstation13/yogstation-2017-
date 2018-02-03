@@ -58,6 +58,6 @@
 		if(!X.anchored)
 			if(setting)
 				var/atom/throw_target = get_edge_target_turf(X, get_dir(X, get_step_away(X, gravity_source)))
-				X.throw_at_fast(throw_target, vortex_range, 1)
+				X.throw_at(throw_target, vortex_range, 1)
 			else
-				X.throw_at_fast(gravity_source, vortex_range, 1)
+				X.throw_at(gravity_source, vortex_range, 1)
