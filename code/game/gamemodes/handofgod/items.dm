@@ -7,6 +7,18 @@
 	var/moralecooldown = 0
 	var/moralewait = 600
 
+/obj/item/weapon/banner/fascist
+	name = "Nanotrasen Banner"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "banner-fascist"
+	item_state = "banner-fascist"
+	desc = "A dark red banner bearing the NTSoc logo on it, a stick on its own can be snapped, but multiple sticks in a bundle cannot be broken."
+
+/obj/item/weapon/banner/fascist/alt
+	name = "Nanotrasen Banner"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "banner-fascist1"
+	item_state = "banner-fascist"
 
 /obj/item/weapon/banner/attack_self(mob/living/carbon/human/user)
 	if(moralecooldown + moralewait > world.time)

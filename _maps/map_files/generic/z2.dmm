@@ -2420,9 +2420,7 @@
 /turf/closed/wall/shuttle/smooth,
 /area/shuttle/escape)
 "gX" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner"
-	},
+/obj/item/weapon/banner/fascist,
 /turf/closed/indestructible/riveted{
 	color = "#A9A9A9"
 	},
@@ -6953,39 +6951,37 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/ferry)
-"Sx" = (
+"St" = (
 /turf/closed/indestructible/riveted{
 	color = "#A9A9A9"
 	},
 /area/centcom/ferry)
-"Sy" = (
+"Su" = (
 /obj/structure/sign/map/left,
 /turf/closed/indestructible/riveted{
 	color = "#A9A9A9"
 	},
 /area/centcom/ferry)
-"Sz" = (
+"Sv" = (
 /obj/structure/sign/map/right,
 /turf/closed/indestructible/riveted{
 	color = "#A9A9A9"
 	},
 /area/centcom/ferry)
-"SA" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner"
-	},
+"Sw" = (
+/obj/item/weapon/banner/fascist,
 /turf/closed/indestructible/riveted{
 	color = "#A9A9A9"
 	},
 /area/centcom/ferry)
-"SB" = (
+"Sx" = (
 /obj/structure/window/reinforced{
 	dir = 4;
 	pixel_x = 0
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"SC" = (
+"Sy" = (
 /obj/machinery/light{
 	dir = 1
 	},
@@ -7003,7 +6999,7 @@
 	dir = 8
 	},
 /area/centcom/ferry)
-"SD" = (
+"Sz" = (
 /obj/structure/window/reinforced{
 	dir = 4;
 	pixel_x = 0
@@ -7013,7 +7009,7 @@
 	dir = 4
 	},
 /area/centcom/ferry)
-"SE" = (
+"SA" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -7034,7 +7030,7 @@
 	dir = 8
 	},
 /area/centcom/ferry)
-"SF" = (
+"SB" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
@@ -7057,19 +7053,19 @@
 	dir = 8
 	},
 /area/centcom/ferry)
-"SG" = (
+"SC" = (
 /turf/open/floor/plasteel{
 	icon_state = "warndark";
 	dir = 4
 	},
 /area/centcom/ferry)
-"SH" = (
+"SD" = (
 /obj/structure/window/reinforced{
 	dir = 8
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"SI" = (
+"SE" = (
 /obj/structure/window/reinforced{
 	dir = 4;
 	pixel_x = 0
@@ -7080,10 +7076,10 @@
 	dir = 4
 	},
 /area/centcom/ferry)
-"SJ" = (
+"SF" = (
 /turf/open/floor/plasteel/darkred,
 /area/centcom/ferry)
-"SK" = (
+"SG" = (
 /obj/structure/window/reinforced{
 	dir = 4;
 	pixel_x = 0
@@ -7091,20 +7087,48 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector,
 /turf/open/floor/plasteel/darkred,
 /area/centcom/ferry)
-"SL" = (
+"SH" = (
 /obj/structure/window/reinforced{
 	dir = 8
+	},
+/turf/open/floor/plasteel/darkred,
+/area/centcom/ferry)
+"SI" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector,
+/turf/open/floor/plasteel/darkred,
+/area/centcom/ferry)
+"SJ" = (
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/turf/open/floor/plasteel/darkred/side{
+	tag = "icon-darkred (WEST)";
+	icon_state = "darkred";
+	dir = 8
+	},
+/area/centcom/ferry)
+"SK" = (
+/turf/open/floor/plasteel/darkred/side{
+	tag = "icon-darkred (EAST)";
+	icon_state = "darkred";
+	dir = 4
+	},
+/area/centcom/ferry)
+"SL" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
 	},
 /turf/open/floor/plasteel/darkred,
 /area/centcom/ferry)
 "SM" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector,
+/obj/machinery/door/window/brigdoor/northleft,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1
+	},
 /turf/open/floor/plasteel/darkred,
 /area/centcom/ferry)
 "SN" = (
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (WEST)";
 	icon_state = "darkred";
@@ -7112,38 +7136,10 @@
 	},
 /area/centcom/ferry)
 "SO" = (
-/turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (EAST)";
-	icon_state = "darkred";
-	dir = 4
-	},
-/area/centcom/ferry)
-"SP" = (
-/obj/structure/window/reinforced{
-	dir = 1;
-	layer = 2.9
-	},
-/turf/open/floor/plasteel/darkred,
-/area/centcom/ferry)
-"SQ" = (
-/obj/machinery/door/window/brigdoor/northleft,
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1
-	},
-/turf/open/floor/plasteel/darkred,
-/area/centcom/ferry)
-"SR" = (
-/turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (WEST)";
-	icon_state = "darkred";
-	dir = 8
-	},
-/area/centcom/ferry)
-"SS" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible,
 /turf/open/floor/plasteel/darkred,
 /area/centcom/ferry)
-"ST" = (
+"SP" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
@@ -7155,48 +7151,48 @@
 	dir = 4
 	},
 /area/centcom/ferry)
-"SU" = (
+"SQ" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible{
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkred,
 /area/centcom/ferry)
-"SV" = (
+"SR" = (
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
 /turf/open/floor/plasteel/darkred,
 /area/centcom/ferry)
-"SW" = (
+"SS" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 4
 	},
 /turf/open/floor/plasteel/darkred,
 /area/centcom/ferry)
-"SX" = (
+"ST" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
 /turf/open/floor/plasteel/darkred,
 /area/centcom/ferry)
-"SY" = (
+"SU" = (
 /obj/structure/sign/nosmoking_2,
 /turf/closed/indestructible/riveted{
 	color = "#A9A9A9"
 	},
 /area/centcom/ferry)
-"SZ" = (
+"SV" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"Ta" = (
+"SW" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 9
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"Tb" = (
+"SX" = (
 /mob/living/simple_animal/hostile/retaliate/dolphin{
 	desc = "OCH DER KAISER";
 	icon_dead = "fascist_dead";
@@ -7207,7 +7203,7 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"Tc" = (
+"SY" = (
 /obj/structure/bed,
 /obj/structure/bed{
 	layer = 4.5;
@@ -7219,11 +7215,11 @@
 	dir = 8
 	},
 /area/centcom/ferry)
-"Td" = (
+"SZ" = (
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"Te" = (
+"Ta" = (
 /obj/structure/bed,
 /obj/structure/bed{
 	layer = 4.5;
@@ -7231,7 +7227,7 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"Tf" = (
+"Tb" = (
 /obj/machinery/vending/coffee,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (WEST)";
@@ -7239,25 +7235,13 @@
 	dir = 8
 	},
 /area/centcom/ferry)
-"Tg" = (
+"Tc" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Bundesberatungsraum"
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"Th" = (
-/obj/structure/bed,
-/obj/structure/bed{
-	layer = 4.5;
-	pixel_y = 10
-	},
-/turf/open/floor/plasteel/darkred/side{
-	tag = "icon-darkred (NORTH)";
-	icon_state = "darkred";
-	dir = 1
-	},
-/area/centcom/ferry)
-"Ti" = (
+"Td" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
 	},
@@ -7267,7 +7251,7 @@
 	dir = 4
 	},
 /area/centcom/ferry)
-"Tj" = (
+"Te" = (
 /obj/structure/closet/secure_closet/ertCom,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (WEST)";
@@ -7275,11 +7259,11 @@
 	dir = 8
 	},
 /area/centcom/ferry)
-"Tk" = (
+"Tf" = (
 /obj/structure/chair/office/dark,
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"Tl" = (
+"Tg" = (
 /obj/structure/table/wood,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/rum,
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tequila,
@@ -7295,14 +7279,26 @@
 	dir = 4
 	},
 /area/centcom/ferry)
-"Tm" = (
+"Th" = (
+/obj/structure/bed,
+/obj/structure/bed{
+	layer = 4.5;
+	pixel_y = 10
+	},
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTH)";
 	icon_state = "darkred";
 	dir = 1
 	},
 /area/centcom/ferry)
-"Tn" = (
+"Ti" = (
+/turf/open/floor/plasteel/darkred/side{
+	tag = "icon-darkred (NORTH)";
+	icon_state = "darkred";
+	dir = 1
+	},
+/area/centcom/ferry)
+"Tj" = (
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHEAST)";
@@ -7310,7 +7306,7 @@
 	dir = 5
 	},
 /area/centcom/ferry)
-"To" = (
+"Tk" = (
 /obj/structure/table/wood,
 /obj/item/weapon/storage/box/drinkingglasses,
 /turf/open/floor/plasteel/darkred/side{
@@ -7319,12 +7315,12 @@
 	dir = 4
 	},
 /area/centcom/ferry)
-"Tp" = (
+"Tl" = (
 /turf/closed/indestructible/riveted{
 	color = "#A9A9A9"
 	},
 /area/centcom/holding)
-"Tq" = (
+"Tm" = (
 /obj/structure/closet/secure_closet/ertSec,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (WEST)";
@@ -7332,17 +7328,17 @@
 	dir = 8
 	},
 /area/centcom/ferry)
-"Tr" = (
+"Tn" = (
 /obj/structure/closet/secure_closet/ertSec,
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"Ts" = (
+"To" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/syringes,
 /obj/item/weapon/gun/syringe/rapidsyringe,
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"Tt" = (
+"Tp" = (
 /obj/structure/closet/secure_closet,
 /obj/item/clothing/suit/space/hardsuit/deathsquad,
 /obj/item/weapon/gun/energy/pulse/loyalpin,
@@ -7358,48 +7354,46 @@
 	dir = 8
 	},
 /area/centcom/ferry)
-"Tu" = (
+"Tq" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/centcom/ferry)
-"Tv" = (
+"Tr" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHWEST)";
 	icon_state = "darkred";
 	dir = 9
 	},
 /area/centcom/ferry)
-"Tw" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner1"
-	},
+"Ts" = (
+/obj/item/weapon/banner/fascist/alt,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (EAST)";
 	icon_state = "darkred";
 	dir = 4
 	},
 /area/centcom/ferry)
-"Tx" = (
+"Tt" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows2";
 	dir = 1
 	},
 /area/centcom/ferry)
-"Ty" = (
+"Tu" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"Tz" = (
+"Tv" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"TA" = (
+"Tw" = (
 /obj/structure/lattice/catwalk,
 /turf/open/space,
 /area/centcom/control)
-"TB" = (
+"Tx" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Kriegsraum";
 	opacity = 1;
@@ -7411,56 +7405,54 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/ferry)
-"TC" = (
+"Ty" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/ferry)
-"TD" = (
+"Tz" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (SOUTHWEST)";
 	icon_state = "darkred";
 	dir = 10
 	},
 /area/centcom/ferry)
-"TE" = (
+"TA" = (
 /turf/closed/indestructible/riveted{
 	color = "#A9A9A9"
 	},
 /area/centcom/control)
-"TF" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner"
-	},
+"TB" = (
+/obj/item/weapon/banner/fascist,
 /turf/closed/indestructible/riveted{
 	color = "#A9A9A9"
 	},
 /area/centcom/control)
-"TG" = (
+"TC" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Bundesberatungsraum"
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"TH" = (
+"TD" = (
 /obj/machinery/door/airlock/external{
 	name = "Supply Dock Airlock";
 	req_access_txt = "31"
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/supply)
-"TI" = (
+"TE" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (WEST)";
 	icon_state = "darkred";
 	dir = 8
 	},
 /area/centcom/supply)
-"TJ" = (
+"TF" = (
 /turf/open/floor/plasteel/black,
 /area/centcom/supply)
-"TK" = (
+"TG" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/green,
 /obj/item/clothing/shoes/sneakers/brown,
@@ -7469,43 +7461,49 @@
 /obj/item/weapon/gun/energy/laser,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"TL" = (
+"TH" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTH)";
 	icon_state = "darkred";
 	dir = 1
 	},
 /area/centcom/control)
-"TM" = (
+"TI" = (
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"TN" = (
+"TJ" = (
+/obj/structure/chair,
+/turf/open/floor/plasteel/black,
+/area/centcom/control)
+"TK" = (
+/obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (EAST)";
 	icon_state = "darkred";
 	dir = 4
 	},
 /area/centcom/control)
-"TO" = (
+"TL" = (
 /obj/structure/table,
 /obj/item/device/cult_shift,
 /obj/item/weapon/plasma_fist_scroll,
 /obj/item/xenos_claw,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"TP" = (
+"TM" = (
 /obj/structure/table,
 /obj/item/device/necromantic_stone/unlimited,
 /obj/item/weapon/gun/grenadelauncher,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"TQ" = (
+"TN" = (
 /obj/structure/table,
 /obj/item/device/batterer,
 /obj/item/weapon/lava_staff,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"TR" = (
+"TO" = (
 /obj/structure/table,
 /obj/item/device/assembly/bikehorn/airhorn,
 /obj/item/device/assembly/bikehorn/airhorn,
@@ -7513,42 +7511,52 @@
 /obj/item/device/assembly/bikehorn/golden,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"TS" = (
+"TP" = (
 /obj/structure/table,
 /obj/item/clockwork/ratvarian_spear,
 /obj/item/weapon/sleeping_carp_scroll,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"TT" = (
+"TQ" = (
 /obj/structure/table,
 /obj/item/bloodvial,
 /obj/item/weapon/gun/magic/staff/chaos,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"TU" = (
+"TR" = (
 /obj/structure/table,
 /obj/item/blood_contract,
 /obj/item/weapon/gun/projectile/automatic/gyropistol,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"TV" = (
+"TS" = (
 /turf/closed/indestructible/riveted{
 	color = "#A9A9A9"
 	},
 /area/centcom/supply)
-"TW" = (
+"TT" = (
+/turf/open/floor/plasteel/black,
+/area/centcom/control)
+"TU" = (
+/turf/open/floor/plasteel/darkred/side{
+	tag = "icon-darkred (EAST)";
+	icon_state = "darkred";
+	dir = 4
+	},
+/area/centcom/control)
+"TV" = (
 /turf/open/floor/plasteel/darkred,
 /area/centcom/abuse)
-"TX" = (
+"TW" = (
 /turf/open/floor/plasteel/black,
 /area/centcom/abuse)
-"TY" = (
+"TX" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Volksthunderdomeischen armen"
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"TZ" = (
+"TY" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrativisches sektor";
 	opacity = 1;
@@ -7556,22 +7564,28 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"Ua" = (
+"TZ" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Massenvernichtungswaffen"
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"Ub" = (
+"Ua" = (
 /obj/structure/table,
 /obj/item/weapon/gun/energy/laser/captain/scattershot,
 /obj/item/weapon/twohanded/singularityhammer,
 /turf/open/floor/plasteel/darkred,
 /area/centcom/abuse)
-"Uc" = (
+"Ub" = (
 /obj/structure/table,
 /obj/item/weapon/gun/energy/ionrifle/carbine,
 /obj/item/weapon/twohanded/shockpaddles/syndicate,
+/turf/open/floor/plasteel/darkred,
+/area/centcom/abuse)
+"Uc" = (
+/obj/structure/table,
+/obj/item/weapon/greentext,
+/obj/item/weapon/melee/supermatter_sword,
 /turf/open/floor/plasteel/darkred,
 /area/centcom/abuse)
 "Ud" = (
@@ -7580,23 +7594,17 @@
 /area/ctf)
 "Ue" = (
 /obj/structure/table,
-/obj/item/weapon/greentext,
-/obj/item/weapon/melee/supermatter_sword,
-/turf/open/floor/plasteel/darkred,
-/area/centcom/abuse)
-"Uf" = (
-/obj/structure/table,
 /obj/item/weapon/gun/energy/gun/turret,
 /obj/item/weapon/switchblade,
 /turf/open/floor/plasteel/darkred,
 /area/centcom/abuse)
-"Ug" = (
+"Uf" = (
 /obj/structure/table,
 /obj/item/weapon/chainsaw_bubblegum,
 /obj/item/weapon/gun/energy/laser/instakill/blue,
 /turf/open/floor/plasteel/darkred,
 /area/centcom/abuse)
-"Uh" = (
+"Ug" = (
 /obj/machinery/telepad_cargo,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (WEST)";
@@ -7604,7 +7612,7 @@
 	dir = 8
 	},
 /area/centcom/supply)
-"Ui" = (
+"Uh" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/green,
 /obj/item/clothing/shoes/sneakers/brown,
@@ -7614,7 +7622,7 @@
 /obj/item/weapon/melee/energy/sword/saber/green,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"Uj" = (
+"Ui" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/green,
 /obj/item/clothing/shoes/sneakers/brown,
@@ -7625,28 +7633,28 @@
 /obj/item/weapon/plasma_fist_scroll,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"Uk" = (
+"Uj" = (
 /turf/open/floor/plasteel/darkred/side,
 /area/centcom/control)
-"Ul" = (
+"Uk" = (
 /obj/structure/table,
 /obj/item/weapon/gun/energy/crossbow/large,
 /obj/item/weapon/spellbook,
 /turf/open/floor/plasteel/darkred,
 /area/centcom/abuse)
-"Um" = (
+"Ul" = (
 /obj/structure/table,
 /obj/item/weapon/chrono_eraser,
 /obj/item/weapon/rtd,
 /turf/open/floor/plasteel/darkred,
 /area/centcom/abuse)
-"Un" = (
+"Um" = (
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /turf/open/floor/plasteel/warningline{
 	dir = 9
 	},
 /area/centcom/control)
-"Uo" = (
+"Un" = (
 /turf/open/floor/plasteel/black,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (NORTH)";
@@ -7654,7 +7662,7 @@
 	dir = 1
 	},
 /area/centcom/control)
-"Up" = (
+"Uo" = (
 /obj/structure/chair,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTH)";
@@ -7662,13 +7670,13 @@
 	dir = 1
 	},
 /area/centcom/control)
-"Uq" = (
+"Up" = (
 /obj/structure/table,
 /obj/item/device/rad_laser,
 /obj/item/weapon/gun/projectile/automatic/speargun,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"Ur" = (
+"Uq" = (
 /obj/structure/table,
 /obj/item/device/sbeacondrop/bomb,
 /obj/item/device/sbeacondrop/bomb,
@@ -7677,45 +7685,45 @@
 /obj/item/weapon/melee/energy/blade,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"Us" = (
+"Ur" = (
 /obj/structure/table,
 /obj/item/device/shadowcloak,
 /obj/item/weapon/hand_tele,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"Ut" = (
+"Us" = (
 /obj/structure/table,
 /obj/item/device/shuttle_curse,
 /obj/item/weapon/melee/arm_blade,
 /obj/item/weapon/orion_ship,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"Uu" = (
+"Ut" = (
 /obj/structure/table,
 /obj/item/pizzabox/bomb,
 /obj/item/weapon/katana/energy,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"Uv" = (
+"Uu" = (
 /obj/structure/table,
 /obj/item/toy/plushie/carpplushie/dehy_carp,
 /obj/item/toy/plushie/carpplushie/dehy_carp,
 /obj/item/weapon/multisword,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"Uw" = (
+"Uv" = (
 /obj/structure/table,
 /obj/item/weapon/bagofhorrors,
 /obj/item/weapon/gun/projectile/automatic/sniper_rifle/syndicate,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"Ux" = (
+"Uw" = (
 /obj/structure/table,
 /obj/item/weapon/banhammer,
 /obj/item/weapon/melee/chainofcommand,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"Uy" = (
+"Ux" = (
 /obj/structure/table,
 /obj/item/weapon/c4,
 /obj/item/weapon/c4,
@@ -7725,14 +7733,14 @@
 /obj/item/weapon/twohanded/mjollnir,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"Uz" = (
+"Uy" = (
 /obj/structure/table,
 /obj/item/weapon/card/emag/bluespace,
 /obj/item/weapon/gun/energy/shock_revolver,
 /obj/item/weapon/wingpotion,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/abuse)
-"UA" = (
+"Uz" = (
 /turf/open/floor/plasteel/black,
 /obj/machinery/igniter,
 /turf/open/floor/plasteel/warningline{
@@ -7741,7 +7749,7 @@
 	dir = 8
 	},
 /area/centcom/control)
-"UB" = (
+"UA" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Aula"
 	},
@@ -7751,7 +7759,7 @@
 	},
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/control)
-"UC" = (
+"UB" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrativisches sektor";
 	opacity = 1;
@@ -7759,7 +7767,7 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/control)
-"UD" = (
+"UC" = (
 /turf/open/floor/plasteel/black,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (WEST)";
@@ -7767,41 +7775,37 @@
 	dir = 8
 	},
 /area/centcom/control)
-"UE" = (
+"UD" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (SOUTHEAST)";
 	icon_state = "darkred";
 	dir = 6
 	},
 /area/centcom/control)
-"UF" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner1"
-	},
+"UE" = (
+/obj/item/weapon/banner/fascist/alt,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHWEST)";
 	icon_state = "darkred";
 	dir = 9
 	},
 /area/centcom/control)
-"UG" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner1"
-	},
+"UF" = (
+/obj/item/weapon/banner/fascist/alt,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHEAST)";
 	icon_state = "darkred";
 	dir = 5
 	},
 /area/centcom/control)
-"UH" = (
+"UG" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (SOUTHWEST)";
 	icon_state = "darkred";
 	dir = 10
 	},
 /area/centcom/control)
-"UI" = (
+"UH" = (
 /turf/open/floor/plasteel/black,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (EAST)";
@@ -7809,49 +7813,47 @@
 	dir = 4
 	},
 /area/centcom/control)
-"UJ" = (
+"UI" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "ccshut";
 	name = "Central Command Security Shutters"
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"UK" = (
+"UJ" = (
 /obj/structure/showcase,
 /turf/open/floor/wood,
 /area/centcom/control)
-"UL" = (
+"UK" = (
 /turf/open/floor/wood,
 /area/centcom/control)
-"UM" = (
+"UL" = (
 /obj/structure/bed/dogbed,
 /mob/living/simple_animal/pet/dog/corgi/puppy/void,
 /turf/open/floor/wood,
 /area/centcom/control)
-"UN" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner1"
-	},
+"UM" = (
+/obj/item/weapon/banner/fascist/alt,
 /turf/open/floor/wood,
 /area/centcom/control)
-"UO" = (
+"UN" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/centcom/control)
-"UP" = (
+"UO" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows";
 	dir = 1
 	},
 /area/centcom/control)
-"UQ" = (
+"UP" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (WEST)";
 	icon_state = "darkred";
 	dir = 8
 	},
 /area/centcom/control)
-"UR" = (
+"UQ" = (
 /obj/structure/chair{
 	dir = 8
 	},
@@ -7865,6 +7867,12 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
+"UR" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/plasteel/black,
+/area/centcom/control)
 "US" = (
 /obj/structure/closet/secure_closet/personal,
 /turf/open/floor/plasteel/darkred/side{
@@ -7874,12 +7882,6 @@
 	},
 /area/centcom/ferry)
 "UT" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/plasteel/black,
-/area/centcom/control)
-"UU" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "ccshut";
 	name = "Central Command Security Shutters"
@@ -7889,16 +7891,16 @@
 	dir = 1
 	},
 /area/centcom/control)
-"UV" = (
+"UU" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"UW" = (
+"UV" = (
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/control)
-"UX" = (
+"UW" = (
 /obj/structure/showcase{
 	desc = "A historical figure of great importance to the wizard federation. He spent his long life learning magic, stealing artifacts, and harassing idiots with swords. May he rest forever, Rodney.";
 	icon = 'icons/mob/mob.dmi';
@@ -7907,16 +7909,16 @@
 	},
 /turf/open/floor/wood,
 /area/centcom/control)
-"UY" = (
+"UX" = (
 /turf/open/floor/carpet,
 /area/centcom/control)
-"UZ" = (
+"UY" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
 /turf/open/floor/carpet,
 /area/centcom/control)
-"Va" = (
+"UZ" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "ccshut";
 	name = "Central Command Security Shutters"
@@ -7926,7 +7928,7 @@
 	dir = 1
 	},
 /area/centcom/control)
-"Vb" = (
+"Va" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHEAST)";
 	icon_state = "darkred";
@@ -7938,7 +7940,7 @@
 	dir = 1
 	},
 /area/centcom/control)
-"Vc" = (
+"Vb" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (SOUTHWEST)";
 	icon_state = "darkred";
@@ -7950,7 +7952,7 @@
 	dir = 1
 	},
 /area/centcom/control)
-"Vd" = (
+"Vc" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (SOUTHEAST)";
 	icon_state = "darkred";
@@ -7962,7 +7964,7 @@
 	dir = 1
 	},
 /area/centcom/control)
-"Ve" = (
+"Vd" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHWEST)";
 	icon_state = "darkred";
@@ -7974,7 +7976,7 @@
 	dir = 1
 	},
 /area/centcom/control)
-"Vf" = (
+"Ve" = (
 /obj/item/clothing/under/rank/centcom_commander/alt,
 /obj/item/clothing/under/rank/centcom_commander/alt,
 /obj/item/clothing/under/rank/centcom_officer/alt,
@@ -7989,39 +7991,40 @@
 /obj/item/clothing/suit/armor/hos,
 /turf/open/floor/wood,
 /area/centcom/control)
-"Vg" = (
+"Vf" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (EAST)";
 	icon_state = "darkredcorners";
 	dir = 4
 	},
 /area/centcom/control)
-"Vh" = (
+"Vg" = (
 /turf/open/floor/plasteel/darkred,
 /area/centcom/control)
-"Vi" = (
+"Vh" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (NORTH)";
 	icon_state = "darkredcorners";
 	dir = 1
 	},
 /area/centcom/control)
-"Vj" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner1"
-	},
+"Vi" = (
+/obj/item/weapon/banner/fascist/alt,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"Vk" = (
+"Vj" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/wood,
 /area/centcom/control)
-"Vl" = (
+"Vk" = (
 /turf/open/floor/plasteel/darkred/corner{
 	tag = "icon-darkredcorners (WEST)";
 	icon_state = "darkredcorners";
 	dir = 8
 	},
+/area/centcom/control)
+"Vl" = (
+/turf/open/floor/plasteel/darkred/corner,
 /area/centcom/control)
 "Vm" = (
 /turf/closed/indestructible/fakeglass{
@@ -8030,17 +8033,14 @@
 	},
 /area/centcom/control)
 "Vn" = (
-/turf/open/floor/plasteel/darkred/corner,
-/area/centcom/control)
-"Vo" = (
 /obj/machinery/computer/card/centcom,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/control)
-"Vp" = (
+"Vo" = (
 /obj/structure/arc,
 /turf/open/floor/carpet,
 /area/centcom/control)
-"Vq" = (
+"Vp" = (
 /obj/structure/chair/comfy/black{
 	dir = 4
 	},
@@ -8054,23 +8054,21 @@
 	},
 /turf/open/floor/carpet,
 /area/centcom/control)
-"Vr" = (
+"Vq" = (
 /obj/structure/table/wood,
 /obj/item/weapon/gavelblock,
 /obj/item/weapon/gavelhammer,
 /turf/open/floor/wood,
 /area/centcom/control)
-"Vs" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner1"
-	},
+"Vr" = (
+/obj/item/weapon/banner/fascist/alt,
 /turf/open/floor/plasteel/darkred,
 /area/centcom/control)
-"Vt" = (
+"Vs" = (
 /obj/machinery/door/airlock/glass_command,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"Vu" = (
+"Vt" = (
 /obj/structure/table/wood,
 /obj/machinery/button{
 	id = "ccshut"
@@ -8079,7 +8077,7 @@
 /obj/item/weapon/paper_bin,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/control)
-"Vv" = (
+"Vu" = (
 /obj/structure/chair{
 	dir = 4
 	},
@@ -8089,7 +8087,7 @@
 	dir = 8
 	},
 /area/centcom/control)
-"Vw" = (
+"Vv" = (
 /obj/docking_port/stationary{
 	dir = 4;
 	dwidth = 25;
@@ -8100,21 +8098,21 @@
 	},
 /turf/open/space,
 /area/space)
-"Vx" = (
+"Vw" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHEAST)";
 	icon_state = "darkred";
 	dir = 5
 	},
 /area/centcom/control)
-"Vy" = (
+"Vx" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (NORTHWEST)";
 	icon_state = "darkred";
 	dir = 9
 	},
 /area/centcom/control)
-"Vz" = (
+"Vy" = (
 /obj/structure/chair/office/light,
 /mob/living/simple_animal/hostile/retaliate/dolphin{
 	desc = "OCH DER KAISER";
@@ -8126,13 +8124,13 @@
 	},
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/control)
-"VA" = (
+"Vz" = (
 /obj/machinery/nuclearbomb{
 	name = "ICBM"
 	},
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/control)
-"VB" = (
+"VA" = (
 /obj/item/clothing/under/rank/centcom_commander/alt,
 /obj/item/clothing/under/rank/centcom_commander/alt,
 /obj/item/clothing/under/rank/centcom_officer/alt,
@@ -8148,11 +8146,11 @@
 /obj/item/clothing/suit/armor/hos,
 /turf/open/floor/wood,
 /area/centcom/control)
-"VC" = (
+"VB" = (
 /turf/open/floor/plasteel/black,
 /turf/open/floor/plasteel/warningline,
 /area/centcom/control)
-"VD" = (
+"VC" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (EAST)";
 	icon_state = "darkred";
@@ -8160,7 +8158,7 @@
 	},
 /turf/open/floor/plasteel/warningline,
 /area/centcom/control)
-"VE" = (
+"VD" = (
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (WEST)";
 	icon_state = "darkred";
@@ -8168,12 +8166,12 @@
 	},
 /turf/open/floor/plasteel/warningline,
 /area/centcom/control)
-"VF" = (
+"VE" = (
 /turf/closed/indestructible/fakeglass{
 	color = ""
 	},
 /area/centcom/control)
-"VG" = (
+"VF" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Massenvernichtungswaffen"
 	},
@@ -8183,31 +8181,27 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"VH" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner1"
-	},
+"VG" = (
+/obj/item/weapon/banner/fascist/alt,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (SOUTHWEST)";
 	icon_state = "darkred";
 	dir = 10
 	},
 /area/centcom/control)
-"VI" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner1"
-	},
+"VH" = (
+/obj/item/weapon/banner/fascist/alt,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (SOUTHEAST)";
 	icon_state = "darkred";
 	dir = 6
 	},
 /area/centcom/control)
-"VJ" = (
+"VI" = (
 /obj/structure/filingcabinet,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"VK" = (
+"VJ" = (
 /obj/structure/closet/gimmick/tacticool{
 	name = "flammenwerfen und zwa"
 	},
@@ -8220,7 +8214,7 @@
 	dir = 8
 	},
 /area/centcom/control)
-"VL" = (
+"VK" = (
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (SOUTHWEST)";
@@ -8228,7 +8222,7 @@
 	dir = 10
 	},
 /area/centcom/control)
-"VM" = (
+"VL" = (
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /turf/open/floor/plasteel/warningline{
 	tag = "icon-warningline (SOUTHEAST)";
@@ -8236,27 +8230,27 @@
 	dir = 6
 	},
 /area/centcom/control)
-"VN" = (
+"VM" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /turf/open/floor/plasteel/darkred/side,
 /area/centcom/control)
-"VO" = (
+"VN" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/darkred/side,
 /area/centcom/control)
-"VP" = (
+"VO" = (
 /obj/structure/filingcabinet/filingcabinet,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"VQ" = (
+"VP" = (
 /obj/structure/sign/nosmoking_2,
 /turf/closed/indestructible/riveted{
 	color = "#A9A9A9"
 	},
 /area/centcom/control)
-"VR" = (
+"VQ" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/red,
 /obj/item/clothing/shoes/sneakers/brown,
@@ -8266,7 +8260,7 @@
 /obj/item/weapon/melee/energy/sword/saber/red,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"VS" = (
+"VR" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/red,
 /obj/item/clothing/shoes/sneakers/brown,
@@ -8277,12 +8271,12 @@
 /obj/item/weapon/plasma_fist_scroll,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"VT" = (
+"VS" = (
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"VU" = (
+"VT" = (
 /obj/structure/window/reinforced/tinted{
 	icon_state = "rwindow";
 	dir = 4
@@ -8295,12 +8289,12 @@
 /obj/structure/grille,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"VV" = (
+"VU" = (
 /obj/structure/table,
 /obj/item/device/flashlight/lamp,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/control)
-"VW" = (
+"VV" = (
 /obj/machinery/camera{
 	c_tag = "Brig Interrogation";
 	dir = 2;
@@ -8308,11 +8302,11 @@
 	},
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/control)
-"VX" = (
+"VW" = (
 /obj/structure/table,
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/control)
-"VY" = (
+"VX" = (
 /mob/living/simple_animal/hostile/retaliate/dolphin{
 	desc = "OCH DER KAISER";
 	icon_dead = "fascist_dead";
@@ -8323,20 +8317,20 @@
 	},
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"VZ" = (
+"VY" = (
 /obj/structure/table,
 /obj/item/weapon/restraints/handcuffs,
 /obj/item/weapon/restraints/handcuffs,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"Wa" = (
+"VZ" = (
 /obj/structure/table,
 /obj/item/device/taperecorder{
 	pixel_y = 0
 	},
 /turf/open/floor/plasteel/circuit/gcircuit/off,
 /area/centcom/control)
-"Wb" = (
+"Wa" = (
 /obj/structure/rack,
 /obj/item/clothing/under/color/red,
 /obj/item/clothing/shoes/sneakers/brown,
@@ -8345,18 +8339,24 @@
 /obj/item/weapon/gun/energy/laser,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
-"Wc" = (
+"Wb" = (
 /obj/structure/table,
 /obj/item/weapon/pen,
 /turf/open/floor/plasteel/darkred/side,
 /area/centcom/control)
-"Wd" = (
+"Wc" = (
 /obj/machinery/door/airlock/external{
 	name = "Rettungskapsellen";
 	req_access = null;
 	req_access_txt = "0"
 	},
 /turf/open/floor/plasteel/black,
+/area/centcom/control)
+"Wd" = (
+/obj/item/weapon/banner/fascist/alt,
+/turf/closed/indestructible/riveted{
+	color = "#A9A9A9"
+	},
 /area/centcom/control)
 "We" = (
 /obj/structure/sign/map/left,
@@ -8530,9 +8530,7 @@
 	},
 /area/space)
 "Wz" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner"
-	},
+/obj/item/weapon/banner/fascist,
 /turf/closed/wall/shuttle{
 	icon_state = "wall3"
 	},
@@ -8600,6 +8598,7 @@
 /obj/item/weapon/storage/pod{
 	pixel_x = -26
 	},
+/obj/structure/chair,
 /turf/open/floor/plasteel/black,
 /area/centcom/control)
 "WK" = (
@@ -8685,9 +8684,7 @@
 /turf/open/floor/plasteel/black,
 /area/centcom/holding)
 "WX" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner"
-	},
+/obj/item/weapon/banner/fascist,
 /turf/closed/indestructible/riveted{
 	color = "#A9A9A9"
 	},
@@ -8922,9 +8919,7 @@
 /turf/closed/indestructible/riveted,
 /area/centcom/control)
 "XE" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner1"
-	},
+/obj/item/weapon/banner/fascist/alt,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (WEST)";
 	icon_state = "darkred";
@@ -9076,9 +9071,7 @@
 /turf/open/indestructible,
 /area/centcom/supply)
 "Yb" = (
-/obj/item/weapon/banner/red{
-	icon_state = "oakbanner1"
-	},
+/obj/item/weapon/banner/fascist/alt,
 /turf/open/floor/plasteel/darkred/side{
 	tag = "icon-darkred (EAST)";
 	icon_state = "darkred";
@@ -33160,19 +33153,19 @@ ab
 ab
 ab
 ab
-TE
-TE
-TE
-TE
-TE
-TE
-TE
-TF
-TE
-TF
-TE
-TE
-TE
+TA
+TA
+TA
+TA
+TA
+TA
+TA
+TB
+TA
+TB
+TA
+TA
+TA
 ab
 ab
 ab
@@ -33417,19 +33410,19 @@ ab
 ab
 ab
 ab
-TF
-VA
-UW
-VA
-TE
-UQ
-VK
-UQ
-VK
-UQ
-VK
-UQ
-TE
+TB
+Vz
+UV
+Vz
+TA
+UP
+VJ
+UP
+VJ
+UP
+VJ
+UP
+TA
 Wh
 Wz
 WI
@@ -33674,21 +33667,21 @@ ab
 ab
 ab
 ab
-TE
-VA
-TM
-TM
-VG
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-Wd
+TA
+Vz
+TT
+TT
+VF
+TT
+TT
+TT
+TT
+TT
+TT
+TT
+Wc
 Wg
-TM
+TJ
 WJ
 WT
 ab
@@ -33931,19 +33924,19 @@ ab
 ab
 ab
 ab
-TE
-VA
-TM
-TM
-VG
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-TE
+TA
+Vz
+TT
+TT
+VF
+TT
+TT
+TT
+TT
+TT
+TT
+TT
+TA
 Wh
 Wz
 WI
@@ -34188,19 +34181,19 @@ ab
 ab
 ab
 ab
-TF
-VA
-UW
-VA
-TE
-TN
-TN
-TN
-TN
-TN
-TN
-TN
-TE
+TB
+Vz
+UV
+Vz
+TA
+TU
+TU
+TU
+TU
+TU
+TU
+TU
+TA
 ab
 ab
 ab
@@ -34423,41 +34416,41 @@ ab
 ab
 ab
 ab
-Sx
-Sx
-Sx
-Sx
-Sx
-Sx
-Sx
-Sx
-Sx
-TH
-TV
-TH
-TV
-TH
-TV
-TH
-TE
-TF
-TE
-TE
-TE
-TF
-TE
-TE
-TE
-TF
-TE
-TE
-TE
-TF
-VG
-TF
-TE
-TE
-TE
+St
+St
+St
+St
+St
+St
+St
+St
+St
+TD
+TS
+TD
+TS
+TD
+TS
+TD
+TA
+TB
+TA
+TA
+TA
+TB
+TA
+TA
+TA
+TB
+TA
+TA
+TA
+TB
+VF
+TB
+TA
+TA
+TA
 Wh
 Wz
 WI
@@ -34680,43 +34673,43 @@ ab
 ab
 ab
 ab
-Sx
-Tu
-Tu
-Tu
-Tu
-Tu
-Tu
-Tu
-Sx
-TI
-TI
-TI
-Uh
-TI
-TI
-TI
+St
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+St
 TE
-UK
-UX
-Vf
-Vk
-Vk
-Vk
-VB
-UX
-UK
 TE
-UQ
-UQ
-UQ
-UQ
-UQ
-UQ
-UQ
-Wd
+TE
+Ug
+TE
+TE
+TE
+TA
+UJ
+UW
+Ve
+Vj
+Vj
+Vj
+VA
+UW
+UJ
+TA
+UP
+UP
+UP
+UP
+UP
+UP
+UP
+Wc
 Wg
-TM
+TJ
 WJ
 WT
 ab
@@ -34937,41 +34930,41 @@ ab
 ab
 ab
 ab
-Sx
-Tu
+St
+Tq
 Ms
 Ms
-Tu
+Tq
 Ms
 Ms
-Tu
-Sx
-TJ
-TJ
-TJ
-TJ
-TJ
-TJ
-TJ
-TE
-UL
-UY
-UY
-UY
-UY
-UY
-UY
-UY
-UL
-TE
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-TE
+Tq
+St
+TF
+TF
+TF
+TF
+TF
+TF
+TF
+TA
+UK
+UX
+UX
+UX
+UX
+UX
+UX
+UX
+UK
+TA
+TT
+TT
+TT
+TT
+TT
+TT
+TT
+TA
 Wh
 Wz
 WI
@@ -35194,41 +35187,41 @@ ab
 ab
 ab
 ab
-Sx
-Tu
+St
+Tq
 Ms
 Ms
-Tu
+Tq
 Ms
 Ms
-Tu
-Sx
-TJ
-TJ
-TJ
-TJ
-TJ
-TJ
-TJ
-UC
-UM
-UY
-UY
-UY
-Vp
-UY
-UY
-UY
+Tq
+St
+TF
+TF
+TF
+TF
+TF
+TF
+TF
+UB
 UL
-UC
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-TE
+UX
+UX
+UX
+Vo
+UX
+UX
+UX
+UK
+UB
+TT
+TT
+TT
+TT
+TT
+TT
+TT
+TA
 ab
 ab
 ab
@@ -35451,41 +35444,41 @@ ab
 ab
 ab
 ab
-Sx
-Tu
+St
+Tq
 Ms
 Ms
-Tu
+Tq
 Ms
 Ms
-Tu
-Sx
-TJ
-TJ
-TJ
-TJ
-TJ
-TJ
-TJ
-TE
-UN
-UY
-UY
-UY
-UY
-UY
-UY
-UY
-UN
-TE
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-TE
+Tq
+St
+TF
+TF
+TF
+TF
+TF
+TF
+TF
+TA
+UM
+UX
+UX
+UX
+UX
+UX
+UX
+UX
+UM
+TA
+TT
+TT
+TT
+TT
+TT
+TT
+TT
+TA
 Wh
 Wz
 WI
@@ -35708,43 +35701,43 @@ ab
 ab
 ab
 ab
-Sx
-Tu
-Tu
-Tu
-Tu
-Tu
-Tu
-Tu
-Sx
-TJ
-TJ
-TJ
-TJ
-TJ
-TJ
-TJ
-TE
-UO
-UZ
+St
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+St
+TF
+TF
+TF
+TF
+TF
+TF
+TF
+TA
+UN
 UY
+UX
+UX
+Vp
+UX
+UX
 UY
-Vq
-UY
-UY
-UZ
-UO
-TE
-TM
-TM
-TM
+UN
+TA
+TT
+TT
+TT
 kr
-TM
-TM
-TM
-Wd
+TT
+TT
+TT
+Wc
 Wg
-TM
+TJ
 WJ
 WT
 ab
@@ -35965,41 +35958,41 @@ ab
 ab
 ab
 ab
-Sx
-Tu
+St
+Tq
 Ms
 Ms
-Tu
+Tq
 Ms
 Ms
-Tu
-Sx
-TJ
-TJ
-TJ
-TJ
-TJ
-TJ
-TJ
-TE
-UO
-UO
-UO
-UO
-Vr
-UO
-UO
-UO
-UO
-TE
-VJ
-VJ
-VP
-VP
-VP
-VJ
-VJ
-TE
+Tq
+St
+TF
+TF
+TF
+TF
+TF
+TF
+TF
+TA
+UN
+UN
+UN
+UN
+Vq
+UN
+UN
+UN
+UN
+TA
+VI
+VI
+VO
+VO
+VO
+VI
+VI
+TA
 Wh
 Wz
 WI
@@ -36222,24 +36215,24 @@ ab
 ab
 ab
 ab
-Sx
-Tu
+Sw
+Tq
 Ms
 Ms
-Tu
+Tq
 Ms
 Ms
-Tu
-Sx
-TE
-TE
-TE
-TE
-TE
-TF
-TE
-TE
-UP
+Tq
+Sw
+TA
+TA
+TA
+TA
+TA
+TB
+TA
+TA
+UO
 Xh
 Xh
 Xh
@@ -36247,16 +36240,16 @@ Xh
 Xh
 Xh
 Xh
-VF
-TE
-TE
-TF
-TE
-TE
-TE
-TE
-TE
-TE
+VE
+TA
+TA
+TB
+TA
+TA
+TA
+TA
+TA
+TB
 Wi
 ab
 Wi
@@ -36479,41 +36472,41 @@ ab
 ab
 ab
 ab
-Sx
-Tu
+St
+Tq
 Ms
 Ms
-Tu
+Tq
 Ms
 Ms
-Tu
-Sx
-TK
-TM
-TM
-Ui
-TE
-Un
-UA
-UD
-UD
-UD
-UD
-UD
-UD
-UD
-UD
-UD
-UD
-UD
-UA
-VL
-TE
-VR
-TM
-TM
-Wb
-TE
+Tq
+St
+TG
+TT
+TT
+Uh
+TA
+Um
+Uz
+UC
+UC
+UC
+UC
+UC
+UC
+UC
+UC
+UC
+UC
+UC
+Uz
+VK
+TA
+VQ
+TT
+TT
+Wa
+TA
 Wi
 ab
 Wi
@@ -36736,41 +36729,41 @@ ab
 ab
 ab
 ab
-Sx
-Tu
-Tu
-Tu
-Tu
-Tu
-Tu
-Tu
-Sx
-TK
-TM
-TM
-Ui
-TE
-Uo
-TM
-UE
-UQ
-UQ
-UQ
-UQ
-UQ
-UQ
-UQ
-UQ
-UQ
-Vx
-TM
-VC
-TE
-VR
-TM
-TM
-Wb
-TE
+St
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+St
+TG
+TT
+TT
+Uh
+TA
+Un
+TT
+UD
+UP
+UP
+UP
+UP
+UP
+UP
+UP
+UP
+UP
+Vw
+TT
+VB
+TA
+VQ
+TT
+TT
+Wa
+TA
 Wi
 ab
 Wi
@@ -36993,41 +36986,41 @@ ab
 ab
 ab
 ab
-Sx
-Tu
-Tu
-Tu
-Tu
-Tu
-Tu
-Tu
-Sx
-TK
-TM
-TM
+St
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+Tq
+St
+TG
+TT
+TT
+Ui
+TA
+Un
 Uj
-TE
-Uo
-Uk
-UF
+UE
+UQ
 UR
-UT
-TM
-UT
-UT
-UT
-TM
-UT
-UT
-VH
-TL
-VC
-TE
-VS
-TM
-TM
-Wb
-TE
+TT
+UR
+UR
+UR
+TT
+UR
+UR
+VG
+TH
+VB
+TA
+VR
+TT
+TT
+Wa
+TA
 Wi
 ab
 Wi
@@ -37250,7 +37243,7 @@ ab
 ab
 ab
 ab
-Sx
+St
 Ms
 Ms
 Ms
@@ -37258,33 +37251,33 @@ Ms
 Ms
 Ms
 Ms
-Sx
-TK
-TM
-TM
-Ui
-TE
-Uo
-Uk
-TM
-UT
-UT
-TM
-UT
-UT
-UT
-TM
-UT
-UT
-TM
-TL
-VC
-TE
-VR
-TM
-TM
-Wb
-TE
+St
+TG
+TT
+TT
+Uh
+TA
+Un
+Uj
+TT
+UR
+UR
+TT
+UR
+UR
+UR
+TT
+UR
+UR
+TT
+TH
+VB
+TA
+VQ
+TT
+TT
+Wa
+TA
 Wi
 ab
 Wi
@@ -37507,7 +37500,7 @@ ab
 ab
 ab
 ab
-Sx
+St
 Ms
 Ms
 Ms
@@ -37515,33 +37508,33 @@ Ms
 Ms
 Ms
 Ms
-Sx
-TK
-TM
-TM
-Ui
-TE
-Uo
-Uk
-TM
-UT
-UT
-TM
-UT
-UT
-UT
-TM
-UT
-UT
-TM
-TL
-VC
-TE
-VR
-TM
-TM
-Wb
-TE
+St
+TG
+TT
+TT
+Uh
+TA
+Un
+Uj
+TT
+UR
+UR
+TT
+UR
+UR
+UR
+TT
+UR
+UR
+TT
+TH
+VB
+TA
+VQ
+TT
+TT
+Wa
+TA
 Wi
 ab
 Wi
@@ -37755,16 +37748,16 @@ ab
 ab
 ab
 ab
-Sx
-Sx
-SA
-Sx
-Sx
-Sx
-SA
-Sx
-Sx
-SA
+St
+St
+Sw
+St
+St
+St
+Sw
+St
+St
+Sw
 Ms
 Ms
 Ms
@@ -37772,33 +37765,33 @@ Ms
 Ms
 Ms
 Ms
-SA
-TE
-TE
-TY
-TE
-TF
-Uo
-Uk
-TM
-TM
-TM
-TM
-Vl
+Sw
+TA
+TA
+TX
+TA
+TB
+Un
+Uj
+TT
+TT
+TT
+TT
+Vk
+Vg
 Vh
-Vi
-TM
-TM
-TM
-TM
-TL
-VC
-TF
-TE
-TE
-TY
-TE
-TF
+TT
+TT
+TT
+TT
+TH
+VB
+TB
+TA
+TA
+TX
+TA
+TB
 Wi
 ab
 Wi
@@ -38012,16 +38005,16 @@ ab
 ab
 ab
 ab
-Sx
-Tc
-SR
-Tc
-Sx
-Tj
-SR
-SR
-Tq
-Sx
+St
+SY
+SN
+SY
+St
+Te
+SN
+SN
+Tm
+St
 Ms
 Ms
 Ms
@@ -38029,33 +38022,33 @@ Ms
 Ms
 Ms
 Ms
-Sx
-TL
-TM
-TM
-TM
-TE
-Uo
-Uk
-TM
-TM
-TM
+St
+TH
+TT
+TT
+TT
+TA
+Un
+Uj
+TT
+TT
+TT
+Vf
+Vl
 Vg
-Vn
-Vh
-Vg
-Vn
-TM
-TM
-TM
-TL
-VC
-TE
-TM
-TM
-TM
-Uk
-TE
+Vf
+Vl
+TT
+TT
+TT
+TH
+VB
+TA
+TT
+TT
+TT
+Uj
+TA
 Wi
 ab
 Wi
@@ -38269,15 +38262,15 @@ ab
 ab
 ab
 ab
-Sx
-Td
+St
+SZ
 hl
-Td
-Sx
-Tk
+SZ
+St
+Tf
 hl
 hl
-Tr
+Tn
 iW
 Ms
 Ms
@@ -38286,33 +38279,33 @@ Ms
 Ms
 Ms
 Ms
-Sx
-TL
-TM
-TM
-TM
-TY
-Uo
-Uk
-TM
-TM
-TM
-Vh
-Vh
-Vs
-Vh
-Vh
-TM
-TM
-TM
-TL
-VC
-TY
-TM
-TM
-TM
-Uk
-TE
+St
+TH
+TT
+TT
+TT
+TX
+Un
+Uj
+TT
+TT
+TT
+Vg
+Vg
+Vr
+Vg
+Vg
+TT
+TT
+TT
+TH
+VB
+TX
+TT
+TT
+TT
+Uj
+TA
 Wi
 ab
 Wi
@@ -38526,11 +38519,11 @@ ab
 ab
 ab
 ab
-Sx
-Te
+St
+Ta
 hl
-Te
-Sx
+Ta
+St
 ia
 hl
 hl
@@ -38543,33 +38536,33 @@ Ms
 Ms
 Ms
 Ms
-Sx
-TL
-TM
-TM
-TM
-TY
-Uo
-Uk
-TM
-TM
-TM
-Vi
-Vl
+St
+TH
+TT
+TT
+TT
+TX
+Un
+Uj
+TT
+TT
+TT
 Vh
-Vi
-Vl
-TM
-TM
-TM
-TL
-VC
-TY
-TM
-TM
-TM
-Uk
-TE
+Vk
+Vg
+Vh
+Vk
+TT
+TT
+TT
+TH
+VB
+TX
+TT
+TT
+TT
+Uj
+TA
 Wi
 ab
 Wi
@@ -38776,22 +38769,22 @@ ab
 ab
 ab
 ab
-Sx
-SA
-Sx
-Sx
-Sx
-Sx
-SA
-Sx
-Td
+St
+Sw
+St
+St
+St
+St
+Sw
+St
+SZ
 hl
-Td
-Sx
+SZ
+St
 ib
 hl
 hl
-Ts
+To
 iX
 Ms
 Ms
@@ -38800,33 +38793,33 @@ Ms
 Ms
 Ms
 Ms
-Sx
-TL
-TM
-TM
-TM
-TE
-Uo
-Uk
-TM
-TM
-TM
-TM
-Vn
-Vh
+St
+TH
+TT
+TT
+TT
+TA
+Un
+Uj
+TT
+TT
+TT
+TT
+Vl
 Vg
-TM
-TM
-TM
-TM
-TL
-VC
-TE
-TM
-TM
-TM
-Uk
-TE
+Vf
+TT
+TT
+TT
+TT
+TH
+VB
+TA
+TT
+TT
+TT
+Uj
+TA
 Wi
 ab
 Wi
@@ -39033,18 +39026,18 @@ ab
 ab
 ab
 ab
+St
 Sx
-SB
-SI
-SO
-SO
-ST
-SZ
-Sx
-Te
+SE
+SK
+SK
+SP
+SV
+St
+Ta
 hl
-Te
-Sx
+Ta
+St
 ic
 hl
 hl
@@ -39057,33 +39050,33 @@ Ms
 Ms
 Ms
 Ms
-SA
-TE
-TE
-TZ
-TE
-TF
-Uo
-Uk
-TM
-UT
-UT
-TM
-UT
-UT
-UT
-TM
-UT
-UT
-TM
-TL
-VC
-TF
-TE
-TE
-TZ
-TE
-TF
+Sw
+TA
+TA
+TY
+TA
+TB
+Un
+Uj
+TT
+UR
+UR
+TT
+UR
+UR
+UR
+TT
+UR
+UR
+TT
+TH
+VB
+TB
+TA
+TA
+TY
+TA
+TB
 Wi
 ab
 Wi
@@ -39290,23 +39283,23 @@ ab
 ab
 ab
 ab
-Sx
-SC
-SJ
-SP
-SJ
-SU
-Ta
-Sx
-Td
+St
+Sy
+SF
+SL
+SF
+SQ
+SW
+St
+SZ
 hl
-Td
-Sx
+SZ
+St
 ic
 hl
 hl
 iJ
-Sx
+St
 Ms
 Ms
 Ms
@@ -39314,33 +39307,33 @@ Ms
 Ms
 Ms
 Ms
-Sx
-TM
-TM
-TM
-TM
-TE
-Uo
-Uk
-TM
-UT
-UT
-TM
-UT
-UT
-UT
-TM
-UT
-UT
-TM
-TL
-VC
-TE
-TM
-TM
-TM
-TM
-TE
+St
+TI
+TT
+TT
+TT
+TA
+Un
+Uj
+TT
+UR
+UR
+TT
+UR
+UR
+UR
+TT
+UR
+UR
+TT
+TH
+VB
+TA
+TI
+TT
+TT
+TT
+TA
 Wi
 ab
 Wi
@@ -39547,23 +39540,23 @@ ab
 ab
 ab
 ab
-Sx
-SD
-SK
-SQ
-SS
-SV
+St
+Sz
+SG
+SM
+SO
+SR
 hl
-Sx
-Sx
-Tg
-Sx
-Sx
-Sx
+St
+St
+Tc
+St
+St
+St
 is
 is
-Sx
-Sx
+St
+St
 Ms
 Ms
 Ms
@@ -39571,33 +39564,33 @@ Ms
 Ms
 Ms
 Ms
-Sx
-TM
-TM
-TM
-TM
-TE
-Uo
-Uk
-UG
-UT
-UT
-TM
-UT
-UT
-UT
-TM
-UT
+St
+TJ
+TT
+TT
+TT
+TA
+Un
+Uj
+UF
 UR
-VI
-TL
-VC
-TE
-TM
-TM
-TM
-TM
-TE
+UR
+TT
+UR
+UR
+UR
+TT
+UR
+UQ
+VH
+TH
+VB
+TA
+TJ
+TT
+TT
+TT
+TA
 Wi
 ab
 Wi
@@ -39804,21 +39797,21 @@ ab
 ab
 ab
 ab
-Sx
-SE
+St
+SA
+SH
 SL
-SP
-SJ
-SW
+SF
+SS
 hl
-Sx
-Tf
-SR
-SR
-SR
-SR
-SR
-SR
+St
+Tb
+SN
+SN
+SN
+SN
+SN
+SN
 iL
 iW
 Ms
@@ -39828,41 +39821,41 @@ Ms
 Ms
 Ms
 Ms
-Sx
-TM
-TM
-TM
-TM
-TE
-Uo
-TM
-UH
-TN
-TN
-TN
-TN
-TN
-TN
-TN
-TN
-TN
-Vy
-TM
-VC
-TE
-TM
-TM
-TM
-TM
-TE
+St
+TJ
+TT
+TT
+TT
+TA
+Un
+TT
+UG
+TU
+TU
+TU
+TU
+TU
+TU
+TU
+TU
+TU
+Vx
+TT
+VB
+TA
+TJ
+TT
+TT
+TT
+TA
 gX
-Tp
-Tp
-Tp
-Tp
+Tl
+Tl
+Tl
+Tl
 gX
-Tp
-Tp
+Tl
+Tl
 ab
 Wi
 ab
@@ -40061,14 +40054,14 @@ ab
 ab
 ab
 ab
-Sx
-SD
-SK
-SQ
-SS
-SV
+St
+Sz
+SG
+SM
+SO
+SR
 hl
-Sx
+St
 hE
 hl
 hl
@@ -40085,33 +40078,33 @@ Ms
 Ms
 Ms
 Ms
-Sx
-TN
-TN
-TN
-TN
-TE
+St
+TK
+TU
+TU
+TU
+TA
 lw
 lO
-UI
-UI
-UI
-UI
-UI
-UI
-UI
-UI
-UI
-UI
-UI
+UH
+UH
+UH
+UH
+UH
+UH
+UH
+UH
+UH
+UH
+UH
 lO
-VM
-TE
-TN
-TN
-TN
-TN
-TE
+VL
+TA
+TK
+TU
+TU
+TU
+TA
 Wj
 WA
 WK
@@ -40119,10 +40112,10 @@ WK
 WY
 Xg
 Wv
-Tp
-Tp
-Tp
-Tp
+Tl
+Tl
+Tl
+Tl
 Wi
 ab
 ab
@@ -40318,14 +40311,14 @@ ab
 ab
 ab
 ab
-Sy
-SF
+Su
+SB
+SH
 SL
-SP
-SJ
-SW
+SF
+SS
 hl
-Sx
+St
 hF
 hl
 hK
@@ -40342,33 +40335,33 @@ Ms
 Ms
 Ms
 Ms
-Sx
-TE
-TE
-TZ
-TE
-TE
-TE
-UB
-TF
-UU
-Va
-Va
-Va
-Va
-Va
-Va
-Va
-Va
-TF
-UB
-TE
-TE
-TE
-TE
-TZ
-TE
-TE
+St
+TA
+TA
+TY
+TA
+TA
+TA
+UA
+TB
+UT
+UZ
+UZ
+UZ
+UZ
+UZ
+UZ
+UZ
+UZ
+TB
+UA
+TA
+TA
+TA
+TA
+TY
+TA
+TA
 Wk
 WB
 WL
@@ -40575,14 +40568,14 @@ ab
 ab
 ab
 ab
+Sv
 Sz
-SD
-SK
-SQ
-SS
-SV
+SG
+SM
+SO
+SR
 hl
-Sx
+St
 hl
 hJ
 hK
@@ -40599,33 +40592,33 @@ Ms
 Ms
 Ms
 Ms
-TE
-TL
-TM
-TM
-Uk
-TE
-Up
-TM
-TM
-UV
-UV
-TM
-TM
-UV
-TM
-TM
-UV
-UV
-TM
-TM
-VN
-TE
-TL
-TM
-TM
-Uk
-TE
+TA
+TH
+TT
+TT
+Uj
+TA
+Uo
+TT
+TT
+UU
+UU
+Vi
+TT
+UU
+TT
+Vi
+UU
+UU
+TT
+TT
+VM
+TA
+TH
+TT
+TT
+Uj
+TA
 Wl
 WC
 WM
@@ -40636,7 +40629,7 @@ Wv
 Xl
 vz
 vz
-Tp
+Tl
 Wi
 ab
 ab
@@ -40832,12 +40825,12 @@ ab
 ab
 ab
 ab
-Sx
-SE
+St
+SA
+SH
 SL
-SP
-SJ
-SW
+SF
+SS
 hl
 hg
 hl
@@ -40856,33 +40849,33 @@ Ka
 Ms
 Ms
 Ms
-TF
-TL
-TM
-TM
-Uk
-TF
-Up
-TM
-TM
-UW
-UW
-UW
-UW
-UW
-UW
-UW
-UW
-UW
-TM
-TM
-VN
-TF
-TL
-TM
-TM
-Uk
-TE
+TB
+TH
+TT
+TT
+Uj
+TB
+Uo
+TT
+TT
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+TT
+TT
+VM
+TB
+TH
+TT
+TT
+Uj
+Wd
 Wm
 WD
 WL
@@ -40893,7 +40886,7 @@ Wv
 Xl
 vz
 vz
-Tp
+Tl
 Wi
 ab
 ab
@@ -41089,14 +41082,14 @@ ab
 ab
 ab
 ab
-Sx
-SG
+St
+SC
+SI
 SM
-SQ
-SS
-SX
+SO
+ST
 hl
-Sx
+St
 hl
 hJ
 hK
@@ -41105,41 +41098,41 @@ hK
 hl
 hl
 hl
-Sx
+St
 jj
-Tx
+Tt
 jC
 jL
 jC
-Tx
+Tt
 ko
-TE
-TL
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-UW
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-UW
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-Uk
-TE
+TA
+TH
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+UV
+TT
+TT
+TT
+TT
+TT
+TT
+TT
+UV
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+Uj
+TA
 Wl
 WC
 WM
@@ -41346,14 +41339,14 @@ ab
 ab
 ab
 ab
-Sx
-SH
+St
+SD
+SJ
 SN
-SR
-SR
-SR
-Tb
-Sx
+SN
+SN
+SX
+St
 hH
 hl
 hL
@@ -41362,40 +41355,40 @@ hL
 hl
 hl
 hl
-Sx
-Tv
+St
+Tr
 js
-SR
-SR
-SR
-SR
-TD
-TE
-TL
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-UW
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-UW
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-Uk
+SN
+SN
+SN
+SN
+Tz
+TA
+TH
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+UV
+TT
+TT
+TT
+TT
+TT
+TT
+TT
+UV
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+Uj
 We
 Wn
 WD
@@ -41404,10 +41397,10 @@ WB
 Xb
 Wv
 Wv
-Tp
-Tp
-Tp
-Tp
+Tl
+Tl
+Tl
+Tl
 Wi
 ab
 ab
@@ -41603,14 +41596,14 @@ ab
 ab
 ab
 ab
-Sx
-SA
-Sx
-Sx
-Sx
-SY
-SA
-Sx
+St
+Sw
+St
+St
+St
+SU
+Sw
+St
 hI
 hl
 hl
@@ -41619,7 +41612,7 @@ hl
 hl
 hl
 hl
-Tg
+Tc
 hl
 hl
 hl
@@ -41627,32 +41620,32 @@ hl
 hl
 hl
 hl
-TG
-TL
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-UW
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-UW
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-Uk
+TC
+TH
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+UV
+TT
+TT
+TT
+TT
+TT
+TT
+TT
+UV
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+Uj
 Wf
 Wl
 WC
@@ -41661,7 +41654,7 @@ WV
 Xa
 Wv
 Wv
-Tp
+Tl
 Wi
 Wi
 Wi
@@ -41864,53 +41857,53 @@ ab
 ab
 ab
 ab
-Sx
+St
 hl
 hl
 hC
-SO
-SO
-SO
-Ti
-Tl
-To
-SO
-SO
-Sx
-Tw
-SO
-SO
-SO
-SO
-SO
-Tw
-TE
-TL
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-UW
-Vb
+SK
+SK
+SK
+Td
+Tg
+Tk
+SK
+SK
+St
+Ts
+SK
+SK
+SK
+SK
+SK
+Ts
+TA
+TH
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+UV
+Va
 Yb
-Vg
-TM
-TM
-Vj
-VC
-UW
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-Uk
-TE
+Vf
+TT
+TT
+Vi
+VB
+UV
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+Uj
+TA
 Wm
 WD
 WL
@@ -41918,7 +41911,7 @@ WB
 Xb
 Wv
 Wv
-Tp
+Tl
 Wi
 ab
 ab
@@ -42121,53 +42114,53 @@ ab
 ab
 ab
 ab
-Sx
+St
 hm
-Sx
-Sx
-Sx
-SA
-Sx
-Sx
-Sx
-SA
-Sx
-Sx
-Sx
-Sx
-Sx
-Sx
-TB
-Sx
-Sx
-Sx
-TE
-TL
-TM
-TM
-Uk
-TE
+St
+St
+St
+Sw
+St
+St
+St
+Sw
+St
+St
+St
+St
+St
+St
+Tx
+St
+St
+St
+TA
+TH
+TT
+TT
+Uj
+TA
 lx
-TM
-TM
-UW
-Vc
-Vh
-Vh
-TN
-TM
-TM
-VC
-UW
-TM
-TM
-VO
-TE
-TL
-TM
-TM
-Uk
-TE
+TT
+TT
+UV
+Vb
+Vg
+Vg
+TU
+TT
+TT
+VB
+UV
+TT
+TT
+VN
+TA
+TH
+TT
+TT
+Uj
+TA
 Wo
 WE
 WM
@@ -42175,7 +42168,7 @@ WV
 Xc
 Wv
 Wv
-Tp
+Tl
 Wi
 ab
 ab
@@ -42378,53 +42371,53 @@ ab
 ab
 ab
 ab
-Sx
+St
 hn
-Sx
+St
 Ms
 Ms
 Ms
 Ms
-Sx
+St
 if
 iu
 iB
-Tt
-Sx
-SR
-SR
-SR
-SR
-SR
-SR
-SR
-TE
-TL
-TM
-TM
-Uk
-TE
-Up
-TM
-TM
-UW
+Tp
+St
+SN
+SN
+SN
+SN
+SN
+SN
+SN
+TA
+TH
+TT
+TT
+Uj
+TA
 Uo
-UH
-Vh
-Vh
-Vx
-TM
-VC
-UW
-TM
-TM
-VN
-TE
-TL
-TM
-TM
-Uk
-TE
+TT
+TT
+UV
+Un
+UG
+Vg
+Vg
+Vw
+TT
+VB
+UV
+TT
+TT
+VM
+TA
+TH
+TT
+TT
+Uj
+TA
 Wp
 WF
 WN
@@ -42432,7 +42425,7 @@ WN
 WN
 Wv
 Xj
-Tp
+Tl
 Wi
 ab
 ab
@@ -42633,21 +42626,21 @@ ab
 ab
 ab
 ab
-Sx
-Sx
-Sx
+St
+St
+St
 ho
-Sx
-Sx
-Sx
-Sx
-Sx
-Sx
-Tm
+St
+St
+St
+St
+St
+St
+Ti
 hl
 hl
 hl
-Sx
+St
 hl
 hl
 hl
@@ -42655,41 +42648,41 @@ hl
 hl
 hl
 hl
-TF
-TL
-TM
-TM
-Uk
-TF
-Up
-TM
-TM
-UW
+TB
+TH
+TT
+TT
+Uj
+TB
 Uo
-TM
-UH
-Vh
-Vh
-Vh
-VD
-UW
-TM
-TM
-VN
-TF
-TL
-TM
-TM
-Uk
-TE
+TT
+TT
+UV
+Un
+TT
+UG
+Vg
+Vg
+Vg
+VC
+UV
+TT
+TT
+VM
+TB
+TH
+TT
+TT
+Uj
+Wd
 gX
-Tp
-Tp
+Tl
+Tl
 WW
-Tp
+Tl
 gX
-Tp
-Tp
+Tl
+Tl
 Wi
 ab
 ab
@@ -42890,7 +42883,7 @@ ab
 ab
 ab
 ab
-Sx
+St
 gV
 gV
 hp
@@ -42899,46 +42892,46 @@ gV
 gV
 gV
 gV
-Sx
-Tm
+St
+Ti
 hl
 hl
 hl
-Sx
+St
 hl
 hl
-Ty
-Ty
-Ty
+Tu
+Tu
+Tu
 hl
 hl
-TE
-TL
-TM
-TM
-Uk
-TE
-Up
-TM
-TM
-UW
+TA
+TH
+TT
+TT
+Uj
+TA
 Uo
-TM
-UE
-Vh
-Vh
-Vh
-VE
-UW
-TM
-TM
-VN
-TE
-TL
-TM
-TM
-Uk
-TE
+TT
+TT
+UV
+Un
+TT
+UD
+Vg
+Vg
+Vg
+VD
+UV
+TT
+TT
+VM
+TA
+TH
+TT
+TT
+Uj
+TA
 Wq
 Wv
 WO
@@ -42946,7 +42939,7 @@ Wv
 Xd
 Wv
 Xd
-Tp
+Tl
 Wi
 ab
 ab
@@ -43147,7 +43140,7 @@ ab
 ab
 ab
 ab
-Sx
+St
 gW
 hh
 hh
@@ -43156,46 +43149,46 @@ hh
 hh
 hh
 gW
-Sx
-Sx
-Sx
+St
+St
+St
 iD
-Sx
+St
 jb
 hl
 jw
-Tz
-Tz
-Tz
-TC
+Tv
+Tv
+Tv
+Ty
 hl
-TE
-TL
-TM
-TM
-Uk
-TE
-Up
-TM
-TM
-UW
+TA
+TH
+TT
+TT
+Uj
+TA
 Uo
-UE
-Vh
-Vh
-Vy
-TM
-VC
-UW
-TM
-TM
-VN
-TE
-TL
-TM
-TM
-Uk
-TE
+TT
+TT
+UV
+Un
+UD
+Vg
+Vg
+Vx
+TT
+VB
+UV
+TT
+TT
+VM
+TA
+TH
+TT
+TT
+Uj
+TA
 Wr
 Wv
 Wv
@@ -43203,7 +43196,7 @@ Wv
 Xe
 Wv
 Xe
-Tp
+Tl
 Wi
 ab
 ab
@@ -43404,7 +43397,7 @@ ab
 ab
 ab
 ab
-Sx
+St
 gV
 hh
 hh
@@ -43413,46 +43406,46 @@ hh
 hh
 hh
 gV
-Sx
-Tm
+St
+Ti
 hl
 hl
 hl
 jc
 hl
 jw
-Tz
-Tz
-Tz
-TC
+Tv
+Tv
+Tv
+Ty
 hl
-TE
-TL
-TM
-TM
-Uk
-TE
+TA
+TH
+TT
+TT
+Uj
+TA
 lx
-TM
-TM
-UW
-Vd
-Vh
-Vh
-UQ
-TM
-TM
-VC
-UW
-TM
-TM
-VO
-TE
-TL
-TM
-TM
-Uk
-TE
+TT
+TT
+UV
+Vc
+Vg
+Vg
+UP
+TT
+TT
+VB
+UV
+TT
+TT
+VN
+TA
+TH
+TT
+TT
+Uj
+TA
 Ws
 Wv
 WP
@@ -43460,7 +43453,7 @@ Wv
 Xd
 Wv
 Xd
-Tp
+Tl
 Wi
 ab
 ab
@@ -43661,7 +43654,7 @@ ab
 ab
 ab
 ab
-Sx
+St
 gV
 hi
 hi
@@ -43670,46 +43663,46 @@ hi
 hh
 hi
 gV
-Sx
-Tm
+St
+Ti
 hl
 hl
 hl
 jc
 hl
 jw
-Tz
-Tz
-Tz
-TC
+Tv
+Tv
+Tv
+Ty
 hl
-TE
-TL
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-UW
-Ve
+TA
+TH
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+UV
+Vd
 XE
+Vh
+TT
+TT
 Vi
-TM
-TM
-Vj
-VC
-UW
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-Uk
-TE
+VB
+UV
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+Uj
+TA
 Wt
 Wv
 WQ
@@ -43717,7 +43710,7 @@ Wv
 Xe
 Wv
 Xe
-Tp
+Tl
 Wi
 ab
 ab
@@ -43918,7 +43911,7 @@ ab
 ab
 ab
 ab
-Sx
+St
 gV
 hi
 hi
@@ -43927,46 +43920,46 @@ hi
 hh
 hi
 gV
-Sx
-Sx
-Sx
+St
+St
+St
 iD
-Sx
+St
 jb
 hl
 jw
-Tz
-Tz
-Tz
-TC
+Tv
+Tv
+Tv
+Ty
 hl
-TE
-TL
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-UW
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-UW
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-Uk
-TE
+TA
+TH
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+UV
+TT
+TT
+TT
+TT
+TT
+TT
+TT
+UV
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+Uj
+TA
 Wu
 Wv
 Wv
@@ -43974,7 +43967,7 @@ Wv
 Xd
 Wv
 Xd
-Tp
+Tl
 Wi
 ab
 ab
@@ -44175,7 +44168,7 @@ ab
 ab
 ab
 ab
-Sx
+St
 gV
 hh
 hq
@@ -44184,12 +44177,12 @@ hh
 hh
 hh
 gV
-Sx
+St
 Th
 hl
 hl
-Te
-Sx
+Ta
+St
 hl
 hl
 gM
@@ -44197,33 +44190,33 @@ gM
 gM
 hl
 hl
-TE
-TL
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-UW
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-UW
-TM
-TM
-Uk
-TE
-TL
-TM
-TM
-Uk
-TE
+TA
+TH
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+UV
+TT
+TT
+TT
+TT
+TT
+TT
+TT
+UV
+TT
+TT
+Uj
+TA
+TH
+TT
+TT
+Uj
+TA
 Wv
 WG
 WR
@@ -44231,7 +44224,7 @@ Wv
 Xf
 Wv
 Xf
-Tp
+Tl
 Wi
 ab
 ab
@@ -44432,7 +44425,7 @@ ab
 ab
 ab
 ab
-Sx
+St
 gW
 hh
 hr
@@ -44441,12 +44434,12 @@ hh
 hh
 hh
 gW
-Sx
+St
 Th
 hl
 hl
-Te
-Sx
+Ta
+St
 hl
 hl
 hl
@@ -44454,33 +44447,33 @@ hl
 hl
 hl
 hl
-TF
-TL
-TM
-TM
-Uk
-TF
-Up
-TM
-TM
-UW
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-UW
-TM
-TM
-VN
-TF
-TL
-TM
-TM
-Uk
-TE
+TB
+TH
+TT
+TT
+Uj
+TB
+Uo
+TT
+TT
+UV
+TT
+TT
+TT
+TT
+TT
+TT
+TT
+UV
+TT
+TT
+VM
+TB
+TH
+TT
+TT
+Uj
+Wd
 Ww
 WH
 WH
@@ -44689,7 +44682,7 @@ ab
 ab
 ab
 ab
-Sx
+St
 gV
 gV
 gV
@@ -44698,46 +44691,46 @@ gV
 gV
 gV
 gV
-Sx
-Tn
-SO
-SO
+St
+Tj
+SK
+SK
 US
-Sx
-SO
+St
+SK
 Gn
-SO
-SO
-SO
-SO
-SO
-TE
-TL
-TM
-TM
-Uk
-TE
-Up
-TM
-TM
-UW
-TM
-Vj
-TM
-TM
-TM
-Vj
-TM
-UW
-TM
-TM
-VN
-TE
-TL
-TM
-TM
-Uk
-TE
+SK
+SK
+SK
+SK
+SK
+TA
+TH
+TT
+TT
+Uj
+TA
+Uo
+TT
+TT
+UV
+TT
+Vi
+TT
+TT
+TT
+Vi
+TT
+UV
+TT
+TT
+VM
+TA
+TH
+TT
+TT
+Uj
+TA
 Wx
 WH
 pV
@@ -44946,55 +44939,55 @@ ab
 ab
 ab
 ab
-Sx
-Sx
-Sx
-Sx
-Sx
-Sx
-Sx
-SA
-Sx
-Sx
-Sx
+St
+Sw
+St
+St
+St
+St
+St
+Sw
+St
+St
+St
 gX
-Tp
-Tp
-Tp
+Tl
+Tl
+Tl
 gX
-Sx
-Sx
-Sx
-Sx
-Sx
-SA
-TE
-TE
-TE
-Ua
-TE
-TE
-TE
-TE
-UJ
-UW
-UJ
+St
+St
+St
+St
+St
+Sw
+TA
+TA
+TA
+TZ
+TA
+TA
+TA
+TA
+UI
+UV
+UI
 im
 im
-Vt
+Vs
 im
 im
-UJ
-UW
-UJ
-TE
-TE
-TE
-TF
-TE
+UI
+UV
+UI
+TA
+TA
+TA
+TB
+TA
 YT
-TF
-TE
+TB
+TA
 Wx
 WH
 WH
@@ -45220,38 +45213,38 @@ ab
 ab
 ab
 ab
-TA
-TA
-TA
-TA
-TA
-TE
-TO
-TW
-TW
-TW
-TW
-Uq
-TF
-TM
-UW
-TM
-im
-UW
-UW
-UW
-im
-TM
-UW
-TM
-TF
+Tw
+Tw
+Tw
+Tw
+Tw
+TB
 TL
-TM
-TE
-TM
-TM
-Uk
-TE
+TV
+TV
+TV
+TV
+Up
+TB
+TT
+UV
+TT
+im
+UV
+UV
+UV
+im
+TT
+UV
+TT
+TB
+TH
+TT
+TA
+TT
+TT
+Uj
+TA
 Wx
 WH
 pV
@@ -45477,37 +45470,37 @@ ab
 ab
 ab
 ab
-TA
+Tw
 jV
-TA
+Tw
 jV
+Tw
 TA
-TE
 Xp
-TX
 TW
+TV
+TV
 TW
-TX
-Ur
-TE
-TM
-UW
-TM
+Uq
+TA
+TT
+UV
+TT
 kj
 mh
-UW
-Vz
+UV
+Vy
 kj
-TM
-UW
-TM
-TE
-TL
-TM
+TT
+UV
+TT
+TA
+TH
+TT
 YT
-TM
-TM
-Uk
+TT
+TT
+Uj
 Wg
 Wx
 WH
@@ -45734,38 +45727,38 @@ ab
 ab
 ab
 ab
-TA
+Tw
 jV
-TA
+Tw
 jV
+Tw
 TA
-TE
 kC
-TX
-Ub
+TW
+Ua
 lr
-TX
-Us
-TE
-TM
-UW
-TM
+TW
+Ur
+TA
+TT
+UV
+TT
 im
-Vo
-Vu
-Vo
+Vn
+Vt
+Vn
 im
-TM
-UW
-TM
-TE
-TL
-TM
-TE
-TM
-VY
-Uk
-TE
+TT
+UV
+TT
+TA
+TH
+TT
+TA
+TT
+VX
+Uj
+TA
 Wx
 WH
 pV
@@ -45991,38 +45984,38 @@ ab
 ab
 ab
 ab
-TA
+Tw
 jV
-TA
+Tw
 jV
+Tw
 TA
-TE
 Xz
-TX
-Uc
+TW
+Ub
 lq
-TX
-Ut
-TE
-UJ
-UW
-UJ
+TW
+Us
+TA
+UI
+UV
+UI
 im
 im
 im
 im
 im
-UJ
-UW
-UJ
-TE
-TL
-TM
-TE
-VT
-VZ
-Wc
-TE
+UI
+UV
+UI
+TA
+TH
+TT
+TA
+VS
+VY
+Wb
+TA
 Wx
 WH
 WH
@@ -46248,38 +46241,38 @@ ab
 ab
 ab
 ab
-TA
+Tw
 jV
-TA
+Tw
 jV
+Tw
 TA
-TE
-TP
-TX
+TM
+TW
 Xv
 XJ
-TX
-Uu
-TE
-TM
-UW
-TM
+TW
+Ut
+TA
+TT
+UV
+TT
 XE
 Yf
-Vv
+Vu
 Yf
 XE
-TM
-UW
-TM
-TE
+TT
+UV
+TT
+TA
 YT
-TE
-TF
-VU
-VU
-VU
-TE
+TA
+TB
+VT
+VT
+VT
+TA
 Wx
 WH
 pV
@@ -46505,37 +46498,37 @@ ab
 ab
 ab
 ab
-TA
+Tw
 jV
-TA
+Tw
 jV
+Tw
 TA
-TE
-TQ
-TX
-Ue
+TN
+TW
+Uc
 XK
-TX
-Uv
-TE
-TM
-UW
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-UW
-TM
-TE
-TM
-TM
-TE
+TW
+Uu
+TA
+TT
 UV
+TT
+TT
+TT
+TT
+TT
+TT
+TT
 UV
-Uk
+TT
+TA
+TT
+TT
+TA
+UU
+UU
+Uj
 We
 Wx
 WH
@@ -46762,37 +46755,37 @@ ab
 ab
 ab
 ab
-TA
+Tw
 jV
-TA
+Tw
 jV
+Tw
 TA
-TE
-TR
-TX
-Uf
-Ul
-TX
-Uw
-TE
-TM
-UW
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-UW
-TM
-TE
-UW
-UW
-TE
-VV
-Wa
-UW
+TO
+TW
+Ue
+Uk
+TW
+Uv
+TA
+TT
+UV
+TT
+TT
+TT
+TT
+TT
+TT
+TT
+UV
+TT
+TA
+UV
+UV
+TA
+VU
+VZ
+UV
 Wf
 Wx
 WH
@@ -47019,38 +47012,38 @@ ab
 ab
 ab
 ab
-TA
+Tw
 jV
-TA
+Tw
 jV
+Tw
 TA
-TE
-TS
-TX
+TP
 TW
+TV
+TV
 TW
-TX
-Ux
-TE
-TM
-UW
-TM
-TM
-TM
-TM
-TM
-TM
-TM
-UW
-TM
-TE
-UW
-UW
+Uw
+TA
+TT
+UV
+TT
+TT
+TT
+TT
+TT
+TT
+TT
+UV
+TT
+TA
+UV
+UV
 YT
-VW
-UW
-UW
-TE
+VV
+UV
+UV
+TA
 Wx
 WH
 WH
@@ -47276,38 +47269,38 @@ ab
 ab
 ab
 ab
-TA
+Tw
 jV
-TA
+Tw
 jV
+Tw
 TA
-TE
+TQ
+TW
+TV
+TV
+TW
+Ux
+TA
 TT
-TX
-TW
-TW
-TX
-Uy
-TE
-TM
-UW
-UW
-UW
-UW
-UW
-UW
-UW
-UW
-UW
-TM
-TE
-UW
-UW
-TE
-VX
-VX
-UW
-TE
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+TT
+TA
+UV
+UV
+TA
+VW
+VW
+UV
+TA
 Wx
 WH
 pV
@@ -47533,38 +47526,38 @@ ab
 ab
 ab
 ab
-TA
+Tw
 jV
-TA
+Tw
 jV
-TA
-TE
+Tw
+TB
+TR
+TW
+Uf
+Ul
+TW
+Uy
+TB
+TT
+TT
+TT
 TU
-TX
-Ug
-Um
-TX
-Uz
-TF
-TM
-TM
-TM
-TN
-TN
-TN
-TN
-TN
-TM
-TM
-TM
-TF
-TM
-TM
-TE
-UT
-UT
-Uk
-TE
+TU
+TU
+TU
+TU
+TT
+TT
+TT
+TB
+TT
+TT
+TA
+UR
+UR
+Uj
+TA
 Wy
 WH
 WH
@@ -47790,19 +47783,19 @@ ab
 ab
 ab
 ab
+Tw
+Tw
+Tw
+Tw
+Tw
 TA
 TA
 TA
 TA
 TA
-TE
-TE
-TE
-TE
-TE
-TE
-TE
-TE
+TA
+TA
+TA
 Ij
 XL
 Ij
@@ -47814,14 +47807,14 @@ XF
 Ij
 XL
 mH
-TE
-TE
-VQ
-TF
-TE
-TE
-TF
-TE
+TA
+TA
+VP
+TB
+TA
+TA
+TB
+TA
 Wi
 Wi
 Wi
@@ -48065,7 +48058,7 @@ ab
 ab
 ab
 ab
-Vw
+Vv
 ab
 ab
 ab
