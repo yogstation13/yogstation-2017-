@@ -6,7 +6,7 @@
 	earliest_start = 6000
 
 /datum/round_event/adware
-	ghost_announce = "3 PDA's have been infected with advertisements."
+	ghost_announce = "3 PDAs have been infected with advertisements."
 
 /datum/round_event/adware/start()
 	var/list/PDAs = get_viewable_pdas()

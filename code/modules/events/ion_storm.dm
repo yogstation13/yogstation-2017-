@@ -38,10 +38,8 @@
 				to_chat(M, "<span class='danger'>[message] ...LAWS UPDATED</span>")
 				to_chat(M, "<br>")
 				interest = M
-				if(message)
-					special = message
-				else
-					special = "But there's no AI."
+			else
+				special = "But there's no AI."
 	if(botEmagChance)
 		for(var/mob/living/simple_animal/bot/bot in living_mob_list)
 			if(prob(botEmagChance))
