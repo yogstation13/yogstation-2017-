@@ -49,13 +49,13 @@
 		if(.)
 			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
 	spawn(0)
-		procs[sig_type] = addtimer(src, "proc_on_self")
+		procs[sig_type] = call(src, proc_on_self)()
 
 /datum/component/proc/ReceiveSignal(sigtype, ...)
 	var/list/sps = signal_procs
 	var/list/arguments = args.Copy()
 	arguments.Cut(1, 2)
-	return call(src, sps)(arglist(arguments))
+	return call(src, sps[sigtype])(arglist(arguments))
 
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
