@@ -19,6 +19,8 @@
 
 		var/datum/disease/D = new /datum/disease/appendicitis
 		H.ForceContractDisease(D)
+		if(!H)
+			message = null
 		interest = H
 		special = H.name
 		break

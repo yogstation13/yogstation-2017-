@@ -18,5 +18,4 @@
 			var/datum/software/malware/adware/A = new /datum/software/malware/adware()
 			A.infect(PDA)
 			PDAs -= PDA
-			if(i == 3)
-				interest = PDA
+			interest = PDA
