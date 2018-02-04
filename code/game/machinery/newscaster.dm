@@ -880,6 +880,10 @@ var/list/obj/machinery/newscaster/allCasters = list()
 		say("Attention! Wanted issue distributed!")
 		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, 1)
 
+/obj/machinery/newscaster/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'> The time is [gameTimestamp()].</span>")
+
 
 /obj/item/weapon/newspaper
 	name = "newspaper"

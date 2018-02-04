@@ -520,3 +520,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			updateUsrDialog()
 		return
 	return ..()
+
+/obj/machinery/requests_console/examine(mob/user)
+	..()
+	to_chat(user, "<span class='notice'> The time is [gameTimestamp()].</span>")
