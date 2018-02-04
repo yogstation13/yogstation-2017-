@@ -73,7 +73,7 @@ Shaft Miner
 	outfit = /datum/outfit/job/miner
 
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mining, access_mining_station, access_mineral_storeroom)
-	minimal_access = list(access_mining, access_mining_station, access_mailsorting, access_mineral_storeroom)
+	minimal_access = list(access_mining, access_mining_station, access_mailsorting)
 
 /datum/outfit/job/miner
 	name = "Shaft Miner"
