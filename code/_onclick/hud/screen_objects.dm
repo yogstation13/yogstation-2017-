@@ -494,3 +494,34 @@
 /obj/screen/healthdoll
 	name = "health doll"
 	screen_loc = ui_healthdoll
+
+/obj/screen/splash
+	icon = 'icons/misc/fullscreen.dmi'
+	icon_state = "title"
+	screen_loc = "1,1"
+	layer = SPLASHSCREEN_LAYER
+	plane = SPLASHSCREEN_PLANE
+	var/client/holder
+
+/obj/screen/splash/New(client/C, visible)
+	..()
+	holder = C
+	var/titlescreen = TITLESCREEN
+	if(titlescreen)
+		icon_state = titlescreen
+	if(!visible)
+		alpha = 0
+	holder.screen += src
+
+/obj/screen/splash/proc/Fade(out, qdel_after = TRUE)
+	if(out)
+		animate(src, alpha = 0, time = 30)
+	else
+		alpha = 0
+		animate(src, alpha = 255, time = 30)
+	if(qdel_after)
+		QDEL_IN(src, 30)
+
+/obj/screen/splash/Destroy()
+	holder.screen -= src
+	return ..()

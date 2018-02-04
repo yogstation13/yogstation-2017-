@@ -166,6 +166,7 @@
 		else
 			health -= weapon.force
 	playsound(loc, weapon.hitsound, 50, 1, 1)
+	user.changeNext_move(CLICK_CD_MELEE)
 
 /obj/effect/cyrogenicbubble/attack_animal(mob/living/simple_animal/M)
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)

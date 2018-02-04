@@ -37,7 +37,7 @@
 
 		//only check this turf, if it didn't check us when it was initalized
 		if(enemy_tile.current_cycle < times_fired)
-			if(CanAtmosPass(enemy_tile))
+			if(CANATMOSPASS(src, enemy_tile))
 				atmos_adjacent_turfs |= enemy_tile
 				enemy_tile.atmos_adjacent_turfs |= src
 			else
@@ -88,7 +88,7 @@
 				return 0
 		to_chat(C, "<span class='notice'>You slipped[ O ? " on the [O.name]" : ""]!</span>")
 
-		C.attack_log += "\[[time_stamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
+		C.attack_log += "\[[gameTimestamp()]\] <font color='orange'>Slipped[O ? " on the [O.name]" : ""][(lube&SLIDE)? " (LUBE)" : ""]!</font>"
 		playsound(C.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 
 		C.accident(C.l_hand)
@@ -177,4 +177,3 @@
 		wet_time = 0
 	if(wet)
 		addtimer(src, "HandleWet", 15)
-

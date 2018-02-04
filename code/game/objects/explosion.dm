@@ -5,14 +5,14 @@
 	src = null	//so we don't abort once src is deleted
 	epicenter = get_turf(epicenter)
 
-	//DO NOT REMOVE THIS SLEEP, IT BREAKS THINGS
+	//DO NOT REMOVE THIS STOPLAG, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion
 	//doing that might cause it to trigger another explosion
 	//this is bad
 	//I would make this not ex_act the thing that triggered the explosion,
 	//but everything that explodes gives us their loc or a get_turf()
 	//and somethings expect us to ex_act them so they can qdel()
-	sleep(1) //tldr, let the calling proc call qdel(src) before we explode
+	stoplag() //tldr, let the calling proc call qdel(src) before we explode
 
 	// Archive the uncapped explosion for the doppler array
 	var/orig_dev_range = devastation_range
@@ -142,7 +142,8 @@
 				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 				I.throw_speed = 4 //Temporarily change their throw_speed for embedding purposes (Reset when it finishes throwing, regardless of hitting anything)
 				I.throw_at_fast(throw_at, throw_range, 2)//Throw it at 2 speed, this is purely visual anyway.
-
+		for(var/mob/living/L in T)
+			L.pummel(epicenter, throw_dist/2)
 		CHECK_TICK
 
 	var/took = (world.timeofday-start)/10

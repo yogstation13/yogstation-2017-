@@ -14,6 +14,7 @@
 	var/metal = 0
 	var/lifetime = 40
 	var/reagent_divisor = 5
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 
 /obj/effect/particle_effect/foam/metal
@@ -289,8 +290,4 @@
 		to_chat(user, "<span class='warning'>You hit the metal foam to no effect!</span>")
 
 /obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height=1.5)
-	return !density
-
-
-/obj/structure/foamedmetal/CanAtmosPass()
 	return !density

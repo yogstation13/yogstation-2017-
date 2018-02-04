@@ -116,13 +116,32 @@
 
 /datum/mutation/human/hulk
 
+	name = "Mutation"
+	quality = POSITIVE
+	dna_block = NON_SCANNABLE
+	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
+	species_allowed = list("human","abomination") //no skeleton/lizard hulk
+	health_req = 1
+
+/datum/mutation/human/genetics_hulk
+
 	name = "Hulk"
 	quality = POSITIVE
 	get_chance = 10
 	lowest_value = 256 * 14
-	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
+	text_gain_indication = "<span class='notice'>You suddenly feel very angry.</span>"
 	species_allowed = list("human","abomination") //no skeleton/lizard hulk
 	health_req = 25
+
+/datum/mutation/human/active_hulk
+
+	name = "Hulk State"
+	quality = POSITIVE
+	dna_block = NON_SCANNABLE
+	text_gain_indication = "<span class='notice'>Your muscles hurt!</span>"
+	species_allowed = list("human","abomination") //no skeleton/lizard hulk
+	health_req = 1
+	var/health_based = 0
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
@@ -131,8 +150,39 @@
 	owner.status_flags -= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
 	owner.update_body_parts()
 
+/datum/mutation/human/active_hulk/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.SetParalysis(0)
+	owner.status_flags -= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
+	owner.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/hulk(null))
+	owner.status_flags |= IGNORESLOWDOWN
+	if(istype(owner.w_uniform, /obj/item/clothing/under))
+		var/obj/item/clothing/under/U = owner.w_uniform
+		if(owner.canUnEquip(U))
+			U.teardown(owner)
+	if(istype(owner.wear_suit, /obj/item/clothing/suit))
+		var/obj/item/clothing/suit/S = owner.wear_suit
+		if(owner.canUnEquip(S))
+			owner.unEquip(S)
+	owner.adjustBrainLoss(90)
+	owner.undershirt = "Nude"
+	owner.dna.species.no_equip.Add(slot_wear_suit, slot_w_uniform)
+	owner.say("PUNY HUMANS!!")
+	owner.dna.species.stamina_recover_normal -= 6
+	owner.dna.species.staminamod = 0.3
+	owner.update_body()
+
 /datum/mutation/human/hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
 	return target.attack_hulk(owner)
+
+/datum/mutation/human/active_hulk/on_attack_hand(mob/living/carbon/human/owner, atom/target)
+	if(prob(3))
+		owner.jitteriness = 10
+	owner.adjustStaminaLoss(-0.5)
+	return target.attack_hulk(owner)
+
+
 
 /datum/mutation/human/hulk/on_life(mob/living/carbon/human/owner)
 	if(owner.health < 0)
@@ -145,7 +195,24 @@
 	owner.status_flags |= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
 	owner.update_body_parts()
 
+/datum/mutation/human/active_hulk/on_losing(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.status_flags |= list(CANSTUN, CANWEAKEN, CANPARALYSE, CANPUSH)
+	owner.mind.RemoveSpell(/obj/effect/proc_holder/spell/aoe_turf/repulse/hulk)
+	owner.status_flags -= IGNORESLOWDOWN
+	owner.adjustBrainLoss(-90)
+	owner.dna.species.no_equip.Remove(slot_wear_suit, slot_w_uniform)
+	owner.dna.species.stamina_recover_normal += 6
+	owner.dna.species.staminamod = 1
+	owner.update_body_parts()
+
 /datum/mutation/human/hulk/say_mod(message)
+	if(message)
+		message = "[uppertext(replacetext(message, ".", "!"))]!!"
+	return message
+
+/datum/mutation/human/active_hulk/say_mod(message)
 	if(message)
 		message = "[uppertext(replacetext(message, ".", "!"))]!!"
 	return message
@@ -623,6 +690,73 @@
 	if(owner.a_intent == "harm")
 		owner.LaserEyes(target)
 
+//Thanks HippieStation
+/datum/mutation/human/cluwne
+	name = "Cluwne"
+	quality = NEGATIVE
+	dna_block = NON_SCANNABLE
+	text_gain_indication = "<span class='danger'>You feel like your brain is tearing itself apart.</span>"
+
+/datum/mutation/human/cluwne/on_acquiring(mob/living/carbon/human/owner)
+	if(..())
+		return
+	owner.dna.add_mutation(CLOWNMUT)
+	owner.dna.add_mutation(EPILEPSY)
+	owner.setBrainLoss(200)
+
+	var/mob/living/carbon/human/H = owner
+
+	if(!istype(H.wear_mask, /obj/item/clothing/mask/cluwne))
+		if(!H.unEquip(H.wear_mask))
+			qdel(H.wear_mask)
+		H.equip_to_slot_or_del(new /obj/item/clothing/mask/cluwne(H), slot_wear_mask)
+	if(!istype(H.w_uniform, /obj/item/clothing/under/cluwne))
+		if(!H.unEquip(H.w_uniform))
+			qdel(H.w_uniform)
+		H.equip_to_slot_or_del(new /obj/item/clothing/under/cluwne(H), slot_w_uniform)
+	if(!istype(H.shoes, /obj/item/clothing/shoes/cluwne))
+		if(!H.unEquip(H.shoes))
+			qdel(H.shoes)
+		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/cluwne(H), slot_shoes)
+
+	owner.equip_to_slot_or_del(new /obj/item/clothing/gloves/color/white(owner), slot_gloves) // this is purely for cosmetic purposes incase they aren't wearing anything in that slot
+	owner.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/clown(owner), slot_back) // ditto
+
+/datum/mutation/human/cluwne/on_life(mob/living/carbon/human/owner)
+	if((prob(15) && owner.paralysis <= 1))
+		owner.setBrainLoss(200)
+		switch(rand(1, 6))
+			if(1)
+				owner.say("HONK")
+			if(2 to 5)
+				owner.say("HONK!")
+			if(6)
+				owner.Stun(1)
+				owner.Weaken(1)
+				owner.Jitter(500)
+
+/datum/mutation/human/cluwne/on_losing(mob/living/carbon/human/owner)
+	owner.adjust_fire_stacks(1)
+	owner.IgniteMob()
+	owner.dna.add_mutation(CLUWNEMUT)
+	
+/datum/mutation/human/cluwne/say_mod(message)
+	if(message)
+		message = "honk"
+		while(rand(0,1))
+			if(rand(0,1))
+				message += " honk"
+			else
+				message += " henk"
+		message += " honk!"
+	return message
+
+/mob/living/carbon/human/proc/cluwneify()
+	dna.add_mutation(CLUWNEMUT)
+	say("HONK")
+	regenerate_icons()
+	visible_message("<span class='danger'>[src]'s body glows green, the glow dissipating only to leave behind a cluwne formerly known as [src]!</span>", \
+					"<span class='danger'>Your brain feels like it's being torn apart, and after a short while, you notice that you've become a cluwne!</span>")
 
 /mob/living/carbon/proc/update_mutations_overlay()
 	return

@@ -122,6 +122,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	var/charge_count = 100
 	var/current_overlay = null
 	var/broken_state = 0
+	var/toggleable = TRUE
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", "gravity")
@@ -254,6 +255,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		return
 
 	if(href_list["gentoggle"])
+		if(!toggleable)
+			return
 		breaker = !breaker
 		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [usr.key].", "gravity")
 		set_power()

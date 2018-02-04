@@ -20,6 +20,7 @@
 	overlays += "waitlight"
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/chem_master(null)
 	B.apply_default_parts(src)
+	..()
 
 /obj/item/weapon/circuitboard/machine/chem_master
 	name = "circuit board (ChemMaster 3000)"

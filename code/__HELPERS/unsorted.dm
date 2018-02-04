@@ -1030,6 +1030,7 @@ B --><-- A
 //orbit() can run without it (swap orbiting for A)
 //but then you can never stop it and that's just silly.
 /atom/movable/var/atom/orbiting = null
+/atom/var/list/orbiters = list()
 
 //A: atom to orbit
 //radius: range to orbit at, radius of the circle formed by orbiting
@@ -1047,6 +1048,7 @@ B --><-- A
 		stop_orbit()
 
 	orbiting = A
+	orbiting.orbiters += src
 	var/matrix/initial_transform = matrix(transform)
 	var/lastloc = loc
 
@@ -1082,8 +1084,15 @@ B --><-- A
 
 
 /atom/movable/proc/stop_orbit()
+	orbiting.orbiters -= src
 	orbiting = null
 
+/atom/movable/proc/transfer_observers_to(atom/movable/target)
+	if(orbiters)
+		for(var/thing in orbiters)
+			if(isobserver(thing))
+				var/mob/dead/observer/D = thing
+				D.ManualFollow(target)
 
 //Center's an image.
 //Requires:
@@ -1349,17 +1358,23 @@ proc/pick_closest_path(value)
 	CRASH(msg)
 
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
-/proc/stoplag()
-	. = 1
-	sleep(world.tick_lag)
-	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
-		. += 2
-		sleep(world.tick_lag*2)
-		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
-			. += 4
-			sleep(world.tick_lag*4)
-			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
-			//	not worth it.
+
+//Increases delay as the server gets more overloaded,
+//as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
+#define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta-1,1)), 1)
+
+/proc/stoplag(initial_delay)
+	if (!initial_delay)
+		initial_delay = world.tick_lag
+	. = 0
+	var/i = DS2TICKS(initial_delay)
+	do
+		. += Ceiling(i*DELTA_CALC)
+		sleep(i*world.tick_lag*DELTA_CALC)
+		i *= 2
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+
+#undef DELTA_CALC
 
 /proc/key_name_params(var/whom, var/include_link = null, var/include_name = 1, var/anchor_params = null, var/datum/admin_ticket/T = null)
 	var/mob/M
