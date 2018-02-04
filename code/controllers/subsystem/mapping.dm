@@ -4,7 +4,6 @@ var/datum/subsystem/mapping/SSmapping
 	name = "Mapping"
 	init_order = 100000
 	flags = SS_NO_FIRE
-	display_order = 50
 	var/datum/map_config/previous_map_config
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
