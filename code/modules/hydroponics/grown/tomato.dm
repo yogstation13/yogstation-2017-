@@ -145,6 +145,6 @@
 			K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
 			if(user)
 				user.unEquip(src)
-				user.attack_log += "\[[time_stamp()]\] <b>[user.real_name]/[user.ckey]</b> awakened a killer tomato."
+				user.attack_log += "\[[gameTimestamp()]\] <b>[user.real_name]/[user.ckey]</b> awakened a killer tomato."
 				K.spawnedBy = "[user.real_name]([user.ckey])"
 			qdel(src)

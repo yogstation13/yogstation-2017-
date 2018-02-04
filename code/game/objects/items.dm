@@ -33,8 +33,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/max_heat_protection_temperature //Set this variable to determine up to which temperature (IN KELVIN) the item protects against heat damage. Keep at null to disable protection. Only protects areas set by heat_protection flags
 	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
-	var/list/actions = list() //list of /datum/action's that this item has.
-	var/list/actions_types = list() //list of paths of action datums to give to the item on New().
+	var/list/actions //list of /datum/action's that this item has.
+	var/list/actions_types //list of paths of action datums to give to the item on New().
 	var/datum/chameleon/chameleon = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
@@ -54,13 +54,13 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/strip_delay = 40
 	var/put_on_delay = 20
 	var/breakouttime = 0
-	var/list/materials = list()
+	var/list/materials
 	var/origin_tech = null	//Used by R&D to determine what research bonuses it grants.
 	var/needs_permit = 0			//Used by security bots to determine if this item is safe for public use.
 	var/scarab_usable = FALSE //can clockwork cogscarabs use this item?
 
 	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
-	var/list/species_exception = list()	// even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
+	var/list/species_exception = null // even if a species cannot put items in a certain slot, if the species id is in the item's exception list, it will be able to wear that item
 
 	var/suittoggled = 0
 	var/hooded = 0
@@ -130,11 +130,23 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	icon = 'icons/obj/device.dmi'
 
 /obj/item/New()
+	if(!materials)
+		materials = list()
 	..()
 	if(ispath(module_holder_type, /obj/item/module_holder))
 		module_holder = new module_holder_type(src)
 	for(var/path in actions_types)
 		new path(src)
+	actions_types = null
+
+/obj/item/device
+	icon = 'icons/obj/device.dmi'
+
+/obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
+	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
+		return FALSE
+	else
+		return TRUE
 
 /obj/item/Destroy()
 	if(high_risk)
