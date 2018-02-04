@@ -49,16 +49,18 @@ Contents:
 	if(alert("Are you sure you want to send in a space ninja?",,"Yes","No")=="No")
 		return
 
-	var/client/C = input("Pick character to spawn as the Space Ninja", "Key", "") as null|anything in clients
-	if(!C)
-		return
+	if(alert("Do you wish to manually pick the ninja?",,"Yes","No")=="Yes")
+		var/client/C = input("Pick character to spawn as the Space Ninja", "Key", "") as null|anything in clients
+		if(!C)
+			return
+		var/datum/round_event/ghost_role/ninja/E = new(FALSE)
+		E.priority_candidates += C
+		E.processing = TRUE
+		message_admins("<span class='notice'>[key_name_admin(key)] has spawned [key_name_admin(C.key)] as a Space Ninja.</span>")
+	else
+		new /datum/round_event/ghost_role/ninja
+		message_admins("<span class='notice'>[key_name_admin(key)] has spawned a Space Ninja.</span>")
 
-	// passing FALSE means the event doesn't start immediately
-	var/datum/round_event/ghost_role/ninja/E = new(FALSE)
-	E.priority_candidates += C
-	E.processing = TRUE
-
-	message_admins("<span class='notice'>[key_name_admin(key)] has spawned [key_name_admin(C.key)] as a Space Ninja.</span>")
 	log_admin("[key] used Spawn Space Ninja.")
 
 	return
