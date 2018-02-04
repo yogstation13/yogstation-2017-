@@ -1,5 +1,0 @@
-author: "ThatLing"
-delete-after: true 
-changes: 
-  - bugfix: "All items will now have an attack message."
-  - bugfix: "You can now light someone else's cigarette using a lighter."
