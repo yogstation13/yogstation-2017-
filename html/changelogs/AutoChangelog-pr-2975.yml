@@ -1,4 +1,0 @@
-author: "ThatLing"
-delete-after: true 
-changes: 
-  - bugfix: "Pressing cancel while you are forging an agent ID no longer turns your name blank."

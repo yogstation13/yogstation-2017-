@@ -1,6 +1,0 @@
-author: "MacHac"
-delete-after: true 
-changes: 
-  - bugfix: "Apprentice Contracts and Slaughter Demon vials will now be refunded for their full value.  The SWF apologizes for the pricing mixup."
-  - tweak: "The Space Wizard Federation has announced a new 'try-before-you-buy' program for magical artifacts.  All wizards may now test out magical items in their ships, and return unwanted goods for a full refund."
-  - rscadd: "A new edition of spellbooks has been released to wizards across the galaxy, allowing users to more clearly see the improvement offered by spell upgrades."
