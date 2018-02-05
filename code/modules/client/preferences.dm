@@ -609,10 +609,7 @@ var/list/preferences_datums = list()
 		HTML += "</a></td></tr>"
 
 	for(var/i = 1, i < (limit - index), i += 1) // Finish the column so it is even
-		if(lastJob.selection_color)
-			HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
-		else
-			HTML += "<tr bgcolor='blue'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
+		HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
 
 	HTML += "</td'></tr></table>"
 
