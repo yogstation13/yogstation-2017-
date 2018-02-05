@@ -1617,4 +1617,62 @@ SYNDICATE BLACK OPS
 		H.pass_flags &= ~PASSTABLE
 		H.CloseWings()
 
+
+/datum/species/vox
+	name = "Vox"
+	id = "vox"
+	sexes = 0
+	say_mod = "caws"
+
+	uniform_icons 		= 'icons/mob/vox/uniform.dmi'
+	gloves_icons 		= 'icons/mob/vox/hands.dmi'
+	glasses_icons 		= 'icons/mob/vox/eyes.dmi'
+	shoes_icons 		= 'icons/mob/vox/feet.dmi'
+	back_icons			= 'icons/mob/vox/back.dmi'
+	head_icons 			= 'icons/mob/vox/head.dmi'
+	wear_suit_icons 	= 'icons/mob/vox/suit.dmi'
+	wear_mask_icons 	= 'icons/mob/vox/mask.dmi'
+
+	// Can't be stung by a ling and doesn't need need eat
+	specflags = list(NOTRANSSTING, NOHUNGER)
+	safe_oxygen_min = 0
+	safe_oxygen_max = 0.05
+	safe_nitrogen_min = 16
+
+	dangerous_existence = 1
+	blacklisted = 1
+
+	brutemod = 1.2
+	hazard_low_pressure = 0
+	lowpressure_mod = 0
+
+	low_temp_level_1 = 80
+	low_temp_level_2 = 50
+	low_temp_level_3 = 0
+
+/datum/species/vox/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
+	if(chem.id == "oxygen")
+		H.adjustToxLoss(9 * REAGENTS_EFFECT_MULTIPLIER, 0, DAMAGE_CHEMICAL)
+		H.reagents.remove_reagent(chem.id, REAGENTS_METABOLISM * H.metabolism_efficiency)
+		return 1
+
+/datum/species/vox/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+
+	C.languages_understood |= VOX
+	C.disabilities |= NOCLONE
+
+/datum/species/vox/on_species_loss(mob/living/carbon/C, datum/species/old_species)
+	..()
+
+	C.languages_understood &= ~VOX
+	C.disabilities &= ~NOCLONE
+
+/datum/species/vox/handle_inherent_channels(mob/living/carbon/human/H, message, message_mode)
+	if(message_mode == MODE_VOXIAN)
+		H.say(message, , list("voxian"), VOX)
+		return 1
+	return ..()
+
+
 #undef STATUS_MESSAGE_COOLDOWN

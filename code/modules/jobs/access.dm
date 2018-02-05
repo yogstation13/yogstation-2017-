@@ -86,6 +86,7 @@
 	//The Syndicate
 /var/const/access_syndicate = 150//General Syndicate Access
 /var/const/access_syndicate_leader = 151//Nuke Op Leader Access
+/var/const/access_vox = 152//Vox Access
 
 /obj/var/list/req_access = null
 /obj/var/req_access_txt = "0"

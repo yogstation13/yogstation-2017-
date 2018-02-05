@@ -63,6 +63,12 @@
 	origin_tech = "bluespace=4;magnets=4;syndicate=5"
 	prox_check = FALSE
 
+/obj/item/weapon/card/emag/vox
+	// Hello, I am not very good at flavourtext. Can someone change this? Thanks.
+	name = "cryptographic inflator"
+	desc = "It's a card with some exposed circuitry. It seems to bribe the NT door controllers."
+	icon_state = "emag_vox"
+
 /obj/item/weapon/card/emag/attack()
 	return
 
@@ -159,6 +165,10 @@ update_label("John Doe", "Clowny")
 	access = list(access_maint_tunnels, access_syndicate)
 	origin_tech = "syndicate=1"
 	var/restricted = TRUE
+
+/obj/item/weapon/card/id/syndicate/vox
+	icon_state = "id_trader"
+	access = list(access_maint_tunnels, access_vox, access_external_airlocks)
 
 /obj/item/weapon/card/id/syndicate/New()
 	..()

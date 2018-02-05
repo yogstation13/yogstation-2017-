@@ -32,10 +32,10 @@
 #define DAMAGE_LAYER			20		//damage indicators (cuts and burns)
 #define UNIFORM_LAYER			19
 #define ID_LAYER				18
-#define SHOES_LAYER				17
-#define GLOVES_LAYER			16
-#define EARS_LAYER				15
-#define SUIT_LAYER				14
+#define GLOVES_LAYER			17
+#define EARS_LAYER				16
+#define SUIT_LAYER				15
+#define SHOES_LAYER				14
 #define GLASSES_LAYER			13
 #define BELT_LAYER				12		//Possible make this an overlay of somethign required to wear a belt?
 #define SUIT_STORE_LAYER		11

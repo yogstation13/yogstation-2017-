@@ -176,6 +176,11 @@ var/list/teleportlocs = list()
 /area/shuttle/assault_pod
 	name = "Steel Rain"
 
+/area/shuttle/vox_shuttle
+	name = "Vox Skipjack"
+	sound_env = LARGE_ENCLOSED
+	ambientsounds = list('sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg')
+
 /area/shuttle/abandoned
 	name = "Abandoned Ship"
 	sound_env = LARGE_ENCLOSED

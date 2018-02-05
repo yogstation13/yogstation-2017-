@@ -632,3 +632,22 @@
 	
 /obj/item/clothing/under/cluwne/Destroy(force)
 	return QDEL_HINT_LETMELIVE
+
+
+/obj/item/clothing/under/vox
+	has_sensor = 0
+	can_adjust = 0
+	species_restricted = null
+	species_fit = list(VOX_SHAPED)
+
+/obj/item/clothing/under/vox/vox_casual
+	name = "alien clothing"
+	desc = "This doesn't look very comfortable."
+	icon_state = "vox-casual-1"
+	item_state = "vox-casual-1"
+
+/obj/item/clothing/under/vox/vox_robes
+	name = "alien robes"
+	desc = "Weird and flowing!"
+	icon_state = "vox-casual-2"
+	item_state = "vox-casual-2"

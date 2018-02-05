@@ -179,13 +179,19 @@ There are several things that need to be remembered:
 
 		var/image/standing
 
+		var/icon_file = 'icons/mob/uniform.dmi'
+		var/datum/species/S = dna.species
+		if(S.name in U.species_fit) //Allows clothes to display differently for multiple species
+			if(S.uniform_icons)
+				icon_file = S.uniform_icons
+
 		if(dna && dna.species.sexes)
 			var/G = (gender == FEMALE) ? "f" : "m"
 			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
-				standing = U.build_worn_icon(state = "[t_color]_s", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE, femaleuniform = U.fitted)
+				standing = U.build_worn_icon(state = "[t_color]_s", default_layer = UNIFORM_LAYER, default_icon_file = icon_file, isinhands = FALSE, femaleuniform = U.fitted)
 
 		if(!standing)
-			standing = U.build_worn_icon(state = "[t_color]_s", default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/uniform.dmi', isinhands = FALSE)
+			standing = U.build_worn_icon(state = "[t_color]_s", default_layer = UNIFORM_LAYER, default_icon_file = icon_file, isinhands = FALSE)
 
 		overlays_standing[UNIFORM_LAYER]	= standing
 
@@ -236,8 +242,13 @@ There are several things that need to be remembered:
 		if(!t_state)
 			t_state = gloves.icon_state
 
-		var/image/standing = gloves.build_worn_icon(state = t_state, default_layer = GLOVES_LAYER, default_icon_file = 'icons/mob/hands.dmi')
+		var/icon_file = 'icons/mob/hands.dmi'
+		var/datum/species/S = dna.species
+		if(S.name in gloves.species_fit) //Allows clothes to display differently for multiple species
+			if(S.gloves_icons)
+				icon_file = S.gloves_icons
 
+		var/image/standing = gloves.build_worn_icon(state = t_state, default_layer = GLOVES_LAYER, default_icon_file = icon_file)
 		overlays_standing[GLOVES_LAYER]	= standing
 
 	else
@@ -265,8 +276,13 @@ There are several things that need to be remembered:
 			client.screen += glasses				//Either way, add the item to the HUD
 
 		if(!(head && (head.flags_inv & HIDEEYES)) && !(wear_mask && (wear_mask.flags_inv & HIDEEYES)))
+			var/icon_file = 'icons/mob/eyes.dmi'
+			var/datum/species/S = dna.species
+			if(S.name in glasses.species_fit) //Allows clothes to display differently for multiple species
+				if(S.glasses_icons)
+					icon_file = S.glasses_icons
 
-			var/image/standing = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = 'icons/mob/eyes.dmi')
+			var/image/standing = glasses.build_worn_icon(state = glasses.icon_state, default_layer = GLASSES_LAYER, default_icon_file = icon_file)
 			overlays_standing[GLASSES_LAYER] = standing
 
 	apply_overlay(GLASSES_LAYER)
@@ -288,7 +304,13 @@ There are several things that need to be remembered:
 				ears.screen_loc = ui_ears			//...draw the item in the inventory screen
 			client.screen += ears					//Either way, add the item to the HUD
 
-		var/image/standing = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = 'icons/mob/ears.dmi')
+		var/icon_file = 'icons/mob/ears.dmi'
+		var/datum/species/S = dna.species
+		if(S.name in ears.species_fit) //Allows clothes to display differently for multiple species
+			if(S.ears_icons)
+				icon_file = S.ears_icons
+
+		var/image/standing = ears.build_worn_icon(state = ears.icon_state, default_layer = EARS_LAYER, default_icon_file = icon_file)
 		overlays_standing[EARS_LAYER] = standing
 
 	apply_overlay(EARS_LAYER)
@@ -310,7 +332,13 @@ There are several things that need to be remembered:
 				shoes.screen_loc = ui_shoes			//...draw the item in the inventory screen
 			client.screen += shoes					//Either way, add the item to the HUD
 
-		var/image/standing = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = 'icons/mob/feet.dmi')
+		var/icon_file = 'icons/mob/feet.dmi'
+		var/datum/species/S = dna.species
+		if(S.name in shoes.species_fit) //Allows clothes to display differently for multiple species
+			if(S.shoes_icons)
+				icon_file = S.shoes_icons
+
+		var/image/standing = shoes.build_worn_icon(state = shoes.icon_state, default_layer = SHOES_LAYER, default_icon_file = icon_file)
 		overlays_standing[SHOES_LAYER]	= standing
 
 	apply_overlay(SHOES_LAYER)
@@ -365,7 +393,13 @@ There are several things that need to be remembered:
 		if(!t_state)
 			t_state = belt.icon_state
 
-		var/image/standing = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER, default_icon_file = 'icons/mob/belt.dmi')
+		var/icon_file = 'icons/mob/belt.dmi'
+		var/datum/species/S = dna.species
+		if(S.name in belt.species_fit) //Allows clothes to display differently for multiple species
+			if(S.belt_icons)
+				icon_file = S.belt_icons
+
+		var/image/standing = belt.build_worn_icon(state = t_state, default_layer = BELT_LAYER, default_icon_file = icon_file)
 		overlays_standing[BELT_LAYER] = standing
 
 
@@ -386,7 +420,13 @@ There are several things that need to be remembered:
 				wear_suit.screen_loc = ui_oclothing	//TODO	//...draw the item in the inventory screen
 			client.screen += wear_suit						//Either way, add the item to the HUD
 
-		var/image/standing = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = 'icons/mob/suit.dmi')
+		var/icon_file = 'icons/mob/suit.dmi'
+		var/datum/species/S = dna.species
+		if(S.name in wear_suit.species_fit) //Allows clothes to display differently for multiple species
+			if(S.wear_suit_icons)
+				icon_file = S.wear_suit_icons
+
+		var/image/standing = wear_suit.build_worn_icon(state = wear_suit.icon_state, default_layer = SUIT_LAYER, default_icon_file = icon_file)
 		overlays_standing[SUIT_LAYER]	= standing
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))

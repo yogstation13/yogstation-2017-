@@ -132,3 +132,6 @@
 
 #define TINT_DARKENED 2			//Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3			//Threshold of tint level to obscure vision fully
+
+
+#define VOX_SHAPED "Vox"

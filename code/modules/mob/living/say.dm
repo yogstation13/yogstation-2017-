@@ -19,6 +19,7 @@ var/list/department_radio_keys = list(
 	  ":y" = "Centcom",		"#y" = "Centcom",		".y" = "Centcom",
 	  ":p" = "pheromones",	"#p" = "pheromones",	".p" = "pheromones",
 	  ":d" = "spokenbinary","#d" = "spokenbinary",	".d" = "spokenbinary",
+	  ":x" = "voxian",		"#x" = "voxian",		".x" = "voxian",
 
 	  ":R" = "right hand",	"#R" = "right hand",	".R" = "right hand",
 	  ":L" = "left hand",	"#L" = "left hand",		".L" = "left hand",
@@ -40,6 +41,7 @@ var/list/department_radio_keys = list(
 	  ":Y" = "Centcom",		"#Y" = "Centcom",		".Y" = "Centcom",
 	  ":P" = "pheromones",	"#P" = "pheromones",	".P" = "pheromones",
 	  ":D" = "spokenbinary","#D" = "spokenbinary",	".D" = "spokenbinary",
+	  ":X" = "voxian",		"#X" = "voxian",		".X" = "voxian",
 
 	  //kinda localization -- rastaf0
 	  //same keys as above, but on russian keyboard layout. This file uses cp1251 as encoding.

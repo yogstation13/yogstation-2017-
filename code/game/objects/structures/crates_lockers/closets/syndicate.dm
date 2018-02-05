@@ -111,5 +111,74 @@
 		for(var/res in resources)
 			var/obj/item/stack/R = new res(src)
 			R.amount = R.max_amount
-
 	return
+
+
+
+/obj/structure/closet/syndicate/vox
+	desc = "A locker containing vox gear"
+
+/obj/structure/closet/syndicate/vox/New()
+	..()
+
+	new /obj/item/device/radio/headset/raider(src)
+	new /obj/item/weapon/storage/backpack(src)
+	new /obj/item/weapon/tank/internals/nitrogen(src)
+	new /obj/item/clothing/mask/breath/vox(src)
+
+
+/obj/structure/closet/syndicate/vox/raider
+	desc = "A locker containing vox gear. This one looks like it contains extra gear for raiders."
+
+/obj/structure/closet/syndicate/vox/raider/New()
+	..()
+
+	new /obj/item/device/chameleon(src)
+	new /obj/item/stack/rods(src, 25)
+	new /obj/item/clothing/glasses/thermal/monocle(src)
+
+
+/obj/structure/closet/syndicate/vox/engineer
+	desc = "A locker containing vox gear. This one looks like it contains extra gear for engineers."
+
+
+/obj/structure/closet/syndicate/vox/engineer/New()
+	..()
+
+	new /obj/item/weapon/storage/belt/utility/full(src)
+	new /obj/item/clothing/glasses/meson/engine(src)
+	new /obj/item/weapon/rcd_ammo/large(src)
+	new /obj/item/weapon/storage/box/metalfoam(src)
+	new /obj/item/stack/sheet/plasteel(src, 50)
+	new /obj/item/stack/sheet/metal(src, 50)
+	new /obj/item/stack/sheet/glass(src, 50)
+
+
+/obj/structure/closet/syndicate/vox/saboteur
+	desc = "A locker containing vox gear. This one looks like it contains extra gear for saboteurs."
+
+
+/obj/structure/closet/syndicate/vox/saboteur/New()
+	..()
+
+	new /obj/item/weapon/storage/belt/utility/full(src)
+	new /obj/item/weapon/card/emag/vox(src)
+
+
+/obj/structure/closet/syndicate/vox/medic
+	desc = "A locker containing vox gear. This one looks like it contains extra gear for medics."
+
+
+/obj/structure/closet/syndicate/vox/medic/New()
+	..()
+
+	new /obj/item/weapon/gun/dartgun/vox/medical(src)
+	new /obj/item/weapon/storage/belt/utility/full(src)
+	new /obj/item/weapon/dart_cartridge(src)
+	new /obj/item/weapon/dart_cartridge(src)
+	new /obj/item/weapon/dart_cartridge(src)
+	new /obj/item/weapon/storage/firstaid/o2(src)
+	new /obj/item/weapon/storage/firstaid/toxin(src)
+	new /obj/item/weapon/storage/firstaid/fire(src)
+	new /obj/item/weapon/storage/firstaid/brute(src)
+	new /obj/item/weapon/storage/firstaid/regular(src)

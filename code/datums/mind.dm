@@ -206,7 +206,15 @@
 	ticker.mode.update_hog_icons_removed(src, "red")
 	ticker.mode.update_hog_icons_removed(src, "blue")
 
+/datum/mind/proc/remove_voxraider()
+	if(src in ticker.mode.raiders)
+		ticker.mode.raiders -= src
+		ticker.mode.update_synd_icons_removed(src)
+		current.set_species(/datum/species/human)
 
+	special_role = null
+	remove_objectives()
+	remove_antag_equip()
 
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
@@ -227,8 +235,10 @@
 	remove_cultist()
 	remove_rev()
 	remove_gang()
+	remove_voxraider()
 	ticker.mode.update_changeling_icons_removed(src)
 	ticker.mode.update_traitor_icons_removed(src)
+	ticker.mode.update_synd_icons_removed(src)
 	ticker.mode.update_wiz_icons_removed(src)
 	ticker.mode.update_cult_icons_removed(src)
 	ticker.mode.update_rev_icons_removed(src)
@@ -660,6 +670,23 @@
 	else
 		text += "|Disabled in Prefs"
 	sections["devil"] = text
+
+	/** vox raider ***/
+	text = "vox raider"
+	if(ticker.mode.config_tag == "voxheist")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(src in ticker.mode.raiders)
+		text += "<b>RAIDER</b>|<a href='?src=\ref[src];vox=clear'>human</a>"
+		text += "<br><a href='?src=\ref[src];vox=shuttle'>shuttle</a>"
+	else
+		text += "<a href='?src=\ref[src];vox=vox'>raider</a>|<b>HUMAN</b>"
+
+	if(current && current.client && (ROLE_VOX in current.client.prefs.be_special))
+		text += "|Enabled in Prefs"
+	else
+		text += "|Disabled in Prefs"
+	sections["vox"] = text
 
 
 	/** SILICON ***/
@@ -1451,6 +1478,35 @@
 				message_admins("[key_name_admin(usr)] has cyberman'ed [current].")
 				log_admin("[key_name(usr)] has cyberman'ed [current].")
 
+	else if(href_list["vox"])
+		switch(href_list["vox"])
+			if("clear")
+				if(src in ticker.mode.raiders)
+					remove_voxraider()
+					to_chat(current, "<span class='userdanger'>You have been banished by the Shoal. Your feathers start to shed and you start to gain a human form.</span>")
+
+					message_admins("[key_name_admin(usr)] has de-vox'ed [current].")
+					log_admin("[key_name(usr)] has de-vox'ed [current].")
+
+			if("vox")
+				if(!(src in ticker.mode.raiders))
+					ticker.mode.raiders += src
+					ticker.mode.update_synd_icons_added(src)
+					ticker.mode.equip_raider(current)
+					special_role = "Vox Raider"
+					assigned_role = "Vox Raider"
+
+					to_chat(current, "<span class='notice'>You notice a peculiar voice calling out your name and start to transform. You now work for the Shoal.</span>")
+					if(!ticker.mode.raider_objectives.len)
+						ticker.mode.forge_vox_objectives()
+					objectives = ticker.mode.raider_objectives
+					ticker.mode.greet_raider(current)
+					message_admins("[key_name_admin(usr)] has turned [current] into a vox raider.")
+					log_admin("[key_name(usr)] has turned [current] into a vox raider.")
+
+			if("shuttle")
+				current.loc = get_turf(locate("landmark*Vox-Spawn"))
+
 	else if (href_list["common"])
 		switch(href_list["common"])
 			if("undress")
@@ -1799,6 +1855,25 @@
 	ticker.mode.update_hog_icons_added(src, colour)
 //	ticker.mode.greet_hog_follower(src,colour)
 	return 1
+
+/datum/mind/proc/make_Raider(turf/spawnloc)
+	if(quiet_round)
+		return
+
+	if(!(src in ticker.mode.raiders))
+		ticker.mode.raiders += src
+		ticker.mode.update_synd_icons_added(src)
+		ticker.mode.equip_raider(current)
+		special_role = "Vox Raider"
+		assigned_role = "Vox Raider"
+
+		to_chat(current, "<span class='notice'>You notice a peculiar voice calling out your name and start to transform. You now work for the Shoal.</span>")
+		if(!ticker.mode.raider_objectives.len)
+			ticker.mode.forge_vox_objectives()
+
+		objectives = ticker.mode.raider_objectives
+		ticker.mode.greet_raider(current)
+		current.loc = spawnloc
 
 
 /datum/mind/proc/AddSpell(obj/effect/proc_holder/spell/S)

@@ -16,6 +16,7 @@ var/list/golem_names = file2list("config/names/golem.txt")
 var/list/first_m_plant_names = file2list("config/names/first_m_plant.txt")
 var/list/first_f_plant_names = file2list("config/names/first_f_plant.txt")
 var/list/last_plant_names = file2list("config/names/last_plant.txt")
+var/list/vox_name_syllables = file2list("config/names/vox.txt")
 
 var/list/verbs = file2list("config/names/verbs.txt")
 var/list/adjectives = file2list("config/names/adjectives.txt")

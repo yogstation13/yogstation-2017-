@@ -24,6 +24,7 @@
 		<a href='?src=\ref[src];makeAntag=7'>Make Nuke Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=13'>Make Centcom Response Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=14'>Make Abductor Team (Requires Ghosts)</a><br>
+		<a href='?src=\ref[src];makeAntag=19'>Make Vox Raider Team (Requires Ghosts)</a><br>
 		<a href='?src=\ref[src];makeAntag=15'>Make Revenant (Requires Ghost)</a><br>
 		"}
 
@@ -542,3 +543,48 @@
 		candidates.Remove(H)
 		return 1
 	return 0
+
+/datum/admins/proc/makeVoxRaiders()
+	var/datum/game_mode/voxheist/temp = new
+	var/list/mob/dead/observer/candidates = pollCandidates("Do you wish to be considered for a Vox Raider team", "voxraider", temp)
+	var/list/mob/dead/observer/chosen = list()
+	var/mob/dead/observer/ghost = null
+
+	if(candidates.len)
+		var/numraiders = 6
+		var/raidercount = 0
+
+		for(var/i = 0, i < numraiders,i++)
+			shuffle(candidates) //More shuffles means more randoms
+			for(var/mob/j in candidates)
+				if(!j || !j.client)
+					candidates.Remove(j)
+					continue
+
+				ghost = j
+				candidates.Remove(ghost)
+				chosen += ghost
+				raidercount++
+				break
+
+		//Making sure we have atleast 4 vox raiders, because less than that is kinda bad
+		if(raidercount < 4)
+			return 0
+
+		var/spawnpos = 1
+		var/list/turf/raider_spawn = list()
+		for(var/obj/effect/landmark/A in landmarks_list)
+			if(A.name == "Vox-Spawn")
+				raider_spawn += get_turf(A)
+
+		for(var/mob/c in chosen)
+			if(spawnpos > raider_spawn.len)
+				spawnpos = 1 //Ran out of spawns. Let's loop back to the first position
+
+			var/mob/living/carbon/human/new_character = makeBody(c)
+			new_character.mind.make_Raider(raider_spawn[spawnpos])
+			spawnpos++
+
+		return 1
+	else
+		return 0

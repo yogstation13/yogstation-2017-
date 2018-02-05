@@ -65,3 +65,10 @@
 	icon_state = "cmagboots0"
 	magboot_state = "cmagboots"
 	slowdown_active = 1
+
+/obj/item/clothing/shoes/magboots/vox
+	name = "vox boots"
+	desc = "A pair of heavy, jagged armored foot pieces. They seem suitable for a velociraptor."
+
+	species_restricted = list(VOX_SHAPED)
+	species_fit = list(VOX_SHAPED)

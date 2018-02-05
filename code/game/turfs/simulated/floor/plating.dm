@@ -347,3 +347,6 @@
 	icon_state = "warnplatecorner"
 /turf/open/floor/plating/airless/warnplate/corner
 	icon_state = "warnplatecorner"
+
+/turf/open/floor/plating/vox
+	initial_gas_mix = "n2=100;TEMP=293.15"

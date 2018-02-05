@@ -145,6 +145,13 @@
 				else
 					message_admins("[key_name_admin(usr)] tried to start a clockwork cult. Unfortunately, there were no candidates available.")
 					log_admin("[key_name(usr)] failed to start a clockwork cult.")
+			if("19")
+				if(src.makeVoxRaiders())
+					message_admins("[key_name(usr)] created a vox raider team.")
+					log_admin("[key_name(usr)] created a vox raider team.")
+				else
+					message_admins("[key_name_admin(usr)] tried to create a vox raider team. Unfortunately, there were no candidates available.")
+					log_admin("[key_name(usr)] failed to create a vox raider team.")
 
 	else if(href_list["forceevent"])
 		if(!check_rights(R_FUN))
@@ -922,11 +929,21 @@
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=abductor;jobban4=\ref[M]'>[replacetext("Abductor", " ", "&nbsp")]</a></td>"
 
+		//Vox Raider
+		if(jobban_isbanned(M, "vox Raider") || isbanned_dept)
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=vox Raider;jobban4=\ref[M]'><font color=red>[replacetext("Vox Raider", " ", "&nbsp")]</font></a></td>"
+		else
+			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=vox Raider;jobban4=\ref[M]'>[replacetext("Vox Raider", " ", "&nbsp")]</a></td>"
+
 		//Alien
 		if(jobban_isbanned(M, "alien candidate") || isbanned_dept)
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'><font color=red>[replacetext("Alien", " ", "&nbsp")]</font></a></td>"
 		else
 			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=alien candidate;jobban4=\ref[M]'>[replacetext("Alien", " ", "&nbsp")]</a></td>"
+
+		// Uncomment this if you are adding more antag jobbans
+		// jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
+
 
 		//Misc (Black)
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"

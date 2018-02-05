@@ -21,6 +21,8 @@
 	storage_slots = 21
 	burn_state = FLAMMABLE
 	burntime = 20
+	
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user, params)
 	if(!silent)

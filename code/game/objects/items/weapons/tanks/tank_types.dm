@@ -5,6 +5,8 @@
  *		Air
  *		Plasma
  *		Emergency Oxygen
+ *		Emergency Nitrogen
+ *		Nitrogen
  */
 
 /*
@@ -182,3 +184,38 @@
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_engi"
 	volume = 10
+
+
+/*
+ * Emergency Nitrogen
+ */
+/obj/item/weapon/tank/internals/emergency_nitrogen
+	name = "emergency nitrogen tank"
+	desc = "Used for emergencies. Not useful unless you only breathe nitrogen."
+	icon_state = "emergency_nitrogen"
+	flags = CONDUCT
+	slot_flags = SLOT_BELT
+	w_class = 2
+	force = 4
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+	volume = 3
+
+/obj/item/weapon/tank/internals/emergency_nitrogen/New()
+	..()
+	air_contents.assert_gas("n2")
+	air_contents.gases["n2"][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+
+/*
+ * Nitrogen
+ */
+/obj/item/weapon/tank/internals/nitrogen
+	name = "nitrogen tank"
+	desc = "A tank of nitrogen."
+	icon_state = "oxygen_fr"
+	force = 10
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+
+/obj/item/weapon/tank/internals/nitrogen/New()
+	..()
+	air_contents.assert_gas("n2")
+	air_contents.gases["n2"][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)

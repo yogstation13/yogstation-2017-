@@ -321,6 +321,12 @@
 /turf/open/floor/plasteel/shuttle/purple
 	icon_state = "shuttlefloor5"
 
+/turf/open/floor/plasteel/shuttle/yellow/vox
+	initial_gas_mix = "n2=100;TEMP=293.15"
+
+/turf/open/floor/plasteel/shuttle/white/vox
+	initial_gas_mix = "n2=100;TEMP=293.15"
+
 
 /turf/open/floor/plasteel/asteroid
 	icon_state = "asteroidfloor"

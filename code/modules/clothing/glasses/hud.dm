@@ -33,6 +33,9 @@
 	icon_state = "healthhud"
 	origin_tech = "magnets=3;biotech=2"
 	hud_type = DATA_HUD_MEDICAL_ADVANCED
+	
+	species_restricted = null
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/glasses/hud/health/optical
 	name = "Optical Health Scanner HUD"
@@ -56,6 +59,9 @@
 	icon_state = "diagnostichud"
 	origin_tech = "magnets=2;engineering=2"
 	hud_type = DATA_HUD_DIAGNOSTIC
+	
+	species_restricted = null
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/glasses/hud/diagnostic/night
 	name = "Night Vision Diagnostic HUD"
@@ -77,6 +83,9 @@
 	origin_tech = "magnets=3;combat=2"
 	hud_type = DATA_HUD_SECURITY_ADVANCED
 	var/syndicate = FALSE
+	
+	species_restricted = null
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/glasses/hud/security/examine(mob/user)
 	. = ..()

@@ -68051,6 +68051,78 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zsl" = (
+/obj/docking_port/stationary{
+	dheight = 18;
+	dir = 2;
+	dwidth = 10;
+	height = 21;
+	id = "vox_n";
+	name = "north of station";
+	width = 20
+	},
+/turf/open/space,
+/area/space)
+"Zsm" = (
+/obj/docking_port/stationary{
+	dheight = 18;
+	dir = 2;
+	dwidth = 10;
+	height = 21;
+	id = "vox_ne";
+	name = "northeast of station";
+	width = 20
+	},
+/turf/open/space,
+/area/space)
+"Zsn" = (
+/obj/docking_port/stationary{
+	dheight = 18;
+	dir = 2;
+	dwidth = 10;
+	height = 21;
+	id = "vox_nw";
+	name = "northwest of station";
+	width = 20
+	},
+/turf/open/space,
+/area/space)
+"Zso" = (
+/obj/docking_port/stationary{
+	dheight = 18;
+	dir = 2;
+	dwidth = 10;
+	height = 21;
+	id = "vox_se";
+	name = "southeast of station";
+	width = 20
+	},
+/turf/open/space,
+/area/space)
+"Zsp" = (
+/obj/docking_port/stationary{
+	dheight = 18;
+	dir = 2;
+	dwidth = 10;
+	height = 21;
+	id = "vox_sw";
+	name = "southwest of station";
+	width = 20
+	},
+/turf/open/space,
+/area/space)
+"Zsq" = (
+/obj/docking_port/stationary{
+	dheight = 18;
+	dir = 2;
+	dwidth = 10;
+	height = 21;
+	id = "vox_s";
+	name = "south of station";
+	width = 20
+	},
+/turf/open/space,
+/area/space)
 "Zsr" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -75678,7 +75750,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Zsn
 aaa
 aaa
 aaa
@@ -80430,7 +80502,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Zsp
 aaa
 aaa
 aaa
@@ -102618,7 +102690,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Zsl
 aaa
 aaa
 aaa
@@ -104618,7 +104690,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Zsq
 aaa
 aaa
 aaa
@@ -123205,7 +123277,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Zsm
 aaa
 aaa
 aaa
@@ -129755,7 +129827,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+Zso
 aaa
 aaa
 aaa
