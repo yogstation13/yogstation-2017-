@@ -476,3 +476,7 @@ var/global/list/ghost_others_options = list(GHOST_OTHERS_SIMPLE, GHOST_OTHERS_DE
 #define OUTFIT_BROWSE_CHAMELEON /datum/outfit_browse/chameleon
 #define OUTFIT_BROWSE_CHANGELING null
 #define OUTFIT_BROWSE_ADMIN null
+
+#define TURF_DECAL_PAINT "paint"
+#define TURF_DECAL_DAMAGE "damage"
+#define TURF_DECAL_DIRT "dirt"
