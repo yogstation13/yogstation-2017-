@@ -78,7 +78,7 @@
 /obj/item/golfball/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/golfclub))
 		var/turf/throw_at = get_ranged_target_turf(src, get_dir(user, src), 3 )
-		throw_at_fast(throw_at, 3 , 2)
+		throw_at(throw_at, 3 , 2)
 		user.changeNext_move(CLICK_CD_RANGE*2)
 
 /obj/item/weapon/golfclub

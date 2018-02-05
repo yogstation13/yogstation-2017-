@@ -24,4 +24,4 @@
 		if(I)
 			I.Remove(src)
 			I.loc = get_turf(src)
-			I.throw_at_fast(get_edge_target_turf(src,pick(alldirs)),rand(1,3),5)
+			I.throw_at(get_edge_target_turf(src,pick(alldirs)),rand(1,3),5)

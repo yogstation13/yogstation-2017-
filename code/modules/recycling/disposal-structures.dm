@@ -275,7 +275,7 @@
 			for(var/atom/movable/AM in H)
 				AM.forceMove(src.loc)
 				AM.pipe_eject(direction)
-				AM.throw_at_fast(target, 10, 1)
+				AM.throw_at(target, 10, 1)
 
 	else	// no specified direction, so throw in random direction
 
@@ -285,7 +285,7 @@
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 				AM.forceMove(src.loc)
 				AM.pipe_eject(0)
-				AM.throw_at_fast(target, 5, 1)
+				AM.throw_at(target, 5, 1)
 	H.vent_gas(T)
 	qdel(H)
 	return
@@ -742,7 +742,7 @@
 		for(var/atom/movable/AM in H)
 			AM.forceMove(T)
 			AM.pipe_eject(dir)
-			AM.throw_at_fast(target, eject_range, 1)
+			AM.throw_at(target, eject_range, 1)
 
 		H.vent_gas(T)
 		qdel(H)

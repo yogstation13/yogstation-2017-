@@ -788,7 +788,7 @@ Sorry Giacom. Please don't be mad :(
 
 /mob/living/singularity_pull(S, current_size)
 	if(current_size >= STAGE_SIX)
-		throw_at_fast(S,14,3, spin=1)
+		throw_at(S,14,3, spin=1)
 	else
 		step_towards(src,S)
 
@@ -1008,7 +1008,7 @@ Sorry Giacom. Please don't be mad :(
 			return 1
 	return 0
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
 	stop_pulling()
 	. = ..()
 
@@ -1049,5 +1049,5 @@ Sorry Giacom. Please don't be mad :(
 	var/throw_range = rand(force*3, force*4)
 	var/turf/throw_at = get_ranged_target_turf(src, throw_dir, throw_range)
 	throw_speed = force
-	src.throw_at_fast(throw_at, throw_range, force)
+	src.throw_at(throw_at, throw_range, force)
 

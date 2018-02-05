@@ -259,7 +259,7 @@ var/list/jauntbeacons = list()	// only deployed beacons in here.
 	var/obj/effect/portal/wormhole/jaunt_tunnel/tunnel = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), J, lifespan=50)
 	tunnel.target = J
 	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1)
-	user.throw_at_fast(tunnel, 5, 1)
+	user.throw_at(tunnel, 5, 1)
 	new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(J), src, lifespan=3000) // 5 minutes
 
 /obj/machinery/jauntbeacon/mother/proc/togglecooldown(setting)

@@ -141,7 +141,9 @@
 	DestroySurroundings()
 	new/obj/effect/overlay/temp/dragon_swoop(T)
 	sleep(round(5 / scaling, 3))
-	throw_at(T, 7, 1, src, 0)
+	throw_at(T, get_dist(src, T), 1, src, 0, callback = CALLBACK(src, .charge_end))
+
+/mob/living/simple_animal/hostile/megafauna/bubblegum/proc/charge_end()
 	charging = 0
 
 
@@ -165,7 +167,7 @@
 			shake_camera(L, 4, 3)
 			shake_camera(src, 2, 3)
 			var/throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-			L.throw_at_fast(throwtarget)
+			L.throw_at(throwtarget)
 
 	charging = 0
 
