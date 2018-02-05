@@ -122,6 +122,11 @@ The box in your backpack has an oxygen tank and breath mask in it."
 	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. \
 The box in your backpack has an oxygen tank and gas mask in it."
 	icon_state = "tox_in_air"
+
+/obj/screen/alert/not_enough_n2
+	name = "Choking (No Nitrogen)"
+	desc = "You're not getting enough nitrogen. Find some good air before you pass out!"
+	icon_state = "not_enough_n2"
 //End gas alerts
 
 

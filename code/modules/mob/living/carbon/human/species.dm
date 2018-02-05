@@ -95,6 +95,7 @@
 	var/safe_co2_max = 10 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_min = 0
 	var/safe_toxins_max = 0.05
+	var/safe_nitrogen_min = 0
 	var/SA_para_min = 1 //Sleeping agent
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas.
@@ -125,6 +126,17 @@
 	var/lowpressure_mod = 1
 
 	var/cold_slowdown_factor = COLD_SLOWDOWN_FACTOR //the lower this is the slower you go in the cold
+
+	var/uniform_icons		= 'icons/mob/uniform.dmi'
+	var/gloves_icons		= 'icons/mob/hands.dmi'
+	var/glasses_icons		= 'icons/mob/eyes.dmi'
+	var/ears_icons			= 'icons/mob/ears.dmi'
+	var/shoes_icons			= 'icons/mob/feet.dmi'
+	var/back_icons			= 'icons/mob/back.dmi'
+	var/head_icons			= 'icons/mob/head.dmi'
+	var/belt_icons			= 'icons/mob/belt.dmi'
+	var/wear_suit_icons		= 'icons/mob/suit.dmi'
+	var/wear_mask_icons		= 'icons/mob/mask.dmi'
 
 	///////////
 	// PROCS //
@@ -1346,7 +1358,13 @@
 			H.adjustOxyLoss(HUMAN_CRIT_MAX_OXYLOSS)
 
 		H.failed_last_breath = 1
-		H.throw_alert("oxy", /obj/screen/alert/oxy)
+
+		if(safe_nitrogen_min > 0)
+			H.throw_alert("not_enough_n2", /obj/screen/alert/not_enough_n2)
+		else if(safe_toxins_min > 0)
+			H.throw_alert("not_enough_tox", /obj/screen/alert/not_enough_tox)
+		else
+			H.throw_alert("oxy", /obj/screen/alert/oxy)
 
 		return 0
 
@@ -1354,12 +1372,13 @@
 
 	var/list/breath_gases = breath.gases
 
-	breath.assert_gases("o2", "plasma", "co2", "n2o", "bz")
+	breath.assert_gases("o2", "plasma", "co2", "n2", "n2o", "bz")
 
 	//Partial pressures in our breath
 	var/O2_pp = breath.get_breath_partial_pressure(breath_gases["o2"][MOLES])
 	var/Toxins_pp = breath.get_breath_partial_pressure(breath_gases["plasma"][MOLES])
 	var/CO2_pp = breath.get_breath_partial_pressure(breath_gases["co2"][MOLES])
+	var/N2_pp = breath.get_breath_partial_pressure(breath_gases["n2"][MOLES])
 
 
 	//-- OXY --//
@@ -1368,8 +1387,11 @@
 	if(safe_oxygen_max)
 		if(O2_pp > safe_oxygen_max && !(NOBREATH in specflags))
 			var/ratio = (breath_gases["o2"][MOLES]/safe_oxygen_max) * 10
-			H.adjustOxyLoss(Clamp(ratio,oxy_breath_dam_min,oxy_breath_dam_max))
+			H.adjustOxyLoss(Clamp(ratio, oxy_breath_dam_min, oxy_breath_dam_max))
 			H.throw_alert("too_much_oxy", /obj/screen/alert/too_much_oxy)
+
+			if(H.reagents)
+				H.reagents.add_reagent("oxygen", Clamp(ratio, oxy_breath_dam_min, oxy_breath_dam_max))
 		else
 			H.clear_alert("too_much_oxy")
 
@@ -1457,6 +1479,24 @@
 	breath_gases["co2"][MOLES] += gas_breathed
 	gas_breathed = 0
 
+
+
+	//-- NITROGEN --//
+	//Too little nitrogen!
+	if(safe_nitrogen_min)
+		if(N2_pp < safe_nitrogen_min && !(NOBREATH in specflags))
+			gas_breathed = handle_too_little_breath(H, N2_pp, safe_nitrogen_min, breath_gases["n2"][MOLES])
+			H.throw_alert("not_enough_n2", /obj/screen/alert/not_enough_n2)
+		else
+			H.failed_last_breath = 0
+			H.adjustOxyLoss(-5)
+			gas_breathed = breath_gases["n2"][MOLES]
+			H.clear_alert("not_enough_n2")
+
+	//Exhale
+	breath_gases["n2"][MOLES] -= gas_breathed
+	breath_gases["co2"][MOLES] += gas_breathed
+	gas_breathed = 0
 
 	//-- TRACES --//
 

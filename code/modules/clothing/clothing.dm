@@ -21,6 +21,7 @@
 	var/canbetorn //can this particular item be torn down to be used for cloth?
 	var/scan_reagents = 0 //Can the wearer see reagents while it's equipped?
 	var/tearhealth = 100
+	var/list/species_restricted = list("exclude", VOX_SHAPED) //Only these species can wear this kit.
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
 	var/list/user_vars_to_edit = list() //VARNAME = VARVALUE eg: "name" = "butts"
@@ -53,6 +54,35 @@
 				user_vars_remembered[variable] = user.vars[variable]
 				user.vars[variable] = user_vars_to_edit[variable]
 
+/obj/item/clothing/mob_can_equip(mob/M, mob/equipper, slot, disable_warning = 0)
+	. = ..()
+	if (!.)
+		return
+
+	if(species_restricted && istype(M, /mob/living/carbon/human) && (slot != slot_l_store && slot != slot_r_store))
+		var/wearable = null
+		var/exclusive = null
+		var/mob/living/carbon/human/H = M
+
+		if("exclude" in species_restricted)
+			exclusive = 1
+
+		var/datum/species/base_species = H.dna.species
+		if(!base_species)
+			return
+
+		if(exclusive)
+			if(!species_restricted.Find(base_species.name))
+				wearable = 1
+		else
+			if(species_restricted.Find(base_species.name))
+				wearable = 1
+
+		if(!wearable) //But we are a species that CAN'T wear it
+			if(!disable_warning)
+				to_chat(M, "<span class='warning'>It doesn't like [src.name] fits on you.</span>") //Let us know
+
+			return 0
 
 
 //Ears: currently only used for headsets and earmuffs

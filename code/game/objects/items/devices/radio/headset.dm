@@ -73,6 +73,13 @@
 	visible_message("[src]'s purple symbols begin to change shape and light up.")
 	return
 
+/obj/item/device/radio/headset/raider
+	name = "trader headset"
+
+/obj/item/device/radio/headset/raider/New()
+	..()
+	make_syndie()
+
 /obj/item/device/radio/headset/binary
 	origin_tech = "syndicate=3"
 /obj/item/device/radio/headset/binary/New()

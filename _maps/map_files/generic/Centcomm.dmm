@@ -6888,12 +6888,524 @@
 	dir = 6
 	},
 /area/centcom/control)
+"VV" = (
+/obj/structure/closet/syndicate/vox/raider,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"VW" = (
+/obj/structure/closet/syndicate/vox/engineer,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"VX" = (
+/obj/structure/closet/syndicate/vox/saboteur,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"VY" = (
+/obj/structure/closet/syndicate/vox/medic,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"VZ" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wa" = (
+/obj/structure/table,
+/obj/item/weapon/storage/box/handcuffs,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wb" = (
+/obj/structure/closet/crate,
+/obj/item/stack/spacecash/c500,
+/obj/item/stack/spacecash/c100,
+/obj/item/stack/spacecash/c100,
+/obj/item/stack/spacecash/c10,
+/obj/item/stack/spacecash/c50,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wc" = (
+/obj/structure/closet,
+/obj/item/stack/spacecash/c50,
+/obj/item/stack/spacecash/c50,
+/obj/item/stack/spacecash/c20,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wd" = (
+/obj/item/weapon/paper/crumpled,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"We" = (
+/obj/machinery/vending/engivend{
+	req_access_txt = "0"
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wf" = (
+/obj/machinery/vending/tool,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wg" = (
+/obj/structure/closet,
+/obj/item/weapon/soap/syndie,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wh" = (
+/obj/machinery/door/airlock/hatch{
+	aiControlDisabled = 1;
+	name = "Weapon Storage";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wi" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/gun/advtaser{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/weapon/gun/energy/gun/advtaser,
+/obj/item/weapon/gun/energy/gun/advtaser{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wj" = (
+/obj/machinery/vending/snack{
+	dir = 3
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wk" = (
+/obj/structure/closet/crate,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wl" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/dartgun/vox/raider{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/weapon/gun/dartgun/vox/raider,
+/obj/item/weapon/gun/dartgun/vox/raider{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/weapon/dart_cartridge,
+/obj/item/weapon/dart_cartridge,
+/obj/item/weapon/dart_cartridge,
+/obj/item/weapon/dart_cartridge,
+/obj/item/weapon/dart_cartridge,
+/obj/item/weapon/dart_cartridge,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wm" = (
+/obj/effect/decal/cleanable/vomit,
+/obj/item/weapon/tank/internals/oxygen{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wn" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wo" = (
+/obj/structure/rack,
+/obj/item/weapon/gun/energy/ionrifle{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/weapon/gun/energy/ionrifle,
+/obj/item/weapon/gun/energy/ionrifle{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wp" = (
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/electrical{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/weapon/storage/toolbox/syndicate{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wq" = (
+/obj/structure/table,
+/obj/item/device/multitool,
+/obj/item/device/multitool,
+/obj/item/clothing/gloves/yellow/vox,
+/obj/item/clothing/gloves/yellow/vox,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wr" = (
+/obj/structure/table,
+/obj/item/weapon/c4{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/weapon/c4,
+/obj/item/weapon/c4{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Ws" = (
+/obj/structure/table,
+/obj/item/weapon/storage/backpack/industrial,
+/obj/item/weapon/storage/backpack/industrial,
+/obj/item/weapon/storage/backpack/industrial,
+/obj/item/weapon/tank/internals/nitrogen,
+/obj/item/weapon/tank/internals/nitrogen,
+/obj/item/clothing/mask/breath/vox,
+/obj/item/clothing/mask/breath/vox,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wt" = (
+/obj/docking_port/stationary/transit{
+	dheight = 15;
+	dir = 2;
+	height = 22;
+	id = "vox_shuttle_transit";
+	width = 20
+	},
+/turf/open/space/transit,
+/area/space)
+"Wu" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-wall3 (NORTHWEST)";
+	icon_state = "wall3";
+	dir = 9
+	},
+/area/shuttle/vox_shuttle)
+"Wv" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-wall3 (NORTHEAST)";
+	icon_state = "wall3";
+	dir = 5
+	},
+/area/shuttle/vox_shuttle)
+"Ww" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-wall3";
+	icon_state = "wall3";
+	dir = 2
+	},
+/area/shuttle/vox_shuttle)
+"Wx" = (
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/grille,
+/turf/open/floor/plating/vox,
+/area/shuttle/vox_shuttle)
+"Wy" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/vox,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"Wz" = (
+/obj/machinery/computer/shuttle/vox,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WA" = (
+/obj/machinery/computer/crew,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WB" = (
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WC" = (
+/obj/structure/chair/comfy/beige{
+	dir = 1;
+	icon_state = "comfychair"
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WD" = (
+/obj/structure/sign/securearea{
+	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'";
+	icon_state = "space";
+	layer = 4;
+	name = "EXTERNAL AIRLOCK";
+	pixel_x = 0
+	},
+/turf/closed/wall/shuttle{
+	tag = "icon-wall3";
+	icon_state = "wall3";
+	dir = 2
+	},
+/area/shuttle/vox_shuttle)
+"WE" = (
+/obj/machinery/door/airlock/hatch{
+	aiControlDisabled = 1;
+	req_access_txt = "152"
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WF" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WG" = (
+/obj/effect/landmark{
+	name = "Vox-Spawn"
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WH" = (
+/obj/structure/closet/emvoxcloset,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WI" = (
+/obj/machinery/telecomms/allinone,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WJ" = (
+/obj/structure/table,
+/obj/item/device/aicard,
+/obj/item/weapon/storage/box/syndie_kit/nuke,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WK" = (
+/obj/machinery/door/airlock/hatch{
+	aiControlDisabled = 1;
+	name = "Cockpit";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WL" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WM" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/sleeper/syndie{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"WN" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"WO" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/brute{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/firstaid/fire,
+/obj/item/weapon/storage/firstaid/o2{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"WP" = (
+/obj/structure/closet,
+/obj/item/stack/spacecash/c200,
+/obj/item/stack/spacecash/c10,
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WQ" = (
+/obj/machinery/door/window/brigdoor/northleft{
+	name = "Cloning and Surgery";
+	req_access_txt = "152"
+	},
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"WR" = (
+/obj/machinery/door/window/brigdoor/northright{
+	name = "Cloning and Surgery";
+	req_access_txt = "152"
+	},
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"WS" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/table,
+/obj/item/weapon/hemostat,
+/obj/item/weapon/retractor,
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"WT" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/table/optable,
+/obj/item/weapon/surgical_drapes,
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"WU" = (
+/obj/structure/window/reinforced{
+	dir = 1;
+	layer = 2.9
+	},
+/obj/structure/table,
+/obj/item/weapon/retractor,
+/obj/item/weapon/scalpel,
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"WV" = (
+/obj/structure/bed/roller,
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"WW" = (
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"WX" = (
+/obj/machinery/door/window/brigdoor/eastleft{
+	name = "Infirmary";
+	req_access_txt = "152"
+	},
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"WY" = (
+/obj/machinery/door/airlock/hatch{
+	aiControlDisabled = 1;
+	name = "Storage";
+	req_access_txt = "150"
+	},
+/turf/open/floor/plasteel/shuttle/yellow/vox,
+/area/shuttle/vox_shuttle)
+"WZ" = (
+/obj/structure/table,
+/obj/item/weapon/surgicaldrill,
+/obj/item/weapon/circular_saw,
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"Xa" = (
+/obj/machinery/sleeper/syndie{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"Xb" = (
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/weapon/storage/firstaid/toxin,
+/obj/item/weapon/storage/firstaid/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"Xc" = (
+/obj/item/xenos_claw,
+/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"Xd" = (
+/obj/machinery/computer/cloning,
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"Xe" = (
+/obj/machinery/clonepod,
+/turf/open/floor/plasteel/shuttle/white/vox,
+/area/shuttle/vox_shuttle)
+"Xf" = (
+/obj/structure/table,
+/obj/item/weapon/defibrillator/loaded,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor3"
+	},
+/area/shuttle/vox_shuttle)
+"Xg" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/vox_shuttle)
 "Xh" = (
 /turf/closed/indestructible/fakeglass{
 	icon_state = "fakewindows2";
 	dir = 1
 	},
 /area/centcom/control)
+"Xi" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-wall3 (SOUTHWEST)";
+	icon_state = "wall3";
+	dir = 10
+	},
+/area/shuttle/vox_shuttle)
+"Xj" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion_l"
+	},
+/turf/open/floor/plating,
+/area/shuttle/vox_shuttle)
+"Xk" = (
+/turf/closed/wall/shuttle{
+	dir = 4;
+	icon_state = "diagonalWall3"
+	},
+/area/shuttle/vox_shuttle)
+"Xl" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/docking_port/mobile{
+	dheight = 18;
+	dir = 2;
+	dwidth = 10;
+	height = 21;
+	id = "vox_shuttle";
+	name = "Vox Skipjack";
+	roundstart_move = null;
+	width = 20
+	},
+/turf/open/floor/plating,
+/area/shuttle/vox_shuttle)
+"Xm" = (
+/obj/docking_port/stationary{
+	dheight = 18;
+	dir = 2;
+	dwidth = 10;
+	height = 21;
+	id = "vox_away";
+	name = "vox home";
+	width = 20
+	},
+/turf/open/space,
+/area/space)
 "Xn" = (
 /obj/structure/sign/map/right,
 /turf/closed/indestructible/riveted,
@@ -7108,6 +7620,8 @@
 /obj/structure/table,
 /obj/item/blood_contract,
 /obj/item/weapon/gun/projectile/automatic/gyropistol,
+/obj/item/weapon/gun/dartgun/vox/raider,
+/obj/item/weapon/gun/dartgun/vox/medical,
 /turf/open/indestructible,
 /area/centcom/control)
 "XV" = (
@@ -7340,6 +7854,7 @@
 "YJ" = (
 /obj/structure/table,
 /obj/item/weapon/grenade/clusterbuster/syndieminibomb,
+/obj/item/weapon/gun/crossbow,
 /turf/open/indestructible,
 /area/centcom/control)
 "YK" = (
@@ -10298,7 +10813,7 @@ aa
 aa
 aa
 aa
-aa
+ab
 aa
 aa
 aa
@@ -10812,7 +11327,7 @@ aa
 aa
 aa
 aa
-aa
+Wt
 aa
 aa
 aa
@@ -11576,7 +12091,7 @@ aa
 aa
 aa
 aa
-aa
+ab
 aa
 aa
 aa
@@ -11742,16 +12257,6 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
 ab
 ab
 ab
@@ -11768,6 +12273,16 @@ ab
 ab
 ab
 ab
+Wu
+Ww
+Ww
+Ww
+Ww
+Wx
+Wx
+Wx
+Ww
+Xi
 ab
 ab
 ab
@@ -12014,17 +12529,17 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wu
+WD
+WH
+Wb
+Ww
+WL
+WM
+WV
+Xa
+Xg
+Xj
 ab
 ab
 ab
@@ -12272,16 +12787,16 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+WE
+WB
+WB
+WE
+WB
+WN
+WW
+WW
+Xg
+Xj
 ab
 ab
 ab
@@ -12528,21 +13043,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wv
+Ww
+Ww
+Ww
+Ww
+WB
+WO
+WX
+Xb
+Ww
+Ww
+Ww
+Ww
+Ww
+Xi
 ab
 ab
 ab
@@ -12789,17 +13304,17 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Ww
+WB
+WB
+WB
+WB
+Ww
+We
+WB
+WB
+Wm
+Ww
 ab
 ab
 ab
@@ -13042,21 +13557,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wu
+Ww
+Wx
+Wx
+Ww
+WB
+WB
+WB
+Wd
+Ww
+Wf
+WB
+WB
+Wn
+Ww
 ab
 ab
 ab
@@ -13298,23 +13813,23 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wu
+Ww
+WF
+WB
+WI
+Ww
+WE
+Ww
+Ww
+Ww
+Ww
+Ww
+WE
+Ww
+Ww
+Ww
+Xi
 ab
 ab
 ab
@@ -13553,26 +14068,26 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wu
+Ww
+Ww
+VZ
+WC
+WB
+WB
+Ww
+WB
+WP
+Ww
+VV
+VW
+VX
+WB
+WB
+WB
+Wp
+Ww
+Xi
 ab
 ab
 ab
@@ -13811,25 +14326,25 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wx
+Wy
+WC
+WG
+WG
+WG
+Ww
+WB
+WB
+Ww
+WB
+WB
+WB
+WB
+WB
+WB
+VZ
+Xg
+Xj
 ab
 ab
 ab
@@ -14068,26 +14583,26 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wx
+Wz
+WC
+WB
+WC
+WB
+WE
+WB
+WB
+WE
+WB
+WB
+WB
+WB
+WB
+WB
+Wq
+Xl
+Xj
+Xm
 ab
 ab
 ab
@@ -14325,25 +14840,25 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wx
+WA
+WC
+WG
+WG
+WG
+Ww
+WB
+WB
+Ww
+WL
+WB
+WB
+WB
+WB
+WB
+Wr
+Xg
+Xj
 ab
 ab
 ab
@@ -14581,26 +15096,26 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wv
+Ww
+Ww
+Wa
+WC
+WB
+WB
+Ww
+WB
+Wc
+Ww
+VV
+VW
+VY
+WB
+Wk
+WB
+Ws
+Ww
+Xk
 ab
 ab
 ab
@@ -14840,23 +15355,23 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wv
+Ww
+WF
+WB
+WJ
+Ww
+WE
+Ww
+Ww
+Ww
+Ww
+Ww
+WE
+Ww
+Ww
+Ww
+Xk
 ab
 ab
 ab
@@ -15098,21 +15613,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wv
+Ww
+Wx
+Wx
+Ww
+WB
+WQ
+WW
+Xc
+Ww
+WB
+WB
+WB
+WB
+Ww
 ab
 ab
 ab
@@ -15174,7 +15689,7 @@ aa
 aa
 aa
 aa
-aa
+ab
 aa
 aa
 aa
@@ -15359,17 +15874,17 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Ww
+WB
+WR
+WW
+WW
+Ww
+Wg
+Wi
+Wl
+Wo
+Ww
 ab
 ab
 ab
@@ -15612,21 +16127,21 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wu
+Ww
+Ww
+Ww
+Ww
+WB
+WS
+WW
+WW
+Ww
+Ww
+Ww
+Ww
+Ww
+Xk
 ab
 ab
 ab
@@ -15870,16 +16385,16 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+WE
+WB
+WB
+WE
+WB
+WT
+WW
+WW
+Xg
+Xj
 ab
 ab
 ab
@@ -16126,17 +16641,17 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wv
+WD
+WH
+WB
+Ww
+WB
+WU
+WZ
+Xf
+Xg
+Xj
 ab
 ab
 ab
@@ -16384,16 +16899,16 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+Wv
+Ww
+Ww
+Ww
+Ww
+Wx
+Wx
+Wx
+Ww
+Xk
 ab
 ab
 ab

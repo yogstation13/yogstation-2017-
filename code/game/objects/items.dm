@@ -51,6 +51,7 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	var/list/armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	var/armour_penetration = 0 //percentage of armour effectiveness to remove
 	var/obj/item/device/uplink/hidden_uplink = null
+	var/list/species_fit = null //This object has a different appearance when worn by these species
 	var/strip_delay = 40
 	var/put_on_delay = 20
 	var/breakouttime = 0

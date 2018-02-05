@@ -195,3 +195,13 @@
 	icon_state = initial(selected.icon_state)
 	item_state = initial(selected.item_state)
 	item_color = initial(selected.item_color)
+
+/obj/item/clothing/gloves/yellow/vox
+	desc = "These bizarre gauntlets seem to be fitted for... bird claws?"
+	name = "insulated gauntlets"
+
+	icon_state = "gloves-vox"
+	item_state = "gloves-vox"
+
+	species_restricted = list(VOX_SHAPED)
+	species_fit = list(VOX_SHAPED)

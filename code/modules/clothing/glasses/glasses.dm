@@ -19,6 +19,9 @@
 	darkness_view = 2
 	vision_flags = SEE_TURFS
 	invis_view = SEE_INVISIBLE_MINIMUM
+	
+	species_restricted = null
+	species_fit = list(VOX_SHAPED)
 
 /obj/item/clothing/glasses/meson/night
 	name = "Night Vision Optical Meson Scanner"

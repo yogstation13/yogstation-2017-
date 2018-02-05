@@ -14,6 +14,9 @@
 	visor_flags_cover = MASKCOVERSMOUTH
 	burn_state = FIRE_PROOF
 
+	species_restricted = null
+	species_fit = list(VOX_SHAPED)
+
 /obj/item/clothing/mask/breath/attack_self(mob/user)
 	adjustmask(user)
 
@@ -36,3 +39,11 @@
 	item_state = "m_mask"
 	permeability_coefficient = 0.01
 	put_on_delay = 10
+
+/obj/item/clothing/mask/breath/vox
+	desc = "A weirdly-shaped breath mask."
+	name = "vox breath mask"
+	icon_state = "voxmask"
+	item_state = "voxmask"
+	permeability_coefficient = 0.01
+	species_restricted = list(VOX_SHAPED)

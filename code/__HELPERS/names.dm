@@ -225,3 +225,12 @@ var/syndicate_code_response//Code response for traitors.
 			code_phrase += ", "
 
 	return code_phrase
+
+/proc/vox_name()
+	var/sounds = rand(3,8)
+	var/newname = ""
+
+	for(var/i in 1 to sounds)
+		newname += pick(vox_name_syllables)
+
+	return capitalize(newname)

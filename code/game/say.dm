@@ -109,6 +109,8 @@ var/list/freqtospan = list(
 		return "chitters."
 	else if(message_langs & SWARMER)
 		return "hums."
+	else if(message_langs & VOX)
+		return "shrieks."
 	else
 		return "makes a strange sound."
 
