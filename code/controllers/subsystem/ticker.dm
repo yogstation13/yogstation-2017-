@@ -127,6 +127,8 @@ var/datum/subsystem/ticker/ticker
 				webhook_send_roundstatus("ingame")
 
 		if(GAME_STATE_PLAYING)
+			if(config.roundlength && world.time >= config.roundlength * 600 && SSshuttle.emergency.mode == SHUTTLE_IDLE && !SSshuttle.emergency.noAutoCall)
+				SSshuttle.emergency.request(null, null, null, " \nEnd of shift", null, TRUE)
 			mode.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
