@@ -25,7 +25,12 @@ var/global/dmm_suite/preloader/_preloader = new
  * 2) Read the map line by line, parsing the result (using parse_grid)
  *
  */
-/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num)
+/dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num)
+	Master.StartLoadingMap()
+	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly, no_changeturf)
+	Master.StopLoadingMap()
+
+/dmm_suite/proc/load_map_impl(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num, no_changeturf as num)
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
 		tfile = file2text(tfile)
@@ -68,7 +73,8 @@ var/global/dmm_suite/preloader/_preloader = new
 			var/ycrd = text2num(dmmRegex.group[4]) + y_offset - 1
 			var/zcrd = text2num(dmmRegex.group[5]) + z_offset - 1
 
-			if(zcrd > world.maxz)
+			var/zexpansion = zcrd > world.maxz
+			if(zexpansion)
 				if(cropMap)
 					continue
 				else
@@ -120,7 +126,7 @@ var/global/dmm_suite/preloader/_preloader = new
 								var/model_key = copytext(line, tpos, tpos + key_len)
 								if(!grid_models[model_key])
 									throw EXCEPTION("Undefined model key in DMM.")
-								parse_grid(grid_models[model_key], xcrd, ycrd, zcrd)
+								parse_grid(grid_models[model_key], xcrd, ycrd, zcrd, no_changeturf || zexpansion)
 								CHECK_TICK
 
 							maxx = max(maxx, xcrd)
@@ -134,10 +140,11 @@ var/global/dmm_suite/preloader/_preloader = new
 	if(bounds[1] == 1.#INF) // Shouldn't need to check every item
 		return null
 	else
-		for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
-			var/turf/T = t
-			//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
-			T.AfterChange(TRUE)
+		if(!no_changeturf)
+			for(var/t in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]), locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+				var/turf/T = t
+				//we do this after we load everything in. if we don't; we'll have weird atmos bugs regarding atmos adjacent turfs
+				T.AfterChange(TRUE)
 		return bounds
 
 /**
@@ -157,7 +164,7 @@ var/global/dmm_suite/preloader/_preloader = new
  * 4) Instanciates the atom with its variables
  *
  */
-/dmm_suite/proc/parse_grid(model as text,xcrd as num,ycrd as num,zcrd as num)
+/dmm_suite/proc/parse_grid(model as text,xcrd as num,ycrd as num,zcrd as num,no_changeturf as num)
 	/*Method parse_grid()
 	- Accepts a text string containing a comma separated list of type paths of the
 		same construction as those contained in a .dmm file, and instantiates them.
@@ -243,7 +250,7 @@ var/global/dmm_suite/preloader/_preloader = new
 	//instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
-		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd)
+		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd,no_changeturf)
 
 	if(T)
 		//if others /turf are presents, simulates the underlays piling effect
@@ -256,7 +263,7 @@ var/global/dmm_suite/preloader/_preloader = new
 
 	//finally instance all remainings objects/mobs
 	for(index in 1 to first_turf_index-1)
-		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
+		instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd,no_changeturf)
 		CHECK_TICK
 
 ////////////////
@@ -264,13 +271,13 @@ var/global/dmm_suite/preloader/_preloader = new
 ////////////////
 
 //Instance an atom at (x,y,z) and gives it the variables in attributes
-/dmm_suite/proc/instance_atom(path,list/attributes, x, y, z)
+/dmm_suite/proc/instance_atom(path,list/attributes, x, y, z, no_changeturf)
 	var/atom/instance
 	_preloader.setup(attributes, path)
 
 	var/turf/T = locate(x,y,z)
 	if(T)
-		if(ispath(path, /turf))
+		if(!no_changeturf && ispath(path, /turf))
 			T.ChangeTurf(path, TRUE)
 			instance = T
 		else

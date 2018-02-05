@@ -569,9 +569,10 @@ var/next_mob_id = 0
 	..()
 
 	if(statpanel("Status"))
-		stat(null, "Map: [MAP_NAME]")
-		if (nextmap && istype(nextmap))
-			stat(null, "Next Map: [nextmap.friendlyname]")
+		stat(null, "Map: [SSmapping.config.map_name]")
+		var/datum/map_config/cached = SSmapping.next_map_config
+		if(cached)
+			stat(null, "Next Map: [cached.map_name]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		stat(null, "Round: [yog_round_number]")
 
