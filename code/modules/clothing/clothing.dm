@@ -488,7 +488,7 @@ BLIND     // can't see anything
 	var/mob/M = usr
 	if (istype(M, /mob/dead/))
 		return
-	if (!can_use(M))
+	if(!can_use(M))
 		return
 	if(src.has_sensor >= 2)
 		to_chat(usr, "The controls are locked.")
@@ -499,6 +499,8 @@ BLIND     // can't see anything
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
+	if(!can_use(M))
+		return
 	if(get_dist(usr, src) > 1)
 		to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
 		return
