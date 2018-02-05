@@ -27,6 +27,7 @@
 	name = "practice laser"
 	damage = 0
 	nodamage = 1
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/beam/scatter
 	name = "laser pellet"
@@ -49,6 +50,7 @@
 	flag = "energy"
 	hitsound = 'sound/weapons/tap.ogg'
 	eyeblur = 0
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/beam/pulse
 	name = "pulse"
@@ -87,6 +89,7 @@
 	damage_type = STAMINA
 	flag = "laser"
 	var/suit_types = list(/obj/item/clothing/suit/redtag, /obj/item/clothing/suit/bluetag)
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/beam/lasertag/on_hit(atom/target, blocked = 0)
 	. = ..()

@@ -5,6 +5,7 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "energy"
+	makesBulletHoles = FALSE
 
 
 /obj/item/projectile/ion/on_hit(atom/target, blocked = 0)
@@ -50,6 +51,7 @@
 	nodamage = 1
 	flag = "energy"
 	var/temperature = 100
+	makesBulletHoles = FALSE
 
 
 /obj/item/projectile/temp/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
@@ -71,6 +73,7 @@
 	damage_type = BRUTE
 	nodamage = 1
 	flag = "bullet"
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/meteor/Bump(atom/A, yes)
 	if(!yes) //prevents multi bumps.
@@ -92,6 +95,7 @@
 	damage_type = TOX
 	nodamage = 1
 	flag = "energy"
+	makesBulletHoles = FALSE
 
 
 /obj/item/projectile/energy/florayield
@@ -101,9 +105,11 @@
 	damage_type = TOX
 	nodamage = 1
 	flag = "energy"
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/beam/mindflayer
 	name = "flayer ray"
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/beam/mindflayer/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -119,6 +125,7 @@
 	damage = 3
 	var/obj/item/weapon/gun/energy/wormhole_projector/gun
 	color = "#33CCFF"
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/beam/wormhole/orange
 	name = "orange bluespace beam"
@@ -199,6 +206,7 @@
 	color = "#33CCFF"
 	var/turf/T
 	var/power = 4
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/gravipulse/New(var/obj/item/ammo_casing/energy/gravipulse/C)
 	..()
