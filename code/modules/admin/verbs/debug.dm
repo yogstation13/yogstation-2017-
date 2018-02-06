@@ -455,9 +455,7 @@ var/global/list/g_fancy_list_of_types = null
 		else
 			id = new /obj/item/weapon/card/id/gold(H.loc)
 			id.access = get_all_accesses()+get_all_centcom_access()+get_all_syndicate_access()
-			id.registered_name = H.real_name
-			id.assignment = "Captain"
-			id.update_label()
+			id.update_label(H.real_name, "Captain")
 
 			if(worn)
 				if(istype(worn,/obj/item/device/pda))

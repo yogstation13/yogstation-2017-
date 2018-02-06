@@ -183,6 +183,11 @@
 	return
 
 /obj/item/stack/proc/building_checks(datum/stack_recipe/R, multiplier)
+	if(R.one_per_turf)
+		for(var/obj/O in usr.loc)
+			if(O.density)
+				to_chat(usr, "<span class='warning'>Something is in the way!</span>")
+				return
 	if(src.get_amount() < R.req_amount*multiplier)
 		if(R.req_amount*multiplier>1)
 			to_chat(usr, "<span class='warning'>You haven't got enough [src] to build \the [R.req_amount*multiplier] [R.title]\s!</span>")

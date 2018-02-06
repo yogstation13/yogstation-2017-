@@ -67,6 +67,7 @@
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 	var/quiet_round = 0 //Won't be picked as target in most cases
 	var/list/outfit_browsers = null
+	var/killstreak = 0
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -1389,7 +1390,7 @@
 					else if (istype(M) && length(M.viruses))
 						for(var/datum/disease/D in M.viruses)
 							D.cure(0)
-						sleep(0) //because deleting of virus is done through spawn(0)
+						stoplag() //because deleting of virus is done through spawn(0)
 			if("infected")
 				if (check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current
@@ -1856,6 +1857,23 @@
 	. = G
 	if(G)
 		G.reenter_corpse()
+
+/datum/mind/proc/killstreak_act()
+	switch(killstreak)
+		if(3)
+			deadchat_broadcast("[name] is on a killing spree!</B>", src.current)
+		if(5)
+			deadchat_broadcast("[name] is dominating!</B>", src.current)
+		if(7)
+			deadchat_broadcast("[name] got a MEGA KILL!</B>", src.current)
+		if(9)
+			deadchat_broadcast("[name] is UNSTOPPABLE!</B>", src.current)
+		if(11)
+			deadchat_broadcast("[name] is WICKED SICK!!</B>", src.current)
+		if(13)
+			deadchat_broadcast("[name] is GODLIKE!</B>", src.current)
+		if(15)
+			deadchat_broadcast("[name] is a KILLIONAIRE!</B>", src.current)
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

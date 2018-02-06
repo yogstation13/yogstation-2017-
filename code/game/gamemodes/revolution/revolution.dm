@@ -284,6 +284,7 @@
 		carbon_mob.flash_eyes(1, 1)
 	rev_mind.current.Stun(5)
 
+	rev_mind.store_memory("Help your cause. Do not harm your fellow freedom fighters. Help them kill the heads to win the revolution!")
 	to_chat(rev_mind.current, "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. Help them kill the heads to win the revolution!</FONT></span>")
 	explain_rev_hud(rev_mind.current)
 	rev_mind.current.attack_log += "\[[gameTimestamp()]\] <font color='red'>Has been converted to the revolution!</font>"

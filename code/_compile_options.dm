@@ -28,7 +28,7 @@
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN			1024
-#define MAX_NAME_LEN			26
+#define MAX_NAME_LEN			40
 #define MAX_BROADCAST_LEN		512
 
 //MINOR TWEAKS/MISC
@@ -49,6 +49,10 @@
 // AI Toggles
 #define AI_CAMERA_LUMINOSITY	5
 #define AI_VOX 1 // Comment out if you don't want VOX to be enabled and have players download the voice sounds.
+
+//Add an image in misc/fullscreen.dmi, and set this define to the icon_state, to set a custom titlescreen for your map
+#define TITLESCREEN "title"
+#define TITLESCREEN_ALT null
 
 //Additional code for the above flags.
 #ifdef TESTING

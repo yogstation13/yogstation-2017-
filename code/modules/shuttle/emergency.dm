@@ -186,6 +186,8 @@
 	travelDir = -90
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
+	var/recallable = TRUE
+	var/noAutoCall = FALSE
 
 /obj/docking_port/mobile/emergency/register()
 	. = ..()
@@ -219,7 +221,7 @@
 			dtime = max(SSshuttle.emergencyCallTime - dtime, 0)
 	return round(dtime/divisor, 1)
 
-/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, coefficient=1, area/signalOrigin, reason, redAlert)
+/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, coefficient=1, area/signalOrigin, reason, redAlert, noRecall)
 	SSshuttle.emergencyCallTime = initial(SSshuttle.emergencyCallTime) * coefficient
 	switch(mode)
 		if(SHUTTLE_RECALL)
@@ -233,6 +235,8 @@
 				timer = world.time
 		else
 			return
+	if(noRecall)
+		recallable = FALSE
 
 	if(prob(70))
 		SSshuttle.emergencyLastCallLoc = signalOrigin
@@ -241,9 +245,13 @@
 
 	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
 
-/obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
+/obj/docking_port/mobile/emergency/cancel(area/signalOrigin, forced)
 	if(mode != SHUTTLE_CALL)
 		return
+	if(!recallable && !forced)
+		return
+	if(forced && world.time >= config.roundlength)
+		noAutoCall = TRUE
 
 	timer = world.time - timeLeft(1)
 	mode = SHUTTLE_RECALL

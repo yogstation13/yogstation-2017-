@@ -335,6 +335,7 @@
 	flag = "bomb"
 	range = 3
 	var/gun
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/kinetic/proc/specialShot(var/when,obj/item/weapon/gun/energy/kinetic_accelerator/KA,mob/user,atom/target)
 	if(!KA.hasPS && !KA.hasPD && !KA.hasAD)

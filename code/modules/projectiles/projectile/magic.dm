@@ -6,6 +6,7 @@
 	nodamage = 1
 	armour_penetration = 100
 	flag = "magic"
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/magic/death
 	name = "bolt of death"
@@ -322,7 +323,9 @@
 				S.color = change.color
 				if(H.mind)
 					H.mind.transfer_to(S)
-					to_chat(S, "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>")
+
+				H.add_memory("<b>Serve [firer.real_name], your creator.</b>")
+				to_chat(S, "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.real_name], your creator.</span>")
 				H = change
 				H.loc = S
 				qdel(src)

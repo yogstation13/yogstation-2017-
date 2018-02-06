@@ -158,6 +158,9 @@
 
 /datum/job/proc/config_check()
 	return 1
+	
+/datum/job/proc/map_check()
+	return 1
 
 /datum/outfit/job
 	name = "Standard Gear"
@@ -223,9 +226,7 @@
 	if(istype(C))
 		var/datum/job/J = SSjob.GetJob(H.job) // Not sure the best idea
 		C.access = J.get_access()
-		C.registered_name = H.real_name
-		C.assignment = H.job
-		C.update_label()
+		C.update_label(H.real_name, H.job)
 		H.sec_hud_set_ID()
 
 	var/obj/item/device/pda/PDA = H.get_item_by_slot(pda_slot)
@@ -233,6 +234,7 @@
 		PDA.owner = H.real_name
 		PDA.ownjob = H.job
 		PDA.update_label()
+
 	if(H.job != "Mime" && H.job != "Clown")
 		log_game("[H.real_name]/[H.ckey] joined the round as [H.job].")
 

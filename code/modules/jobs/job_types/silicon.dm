@@ -40,3 +40,14 @@ Cyborg
 /datum/job/cyborg/equip(mob/living/carbon/human/H)
 	if(!H)
 		return 0
+	var/needTicker
+	if(H in ticker.livings)
+		ticker.livings -= H
+		H.notransform = FALSE
+		needTicker = TRUE
+	var/mob/living/living = H.Robotize()
+	if(needTicker)
+		living.notransform = TRUE
+		var/obj/screen/splash/S = new(living.client, TRUE)
+		S.Fade(TRUE)
+		ticker.livings += living

@@ -97,3 +97,7 @@
 /obj/machinery/telecomms/receiver/preset_left/birdstation
 	name = "Receiver"
 	freq_listening = list()
+
+/obj/machinery/telecomms/receiver/preset_left/ministation
+	name = "Receiver"
+	freq_listening = list()
