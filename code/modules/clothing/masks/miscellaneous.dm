@@ -163,3 +163,24 @@
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
+	
+/obj/item/clothing/mask/cluwne
+	name = "clown wig and mask"
+	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
+	flags_cover = MASKCOVERSEYES
+	icon_state = "clown"
+	item_state = "clown"
+	burn_state = FIRE_PROOF
+	flags = NODROP | MASKINTERNALS | DROPDEL
+	flags_inv = HIDEEARS|HIDEEYES
+
+/obj/item/clothing/mask/cluwne/equipped(mob/user, slot)
+	if(!ishuman(user))
+		return
+	if(slot == slot_wear_mask)
+		var/mob/living/carbon/human/H = user
+		H.dna.add_mutation(CLUWNEMUT)
+	return
+	
+/obj/item/clothing/mask/cluwne/Destroy(force)
+	return QDEL_HINT_LETMELIVE

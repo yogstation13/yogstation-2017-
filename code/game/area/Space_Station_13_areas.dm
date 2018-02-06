@@ -434,10 +434,15 @@ var/list/teleportlocs = list()
 //STATION13
 
 /area/atmos
- 	name = "Atmospherics"
- 	icon_state = "atmos"
- 	sound_env = LARGE_ENCLOSED
+	name = "Atmospherics Office"
+	icon_state = "atmos"
+	sound_env = LARGE_ENCLOSED
 
+/area/atmos/pipes
+	name = "Atmospherics"
+	icon_state = "atmos_pipes"
+	sound_env = LARGE_ENCLOSED
+	
 //Maintenance
 /area/maintenance
 	ambientsounds = list('sound/ambience/ambimaint1.ogg',

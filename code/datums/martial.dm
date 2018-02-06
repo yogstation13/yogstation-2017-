@@ -10,7 +10,7 @@
 	var/no_ranged_weapons = FALSE
 
 /datum/martial_art/proc/try_deflect_projectile(mob/living/carbon/human/user, obj/item/projectile/Proj)
-	if(user.incapacitated() || (user.dna && user.dna.check_mutation(HULK)))
+	if(user.incapacitated() || (user.dna && (user.dna.check_mutation(HULK) || user.dna.check_mutation(ACTIVE_HULK))))
 		return FALSE
 	if(prob(deflection_chance))
 		user.visible_message("<span class='danger'>[user] deflecs the projectile; they can't be hit with ranged weapons!</span>", "<span class='userdanger'>You deflect the projectile!</span>")
