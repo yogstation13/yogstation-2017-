@@ -172,7 +172,8 @@ var/list/admin_verbs_debug = list(
 	/client/proc/map_template_upload,
 	/client/proc/check_ruins,
 	/datum/admins/proc/locate_item,
-	/datum/admins/proc/borer_panel
+	/datum/admins/proc/borer_panel,
+	/client/proc/view_runtimes
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,

@@ -40,26 +40,26 @@
 
 /datum/map_config/proc/LoadConfig(filename)
 	if(!fexists(filename))
-		world.log << "map_config not found: [filename]"
+		log_world("map_config not found: [filename]")
 		return
 
 	var/json = file(filename)
 	if(!json)
-		world.log << "Could not open map_config: [filename]"
+		log_world("Could not open map_config: [filename]")
 		return
 
 	json = file2text(json)
 	if(!json)
-		world.log << "map_config is not text: [filename]"
+		log_world("map_config is not text: [filename]")
 		return
 
 	json = json_decode(json)
 	if(!json)
-		world.log << "map_config is not json: [filename]"
+		log_world("map_config is not json: [filename]")
 		return
 
 	if(!ValidateJSON(json))
-		world.log << "map_config failed to validate for above reason: [filename]"
+		log_world("map_config failed to validate for above reason: [filename]")
 		return
 
 	config_filename = filename
@@ -80,7 +80,7 @@
 
 	defaulted = FALSE
 
-#define CHECK_EXISTS(X) if(!istext(json[X])) { world.log << X + "missing from json!"; return; }
+#define CHECK_EXISTS(X) if(!istext(json[X])) { log_world(X + " missing from json!"); return; }
 /datum/map_config/proc/ValidateJSON(list/json)
 	CHECK_EXISTS("map_name")
 	CHECK_EXISTS("map_path")
@@ -88,20 +88,20 @@
 
 	var/path = GetFullMapPath(json["map_path"], json["map_file"])
 	if(!fexists(path))
-		world.log << "Map file ([path]) does not exist!"
+		log_world("Map file ([path]) does not exist!")
 		return
 
 	var/tc = json["transition_config"]
 	if(tc != null && tc != "default")
 		if(!islist(tc))
-			world.log << "transition_config is not a list!"
+			log_world("transition_config is not a list!")
 			return
 
 		for(var/I in tc)
 			if(isnull(TransitionStringToEnum(I)))
-				world.log << "Invalid transition_config option: [I]!"
+				log_world("Invalid transition_config option: [I]!")
 			if(isnull(TransitionStringToEnum(tc[I])))
-				world.log << "Invalid transition_config option: [I]!"
+				log_world("Invalid transition_config option: [I]!")
 
 	return TRUE
 #undef CHECK_EXISTS

@@ -31,7 +31,7 @@
 			if(!valid)
 				continue
 
-			world.log << "Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z])"
+			log_world("Ruin \"[ruin.name]\" placed at ([T.x], [T.y], [T.z])")
 			add_list_to_list(ruinAreas, list(ruin.name, T.x, T.y, T.z))
 
 			var/obj/effect/ruin_loader/R = new /obj/effect/ruin_loader(T)
@@ -44,7 +44,7 @@
 			break
 
 	if(!overall_sanity)
-		world.log << "Ruin loader gave up with [budget] left to spend."
+		log_world("Ruin loader gave up with [budget] left to spend.")
 
 
 /obj/effect/ruin_loader

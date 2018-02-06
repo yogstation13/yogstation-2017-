@@ -536,7 +536,7 @@ var/datum/subsystem/ticker/ticker
 		for(var/path in SSgarbage.didntgc)
 			dellog += "Path : [path] \n"
 			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
-		world.log << dellog
+		log_world(dellog)
 
 	for(var/obj/machinery/capture_the_flag/CTF in machines)
 		if(!CTF.ctf_enabled)

@@ -65,9 +65,9 @@
 
 	if(config.sql_enabled)
 		if(!setup_database_connection())
-			world.log << "Your server failed to establish a connection with the database."
+			log_world("Your server failed to establish a connection with the database.")
 		else
-			world.log << "Database connection established."
+			log_world("Database connection established.")
 
 
 	data_core = new /datum/datacore()
@@ -272,26 +272,6 @@ var/last_irc_status = 0
 			C << link("byond://[config.server]")
 	..(0)
 
-var/inerror = 0
-/world/Error(var/exception/e)
-	//runtime while processing runtimes
-	if (inerror)
-		inerror = 0
-		return ..(e)
-	inerror = 1
-	//newline at start is because of the "runtime error" byond prints that can't be timestamped.
-	e.name = "\n\[[time2text(world.timeofday,"hh:mm:ss")]\][e.name]"
-
-	//this is done this way rather then replace text to pave the way for processing the runtime reports more thoroughly
-	//	(and because runtimes end with a newline, and we don't want to basically print an empty time stamp)
-	var/list/split = splittext(e.desc, "\n")
-	for (var/i in 1 to split.len)
-		if (split[i] != "")
-			split[i] = "\[[time2text(world.timeofday,"hh:mm:ss")]\][split[i]]"
-	e.desc = jointext(split, "\n")
-	inerror = 0
-	return ..(e)
-
 /world/proc/manage_fps()
 	var/count = player_list.len
 
@@ -367,7 +347,7 @@ var/list/donators = list()
 	else
 		establish_db_connection()
 		if(!dbcon.IsConnected())
-			world.log << "Failed to connect to database in load_donators(). Reverting to legacy system."
+			log_world("Failed to connect to database in load_donators(). Reverting to legacy system.")
 			diary << "Failed to connect to database in load_donators(). Reverting to legacy system."
 			config.donator_legacy_system = 1
 			load_donators()
@@ -461,7 +441,7 @@ var/failed_db_connections = 0
 	else
 		failed_db_connections++		//If it failed, increase the failed connections counter.
 		if(config.sql_enabled)
-			world.log << "SQL error: " + dbcon.ErrorMsg()
+			log_world("SQL error: " + dbcon.ErrorMsg())
 
 	return .
 

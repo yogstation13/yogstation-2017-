@@ -97,7 +97,7 @@ var/datum/subsystem/mapping/SSmapping
 		CHECK_TICK
 		new /turf/open/space(T)
 
-#define INIT_ANNOUNCE(X) to_chat("<span class='boldannounce'>[X]</span>"); world.log << X
+#define INIT_ANNOUNCE(X) to_chat("<span class='boldannounce'>[X]</span>"); log_world(X)
 
 /datum/subsystem/mapping/proc/loadWorld()
 	//if any of these fail, something has gone horribly, HORRIBLY, wrong

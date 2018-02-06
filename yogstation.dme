@@ -1131,6 +1131,8 @@
 #include "code\modules\donors\donor_items.dm"
 #include "code\modules\donors\donor_verbs.dm"
 #include "code\modules\emoji\emoji_parse.dm"
+#include "code\modules\error_handler\error_handler.dm"
+#include "code\modules\error_handler\error_viewer.dm"
 #include "code\modules\events\_event.dm"
 #include "code\modules\events\abductor.dm"
 #include "code\modules\events\adware.dm"
