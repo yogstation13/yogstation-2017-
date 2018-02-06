@@ -1,10 +1,9 @@
+var/list/wire_color_airlock_directory = list()
+
 /datum/wires/airlock
 	holder_type = /obj/machinery/door/airlock
 
-/datum/wires/airlock/secure
-	randomize = TRUE
-
-/datum/wires/airlock/New(atom/holder)
+/datum/wires/airlock/New(atom/holder, wireType)
 	wires = list(
 		WIRE_POWER1, WIRE_POWER2,
 		WIRE_BACKUP1, WIRE_BACKUP2,
@@ -13,7 +12,12 @@
 		WIRE_ZAP1, WIRE_ZAP2
 	)
 	add_duds(2)
-	..()
+	src.holder = holder
+	if(!wire_color_airlock_directory[wireType])
+		randomize()
+		wire_color_airlock_directory[wireType] = colors
+	else
+		colors = wire_color_airlock_directory[wireType]
 
 /datum/wires/airlock/interactable(mob/user)
 	var/obj/machinery/door/airlock/A = holder

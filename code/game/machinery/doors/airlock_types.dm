@@ -4,18 +4,22 @@
 /obj/machinery/door/airlock/command
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_com
+	wireType = "command"
 
 /obj/machinery/door/airlock/security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_sec
+	wireType = "security"
 
 /obj/machinery/door/airlock/engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_eng
+	wireType = "engineering"
 
 /obj/machinery/door/airlock/medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_med
+	wireType = "medical"
 
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
@@ -31,10 +35,12 @@
 	name = "atmospherics airlock"
 	icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_atmo
+	wireType = "engineering"
 
 /obj/machinery/door/airlock/research
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_research
+	wireType = "science"
 
 /obj/machinery/door/airlock/freezer
 	name = "freezer airlock"
@@ -44,10 +50,12 @@
 /obj/machinery/door/airlock/science
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_science
+	wireType = "science"
 
 /obj/machinery/door/airlock/virology
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_viro
+	wireType = "medical"
 
 //////////////////////////////////
 /*
@@ -59,30 +67,35 @@
 	opacity = 0
 	doortype = /obj/structure/door_assembly/door_assembly_com/glass
 	glass = 1
+	wireType = "command"
 
 /obj/machinery/door/airlock/glass_engineering
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	opacity = 0
 	doortype = /obj/structure/door_assembly/door_assembly_eng/glass
 	glass = 1
+	wireType = "engineering"
 
 /obj/machinery/door/airlock/glass_security
 	icon = 'icons/obj/doors/airlocks/station/security.dmi'
 	opacity = 0
 	doortype = /obj/structure/door_assembly/door_assembly_sec/glass
 	glass = 1
+	wireType = "security"
 
 /obj/machinery/door/airlock/glass_medical
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	opacity = 0
 	doortype = /obj/structure/door_assembly/door_assembly_med/glass
 	glass = 1
+	wireType = "medical"
 
 /obj/machinery/door/airlock/glass_research
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
 	opacity = 0
 	doortype = /obj/structure/door_assembly/door_assembly_research/glass
 	glass = 1
+	wireType = "science"
 
 /obj/machinery/door/airlock/glass_mining
 	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
@@ -95,18 +108,21 @@
 	opacity = 0
 	doortype = /obj/structure/door_assembly/door_assembly_atmo/glass
 	glass = 1
+	wireType = "engineering"
 
 /obj/machinery/door/airlock/glass_science
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'
 	opacity = 0
 	doortype = /obj/structure/door_assembly/door_assembly_science/glass
 	glass = 1
+	wireType = "science"
 
 /obj/machinery/door/airlock/glass_virology
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	opacity = 0
 	doortype = /obj/structure/door_assembly/door_assembly_viro/glass
 	glass = 1
+	wireType = "medical"
 
 /obj/machinery/door/airlock/glass_maintenance
 	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
@@ -241,6 +257,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	opacity = 1
 	doortype = /obj/structure/door_assembly/door_assembly_centcom
+	wireType = "command"
 
 //////////////////////////////////
 /*
@@ -254,6 +271,7 @@
 	opacity = 1
 	doortype = /obj/structure/door_assembly/door_assembly_vault
 	explosion_block = 2
+	wireType = "command"
 
 //////////////////////////////////
 /*
@@ -285,6 +303,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	doortype = /obj/structure/door_assembly/door_assembly_highsecurity
 	explosion_block = 2
+	wireType = "command"
 
 //////////////////////////////////
 /*

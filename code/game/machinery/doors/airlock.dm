@@ -66,12 +66,14 @@ var/list/airlock_overlays = list()
 	var/image/old_panel_overlay
 	var/image/old_weld_overlay
 	var/image/old_sparks_overlay
+	var/wireType = "regular"
 
 	explosion_block = 1
 
 /obj/machinery/door/airlock/New()
 	..()
-	wires = new /datum/wires/airlock(src)
+	wires = new /datum/wires/airlock(src, wireType)
+
 	if(src.closeOtherId != null)
 		spawn (5)
 			for (var/obj/machinery/door/airlock/A in airlocks)
