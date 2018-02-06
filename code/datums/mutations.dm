@@ -9,6 +9,11 @@
 
 /datum/mutation/human
 
+	var/dna_block
+	var/quality
+	var/get_chance = 100
+	var/lowest_value = 256 * 8
+	var/highest_force_lose_value = 256 * 8 - 1 //the lowest value this block will be when the mutation is forceremoved. This should always be lower than lowest_value.
 	var/text_gain_indication = ""
 	var/text_lose_indication = ""
 	var/list/visual_indicators = list()
@@ -17,7 +22,6 @@
 	var/health_req //minimum health required to acquire the mutation
 	var/limb_req //required limbs to acquire this mutation
 	var/time_coeff = 1 //coefficient for timed mutations
-
 
 /datum/mutation/human/proc/force_give(mob/living/carbon/human/owner)
 	set_block(owner)
@@ -735,7 +739,7 @@
 	owner.adjust_fire_stacks(1)
 	owner.IgniteMob()
 	owner.dna.add_mutation(CLUWNEMUT)
-
+	
 /datum/mutation/human/cluwne/say_mod(message)
 	if(message)
 		message = "honk"
