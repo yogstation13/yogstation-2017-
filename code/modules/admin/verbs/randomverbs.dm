@@ -474,6 +474,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	var/input = stripped_multiline_input(usr, "Please enter anything you want. Anything. Serious.", "What?", "")
 	if(!input)
 		return
+	input = fix_apostrophes(input)
 
 	var/confirm = alert(src, "Do you want to announce the contents of the report to the crew?", "Announce", "Yes", "No")
 	if(confirm == "Yes")
