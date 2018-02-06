@@ -41,9 +41,7 @@
 		W.icon_state = "centcom"
 		W.access = get_all_accesses()
 		W.access += get_all_centcom_access()
-		W.assignment = "Highlander"
-		W.registered_name = H.real_name
-		W.update_label(H.real_name)
+		W.update_label(H.real_name, "Highlander")
 		H.equip_to_slot_or_del(W, slot_wear_id)
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
@@ -84,9 +82,7 @@
 		W.icon_state = "centcom"
 		W.access = get_all_accesses()
 		W.access += get_all_centcom_access()
-		W.assignment = "Multiverse Summoner"
-		W.registered_name = H.real_name
-		W.update_label(H.real_name)
+		W.update_label(H.real_name, "Multiverse Summoner")
 		H.equip_to_slot_or_del(W, slot_wear_id)
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ME!</span>")

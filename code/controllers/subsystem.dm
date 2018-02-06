@@ -161,4 +161,9 @@
 	if (edited_var == "can_fire" && can_fire)
 		next_fire = world.time + wait
 	..()
+	
+//when we enter dmm_suite.load_map
+/datum/subsystem/proc/StartLoadingMap()
 
+//when we exit dmm_suite.load_map
+/datum/subsystem/proc/StopLoadingMap()

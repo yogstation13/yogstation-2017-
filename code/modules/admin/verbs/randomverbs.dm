@@ -675,7 +675,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(EMERGENCY_AT_LEAST_DOCKED)
 		return
 
-	SSshuttle.emergency.cancel()
+	SSshuttle.emergency.cancel(null, TRUE)
 	feedback_add_details("admin_verb","CCSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] admin-recalled the emergency shuttle.")
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] admin-recalled the emergency shuttle.</span>")

@@ -105,6 +105,7 @@
 	icon_state = "polywand"
 	fire_sound = "sound/magic/Staff_Change.ogg"
 	max_charges = 10 //10, 5, 5, 4
+	no_den_usage = 1
 
 /obj/item/weapon/gun/magic/wand/polymorph/zap_self(mob/living/user)
 	..() //because the user mob ceases to exists by the time wabbajack fully resolves

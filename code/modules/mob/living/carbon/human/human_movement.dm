@@ -7,6 +7,8 @@
 /mob/living/carbon/human/slip(s_amount, w_amount, obj/O, lube)
 	if(isobj(shoes) && ( (shoes.flags & SUPERNOSLIP) || ((shoes.flags&NOSLIP) && !(lube&GALOSHES_DONT_HELP)) ))
 		return 0
+	if(martial_art && martial_art.no_slip)
+		return 0
 	return ..()
 
 /mob/living/carbon/human/experience_pressure_difference()
