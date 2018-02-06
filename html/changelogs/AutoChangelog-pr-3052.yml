@@ -1,4 +1,0 @@
-author: "ThatLing"
-delete-after: true 
-changes: 
-  - bugfix: "Transit tube pods will no longer eat the air around them and pull you into them."
