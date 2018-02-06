@@ -276,6 +276,16 @@ var/next_mob_id = 0
 	set name = "Examine"
 	set category = "IC"
 
+	var/see_turfs = FALSE
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.glasses && H.glasses.vision_flags & SEE_TURFS)
+			see_turfs = TRUE
+
+	if(!isobserver(src) && isturf(A) && !(A in view(src)))
+		if(!see_turfs)
+			return
+
 	if(is_blind(src))
 		to_chat(src, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
