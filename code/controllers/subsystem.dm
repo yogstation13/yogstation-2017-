@@ -163,7 +163,7 @@
 				next_fire = world.time + wait
 		if ("queued_priority") //editing this breaks things.
 			return 0
-    . = ..()
+	. = ..()
 
 //when we enter dmm_suite.load_map
 /datum/subsystem/proc/StartLoadingMap()
