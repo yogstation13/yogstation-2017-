@@ -48204,7 +48204,9 @@
 	},
 /area/atmos)
 "bRl" = (
-/obj/machinery/computer/station_alert,
+/obj/machinery/computer/station_alert{
+	name = "Station Alert Console"
+	},
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "blueyellow"
@@ -49973,6 +49975,21 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/item/device/analyzer{
+	pixel_x = 10
+	},
+/obj/item/device/analyzer{
+	pixel_x = 10
+	},
+/obj/item/device/t_scanner{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/device/t_scanner{
+	pixel_x = -5;
+	pixel_y = 6
+	},
 /turf/open/floor/plasteel,
 /area/atmos)
 "bVa" = (
@@ -50034,7 +50051,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/chair,
+/obj/structure/table,
+/obj/item/device/flashlight{
+	pixel_x = 6
+	},
+/obj/item/device/flashlight{
+	pixel_x = 6
+	},
+/obj/item/device/pipe_painter{
+	pixel_x = -3;
+	pixel_y = 7
+	},
 /turf/open/floor/plasteel,
 /area/atmos)
 "bVh" = (
@@ -50476,7 +50503,9 @@
 /turf/open/floor/plating,
 /area/atmos)
 "bWh" = (
-/obj/machinery/computer/atmos_alert,
+/obj/machinery/computer/atmos_alert{
+	name = "Atmospheric Alert Console"
+	},
 /turf/open/floor/plasteel,
 /area/atmos)
 "bWi" = (
@@ -50549,19 +50578,11 @@
 /turf/open/floor/plasteel,
 /area/atmos)
 "bWq" = (
-/obj/structure/table,
-/obj/item/device/pipe_painter{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/device/flashlight{
-	pixel_x = 6
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/item/device/flashlight{
-	pixel_x = 6
+/obj/structure/chair/office/dark{
+	dir = 1
 	},
 /turf/open/floor/plasteel,
 /area/atmos)
@@ -50618,7 +50639,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	adminlog = 1;
 	dir = 4;
-	name = "Distro to Waste"
+	name = "Distro to Filter"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable/yellow{
@@ -50640,11 +50661,6 @@
 	name = "Atmospherics Distribution"
 	})
 "bWz" = (
-/obj/machinery/camera{
-	c_tag = "Atmospherics North East";
-	dir = 8;
-	network = list("SS13")
-	},
 /obj/structure/window/reinforced,
 /obj/structure/closet/firecloset,
 /turf/open/floor/plasteel{
@@ -54960,6 +54976,10 @@
 /turf/closed/wall,
 /area/engine/break_room)
 "cfn" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -27;
+	pixel_y = 1
+	},
 /turf/open/floor/plasteel{
 	dir = 9;
 	icon_state = "blueyellow"
@@ -55038,11 +55058,6 @@
 	},
 /area/security/checkpoint/engineering)
 "cfy" = (
-/obj/machinery/camera{
-	c_tag = "Atmospherics South East";
-	dir = 8;
-	network = list("SS13")
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump{
 	dir = 2;
 	on = 1
@@ -57142,10 +57157,6 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "cki" = (
-/obj/machinery/vending/cigarette{
-	pixel_x = 0;
-	pixel_y = 0
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/engine/break_room)
@@ -57417,9 +57428,8 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "ckS" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	tag = "icon-manifold-b-f (NORTH)";
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
@@ -63116,7 +63126,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	adminlog = 1;
 	dir = 4;
-	name = "Incinerator to Output";
+	name = "Output to Port";
 	on = 0
 	},
 /turf/open/floor/plasteel{
@@ -68051,6 +68061,67 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine,
 /area/toxins/xenobiology)
+"Zsl" = (
+/obj/structure/closet,
+/obj/item/clothing/under/patriotsuit,
+/obj/item/clothing/head/dallas,
+/obj/item/weapon/bedsheet/patriot,
+/obj/item/clothing/gloves/fingerless,
+/obj/item/clothing/shoes/jackboots,
+/turf/open/space,
+/area/space)
+"Zsm" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	dir = 4;
+	icon_state = "intact";
+	tag = ""
+	},
+/turf/closed/wall/r_wall,
+/area/security/checkpoint/engineering)
+"Zsn" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/hidden{
+	tag = "icon-intact (NORTHWEST)";
+	icon_state = "intact";
+	dir = 9
+	},
+/turf/closed/wall/r_wall,
+/area/security/checkpoint/engineering)
+"Zso" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/vending/cigarette{
+	pixel_x = 0;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel,
+/area/engine/break_room)
+"Zsp" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating,
+/area/engine/break_room)
+"Zsq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/table,
+/obj/item/weapon/electronics/airalarm{
+	pixel_w = 0;
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/weapon/electronics/airalarm{
+	pixel_w = 0;
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/device/multitool{
+	pixel_x = 9;
+	pixel_y = -5
+	},
+/turf/open/floor/plasteel,
+/area/atmos)
 "Zsr" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -68095,19 +68166,19 @@
 	on = 1
 	},
 /turf/open/floor/plating/airless,
-/area/space)
+/area/maintenance/incinerator)
 "Zsw" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/space,
-/area/space)
+/area/maintenance/incinerator)
 "Zsx" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
 /turf/open/space,
-/area/space)
+/area/maintenance/incinerator)
 "Zsy" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
@@ -68528,7 +68599,12 @@
 	pixel_y = 20
 	},
 /obj/item/weapon/storage/toolbox/mechanical{
-	pixel_y = 2
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/belt/utility{
+	pixel_x = 5;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel{
 	dir = 1;
@@ -68539,11 +68615,8 @@
 	})
 "Ztq" = (
 /obj/structure/table,
-/obj/item/weapon/storage/belt/utility{
-	pixel_x = 5;
-	pixel_y = -2
-	},
 /obj/item/weapon/wrench,
+/obj/item/weapon/storage/box/lights/mixed,
 /turf/open/floor/plasteel{
 	dir = 1;
 	icon_state = "blueyellow"
@@ -69522,11 +69595,6 @@
 	scrub_N2O = 0;
 	scrub_Toxins = 0
 	},
-/obj/machinery/camera{
-	c_tag = "Atmospherics Tanks North";
-	dir = 2;
-	network = list("SS13")
-	},
 /turf/open/floor/plasteel{
 	icon_state = "vault";
 	dir = 5
@@ -69782,6 +69850,7 @@
 "ZvF" = (
 /obj/machinery/atmospherics/components/trinary/mixer/flipped{
 	dir = 4;
+	name = "Air Mixer";
 	node1_concentration = 0.8;
 	node2_concentration = 0.2;
 	on = 1
@@ -70069,6 +70138,7 @@
 "Zwe" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
 	filter_type = "n2";
+	name = "N2 Filter";
 	on = 1
 	},
 /turf/open/floor/plasteel{
@@ -70082,7 +70152,7 @@
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
 	dir = 1;
 	filter_type = "n2o";
-	name = "CO2 Filter";
+	name = "N2O Filter";
 	on = 1
 	},
 /turf/open/floor/plasteel{
@@ -70317,7 +70387,7 @@
 /obj/machinery/computer/atmos_control/tank{
 	frequency = 1441;
 	input_tag = "tox_in";
-	name = "Toxin Supply Control";
+	name = "Plasma Supply Control";
 	output_tag = "tox_out";
 	sensors = list("tox_sensor" = "Tank")
 	},
@@ -70356,6 +70426,7 @@
 "ZwC" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
 	filter_type = "o2";
+	name = "O2 Filter";
 	on = 1
 	},
 /turf/open/floor/plasteel{
@@ -70383,7 +70454,7 @@
 /obj/machinery/atmospherics/components/trinary/filter/flipped{
 	dir = 1;
 	filter_type = "plasma";
-	name = "CO2 Filter";
+	name = "Plasma Filter";
 	on = 1
 	},
 /turf/open/floor/plasteel{
@@ -70434,11 +70505,6 @@
 "ZwJ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Atmospherics Tanks South";
-	dir = 1;
-	network = list("SS13")
 	},
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /turf/open/floor/plasteel{
@@ -70909,7 +70975,7 @@
 "ZxB" = (
 /obj/machinery/atmospherics/components/binary/valve{
 	dir = 4;
-	name = "Incinerator to Space"
+	name = "Output to Space"
 	},
 /turf/open/floor/plasteel{
 	icon_state = "floorgrime"
@@ -70966,7 +71032,7 @@
 	},
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
-	name = "Incinerator to Space";
+	name = "Incinerator to Output";
 	on = 0
 	},
 /turf/open/floor/engine,
@@ -101973,8 +102039,8 @@ Zts
 bSo
 ZtL
 ZtY
-ZtD
-bRj
+Zsm
+Zuw
 cfq
 cgt
 chs
@@ -102230,7 +102296,7 @@ bXC
 bSo
 cbg
 ccm
-ZtD
+Zsm
 cel
 cfr
 cgu
@@ -102487,13 +102553,13 @@ Ztt
 Ztt
 cbh
 ccn
-ZtD
+Zsm
 cem
 cfs
 cgv
 chu
 cih
-cjp
+Zso
 cgr
 ckS
 clH
@@ -102744,7 +102810,7 @@ bXD
 ZtB
 ZtM
 ZtZ
-ZtD
+Zsm
 cen
 cft
 cgw
@@ -102752,7 +102818,7 @@ chv
 cij
 cjr
 cki
-ckT
+cki
 clI
 cmz
 cny
@@ -103001,15 +103067,15 @@ bXC
 ZtC
 ZtN
 ZtN
-Zum
+Zsn
 Zuw
 Zuw
 ZuP
 Zuw
 Zuw
 Zvm
-Zvm
-ZvA
+Zsp
+Zsp
 Zvm
 cnp
 cnp
@@ -103273,7 +103339,7 @@ aaa
 aaA
 aaA
 aaA
-aaa
+Zsl
 aaa
 aaA
 aaA
@@ -103519,7 +103585,7 @@ cdz
 ccp
 cbi
 cgx
-ZuY
+aaA
 cbi
 cbi
 cbi
@@ -103766,7 +103832,7 @@ bRj
 bSt
 bTR
 bUZ
-bWp
+bWj
 bXF
 Ztu
 ZtD
@@ -104279,8 +104345,8 @@ bQh
 bRj
 bSv
 bTR
-bUZ
-Ztj
+Zsq
+bWj
 bXF
 Ztv
 ZtD
@@ -106853,9 +106919,9 @@ bVo
 bWz
 Ztn
 bVl
-ZtG
-ZtQ
 Zud
+ZtQ
+ZtG
 bVl
 ZuC
 ZuK
@@ -108168,7 +108234,7 @@ Zxp
 cuw
 ZxA
 cqS
-ZxI
+aaa
 aaa
 aaa
 aaa
@@ -108425,7 +108491,7 @@ Zxq
 Zxv
 ZxB
 Sup
-ZxI
+aaa
 aaa
 aaa
 aaa
@@ -108682,7 +108748,7 @@ Zxr
 cuv
 ZxC
 Sup
-ZxI
+aaa
 aaa
 aaa
 aaa
@@ -108939,7 +109005,7 @@ cyq
 Zxw
 ZxD
 cqS
-ZxI
+aaa
 aaa
 aaa
 aaa
