@@ -1,0 +1,7 @@
+{
+    "map_name": "Efficiency Station",
+    "map_path": "map_files/EfficiencyStation",
+    "map_file": "EfficiencyStation.dmm",
+    "minetype": "lavaland",
+    "transition_config": "default"
+}

@@ -128,6 +128,19 @@
 	list_reagents = list("nutriment" = 8)
 	foodtype = MEAT
 
+/obj/item/weapon/reagent_containers/food/snacks/kebab/mouse
+	trash = /obj/item/stack/rods
+	icon_state = "mousekebab"
+	desc = "Three dead mice. Three dead mice. See how they can't run. See how they can't run. They all ran after the farmer's wife, Who cut off their tails with a carving knife, this snack is made of tiny life--Wait a minute are those mice still moving?."
+	w_class = 3
+	list_reagents = list("nutriment" = 8,"vitamin" = 2)
+	foodtype = MEAT | GROSS
+
+/obj/item/weapon/reagent_containers/food/snacks/kebab/mouse/On_Consume()
+	. = ..()
+	visible_message("<span class='danger'>The mice on [src] squeek!</span>")
+	playsound(src, 'sound/effects/mousesqueek.ogg', 100, 1)
+
 /obj/item/weapon/reagent_containers/food/snacks/kebab/human
 	name = "human-kebab"
 	desc = "A human meat, on a stick."

@@ -1,5 +1,3 @@
-var/global/dmm_suite/maploader = new
-
 dmm_suite{
 	/*
 
@@ -53,7 +51,7 @@ dmm_suite{
 
 		*/
 
-	verb/load_map(var/dmm_file as file, var/x_offset as num, var/y_offset as num, var/z_offset as num, var/cropMap as num, var/measureOnly as num){
+	verb/load_map(var/dmm_file as file, var/x_offset as num, var/y_offset as num, var/z_offset as num, var/cropMap as num, var/measureOnly as num, var/no_changeturf as num){
 		// dmm_file: A .dmm file to load (Required).
 		// z_offset: A number representing the z-level on which to start loading the map (Optional).
 		// cropMap: When true, the map will be cropped to fit the existing world dimensions (Optional).

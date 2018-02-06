@@ -3,6 +3,7 @@
 	desc = "How do you even reuse a bullet?"
 	var/ammo_type = /obj/item/ammo_casing/caseless/
 	var/dropped = 0
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/bullet/reusable/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -23,6 +24,7 @@
 	damage = 30 //takes 3 spears to kill a mega carp, one to kill a normal carp
 	icon_state = "magspear"
 	ammo_type = /obj/item/ammo_casing/caseless/magspear
+
 
 /obj/item/projectile/bullet/reusable/foam_dart
 	name = "foam dart"

@@ -199,10 +199,8 @@ var/hsboxspawn = 1
 			//
 			if("hsbaaid")
 				var/obj/item/weapon/card/id/gold/ID = new(usr.loc)
-				ID.registered_name = usr.real_name
-				ID.assignment = "Sandbox"
 				ID.access = get_all_accesses()
-				ID.update_label()
+				ID.update_label(usr.real_name, "Sandbox")
 
 			//
 			// RCD - starts with full clip

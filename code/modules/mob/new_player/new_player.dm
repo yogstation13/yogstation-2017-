@@ -142,7 +142,7 @@
 
 	if(statpanel("Lobby"))
 		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
-		stat("Map:", MAP_NAME)
+		stat("Map:", SSmapping.config.map_name)
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
 			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
@@ -196,7 +196,7 @@
 			if (O)
 				observer.loc = O.loc
 			else
-				to_chat(src, "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>")
+				to_chat(src, "<span class='notice'>Teleporting failed. The map is probably still loading...</span>")
 			observer.key = key
 			observer.client = client
 			observer.set_ghost_appearance()

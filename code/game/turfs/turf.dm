@@ -17,6 +17,7 @@
 
 	var/image/obscured	//camerachunks
 
+	var/list/decals
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
 	var/unacidable = FALSE
@@ -35,10 +36,19 @@
 /turf/proc/Initalize_Atmos(times_fired)
 	CalculateAdjacentTurfs()
 
-/turf/Destroy()
+/turf/Destroy(force)
+	. = QDEL_HINT_IWILLGC
+	if(force)
+		..()
+		//this will completely wipe turf state
+		var/turf/basic/B = new /turf/basic(src)
+		for(var/A in B.contents)
+			qdel(A)
+		for(var/I in B.vars)
+			B.vars[I] = null
+		return
 	visibilityChanged()
 	..()
-	return QDEL_HINT_HARDDEL_NOW
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
@@ -341,3 +351,10 @@
 	SSair.remove_from_active(T0)
 	T0.CalculateAdjacentTurfs()
 	SSair.add_to_active(T0,1)
+
+/turf/proc/add_decal(decal, group, color)
+	LAZYINITLIST(decals)
+	if(!decals[group])
+		decals[group] = list()
+	decals[group] += decal
+	add_overlay(decals[group])

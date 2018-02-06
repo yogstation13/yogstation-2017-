@@ -94,7 +94,7 @@
 
 /turf/closed/bullet_act(obj/item/projectile/Proj)
 	. = ..()
-	if((. != -1) && !Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN))
+	if((. != -1) && !Proj.nodamage && (Proj.damage_type == BRUTE || Proj.damage_type == BURN) && Proj.makesBulletHoles)
 		var/mutable_appearance/bullet_hole = image('icons/effects/effects.dmi', "bullet_hole", BULLET_HOLE_LAYER)
 
 		var/random_x = rand(-13, 13)

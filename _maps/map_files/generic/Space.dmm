@@ -5659,6 +5659,91 @@
 	},
 /turf/open/space,
 /area/space)
+"nM" = (
+/obj/structure/alien/weeds,
+/obj/item/clothing/mask/facehugger{
+	icon_state = "facehugger_dead";
+	stat = 2
+	},
+/turf/open/floor/plasteel/airless,
+/area/mine/abandoned)
+"nN" = (
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"nO" = (
+/turf/open/floor/plating,
+/area/mine/north_outpost)
+"nP" = (
+/obj/machinery/atmospherics/pipe/simple,
+/turf/open/floor/plating,
+/area/mine/laborcamp)
+"nQ" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/mine/north_outpost)
+"nR" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plasteel,
+/area/mine/north_outpost)
+"nS" = (
+/obj/item/device/soulstone/anybody{
+	affiliation = "purple"
+	},
+/turf/open/floor/plasteel,
+/area/mine/north_outpost)
+"nT" = (
+/obj/effect/mob_spawn/human/skeleton,
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"nU" = (
+/obj/item/clothing/tie/petcollar{
+	name = "pet collar - Roxy";
+	tagname = "Roxy"
+	},
+/turf/open/floor/plasteel,
+/area/mine/laborcamp/security)
+"nV" = (
+/obj/item/weapon/stock_parts/cell/high,
+/turf/open/floor/bluegrid,
+/area/mine/maintenance)
+"nW" = (
+/obj/item/weapon/pickaxe/emergency,
+/turf/open/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/mine/explored)
+"nX" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/plating,
+/area/mine/west_outpost)
+"nY" = (
+/turf/open/floor/plating,
+/area/mine/west_outpost)
+"nZ" = (
+/obj/structure/bed,
+/turf/open/floor/carpet,
+/area/mine/living_quarters)
+"oa" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/turf/open/floor/plating/asteroid/airless,
+/area/mine/west_outpost)
+"ob" = (
+/turf/open/floor/plating,
+/area/mine/production)
+"oc" = (
+/obj/item/clothing/head/helmet/space/eva,
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"od" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/turf/open/floor/plating,
+/area/mine/living_quarters)
 "oe" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -5672,91 +5757,6 @@
 	},
 /turf/open/floor/plating,
 /area/mine/production)
-"od" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/turf/open/floor/plating,
-/area/mine/living_quarters)
-"oc" = (
-/obj/item/clothing/head/helmet/space/eva,
-/turf/open/floor/plasteel,
-/area/mine/eva)
-"ob" = (
-/turf/open/floor/plating,
-/area/mine/production)
-"oa" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plating/asteroid/airless,
-/area/mine/west_outpost)
-"nZ" = (
-/obj/structure/bed,
-/turf/open/floor/carpet,
-/area/mine/living_quarters)
-"nY" = (
-/turf/open/floor/plating,
-/area/mine/west_outpost)
-"nX" = (
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/plating,
-/area/mine/west_outpost)
-"nW" = (
-/obj/item/weapon/pickaxe/emergency,
-/turf/open/floor/plating/airless{
-	icon_state = "asteroidplating"
-	},
-/area/mine/explored)
-"nV" = (
-/obj/item/weapon/stock_parts/cell/high,
-/turf/open/floor/bluegrid,
-/area/mine/maintenance)
-"nU" = (
-/obj/item/clothing/tie/petcollar{
-	name = "pet collar - Roxy";
-	tagname = "Roxy"
-	},
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"nT" = (
-/obj/effect/mob_spawn/human/skeleton,
-/turf/open/floor/plasteel,
-/area/mine/laborcamp/security)
-"nS" = (
-/obj/item/device/soulstone/anybody{
-	affiliation = "purple"
-	},
-/turf/open/floor/plasteel,
-/area/mine/north_outpost)
-"nR" = (
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plasteel,
-/area/mine/north_outpost)
-"nQ" = (
-/obj/structure/grille/broken,
-/turf/open/floor/plating,
-/area/mine/north_outpost)
-"nP" = (
-/obj/machinery/atmospherics/pipe/simple,
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"nO" = (
-/turf/open/floor/plating,
-/area/mine/north_outpost)
-"nN" = (
-/turf/open/floor/plating,
-/area/mine/laborcamp)
-"nM" = (
-/obj/structure/alien/weeds,
-/obj/item/clothing/mask/facehugger{
-	icon_state = "facehugger_dead";
-	stat = 2
-	},
-/turf/open/floor/plasteel/airless,
-/area/mine/abandoned)
 
 (1,1,1) = {"
 aa
