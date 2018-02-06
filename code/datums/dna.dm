@@ -1,14 +1,15 @@
 
 /////////////////////////// DNA DATUM
 /datum/dna
-	var/unique_enzymes
-	var/struc_enzymes
 	var/uni_identity
 	var/blood_type
 	var/datum/species/species = new /datum/species/human() //The type of mutant race the player is if applicable (i.e. potato-man)
 	var/list/features = list("FFF") //first value is mutant color
 	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
+
+	var/list/potential_mutations = list()
 	var/list/mutations = list()   //All mutations are from now on here
+
 	var/list/temporary_mutations = list() //Timers for temporary mutations
 	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
 	var/mob/living/carbon/holder
@@ -16,6 +17,9 @@
 /datum/dna/New(mob/living/carbon/new_holder)
 	if(new_holder)
 		holder = new_holder
+
+
+
 
 /datum/dna/proc/transfer_identity(mob/living/carbon/destination, transfer_SE = 0)
 	destination.dna.unique_enzymes = unique_enzymes
@@ -38,13 +42,13 @@
 	new_dna.real_name = real_name
 	new_dna.mutations = mutations
 
-/datum/dna/proc/add_mutation(mutation_name)
-	var/datum/mutation/human/HM = mutations_list[mutation_name]
-	HM.on_acquiring(holder)
+/datum/dna/proc/add_mutation(mutation_name,genetic = FALSE)
+	var/datum/mutation/M = mutations_list[mutation_name]
+	M.installMutation(holder)
 
 /datum/dna/proc/remove_mutation(mutation_name)
-	var/datum/mutation/human/HM = mutations_list[mutation_name]
-	HM.on_losing(holder)
+	var/datum/mutation/M = mutations_list[mutation_name]
+	M.removeMutation(holder)
 
 /datum/dna/proc/check_mutation(mutation_name)
 	var/datum/mutation/human/HM = mutations_list[mutation_name]
