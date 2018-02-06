@@ -452,3 +452,8 @@
 	// And animate the attack!
 	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
 	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3, easing = QUAD_EASING)
+
+/atom/movable/vv_get_dropdown()
+	. = ..()
+	. -= "Jump to"
+	.["Follow"] = "?_src_=holder;adminplayerobservefollow=\ref[src]"

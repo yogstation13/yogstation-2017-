@@ -1152,3 +1152,15 @@
 	if(dna.check_mutation(ACTIVE_HULK) && confused && (world.time - last_bumped) > 15)
 		Bumped(AM)
 		return AM.attack_hulk(src)
+
+/mob/living/carbon/human/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Make monkey"] = "?_src_=vars;makemonkey=\ref[src]"
+	.["Set Species"] = "?_src_=vars;setspecies=\ref[src]"
+	.["Remove Body Part"] = "?_src_=vars;removebodypart=\ref[src]"
+	.["Make cyborg"] = "?_src_=vars;makerobot=\ref[src]"
+	.["Make alien"] = "?_src_=vars;makealien=\ref[src]"
+	.["Make slime"] = "?_src_=vars;makeslime=\ref[src]"
+	.["Toggle Purrbation"] = "?_src_=vars;purrbation=\ref[src]"
+	.["Make cluwne"] = "?_src_=vars;makecluwne=\ref[src]"
