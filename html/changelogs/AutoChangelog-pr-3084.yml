@@ -1,0 +1,4 @@
+author: "nichlas0010"
+delete-after: true 
+changes: 
+  - rscadd: "Electric chairs now have a 50% chance of deconverting revs!"
