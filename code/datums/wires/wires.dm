@@ -310,7 +310,7 @@ var/list/wire_name_directory = list()
 	if(IsAdminGhost(user))
 		reveal_wires = TRUE
 
-	if(issilicon(user))
+	if(issilicon(user) && !randomize) //!randomize because if not then cyborgs are going to be able to read things like syndiebombs.
 		reveal_wires = TRUE
 
 	// Station blueprints do that too, but only if the wires are not randomized.
