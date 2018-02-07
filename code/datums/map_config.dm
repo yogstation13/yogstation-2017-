@@ -12,12 +12,11 @@
 	var/minetype = "lavaland"
 
 	//Order matters here.
-	var/list/transition_config = list(CENTCOM = SELFLOOPING,
-									MAIN_STATION = CROSSLINKED,
+	var/list/transition_config = list(MAIN_STATION = CROSSLINKED,
+									CENTCOM = SELFLOOPING,
 									EMPTY_AREA_1 = CROSSLINKED,
 									EMPTY_AREA_2 = CROSSLINKED,
 									MINING = SELFLOOPING,
-									CITY_OF_COGS = SELFLOOPING,
 									EMPTY_AREA_3 = CROSSLINKED,
 									EMPTY_AREA_4 = CROSSLINKED,
 									EMPTY_AREA_5 = CROSSLINKED,
@@ -142,6 +141,6 @@
 
 /datum/map_config/proc/MakeNextMap()
 	return config_filename == "data/next_map.json" || fcopy(config_filename, "data/next_map.json")
-	
+
 /datum/map_config/proc/MakePreviousMap()
-	return config_filename == "data/previous_map.json" || fcopy(config_filename, "data/previous_map.json") 
+	return config_filename == "data/previous_map.json" || fcopy(config_filename, "data/previous_map.json")
