@@ -510,13 +510,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /mob/proc/is_nearcrit()
 	return FALSE
 
-
-//todo: do this properly.
 /mob/proc/is_holding_item_of_type(typepath)
-	for(var/obj/item/I in held_items())
+	for(var/obj/item/I in get_both_hands())
 		if(istype(I, typepath))
 			return I
 	return FALSE
-
-/mob/proc/held_items()
-	return list(src.l_hand, src.r_hand)
