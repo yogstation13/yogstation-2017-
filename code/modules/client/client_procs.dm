@@ -250,7 +250,7 @@ var/next_external_rsc = 0
 		if (holder)
 			to_chat(src, "Because you are an admin, you are being allowed to walk past this limitation, But it is still STRONGLY suggested you upgrade")
 		else
-			del(src)
+			qdel(src)
 			return 0
 	else if (byond_version < config.client_warn_version)	//We have words for this client.
 		to_chat(src, "<span class='danger'><b>Your version of byond may be getting out of date:</b></span>")
@@ -262,11 +262,11 @@ var/next_external_rsc = 0
 	if (connection == "web")
 		if (!config.allowwebclient)
 			to_chat(src, "Web client is disabled")
-			del(src)
+			qdel(src)
 			return 0
 		if (config.webclientmembersonly && !IsByondMember())
 			to_chat(src, "Sorry, but the web client is restricted to byond members only.")
-			del(src)
+			qdel(src)
 			return 0
 
 	if( (world.address == address || !address) && !host )
@@ -294,7 +294,7 @@ var/next_external_rsc = 0
 			log_access("Failed Login: [key] - New account attempting to connect during panic bunker")
 			message_admins("<span class='adminnotice'>Failed Login: [key] - New account attempting to connect during panic bunker</span>")
 			to_chat(src, "Sorry but the server is currently not accepting connections from never before seen players.")
-			del(src)
+			qdel(src)
 			return 0
 
 		if (config.notify_new_player_age >= 0)
@@ -378,6 +378,9 @@ var/next_external_rsc = 0
 		return
 	var/DBQuery/query_logout = dbcon.NewQuery("UPDATE `[format_table_name("connection_log")]` SET `left`=Now() WHERE `id`=[number];")
 	query_logout.Execute()
+
+/client/Destroy()
+	return QDEL_HINT_HARDDEL_NOW
 
 /client/proc/set_client_age_from_db()
 	if (IsGuestKey(src.key))
@@ -517,7 +520,7 @@ var/next_external_rsc = 0
 
 			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer confirmed (oldcid: [oldcid])")
 
-			del(src)
+			qdel(src)
 			return TRUE
 		else
 			if (cidcheck_failedckeys[ckey])
@@ -546,7 +549,7 @@ var/next_external_rsc = 0
 
 			//teeheehee (in case the above method doesn't work, its not 100% reliable.)
 			to_chat(src, "<pre class=\"system system\">Network connection shutting down due to read error.</pre>")
-			del(src)
+			qdel(src)
 			return TRUE
 
 /client/proc/note_randomizer_user()
@@ -572,7 +575,7 @@ var/next_external_rsc = 0
 			return
 	add_note(ckey, "Detected as using a cid randomizer.", null, adminckey, logged = 0)
 
-/client/proc/vv_edit_var(var_name, var_value)
+/client/vv_edit_var(var_name, var_value)
 	switch (var_name)
 		if ("holder")
 			return FALSE
@@ -580,3 +583,4 @@ var/next_external_rsc = 0
 			return FALSE
 		if ("key")
 			return FALSE
+	. = ..()
