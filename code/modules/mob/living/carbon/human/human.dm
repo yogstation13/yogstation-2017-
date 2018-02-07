@@ -64,7 +64,7 @@
 	//...sec hud images...
 	sec_hud_set_ID()
 	sec_hud_set_implants()
-	sec_hud_set_security_status()
+	update_face_dependant_huds()
 	//...and display them.
 	add_to_all_human_data_huds()
 
@@ -1040,6 +1040,7 @@
 	for(var/datum/mutation/human/HM in dna.mutations)
 		if(HM.quality != POSITIVE)
 			dna.remove_mutation(HM.name)
+	update_face_dependant_huds()
 	..()
 
 /mob/living/carbon/human/regenerate_organs()
@@ -1178,3 +1179,15 @@
 	if(dna.check_mutation(ACTIVE_HULK) && confused && (world.time - last_bumped) > 15)
 		Bumped(AM)
 		return AM.attack_hulk(src)
+
+/mob/living/carbon/human/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Make monkey"] = "?_src_=vars;makemonkey=\ref[src]"
+	.["Set Species"] = "?_src_=vars;setspecies=\ref[src]"
+	.["Remove Body Part"] = "?_src_=vars;removebodypart=\ref[src]"
+	.["Make cyborg"] = "?_src_=vars;makerobot=\ref[src]"
+	.["Make alien"] = "?_src_=vars;makealien=\ref[src]"
+	.["Make slime"] = "?_src_=vars;makeslime=\ref[src]"
+	.["Toggle Purrbation"] = "?_src_=vars;purrbation=\ref[src]"
+	.["Make cluwne"] = "?_src_=vars;makecluwne=\ref[src]"

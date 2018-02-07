@@ -215,4 +215,7 @@
 /obj/proc/CanAStarPass()
 	. = !density
 
-
+/obj/vv_get_dropdown()
+	. = ..()
+	.["Delete all of type"] = "?_src_=vars;delall=\ref[src]"
+	.["Osay"] = "?_src_=vars;osay=\ref[src]"

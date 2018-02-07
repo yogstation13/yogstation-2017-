@@ -1,27 +1,138 @@
-"e" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/pumpkin,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"i" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/tea,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"j" = (/obj/machinery/biogenerator,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"l" = (/obj/machinery/light/small{dir = 4},/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"n" = (/obj/structure/sink{dir = 8; pixel_x = -12},/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"r" = (/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"u" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/whitebeet,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"A" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/ambrosia,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"D" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/carrot,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"G" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/tobacco,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"K" = (/obj/effect/spawner/structure/window,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"Q" = (/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"R" = (/obj/item/weapon/reagent_containers/glass/bucket,/obj/machinery/light/small{dir = 8},/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"T" = (/turf/template_noop,/area/template_noop)
-"U" = (/obj/structure/rack,/obj/item/weapon/storage/bag/plants/portaseeder,/obj/item/device/plant_analyzer,/obj/item/weapon/cultivator,/obj/item/weapon/shovel/spade,/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"V" = (/obj/structure/barricade/wooden,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
-"Y" = (/obj/machinery/hydroponics/soil,/obj/item/seeds/cabbage,/turf/open/floor/plasteel/hydrofloor,/area/template_noop)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"e" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/pumpkin,
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/rh,
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"i" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/tea,
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/ez,
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"j" = (
+/obj/machinery/biogenerator,
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"l" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"n" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"r" = (
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"u" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/whitebeet,
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"A" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/ambrosia,
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"D" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/carrot,
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"G" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/tobacco,
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"K" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"Q" = (
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"R" = (
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"T" = (
+/turf/template_noop,
+/area/template_noop)
+"U" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/bag/plants/portaseeder,
+/obj/item/device/plant_analyzer,
+/obj/item/weapon/cultivator,
+/obj/item/weapon/shovel/spade,
+/obj/item/weapon/reagent_containers/glass/bottle/nutrient/l4z,
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"V" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
+"Y" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/seeds/cabbage,
+/turf/open/floor/plasteel/hydrofloor,
+/area/template_noop)
 
 (1,1,1) = {"
-TTTTVT
-TjYeGK
-TnrQlT
-TRrrUT
-TAiDuT
-TTTTTT
+T
+T
+T
+T
+T
+T
 "}
-
+(2,1,1) = {"
+T
+j
+n
+R
+A
+T
+"}
+(3,1,1) = {"
+T
+Y
+r
+r
+i
+T
+"}
+(4,1,1) = {"
+T
+e
+Q
+r
+D
+T
+"}
+(5,1,1) = {"
+V
+G
+l
+U
+u
+T
+"}
+(6,1,1) = {"
+T
+K
+T
+T
+T
+T
+"}

@@ -118,11 +118,18 @@
 			update_inv_r_hand(0)
 		return
 
+	var/datum/martial_art/martial_art
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		martial_art = H.martial_art
+
 	// operate three levels deep here (item in backpack in src; item in box in backpack in src, not any deeper)
 	if(!isturf(A) && A == loc || (A in contents) || (A.loc in contents) || (A.loc && (A.loc.loc in contents)))
 		// No adjacency needed
 		if(W)
 			var/resolved = resolve_assault_modules(A, ARMED_MELEE_CLICK)
+			if(!resolved && martial_art && martial_art.item_attack(src, W, A, FALSE) )
+				resolved = TRUE
 			if(!resolved && A && W)
 				resolved = A.attackby(W,src)
 			if(!resolved && A && W)
@@ -141,6 +148,8 @@
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
 				var/resolved = resolve_assault_modules(A, ARMED_MELEE_CLICK)
+				if(!resolved && martial_art && martial_art.item_attack(src, W, A, FALSE) )
+					resolved = TRUE
 				if(!resolved && A && W)
 					resolved = A.attackby(W,src,params)
 				if(!resolved && A && W)

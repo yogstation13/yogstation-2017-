@@ -8,6 +8,8 @@
 	density = 1
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
+	
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 	var/secondsElectrified = 0
 	var/actionstaken = list()

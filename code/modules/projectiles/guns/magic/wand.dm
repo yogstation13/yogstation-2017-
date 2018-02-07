@@ -50,7 +50,7 @@
 /obj/item/weapon/gun/magic/wand/proc/zap_self(mob/living/user)
 	user.visible_message("<span class='danger'>[user] zaps \himself with [src].</span>")
 	playsound(user, fire_sound, 50, 1)
-	user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> zapped \himself with a <b>[src]</b>"
+	user.attack_log += "\[[gameTimestamp()]\] <b>[user]/[user.ckey]</b> zapped \himself with a <b>[src]</b>"
 
 
 /////////////////////////////////////
@@ -105,6 +105,7 @@
 	icon_state = "polywand"
 	fire_sound = "sound/magic/Staff_Change.ogg"
 	max_charges = 10 //10, 5, 5, 4
+	no_den_usage = 1
 
 /obj/item/weapon/gun/magic/wand/polymorph/zap_self(mob/living/user)
 	..() //because the user mob ceases to exists by the time wabbajack fully resolves

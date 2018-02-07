@@ -71,6 +71,25 @@
 	if(!proximity && prox_check)
 		return
 	A.emag_act(user)
+	
+//Don't let Nich touch my baby
+/obj/item/weapon/card/emag/emag_act(mob/user)
+	var/otherEmag
+	if(user.l_hand)
+		if(istype(user.l_hand, /obj/item/weapon/card/emag))
+			if(user.l_hand != src)
+				otherEmag = user.l_hand
+	if(!otherEmag)
+		if(user.r_hand)
+			if(istype(user.r_hand, /obj/item/weapon/card/emag))
+				if(user.r_hand != src)
+					otherEmag = user.r_hand
+	if(!otherEmag)
+		return
+	to_chat(user, "<span class='notice'>The cryptographic sequencers attempt to override each other and destroy themselves in the process.</span>")
+	playsound(src.loc, "sparks", 50, 1)
+	qdel(otherEmag)
+	qdel(src)
 
 /obj/item/weapon/card/id
 	name = "identification card"
@@ -112,9 +131,11 @@ update_label("John Doe", "Clowny")
 	Properly formats the name and occupation and sets the id name to the arguments
 */
 /obj/item/weapon/card/id/proc/update_label(newname, newjob)
-	if(newname || newjob)
-		name = "[(!newname)	? "identification card"	: "[newname]'s ID Card"][(!newjob) ? "" : " ([newjob])"]"
-		return
+	if(newname)
+		registered_name = newname
+	
+	if(newjob)
+		assignment = newjob
 
 	name = "[(!registered_name)	? "identification card"	: "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
 	ID_fluff()
@@ -161,21 +182,23 @@ update_label("John Doe", "Clowny")
 	if(istype(user, /mob/living) && user.mind)
 		if(!restricted || user.mind.special_role)
 			if(alert(user, "Action", "Agent ID", "Show", "Forge") == "Forge")
-				var t = name_input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))
-				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
-					if (t)
-						alert("Invalid name.")
+				var/new_name = name_input(user, "What name would you like to put on this card?", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))
+				if(!new_name)
 					return
-				registered_name = t
 
-				var u = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Assistant", MAX_MESSAGE_LEN)
-				if(!u)
-					registered_name = ""
+				if(new_name == "Unknown" || new_name == "floor" || new_name == "wall" || new_name == "r-wall") //Same as mob/new_player/prefrences.dm
+					to_chat(user, "<span class='warning'>You have entered an invalid name.</span>")
 					return
-				assignment = u
-				update_label()
+
+
+				var/new_job = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment, MAX_MESSAGE_LEN)
+				if(!new_job)
+					return
+
+				update_label(new_name, new_job)
 				to_chat(user, "<span class='notice'>You successfully forge the ID card.</span>")
 				return
+
 	..()
 
 /obj/item/weapon/card/id/syndicate_command
@@ -306,43 +329,44 @@ update_label("John Doe", "Clowny")
 /obj/item/weapon/card/id/proc/ID_fluff()
 	var/job = assignment
 	var/list/idfluff = list(
-	"Assistant" = list("civillian","green"),
-	"Captain" = list("captain","gold"),
-	"Head of Personnel" = list("civillian","silver"),
-	"Head of Security" = list("security","silver"),
-	"Chief Engineer" = list("engineering","silver"),
-	"Research Director" = list("science","silver"),
-	"Chief Medical Officer" = list("medical","silver"),
-	"Station Engineer" = list("engineering","yellow"),
-	"Atmospheric Technician" = list("engineering","white"),
-	"Signal Technician" = list("engineering","green"),
-	"Medical Doctor" = list("medical","blue"),
-	"Geneticist" = list("medical","purple"),
-	"Virologist" = list("medical","green"),
-	"Chemist" = list("medical","orange"),
-	"Paramedic" = list("medical","white"),
-	"Psychiatrist" = list("medical","brown"),
-	"Scientist" = list("science","purple"),
-	"Roboticist" = list("science","black"),
-	"Quartermaster" = list("cargo","silver"),
-	"Cargo Technician" = list("cargo","brown"),
-	"Shaft Miner" = list("cargo","black"),
-	"Mining Medic" = list("cargo","blue"),
-	"Bartender" = list("civillian","black"),
-	"Botanist" = list("civillian","blue"),
-	"Cook" = list("civillian","white"),
-	"Janitor" = list("civillian","purple"),
-	"Librarian" = list("civillian","purple"),
-	"Chaplain" = list("civillian","black"),
-	"Clown" = list("clown","rainbow"),
-	"Mime" = list("mime","white"),
-	"Clerk" = list("civillian","blue"),
-	"Tourist" = list("civillian","yellow"),
-	"Warden" = list("security","black"),
-	"Security Officer" = list("security","red"),
-	"Detective" = list("security","brown"),
-	"Lawyer" = list("security","purple")
+		"Assistant" = list("civillian","green"),
+		"Captain" = list("captain","gold"),
+		"Head of Personnel" = list("civillian","silver"),
+		"Head of Security" = list("security","silver"),
+		"Chief Engineer" = list("engineering","silver"),
+		"Research Director" = list("science","silver"),
+		"Chief Medical Officer" = list("medical","silver"),
+		"Station Engineer" = list("engineering","yellow"),
+		"Atmospheric Technician" = list("engineering","white"),
+		"Signal Technician" = list("engineering","green"),
+		"Medical Doctor" = list("medical","blue"),
+		"Geneticist" = list("medical","purple"),
+		"Virologist" = list("medical","green"),
+		"Chemist" = list("medical","orange"),
+		"Paramedic" = list("medical","white"),
+		"Psychiatrist" = list("medical","brown"),
+		"Scientist" = list("science","purple"),
+		"Roboticist" = list("science","black"),
+		"Quartermaster" = list("cargo","silver"),
+		"Cargo Technician" = list("cargo","brown"),
+		"Shaft Miner" = list("cargo","black"),
+		"Mining Medic" = list("cargo","blue"),
+		"Bartender" = list("civillian","black"),
+		"Botanist" = list("civillian","blue"),
+		"Cook" = list("civillian","white"),
+		"Janitor" = list("civillian","purple"),
+		"Librarian" = list("civillian","purple"),
+		"Chaplain" = list("civillian","black"),
+		"Clown" = list("clown","rainbow"),
+		"Mime" = list("mime","white"),
+		"Clerk" = list("civillian","blue"),
+		"Tourist" = list("civillian","yellow"),
+		"Warden" = list("security","black"),
+		"Security Officer" = list("security","red"),
+		"Detective" = list("security","brown"),
+		"Lawyer" = list("security","purple")
 	)
+	
 	if(job in idfluff)
 		has_fluff = 1
 	else
@@ -350,6 +374,7 @@ update_label("John Doe", "Clowny")
 			return
 		else
 			job = "Assistant" //Loads up the basic green ID
+
 	overlays.Cut()
 	overlays += idfluff[job][1]
 	overlays += idfluff[job][2]

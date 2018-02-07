@@ -276,6 +276,16 @@ var/next_mob_id = 0
 	set name = "Examine"
 	set category = "IC"
 
+	var/see_turfs = FALSE
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(H.glasses && H.glasses.vision_flags & SEE_TURFS)
+			see_turfs = TRUE
+
+	if(!isobserver(src) && isturf(A) && !(A in view(src)))
+		if(!see_turfs)
+			return
+
 	if(is_blind(src))
 		to_chat(src, "<span class='notice'>Something is there but you can't see it.</span>")
 		return
@@ -569,9 +579,10 @@ var/next_mob_id = 0
 	..()
 
 	if(statpanel("Status"))
-		stat(null, "Map: [MAP_NAME]")
-		if (nextmap && istype(nextmap))
-			stat(null, "Next Map: [nextmap.friendlyname]")
+		stat(null, "Map: [SSmapping.config.map_name]")
+		var/datum/map_config/cached = SSmapping.next_map_config
+		if(cached)
+			stat(null, "Next Map: [cached.map_name]")
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		stat(null, "Round: [yog_round_number]")
 
@@ -792,6 +803,8 @@ var/next_mob_id = 0
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
 	mob_spell_list += S
 	S.action.Grant(src)
+	if(mind)
+		mind.spell_list += S
 
 //override to avoid rotating pixel_xy on mobs
 /mob/shuttleRotate(rotation)
@@ -919,10 +932,10 @@ var/next_mob_id = 0
 		if( search_id && istype(A,/obj/item/weapon/card/id) )
 			var/obj/item/weapon/card/id/ID = A
 			if(ID.registered_name == oldname)
-				ID.registered_name = newname
-				ID.update_label()
+				ID.update_label(newname)
 				if(!search_pda)
 					break
+
 				search_id = 0
 
 		else if( search_pda && istype(A,/obj/item/device/pda) )
@@ -932,6 +945,7 @@ var/next_mob_id = 0
 				PDA.update_label()
 				if(!search_id)
 					break
+
 				search_pda = 0
 
 /mob/proc/update_stat()
@@ -940,34 +954,63 @@ var/next_mob_id = 0
 /mob/proc/update_health_hud()
 	return
 
-/mob/living/on_varedit(modified_var)
-	switch(modified_var)
+/mob/living/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("stat")
+			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
+				dead_mob_list -= src
+				living_mob_list += src
+			if((stat < DEAD) && (var_value == DEAD))//Kill he
+				living_mob_list -= src
+				dead_mob_list += src
+	. = ..()
+	switch(var_name)
 		if("weakened")
-			SetWeakened(weakened)
+			SetWeakened(var_value)
 		if("stunned")
-			SetStunned(stunned)
+			SetStunned(var_value)
 		if("paralysis")
-			SetParalysis(paralysis)
+			SetParalysis(var_value)
 		if("sleeping")
-			SetSleeping(sleeping)
+			SetSleeping(var_value)
 		if("eye_blind")
-			set_blindness(eye_blind)
+			set_blindness(var_value)
 		if("eye_damage")
-			set_eye_damage(eye_damage)
+			set_eye_damage(var_value)
 		if("eye_blurry")
-			set_blurriness(eye_blurry)
+			set_blurriness(var_value)
 		if("ear_deaf")
-			setEarDamage(-1, ear_deaf)
+			setEarDamage(-1, var_value)
 		if("ear_damage")
-			setEarDamage(ear_damage, -1)
+			setEarDamage(var_value, -1)
 		if("maxHealth")
 			updatehealth()
 		if("resize")
 			update_transform()
-	..()
 
 /mob/proc/is_literate()
 	return 0
 
 /mob/proc/get_idcard()
 	return
+
+/mob/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Gib"] = "?_src_=vars;gib=\ref[src]"
+	.["Give Spell"] = "?_src_=vars;give_spell=\ref[src]"
+	.["Give Disease"] = "?_src_=vars;give_disease=\ref[src]"
+	.["Make Space Ninja"] = "?_src_=vars;ninja=\ref[src]"
+	.["Toggle Godmode"] = "?_src_=vars;godmode=\ref[src]"
+	.["Toggle Build Mode"] = "?_src_=vars;build_mode=\ref[src]"
+	.["Assume Direct Control"] = "?_src_=vars;direct_control=\ref[src]"
+	.["Drop Everything"] = "?_src_=vars;drop_everything=\ref[src]"
+	.["Regenerate Icons"] = "?_src_=vars;regenerateicons=\ref[src]"
+	.["Offer Control to Ghosts"] = "?_src_=vars;offer_control=\ref[src]"
+	.["Show player panel"] = "?_src_=vars;mob_player_panel=\ref[src]"
+
+/mob/vv_get_var(var_name)
+	switch(var_name)
+		if ("attack_log")
+			return debug_variable(var_name, attack_log, 0, src, FALSE)
+	. = ..()

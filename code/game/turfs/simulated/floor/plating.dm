@@ -12,10 +12,12 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
-	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
-	burnt_states = list("panelscorched")
 
 /turf/open/floor/plating/New()
+	if(!broken_states)
+		broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
+	if(!burnt_states)
+		burnt_states = list("panelscorched")
 	..()
 	icon_plating = icon_state
 
@@ -152,7 +154,27 @@
 
 /turf/open/floor/engine/cult
 	name = "engraved floor"
-	icon_state = "cult"
+	icon_state = "plating"
+	var/obj/effect/clockwork/overlay/floor/realappearence
+
+/turf/open/floor/engine/cult/New()
+	..()
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
+	realappearence = PoolOrNew(/obj/effect/overlay/cult/floor, src)
+	realappearence.linked = src
+
+/turf/open/floor/engine/cult/Destroy()
+	be_removed()
+	return ..()
+
+/turf/open/floor/engine/cult/ChangeTurf(path, defer_change = FALSE)
+	if(path != type)
+		be_removed()
+	return ..()
+
+/turf/open/floor/engine/cult/proc/be_removed()
+	qdel(realappearence)
+	realappearence = null
 
 /turf/open/floor/engine/cult/New()
 	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)

@@ -467,7 +467,7 @@
 /area/lavaland/surface/outdoors/mapgen_protected)
 "CJ" = (
 /obj/structure/table/abductor,
-/obj/item/weapon/gun/energy/kinetic_accelerator/crossbow/large,
+/obj/item/weapon/gun/energy/crossbow/large,
 /obj/effect/spawner/mapset{
 	prob_nothing = 60
 	},
@@ -784,10 +784,14 @@
 /area/lavaland/surface/outdoors/mapgen_protected)
 "ZE" = (
 /obj/structure/table/abductor,
-/obj/item/weapon/gun/energy/kinetic_accelerator/super,
+/obj/item/weapon/gun/energy/kinetic_accelerator,
 /obj/effect/spawner/mapset{
 	prob_nothing = 60
 	},
+/obj/item/kinetic_part/barrel/super,
+/obj/item/kinetic_part/barrel_end/super,
+/obj/item/kinetic_part/charger/super,
+/obj/item/kinetic_part/grip/super,
 /turf/open/floor/mineral/abductor,
 /area/lavaland/surface/outdoors/mapgen_protected)
 "ZZ" = (
