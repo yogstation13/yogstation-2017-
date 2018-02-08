@@ -215,7 +215,10 @@
 		SSshuttle.mobile -= src
 	. = ..()
 
-/obj/docking_port/mobile/initialize()
+/obj/docking_port/mobile/Initialize(mapload)
+	..()
+	if(!mapload)
+		return
 	if(!id)
 		id = "[SSshuttle.mobile.len]"
 	if(name == "shuttle")

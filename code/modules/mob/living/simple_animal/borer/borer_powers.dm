@@ -16,7 +16,8 @@
 			choices += H
 
 	var/mob/living/carbon/human/H = input(src,"Who do you wish to infect?") in null|choices
-	if(!H) return
+	if(!H)
+		return
 
 	if(H.borer)
 		to_chat(src, "<span class='warning'>[victim] is already infected!</span>")
@@ -29,12 +30,17 @@
 			to_chat(src, "<span class='warning'>As [H] moves away, you are dislodged and fall to the ground.</span>")
 			return
 
-		if(!H || !src) return
+		if(!H || !src)
+			return
 
 		Infect(H)
 
 /mob/living/simple_animal/borer/proc/CanInfect(var/mob/living/carbon/human/H)
 	if(!Adjacent(H))
+		return 0
+	
+	if(!H.mind)
+		to_chat(src, "<span class='warning'>[H] does not have a mind.</span>")
 		return 0
 
 	if(!checkStrength())

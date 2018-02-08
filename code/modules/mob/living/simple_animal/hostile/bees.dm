@@ -123,7 +123,7 @@
 	if(istype(A, /obj/machinery/hydroponics))
 		var/obj/machinery/hydroponics/Hydro = A
 		if(Hydro.myseed && !Hydro.dead && !Hydro.recent_bee_visit)
-			wanted_objects |= /obj/machinery/hydroponics //so we only hunt them while they're alive/seeded/not visisted
+			wanted_objects |= typecacheof(/obj/machinery/hydroponics) //so we only hunt them while they're alive/seeded/not visisted
 			return 1
 	if(isliving(A))
 		var/mob/living/H = A
@@ -140,7 +140,7 @@
 		var/obj/structure/beebox/BB = target
 		loc = BB
 		target = null
-		wanted_objects -= /obj/structure/beebox //so we don't attack beeboxes when not going home
+		wanted_objects -= typecacheof(/obj/structure/beebox) //so we don't attack beeboxes when not going home
 	else
 		if(beegent && isliving(target))
 			var/mob/living/L = target
@@ -162,7 +162,7 @@
 		return
 
 	target = null //so we pick a new hydro tray next FindTarget(), instead of loving the same plant for eternity
-	wanted_objects -= /obj/machinery/hydroponics //so we only hunt them while they're alive/seeded/not visisted
+	wanted_objects -= typecacheof(/obj/machinery/hydroponics) //so we only hunt them while they're alive/seeded/not visisted
 	Hydro.recent_bee_visit = TRUE
 	spawn(BEE_TRAY_RECENT_VISIT)
 		if(Hydro)
@@ -196,7 +196,7 @@
 			idle = max(0, --idle)
 			if(idle <= BEE_IDLE_GOHOME && prob(BEE_PROB_GOHOME))
 				if(!FindTarget())
-					wanted_objects += /obj/structure/beebox //so we don't attack beeboxes when not going home
+					wanted_objects += typecacheof(/obj/structure/beebox) //so we don't attack beeboxes when not going home
 					target = beehome
 	if(!beehome) //add outselves to a beebox (of the same reagent) if we have no home
 		for(var/obj/structure/beebox/BB in view(vision_range, src))

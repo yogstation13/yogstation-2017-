@@ -83,7 +83,7 @@
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/manipulator = 6)
 
-/obj/machinery/power/compressor/initialize()
+/obj/machinery/power/compressor/Initialize()
 	..()
 	locate_machinery()
 	if(!turbine)
@@ -199,7 +199,7 @@
 							/obj/item/stack/cable_coil = 5,
 							/obj/item/weapon/stock_parts/capacitor = 6)
 
-/obj/machinery/power/turbine/initialize()
+/obj/machinery/power/turbine/Initialize()
 	..()
 	locate_machinery()
 	if(!compressor)
@@ -335,10 +335,9 @@
 
 
 
-/obj/machinery/computer/turbine_computer/initialize()
+/obj/machinery/computer/turbine_computer/Initialize()
 	..()
-	spawn(10)
-		locate_machinery()
+	locate_machinery()
 
 /obj/machinery/computer/turbine_computer/locate_machinery()
 	compressor = locate(/obj/machinery/power/compressor) in range(5, src)

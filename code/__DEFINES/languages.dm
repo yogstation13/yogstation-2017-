@@ -12,3 +12,4 @@
 #define PREDATOR 128
 #define RATVAR 256
 #define ASHWALKER 512
+#define ZOMBIE 1024

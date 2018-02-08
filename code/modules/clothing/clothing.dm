@@ -53,7 +53,19 @@
 				user_vars_remembered[variable] = user.vars[variable]
 				user.vars[variable] = user_vars_to_edit[variable]
 
+/obj/item/clothing/proc/take_teardamage(amount)
+	var/bearer = loc
+	if(amount > tearhealth || 0 >= tearhealth - amount)
+		visible_message(break_message(), break_message())
+		qdel(src)
 
+	if (ishuman(bearer))
+		var/mob/living/carbon/human/H = bearer
+		H.update_inv_w_uniform()
+	tearhealth -= amount
+
+/obj/item/clothing/proc/break_message()
+	return "<span class='warning'>[src] falls apart and breaks!</span>"
 
 //Ears: currently only used for headsets and earmuffs
 /obj/item/clothing/ears
@@ -378,28 +390,27 @@ BLIND     // can't see anything
 	adjusted = 0
 	..()
 
-/obj/item/clothing/under/proc/handle_tear(mob/user)
-	if (canbetorn)
-		if (tearhealth >= 20)
-			tearhealth -= 20
-			permeability_coefficient += 0.20
-			if (armor)
-				if (armor["brute"])
-					armor["brute"] -= 2
-				if (armor["melee"])
-					armor["melee"] -= 2
-			if (user)
-				if (user.loc)
-					new /obj/item/clothing/torncloth(user.loc)
+/obj/item/clothing/under/proc/handle_tear(mob/user, ripcount = 1)
+	if(!canbetorn)
+		return
+
+	for(var/count = ripcount, count > 0, ripcount--)
+		take_teardamage(20)
+		permeability_coefficient += 0.20
+		if (armor)
+			if (armor["brute"])
+				armor["brute"] -= 2
+			if (armor["melee"])
+				armor["melee"] -= 2
+		if (user)
+			if (user.loc)
+				new /obj/item/clothing/torncloth(user.loc)
+				if(!qdeleted(src))
 					user.visible_message("You hear cloth tearing.", "A segment of [src] falls away to the floor, torn apart.", "*riiip*")
-			return 1
-		else
-			//no more cloth left on the item, so nix it
-			user.visible_message("[src] falls away to tatters, stripped to its barest seams.")
-			teardown(user)
-		return 1
-	else
-		return 0
+	return 1
+
+
+
 
 /obj/item/clothing/under/proc/teardown(mob/user)
 	removetie() //remove accessories before qdel

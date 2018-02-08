@@ -96,7 +96,7 @@
 		to_chat(user, "<span class='notice'>You return the wisp to the lantern.</span>")
 
 		if(wisp.orbiting)
-			var/atom/A = wisp.orbiting
+			var/atom/A = wisp.orbiting.orbiting
 			if(istype(A, /mob/living))
 				var/mob/living/M = A
 				M.sight &= ~SEE_MOBS
@@ -512,8 +512,15 @@
 	var/turf/T = get_turf(src)
 	var/list/contents = T.GetAllContents()
 	var/mob/dead/observer/current_spirits = list()
-	for(var/mob/dead/observer/G in dead_mob_list)
-		if(G.orbiting in contents)
+	var/list/orbiters = list()
+	for(var/thing in contents)
+		var/atom/A = thing
+		if (A.orbiters)
+			orbiters += A.orbiters
+
+	for(var/thing in orbiters)
+		if (isobserver(thing))
+			var/mob/dead/observer/G = thing
 			ghost_counter++
 			G.invisibility = 0
 			current_spirits |= G
