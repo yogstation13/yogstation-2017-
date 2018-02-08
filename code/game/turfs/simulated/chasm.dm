@@ -13,7 +13,7 @@
 	var/drop_z = 1
 	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
 
-/turf/open/chasm/New()
+/turf/open/chasm/Initialize()
 	. = ..()
 	safeties_typecache = typecacheof(safeties_typecache)
 
@@ -89,7 +89,7 @@
 			L.adjustBruteLoss(30)
 
 
-/turf/open/chasm/straight_down/New()
+/turf/open/chasm/straight_down/Initialize()
 	..()
 	drop_x = x
 	drop_y = y

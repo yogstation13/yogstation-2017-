@@ -33,7 +33,7 @@
 	var/titlescreen = TITLESCREEN
 	var/titlescreenalt = TITLESCREEN_ALT
 
-/turf/closed/indestructible/splashscreen/New()
+/turf/closed/indestructible/splashscreen/Initialize()
 	..()
 	if(titlescreen)
 		if(titlescreenalt)
@@ -46,12 +46,6 @@
 
 /turf/closed/indestructible/riveted
 	icon_state = "riveted"
-
-/turf/closed/indestructible/riveted/New()
-	..()
-	if(smooth)
-		queue_smooth(src)
-		icon_state = ""
 
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'

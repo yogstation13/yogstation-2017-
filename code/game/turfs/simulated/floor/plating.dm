@@ -13,7 +13,7 @@
 	icon_state = "plating"
 	intact = 0
 
-/turf/open/floor/plating/New()
+/turf/open/floor/plating/Initialize()
 	if(!broken_states)
 		broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
 	if(!burnt_states)
@@ -157,7 +157,7 @@
 	icon_state = "plating"
 	var/obj/effect/clockwork/overlay/floor/realappearence
 
-/turf/open/floor/engine/cult/New()
+/turf/open/floor/engine/cult/Initialize()
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
 	realappearence = PoolOrNew(/obj/effect/overlay/cult/floor, src)
@@ -176,9 +176,9 @@
 	qdel(realappearence)
 	realappearence = null
 
-/turf/open/floor/engine/cult/New()
-	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
+/turf/open/floor/engine/cult/Initialize()
 	..()
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
 
 /turf/open/floor/engine/cult/narsie_act()
 	return
@@ -224,7 +224,7 @@
 	name = "alien floor"
 	icon_state = "alienpod1"
 
-/turf/open/floor/plating/abductor/New()
+/turf/open/floor/plating/abductor/Initialize()
 	..()
 	icon_state = "alienpod[rand(1,9)]"
 
@@ -239,11 +239,6 @@
 	luminosity = 1
 	flags = 0
 	unacidable = 1
-	var/static/list/safeties_typecache = list(/obj/structure/lattice/catwalk)
-
-/turf/open/floor/plating/lava/New()
-	. = ..()
-	safeties_typecache = typecacheof(safeties_typecache)
 
 /turf/open/floor/plating/lava/airless
 	initial_gas_mix = "TEMP=2.7"
@@ -266,7 +261,9 @@
 /turf/open/floor/plating/lava/TakeTemperature(temp)
 
 /turf/open/floor/plating/lava/proc/is_safe()
-	var/list/found_safeties = typecache_filter_list(contents, safeties_typecache)
+	//if anything matching this typecache is found in the lava, we don't burn things
+	var/static/list/lava_safeties_typecache = typecacheof(list(/obj/structure/lattice/catwalk))
+	var/list/found_safeties = typecache_filter_list(contents, lava_safeties_typecache)
 	return LAZYLEN(found_safeties)
 
 /turf/open/floor/plating/lava/proc/burn_stuff(AM)

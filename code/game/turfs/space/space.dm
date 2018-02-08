@@ -16,15 +16,16 @@
 	var/global/datum/gas_mixture/space/space_gas = new
 
 
-/turf/open/space/New()
+/turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
-
-/turf/open/space/Destroy(force)
-	if(force)
-		. = ..()
-	else
-		return QDEL_HINT_LETMELIVE
+	
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+	
+	if(requires_activation)
+		SSair.add_to_active(src)
 
 /turf/open/space/Initalize_Atmos(times_fired)
 	return

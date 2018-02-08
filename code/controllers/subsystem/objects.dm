@@ -1,5 +1,9 @@
 var/datum/subsystem/objects/SSobj
 
+#define INITIALIZATION_INSSOBJ 0		//New should not call Initialize
+#define INITIALIZATION_INNEW_MAPLOAD 1	//New should call Initialize(TRUE)
+#define INITIALIZATION_INNEW_REGULAR 2	//New should call Initialize(FALSE)
+
 /datum/var/isprocessing = 0
 
 /datum/proc/process()
@@ -12,7 +16,7 @@ var/datum/subsystem/objects/SSobj
 	init_order = 12
 	priority = 40
 
-	var/initialized = FALSE
+	var/initialized = INITIALIZATION_INSSOBJ
 	var/old_initialized
 	var/list/atom_spawners = list()
 	var/list/processing = list()
@@ -25,12 +29,48 @@ var/datum/subsystem/objects/SSobj
 /datum/subsystem/objects/Initialize(timeofdayl)
 	trigger_atom_spawners()
 	setupGenetics()
-	for(var/thing in world)
-		var/atom/A = thing
-		A.Initialize(TRUE)
-		CHECK_TICK
-	initialized = TRUE
+	initialized = INITIALIZATION_INNEW_MAPLOAD
+	InitializeAtoms()
 	. = ..()
+
+/datum/subsystem/objects/proc/InitializeAtoms(list/objects = null)
+	if(initialized == INITIALIZATION_INSSOBJ)
+		return
+
+	var/list/late_loaders
+
+	initialized = INITIALIZATION_INNEW_MAPLOAD
+	
+	if(objects)
+		for(var/I in objects)
+			var/atom/A = I
+			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+				var/start_tick = world.time
+				if(A.Initialize(TRUE))
+					LAZYADD(late_loaders, A)
+				if(start_tick != world.time)
+					WARNING("[A]: [A.type] slept during it's Initialize!")
+				CHECK_TICK
+	else
+		for(var/atom/A in world)
+			if(!A.initialized)	//this check is to make sure we don't call it twice on an object that was created in a previous Initialize call
+				var/start_tick = world.time
+				if(A.Initialize(TRUE))
+					LAZYADD(late_loaders, A)
+				if(start_tick != world.time)
+					WARNING("[A]: [A.type] slept during it's Initialize!")
+				CHECK_TICK
+
+	initialized = INITIALIZATION_INNEW_REGULAR
+	
+	if(late_loaders)
+		for(var/I in late_loaders)
+			var/atom/A = I
+			var/start_tick = world.time
+			A.Initialize(FALSE)
+			if(start_tick != world.time)
+				WARNING("[A]: [A.type] slept during it's Initialize!")
+			CHECK_TICK
 
 /datum/subsystem/objects/proc/map_loader_begin()
 	old_initialized = initialized
@@ -63,8 +103,6 @@ var/datum/subsystem/objects/SSobj
 			thing.process(wait)
 		else
 			SSobj.processing -= thing
-			if (thing)
-				thing.isprocessing = 0
 		if (MC_TICK_CHECK)
 			return
 
@@ -74,13 +112,6 @@ var/datum/subsystem/objects/SSobj
 				burningobj.burn()
 		else
 			SSobj.burning.Remove(burningobj)
-
-/datum/subsystem/objects/proc/setup_template_objects(list/objects)
-	trigger_atom_spawners(0, ignore_z=TRUE)
-	if(initialized)
-		for(var/A in objects)
-			var/atom/B = A
-			B.Initialize(TRUE)
 
 /datum/subsystem/objects/Recover()
 	initialized = SSobj.initialized

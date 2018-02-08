@@ -389,7 +389,7 @@
 	name = "engraved floor"
 	explosion_block = 50
 
-/turf/open/floor/plasteel/cult/dungeon/New()
+/turf/open/floor/plasteel/cult/dungeon/Initialize()
 	..()
 	slowdown = rand(0,2)
 

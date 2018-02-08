@@ -37,7 +37,7 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 	var/list/broken_states
 	var/list/burnt_states
 
-/turf/open/floor/New()
+/turf/open/floor/Initialize(mapload)
 	if(!broken_states)
 		broken_states = list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 	if(!burnt_states)
@@ -49,6 +49,8 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 		icon_regular_floor = icon_state
 	if(floor_tile)
 		builtin_tile = new floor_tile
+	if(mapload)
+		MakeDirty()
 
 /turf/open/floor/Destroy()
 	if(builtin_tile)
@@ -207,8 +209,3 @@ var/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","damaged3","
 
 /turf/open/floor/can_have_cabling()
 	return !burnt && !broken
-
-/turf/open/floor/Initialize(mapload)
-	..()
-	if(mapload)
-		MakeDirty()

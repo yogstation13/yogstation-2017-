@@ -60,9 +60,9 @@
 	icon_state = "bcircuit"
 	floor_tile = /obj/item/stack/tile/plasteel
 
-/turf/open/floor/bluegrid/New()
-	..()
+/turf/open/floor/bluegrid/Initialize()
 	nuke_tiles += src
+	..()
 
 /turf/open/floor/bluegrid/Destroy()
 	nuke_tiles -= src
@@ -100,7 +100,7 @@
 	icon_state = "water"
 	baseturf = /turf/open/floor/plating/beach/water
 
-/turf/open/floor/plating/ironsand/New()
+/turf/open/floor/plating/ironsand/Initialize()
 	..()
 	name = "Iron Sand"
 	icon_state = "ironsand[rand(1,15)]"
@@ -166,7 +166,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "clockwork_floor"
 
-/turf/open/floor/clockwork/New()
+/turf/open/floor/clockwork/Initialize()
 	..()
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/floor, src)
 	PoolOrNew(/obj/effect/overlay/temp/ratvar/beam, src)

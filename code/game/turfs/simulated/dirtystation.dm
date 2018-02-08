@@ -8,7 +8,7 @@
 	desc = "Looks like it's been here a while. Ew."
 	bloodiness = 0
 
-/obj/effect/decal/cleanable/blood/old/New()
+/obj/effect/decal/cleanable/blood/old/Initialize()
 	..()
 	icon_state += "-old"
 	blood_DNA["Non-human DNA"] = "A+"
@@ -18,7 +18,7 @@
 	desc = "Space Jesus, why didn't anyone clean this up?  It smells terrible."
 	bloodiness = 0
 
-/obj/effect/decal/cleanable/blood/gibs/old/New()
+/obj/effect/decal/cleanable/blood/gibs/old/Initialize()
 	..()
 	icon_state += "-old"
 	dir = pick(1,2,4,8)
@@ -28,7 +28,7 @@
 	name = "crusty dried vomit"
 	desc = "You try not to look at the chunks, and fail."
 
-/obj/effect/decal/cleanable/vomit/old/New()
+/obj/effect/decal/cleanable/vomit/old/Initialize()
 	..()
 	icon_state += "-old"
 
