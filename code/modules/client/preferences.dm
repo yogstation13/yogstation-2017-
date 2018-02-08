@@ -64,7 +64,7 @@ var/list/preferences_datums = list()
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 	var/prefered_security_department = "random"
-	
+
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -189,7 +189,7 @@ var/list/preferences_datums = list()
 			dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
 			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR>"
 			dat += "<a href ='?_src_=prefs;preference=sec_dept;task=input'><b>Security department:</b> [prefered_security_department]</a><BR></td>"
-			
+
 			dat += "<td valign='center'>"
 
 			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
@@ -609,10 +609,7 @@ var/list/preferences_datums = list()
 		HTML += "</a></td></tr>"
 
 	for(var/i = 1, i < (limit - index), i += 1) // Finish the column so it is even
-		if(lastJob && lastJob.selection_color)
-			HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
-		else
-			HTML += "<tr bgcolor='blue'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
+		HTML += "<tr bgcolor='[lastJob.selection_color]'><td width='60%' align='right'>&nbsp</td><td>&nbsp</td></tr>"
 
 	HTML += "</td'></tr></table>"
 
