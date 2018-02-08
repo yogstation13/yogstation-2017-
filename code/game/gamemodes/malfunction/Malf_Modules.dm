@@ -54,9 +54,13 @@
 	density = 1
 	verb_exclaim = "blares"
 	var/timing = 1
-	var/timer = 450
+	var/timer = 4500
+	var/nuke_time
+	var/time_left
 
 /obj/machinery/doomsday_device/process()
+	if(!nuke_time)
+		nuke_time = world.time + timer
 	var/turf/T = get_turf(src)
 	if(!T || T.z != ZLEVEL_STATION)
 		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
@@ -68,14 +72,15 @@
 		qdel(src)
 	if(!timing)
 		return
-	if(timer <= 0)
+	if(world.time >= nuke_time)
 		timing = 0
 		detonate(T.z)
 		qdel(src)
 	else
-		timer--
-		if(!(timer%60))
-			var/message = "[timer] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
+		time_left = (nuke_time - world.time)/10
+		if(!(time_left%60))
+			time_left = round(time_left)
+			var/message = "[time_left] SECONDS UNTIL DOOMSDAY DEVICE ACTIVATION!"
 			minor_announce(message, "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", 1)
 
 /obj/machinery/doomsday_device/proc/detonate(z_level = 1)

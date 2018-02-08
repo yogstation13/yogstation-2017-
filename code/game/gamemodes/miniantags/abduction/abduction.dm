@@ -308,7 +308,7 @@
 	c.team = team
 
 	spawn(5) // I'd do this properly when i got some time, temporary hack for mappers
-		c.Initialize()
+		c.Setup()
 	qdel(src)
 
 

@@ -24,10 +24,9 @@
 		circuit = C
 	else if(circuit)
 		circuit = new circuit(null)
-	power_change()
-	update_icon()
 
-/obj/machinery/computer/initialize()
+/obj/machinery/computer/Initialize()
+	..()
 	power_change()
 
 /obj/machinery/computer/process()

@@ -17,6 +17,7 @@
 	jitter = 20
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 7
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/energy/electrode/on_hit(atom/target, blocked = 0)
 	. = ..()
@@ -26,7 +27,7 @@
 		sparks.start()
 	else if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		if(C.dna && C.dna.check_mutation(HULK))
+		if(C.dna && (C.dna.check_mutation(HULK) || C.dna.check_mutation(ACTIVE_HULK)))
 			C.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		else if(CANWEAKEN in C.status_flags)
 			spawn(5)
@@ -45,6 +46,7 @@
 	damage_type = STAMINA
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/energy/net/New()
 	..()
@@ -98,6 +100,7 @@
 	weaken = 1
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 4
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/energy/trap/on_hit(atom/target, blocked = 0)
 	if(!ismob(target) || blocked >= 100) //Fully blocked by mob or collided with dense object - drop a trap
@@ -118,6 +121,7 @@
 	weaken = 0
 	hitsound = 'sound/weapons/taserhit.ogg'
 	range = 10
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/energy/trap/cyborg/on_hit(atom/target, blocked = 0)
 	if(!ismob(target) || blocked >= 100)
@@ -144,6 +148,7 @@
 	damage = 20
 	damage_type = CLONE
 	irradiate = 10
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/energy/dart //ninja throwing dart
 	name = "dart"
@@ -152,6 +157,7 @@
 	damage_type = TOX
 	weaken = 5
 	range = 7
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/energy/bolt //ebow bolts
 	name = "bolt"

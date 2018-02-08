@@ -62,11 +62,12 @@
 	else
 		linked.linked = src // todo detect multiple/constructed computers
 
-	if(ticker && ticker.current_state >= GAME_STATE_PLAYING)
-		initialize()
 	..()
 
-/obj/machinery/computer/holodeck/initialize()
+/obj/machinery/computer/holodeck/Initialize(mapload)
+	..()
+	if(!mapload && ticker.current_state < GAME_STATE_PLAYING)
+		return
 	program_cache = list()
 	emag_programs = list()
 	for(var/typekey in subtypesof(program_type))
@@ -163,6 +164,7 @@
 			return
 		if(area == offline_program || (area in program_cache) || (emagged && (area in emag_programs)))
 			load_program(area)
+			investigate_log("[usr.real_name]([usr.ckey]) activated the [program.name].","holodeck")
 	else if("safety" in href_list)
 		if(!isaiorborg(usr))
 			message_admins("EXPLOIT: [usr] attempted to override [src]'s safeties without being a silicon.")
@@ -192,6 +194,7 @@
 		to_chat(user, "<span class='warning'>You vastly increase projector power and override the safety and security protocols.</span>")
 		to_chat(user, "Warning.  Automatic shutoff and derezing protocols have been corrupted.  Please call Nanotrasen maintenance and do not use the simulator.")
 		log_game("[key_name(user)] emagged the Holodeck Control Console")
+		investigate_log("[key_name(user)] emagged the [src].", "holodeck")
 		updateUsrDialog()
 		nerf(!emagged)
 

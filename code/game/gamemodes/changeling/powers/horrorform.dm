@@ -16,7 +16,7 @@
 	if(changeling.absorbedcount < 1)
 		to_chat(user, "<span class='warning'>We require one absorbed lifeform to be able to do this.</span>")
 		return
-	if(changeling.chem_charges < 20)//no spamming it with 5 chems, you won't get anything done anyway
+	if(changeling.chem_charges < 30)//no spamming it with 5 chems, you won't get anything done anyway
 		to_chat(user, "<span class='warning'>We require sufficient chemicals to use this ability.</span>")
 		return
 	if(user.health < 35)//amount of health that makes you revert
@@ -50,11 +50,10 @@
 			sleep(30)
 
 			playsound(user.loc, 'sound/effects/creepyshriek.ogg', 100, 1, extrarange = 30)
-			user.visible_message("<span class='warning'><b>[user] lets out an abhorrent screech as their height suddenly increases, their body parts splitting and deforming horribly!</span>")
-			user <<"<span class='notice'>You are a shambling abomination! You are amazingly powerful and have new abilities, but you cannot use any other changeling abilities and lose chemicals quickly. Remember, taking too much damage or running out of chemicals will revert you and leave you vulnerable. Check the 'Abomination' spell tab to use your abilities. Remember, you can maintain this form by using your 'Devour' ability whilst grabbing a humanoid to devour them and gain chemicals!</span>"
-			user <<"<span class='notice'>You are amazingly powerful and have new abilities, but you cannot use any other changeling abilities and lose chemicals quickly.</span>"
-			user <<"<span class='notice'>Remember, taking too much damage or running out of chemicals will revert you and leave you vulnerable.</span>"
-			user <<"<span class='notice'>Check the 'Abomination' spell tab to use your abilities. The 'Devour' ability will allow you to eat a grabbed humanoid and gain chemicals from them!</span>"
+			user.visible_message("<span class='warning'><b>[user] lets out an abhorrent screech as their body parts split and deform horribly!</span>")
+			user <<"<span class='notice'>You are a shambling abomination! You are amazingly powerful and have new abilities, but you cannot use any other changeling abilities and lose chemicals quickly.</span>"
+			user <<"<span class='notice'>Taking too much damage or running out of chemicals will revert you and leave you vulnerable.</span>"
+			user <<"<span class='notice'>Check the 'Abomination' tab to use your abilities. The 'Devour' ability will allow you to eat a grabbed humanoid and gain chemicals from them!</span>"
 			H.restore_blood()
 			H.remove_all_embedded_objects()
 			var/list/missing = H.get_missing_limbs()
@@ -116,15 +115,85 @@
 	sexes = 0
 	speedmod = 3
 	armor = 0//has horror armor instead
-	punchdamagelow = 30
-	punchdamagehigh = 30
-	punchstunthreshold = 30 //100 % chance
 	no_equip = list(slot_w_uniform, slot_back, slot_ears)
 	attack_verb = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	heatmod = 1.5
 	can_grab_items = FALSE //no picking stuff up grr
 	blacklisted = 1
+
+/datum/species/deformed //what you get from abomination reversion
+	name = "???"
+	id = "husk"
+	say_mod = "gasps"
+	sexes = 0
+	roundstart = 0
+	speedmod = 1
+
+/obj/item/clothing/suit/space/abomination
+	name = "fleshy hide"
+	desc = "A huge chunk of flesh. It seems to be shifting around itself."
+	icon_state = "golem"
+	item_state = "golem"
+	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	armor = list(melee = 80, bullet = 45, laser = 35,energy = 100, bomb = 30, bio = 100, rad = 0)
+	slowdown = 0
+	unacidable = 1
+	burn_state = -1
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags = ABSTRACT | NODROP
+
+/obj/item/clothing/shoes/abomination
+	name = "spiked hooks"
+	desc = "A fleshy membrane with spikes that dig into the ground below."
+	icon_state = "golem"
+	unacidable = 1
+	burn_state = -1
+	flags = NOSLIP | ABSTRACT | NODROP
+
+/obj/item/clothing/mask/muzzle/abomination
+	name = "distorted mouth"
+	desc = "A disgusting mouth with multiple rows of teeth."
+	icon_state = "golem"
+	item_state = "golem"
+	flags = ABSTRACT | NODROP
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0)
+	unacidable = 1
+	burn_state = -1
+	flags_cover = null
+
+/obj/item/clothing/head/helmet/space/abomination
+	name = "hardened membrane"
+	icon_state = "golem"
+	item_state = "golem"
+	desc = "Hardened resin of some sort."
+	flags = ABSTRACT | NODROP
+	armor = list(melee = 80, bullet = 45, laser = 30,energy = 100, bomb = 30, bio = 100, rad = 0)
+	unacidable = 1
+	burn_state = -1
+	flags_cover = null
+
+/obj/item/clothing/gloves/abomination
+	name = "hardened membrane"
+	desc = "A strange filament webbing that would fit around some...thing's hands."
+	icon_state = "golem"
+	item_state = "golem"
+	siemens_coefficient = 0
+	permeability_coefficient = 0.9
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	unacidable = 1
+	burn_state = -1
+	flags = ABSTRACT | NODROP
+
+/obj/item/clothing/glasses/night/shadowling/abomination
+	name = "sunken pits"
+	desc = "Eye holes housing some sort of eyes."
+	icon_state = "golem"
+	item_state = "golem"
+	actions_types = null
 
 /datum/species/abomination/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	handle_body(C)
@@ -137,13 +206,13 @@
 	return
 
 /datum/species/abomination/spec_life(mob/living/carbon/human/user)
+	user.adjustStaminaLoss(-40)
 	if(user.health < 100 && prob(40))
 		var/mob/living/carbon/human/H = user
 		H.adjustBruteLoss(-4)
 		H.adjustFireLoss(-4)
 		H.adjustOxyLoss(-10)
 		H.adjustToxLoss(-10)
-		H.adjustStaminaLoss(-10)
 		if(prob(25))
 			H.visible_message("<span class='warning'>[H]'s skin shifts around itself, some of its wounds vanishing.</span>")
 
@@ -156,20 +225,19 @@
 		if(H.dna && H.dna.mutations)
 			HM.force_lose(H)
 		changeling.reverting = 1
-		changeling.geneticdamage += 30
+		changeling.geneticdamage += 15
 		user.Weaken(15)
 		user.apply_damage(30, CLONE)
 
 	if(changeling.chem_charges == 0)
 		user.visible_message("<span class='warning'>[user] suddenly shrinks back down to a normal size.</span>")
-		to_chat(user, "<span class='notice'>You ran out of chemicals before you could revert properly, disfiguring you!</span>")
+		to_chat(user, "<span class='notice'>You ran out of chemicals before you could revert properly!</span>")
 		var/mob/living/carbon/human/H = user
 		var/datum/mutation/human/HM = mutations_list[HULK]
 		if(H.dna && H.dna.mutations)
 			HM.force_lose(H)
 		changeling.reverting = 1
-		changeling.geneticdamage += 10
-		user.Weaken(5)
+		changeling.geneticdamage += 5
 
 
 	if(changeling.reverting == 1)

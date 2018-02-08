@@ -62,6 +62,8 @@ var/datum/subsystem/ticker/ticker
 	var/identification_console_message
 	var/id_console_msg_lock
 
+	var/list/livings = list()
+
 /datum/subsystem/ticker/New()
 	NEW_SS_GLOBAL(ticker)
 
@@ -125,6 +127,8 @@ var/datum/subsystem/ticker/ticker
 				webhook_send_roundstatus("ingame")
 
 		if(GAME_STATE_PLAYING)
+			if(config.roundlength && world.time >= config.roundlength * 600 && SSshuttle.emergency.mode == SHUTTLE_IDLE && !SSshuttle.emergency.noAutoCall)
+				SSshuttle.emergency.request(null, null, null, " \nEnd of shift", null, TRUE)
 			mode.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
@@ -257,7 +261,7 @@ var/datum/subsystem/ticker/ticker
 
 		var/list/adm = get_admin_counts()
 		if(!adm["present"])
-			send2irc("Server", "Round just started with no active admins online!")
+			webhook_send("adminless", "Round just started with no active admins online!")
 
 	return 1
 
@@ -384,17 +388,36 @@ var/datum/subsystem/ticker/ticker
 			joined_player_list += player.ckey
 			if(player.mind.assigned_role=="AI")
 				player.close_spawn_windows()
-				player.AIize()
+				var/mob/living = player.AIize()
+				if(living)
+					living.notransform = TRUE
+					if(living.client)
+						var/obj/screen/splash/S = new(living.client, TRUE)
+						S.Fade(TRUE)
+					livings += living
 			else
-				player.create_character()
-				qdel(player)
+				var/mob/living = player.create_character()
+				if(living)
+					qdel(player)
+					living.notransform = TRUE
+					if(living.client)
+						var/obj/screen/splash/S = new(living.client, TRUE)
+						S.Fade(TRUE)
+					livings += living
 		else
 			if(player.client)
 				if(player.client.prefs.agree < MAXAGREE)
 					player.disclaimer()
 				else
 					player.new_player_panel()
+	if(livings.len)
+		addtimer(src, "release_characters", 30, FALSE, livings)
 
+/datum/subsystem/ticker/proc/release_characters(list/livings)
+	for(var/I in livings)
+		var/mob/living/L = I
+		if(L)
+			L.notransform = FALSE
 
 /datum/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)
@@ -553,7 +576,7 @@ var/datum/subsystem/ticker/ticker
 			queue_delay = 0
 
 /datum/subsystem/ticker/proc/check_maprotate()
-	if (!config.maprotation || !SERVERTOOLS)
+	if (!config.maprotation)
 		return
 	if (SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
 		return
@@ -566,7 +589,7 @@ var/datum/subsystem/ticker/ticker
 	if (!prob((world.time/600)*config.maprotatechancedelta))
 		return
 	spawn(0) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
-		maprotate()
+		SSmapping.maprotate()
 
 
 /world/proc/has_round_started()

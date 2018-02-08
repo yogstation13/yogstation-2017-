@@ -2,7 +2,7 @@ var/datum/subsystem/job/SSjob
 
 /datum/subsystem/job
 	name = "Jobs"
-	init_order = 5
+	init_order = 25
 	flags = SS_NO_FIRE
 
 	var/list/occupations = list()		//List of all jobs
@@ -36,6 +36,8 @@ var/datum/subsystem/job/SSjob
 		if(job.faction != faction)
 			continue
 		if(!job.config_check())
+			continue
+		if(!job.map_check())
 			continue
 		occupations += job
 

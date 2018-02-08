@@ -87,7 +87,7 @@
 						for(var/datum/symptom/S in DD.symptoms)
 							viruslist += "[S.name] "
 						viruslist += "\]"
-		user.attack_log += "\[[time_stamp()]\] <font color='orange'>Sprayed \a [src] containing [english_list(sprayed)].</font>"
+		user.attack_log += "\[[gameTimestamp()]\] <font color='orange'>Sprayed \a [src] containing [english_list(sprayed)].</font>"
 		if(viruslist)
 			investigate_log("[user.real_name] ([user.ckey]) sprayed \a [src] containing [viruslist]", "viro")
 			log_game("VIRO: [user.real_name] ([user.ckey]) sprayed \a [src] containing [viruslist]")

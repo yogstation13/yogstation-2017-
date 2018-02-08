@@ -51,6 +51,7 @@
 	var/jitter = 0
 	var/forcedodge = 0 //to pass through everything
 	var/dismemberment = 0 //The higher the number, the greater the bonus to dismembering. 0 will not dismember at all.
+	var/makesBulletHoles = TRUE
 
 /obj/item/projectile/New()
 	permutated = list()
@@ -84,12 +85,29 @@
 								"<span class='userdanger'>[L] is hit by \a [src][organ_hit_text]!</span>")	//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
 		L.on_hit(type)
 
+	var/viruslist = ""
 	var/reagent_note
 	if(reagents && reagents.reagent_list)
 		reagent_note = " REAGENTS:"
 		for(var/datum/reagent/R in reagents.reagent_list)
 			reagent_note += R.id + " ("
 			reagent_note += num2text(R.volume) + ") "
+			
+			if(istype(R, /datum/reagent/blood))
+				var/datum/reagent/blood/RR = R
+				for(var/datum/disease/D in RR.data["viruses"])
+					viruslist += " [D.name]"
+					if(istype(D, /datum/disease/advance))
+						var/datum/disease/advance/DD = D
+						viruslist += " \[ symptoms: "
+						for(var/datum/symptom/S in DD.symptoms)
+							viruslist += "[S.name] "
+						viruslist += "\]"
+
+
+	if(viruslist)
+		investigate_log("[firer.real_name] ([firer.ckey]) injected [L.real_name] ([L.ckey]) using a projectile with [viruslist] [blocked == 100 ? "BLOCKED" : ""]", "viro")
+		log_game("VIRO: [firer.real_name] ([firer.ckey]) injected [L.real_name] ([L.ckey]) using a projectile with [viruslist] [blocked == 100 ? "BLOCKED" : ""]")
 
 	add_logs(firer, L, "shot", src, reagent_note)
 	return L.apply_effects(stun, weaken, paralyze, irradiate, slur, stutter, eyeblur, drowsy, blocked, stamina, jitter)

@@ -85,8 +85,10 @@
 			if(prob(25))
 				emote("drool")
 			else
-				say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
-
+				if(!dna.check_mutation(ACTIVE_HULK))
+					say(pick_list_replacements(BRAIN_DAMAGE_FILE, "brain_damage"))
+				else
+					say(pick_list_replacements(BRAIN_DAMAGE_FILE, "hulk"))
 
 /mob/living/carbon/human/handle_mutations_and_radiation()
 	if(!dna || !dna.species.handle_mutations_and_radiation(src))

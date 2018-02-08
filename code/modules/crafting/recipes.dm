@@ -370,6 +370,18 @@
 	reqs = list(/obj/item/stack/sheet/cloth = 4)
 	category = CAT_MISC
 
+/datum/crafting_recipe/roller_bed
+	name = "Roller bed"
+	result = /obj/structure/bed/roller
+	time = 50
+	reqs = list(/obj/item/weapon/bedsheet = 1,
+				/obj/item/stack/sheet/metal = 2,
+				/obj/item/stack/rods = 4)
+	tools = list(/obj/item/weapon/wrench = 1,
+			/obj/item/weapon/weldingtool = 1)
+	category = CAT_MISC
+
+
 // TRIBAL //
 /datum/crafting_recipe/bonearmor
 	name = "Bone Armor"

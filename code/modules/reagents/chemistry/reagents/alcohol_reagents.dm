@@ -11,7 +11,7 @@
 	description = "A well-known alcohol with a variety of applications."
 	color = "#404030" // rgb: 64, 64, 48
 	nutriment_factor = 0
-	var/boozepwr = 65 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
+	var/boozepwr = 100 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
 
 /*
 Boozepwr Chart
@@ -740,9 +740,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/hearty_punch
 	name = "Hearty Punch"
 	id = "hearty_punch"
-	description = "Brave bull/syndicate bomb/absinthe mixture resulting in an energizing beverage. Mild alcohol content."
+	description = "Brave bull/syndicate bomb/absinthe mixture resulting in an energizing beverage. Kicks like a horse, however."
 	color = rgb(140, 0, 0)
-	boozepwr = 10
+	boozepwr = 120
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
 /datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/M)

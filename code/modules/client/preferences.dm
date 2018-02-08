@@ -29,6 +29,7 @@ var/list/preferences_datums = list()
 
 	var/UI_style = "Midnight"
 	var/hotkeys = FALSE
+	var/hotkeysmode = FALSE		// FALSE = QWERTY, TRUE = AZERTY
 	var/tgui_fancy = TRUE
 	var/tgui_lock = TRUE
 	var/toggles = TOGGLES_DEFAULT
@@ -63,7 +64,7 @@ var/list/preferences_datums = list()
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 	var/prefered_security_department = "random"
-	
+
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -113,11 +114,6 @@ var/list/preferences_datums = list()
 	if(istype(C))
 		if(!IsGuestKey(C.key))
 			load_path(C.ckey)
-			unlock_content |= C.IsByondMember()
-			if(unlock_content)
-				max_save_slots = 8
-			else if(is_donator(C))
-				max_save_slots = DONOR_CHARACTER_SLOTS
 	var/loaded_preferences_successfully = load_preferences()
 	if(loaded_preferences_successfully)
 		if(load_character())
@@ -193,7 +189,7 @@ var/list/preferences_datums = list()
 			dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
 			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR>"
 			dat += "<a href ='?_src_=prefs;preference=sec_dept;task=input'><b>Security department:</b> [prefered_security_department]</a><BR></td>"
-			
+
 			dat += "<td valign='center'>"
 
 			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
@@ -360,6 +356,7 @@ var/list/preferences_datums = list()
 			dat += "<h2>General Settings</h2>"
 			dat += "<b>UI Style:</b> <a href='?_src_=prefs;preference=ui'>[UI_style]</a><br>"
 			dat += "<b>Keybindings:</b> <a href='?_src_=prefs;preference=hotkeys'>[(hotkeys) ? "Hotkeys" : "Default"]</a><br>"
+			dat += "<b>Hotkeys mode:</b> <a href='?_src_=prefs;preference=hotkeysmode'>[(hotkeysmode) ? "AZERTY" : "QWERTY"]</a><br>"
 			dat += "<b>tgui Style:</b> <a href='?_src_=prefs;preference=tgui_fancy'>[(tgui_fancy) ? "Fancy" : "No Frills"]</a><br>"
 			dat += "<b>tgui Monitors:</b> <a href='?_src_=prefs;preference=tgui_lock'>[(tgui_lock) ? "Primary" : "All"]</a><br>"
 			dat += "<b>Play admin midis:</b> <a href='?_src_=prefs;preference=hear_midis'>[(toggles & SOUND_MIDI) ? "Yes" : "No"]</a><br>"
@@ -408,22 +405,22 @@ var/list/preferences_datums = list()
 
 			dat += "<b>Ghosts of Others:</b> <a href='?_src_=prefs;task=input;preference=ghostothers'>[button_name]</a><br>"
 
-			if (SERVERTOOLS && config.maprotation)
+			if (config.maprotation)
 				var/p_map = preferred_map
 				if (!p_map)
 					p_map = "Default"
 					if (config.defaultmap)
-						p_map += " ([config.defaultmap.friendlyname])"
+						p_map += " ([config.defaultmap.map_name])"
 				else
 					if (p_map in config.maplist)
-						var/datum/votablemap/VM = config.maplist[p_map]
+						var/datum/map_config/VM = config.maplist[p_map]
 						if (!VM)
 							p_map += " (No longer exists)"
 						else
-							p_map = VM.friendlyname
+							p_map = VM.map_name
 					else
 						p_map += " (No longer exists)"
-				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a>"
+				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
 
 			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a>"
 
@@ -1137,20 +1134,20 @@ var/list/preferences_datums = list()
 					var/department = input(user, "Choose your preferred security department:", "Security Departments") as null|anything in security_depts_prefs
 					if(department)
 						prefered_security_department = department
-				if ("preferred_map")
+				if("preferred_map")
 					var/maplist = list()
 					var/default = "Default"
-					if (config.defaultmap)
-						default += " ([config.defaultmap.friendlyname])"
-					for (var/M in config.maplist)
-						var/datum/votablemap/VM = config.maplist[M]
-						var/friendlyname = "[VM.friendlyname] "
-						if (VM.voteweight <= 0)
-							friendlyname += " (disabled)"
-						maplist[friendlyname] = VM.name
+					if(config.defaultmap)
+						default += " ([config.defaultmap.map_name])"
+					for(var/M in config.maplist)
+						var/datum/map_config/VM = config.maplist[M]
+						var/map_name = "[VM.map_name] "
+						if(VM.voteweight <= 0)
+							map_name += " (disabled)"
+						maplist[map_name] = VM.map_name
 					maplist[default] = null
 					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
-					if (pickedmap)
+					if(pickedmap)
 						preferred_map = maplist[pickedmap]
 				if("clientfps")
 					var/version_message
@@ -1195,6 +1192,11 @@ var/list/preferences_datums = list()
 
 				if("hotkeys")
 					hotkeys = !hotkeys
+					user.client.sethotkeys(1)
+
+				if("hotkeysmode")
+					hotkeysmode = !hotkeysmode
+					user.client.sethotkeys(1)
 
 				if("tgui_fancy")
 					tgui_fancy = !tgui_fancy
@@ -1352,5 +1354,12 @@ var/list/preferences_datums = list()
 	if(character.dna)
 		features = character.dna.features.Copy()
 		pref_species = character.dna.species
+
+/datum/preferences/proc/update_character_slots(client/C)
+	unlock_content |= C.IsByondMember()
+	if(unlock_content)
+		max_save_slots = 8
+	else if(is_donator(C))
+		max_save_slots = DONOR_CHARACTER_SLOTS
 
 #undef DONOR_CHARACTER_SLOTS

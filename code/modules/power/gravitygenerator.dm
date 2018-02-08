@@ -89,7 +89,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 // Generator which spawns with the station.
 //
 
-/obj/machinery/gravity_generator/main/station/initialize()
+/obj/machinery/gravity_generator/main/station/Initialize()
+	..()
 	setup_parts()
 	middle.overlays += "activated"
 	update_list()
@@ -98,9 +99,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 // Generator an admin can spawn
 //
 
-/obj/machinery/gravity_generator/main/station/admin/New()
-	..()
-	initialize()
+/obj/machinery/gravity_generator/main/station/admin
+	use_power = 0
 
 //
 // Main Generator with the main code
@@ -122,6 +122,7 @@ var/const/GRAV_NEEDS_WRENCH = 3
 	var/charge_count = 100
 	var/current_overlay = null
 	var/broken_state = 0
+	var/toggleable = TRUE
 
 /obj/machinery/gravity_generator/main/Destroy() // If we somehow get deleted, remove all of our other parts.
 	investigate_log("was destroyed!", "gravity")
@@ -254,6 +255,8 @@ var/const/GRAV_NEEDS_WRENCH = 3
 		return
 
 	if(href_list["gentoggle"])
+		if(!toggleable)
+			return
 		breaker = !breaker
 		investigate_log("was toggled [breaker ? "<font color='green'>ON</font>" : "<font color='red'>OFF</font>"] by [usr.key].", "gravity")
 		set_power()

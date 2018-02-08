@@ -213,7 +213,7 @@
 /obj/item/weapon/survivalcapsule/proc/get_template()
 	if(template)
 		return
-	template = shelter_templates[template_id]
+	template = SSmapping.shelter_templates[template_id]
 	if(!template)
 		throw EXCEPTION("Shelter template ([template_id]) not found!")
 		qdel(src)
@@ -276,7 +276,7 @@
 /obj/item/weapon/sinew_tent/proc/get_template()
 	if(template)
 		return
-	template = shelter_templates[template_id]
+	template = SSmapping.shelter_templates[template_id]
 	if(!template)
 		throw EXCEPTION("Shelter template ([template_id]) not found!")
 		qdel(src)
@@ -583,6 +583,7 @@
 	var/arbitraryatmosblockingvar = TRUE
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 5
+	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/structure/fans/deconstruct()
 	if(buildstacktype)
@@ -611,12 +612,9 @@
 	air_update_turf(1)
 
 /obj/structure/fans/Destroy()
-	arbitraryatmosblockingvar = FALSE
-	air_update_turf(1)
-	return ..()
-
-/obj/structure/fans/CanAtmosPass(turf/T)
-	return !arbitraryatmosblockingvar
+	var/turf/T = loc
+	. = ..()
+	T.air_update_turf(1)
 
 //Signs
 /obj/structure/sign/mining

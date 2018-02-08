@@ -396,14 +396,23 @@ BLIND     // can't see anything
 		else
 			//no more cloth left on the item, so nix it
 			user.visible_message("[src] falls away to tatters, stripped to its barest seams.")
-			removetie() //remove accessories before qdel
-			qdel(src)
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				H.update_inv_w_uniform()
+			teardown(user)
 		return 1
 	else
 		return 0
+
+/obj/item/clothing/under/proc/teardown(mob/user)
+	removetie() //remove accessories before qdel
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.update_inv_w_uniform()
+	if (tearhealth >= 20)
+		if (user)
+			if (user.loc)
+				while(tearhealth >= 20)
+					new /obj/item/clothing/torncloth(user.loc)
+					tearhealth -= 40 //make less cloth scraps if tearing down jumpsuit with some cloth potential left
+	qdel(src)
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user, params)
 	attachTie(I, user)
@@ -479,7 +488,7 @@ BLIND     // can't see anything
 	var/mob/M = usr
 	if (istype(M, /mob/dead/))
 		return
-	if (!can_use(M))
+	if(!can_use(M))
 		return
 	if(src.has_sensor >= 2)
 		to_chat(usr, "The controls are locked.")
@@ -490,6 +499,8 @@ BLIND     // can't see anything
 
 	var/list/modes = list("Off", "Binary vitals", "Exact vitals", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
+	if(!can_use(M))
+		return
 	if(get_dist(usr, src) > 1)
 		to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
 		return
