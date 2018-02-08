@@ -54570,7 +54570,7 @@
 	name = "Monkey Pen Shutters";
 	pixel_x = -24;
 	pixel_y = 0;
-	req_access_txt = "24"
+	req_access_txt = "39"
 	},
 /obj/structure/cable/yellow{
 	d1 = 1;
