@@ -9,6 +9,10 @@
 	var/locked = 1
 	var/open = 0
 	var/health = 60
+	var/open_sound = 'sound/machines/click.ogg'
+	var/close_sound = 'sound/machines/click.ogg'
+	var/deconstruct_sound = 'sound/items/Ratchet.ogg'
+	var/lock_sound = 'sound/machines/locktoggle.ogg'
 
 /obj/structure/fireaxecabinet/New()
 	..()
@@ -16,7 +20,7 @@
 
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT) && !fireaxe && (open || health <= 0))
-		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src.loc, deconstruct_sound, 50, 1)
 		if(do_after(user, 40/I.toolspeed, target = src))
 			to_chat(user, "<span class='notice'>You disassemble the [name].</span>")
 			var/obj/item/stack/sheet/metal/M = new (loc, 3)//spawn three metal for deconstruction
@@ -101,16 +105,11 @@
 			fireaxe = null
 			to_chat(user, "<span class='caution'>You take the fire axe from the [name].</span>")
 			src.add_fingerprint(user)
-			add_logs(user, src, "has taken the fire axe from the [name].")
+			add_logs(user, src, "has taken fire axe from [name]")
 			update_icon()
 			return
-	if(locked)
-		user <<"<span class='warning'>The [name] won't budge!</span>"
-		return
-	else
-		open = !open
-		update_icon()
-		return
+	toggle_open()
+	return
 
 /obj/structure/fireaxecabinet/attack_paw(mob/living/user)
 	attack_hand(user)
@@ -161,7 +160,7 @@
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	audible_message("You hear an audible clunk as the [name]'s bolt [locked ? "retracts" : "locks into place"].")
-	playsound(src, 'sound/machines/locktoggle.ogg', 50, 1)
+	playsound(src, lock_sound, 50, 1)
 	locked = !locked
 	update_icon()
 
@@ -174,6 +173,10 @@
 		usr <<"<span class='warning'>The [name] won't budge!</span>"
 		return
 	else
+		if(open)
+			playsound(loc, close_sound, 15, 1, -3)
+		else
+			playsound(loc, open_sound, 15, 1, -3)
 		open = !open
 		update_icon()
 		return
