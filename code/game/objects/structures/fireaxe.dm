@@ -17,7 +17,11 @@
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT) && !fireaxe && (open || health <= 0))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		deconstruct()
+		if(do_after(user, 40/I.toolspeed, target = src))
+			to_chat(user, "<span class='notice'>You disassemble the [name].</span>")
+			var/obj/item/stack/sheet/metal/M = new (loc, 3)//spawn three metal for deconstruction
+			M.add_fingerprint(user)
+			deconstruct()
 	if(isrobot(user) || istype(I,/obj/item/device/multitool))
 		toggle_lock(user)
 		return
@@ -65,12 +69,6 @@
 		update_icon()
 		if(health <= 0)
 			playsound(src, 'sound/effects/Glassbr3.ogg', 100, 1)
-
-/obj/structure/fireaxecabinet/deconstruct()
-	// If we don't have the NODECONSTRUCT flag
-	if (!(flags & NODECONSTRUCT))
-		new /obj/item/stack/sheet/metal(loc,3)//produce 3 metal
-	..()
 
 
 /obj/structure/fireaxecabinet/ex_act(severity, target)
