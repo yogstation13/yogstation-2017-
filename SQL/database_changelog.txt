@@ -1,3 +1,15 @@
+8 February 2018
+
+Added ipintel table, only required if ip intel is enabled in the config
+
+CREATE TABLE  `ipintel` (
+`ip` INT UNSIGNED NOT NULL ,
+`date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL ,
+`intel` REAL NOT NULL DEFAULT  '0',
+PRIMARY KEY (  `ip` )
+) ENGINE = INNODB;
+
+---------------------------------------------------
 
 7 February 2017, by tomamoto
 
