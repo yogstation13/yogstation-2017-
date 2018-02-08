@@ -30,7 +30,7 @@
 	density = 0
 	var/active = 1
 
-/obj/structure/fireplace/initialize()
+/obj/structure/fireplace/Initialize()
 	..()
 	toggleFireplace()
 

@@ -219,7 +219,7 @@
 	var/sensor_tag
 	var/sanitize_external
 
-/obj/machinery/embedded_controller/radio/airlock_controller/initialize()
+/obj/machinery/embedded_controller/radio/airlock_controller/Initialize()
 	..()
 
 	var/datum/computer/file/embedded_program/airlock_controller/new_prog = new

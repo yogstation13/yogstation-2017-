@@ -53,12 +53,12 @@
 		else
 			to_chat(user, "<span class='notice'>A no server error appears on the screen.</span>")
 
-/obj/machinery/computer/message_monitor/initialize()
+/obj/machinery/computer/message_monitor/Initialize()
+	..()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
 		if(message_servers && message_servers.len > 0)
 			linkedServer = message_servers[1]
-	return
 
 /obj/machinery/computer/message_monitor/attack_hand(mob/living/user)
 	if(..())
@@ -454,7 +454,7 @@
 /obj/item/weapon/paper/monitorkey
 	name = "monitor decryption key"
 
-/obj/item/weapon/paper/monitorkey/initialize()
+/obj/item/weapon/paper/monitorkey/Initialize()
 	if(message_servers)
 		for(var/obj/machinery/message_server/server in message_servers)
 			if(!isnull(server))

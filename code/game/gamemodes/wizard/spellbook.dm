@@ -606,7 +606,8 @@
 	else
 		to_chat(user, "It appears to have no author.")
 
-/obj/item/weapon/spellbook/proc/Initialize()
+/obj/item/weapon/spellbook/Initialize()
+	..()
 	var/entry_types = subtypesof(/datum/spellbook_entry) - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
 	for(var/T in entry_types)
 		var/datum/spellbook_entry/E = new T
@@ -617,10 +618,6 @@
 			qdel(E)
 	tab = categories[1]
 
-/obj/item/weapon/spellbook/New()
-	..()
-	Initialize()
-
 /obj/item/weapon/spellbook/proc/RefundAllowed(mob/user)
 	if(refund_rules & REFUND_FLAG_ALWAYS)
 		return 1
@@ -629,7 +626,6 @@
 	if(!(user in A.contents))
 		return 0
 	return 1
-
 
 /obj/item/weapon/spellbook/attackby(obj/item/O, mob/user, params)
 	if(!RefundAllowed(user))
