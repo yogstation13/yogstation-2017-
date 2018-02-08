@@ -2,20 +2,20 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping
 	name = "Mapping"
-	init_order = 100000
+	init_order = 24
 	flags = SS_NO_FIRE
 	var/datum/map_config/previous_map_config
 	var/datum/map_config/config
 	var/datum/map_config/next_map_config
-	
+
 	//List of preloaded templates
 	var/list/datum/map_template/map_templates = list()
-	
+
 	var/list/datum/map_template/ruins_templates = list()
 	var/list/datum/map_template/space_ruins_templates = list()
 	var/list/datum/map_template/lava_ruins_templates = list()
 	var/list/datum/map_template/maint_room_templates = list()
-	
+
 	var/list/datum/map_template/shuttle_templates = list()
 	var/list/datum/map_template/shelter_templates = list()
 
@@ -37,7 +37,7 @@ var/datum/subsystem/mapping/SSmapping
 	loadWorld()
 	SortAreas()
 	process_teleport_locs()
-	
+
 	// Pick a random away mission.
 	createRandomZlevel()
 	// Generate mining.
