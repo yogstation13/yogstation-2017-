@@ -153,16 +153,19 @@
 		overlays += "glass_raised"
 
 /obj/structure/fireaxecabinet/proc/reset_lock(mob/user)
-	to_chat(user, "<span class = 'caution'>Resetting circuitry...</span>")
-	if(do_after(user, 20, target = src))
-		to_chat(user, "<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")
-		toggle_lock(user)
+	if(!open)
+		to_chat(user, "<span class = 'caution'>Resetting circuitry...</span>")
+		if(do_after(user, 20, target = src))
+			to_chat(user, "<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")
+			src.add_fingerprint(user)
+			toggle_lock(user)
 
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
-	audible_message("You hear an audible clunk as the [name]'s bolt [locked ? "retracts" : "locks into place"].")
-	playsound(src, lock_sound, 50, 1)
-	locked = !locked
-	update_icon()
+	if(!open)
+		audible_message("You hear an audible clunk as the [name]'s bolt [locked ? "retracts" : "locks into place"].")
+		playsound(src, lock_sound, 50, 1)
+		locked = !locked
+		update_icon()
 
 /obj/structure/fireaxecabinet/verb/toggle_open()
 	set name = "Open/Close"
