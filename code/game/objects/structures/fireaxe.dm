@@ -23,7 +23,7 @@
 			M.add_fingerprint(user)
 			deconstruct()
 	if(isrobot(user) || istype(I,/obj/item/device/multitool))
-		toggle_lock(user)
+		reset_lock(user)
 		return
 	if(open || health <= 0)
 		if(istype(I, /obj/item/weapon/twohanded/fireaxe) && !fireaxe)
@@ -101,10 +101,11 @@
 			fireaxe = null
 			to_chat(user, "<span class='caution'>You take the fire axe from the [name].</span>")
 			src.add_fingerprint(user)
+			add_logs(user, src, "has taken the fire axe from the [name].")
 			update_icon()
 			return
 	if(locked)
-		user <<"<span class='warning'> The [name] won't budge!</span>"
+		user <<"<span class='warning'>The [name] won't budge!</span>"
 		return
 	else
 		open = !open
@@ -152,13 +153,17 @@
 	else
 		overlays += "glass_raised"
 
-/obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
-	to_chat(user, "<span class = 'caution'> Resetting circuitry...</span>")
-	playsound(src, 'sound/machines/locktoggle.ogg', 50, 1)
+/obj/structure/fireaxecabinet/proc/reset_lock(mob/user)
+	to_chat(user, "<span class = 'caution'>Resetting circuitry...</span>")
 	if(do_after(user, 20, target = src))
 		to_chat(user, "<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")
-		locked = !locked
-		update_icon()
+		toggle_lock(user)
+
+/obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
+	audible_message("You hear an audible clunk as the [name]'s bolt [locked ? "retracts" : "locks into place"].")
+	playsound(src, 'sound/machines/locktoggle.ogg', 50, 1)
+	locked = !locked
+	update_icon()
 
 /obj/structure/fireaxecabinet/verb/toggle_open()
 	set name = "Open/Close"
@@ -166,7 +171,7 @@
 	set src in oview(1)
 
 	if(locked)
-		usr <<"<span class='warning'> The [name] won't budge!</span>"
+		usr <<"<span class='warning'>The [name] won't budge!</span>"
 		return
 	else
 		open = !open
