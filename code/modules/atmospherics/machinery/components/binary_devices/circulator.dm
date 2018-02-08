@@ -8,15 +8,18 @@
 	icon_state = "circ1-off"
 
 	var/side = CIRC_LEFT
+	var/circ = null
 	var/status = 0
 
 	var/last_pressure_delta = 0
 
-	anchored = 1
+	anchored = 0
 	density = 1
 
 	var/global/const/CIRC_LEFT = 1
 	var/global/const/CIRC_RIGHT = 2
+
+	var/obj/machinery/power/generator/generator = null
 
 
 /obj/machinery/atmospherics/components/binary/circulator/proc/return_transfer_air()
@@ -68,3 +71,23 @@
 		icon_state = "circ[side]-off"
 
 	return 1
+
+/obj/machinery/atmospherics/components/binary/circulator/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/wrench))
+		playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+		if(!anchored)
+			to_chat(user, "<span class='notice'>You wrench [src] into place.</span>")
+			anchored = 1
+		else if(anchored)
+			if(do_after(user, 20/I.toolspeed, target = src))
+				to_chat(user, "<span class='notice'>You unwrench [src].")
+				anchored = 0
+				if(generator)
+					if(circ == "hot")
+						generator.hot_circ = null
+					else if(circ == "cold")
+						generator.cold_circ = null
+					generator = null
+
+	else
+		return ..()

@@ -11,7 +11,7 @@
 	name = "thermoelectric generator"
 	desc = "It's a high efficiency thermoelectric generator."
 	icon_state = "teg"
-	anchored = 1
+	anchored = 0
 	density = 1
 	use_power = 0
 
@@ -26,12 +26,34 @@
 	var/lastgenlev = -1
 	var/lastcirc = "00"
 
+/obj/machinery/power/generator/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/wrench))
+		playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
+		if(!anchored)
+			to_chat(user, "<span class='notice'>You wrench [src] into place.</span>")
+			anchored = 1
+		else if(anchored)
+			if(do_after(user, 20/I.toolspeed, target = src))
+				to_chat(user, "<span class='notice'>You unwrench [src].")
+				anchored = 0
+	else
+		return ..()
 
 /obj/machinery/power/generator/Initialize()
 	..()
 	var/obj/machinery/atmospherics/components/binary/circulator/circpath = /obj/machinery/atmospherics/components/binary/circulator
 	cold_circ = locate(circpath) in get_step(src, cold_dir)
+	if(!cold_circ.anchored)
+		cold_circ = null
+	else
+		cold_circ.generator = src
+		cold_circ.circ = "cold"
 	hot_circ = locate(circpath) in get_step(src, hot_dir)
+	if(!hot_circ.anchored)
+		hot_circ = null
+	else
+		hot_circ.generator = src
+		hot_circ.circ = "hot"
 	connect_to_network()
 
 	if(cold_circ)
@@ -49,9 +71,6 @@
 			if(WEST)
 				hot_circ.side = circpath.CIRC_LEFT
 		hot_circ.update_icon()
-
-	if(!cold_circ || !hot_circ)
-		stat |= BROKEN
 
 	update_icon()
 
@@ -73,7 +92,16 @@
 
 /obj/machinery/power/generator/process()
 
+	if(!anchored)
+		return
+
 	if(!cold_circ || !hot_circ)
+		return
+
+	if(!cold_circ.anchored || !hot_circ.anchored)
+		return
+
+	if(!locate(cold_circ) in get_step(src, cold_dir) || !locate(hot_circ) in get_step(src, hot_dir))
 		return
 
 	lastgen = 0
@@ -134,6 +162,8 @@
 	src.updateDialog()
 
 /obj/machinery/power/generator/attack_hand(mob/user)
+	if(!anchored)
+		return
 	if(..())
 		user << browse(null, "window=teg")
 		return
@@ -141,9 +171,13 @@
 
 /obj/machinery/power/generator/proc/get_menu(include_link = 1)
 	var/t = ""
-	if(!powernet)
-		t += "<span class='bad'>Unable to connect to the power network!</span>"
-	else if(cold_circ && hot_circ)
+	if(!powernet || !cold_circ || !hot_circ)
+		initialize()
+		if(!powernet)
+			t += "<span class='bad'>Unable to connect to the power network!</span>"
+		else if(!cold_circ || !hot_circ)
+			t += "<span class='bad'>Unable to locate all parts!</span>"
+	else
 		var/datum/gas_mixture/cold_circ_air1 = cold_circ.AIR1
 		var/datum/gas_mixture/cold_circ_air2 = cold_circ.AIR2
 		var/datum/gas_mixture/hot_circ_air1 = hot_circ.AIR1
@@ -164,8 +198,6 @@
 		t += "Pressure Inlet: [round(hot_circ_air2.return_pressure(), 0.1)] kPa / Outlet: [round(hot_circ_air1.return_pressure(), 0.1)] kPa<BR>"
 
 		t += "</div>"
-	else
-		t += "<span class='bad'>Unable to locate all parts!</span>"
 	if(include_link)
 		t += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
 

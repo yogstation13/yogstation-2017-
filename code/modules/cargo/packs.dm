@@ -598,6 +598,16 @@
 	crate_type = /obj/structure/closet/crate/secure/engineering
 	dangerous = TRUE
 
+/datum/supply_pack/engineering/thermoelectric_generator
+	name = "Thermoelectric Generator Crate"
+	cost = 10000
+	access = access_atmospherics
+	contains = list(/obj/machinery/power/generator,
+					/obj/machinery/atmospherics/components/binary/circulator,
+					/obj/machinery/atmospherics/components/binary/circulator)
+	crate_name = "thermoelectric generator crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering
+
 /datum/supply_pack/engineering/flood_lamp
 	name = "Flood Lamp Assembly Crate"
 	contains = list(/obj/machinery/flood_lamp,
