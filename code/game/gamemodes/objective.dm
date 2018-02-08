@@ -701,11 +701,11 @@ var/global/list/possible_items_special = list()
 					n_p ++
 		target_amount = min(target_amount, n_p)
 
-	explanation_text = "Extract [target_amount] compatible genome\s."
+	explanation_text = "Absorb [target_amount] compatible lifeform\s."
 	return target_amount
 
 /datum/objective/absorb/check_completion()
-	if(owner && owner.changeling && owner.changeling.stored_profiles && (owner.changeling.profilecount >= target_amount))
+	if(owner && owner.changeling && owner.changeling.stored_profiles && (owner.changeling.absorbedcount >= target_amount))
 		return 1
 	else
 		return 0
