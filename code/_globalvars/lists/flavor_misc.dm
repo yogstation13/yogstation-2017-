@@ -48,6 +48,13 @@ var/global/list/security_depts_prefs = list("random", "none", "engineering", "su
 #define DSATCHEL "Department Satchel"
 #define DDUFFLEBAG "Department Dufflebag"
 var/global/list/backbaglist = list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL)
+
+	//uplink spawn loc
+#define UPLINK_PDA "PDA"
+#define UPLINK_RADIO "Radio"
+#define UPLINK_PEN "Pen"
+var/global/list/uplink_spawn_loc_list = list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN)
+
 	//Female Uniforms
 var/global/list/female_clothing_icons = list()
 
