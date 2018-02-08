@@ -1139,6 +1139,12 @@
 	cost = 1000
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 	crate_name = "sandstone blocks crate"
+	
+/datum/supply_pack/materials/carpet50
+	name = "50 Carpet Sheets"
+	cost = 1000
+	contains = list(/obj/item/stack/tile/carpet/fifty)
+	crate_name = "carpet sheets crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
@@ -1210,6 +1216,39 @@
 	contraband = TRUE
 	contains = list(/obj/item/weapon/storage/box/lasertagpins)
 	crate_name = "laser tag crate"
+
+/datum/supply_pack/misc/paintball
+	name = "mixed paintball supplies crate"
+	cost = 2500
+	contains = list(/obj/item/weapon/gun/projectile/automatic/paintball,
+				/obj/item/weapon/gun/projectile/automatic/paintball,
+				/obj/item/weapon/gun/projectile/automatic/paintball/red,
+				/obj/item/weapon/gun/projectile/automatic/paintball/red,
+				/obj/item/weapon/gun/projectile/automatic/paintball/super,
+				/obj/item/ammo_box/magazine/paintball,
+				/obj/item/ammo_box/magazine/paintball,
+				/obj/item/ammo_box/magazine/paintball,
+				/obj/item/ammo_box/magazine/paintball/blue,
+				/obj/item/ammo_box/magazine/paintball/blue,
+				/obj/item/ammo_box/magazine/paintball/blue,
+				/obj/item/ammo_box/magazine/paintball/violet,
+				/obj/item/ammo_box/magazine/paintball/yellow,)
+	crate_name = "paintball starter pack"
+
+/datum/supply_pack/misc/paintball/ammo
+	name = "paintball ammo crate"
+	cost = 700
+	contains = list(/obj/item/ammo_box/magazine/paintball/blue,
+					/obj/item/ammo_box/magazine/paintball/blue,
+					/obj/item/ammo_box/magazine/paintball/blue,
+					/obj/item/ammo_box/magazine/paintball,
+					/obj/item/ammo_box/magazine/paintball,
+					/obj/item/ammo_box/magazine/paintball,
+					/obj/item/ammo_box/magazine/paintball/violet,
+					/obj/item/ammo_box/magazine/paintball/violet,
+					/obj/item/ammo_box/magazine/paintball/yellow,
+					/obj/item/ammo_box/magazine/paintball/yellow,)
+	crate_name = "paintball ammunition crate"
 
 /datum/supply_pack/misc/clownpin
 	name = "Hilarious Firing Pin Crate"

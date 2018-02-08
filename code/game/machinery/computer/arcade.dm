@@ -238,7 +238,8 @@
 
 			if(emagged)
 				feedback_inc("arcade_win_emagged")
-				new /obj/effect/spawner/newbomb/timer/syndicate(src.loc)
+				new /obj/item/weapon/grenade/syndieminibomb(src.loc)
+				new /obj/item/weapon/grenade/syndieminibomb(src.loc)
 				new /obj/item/clothing/head/collectable/petehat(src.loc)
 				message_admins("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")

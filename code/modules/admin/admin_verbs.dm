@@ -93,6 +93,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/reset_idconsole_msg,
 	/client/proc/lock_idconsole,
 	/client/proc/fix_air,
+	/client/proc/admin_pick_random_player
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel,
@@ -123,8 +124,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/toggle_nuke,
 	/client/proc/mass_zombie_infection,
 	/client/proc/mass_zombie_cure,
-	/client/proc/polymorph_all,
-	/client/proc/admin_pick_random_player
+	/client/proc/polymorph_all
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -144,10 +144,8 @@ var/list/admin_verbs_server = list(
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
 	/client/proc/toggle_random_events,
-#if SERVERTOOLS
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
-#endif
 	/client/proc/panicbunker
 
 	)
@@ -840,6 +838,8 @@ var/list/admin_verbs_hideable = list(
 	log_admin("[src] deadmined themself.")
 	message_admins("[src] deadmined themself.")
 	feedback_add_details("admin_verb","DAS")
+	if(!admins.len)
+		webhook_send("adminless", "The last admin has de-adminned!")
 
 /client/proc/readmin()
 	set name = "Readmin"

@@ -31,10 +31,12 @@
 	icon_state = "tallcabinet"
 
 
-/obj/structure/filingcabinet/initialize()
-	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
-			I.loc = src
+/obj/structure/filingcabinet/Initialize(mapload)
+	..()
+	if(mapload)
+		for(var/obj/item/I in loc)
+			if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
+				I.loc = src
 
 /obj/structure/filingcabinet/ex_act(severity, target)
 	for(var/obj/item/I in src)
@@ -43,7 +45,7 @@
 	..()
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/documents))
+	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/documents/secret))
 		if(!user.drop_item())
 			return
 		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")

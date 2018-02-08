@@ -23,11 +23,7 @@
 	src.target = target
 	src.creator = creator
 	var/area/A = get_area(target)
-	if(A)
-		if(A.noteleport) // No point in persisting if the target is unreachable.
-			destroy_effect()
-			return
-	else // no area, no service
+	if(A && A.noteleport)
 		destroy_effect()
 		return
 	for(var/mob/M in src.loc)

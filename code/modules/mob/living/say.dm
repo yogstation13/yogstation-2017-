@@ -111,6 +111,10 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 	//Log of what we've said, plain message, no spans or junk
 	var/message_log = "\[[gameTimestamp()]\] [message]"
 	say_log += message_log
+	var/message_channel = message_mode
+	if(message_channel == MODE_HEADSET)
+		message_channel = "Common"
+	say_log[message_log] = message_channel
 
 	var/message_range = 7
 	var/radio_return = radio(message, message_mode, spans)
@@ -133,7 +137,12 @@ var/list/crit_allowed_modes = list(MODE_WHISPER,MODE_CHANGELING,MODE_ALIEN)
 
 	send_speech(message, message_range, src, bubble_type, spans, languages)
 
-	log_say("[name]/[key] : [message]")
+	//message_channel is the channel they attempted to talk on
+	//they are not always successful whether comms are down or their headset doesn't have that key
+	if(message_channel)
+		log_say("[name]/[key] on [message_channel] : [message]")
+	else
+		log_say("[name]/[key] : [message]")
 	return 1
 
 /mob/living/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans)

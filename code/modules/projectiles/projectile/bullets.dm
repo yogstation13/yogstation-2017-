@@ -123,6 +123,7 @@
 	weaken = 8
 	stun = 8
 	hitsound = 'sound/effects/meteorimpact.ogg'
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/bullet/meteorshot/weak
 	damage = 10
@@ -141,6 +142,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "banana"
 	range = 200
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/bullet/honker/New()
 	..()
@@ -173,6 +175,7 @@
 	icon_state = "cbbolt"
 	damage = 6
 	var/piercing = 0
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/bullet/dart/New()
 	..()
@@ -220,6 +223,7 @@
 	damage = 5
 	damage_type = TOX
 	weaken = 5
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/bullet/neurotoxin/on_hit(atom/target, blocked = 0)
 	if(isalien(target))

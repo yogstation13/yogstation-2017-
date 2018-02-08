@@ -249,10 +249,6 @@ var/obj/effect/vortex_end/vortex_beacon
 
 /obj/effect/vortex/proc/suck(atom/movable/AM)
 	AM.forceMove(vortex_beacon.loc)
-	if(isliving(AM))
-		var/mob/living/L = AM
-		if(!(L in vortex_beacon.casters))
-			L.Stun(2)
 
 /obj/effect/vortex_end
 	name = "vortex"

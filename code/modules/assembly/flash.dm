@@ -41,6 +41,7 @@
 	T.visible_message("<span class='disarm'>[src] emits a blinding light!</span>")
 	for(var/mob/living/carbon/M in viewers(3, T))
 		flash_carbon(M, null, 5, 0)
+	try_burnout()
 
 
 /obj/item/device/assembly/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
@@ -52,10 +53,6 @@
 
 
 /obj/item/device/assembly/flash/proc/flash_recharge(interval=10)
-	if(prob(times_used * 3)) //The more often it's used in a short span of time the more likely it will burn out
-		burn_out()
-		return 0
-
 	var/deciseconds_passed = world.time - last_used
 	for(var/seconds = deciseconds_passed/10, seconds>=interval, seconds-=interval) //get 1 charge every interval
 		times_used--
@@ -108,6 +105,7 @@
 
 	if(iscarbon(M))
 		flash_carbon(M, user, 5, 1)
+		try_burnout()
 		return 1
 
 	else if(issilicon(M))
@@ -115,9 +113,11 @@
 		update_icon(1)
 		M.Weaken(rand(5,10))
 		user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>", "<span class='danger'>You overload [M]'s sensors with the flash!</span>")
+		try_burnout()
 		return 1
 
 	user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
+	try_burnout()
 
 
 /obj/item/device/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
@@ -128,6 +128,7 @@
 	user.visible_message("<span class='disarm'>[user]'s flash emits a blinding light!</span>", "<span class='danger'>Your flash emits a blinding light!</span>")
 	for(var/mob/living/carbon/M in oviewers(3, null))
 		flash_carbon(M, user, 1, 0)
+	try_burnout()
 
 
 /obj/item/device/assembly/flash/emp_act(severity)
@@ -158,6 +159,10 @@
 		else
 			to_chat(user, "<span class='warning'>You're not sure how to use this!</span>")
 			return
+
+/obj/item/device/assembly/flash/proc/try_burnout()
+	if(prob(times_used * 3)) //The more often it's used in a short span of time the more likely it will burn out
+		burn_out()
 
 /obj/item/device/assembly/flash/cyborg
 	origin_tech = null

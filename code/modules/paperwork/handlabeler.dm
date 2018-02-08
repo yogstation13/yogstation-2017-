@@ -24,8 +24,7 @@
 			if(their_card.registered_name != old_real_name)
 				continue
 
-			their_card.registered_name = user.real_name
-			their_card.update_label()
+			their_card.update_label(user.real_name)
 
 	// NOT EVEN DEATH WILL TAKE AWAY THE STAIN
 	user.mind.name += " (suicide)"
@@ -60,7 +59,7 @@
 	user.visible_message("[user] labels [A] as [label].", \
 						 "<span class='notice'>You label [A] as [label].</span>")
 	A.add_fingerprint(user)
-	user.attack_log += "\[[time_stamp()]\]Labeled [A.name] as [label]"
+	user.attack_log += "\[[gameTimestamp()]\]Labeled [A.name] as [label]"
 	log_game("\[[time_stamp()]\] [user]/[user.ckey] Labeled [A.name] as [label]")
 
 	A.name = "[A.name] ([label])"

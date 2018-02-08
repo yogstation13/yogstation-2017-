@@ -153,7 +153,12 @@
 		open_animation()
 		sleep(OPEN_DURATION + 2)
 		pod_moving = 0
-		pod.mix_air()
+		if(!qdeleted(pod))
+			var/datum/gas_mixture/floor_mixture = loc.return_air()
+			floor_mixture.archive()
+			pod.air_contents.archive()
+			pod.air_contents.share(floor_mixture, 1) //mix the pod's gas mixture with the tile it's on
+			air_update_turf()
 
 // Tube station directions are simply 90 to either side of
 //  the exit.

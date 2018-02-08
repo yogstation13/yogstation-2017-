@@ -267,3 +267,6 @@ ANNOUNCE_ADMIN_LOGOUT
 #Used to send round data to a webhook. Address must use HTTP without SSL because byond is horrible
 #WEBHOOK_ADDRESS http://example.com
 #WEBHOOK_KEY webkey
+
+#How long the round lasts, untill shuttlecall is forced. Comment to stop automatic shuttlecalls. Given in minutes
+ROUNDLENGTH 120

@@ -6,9 +6,12 @@
 	circuit = /obj/item/weapon/circuitboard/computer/mining_shuttle
 	shuttleId = "mining"
 	possible_destinations = "mining_home;mining_away"
+	rogue_destinations = list("mining_away" = "asteroid")
+	current_destination = "mining_home"
 	no_destination_swap = 1
 	notification = SUPP_FREQ
 	cooldownlen = 50
+	smart_transit = TRUE
 	awayspeech = TRUE
 
 /obj/machinery/computer/shuttle/mining/Topic(href, href_list)

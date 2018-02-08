@@ -9,6 +9,7 @@
 #define LATTICE_LAYER 2.2
 #define DISPOSAL_PIPE_LAYER 2.3
 #define GAS_PIPE_LAYER 2.35
+#define TURF_DECAL_LAYER 2.39
 #define WIRE_LAYER 2.4
 #define WIRE_TERMINAL_LAYER 2.45
 #define LOW_OBJ_LAYER 2.5
@@ -40,6 +41,7 @@
 #define SPACEVINE_LAYER 4.8
 #define SPACEVINE_MOB_LAYER 4.9
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
+#define RIPPLE_LAYER 5.1
 
 #define GHOST_LAYER 6
 #define AREA_LAYER 10
@@ -56,3 +58,6 @@
 #define HUD_LAYER 19
 #define HUD_PLANE 19
 #define ABOVE_HUD_LAYER 19.1
+
+#define SPLASHSCREEN_LAYER 21
+#define SPLASHSCREEN_PLANE 21

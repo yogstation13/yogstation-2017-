@@ -65,9 +65,9 @@
 	var/trapped = 0
 	var/mob/trapped_mob
 
-/obj/structure/closet/initialize()
+/obj/structure/closet/Initialize(mapload)
 	..()
-	if(prob(30))
+	if(mapload && prob(30))
 		set_spooky_trap()
 
 /obj/structure/closet/dump_contents()

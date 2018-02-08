@@ -144,7 +144,8 @@
 				distorted_message = Gibberish2(input, cyberman.cyberman.emp_hit*1.6)
 			to_chat(cyberman.current, "<span class='cyberman'>Cyberman Broadcast: [distorted_message]</span>")
 		for(var/mob/dead in dead_mob_list)
-			to_chat(dead, "<span class='cyberman'>Cyberman Broadcast: [input]</span>")
+			var/link = FOLLOW_LINK(dead, user)
+			to_chat(dead, "[link] <span class='cyberman'>Cyberman Broadcast: [input]</span>")
 	return 1
 
 /datum/cyberman_datum/proc/get_user_selected_hack(mob/living/carbon/human/user = usr, display, null_option)

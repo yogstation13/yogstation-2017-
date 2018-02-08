@@ -128,6 +128,9 @@
 	switch(M.bodytemperature) // Low temperatures are required to take effect.
 		if(0 to 100) // At extreme temperatures (upgraded cryo) the effect is greatly increased.
 			M.status_flags -= DISFIGURED
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.update_face_dependant_huds()
 			M.adjustCloneLoss(-7, 0, DAMAGE_CHEMICAL)
 			M.adjustOxyLoss(-9, 0, DAMAGE_CHEMICAL)
 			M.adjustBruteLoss(-5, 0, DAMAGE_CHEMICAL)
@@ -136,6 +139,9 @@
 			. = 1
 		if(100 to 225) // At lower temperatures (cryo) the full effect is boosted
 			M.status_flags -= DISFIGURED
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.update_face_dependant_huds()
 			M.adjustCloneLoss(-2, 0, DAMAGE_CHEMICAL)
 			M.adjustOxyLoss(-7, 0, DAMAGE_CHEMICAL)
 			M.adjustBruteLoss(-3, 0, DAMAGE_CHEMICAL)
@@ -143,7 +149,9 @@
 			M.adjustToxLoss(-3, 0, DAMAGE_CHEMICAL)
 			. = 1
 		if(225 to T0C)
-			M.status_flags -= DISFIGURED
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.update_face_dependant_huds()
 			M.adjustCloneLoss(-1, 0, DAMAGE_CHEMICAL)
 			M.adjustOxyLoss(-5, 0, DAMAGE_CHEMICAL)
 			M.adjustBruteLoss(-1, 0, DAMAGE_CHEMICAL)
@@ -165,6 +173,9 @@
 	M.adjustCloneLoss(-15, 0) //Rezadone is almost never used in favor of cryoxadone. Hopefully this will change that.
 	M.heal_organ_damage(1,1, 0)
 	M.status_flags -= DISFIGURED
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_face_dependant_huds()
 	..()
 	. = 1
 
@@ -1045,7 +1056,7 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	..()
 	. = 1
 
-/datum/reagent/medicine/earthsblood
+/datum/reagent/medicine/earthsblood //Created by ambrosia gaia plants
 	name = "Earthsblood"
 	id = "earthsblood"
 	description = "Ichor from an extremely powerful plant. Great for restoring wounds, but it's a little heavy on the brain."
@@ -1057,11 +1068,11 @@ datum/reagent/medicine/syndicate_nanites/on_mob_life(mob/living/M)
 	M.adjustFireLoss(-3 * REM, 0)
 	M.adjustOxyLoss(-15 * REM, 0)
 	M.adjustToxLoss(-3 * REM, 0)
-	M.adjustBrainLoss(0.5 * REM) //This does, after all, come from ambrosia
+	M.adjustBrainLoss(2 * REM) //This does, after all, come from ambrosia, and the most powerful ambrosia in existence, at that!
 	M.adjustCloneLoss(-1 * REM, 0)
 	M.adjustStaminaLoss(-30 * REM, 0)
 	M.jitteriness = min(max(0, M.jitteriness + 3), 30)
-	M.druggy = min(max(0, M.druggy + 3), 15) //See above
+	M.druggy = min(max(0, M.druggy + 10), 15) //See above
 	..()
 	. = 1
 

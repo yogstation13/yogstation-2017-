@@ -11,8 +11,8 @@
 		to_chat(usr, "<span class='ticket-status'>You did not supply a message for your ticket. Ignoring your request.</span>")
 		return
 
-	ticket_title = replacetext(ticket_title, "'", "\'")
-	ticket_title = sanitize(copytext(ticket_title,1,MAX_MESSAGE_LEN))
+	//ticket_title = replacetext(ticket_title, "'", "\'")
+	//ticket_title = sanitize(copytext(ticket_title,1,MAX_MESSAGE_LEN))
 
 	var/datum/admin_ticket/found_ticket = null
 	for(var/datum/admin_ticket/T in tickets_list)

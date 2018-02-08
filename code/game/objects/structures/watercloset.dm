@@ -36,7 +36,11 @@
 		else
 			to_chat(user, "<span class='warning'>You need a tighter grip!</span>")
 	else
-		return ..()
+		if(mode == 2)
+			user.changeNext_move(CLICK_CD_MELEE)
+			flush()
+			to_chat(user,"<span class='notice'>You flush the toilet.</span>")
+			playsound(src, 'sound/items/Toilet_Flush.ogg', 50, 1)
 
 /obj/machinery/disposal/bin/toilet/attackby(obj/item/I, mob/living/user, params)
 	return ..()
@@ -295,6 +299,13 @@
 	icon_state = "rubberducky"
 	item_state = "rubberducky"
 
+/obj/item/device/assembly/bikehorn/rubberducky/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] tells [src] that they don't want to live anymore! It looks like they're trying to commit suicide.</span>")
+	playsound(get_turf(src), honksound, 50, 1)
+	sleep(20)
+	user.visible_message("<span class='suicide'>[src] points a gun at [user]!</span>")
+	playsound(get_turf(src), 'sound/weapons/Gunshot.ogg', 50, 1, -1)
+	return (BRUTELOSS)
 
 
 /obj/structure/sink

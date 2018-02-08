@@ -140,6 +140,12 @@
 		AdjustParalysis(-3)
 		AdjustStunned(-3)
 		AdjustWeakened(-3)
+		if(dna.check_mutation(ACTIVE_HULK))
+			if(prob(60))
+				adjustStaminaLoss(10)
+				to_chat(src, "<span class='notice'>[M] calms you down a little.</span>")
+			else
+				to_chat(src, "<span class='warning'>[M] tries to calm you!</span>")
 		if(resting)
 			resting = 0
 			update_canmove()
@@ -308,7 +314,8 @@
 
 
 /mob/living/carbon/fall(forced)
-    loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
+	if(loc)
+		loc.handle_fall(src, forced)//it's loc so it doesn't call the mob's handle_fall which does nothing
 
 /mob/living/carbon/is_muzzled()
 	return(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
@@ -803,3 +810,9 @@
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
 
 	..()
+
+/mob/living/carbon/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
+	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"

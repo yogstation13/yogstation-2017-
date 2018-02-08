@@ -15,6 +15,7 @@
 		for(var/obj/item/organ/I in internal_organs)
 			int_organs += I
 			I.Remove(src, 1)
+			I.loc = null //hide the organ in nullspace
 
 	if(tr_flags & TR_KEEPITEMS)
 		for(var/obj/item/W in (src.contents-implants-int_organs))
@@ -29,6 +30,8 @@
 	invisibility = INVISIBILITY_MAXIMUM
 
 	var/atom/movable/overlay/animation = new( loc )
+	animation.name = name
+	animation.desc = desc
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
@@ -86,6 +89,7 @@
 			qdel(I)
 
 		for(var/obj/item/organ/I in int_organs)
+			I.forceMove(O.loc) //if something fails in inserting the organ, it will be on the ground
 			I.Insert(O, 1)
 
 	//transfer mind and delete old mob
@@ -99,6 +103,8 @@
 	for(var/A in loc.vars)
 		if(loc.vars[A] == src)
 			loc.vars[A] = O
+
+	transfer_observers_to(O)
 
 	. = O
 
@@ -124,6 +130,7 @@
 		for(var/obj/item/organ/I in internal_organs)
 			int_organs += I
 			I.Remove(src, 1)
+			I.loc = null //hide the organ in nullspace
 
 	//now the rest
 	if (tr_flags & TR_KEEPITEMS)
@@ -144,6 +151,8 @@
 	overlays.Cut()
 	invisibility = INVISIBILITY_MAXIMUM
 	var/atom/movable/overlay/animation = new( loc )
+	animation.name = name
+	animation.desc = desc
 	animation.icon_state = "blank"
 	animation.icon = 'icons/mob/mob.dmi'
 	animation.master = src
@@ -206,6 +215,7 @@
 			qdel(I)
 
 		for(var/obj/item/organ/I in int_organs)
+			I.forceMove(O.loc) //if something fails in inserting the organ, it will be on the ground
 			I.Insert(O, 1)
 
 	if(mind)
@@ -217,6 +227,8 @@
 	O.a_intent = "help"
 	if (tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a human.</B>")
+
+	transfer_observers_to(O)
 
 	. = O
 
@@ -302,11 +314,11 @@
 	O.rename_self("ai")
 	. = O
 	qdel(src)
-	return
+	return O
 
 
 //human -> robot
-/mob/living/carbon/human/proc/Robotize(delete_items = 0)
+/mob/living/carbon/human/proc/Robotize(delete_items = FALSE, teleport = FALSE)
 	if (notransform)
 		return
 	for(var/obj/item/W in src)
@@ -315,8 +327,8 @@
 		else
 			unEquip(W)
 	regenerate_icons()
-	notransform = 1
-	canmove = 0
+	notransform = TRUE
+	canmove = FALSE
 	icon = null
 	invisibility = INVISIBILITY_MAXIMUM
 	for(var/t in bodyparts)
@@ -352,7 +364,14 @@
 			R.mmi.brainmob.real_name = real_name //the name of the brain inside the cyborg is the robotized human's name.
 			R.mmi.brainmob.name = real_name
 
-	R.loc = loc
+	if(teleport)
+		for(var/obj/effect/landmark/start/sloc in start_landmarks_list)
+			if(sloc.name != "Cyborg")
+				continue
+			R.loc = sloc.loc
+			break
+	else
+		R.loc = loc
 	R.job = "Cyborg"
 	R.notify_ai(1)
 
