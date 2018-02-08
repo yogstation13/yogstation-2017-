@@ -32,10 +32,8 @@
 
 
 
-/obj/machinery/computer/operating/New()
-	..()
-	if(ticker)
-		find_table()
+/obj/machinery/computer/operating/Initialize()
+	find_table()
 
 /obj/machinery/computer/operating/erase_data()
 	implants = null
@@ -67,9 +65,6 @@
 	implants += /obj/item/weapon/implant/mindshield
 	implants += /obj/item/weapon/implant/tracking
 	implants += /obj/item/weapon/implant/chem
-
-/obj/machinery/computer/operating/initialize()
-	find_table()
 
 /obj/machinery/computer/operating/proc/find_table()
 	for(var/dir in cardinal)

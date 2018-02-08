@@ -26,7 +26,7 @@
 	newshot()
 	if(no_den_usage)
 		var/area/A = get_area(user)
-		if(istype(A, /area/wizard_station))
+		if(istype(A, /area/wizard_station) && !istype(target,/obj/item/weapon/spellbook))
 			to_chat(user, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>")
 			return
 		else

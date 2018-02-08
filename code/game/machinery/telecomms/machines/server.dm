@@ -294,3 +294,7 @@
 							/obj/item/weapon/stock_parts/manipulator = 2,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/subspace/filter = 1)
+
+/obj/machinery/telecomms/server/presets/common/ministation/New()
+	..()
+	freq_listening = list()

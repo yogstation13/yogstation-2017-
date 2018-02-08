@@ -476,10 +476,9 @@ var/next_external_rsc = 0
 /client/Stat()
 	. = ..()
 	if (holder)
-		sleep(1)
+		stoplag(1)
 	else
-		sleep(5)
-		stoplag()
+		stoplag(5)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
@@ -572,3 +571,12 @@ var/next_external_rsc = 0
 		if (query_get_notes.item[1] == adminckey)
 			return
 	add_note(ckey, "Detected as using a cid randomizer.", null, adminckey, logged = 0)
+
+/client/proc/vv_edit_var(var_name, var_value)
+	switch (var_name)
+		if ("holder")
+			return FALSE
+		if ("ckey")
+			return FALSE
+		if ("key")
+			return FALSE

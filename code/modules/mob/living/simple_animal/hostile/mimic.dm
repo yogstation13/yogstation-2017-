@@ -38,10 +38,11 @@
 	var/attempt_open = 0
 
 // Pickup loot
-/mob/living/simple_animal/hostile/mimic/crate/initialize()
+/mob/living/simple_animal/hostile/mimic/crate/Initialize(mapload)
 	..()
-	for(var/obj/item/I in loc)
-		I.loc = src
+	if(mapload)
+		for(var/obj/item/I in loc)
+			I.loc = src
 
 /mob/living/simple_animal/hostile/mimic/crate/DestroySurroundings()
 	..()

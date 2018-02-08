@@ -31,15 +31,12 @@
 	var/material_drop = /obj/item/stack/sheet/metal
 	var/magic_teleport = FALSE  //Having this to true will teleport the contents upon closing to another random locker. (WARNING: Extremely fun)
 
-/obj/structure/closet/New()
-	..()
-	update_icon()
-	closet_list.Add(src)
 
-/obj/structure/closet/initialize()
+/obj/structure/closet/Initialize(mapload)
 	..()
-	if(!opened)		// if closed, any item at the crate's loc is put in the contents
+	if(mapload && !opened)	// if closed, any item at the crate's loc is put in the contents
 		take_contents()
+	update_icon()
 
 /obj/structure/closet/Destroy()
 	dump_contents()

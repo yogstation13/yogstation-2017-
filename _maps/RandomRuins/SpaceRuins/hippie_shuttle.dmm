@@ -1,53 +1,440 @@
-"a" = (/turf/open/space,/area/space)
-"b" = (/turf/closed/wall/shuttle{tag = "icon-wall (NORTHWEST)"; icon_state = "wall"; dir = 9},/area/ruin/powered)
-"c" = (/obj/structure/window/shuttle,/turf/open/space,/area/ruin/powered)
-"d" = (/turf/closed/wall/shuttle{tag = "icon-wall (NORTHEAST)"; icon_state = "wall"; dir = 5},/area/ruin/powered)
-"e" = (/obj/machinery/door/airlock/shuttle,/turf/open/space,/area/ruin/powered)
-"f" = (/obj/structure/chair/comfy{tag = "icon-comfychair (NORTH)"; icon_state = "comfychair"; dir = 1},/obj/effect/decal/remains/human,/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
-"g" = (/obj/machinery/computer/shuttle,/turf/open/floor/plasteel/shuttle/white,/area/ruin/powered)
-"h" = (/obj/structure/table,/obj/item/key,/turf/open/floor/plasteel/shuttle/white,/area/ruin/powered)
-"i" = (/obj/structure/chair/comfy{tag = "icon-comfychair (NORTH)"; icon_state = "comfychair"; dir = 1},/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
-"j" = (/turf/closed/wall/shuttle{icon_state = "swall3"; dir = 2},/area/ruin/powered)
-"k" = (/obj/machinery/light_construct{dir = 8},/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
-"l" = (/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
-"m" = (/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
-"n" = (/obj/machinery/light_construct{dir = 4},/turf/open/floor/plasteel/shuttle,/area/ruin/powered)
-"o" = (/turf/closed/wall/shuttle{icon_state = "swall7"; dir = 2},/area/ruin/powered)
-"p" = (/turf/closed/wall/shuttle{icon_state = "swall12"; dir = 2},/area/ruin/powered)
-"q" = (/turf/open/floor/plasteel/stairs/left,/area/ruin/powered)
-"r" = (/turf/open/floor/plasteel/stairs/right,/area/ruin/powered)
-"s" = (/turf/closed/wall/shuttle{icon_state = "swall11"; dir = 2},/area/ruin/powered)
-"t" = (/obj/machinery/door/poddoor/shutters{id = "HippieVan"},/turf/open/space,/area/ruin/powered)
-"u" = (/obj/effect/mob_spawn/human/corpse/damaged,/obj/effect/decal/cleanable/blood,/obj/effect/decal/cleanable/blood/gibs/body,/obj/effect/decal/cleanable/blood/tracks,/obj/machinery/button/door{id = "HippieVan"; name = "External Shutters"; pixel_y = 25},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
-"v" = (/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
-"w" = (/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,/obj/item/weapon/lighter,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
-"x" = (/obj/item/weapon/reagent_containers/glass/bottle/drugs,/obj/effect/decal/cleanable/cobweb2,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
-"y" = (/obj/item/clothing/mask/cigarette/rollie/trippy,/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
-"z" = (/obj/item/weapon/reagent_containers/syringe,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
-"A" = (/obj/item/weapon/paper/crumpled/bloody/hippie,/obj/item/weapon/cigbutt/roach,/obj/machinery/light_construct{dir = 4},/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
-"B" = (/obj/item/weapon/reagent_containers/glass/bottle,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
-"C" = (/obj/effect/decal/remains/human,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
-"D" = (/obj/structure/bed,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
-"E" = (/obj/structure/closet/wardrobe/mixed,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
-"F" = (/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
-"G" = (/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/food/drinks/beer,/turf/open/floor/plasteel/shuttle{icon_state = "shuttlefloor2"},/area/ruin/powered)
-"H" = (/turf/closed/wall/shuttle,/area/ruin/powered)
-"I" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_l"},/turf/open/space,/area/ruin/powered)
-"J" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion_r"},/turf/open/space,/area/ruin/powered)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/open/space,
+/area/space)
+"b" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-wall (NORTHWEST)";
+	icon_state = "wall";
+	dir = 9
+	},
+/area/ruin/powered)
+"c" = (
+/obj/structure/window/shuttle,
+/turf/open/space,
+/area/ruin/powered)
+"d" = (
+/turf/closed/wall/shuttle{
+	tag = "icon-wall (NORTHEAST)";
+	icon_state = "wall";
+	dir = 5
+	},
+/area/ruin/powered)
+"e" = (
+/obj/machinery/door/airlock/shuttle,
+/turf/open/space,
+/area/ruin/powered)
+"f" = (
+/obj/structure/chair/comfy{
+	tag = "icon-comfychair (NORTH)";
+	icon_state = "comfychair";
+	dir = 1
+	},
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel/shuttle,
+/area/ruin/powered)
+"g" = (
+/obj/machinery/computer/shuttle,
+/turf/open/floor/plasteel/shuttle/white,
+/area/ruin/powered)
+"h" = (
+/obj/structure/table,
+/obj/item/key,
+/turf/open/floor/plasteel/shuttle/white,
+/area/ruin/powered)
+"i" = (
+/obj/structure/chair/comfy{
+	tag = "icon-comfychair (NORTH)";
+	icon_state = "comfychair";
+	dir = 1
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/ruin/powered)
+"j" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall3";
+	dir = 2
+	},
+/area/ruin/powered)
+"k" = (
+/obj/machinery/light_construct{
+	dir = 8
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/ruin/powered)
+"l" = (
+/turf/open/floor/plasteel/shuttle,
+/area/ruin/powered)
+"m" = (
+/obj/item/weapon/reagent_containers/food/drinks/beer,
+/turf/open/floor/plasteel/shuttle,
+/area/ruin/powered)
+"n" = (
+/obj/machinery/light_construct{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle,
+/area/ruin/powered)
+"o" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall7";
+	dir = 2
+	},
+/area/ruin/powered)
+"p" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall12";
+	dir = 2
+	},
+/area/ruin/powered)
+"q" = (
+/turf/open/floor/plasteel/stairs/left,
+/area/ruin/powered)
+"r" = (
+/turf/open/floor/plasteel/stairs/right,
+/area/ruin/powered)
+"s" = (
+/turf/closed/wall/shuttle{
+	icon_state = "swall11";
+	dir = 2
+	},
+/area/ruin/powered)
+"t" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "HippieVan"
+	},
+/turf/open/space,
+/area/ruin/powered)
+"u" = (
+/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/button/door{
+	id = "HippieVan";
+	name = "External Shutters";
+	pixel_y = 25
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/ruin/powered)
+"v" = (
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/ruin/powered)
+"w" = (
+/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
+/obj/item/weapon/lighter,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/ruin/powered)
+"x" = (
+/obj/item/weapon/reagent_containers/glass/bottle/drugs,
+/obj/effect/decal/cleanable/cobweb2,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/ruin/powered)
+"y" = (
+/obj/item/clothing/mask/cigarette/rollie/trippy,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/ruin/powered)
+"z" = (
+/obj/item/weapon/reagent_containers/syringe,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/ruin/powered)
+"A" = (
+/obj/item/weapon/paper/crumpled/bloody/hippie,
+/obj/item/weapon/cigbutt/roach,
+/obj/machinery/light_construct{
+	dir = 4
+	},
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/ruin/powered)
+"B" = (
+/obj/item/weapon/reagent_containers/glass/bottle,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/ruin/powered)
+"C" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/ruin/powered)
+"D" = (
+/obj/structure/bed,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/ruin/powered)
+"E" = (
+/obj/structure/closet/wardrobe/mixed,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/ruin/powered)
+"F" = (
+/obj/item/weapon/reagent_containers/food/drinks/beer,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/ruin/powered)
+"G" = (
+/obj/item/weapon/reagent_containers/syringe,
+/obj/item/weapon/reagent_containers/food/drinks/beer,
+/turf/open/floor/plasteel/shuttle{
+	icon_state = "shuttlefloor2"
+	},
+/area/ruin/powered)
+"H" = (
+/turf/closed/wall/shuttle,
+/area/ruin/powered)
+"I" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion_l"
+	},
+/turf/open/space,
+/area/ruin/powered)
+"J" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion_r"
+	},
+/turf/open/space,
+/area/ruin/powered)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaa
-aaaabccccdaaaa
-aaaaefghieaaaa
-aaaajklmnjaaaa
-aaaaopqrpsaaaa
-aaaatuvwxjaaaa
-aaaatyvzAjaaaa
-aaaatvzBCjaaaa
-aaaacDEFGcaaaa
-aaaaHpccpHaaaa
-aaaaIaaaaJaaaa
-aaaaaaaaaaaaaa
-aaaaaaaaaaaaaa
-aaaaaaaaaaaaaa
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+b
+e
+j
+o
+t
+t
+t
+c
+H
+I
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+c
+f
+k
+p
+u
+y
+v
+D
+p
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+c
+g
+l
+q
+v
+v
+z
+E
+c
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+c
+h
+m
+r
+w
+z
+B
+F
+c
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+c
+i
+n
+p
+x
+A
+C
+G
+p
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+d
+e
+j
+s
+j
+j
+j
+c
+H
+J
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
 "}

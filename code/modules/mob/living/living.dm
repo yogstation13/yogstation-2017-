@@ -1037,6 +1037,8 @@ Sorry Giacom. Please don't be mad :(
 			return 1
 
 /mob/living/proc/pummel(atom/movable/AM, var/force = 2)
+	if(anchored)
+		return
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(force >= 6 && H.shoes)

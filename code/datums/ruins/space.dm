@@ -59,7 +59,7 @@
 /datum/map_template/ruin/space/freeminer_asteroid/load(turf/T, centered = FALSE)
 	. = ..()
 	if(.)
-		var/datum/map_template/shuttle/S = shuttle_templates["whiteship_miner"]
+		var/datum/map_template/shuttle/S = SSmapping.shuttle_templates["whiteship_miner"]
 		if(S)
 			for(var/obj/machinery/shuttle_manipulator/M in machines)
 				M.existing_shuttle = SSshuttle.getShuttle(S.port_id)

@@ -123,8 +123,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 			state = STATE_PURCHASE
 
 		if("buyshuttle")
-			if(authenticated==2)
-				var/list/shuttles = flatten_list(shuttle_templates)
+			if(src.authenticated==2)
+				var/list/shuttles = flatten_list(SSmapping.shuttle_templates)
 				var/datum/map_template/shuttle/S = locate(href_list["chosen_shuttle"]) in shuttles
 				if(S && istype(S))
 					if((SSshuttle.shuttle_purchased && !emagged) || SSshuttle.emag_shuttle_purchased)
@@ -461,7 +461,7 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				if (authenticated==2)
 					dat += "<BR><BR><B>Captain Functions</B>"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=announce'>Make a Captain's Announcement</A> \]"
-					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=purchase_menu'>Purchase Shuttle</A> \]"
+					//dat += "<BR>\[ <A HREF='?src=\ref[src];operation=purchase_menu'>Purchase Shuttle</A> \]" ~~temporarily commented out as it's slightly broke as of dynamomaps. 
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=\ref[src];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
@@ -527,8 +527,8 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 				dat += "<BR>Lift access restrictions on maintenance and external airlocks? <BR>\[ <A HREF='?src=\ref[src];operation=enableemergency'>OK</A> | <A HREF='?src=\ref[src];operation=viewmessage'>Cancel</A> \]"
 		if(STATE_PURCHASE)
 			dat += "Budget: [SSshuttle.points] Credits.<BR>"
-			for(var/shuttle_id in shuttle_templates)
-				var/datum/map_template/shuttle/S = shuttle_templates[shuttle_id]
+			for(var/shuttle_id in SSmapping.shuttle_templates)
+				var/datum/map_template/shuttle/S = SSmapping.shuttle_templates[shuttle_id]
 				if(!emagged && S.emag_buy)
 					continue
 				if(S.credit_cost < INFINITY)

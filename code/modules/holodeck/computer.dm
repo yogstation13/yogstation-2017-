@@ -62,11 +62,12 @@
 	else
 		linked.linked = src // todo detect multiple/constructed computers
 
-	if(ticker && ticker.current_state >= GAME_STATE_PLAYING)
-		initialize()
 	..()
 
-/obj/machinery/computer/holodeck/initialize()
+/obj/machinery/computer/holodeck/Initialize(mapload)
+	..()
+	if(!mapload && ticker.current_state < GAME_STATE_PLAYING)
+		return
 	program_cache = list()
 	emag_programs = list()
 	for(var/typekey in subtypesof(program_type))
