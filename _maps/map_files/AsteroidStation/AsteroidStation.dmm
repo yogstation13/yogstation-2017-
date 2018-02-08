@@ -621,8 +621,8 @@
 /obj/item/weapon/circular_saw,
 /obj/item/weapon/cautery,
 /obj/item/weapon/surgicaldrill,
-/obj/item/robot_parts/l_arm,
-/obj/item/robot_parts/r_arm,
+/obj/item/bodypart/l_arm/robot,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor4"
 	},
@@ -1097,11 +1097,11 @@
 /turf/open/floor/plating,
 /area/shuttle/transport)
 "acN" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 8
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f10";
 	dir = 2
@@ -1676,11 +1676,11 @@
 	},
 /area/shuttle/transport)
 "adV" = (
+/turf/open/space,
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "propulsion";
 	dir = 8
 	},
-/turf/open/space,
 /turf/closed/wall/shuttle{
 	icon_state = "swall_f9";
 	dir = 2
@@ -19242,7 +19242,7 @@
 /area/mine/explored)
 "aNl" = (
 /obj/machinery/disposal/bin/toilet{
-	 desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one has a heart drawn on the cistern.";
+	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one has a heart drawn on the cistern.";
 	dir = 4
 	},
 /turf/open/floor/plasteel{
@@ -61627,7 +61627,7 @@
 /area/atmos)
 "cuX" = (
 /obj/machinery/disposal/bin/toilet{
-	 desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one has a heart drawn on the cistern.";
+	desc = "The HT-451, a torque rotation-based, waste disposal unit for small matter. This one has a heart drawn on the cistern.";
 	dir = 4
 	},
 /obj/machinery/button/door{
@@ -62212,7 +62212,7 @@
 "cwd" = (
 /turf/open/floor/bluegrid{
 	name = "airless floor";
-	initial_gas_mix="TEMP=2.7";
+	initial_gas_mix = "TEMP=2.7";
 	temperature = 2.7
 	},
 /area/toxins/xenobiology)
@@ -62443,7 +62443,7 @@
 	},
 /turf/open/floor/bluegrid{
 	name = "airless floor";
-	initial_gas_mix="TEMP=2.7";
+	initial_gas_mix = "TEMP=2.7";
 	temperature = 2.7
 	},
 /area/toxins/xenobiology)
@@ -63278,7 +63278,7 @@
 	},
 /turf/open/floor/engine{
 	name = "n2 floor";
-	initial_gas_mix="nitrogen=100000;TEMP=293.15"
+	initial_gas_mix = "nitrogen=100000;TEMP=293.15"
 	},
 /area/atmos)
 "cyx" = (
@@ -63288,7 +63288,7 @@
 	},
 /turf/open/floor/engine{
 	name = "n2 floor";
-	initial_gas_mix="nitrogen=100000;TEMP=293.15"
+	initial_gas_mix = "nitrogen=100000;TEMP=293.15"
 	},
 /area/atmos)
 "cyy" = (
@@ -63305,7 +63305,7 @@
 	},
 /turf/open/floor/engine{
 	name = "n2 floor";
-	initial_gas_mix="nitrogen=100000;TEMP=293.15"
+	initial_gas_mix = "nitrogen=100000;TEMP=293.15"
 	},
 /area/atmos)
 "cyz" = (
@@ -63316,7 +63316,7 @@
 	},
 /turf/open/floor/engine{
 	name = "o2 floor";
-	initial_gas_mix="oxygen=100000;TEMP=293.15"
+	initial_gas_mix = "oxygen=100000;TEMP=293.15"
 	},
 /area/atmos)
 "cyA" = (
@@ -63329,7 +63329,7 @@
 	},
 /turf/open/floor/engine{
 	name = "o2 floor";
-	initial_gas_mix="oxygen=100000;TEMP=293.15"
+	initial_gas_mix = "oxygen=100000;TEMP=293.15"
 	},
 /area/atmos)
 "cyB" = (
@@ -63346,7 +63346,7 @@
 	},
 /turf/open/floor/engine{
 	name = "o2 floor";
-	initial_gas_mix="oxygen=100000;TEMP=293.15"
+	initial_gas_mix = "oxygen=100000;TEMP=293.15"
 	},
 /area/atmos)
 "cyC" = (
@@ -63357,8 +63357,8 @@
 	pixel_y = 1
 	},
 /turf/open/floor/engine{
-	 name = "co2 floor";
-	initial_gas_mix="co2=50000;TEMP=293.15"
+	name = "co2 floor";
+	initial_gas_mix = "co2=50000;TEMP=293.15"
 	},
 /area/atmos)
 "cyD" = (
@@ -63368,7 +63368,7 @@
 	},
 /turf/open/floor/engine{
 	name = "co2 floor";
-	initial_gas_mix="co2=50000;TEMP=293.15"
+	initial_gas_mix = "co2=50000;TEMP=293.15"
 	},
 /area/atmos)
 "cyE" = (
@@ -63384,8 +63384,8 @@
 	pump_direction = 0
 	},
 /turf/open/floor/engine{
-	 name = "co2 floor";
-	initial_gas_mix="co2=50000;TEMP=293.15"
+	name = "co2 floor";
+	initial_gas_mix = "co2=50000;TEMP=293.15"
 	},
 /area/atmos)
 "cyF" = (
@@ -63397,7 +63397,7 @@
 	},
 /turf/open/floor/engine{
 	name = "plasma floor";
-	initial_gas_mix="plasma=70000;TEMP=293.15"
+	initial_gas_mix = "plasma=70000;TEMP=293.15"
 	},
 /area/atmos)
 "cyG" = (
@@ -63407,7 +63407,7 @@
 	},
 /turf/open/floor/engine{
 	name = "plasma floor";
-	initial_gas_mix="plasma=70000;TEMP=293.15"
+	initial_gas_mix = "plasma=70000;TEMP=293.15"
 	},
 /area/atmos)
 "cyH" = (
@@ -63424,7 +63424,7 @@
 	},
 /turf/open/floor/engine{
 	name = "plasma floor";
-	initial_gas_mix="plasma=70000;TEMP=293.15"
+	initial_gas_mix = "plasma=70000;TEMP=293.15"
 	},
 /area/atmos)
 "cyI" = (
@@ -63477,14 +63477,14 @@
 "cyO" = (
 /turf/open/floor/engine{
 	name = "n2 floor";
-	initial_gas_mix="plasma=100000;TEMP=293.15"
+	initial_gas_mix = "plasma=100000;TEMP=293.15"
 	},
 /area/atmos)
 "cyP" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/engine{
 	name = "n2 floor";
-	initial_gas_mix="nitrogen=100000;TEMP=293.15"
+	initial_gas_mix = "nitrogen=100000;TEMP=293.15"
 	},
 /area/atmos)
 "cyQ" = (
@@ -63493,20 +63493,20 @@
 	},
 /turf/open/floor/engine{
 	name = "n2 floor";
-	initial_gas_mix="nitrogen=100000;TEMP=293.15"
+	initial_gas_mix = "nitrogen=100000;TEMP=293.15"
 	},
 /area/atmos)
 "cyR" = (
 /turf/open/floor/engine{
 	name = "o2 floor";
-	initial_gas_mix="oxygen=100000;TEMP=293.15"
+	initial_gas_mix = "oxygen=100000;TEMP=293.15"
 	},
 /area/atmos)
 "cyS" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/engine{
 	name = "o2 floor";
-	initial_gas_mix="oxygen=100000;TEMP=293.15"
+	initial_gas_mix = "oxygen=100000;TEMP=293.15"
 	},
 /area/atmos)
 "cyT" = (
@@ -63515,20 +63515,20 @@
 	},
 /turf/open/floor/engine{
 	name = "o2 floor";
-	initial_gas_mix="oxygen=100000;TEMP=293.15"
+	initial_gas_mix = "oxygen=100000;TEMP=293.15"
 	},
 /area/atmos)
 "cyU" = (
 /turf/open/floor/engine{
 	name = "co2 floor";
-	initial_gas_mix="co2=50000;TEMP=293.15"
+	initial_gas_mix = "co2=50000;TEMP=293.15"
 	},
 /area/atmos)
 "cyV" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/engine{
 	name = "co2 floor";
-	initial_gas_mix="co2=50000;TEMP=293.15"
+	initial_gas_mix = "co2=50000;TEMP=293.15"
 	},
 /area/atmos)
 "cyW" = (
@@ -63536,21 +63536,21 @@
 	dir = 4
 	},
 /turf/open/floor/engine{
-	 name = "co2 floor";
-	initial_gas_mix="co2=50000;TEMP=293.15"
+	name = "co2 floor";
+	initial_gas_mix = "co2=50000;TEMP=293.15"
 	},
 /area/atmos)
 "cyX" = (
 /turf/open/floor/engine{
 	name = "plasma floor";
-	initial_gas_mix="plasma=70000;TEMP=293.15"
+	initial_gas_mix = "plasma=70000;TEMP=293.15"
 	},
 /area/atmos)
 "cyY" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/engine{
 	name = "plasma floor";
-	initial_gas_mix="plasma=70000;TEMP=293.15"
+	initial_gas_mix = "plasma=70000;TEMP=293.15"
 	},
 /area/atmos)
 "cyZ" = (
@@ -63559,7 +63559,7 @@
 	},
 /turf/open/floor/engine{
 	name = "plasma floor";
-	initial_gas_mix="plasma=70000;TEMP=293.15"
+	initial_gas_mix = "plasma=70000;TEMP=293.15"
 	},
 /area/atmos)
 "cza" = (
@@ -104228,7 +104228,7 @@ abH
 abX
 abH
 abP
-acr
+acj
 abD
 abD
 acx
