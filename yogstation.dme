@@ -1306,7 +1306,6 @@
 #include "code\modules\hydroponics\grown\towercap.dm"
 #include "code\modules\jobs\access.dm"
 #include "code\modules\jobs\jobs.dm"
-#include "code\modules\jobs\map_changes.dm"
 #include "code\modules\jobs\whitelist.dm"
 #include "code\modules\jobs\job_types\assistant.dm"
 #include "code\modules\jobs\job_types\captain.dm"
