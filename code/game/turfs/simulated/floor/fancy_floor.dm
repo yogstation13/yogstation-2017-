@@ -30,10 +30,9 @@
 	floor_tile = /obj/item/stack/tile/grass
 	broken_states = list("sand")
 
-/turf/open/floor/grass/New()
+/turf/open/floor/grass/Initialize()
 	..()
-	spawn(1)
-		update_icon()
+	update_icon()
 
 /turf/open/floor/grass/attackby(obj/item/C, mob/user, params)
 	if(..())
@@ -53,10 +52,9 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 
-/turf/open/floor/carpet/New()
+/turf/open/floor/carpet/Initialize()
 	..()
-	spawn(1)
-		update_icon()
+	update_icon()
 
 /turf/open/floor/carpet/update_icon()
 	if(!..())
@@ -88,6 +86,6 @@
 	floor_tile = /obj/item/stack/tile/fakespace
 	broken_states = list("damaged")
 
-/turf/open/floor/fakespace/New()
+/turf/open/floor/fakespace/Initialize()
 	..()
 	icon_state = "[rand(0,25)]"

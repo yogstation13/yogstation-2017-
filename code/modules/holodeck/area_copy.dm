@@ -103,7 +103,7 @@
 			if(V == "air")
 				var/turf/open/O1 = X
 				var/turf/open/O2 = T
-				O1.air.copy_from(O2.air)
+				O1.air.copy_from(O2.return_air())
 				continue
 			X.vars[V] = T.vars[V]
 		toupdate += X

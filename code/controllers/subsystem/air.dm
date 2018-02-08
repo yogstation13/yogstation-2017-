@@ -36,6 +36,9 @@ var/datum/subsystem/air/SSair
 
 	var/list/currentrun = list()
 	var/currentpart = SSAIR_PIPENETS
+	
+	var/map_loading = TRUE
+	var/list/queued_for_activation
 
 
 /datum/subsystem/air/New()
@@ -59,6 +62,7 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/Initialize(timeofday)
+	map_loading = FALSE
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
@@ -247,10 +251,25 @@ var/datum/subsystem/air/SSair
 		active_turfs |= T
 		if(blockchanges && T.excited_group)
 			T.excited_group.garbage_collect()
-	else
+	else if(T.initialized)
 		for(var/turf/S in T.atmos_adjacent_turfs)
 			add_to_active(S)
+	else if(map_loading)
+		if(queued_for_activation)
+			queued_for_activation[T] = T
+		return
+	else
+		T.requires_activation = TRUE
 
+/datum/subsystem/air/proc/begin_map_load()
+	LAZYINITLIST(queued_for_activation)
+	map_loading = TRUE
+
+/datum/subsystem/air/proc/end_map_load()
+	map_loading = FALSE
+	for(var/T in queued_for_activation)
+		add_to_active(T)
+	queued_for_activation.Cut()
 
 /datum/subsystem/air/proc/setup_allturfs()
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
