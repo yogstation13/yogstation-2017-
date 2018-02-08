@@ -13,7 +13,7 @@
 	var/broken = 0
 	var/brightness_on = 4 //luminosity when on
 
-/obj/item/device/flashlight/initialize()
+/obj/item/device/flashlight/Initialize()
 	..()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"

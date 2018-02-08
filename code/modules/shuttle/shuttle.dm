@@ -212,7 +212,10 @@
 		SSshuttle.mobile -= src
 	. = ..()
 
-/obj/docking_port/mobile/initialize()
+/obj/docking_port/mobile/Initialize(mapload)
+	..()
+	if(!mapload)
+		return
 	var/area/A = get_area(src)
 	if(istype(A, /area/shuttle))
 		areaInstance = A
