@@ -1,4 +1,0 @@
-author: "MacHac"
-delete-after: true 
-changes: 
-  - bugfix: "Artificially created ashwalkers are now properly immune to ash storms."

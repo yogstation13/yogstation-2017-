@@ -1,4 +1,0 @@
-author: " ThatLing and MacHac"
-delete-after: true 
-changes: 
-  - bugfix: "The borer event can now happen again."
