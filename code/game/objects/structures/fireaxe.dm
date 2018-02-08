@@ -6,9 +6,10 @@
 	icon_state = "fireaxe"
 	anchored = 1
 	density = 0
+	req_access = list(access_atmospherics)
 	var/locked = 1
 	var/open = 0
-	var/health = 60
+	var/health = 100
 	var/open_sound = 'sound/machines/click.ogg'
 	var/close_sound = 'sound/machines/click.ogg'
 	var/deconstruct_sound = 'sound/items/Ratchet.ogg'
@@ -26,6 +27,7 @@
 			var/obj/item/stack/sheet/metal/M = new (loc, 3)//spawn three metal for deconstruction
 			M.add_fingerprint(user)
 			deconstruct()
+			return
 	if(isrobot(user) || istype(I,/obj/item/device/multitool))
 		reset_lock(user)
 		return
@@ -44,6 +46,12 @@
 			return
 		else if(health > 0)
 			toggle_open()
+			return
+	else if(I.GetID())
+		if (allowed(user))
+			toggle_lock()
+		else
+			to_chat(user, "<span class='danger'>Access denied.</span>")
 	else
 		return ..()
 
@@ -137,13 +145,13 @@
 		switch(health)
 			if(-INFINITY to 0)
 				overlays += "glass4"
-			if(1 to 20)
+			if(1 to 32)
 				overlays += "glass3"
-			if(21 to 40)
+			if(33 to 65)
 				overlays += "glass2"
-			if(41 to 59)
+			if(66 to 99)
 				overlays += "glass1"
-			if(60)
+			if(100)
 				overlays += "glass"
 		if(locked)
 			overlays += "locked"
@@ -155,7 +163,7 @@
 /obj/structure/fireaxecabinet/proc/reset_lock(mob/user)
 	if(!open)
 		to_chat(user, "<span class = 'caution'>Resetting circuitry...</span>")
-		if(do_after(user, 20, target = src))
+		if(do_after(user, 60, target = src))
 			to_chat(user, "<span class='caution'>You [locked ? "disable" : "re-enable"] the locking modules.</span>")
 			src.add_fingerprint(user)
 			toggle_lock(user)
@@ -163,7 +171,7 @@
 /obj/structure/fireaxecabinet/proc/toggle_lock(mob/user)
 	if(!open)
 		audible_message("You hear an audible clunk as the [name]'s bolt [locked ? "retracts" : "locks into place"].")
-		playsound(src, lock_sound, 50, 1)
+		playsound(loc, lock_sound, 30, 1, -3)
 		locked = !locked
 		update_icon()
 
