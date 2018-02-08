@@ -134,7 +134,20 @@
 /obj/item/ammo_casing/energy/wormhole/orange
 	projectile_type = /obj/item/projectile/beam/wormhole/orange
 	select_name = "orange"
+	
+/obj/item/ammo_casing/energy/wormhole/New(var/obj/item/weapon/gun/energy/wormhole_projector/wh)
+	gun = wh
+	
+/obj/item/ammo_casing/energy/BCT
+	projectile_type = /obj/item/projectile/beam/BCT
+	e_cost = 0
+	fire_sound = "sound/weapons/pulse3.ogg"
+	var/obj/item/weapon/gun/energy/BCT/gun = null
+	select_name = "blue"
 
+/obj/item/ammo_casing/energy/BCT/New(var/obj/item/weapon/gun/energy/BCT/wh)
+	gun = wh
+	
 /obj/item/ammo_casing/energy/bolt
 	projectile_type = /obj/item/projectile/energy/bolt
 	select_name = "bolt"

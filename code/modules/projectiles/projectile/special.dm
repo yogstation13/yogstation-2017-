@@ -135,9 +135,6 @@
 	if(casing)
 		gun = casing.gun
 
-/obj/item/ammo_casing/energy/wormhole/New(var/obj/item/weapon/gun/energy/wormhole_projector/wh)
-	gun = wh
-
 /obj/item/projectile/beam/wormhole/on_hit(atom/target)
 	if(ismob(target))
 		var/turf/portal_destination = pick(orange(6, src))
@@ -146,7 +143,42 @@
 	if(!gun)
 		qdel(src)
 	gun.create_portal(src)
-
+	
+/obj/item/projectile/beam/BCT
+	name = "bluespace beam"
+	icon_state = "spark"
+	hitsound = "sparks"
+	damage = 3
+	var/obj/item/weapon/gun/energy/BCT/gun
+	color = "#33CCFF"
+	
+/obj/item/projectile/beam/BCT/New(var/obj/item/ammo_casing/energy/BCT/casing)
+	if(casing)
+		gun = casing.gun
+	
+/obj/item/projectile/beam/BCT/on_hit(atom/target)
+	if(ismob(target) && !istype(target, /mob/living/simple_animal/hostile/megafauna))
+		var/mob/cast = target
+		if(cast.mind)
+			if(!gun.mind)
+				gun.mind = cast.mind
+			else
+				if(gun.mind == cast.mind)
+					return
+				//log_admin(
+				var/mob/dead/observer/ghost = gun.mind.current.ghostize()
+				cast.mind.transfer_to(gun.mind.current)
+				ghost.mind.transfer_to(cast)
+				ghost.reenter_corpse()
+				if(istype(cast, /mob/dead/observer))
+					var/mob/dead/observer/deadCast = cast
+					deadCast.reenter_corpse()
+				gun.mind = null
+		else
+			if(gun.mind)
+				gun.mind.transfer_to(cast)
+				gun.mind = null
+				
 /obj/item/projectile/bullet/frag12
 	name ="explosive slug"
 	damage = 25
