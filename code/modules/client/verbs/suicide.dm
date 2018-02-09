@@ -172,6 +172,7 @@
 	if(!canmove || restrained())	//just while I finish up the new 'fun' suiciding verb. This is to prevent metagaming via suicide
 		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 		return
-	if(borer && borer.controlling)
-		to_chat(src, "You can't commit suicide while you're controlling your host!")
+	if(controlled)
+		to_chat(src, "Something is preventing you from suiciding.")
+		return
 	return 1

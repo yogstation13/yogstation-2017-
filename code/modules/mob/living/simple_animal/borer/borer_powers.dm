@@ -271,7 +271,7 @@
 		return
 
 	if(docile)
-		to_chat(src, "<span class='warning'>You are feeling far too docile to do that.</span>")
+		to_chat(src, "<span class='warning'>You are feeling too docile to do that.</span>")
 		return
 
 	if(victim.stat == DEAD)
@@ -342,6 +342,7 @@
 				victim.lastKnownIP = s2h_ip
 
 			controlling = 1
+			victim.controlled = TRUE //prevents suicide
 
 			victim.verbs += /mob/living/carbon/proc/release_control
 			victim.verbs += /mob/living/carbon/proc/spawn_larvae
