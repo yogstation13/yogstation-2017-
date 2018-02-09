@@ -173,6 +173,6 @@
 		to_chat(src, "You can't commit suicide whilst restrained! ((You can type Ghost instead however.))")
 		return
 	if(controlled)
-		to_chat(src, "Something is preventing you from suiciding.")
+		to_chat(src, "Something is preventing you from committing suicide.")
 		return
 	return 1
