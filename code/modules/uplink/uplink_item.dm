@@ -538,6 +538,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/pen/edagger
 	cost = 3
 
+/datum/uplink_item/stealthy_weapons/briefcasegun
+	name = "Briefcase Gun"
+	desc = "A gun concealed within a briefcase, used by her majesty's secret service"
+	item = /obj/item/weapon/storage/briefcase/gun
+	cost = 15
+
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun with Riot Darts"
 	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade \

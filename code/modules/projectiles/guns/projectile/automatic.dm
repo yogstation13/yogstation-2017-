@@ -133,6 +133,9 @@
 	mag_type = /obj/item/ammo_box/magazine/uzim9mm
 	burst_size = 2
 
+/obj/item/weapon/gun/projectile/automatic/mini_uzi/briefcase //used in the briefcase gun
+	name = "briefcase"
+
 /obj/item/weapon/gun/projectile/automatic/m90
 	name = "\improper M-90gl Carbine"
 	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
