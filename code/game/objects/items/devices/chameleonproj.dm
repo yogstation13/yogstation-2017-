@@ -9,7 +9,7 @@
 	throw_range = 5
 	w_class = 2
 	origin_tech = "syndicate=4;magnets=4"
-	var/can_use = 1
+	var/can_use = TRUE
 	var/obj/effect/dummy/chameleon/active_dummy = null
 	var/saved_appearance = null
 
@@ -25,8 +25,8 @@
 /obj/item/device/chameleon/equipped()
 	disrupt()
 
-/obj/item/device/chameleon/attack_self()
-	toggle()
+/obj/item/device/chameleon/attack_self(mob/user)
+	toggle(user)
 
 /obj/item/device/chameleon/afterattack(atom/target, mob/user , proximity)
 	if(!proximity) return
@@ -39,20 +39,20 @@
 			temp.layer = initial(target.layer) // scanning things in your inventory
 			saved_appearance = temp.appearance
 
-/obj/item/device/chameleon/proc/toggle()
+/obj/item/device/chameleon/proc/toggle(mob/user)
 	if(!can_use || !saved_appearance) return
 	if(active_dummy)
 		eject_all()
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
 		qdel(active_dummy)
 		active_dummy = null
-		to_chat(usr, "<span class='notice'>You deactivate \the [src].</span>")
+		to_chat(user, "<span class='notice'>You deactivate \the [src].</span>")
 		PoolOrNew(/obj/effect/overlay/temp/emp/pulse, get_turf(src))
 	else
 		playsound(get_turf(src), 'sound/effects/pop.ogg', 100, 1, -6)
-		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(usr.loc)
-		C.activate(usr, saved_appearance, src)
-		to_chat(usr, "<span class='notice'>You activate \the [src].</span>")
+		var/obj/effect/dummy/chameleon/C = new/obj/effect/dummy/chameleon(get_turf(user))
+		if(C.activate(user, saved_appearance, src))
+			to_chat(user, "<span class='notice'>You activate \the [src].</span>")
 		PoolOrNew(/obj/effect/overlay/temp/emp/pulse, get_turf(src))
 
 /obj/item/device/chameleon/proc/disrupt(delete_dummy = 1)
@@ -67,8 +67,8 @@
 		if(delete_dummy)
 			qdel(active_dummy)
 		active_dummy = null
-		can_use = 0
-		spawn(50) can_use = 1
+		can_use = FALSE
+		spawn(50) can_use = TRUE
 
 /obj/item/device/chameleon/proc/eject_all()
 	for(var/atom/movable/A in active_dummy)
@@ -81,14 +81,18 @@
 	name = ""
 	desc = ""
 	density = 0
-	var/can_move = 1
+	var/can_move = TRUE
 	var/obj/item/device/chameleon/master = null
 
 /obj/effect/dummy/chameleon/proc/activate(mob/M, saved_appearance, obj/item/device/chameleon/C)
+	if(M.pulledby)
+		to_chat(M, "<span class='danger'>Your chameleon-projector refuses to transform you because something is pulling you.</span>")
+		return FALSE
 	appearance = saved_appearance
-	M.loc = src
+	M.forceMove(src)
 	master = C
 	master.active_dummy = src
+	return TRUE
 
 /obj/effect/dummy/chameleon/attackby()
 	master.disrupt()
@@ -118,18 +122,18 @@
 		return //No magical space movement!
 
 	if(can_move)
-		can_move = 0
+		can_move = FALSE
 		switch(user.bodytemperature)
 			if(300 to INFINITY)
-				spawn(10) can_move = 1
+				spawn(10) can_move = TRUE
 			if(295 to 300)
-				spawn(13) can_move = 1
+				spawn(13) can_move = TRUE
 			if(280 to 295)
-				spawn(16) can_move = 1
+				spawn(16) can_move = TRUE
 			if(260 to 280)
-				spawn(20) can_move = 1
+				spawn(20) can_move = TRUE
 			else
-				spawn(25) can_move = 1
+				spawn(25) can_move = TRUE
 		step(src, direction)
 	return
 
