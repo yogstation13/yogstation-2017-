@@ -538,12 +538,6 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/pen/edagger
 	cost = 3
 
-/datum/uplink_item/stealthy_weapons/briefcasegun
-	name = "Briefcase Gun"
-	desc = "A gun concealed within a briefcase, used by her majesty's secret service"
-	item = /obj/item/weapon/storage/briefcase/gun
-	cost = 15
-
 /datum/uplink_item/stealthy_weapons/foampistol
 	name = "Toy Gun with Riot Darts"
 	desc = "An innocent-looking toy pistol designed to fire foam darts. Comes loaded with riot-grade \
@@ -1093,6 +1087,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	item = /obj/item/weapon/martial_arts_scroll/slipping_carp_scroll
 	restricted_roles = list("Janitor")
 	cost = 19 //they need 1 remaining to buy syndicate soap
+
+/datum/uplink_item/role_restricted/briefcasegun
+	name = "Briefcase Gun"
+	desc = "A gun concealed within a briefcase, used by her majesty's secret service"
+	item = /obj/item/weapon/storage/briefcase/gun
+	restricted_roles = list("Lawyer")
+	cost = 10
 
 /datum/uplink_item/role_restricted/bikehornsword
 	name = "Energy Sword Bikehorn"
