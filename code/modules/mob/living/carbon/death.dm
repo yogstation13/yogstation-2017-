@@ -3,9 +3,10 @@
 	losebreath = 0
 	if(istype(LAssailant, /mob/living))
 		var/mob/living/L = LAssailant
-		if(L.mind && LAssailant != src)
+		if(mind && L.mind && LAssailant != src)
 			L.mind.killstreak++
 			L.mind.killstreak_act()
+		
 	..()
 
 /mob/living/carbon/gib(no_brain, no_organs)

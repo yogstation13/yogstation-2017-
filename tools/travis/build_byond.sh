@@ -14,5 +14,9 @@ if [ "$BUILD_TOOLS" = false ]; then
         exit 1
     fi;
     source $HOME/BYOND-${BYOND_MAJOR}.${BYOND_MINOR}/byond/bin/byondsetup
-    tools/travis/dm.sh -M${DM_MAPFILE} yogstation.dme
+    if [ "$BUILD_TESTING" = true ]; then
+		tools/travis/dm.sh -DTRAVISBUILDING yogstation.dme
+	else
+		tools/travis/dm.sh -DTRAVISBUILDING -DTRAVISTESTING -DALL_MAPS yogstation.dme
+	fi;
 fi;

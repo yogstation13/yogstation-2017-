@@ -24,8 +24,7 @@
 	R.freqlock = 1
 
 	var/obj/item/weapon/card/id/W = H.wear_id
-	W.registered_name = H.real_name
-	W.update_label(W.registered_name, W.assignment)
+	W.update_label(H.real_name, W.assignment)
 
 /datum/outfit/ert/commander
 	name = "ERT Commander"
@@ -296,6 +295,4 @@
 	W.icon_state = "centcom"
 	W.access = get_centcom_access("Centcom Official")
 	W.access += access_weapons
-	W.assignment = "Centcom Official"
-	W.registered_name = H.real_name
-	W.update_label()
+	W.update_label(H.real_name, "Centcom Official")

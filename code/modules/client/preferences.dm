@@ -64,7 +64,7 @@ var/list/preferences_datums = list()
 
 	var/list/custom_names = list("clown", "mime", "ai", "cyborg", "religion", "deity")
 	var/prefered_security_department = "random"
-	
+
 		//Mob preview
 	var/icon/preview_icon = null
 
@@ -105,6 +105,7 @@ var/list/preferences_datums = list()
 
 	var/soundenv = TRUE
 	var/clientfps = 0
+	var/uplink_spawn_loc = UPLINK_PDA
 
 /datum/preferences/New(client/C)
 	custom_names["ai"] = pick(ai_names)
@@ -189,7 +190,7 @@ var/list/preferences_datums = list()
 			dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
 			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR>"
 			dat += "<a href ='?_src_=prefs;preference=sec_dept;task=input'><b>Security department:</b> [prefered_security_department]</a><BR></td>"
-			
+
 			dat += "<td valign='center'>"
 
 			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
@@ -210,7 +211,8 @@ var/list/preferences_datums = list()
 			dat += "<b>Underwear:</b><BR><a href ='?_src_=prefs;preference=underwear;task=input'>[underwear]</a><BR>"
 			dat += "<b>Undershirt:</b><BR><a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 			dat += "<b>Socks:</b><BR><a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
-			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR></td>"
+			dat += "<b>Backpack:</b><BR><a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><BR>"
+			dat += "<b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
 
 			if(pref_species.use_skintones)
 
@@ -405,22 +407,22 @@ var/list/preferences_datums = list()
 
 			dat += "<b>Ghosts of Others:</b> <a href='?_src_=prefs;task=input;preference=ghostothers'>[button_name]</a><br>"
 
-			if (SERVERTOOLS && config.maprotation)
+			if (config.maprotation)
 				var/p_map = preferred_map
 				if (!p_map)
 					p_map = "Default"
 					if (config.defaultmap)
-						p_map += " ([config.defaultmap.friendlyname])"
+						p_map += " ([config.defaultmap.map_name])"
 				else
 					if (p_map in config.maplist)
-						var/datum/votablemap/VM = config.maplist[p_map]
+						var/datum/map_config/VM = config.maplist[p_map]
 						if (!VM)
 							p_map += " (No longer exists)"
 						else
-							p_map = VM.friendlyname
+							p_map = VM.map_name
 					else
 						p_map += " (No longer exists)"
-				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a>"
+				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
 
 			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a>"
 
@@ -483,7 +485,7 @@ var/list/preferences_datums = list()
 	dat += "</center>"
 
 	//user << browse(dat, "window=preferences;size=560x560")
-	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 750)
+	var/datum/browser/popup = new(user, "preferences", "<div align='center'>Character Setup</div>", 640, 770)
 	popup.set_content(dat)
 	popup.open(0)
 
@@ -1089,6 +1091,11 @@ var/list/preferences_datums = list()
 					if(new_backbag)
 						backbag = new_backbag
 
+				if("uplink_loc")
+					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in uplink_spawn_loc_list
+					if(new_loc)
+						uplink_spawn_loc = new_loc
+
 				if("clown_name")
 					var/new_clown_name = name_input(user, "Choose your character's clown name:", "Character Preference")
 					if(new_clown_name)
@@ -1134,20 +1141,20 @@ var/list/preferences_datums = list()
 					var/department = input(user, "Choose your preferred security department:", "Security Departments") as null|anything in security_depts_prefs
 					if(department)
 						prefered_security_department = department
-				if ("preferred_map")
+				if("preferred_map")
 					var/maplist = list()
 					var/default = "Default"
-					if (config.defaultmap)
-						default += " ([config.defaultmap.friendlyname])"
-					for (var/M in config.maplist)
-						var/datum/votablemap/VM = config.maplist[M]
-						var/friendlyname = "[VM.friendlyname] "
-						if (VM.voteweight <= 0)
-							friendlyname += " (disabled)"
-						maplist[friendlyname] = VM.name
+					if(config.defaultmap)
+						default += " ([config.defaultmap.map_name])"
+					for(var/M in config.maplist)
+						var/datum/map_config/VM = config.maplist[M]
+						var/map_name = "[VM.map_name] "
+						if(VM.voteweight <= 0)
+							map_name += " (disabled)"
+						maplist[map_name] = VM.map_name
 					maplist[default] = null
 					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
-					if (pickedmap)
+					if(pickedmap)
 						preferred_map = maplist[pickedmap]
 				if("clientfps")
 					var/version_message

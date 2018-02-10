@@ -113,9 +113,7 @@
 
 	var/obj/item/weapon/card/id/W = H.wear_id
 	W.access = get_all_accesses()
-	W.assignment = "Tunnel Clown!"
-	W.registered_name = H.real_name
-	W.update_label(H.real_name)
+	W.update_label(H.real_name, "Tunnel Clown!")
 
 /datum/outfit/psycho
 	name = "Masked Killer"
@@ -176,9 +174,7 @@
 
 	var/obj/item/weapon/card/id/syndicate/W = H.wear_id
 	W.access = get_all_accesses()
-	W.assignment = "Reaper"
-	W.registered_name = H.real_name
-	W.update_label(H.real_name)
+	W.update_label(H.real_name, "Reaper")
 
 /datum/outfit/centcom_commander
 	name = "Centcom Commander"
@@ -205,9 +201,7 @@
 	W.icon_state = "centcom"
 	W.access = get_all_accesses()
 	W.access += get_centcom_access("Centcom Commander")
-	W.assignment = "Centcom Commander"
-	W.registered_name = H.real_name
-	W.update_label()
+	W.update_label(H.real_name, "Centcom Commander")
 
 /datum/outfit/centcom_commander/german
 	name = "Centcom Kommander"
@@ -250,9 +244,7 @@
 	W.icon_state = "centcom"
 	W.access = get_all_accesses()
 	W.access += get_centcom_access("Special Ops Officer")
-	W.assignment = "Special Ops Officer"
-	W.registered_name = H.real_name
-	W.update_label()
+	W.update_label(H.real_name, "Special Ops Officer")
 
 	var/obj/item/device/radio/headset/R = H.ears
 	R.set_frequency(CENTCOM_FREQ)
@@ -308,9 +300,7 @@
 	W.icon_state = "centcom"
 	W.access = get_all_accesses()
 	W.access += get_centcom_access("Admiral")
-	W.assignment = "Admiral"
-	W.registered_name = H.real_name
-	W.update_label()
+	W.update_label(H.real_name, "Admiral")
 
 /datum/outfit/mobster
 	name = "Mobster"
@@ -329,9 +319,7 @@
 		return
 
 	var/obj/item/weapon/card/id/W = H.wear_id
-	W.assignment = "Assistant"
-	W.registered_name = H.real_name
-	W.update_label()
+	W.update_label(H.real_name, "Assistant")
 
 /datum/outfit/plasmaman
 	name = "Plasmaman"
@@ -384,9 +372,7 @@
 	W.icon_state = "centcom"
 	W.access = get_all_accesses()//They get full station access.
 	W.access += get_centcom_access("Death Commando")//Let's add their alloted Centcom access.
-	W.assignment = "Death Commando"
-	W.registered_name = H.real_name
-	W.update_label(W.registered_name, W.assignment)
+	W.update_label(H.real_name, "Death Commando")
 
 /datum/outfit/death_commando/officer
 	name = "Death Commando Officer"
@@ -429,9 +415,7 @@
 	H.sec_hud_set_implants()
 
 	var/obj/item/weapon/card/id/W = H.wear_id
-	W.assignment = "Recovery Agent"
-	W.registered_name = H.real_name
-	W.update_label()
+	W.update_label(H.real_name, "Recovery Agent")
 
 
 	to_chat(H, "<span class='alert'>You are NOT security. You are NOT a head of department. You will NOT challenge a head of department and nor will you meddle in securities affairs. You have a gun ONLY to defend your valuable all-access ID. If you see criminals, you MAY stun them, and take the body they are holding. Nothing more. You MAY report their location, Nothing more. You are NOT security. Your job is to recover bodies to the morgue to ensure more players get to play a fair game. ( for more information https://wiki.yogstation.net/index.php?title=Recovery_Agent_manual )</span>")
@@ -461,9 +445,7 @@
 		return
 
 	var/obj/item/weapon/card/id/W = H.wear_id
-	W.assignment = "Recovery Agent"
-	W.registered_name = "[H.real_name] Throwback"
-	W.update_label()
+	W.update_label("[H.real_name] Throwback", "Recovery Agent")
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(H)
 	L.imp_in = H

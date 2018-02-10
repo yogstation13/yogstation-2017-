@@ -1,6 +1,6 @@
 
 var/list/mob/living/simple_animal/borer/borers = list()
-var/total_borer_hosts_needed = 10
+var/total_borer_hosts_needed = rand(5, 7)
 var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surrenders")
 
 /mob/living/simple_animal/borer
@@ -226,13 +226,12 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 	reset_perspective(null)
 
 /mob/living/simple_animal/borer/proc/transfer_personality(var/client/candidate)
-	if(!candidate || !candidate.mob)
+	if(!candidate)
 		return
 
 	var/datum/mind/M = create_borer_mind(candidate.ckey)
 	M.transfer_to(src)
 
-	candidate.mob = src
 	ckey = candidate.ckey
 
 	if(mind)

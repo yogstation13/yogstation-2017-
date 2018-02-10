@@ -29,9 +29,6 @@
 		var/obj/item/bodypart/O = X
 		O.owner = src
 
-	if(good_mutations.len) //genetic mutations have been set up.
-		initialize()
-
 	internal_organs += new /obj/item/organ/appendix
 	internal_organs += new /obj/item/organ/lungs
 	internal_organs += new /obj/item/organ/heart
@@ -43,7 +40,8 @@
 
 	..()
 
-/mob/living/carbon/monkey/initialize()
+/mob/living/carbon/monkey/Initialize()
+	..()
 	create_dna(src)
 	dna.initialize_dna(random_blood_type())
 

@@ -31,6 +31,8 @@
 	var/alarm_on = 0
 	var/busy = 0
 	var/emped = 0  //Number of consecutive EMP's on this camera
+	
+	var/last_paper_time = 0
 
 	// Upgrades bitflag
 	var/upgrades = 0
@@ -49,8 +51,9 @@
 			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
 
-/obj/machinery/camera/initialize()
-	if(z == 1 && prob(3) && !start_active)
+/obj/machinery/camera/Initialize(mapload)
+	..()
+	if(mapload && z == 1 && prob(3) && !start_active)
 		toggle_cam()
 
 /obj/machinery/camera/Move()
@@ -193,6 +196,12 @@
 
 	// OTHER
 	if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/device/pda)) && isliving(user))
+		if(last_paper_time > world.time)
+			to_chat(user, "<span class='notice'>The camera turns away as you hold up the paper.</span>")
+			return
+
+		last_paper_time = world.time + 100		// 10 second cooldown between showing paper
+
 		var/mob/living/U = user
 		var/obj/item/weapon/paper/X = null
 		var/obj/item/device/pda/P = null

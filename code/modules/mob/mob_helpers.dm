@@ -414,6 +414,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return 0
 
 /proc/get_both_hands(mob/living/carbon/M)
+	if(!M)
+		return
 	var/list/hands = list(M.l_hand, M.r_hand)
 	return hands
 
@@ -508,4 +510,10 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 		return FALSE
 
 /mob/proc/is_nearcrit()
+	return FALSE
+
+/mob/proc/is_holding_item_of_type(typepath)
+	for(var/obj/item/I in get_both_hands(usr))
+		if(istype(I, typepath))
+			return I
 	return FALSE

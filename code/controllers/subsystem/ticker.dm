@@ -127,6 +127,8 @@ var/datum/subsystem/ticker/ticker
 				webhook_send_roundstatus("ingame")
 
 		if(GAME_STATE_PLAYING)
+			if(config.roundlength && world.time >= config.roundlength * 600 && SSshuttle.emergency.mode == SHUTTLE_IDLE && !SSshuttle.emergency.noAutoCall)
+				SSshuttle.emergency.request(null, null, null, " \nEnd of shift", null, TRUE)
 			mode.process(wait * 0.1)
 			check_queue()
 			check_maprotate()
@@ -574,7 +576,7 @@ var/datum/subsystem/ticker/ticker
 			queue_delay = 0
 
 /datum/subsystem/ticker/proc/check_maprotate()
-	if (!config.maprotation || !SERVERTOOLS)
+	if (!config.maprotation)
 		return
 	if (SSshuttle.emergency.mode != SHUTTLE_ESCAPE || SSshuttle.canRecall())
 		return
@@ -587,7 +589,7 @@ var/datum/subsystem/ticker/ticker
 	if (!prob((world.time/600)*config.maprotatechancedelta))
 		return
 	spawn(0) //compiling a map can lock up the mc for 30 to 60 seconds if we don't spawn
-		maprotate()
+		SSmapping.maprotate()
 
 
 /world/proc/has_round_started()
