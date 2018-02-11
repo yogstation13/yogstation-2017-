@@ -82,10 +82,9 @@
 
 /datum/weather/nuclear_fallout/impact(mob/living/L)
 	var/resist = L.getarmor(null, "rad")
-	if(prob(40))
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			if(H.dna && H.dna.species)
-				if(!(RADIMMUNE in H.dna.species.specflags))
-					if(prob(max(0,100-resist)))
-						H.adjustToxLoss(1)
+	if(ishuman(L))
+		var/mob/living/carbon/human/H = L
+		if(H.dna && H.dna.species)
+			if(!(RADIMMUNE in H.dna.species.specflags))
+				if(prob(max(0,100-resist)))
+					H.adjustToxLoss(1)
