@@ -33,15 +33,6 @@
 				L.dust()
 		else
 			L.IgniteMob()
-/*
-/datum/weather/nuclear/can_impact(atom/L) //Can this weather impact a mob?
-	var/turf/mob_turf = get_turf(L)
-	if(!mob_turf || (mob_turf.z != target_z))
-		return
-	if(!(get_area(L) in impacted_areas))
-		return
-	return 1
-*/
 
 /datum/weather/nuclear/telegraph()
 	. = ..()
@@ -57,10 +48,6 @@
 		T.broken()
 		if(prob(50))
 			T.atmos_spawn_air("plasma=20;TEMP=1000")
-//	for(var/area/thearea in sortedAreas)
-//		var/atom/movable/O = pick(thearea.contents)
-//		O.atmos_spawn_air("plasma=40;TEMP=1000")
-
 
 /datum/weather/nuclear/end()
 	if(..())
@@ -72,7 +59,6 @@
 	SSweather.run_weather("nuclear fallout",1) //fallout follows rads
 	if(emergency_access)
 		revoke_maint_all_access()
-
 
 /datum/weather/nuclear_fallout
 	name = "nuclear fallout"
@@ -93,7 +79,6 @@
 	target_z = ZLEVEL_STATION
 	end_message = "<span class='notice'>The ash stops falling.</span>"
 	immunity_type = "rad"
-
 
 /datum/weather/nuclear_fallout/impact(mob/living/L)
 	var/resist = L.getarmor(null, "rad")
