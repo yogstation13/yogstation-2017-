@@ -1,57 +1,688 @@
-"a" = (/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
-"b" = (/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"c" = (/turf/closed/wall/r_wall,/area/ruin/powered/podperson)
-"d" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 8},/turf/closed/mineral/volcanic/lava_land_surface,/area/lavaland/surface/outdoors)
-"e" = (/obj/machinery/smartfridge,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"f" = (/obj/structure/closet/crate/hydroponics,/obj/item/weapon/cultivator,/obj/item/weapon/cultivator,/obj/item/weapon/cultivator,/obj/item/weapon/cultivator,/obj/item/weapon/shovel/spade,/obj/item/weapon/shovel/spade,/obj/item/weapon/shovel/spade,/obj/item/weapon/shovel/spade,/obj/item/weapon/hatchet,/obj/item/weapon/hatchet,/obj/item/weapon/hatchet,/obj/item/weapon/hatchet,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"g" = (/obj/machinery/hydroponics/constructable,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"h" = (/obj/structure/closet/crate,/obj/effect/spawner/lootdrop/seed_vault,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"i" = (/obj/machinery/plantgenes/seedvault,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"j" = (/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants,/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"k" = (/obj/structure/table/wood,/obj/item/weapon/storage/bag/plants,/obj/item/weapon/storage/bag/plants,/obj/item/weapon/storage/bag/plants,/obj/item/weapon/storage/bag/plants,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"l" = (/obj/structure/table/wood,/obj/item/weapon/gun/energy/floragun,/obj/item/weapon/gun/energy/floragun,/obj/item/weapon/gun/energy/floragun,/obj/item/weapon/gun/energy/floragun,/obj/item/weapon/storage/box/disks_plantgene,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"m" = (/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"n" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 8},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"o" = (/obj/effect/mob_spawn/human/seed_vault,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"p" = (/obj/structure/sink{icon_state = "sink"; dir = 8; pixel_x = -12; pixel_y = 2},/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"q" = (/obj/machinery/vending/hydronutrients,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"r" = (/obj/machinery/vending/hydroseeds,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"s" = (/obj/machinery/reagentgrinder{pixel_y = 5},/obj/structure/table/glass,/obj/item/weapon/reagent_containers/glass/beaker/bluespace,/obj/item/weapon/reagent_containers/glass/beaker/bluespace,/obj/item/weapon/reagent_containers/glass/beaker/bluespace,/obj/item/weapon/reagent_containers/glass/beaker/bluespace,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"t" = (/obj/structure/sink{dir = 4; icon_state = "sink"; pixel_x = 11; pixel_y = 0},/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"u" = (/obj/machinery/door/airlock,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"v" = (/obj/machinery/door/airlock/external,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"w" = (/obj/structure/disposalpipe/trunk,/obj/machinery/disposal/bin,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"x" = (/obj/machinery/seed_extractor,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"y" = (/obj/machinery/biogenerator,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"z" = (/obj/machinery/chem_dispenser/mutagen,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"A" = (/obj/structure/disposalpipe/segment,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"B" = (/obj/structure/closet/crate/hydroponics,/obj/item/clothing/under/rank/hydroponics,/obj/item/clothing/under/rank/hydroponics,/obj/item/clothing/under/rank/hydroponics,/obj/item/clothing/under/rank/hydroponics,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"C" = (/obj/machinery/chem_master/condimaster,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"D" = (/obj/structure/table/wood,/obj/item/weapon/reagent_containers/glass/bucket,/obj/item/weapon/reagent_containers/glass/bucket,/obj/item/weapon/reagent_containers/glass/bucket,/obj/item/weapon/reagent_containers/glass/bucket,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"E" = (/obj/item/weapon/storage/toolbox/syndicate,/obj/structure/table/wood,/turf/open/floor/plasteel/freezer{baseturf = /turf/open/floor/plating/lava/smooth},/area/ruin/powered/podperson)
-"F" = (/obj/structure/disposalpipe/segment,/turf/closed/wall/r_wall,/area/ruin/powered/podperson)
-"G" = (/obj/structure/disposalpipe/segment{dir = 1; icon_state = "pipe-c"},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
-"H" = (/obj/structure/disposalpipe/trunk{dir = 8},/turf/open/floor/plating/asteroid/basalt/lava_land_surface,/area/lavaland/surface/outdoors)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+"a" = (
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"b" = (
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"c" = (
+/turf/closed/wall/r_wall,
+/area/ruin/powered/podperson)
+"d" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 8
+	},
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"e" = (
+/obj/machinery/smartfridge,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"f" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/item/weapon/cultivator,
+/obj/item/weapon/cultivator,
+/obj/item/weapon/cultivator,
+/obj/item/weapon/cultivator,
+/obj/item/weapon/shovel/spade,
+/obj/item/weapon/shovel/spade,
+/obj/item/weapon/shovel/spade,
+/obj/item/weapon/shovel/spade,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/hatchet,
+/obj/item/weapon/hatchet,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"g" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"h" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/lootdrop/seed_vault,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"i" = (
+/obj/machinery/plantgenes/seedvault,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"j" = (
+/obj/item/weapon/hatchet,
+/obj/item/weapon/storage/bag/plants,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"k" = (
+/obj/structure/table/wood,
+/obj/item/weapon/storage/bag/plants,
+/obj/item/weapon/storage/bag/plants,
+/obj/item/weapon/storage/bag/plants,
+/obj/item/weapon/storage/bag/plants,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"l" = (
+/obj/structure/table/wood,
+/obj/item/weapon/gun/energy/floragun,
+/obj/item/weapon/gun/energy/floragun,
+/obj/item/weapon/gun/energy/floragun,
+/obj/item/weapon/gun/energy/floragun,
+/obj/item/weapon/storage/box/disks_plantgene,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"m" = (
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"n" = (
+/obj/structure/shuttle/engine/propulsion{
+	icon_state = "propulsion";
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"o" = (
+/obj/effect/mob_spawn/human/seed_vault,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"p" = (
+/obj/structure/sink{
+	icon_state = "sink";
+	dir = 8;
+	pixel_x = -12;
+	pixel_y = 2
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"q" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"r" = (
+/obj/machinery/vending/hydroseeds,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"s" = (
+/obj/machinery/reagentgrinder{
+	pixel_y = 5
+	},
+/obj/structure/table/glass,
+/obj/item/weapon/reagent_containers/glass/beaker/bluespace,
+/obj/item/weapon/reagent_containers/glass/beaker/bluespace,
+/obj/item/weapon/reagent_containers/glass/beaker/bluespace,
+/obj/item/weapon/reagent_containers/glass/beaker/bluespace,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"t" = (
+/obj/structure/sink{
+	dir = 4;
+	icon_state = "sink";
+	pixel_x = 11;
+	pixel_y = 0
+	},
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"u" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"v" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"w" = (
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"x" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"y" = (
+/obj/machinery/biogenerator,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"z" = (
+/obj/machinery/chem_dispenser/mutagen,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"A" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"B" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/item/clothing/under/rank/hydroponics,
+/obj/item/clothing/under/rank/hydroponics,
+/obj/item/clothing/under/rank/hydroponics,
+/obj/item/clothing/under/rank/hydroponics,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"C" = (
+/obj/machinery/chem_master/condimaster,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"D" = (
+/obj/structure/table/wood,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/weapon/reagent_containers/glass/bucket,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"E" = (
+/obj/item/weapon/storage/toolbox/syndicate,
+/obj/structure/table/wood,
+/turf/open/floor/plasteel/freezer{
+	baseturf = /turf/open/floor/plating/lava/smooth
+	},
+/area/ruin/powered/podperson)
+"F" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall/r_wall,
+/area/ruin/powered/podperson)
+"G" = (
+/obj/structure/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
+"H" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 
 (1,1,1) = {"
-aabbaaaaaaaaaaaaaaaa
-aabbaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaabaaaa
-aaaaaaaaaaaaaaaaabab
-aaaaaaaaaaaaaaaaabbb
-aaaccccccccccccdbbbb
-aaccefghigjgklccabaa
-ccccmmmmmmmmmmcnbbbb
-comcpmgqersmmtcccbbb
-comummmmmmmmgmvmvbbb
-comummmmmmmmgmvmvbbb
-comcpmgwxyzmmtcccbbb
-ccccmmmAmmmmmmcnbbbb
-aaccpBgAmgCgDEccbbbb
-aaaccccFcccccccnbbaa
-aaaaaaaGHbaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaa
-aabaaaaaaaaaaaaaaabb
-bbaaaaaaaaaaaaaabbbb
-bbbaaaaaaaaaaaaabbba
+a
+a
+a
+a
+a
+a
+a
+c
+c
+c
+c
+c
+c
+a
+a
+a
+a
+a
+b
+b
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+c
+o
+o
+o
+o
+c
+a
+a
+a
+a
+a
+b
+b
+"}
+(3,1,1) = {"
+b
+b
+a
+a
+a
+a
+c
+c
+m
+m
+m
+m
+c
+c
+a
+a
+a
+b
+a
+b
+"}
+(4,1,1) = {"
+b
+b
+a
+a
+a
+c
+c
+c
+c
+u
+u
+c
+c
+c
+c
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+c
+e
+m
+p
+m
+m
+p
+m
+p
+c
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+c
+f
+m
+m
+m
+m
+m
+m
+B
+c
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+c
+g
+m
+g
+m
+m
+g
+m
+g
+c
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+c
+h
+m
+q
+m
+m
+w
+A
+A
+F
+G
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+c
+i
+m
+e
+m
+m
+x
+m
+m
+c
+H
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+c
+g
+m
+r
+m
+m
+y
+m
+g
+c
+b
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+c
+j
+m
+s
+m
+m
+z
+m
+C
+c
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+c
+g
+m
+m
+m
+m
+m
+m
+g
+c
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+c
+k
+m
+m
+g
+g
+m
+m
+D
+c
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+c
+l
+m
+t
+m
+m
+t
+m
+E
+c
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+c
+c
+c
+c
+v
+v
+c
+c
+c
+c
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+b
+a
+a
+d
+c
+n
+c
+m
+m
+c
+n
+c
+n
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+b
+a
+b
+c
+v
+v
+c
+b
+b
+b
+a
+a
+a
+b
+b
+"}
+(18,1,1) = {"
+a
+a
+a
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+b
+b
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+b
+b
+a
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+b
+b
+b
+"}
+(20,1,1) = {"
+a
+a
+a
+b
+b
+b
+a
+b
+b
+b
+b
+b
+b
+b
+a
+a
+a
+b
+b
+a
 "}

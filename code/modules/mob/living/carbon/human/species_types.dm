@@ -196,6 +196,15 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/lizard/ashwalker/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	return
 
+/datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C.weather_immunities.Add("ash")
+
+/datum/species/lizard/ashwalker/on_species_loss(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C.weather_immunities.Remove("ash")
+
+
 /datum/species/lizard/ashwalker/cosmic
 	name = "Cosmic Ashwalker"
 	var/rebirth
@@ -1264,7 +1273,6 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	blacklisted = 1 //See above
 	burnmod = 2
 	heatmod = 2
-	speedmod = 1
 	disliked_food = GROSS
 	liked_food = RAW | VEGETABLES
 	toxic_food = TOXIC | RAW

@@ -129,8 +129,6 @@
 		name = "[A.name] Air Alarm"
 
 	update_icon()
-	if(ticker && ticker.current_state == 3)//if the game is running
-		initialize()
 
 /obj/machinery/airalarm/Destroy()
 	if(SSradio)
@@ -139,7 +137,8 @@
 	wires = null
 	return ..()
 
-/obj/machinery/airalarm/initialize()
+/obj/machinery/airalarm/Initialize()
+	..()
 	set_frequency(frequency)
 
 /obj/machinery/airalarm/ui_status(mob/user)

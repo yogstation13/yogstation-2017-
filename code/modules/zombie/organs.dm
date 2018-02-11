@@ -1,4 +1,4 @@
-#define START_TIMER reanimation_timer = world.time + rand(600,1200)
+#define START_TIMER reanimation_timer = world.time + rand(60)
 
 /obj/item/organ/body_egg/zombie_infection
 	name = "festering ooze"
@@ -9,6 +9,7 @@
 	var/datum/species/old_species
 	var/living_transformation_time = 5
 	var/converts_living = FALSE
+	var/strength = 1
 
 /obj/item/organ/body_egg/zombie_infection/New()
 	. = ..()
@@ -22,13 +23,26 @@
 	..()
 	if(owner)
 		if(iszombie(owner))
-			owner.adjustBruteLoss(-2)
-			owner.adjustFireLoss(-2)
+			if(owner.on_fire)
+				if(owner.stat == DEAD)
+					ashify(owner)
+					return
 		else
-			if(prob(45))
-				if(prob(20))
-					owner <<"<span class='danger'>You feel sick.</span>"
-				owner.adjustToxLoss(3)
+			if(prob(5))
+				owner <<"<span class='danger'>You feel sick.</span>"
+				owner.adjustToxLoss(strength)
+			strength = min(strength + 1, 10)
+
+/obj/item/organ/body_egg/zombie_infection/proc/ashify()
+	for(var/obj/item/I in owner)
+		owner.unEquip(I)
+		if(I.burn_state == FLAMMABLE)
+			I.burn()
+	new /obj/effect/decal/cleanable/ash(get_turf(owner))
+	visible_message("<span class='warning'>[owner] burns into ashes!</span>",\
+				"<span class='warning'>[owner] burns into ashes!</span>")
+	log_game("[owner] (zombie) has burned to death.")
+	qdel(owner)
 
 /obj/item/organ/body_egg/zombie_infection/on_find(mob/living/finder)
 	to_chat(finder, "<span class='warning'>Inside the head is a disgusting black web of pus and vicera, bound tightly around the brain like some biological harness.</span>")
@@ -60,6 +74,8 @@
 	owner.set_species(/datum/species/zombie/infectious)
 	var/old_stat = owner.stat // Save for the message
 	owner.revive(full_heal = TRUE)
+	owner.languages_spoken = ZOMBIE
+	owner.languages_understood = ZOMBIE
 	switch(old_stat)
 		if(DEAD, UNCONSCIOUS)
 			owner.visible_message("<span class='danger'>[owner] staggers to \

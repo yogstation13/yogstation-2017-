@@ -221,15 +221,13 @@
 		id = worn.GetID()
 	if(id)
 		id.icon_state = "gold"
-		id.access = get_all_accesses()+get_all_centcom_access()
+		id.access = get_all_accesses() + get_all_centcom_access()
 		id.assignment = "Captain"
 		id.update_label()
 	else
 		id = new /obj/item/weapon/card/id/gold(user.loc)
-		id.registered_name = user.real_name
-		id.access = get_all_accesses()+get_all_centcom_access()
-		id.assignment = "Captain"
-		id.update_label()
+		id.access = get_all_accesses() + get_all_centcom_access()
+		id.update_label(user.real_name, "Captain")
 		if(worn)
 			if(istype(worn,/obj/item/device/pda))
 				var/obj/item/device/pda/PDA = worn

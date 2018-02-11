@@ -80,6 +80,9 @@ var/list/airlock_overlays = list()
 					break
 	if(glass)
 		airlock_material = "glass"
+
+/obj/machinery/door/airlock/Initialize()
+	..()
 	update_icon()
 
 /obj/machinery/door/airlock/lock()

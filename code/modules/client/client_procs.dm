@@ -360,6 +360,8 @@ var/next_external_rsc = 0
 		adminGreet(1)
 		holder.owner = null
 		admins -= src
+		if(!admins.len && !ticker.server_reboot_in_progress)
+			webhook_send("adminless", "The last admin, [src], has left the server!")
 	sync_logout_with_db(connection_number)
 	directory -= ckey
 	clients -= src
@@ -369,7 +371,7 @@ var/next_external_rsc = 0
 	return ..()
 
 /client/proc/sync_logout_with_db(number)
-	if(!number || !isnum(number))
+	if(!number)
 		return
 	establish_db_connection()
 	if (!dbcon.IsConnected())
@@ -449,7 +451,7 @@ var/next_external_rsc = 0
 	var/DBQuery/query_getid = dbcon.NewQuery("SELECT `id` FROM `[format_table_name("connection_log")]` WHERE `serverip`='[serverip]' AND `ckey`='[sql_ckey]' AND `ip`='[sql_ip]' AND `computerid`='[sql_computerid]' ORDER BY datetime DESC LIMIT 1;")
 	query_getid.Execute()
 	while (query_getid.NextRow())
-		connection_number = text2num(query_getid.item[1])
+		connection_number = query_getid.item[1]
 
 /client/proc/add_verbs_from_config()
 	if(config.see_own_notes)
@@ -474,10 +476,9 @@ var/next_external_rsc = 0
 /client/Stat()
 	. = ..()
 	if (holder)
-		sleep(1)
+		stoplag(1)
 	else
-		sleep(5)
-		stoplag()
+		stoplag(5)
 
 //send resources to the client. It's here in its own proc so we can move it around easiliy if need be
 /client/proc/send_resources()
@@ -570,3 +571,12 @@ var/next_external_rsc = 0
 		if (query_get_notes.item[1] == adminckey)
 			return
 	add_note(ckey, "Detected as using a cid randomizer.", null, adminckey, logged = 0)
+
+/client/proc/vv_edit_var(var_name, var_value)
+	switch (var_name)
+		if ("holder")
+			return FALSE
+		if ("ckey")
+			return FALSE
+		if ("key")
+			return FALSE

@@ -96,6 +96,7 @@
 	oneharvest = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
+	genes = list(/datum/plant_gene/trait/maxchem)
 	reagents_add = list("vitamin" = 0.1, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/redbeet

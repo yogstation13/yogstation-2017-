@@ -10,6 +10,7 @@
 /obj/item/device/instrument/New()
 	song = new(instrumentId, src)
 	song.instrumentExt = instrumentExt
+	..()
 
 /obj/item/device/instrument/Destroy()
 	qdel(song)
@@ -20,9 +21,11 @@
 	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like \he's trying to commit suicide..</span>")
 	return (BRUTELOSS)
 
-/obj/item/device/instrument/initialize()
-	song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
+/obj/item/device/instrument/Initialize(mapload)
 	..()
+	if(mapload)
+		song.tempo = song.sanitize_tempo(song.tempo) // tick_lag isn't set when the map is loaded
+	
 
 /obj/item/device/instrument/attack_self(mob/user)
 	if(!user.IsAdvancedToolUser())

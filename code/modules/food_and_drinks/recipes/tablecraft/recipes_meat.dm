@@ -11,6 +11,15 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/human
 	category = CAT_MEAT
 
+/datum/crafting_recipe/food/mousekebab
+	name = "Mouse kebab"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/obj/item/weapon/reagent_containers/food/snacks/deadmouse = 3
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/kebab/mouse
+	category = CAT_MEAT
+
 /datum/crafting_recipe/food/kebab
 	name = "Kebab"
 	reqs = list(

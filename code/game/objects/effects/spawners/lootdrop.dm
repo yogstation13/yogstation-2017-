@@ -178,7 +178,9 @@
 	var/prob_nothing = 0
 	var/drops = 1
 
-/obj/effect/spawner/mapset/initialize()
+/obj/effect/spawner/mapset/Initialize(mapload)
+	if(!mapload)
+		return
 	if(!loc)
 		return
 	for(var/obj/structure/closet/C in loc)

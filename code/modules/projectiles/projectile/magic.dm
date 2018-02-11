@@ -6,6 +6,7 @@
 	nodamage = 1
 	armour_penetration = 100
 	flag = "magic"
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/magic/death
 	name = "bolt of death"
@@ -307,13 +308,15 @@
 					return
 
 			new_mob.attack_log = M.attack_log
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
+			M.attack_log += text("\[[gameTimestamp()]\] <font color='orange'>[M.real_name] ([M.ckey]) became [new_mob.real_name].</font>")
 
 			new_mob.a_intent = "harm"
 
 			M.wabbajack_act(new_mob)
 
 			to_chat(new_mob, "<B>Your form morphs into that of a [randomize].</B>")
+
+			M.transfer_observers_to(new_mob)
 
 			qdel(M)
 			return new_mob
@@ -339,7 +342,9 @@
 				S.color = change.color
 				if(H.mind)
 					H.mind.transfer_to(S)
-					to_chat(S, "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.name], your creator.</span>")
+
+				H.add_memory("<b>Serve [firer.real_name], your creator.</b>")
+				to_chat(S, "<span class='userdanger'>You are an animate statue. You cannot move when monitored, but are nearly invincible and deadly when unobserved! Do not harm [firer.real_name], your creator.</span>")
 				H = change
 				H.loc = S
 				qdel(src)

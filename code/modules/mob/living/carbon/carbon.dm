@@ -810,3 +810,9 @@
 		to_chat(user, "<span class='notice'>You retrieve some of [src]\'s internal organs!</span>")
 
 	..()
+
+/mob/living/carbon/vv_get_dropdown()
+	. = ..()
+	. += "---"
+	.["Make AI"] = "?_src_=vars;makeai=\ref[src]"
+	.["Modify organs"] = "?_src_=vars;editorgans=\ref[src]"

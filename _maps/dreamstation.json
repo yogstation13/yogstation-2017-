@@ -1,0 +1,7 @@
+{
+    "map_name": "Birdboat Station",
+    "map_path": "map_files/BirdStation",
+    "map_file": "BirdStation.dmm",
+    "minetype": "lavaland",
+    "transition_config": "default"
+}

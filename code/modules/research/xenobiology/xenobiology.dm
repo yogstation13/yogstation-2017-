@@ -181,6 +181,7 @@
 		SM.languages_understood |= HUMAN
 		SM.faction |= user.faction
 		SM.sentience_act()
+		SM.add_memory("<b>Serve [user], and assist them in completing their goals at any cost.</b>")
 		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
 		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>")
 		to_chat(user, "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>")

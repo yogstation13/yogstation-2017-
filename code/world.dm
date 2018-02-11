@@ -2,12 +2,10 @@
 
 /world
 	mob = /mob/new_player
-	turf = /turf/open/space
+	turf = /turf/basic
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
-
-var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 /world/New()
 	check_for_cleanbot_bug()
@@ -77,19 +75,10 @@ var/global/list/map_transition_config = MAP_TRANSITION_CONFIG
 	spawn(10)
 		Master.Setup()
 
-	process_teleport_locs()			//Sets up the wizard teleport locations
-	SortAreas()						//Build the list of all existing areas and sort it alphabetically
-
-	#ifdef MAP_NAME
-	map_name = "[MAP_NAME]"
-	#else
-	map_name = "Unknown"
-	#endif
-
 	config.Tickcomp = 0
 	world.fps = 20
 	var/list/webhookData = list(                                 \
-														"map_name" = map_name,             \
+														"map_name" = SSmapping.config.map_name,             \
 														 "round" = yog_round_number,       \
 														 "revision" = revdata.commit,      \
 														 "changelog_hash" = changelog_hash)
@@ -141,7 +130,7 @@ var/last_irc_status = 0
 		if(ticker)
 			s["gamestate"] = ticker.current_state
 
-		s["map_name"] = map_name ? map_name : "Unknown"
+		s["map_name"] = SSmapping.config.map_name
 
 		if(key_valid && ticker && ticker.mode)
 			s["real_mode"] = ticker.mode.name
@@ -265,14 +254,6 @@ var/last_irc_status = 0
 		to_chat(world, "<span class='boldannounce'>Reboot was cancelled by an admin.</span>")
 		ticker.server_reboot_in_progress = 0
 		return
-	if(mapchanging)
-		to_chat(world, "<span class='boldannounce'>Map change operation detected, delaying reboot.</span>")
-		rebootingpendingmapchange = 1
-		spawn(1200)
-			if(mapchanging)
-				mapchanging = 0 //map rotation can in some cases be finished but never exit, this is a failsafe
-				Reboot("Map change timed out", time = 10)
-		return
 	feedback_set_details("[feedback_c]","[feedback_r]")
 	log_game("<span class='boldannounce'>Rebooting World. [reason]</span>")
 	kick_clients_in_lobby("<span class='boldannounce'>The round came to an end with you in the lobby.</span>", 1) //second parameter ensures only afk clients are kicked
@@ -285,10 +266,7 @@ var/last_irc_status = 0
 			log << "#[count]\t[index]"
 #endif
 	spawn(0)
-		if(ticker && ticker.round_end_sound)
-			world << sound(ticker.round_end_sound)
-		else
-			world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg')) // random end sounds!! - LastyBatsy
+		RoundEndAnimation()
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[config.server]")
@@ -366,7 +344,7 @@ var/inerror = 0
 	config.load("config/game_options.txt","game_options")
 	config.load("config/discord.txt","discord")
 	config.loadsql("config/dbconfig.txt")
-	if (config.maprotation && SERVERTOOLS)
+	if (config.maprotation)
 		config.loadmaplist("config/maps.txt")
 
 	// apply some settings from config..
@@ -497,97 +475,17 @@ var/failed_db_connections = 0
 	else
 		return 1
 
+/world/proc/RoundEndAnimation()
+	set waitfor = FALSE
+
+	var/titlescreen = TITLESCREEN
+	if(!titlescreen)
+		titlescreen = "title"
+
+	for(var/thing in clients)
+		var/obj/screen/splash/S = new(thing, FALSE)
+		S.Fade(FALSE,FALSE)
+
+	world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg','sound/misc/leavingtg.ogg'))
+
 #undef FAILED_DB_CONNECTION_CUTOFF
-
-
-/proc/maprotate()
-	if (!SERVERTOOLS)
-		return
-	var/players = clients.len
-	var/list/mapvotes = list()
-	//count votes
-	for (var/client/c in clients)
-		var/vote = c.prefs.preferred_map
-		if (!vote)
-			if (config.defaultmap)
-				mapvotes[config.defaultmap.name] += 1
-			continue
-		mapvotes[vote] += 1
-
-	//filter votes
-	for (var/map in mapvotes)
-		if (!map)
-			mapvotes.Remove(map)
-		if (!(map in config.maplist))
-			mapvotes.Remove(map)
-			continue
-		var/datum/votablemap/VM = config.maplist[map]
-		if (!VM)
-			mapvotes.Remove(map)
-			continue
-		if (VM.voteweight <= 0)
-			mapvotes.Remove(map)
-			continue
-		if (VM.minusers > 0 && players < VM.minusers)
-			mapvotes.Remove(map)
-			continue
-		if (VM.maxusers > 0 && players > VM.maxusers)
-			mapvotes.Remove(map)
-			continue
-
-		mapvotes[map] = mapvotes[map]*VM.voteweight
-
-	var/pickedmap = pickweight(mapvotes)
-	if (!pickedmap)
-		return
-	var/datum/votablemap/VM = config.maplist[pickedmap]
-	message_admins("Randomly rotating map to [VM.name]([VM.friendlyname])")
-	. = changemap(VM)
-	if (. == 0)
-		to_chat(world, "<span class='boldannounce'>Map rotation has chosen [VM.friendlyname] for next round!</span>")
-
-var/datum/votablemap/nextmap
-var/mapchanging = 0
-var/rebootingpendingmapchange = 0
-/proc/changemap(var/datum/votablemap/VM)
-	if (!SERVERTOOLS)
-		return
-	if (!istype(VM))
-		return
-	mapchanging = 1
-	log_game("Changing map to [VM.name]([VM.friendlyname])")
-	var/file = file("setnewmap.bat")
-	file << "\nset MAPROTATE=[VM.name]\n"
-	. = shell("..\\bin\\maprotate.bat")
-	mapchanging = 0
-	switch (.)
-		if (null)
-			message_admins("Failed to change map: Could not run map rotator")
-			log_game("Failed to change map: Could not run map rotator")
-		if (0)
-			log_game("Changed to map [VM.friendlyname]")
-			nextmap = VM
-		//1x: file errors
-		if (11)
-			message_admins("Failed to change map: File error: Map rotator script couldn't find file listing new map")
-			log_game("Failed to change map: File error: Map rotator script couldn't find file listing new map")
-		if (12)
-			message_admins("Failed to change map: File error: Map rotator script couldn't find tgstation-server framework")
-			log_game("Failed to change map: File error: Map rotator script couldn't find tgstation-server framework")
-		//2x: conflicting operation errors
-		if (21)
-			message_admins("Failed to change map: Conflicting operation error: Current server update operation detected")
-			log_game("Failed to change map: Conflicting operation error: Current server update operation detected")
-		if (22)
-			message_admins("Failed to change map: Conflicting operation error: Current map rotation operation detected")
-			log_game("Failed to change map: Conflicting operation error: Current map rotation operation detected")
-		//3x: external errors
-		if (31)
-			message_admins("Failed to change map: External error: Could not compile new map:[VM.name]")
-			log_game("Failed to change map: External error: Could not compile new map:[VM.name]")
-
-		else
-			message_admins("Failed to change map: Unknown error: Error code #[.]")
-			log_game("Failed to change map: Unknown error: Error code #[.]")
-	if(rebootingpendingmapchange)
-		world.Reboot("Map change finished", time = 10)

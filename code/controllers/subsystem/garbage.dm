@@ -4,7 +4,6 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	name = "Garbage"
 	priority = 15
 	wait = 5
-	display_order = 2
 	flags = SS_FIRE_IN_LOBBY|SS_POST_FIRE_TIMING|SS_BACKGROUND|SS_NO_INIT
 
 	var/collection_timeout = 3000// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
@@ -164,6 +163,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		del(D)
 	else if(isnull(D.gc_destroyed))
 		var/hint = D.Destroy(force) // Let our friend know they're about to get fucked up.
+		D.SendSignal(COMSIG_PARENT_QDELETED)
 		if(!D)
 			return
 		switch(hint)
@@ -212,6 +212,14 @@ var/datum/subsystem/garbage_collector/SSgarbage
 // Return the appropriate QDEL_HINT; in most cases this is QDEL_HINT_QUEUE.
 /datum/proc/Destroy(force=FALSE)
 	tag = null
+	var/list/dc = datum_components
+	for(var/I in dc)
+		var/datum/component/C = I
+		C._RemoveNoSignal()
+		qdel(C)
+	if(dc)
+		dc.Cut()
+
 	return QDEL_HINT_QUEUE
 
 /datum/var/gc_destroyed //Time when this object was destroyed.

@@ -66,6 +66,7 @@
 
 				return -1 // complete projectile permutation
 
+		LAssailant = P.firer
 		if(check_shields(P.damage, "the [P.name]", P, PROJECTILE_ATTACK, P.armour_penetration))
 			P.on_hit(src, 100, def_zone)
 			return 2
@@ -122,6 +123,7 @@
 	if(!I || !user)
 		return 0
 
+	LAssailant = user
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
 	var/target_area = parse_zone(check_zone(user.zone_selected))
 	feedback_add_details("item_used_for_combat","[I.type]|[I.force]")
@@ -273,6 +275,7 @@
 				hair_style = "Bald"
 				update_hair()
 				status_flags |= DISFIGURED
+				update_face_dependant_huds()
 
 		update_damage_overlays()
 
@@ -377,6 +380,7 @@
 		throwpower = I.throwforce
 		if(I.thrownby == src) //No throwing stuff at yourself to trigger hit reactions
 			return ..()
+		LAssailant = I.thrownby
 	if(resolve_defense_modules(AM, attack_type = THROWN_PROJECTILE_ATTACK))
 		return
 	if(check_shields(throwpower, "\the [AM.name]", AM, THROWN_PROJECTILE_ATTACK))

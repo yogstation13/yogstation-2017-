@@ -175,10 +175,11 @@
 				W.access = jobdatum.get_access()
 			else
 				W.access = list()
+
 		if(id_job)
 			W.assignment = id_job
-		W.registered_name = H.real_name
-		W.update_label()
+
+		W.update_label(H.real_name)
 		H.equip_to_slot_or_del(W, slot_wear_id)
 
 	for(var/I in implants)

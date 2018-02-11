@@ -11,6 +11,8 @@
 	var/auth_need = 3
 	var/list/authorized = list()
 	paiAllowed = 0
+	var/revokeCooldown = 100
+	var/cooldownTime = null
 
 /obj/machinery/computer/emergency_shuttle/attackby(obj/item/I, mob/user,params)
 	if(istype(I, /obj/item/weapon/card/id))
@@ -75,14 +77,17 @@
 			. = authorize(user)
 
 		if("repeal")
-			authorized -= ID
+			if(world.time >= cooldownTime)
+				authorized -= ID
+				cooldownTime = world.time + revokeCooldown
 
 		if("abort")
-			if(authorized.len)
+			if(authorized.len && world.time >= cooldownTime)
 				// Abort. The action for when heads are fighting over whether
 				// to launch early.
 				authorized.Cut()
 				. = TRUE
+				cooldownTime = world.time + revokeCooldown
 
 	if((old_len != authorized.len) && !ENGINES_STARTED)
 		var/alert = (authorized.len > old_len)
@@ -181,6 +186,8 @@
 	travelDir = -90
 	roundstart_move = "emergency_away"
 	var/sound_played = 0 //If the launch sound has been sent to all players on the shuttle itself
+	var/recallable = TRUE
+	var/noAutoCall = FALSE
 
 /obj/docking_port/mobile/emergency/register()
 	. = ..()
@@ -214,7 +221,7 @@
 			dtime = max(SSshuttle.emergencyCallTime - dtime, 0)
 	return round(dtime/divisor, 1)
 
-/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, coefficient=1, area/signalOrigin, reason, redAlert)
+/obj/docking_port/mobile/emergency/request(obj/docking_port/stationary/S, coefficient=1, area/signalOrigin, reason, redAlert, noRecall)
 	SSshuttle.emergencyCallTime = initial(SSshuttle.emergencyCallTime) * coefficient
 	switch(mode)
 		if(SHUTTLE_RECALL)
@@ -228,6 +235,8 @@
 				timer = world.time
 		else
 			return
+	if(noRecall)
+		recallable = FALSE
 
 	if(prob(70))
 		SSshuttle.emergencyLastCallLoc = signalOrigin
@@ -236,9 +245,13 @@
 
 	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ]", null, 'sound/AI/shuttlecalled.ogg', "Priority")
 
-/obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
+/obj/docking_port/mobile/emergency/cancel(area/signalOrigin, forced)
 	if(mode != SHUTTLE_CALL)
 		return
+	if(!recallable && !forced)
+		return
+	if(forced && world.time >= config.roundlength)
+		noAutoCall = TRUE
 
 	timer = world.time - timeLeft(1)
 	mode = SHUTTLE_RECALL
@@ -263,6 +276,17 @@
 		return
 
 	var/time_left = timeLeft(1)
+
+	// The emergency shuttle doesn't work like others so this
+	// ripple check is slightly different
+	if(!ripples.len && (time_left <= SHUTTLE_RIPPLE_TIME) && ((mode == SHUTTLE_CALL) || (mode == SHUTTLE_ESCAPE)))
+		var/destination
+		if(mode == SHUTTLE_CALL)
+			destination = SSshuttle.getDock("emergency_home")
+		else if(mode == SHUTTLE_ESCAPE)
+			destination = SSshuttle.getDock("emergency_away")
+		create_ripples(destination)
+
 	switch(mode)
 		if(SHUTTLE_RECALL)
 			if(time_left <= 0)
@@ -386,8 +410,10 @@
 	height = 4
 	var/target_area = /area/lavaland/surface/outdoors
 
-/obj/docking_port/stationary/random/initialize()
+/obj/docking_port/stationary/random/Initialize(mapload)
 	..()
+	if(!mapload)
+		return
 	var/list/turfs = get_area_turfs(target_area)
 	var/turf/T = pick(turfs)
 	src.loc = T

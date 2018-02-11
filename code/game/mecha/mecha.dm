@@ -819,6 +819,8 @@
 		else if(user.has_buckled_mobs())
 			to_chat(user, "<span class='warning'>You can't enter the exosuit with other creatures attached to you!</span>")
 		else
+			if(user.s_active)
+				user.s_active.close(user)
 			moved_inside(user)
 	else
 		to_chat(user, "<span class='warning'>You stop entering the exosuit!</span>")
