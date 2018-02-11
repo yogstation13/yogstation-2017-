@@ -327,6 +327,7 @@
 			feedback_add_details("admin_secrets_fun_used","QP")
 			log_admin("[key_name(usr)] made all SMESs powered", 1)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all SMESs powered</span>")
+			power_restore_quick()
 
 
 		if("nuclearlaunch")
