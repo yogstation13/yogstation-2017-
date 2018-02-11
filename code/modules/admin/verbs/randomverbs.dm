@@ -1095,3 +1095,15 @@ var/list/datum/outfit/custom_outfits = list() //Admin created outfits
 	message_admins("[key_name_admin(usr)] started polymorphed all living mobs.")
 	log_admin("[key_name(usr)] polymorphed all living mobs.")
 	feedback_add_details("admin_verb","MASSWABBAJACK")
+
+/client/proc/nuke_the_station(obj/machinery/nuclearbomb/N in nuke_list)
+	set name = "Fire nuclear missile at station."
+	set category = "Fun"
+	set popup_menu = 0
+	if(!check_rights(R_FUN))
+		return
+	feedback_inc("admin_secrets_fun_used",1)
+	feedback_add_details("admin_secrets_fun_used","P")
+	log_admin("[key_name(usr)] launched a tactical nuke at the station!", 1)
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] launched a nuke at the station!</span>")
+	SSweather.run_weather("nuclear detonation",1)

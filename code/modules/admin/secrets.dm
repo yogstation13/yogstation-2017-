@@ -50,6 +50,7 @@
 			<A href='?src=\ref[src];secrets=power'>Make all areas powered</A><BR>
 			<A href='?src=\ref[src];secrets=unpower'>Make all areas unpowered</A><BR>
 			<A href='?src=\ref[src];secrets=quickpower'>Power all SMES</A><BR>
+			<A href='?src=\ref[src];secrets=nuclearlaunch'>Launch a nuclear missile</A><BR>
 			<A href='?src=\ref[src];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
 			<A href='?src=\ref[src];secrets=traitorAI'>Force traitor AI (needs to be used in the lobby)</A><BR>
 			<A href='?src=\ref[src];secrets=traitor_all'>Everyone is the traitor</A><BR>
@@ -326,7 +327,16 @@
 			feedback_add_details("admin_secrets_fun_used","QP")
 			log_admin("[key_name(usr)] made all SMESs powered", 1)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all SMESs powered</span>")
-			power_restore_quick()
+
+
+		if("nuclearlaunch")
+			if(!check_rights(R_FUN))
+				return
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","P")
+			log_admin("[key_name(usr)] launched a nuke at the station!", 1)
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] launched a nuke at the station!</span>")
+			SSweather.run_weather("nuclear detonation",1)
 
 		if("traitor_all")
 			if(!check_rights(R_FUN))
