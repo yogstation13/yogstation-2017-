@@ -250,7 +250,6 @@ var/datum/subsystem/ticker/ticker
 			var/datum/holiday/holiday = SSevent.holidays[holidayname]
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
-
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.post_setup()
 		//Cleanup some stuff
@@ -263,6 +262,28 @@ var/datum/subsystem/ticker/ticker
 		if(!adm["present"])
 			webhook_send("adminless", "Round just started with no active admins online!")
 
+	setup_bar() //This needs to be done after the players have spawned
+	return 1
+
+
+
+/datum/subsystem/ticker/proc/setup_bar()
+//	sleep(50) //let everything spawn.
+	if(bar_choosers.len)
+		var/mob/living/carbon/human/thebarchooser = pick(bar_choosers)
+		if(!bar_chosen)
+			SSmapping.seedBar(thebarchooser.client.prefs.preferred_bar_theme)
+			bar_chosen = TRUE
+			to_chat(thebarchooser,"Your bar preference of [thebarchooser.client.prefs.preferred_bar_theme] has been loaded")
+			return 1
+	else//Error meme
+		SSmapping.seedBar("default")
+		bar_chosen = TRUE
+		log_game("No bartenders or cooks were present to choose the bar theme, reverting to default bar.")
+		return 1
+	SSmapping.seedBar("default")
+	bar_chosen = TRUE
+	log_game("Error: Unable to spawn bar (probably due to a lack of bartenders and cooks) defaulting to normal bar!")
 	return 1
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template

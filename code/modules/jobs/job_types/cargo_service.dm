@@ -118,6 +118,7 @@ Bartender
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	can_choose_bar = TRUE
 
 	outfit = /datum/outfit/job/bartender
 
@@ -137,6 +138,10 @@ Bartender
 	shoes = /obj/item/clothing/shoes/laceup
 	l_pocket = /obj/item/weapon/lighter
 
+
+/datum/outfit/job/bartender/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)//Bar spawning moved to ticker.dm.. -Bartenders get priority over choosing what bar theme is applied, as they own the place. Failing that a random chef gets their preference.
+	return ..()
+
 /datum/job/bartender/space
 	title = "Space Bartender"
 	flag = null
@@ -148,6 +153,9 @@ Bartender
 	spawn_positions = 0
 	department_head = null
 	department_flag = null
+	can_choose_bar = FALSE//Space barmen don't get to pick what bar the station uses, no thanks!
+
+
 /*
 Cook
 */
@@ -162,6 +170,7 @@ Cook
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
 	var/cooks = 0 //Counts cooks amount
+	can_choose_bar = TRUE
 
 	outfit = /datum/outfit/job/cook
 
@@ -177,7 +186,7 @@ Cook
 	suit = /obj/item/clothing/suit/toggle/chef
 	head = /obj/item/clothing/head/chefhat
 
-/datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/job/cook/post_equip(mob/living/carbon/human/H)
 	..()
 	var/datum/job/cook/J = SSjob.GetJob(H.job)
 	if(J) // Fix for runtime caused by invalid job being passed

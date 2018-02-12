@@ -18,6 +18,7 @@ var/datum/subsystem/mapping/SSmapping
 
 	var/list/datum/map_template/shuttle_templates = list()
 	var/list/datum/map_template/shelter_templates = list()
+	var/list/datum/map_template/bar_room_templates = list()
 
 /datum/subsystem/mapping/New()
 	NEW_SS_GLOBAL(SSmapping)
@@ -58,6 +59,7 @@ var/datum/subsystem/mapping/SSmapping
 	setup_map_transitions()
 
 	seedMaint()
+//	seedBar()// ONLY for testing, this is now redundant, everything's been moved to a config!
 	previous_map_config = SSmapping.previous_map_config
 	config = SSmapping.config
 	next_map_config = SSmapping.next_map_config
@@ -70,6 +72,12 @@ var/datum/subsystem/mapping/SSmapping
 	for(var/V in maintroom_landmarks)
 		var/obj/effect/landmark/maintroom/LM = V
 		LM.load()
+
+/datum/subsystem/mapping/proc/seedBar(template_name)
+//	to_chat(world, "<span class='boldannounce'>Loading bars...</span>")	//delet this
+	for(var/V in bar_landmarks)
+		var/obj/effect/landmark/bar_spawner/LM = V
+		LM.load(template_name)//TESTING ONLY!!!!! REMOVE MEEEEE
 
 /datum/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT
@@ -217,6 +225,8 @@ var/datum/subsystem/mapping/SSmapping
 			space_ruins_templates[R.name] = R
 		else if(istype(R, /datum/map_template/ruin/maint))
 			maint_room_templates[R.name] = R
+		else if(istype(R, /datum/map_template/ruin/bar))
+			bar_room_templates[R.name] = R
 
 /datum/subsystem/mapping/proc/preloadShuttleTemplates()
 

@@ -42,6 +42,7 @@ var/list/preferences_datums = list()
 	var/inquisitive_ghost = 1
 	var/allow_midround_antag = 1
 	var/preferred_map = null
+	var/preferred_bar_theme = "default" //If they don't choose, load the classic bar theme
 
 	//character preferences
 	var/real_name						//our character's name
@@ -189,8 +190,9 @@ var/list/preferences_datums = list()
 			dat += "<a href ='?_src_=prefs;preference=cyborg_name;task=input'><b>Cyborg:</b> [custom_names["cyborg"]]</a><BR>"
 			dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
 			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR>"
+			dat += "<b>Other preferences:</b><BR>"
+			dat += "<a href ='?_src_=prefs;preference=bar_theme;task=input'><b>Bar theme preference:</b> [preferred_bar_theme]</a><BR>" //Kmc was here
 			dat += "<a href ='?_src_=prefs;preference=sec_dept;task=input'><b>Security department:</b> [prefered_security_department]</a><BR></td>"
-
 			dat += "<td valign='center'>"
 
 			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
@@ -1156,6 +1158,14 @@ var/list/preferences_datums = list()
 					var/pickedmap = input(user, "Choose your preferred map. This will be used to help weight random map selection.", "Character Preference")  as null|anything in maplist
 					if(pickedmap)
 						preferred_map = maplist[pickedmap]
+				if("bar_theme")
+					var/list/templates = list()
+					for(var/obj/effect/landmark/bar_spawner/spawner in landmarks_list)
+						templates = spawner.template_names
+					var/preferred = input(user, "Choose what theme you'd like to apply to the bar when you choose bartender or chef.", "Character Preference")  as null|anything in templates//SSmapping.bar_room_templates
+				//	var/datum/map_template/preferred_bar_theme = SSmapping.bar_room_templates[preferred]
+					if(preferred)
+						preferred_bar_theme = preferred
 				if("clientfps")
 					var/version_message
 					if(user.client && user.client.byond_version < 511)

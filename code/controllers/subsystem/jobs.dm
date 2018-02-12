@@ -352,9 +352,9 @@ var/datum/subsystem/job/SSjob
 //Gives the player the stuff he should have with his rank
 /datum/subsystem/job/proc/EquipRank(mob/living/H, rank, joined_late=0)
 	var/datum/job/job = GetJob(rank)
-
 	H.job = rank
-
+	if(job.can_choose_bar)
+		bar_choosers += H
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
 		var/obj/S = null
