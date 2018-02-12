@@ -1,7 +1,0 @@
-{
-    "map_name": "Dream Station",
-    "map_path": "map_files/DreamStation",
-    "map_file": "dreamstation04.dmm",
-    "minetype": "lavaland",
-    "transition_config": "default"
-}
