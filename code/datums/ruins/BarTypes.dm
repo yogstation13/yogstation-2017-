@@ -44,7 +44,7 @@ var/global/bar_chosen = FALSE
 //Spawner, ADD YOUR MAPS HERE TOO, WHERE IT SAYS!
 
 /obj/effect/landmark/bar_spawner
-	var/list/template_names = list("default","diner","disco","casino","ragecage","spacious","conveyorbar","space_ship_bar")//	Mappers, add your bar name here, or it won't spawn!
+	var/list/template_names = list("default","diner","disco","casino","ragecage","spacious","conveyorbar","space_ship_bar","do_it_yourself_bar")//	Mappers, add your bar name here, or it won't spawn!
 	var/chosen_template = null
 
 /obj/effect/landmark/bar_spawner/New()
@@ -132,6 +132,13 @@ var/global/bar_chosen = FALSE
 	name = "space_ship_bar"
 	description = "Engines to maximum, SHIELDS MR SCOTT. \
 	the USS Callister is there for all your LARPING needs.."
+
+/datum/map_template/ruin/bar/doityourself
+	id = "do_it_yourself_bar"
+	suffix = "doityourself.dmm"
+	name = "do_it_yourself_bar"
+	description = "A blank slate, build something great- \
+	let the creativity flow through you...do it!"
 
 //Bar specific decor!
 
