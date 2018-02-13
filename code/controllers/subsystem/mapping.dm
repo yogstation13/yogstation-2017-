@@ -111,7 +111,7 @@ var/datum/subsystem/mapping/SSmapping
 	TryLoadZ("_maps/map_files/generic/[config.minetype].dmm", FailedZs, ZLEVEL_MINING, TRUE)
 	INIT_ANNOUNCE("Loaded mining level!")
 
-	for(var/I in (ZLEVEL_MINING + 1) to ZLEVEL_SPACEMAX)
+	for(var/I in (ZLEVEL_PREGENMAX + 1) to ZLEVEL_SPACEMAX)
 		CreateSpace()
 
 	if(LAZYLEN(FailedZs))	//but seriously, unless the server's filesystem is messed up this will never happen
