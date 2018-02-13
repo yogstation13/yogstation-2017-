@@ -9,6 +9,7 @@
 	announceWhen	= 15
 
 	var/virus_type
+	ghost_announce = null //Gets overwritten in start(), this way we can have both the victim AND the virus
 
 
 /datum/round_event/disease_outbreak/announce()
@@ -45,10 +46,13 @@
 			DS.strain_data["SE"] = H.dna.struc_enzymes
 		else
 			D = new virus_type()
-		D.carrier = 1
 		H.AddDisease(D)
-
+		D.carrier = 1
+		ghost_announce = "[H.name] has been infected with [D.name]"
+		interest = H
+    
 		message_admins("[H.real_name]/([H.key]) has been infected with [D.name] by an event.")
 		log_game("[H.real_name]/([H.key]) has been infected with [D.name] by an event.")
 		H.investigate_log("[H.real_name]/([H.key]) has been infected with [D.name] by an event.", "viro")
+
 		break

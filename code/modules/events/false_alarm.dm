@@ -7,6 +7,7 @@
 /datum/round_event/falsealarm
 	announceWhen	= 0
 	endWhen			= 1
+	ghost_announce = "A false alarm has triggered."
 
 /datum/round_event/falsealarm/announce()
 	var/list/events_list = list()

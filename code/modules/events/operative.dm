@@ -7,6 +7,7 @@
 /datum/round_event/ghost_role/operative
 	minimum_required = 1
 	role_name = "lone operative"
+	ghost_announce = "A Lone Operative has spawned."
 
 /datum/round_event/ghost_role/operative/spawn_role()
 	var/list/candidates = get_candidates("operative", null, ROLE_OPERATIVE)
@@ -56,4 +57,5 @@
 	message_admins("[operative.key] has been made into lone operative by an event.")
 	log_game("[operative.key] was spawned as a lone operative by an event.")
 	spawned_mobs += operative
+	interest = operative
 	return SUCCESSFUL_SPAWN

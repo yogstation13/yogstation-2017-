@@ -15,6 +15,7 @@
 									/area/security,
 									/area/quartermaster,
 									/area/toxins)
+	ghost_announce = "A Greytide Virus spawned."
 	var/severity = 1
 
 

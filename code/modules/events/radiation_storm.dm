@@ -3,12 +3,12 @@
 	typepath = /datum/round_event/radiation_storm
 
 /datum/round_event/radiation_storm
-
+	ghost_announce = "The station is being hit by a Radiation Storm."
+	startWhen = 3
+	announceWhen	= 1
 
 /datum/round_event/radiation_storm/setup()
-	startWhen = 3
 	endWhen = startWhen + 1
-	announceWhen	= 1
 
 /datum/round_event/radiation_storm/announce()
 	priority_announce("High levels of radiation detected near the station. Enter maintenence immediately to avoid life-threatening damage..", "Anomaly Alert", 'sound/AI/radiation.ogg')

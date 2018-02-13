@@ -13,6 +13,7 @@
 	var/list/obj/machinery/vending/vendingMachines = list()
 	var/list/obj/machinery/vending/infectedMachines = list()
 	var/obj/machinery/vending/originMachine
+	ghost_announce = "The vending machines are starting a revolution."
 	var/list/rampant_speeches = list("Try our aggressive new marketing strategies!", \
 									 "You should buy products to feed your lifestyle obession!", \
 									 "Consume!", \
@@ -38,6 +39,7 @@
 	vendingMachines.Remove(originMachine)
 	originMachine.shut_up = 0
 	originMachine.shoot_inventory = 1
+	interest = originMachine
 
 
 /datum/round_event/brand_intelligence/tick()

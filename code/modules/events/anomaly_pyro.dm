@@ -8,7 +8,8 @@
 	startWhen = 10
 	announceWhen = 3
 	endWhen = 85
-
+	ghost_announce = "A Pyroclastic Anomaly has spawned."
+	ghostAutoAnnounce = FALSE
 
 /datum/round_event/anomaly/anomaly_pyro/announce()
 	priority_announce("Pyroclastic anomaly detected on long range scanners. Expected location: [impact_area.name].", "Anomaly Alert")
@@ -17,6 +18,8 @@
 	var/turf/T = safepick(get_area_turfs(impact_area))
 	if(T)
 		newAnomaly = new /obj/effect/anomaly/pyro(T)
+		interest = newAnomaly
+		announceGhost()
 
 /datum/round_event/anomaly/anomaly_pyro/tick()
 	if(!newAnomaly)

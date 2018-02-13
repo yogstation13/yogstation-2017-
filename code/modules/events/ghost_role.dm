@@ -29,6 +29,7 @@
 			signing up.")
 	else if(status == SUCCESSFUL_SPAWN)
 		message_admins("[role_name] spawned successfully.")
+		if(ghostAutoAnnounce) addtimer(src,"announceGhost",20)
 		if(!spawned_mobs.len)
 			message_admins("No mobs found in the `spawned_mobs` list, this is \
 				a bug.")

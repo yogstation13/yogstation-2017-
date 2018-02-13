@@ -7,6 +7,7 @@
 	startWhen = 5
 	endWhen = 65
 	announceWhen	= 1
+	ghost_announce = "The gravity generator is temporarily going offline."
 
 /datum/round_event/weightless/setup()
 	startWhen = rand(0,10)

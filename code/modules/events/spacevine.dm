@@ -5,6 +5,9 @@
 	max_occurrences = 3
 	min_players = 10
 
+/datum/round_event/spacevine
+	ghost_announce = "A batch of space vines have spawned."
+
 /datum/round_event/spacevine/start()
 	var/list/turfs = list() //list of all the empty floor turfs in the hallway areas
 
@@ -14,12 +17,11 @@
 		for(var/turf/F in A)
 			if(F.Enter(SV))
 				turfs += F
-
 	qdel(SV)
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		new/obj/effect/spacevine_controller(T) //spawn a controller at turf
+		interest = new/obj/effect/spacevine_controller(T) //spawn a controller at turf
 
 
 /datum/spacevine_mutation

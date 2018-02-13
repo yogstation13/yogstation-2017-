@@ -9,6 +9,7 @@
 /datum/round_event/carp_migration
 	announceWhen	= 3
 	startWhen = 50
+	ghost_announce = "A school of carp has migrated to station-space."
 
 /datum/round_event/carp_migration/setup()
 	startWhen = rand(40, 60)

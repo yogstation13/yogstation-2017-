@@ -9,6 +9,7 @@
 /datum/round_event/wormholes
 	announceWhen = 10
 	endWhen = 60
+	ghost_announce = "The station is being hit by wormholes."
 
 	var/list/pick_turfs = list()
 	var/list/wormholes = list()
