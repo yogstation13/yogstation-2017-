@@ -44,7 +44,7 @@ var/global/bar_chosen = FALSE
 //Spawner, ADD YOUR MAPS HERE TOO, WHERE IT SAYS!
 
 /obj/effect/landmark/bar_spawner
-	var/list/template_names = list("default","diner","disco","casino","ragecage","spacious","conveyorbar","space_ship_bar","do_it_yourself_bar")//	Mappers, add your bar name here, or it won't spawn!
+	var/list/template_names = list("default","diner","disco","casino","ragecage","spacious","conveyorbar","space_ship_bar","do_it_yourself_bar","corporate","purplepassion","clown")//	Mappers, add your bar name here, or it won't spawn!
 	var/chosen_template = null
 
 /obj/effect/landmark/bar_spawner/New()
@@ -140,6 +140,27 @@ var/global/bar_chosen = FALSE
 	description = "A blank slate, build something great- \
 	let the creativity flow through you...do it!"
 
+/datum/map_template/ruin/bar/corporate
+	id = "corporate"
+	suffix = "corporate.dmm"
+	name = "corporate"
+	description = "Ever missed those days in the cubicles wiith your shitty computer?- \
+	relive those days with this nanotrasen office themed bar! (drinking prohibited on the premises)"
+
+/datum/map_template/ruin/bar/purplepassion
+	id = "purplepassion"
+	suffix = "purple.dmm"
+	name = "purplepassion"
+	description = "Purple.Purple? purple! PURPLE...Puuuuurplleeee \
+	PURPLE!!!!"
+
+/datum/map_template/ruin/bar/clown
+	id = "clown"
+	suffix = "clown.dmm"
+	name = "clown"
+	description = "HONK HONK HONK HONK HONK HONK HONK HONK HONK \
+	HONKKKKKKK!!!!"
+
 //Bar specific decor!
 
 
@@ -218,3 +239,30 @@ turf/open/floor/plasteel/ameridiner
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/special_slot_machine.dmi'
 	icon_state = "slots1"
+
+/client/proc/force_bar_spawn()///For """""""""""""""""""""""""""""""testing""""""""""""""""""""""""""""""" purposes.
+	set name = "Force your bar spawn preference."
+	set category = "Fun"
+	set popup_menu = 0
+	if(!check_rights(R_FUN))
+		return
+	var/our_badmin = usr
+	var/our_badmin_pref = usr.client.prefs.preferred_bar_theme
+	if(!bar_chosen)
+		log_admin("[key_name(usr)] is going to force their bar preference!", 1)
+		var/areyouDrunk = input(our_badmin, "Are you SURE you want to do this?", "Anti-Drunkmin Failsafe") in list("YES","NO")
+		switch(areyouDrunk)
+			if("YES")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","P")
+				log_admin("[key_name(usr)] forced their bar preference upon the station!", 1)
+				message_admins("<span class='adminnotice'>[key_name_admin(usr)] is forcing their bar choice of [our_badmin_pref]!")
+				ticker.setup_bar(our_badmin_pref) //Skip that stupid democracy and force your bar on the station.
+				bar_chosen = TRUE
+				return 1
+			if("NO")
+				log_admin("[key_name(usr)] Decided against forcing their bar preference, it will be spawned at random.", 1)
+				return 0
+	else
+		to_chat(usr, "Too late! You can only force your bar preference before the round starts!")
+		return 0

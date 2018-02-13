@@ -153,7 +153,7 @@
 "cW" = (/obj/machinery/atmospherics/components/unary/vent_pump{dir = 1; on = 1},/obj/structure/window/reinforced,/turf/open/floor/plasteel/shuttle,/area/template_noop)
 "cX" = (/obj/structure/chair{tag = "icon-chair_shuttle (NORTH)"; icon_state = "chair_shuttle"; dir = 1},/turf/open/floor/plasteel/shuttle,/area/template_noop)
 "cY" = (/obj/effect/landmark/event_spawn,/turf/open/floor/plasteel/white,/area/template_noop)
-"cZ" = (/obj/machinery/door/firedoor/border_only{dir = 4; name = "Firelock East"},/obj/machinery/door/airlock{name = "Kitchen"; req_access_txt = "28"},/obj/machinery/door/airlock/shuttle{req_access_txt = "28"},/turf/open/floor/plasteel/white,/area/template_noop)
+"cZ" = (/obj/machinery/door/firedoor/border_only{dir = 4; name = "Firelock East"},/obj/machinery/door/airlock/shuttle{req_access_txt = "28"},/turf/open/floor/plasteel/white,/area/template_noop)
 "da" = (/obj/machinery/light_switch{pixel_y = -25},/turf/open/floor/plating{icon_state = "warnplate"; dir = 8},/area/template_noop)
 "db" = (/obj/machinery/light,/turf/open/floor/plasteel/black,/area/template_noop)
 "dc" = (/obj/effect/landmark/event_spawn,/turf/open/floor/plasteel/black,/area/template_noop)
