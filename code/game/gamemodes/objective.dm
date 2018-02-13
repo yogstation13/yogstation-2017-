@@ -698,7 +698,7 @@ var/global/list/possible_items_special = list()
 			for(var/mob/living/carbon/human/P in player_list)
 				if(P.client && !(P.mind in ticker.mode.changelings) && P.mind!=owner)
 					n_p ++
-		target_amount = min(10, max(2, round(n_p/5))) //
+		target_amount = min(10, max(2, round(n_p/10))) //
 
 	explanation_text = "Extract [target_amount] compatible genome\s."
 	return target_amount
