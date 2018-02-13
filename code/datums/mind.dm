@@ -67,6 +67,7 @@
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 	var/quiet_round = 0 //Won't be picked as target in most cases
 	var/list/outfit_browsers = null
+	var/killstreak = 0
 
 /datum/mind/New(var/key)
 	src.key = key
@@ -967,7 +968,8 @@
 					ticker.mode.update_rev_icons_removed(src)
 					to_chat(current, "<span class='userdanger'>Revolution has been disappointed of your leader traits! You are a regular revolutionary now!</span>")
 				else if(!(src in ticker.mode.revolutionaries))
-					to_chat(current, "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!</FONT></span>")
+					to_chat(current, "<span class='danger'><FONT size = 3> You are now a revolutionary! Help your cause. Do not harm your fellow freedom fighters. Help them kill the heads to win the revolution!</FONT></span>")
+					ticker.mode.explain_rev_hud(current)
 				else
 					return
 				ticker.mode.revolutionaries += src
@@ -980,9 +982,10 @@
 				if(src in ticker.mode.revolutionaries)
 					ticker.mode.revolutionaries -= src
 					ticker.mode.update_rev_icons_removed(src)
-					to_chat(current, "<span class='userdanger'>You have proved your devotion to revoltion! Yea are a head revolutionary now!</span>")
+					to_chat(current, "<span class='userdanger'>You have proved your devotion to revoltion! You are a head revolutionary now!</span>")
 				else if(!(src in ticker.mode.head_revolutionaries))
 					to_chat(current, "<span class='userdanger'>You are a member of the revolutionaries' leadership now!</span>")
+					ticker.mode.explain_rev_hud(current)
 				else
 					return
 				if (ticker.mode.head_revolutionaries.len>0)
@@ -1387,7 +1390,7 @@
 					else if (istype(M) && length(M.viruses))
 						for(var/datum/disease/D in M.viruses)
 							D.cure(0)
-						sleep(0) //because deleting of virus is done through spawn(0)
+						stoplag() //because deleting of virus is done through spawn(0)
 			if("infected")
 				if (check_rights(R_ADMIN, 0))
 					var/mob/living/carbon/human/H = current
@@ -1854,6 +1857,23 @@
 	. = G
 	if(G)
 		G.reenter_corpse()
+
+/datum/mind/proc/killstreak_act()
+	switch(killstreak)
+		if(3)
+			deadchat_broadcast("[name] is on a killing spree!</B>", src.current)
+		if(5)
+			deadchat_broadcast("[name] is dominating!</B>", src.current)
+		if(7)
+			deadchat_broadcast("[name] got a MEGA KILL!</B>", src.current)
+		if(9)
+			deadchat_broadcast("[name] is UNSTOPPABLE!</B>", src.current)
+		if(11)
+			deadchat_broadcast("[name] is WICKED SICK!!</B>", src.current)
+		if(13)
+			deadchat_broadcast("[name] is GODLIKE!</B>", src.current)
+		if(15)
+			deadchat_broadcast("[name] is a KILLIONAIRE!</B>", src.current)
 
 /mob/proc/sync_mind()
 	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)

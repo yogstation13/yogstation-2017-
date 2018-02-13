@@ -198,9 +198,9 @@
 			if(emagged)
 				for(var/reagent_id in available_chems)
 					occupant.reagents.add_reagent(reagent_id, 30)
-					occupant.attack_log += text("\[[time_stamp()]\] <font color='orange'>[occupant]/[occupant.ckey] has been injected by [usr]/[usr.ckey] with 30 [reagent_id] using an EMAGGED sleeper</font>")
+					occupant.attack_log += text("\[[gameTimestamp()]\] <font color='orange'>[occupant]/[occupant.ckey] has been injected by [usr]/[usr.ckey] with 30 [reagent_id] using an EMAGGED sleeper</font>")
 					log_attack("[usr]/[usr.ckey] injected [occupant]/[occupant.ckey] with 30 [reagent_id] using an EMAGGED sleeper")
-					usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[usr]/[usr.ckey] has injected [occupant]/[occupant.ckey] with 30 [reagent_id] using an EMAGGED sleeper</font>")
+					usr.attack_log += text("\[[gameTimestamp()]\] <font color='red'>[usr]/[usr.ckey] has injected [occupant]/[occupant.ckey] with 30 [reagent_id] using an EMAGGED sleeper</font>")
 				audible_message("<span class='alert'>[src] buzzes and beeps madly!</span>")
 				emag_effect = 1
 				open_machine()
@@ -211,8 +211,8 @@
 /obj/machinery/sleeper/proc/inject_chem(chem)
 	if((chem in available_chems) && chem_allowed(chem))
 		occupant.reagents.add_reagent(chem, 10)
-		occupant.attack_log += text("\[[time_stamp()]\] <font color='orange'>[occupant]/[occupant.ckey] has been injected by [usr]/[usr.ckey] with 10 [chem] using a sleeper</font>")
-		usr.attack_log += text("\[[time_stamp()]\] <font color='red'>[usr]/[usr.ckey] has injected [occupant]/[occupant.ckey] with 10 [chem] using a sleeper</font>")
+		occupant.attack_log += text("\[[gameTimestamp()]\] <font color='orange'>[occupant]/[occupant.ckey] has been injected by [usr]/[usr.ckey] with 10 [chem] using a sleeper</font>")
+		usr.attack_log += text("\[[gameTimestamp()]\] <font color='red'>[usr]/[usr.ckey] has injected [occupant]/[occupant.ckey] with 10 [chem] using a sleeper</font>")
 		log_attack("[usr]/[usr.ckey] injected [occupant]/[occupant.ckey] with 10 [chem] using a sleeper")
 		return TRUE
 

@@ -98,7 +98,7 @@
 
 	playsound(src, 'sound/effects/paper_wrap.ogg', 50, 1)
 	user.visible_message("<span class='notice'>[user] wraps [target].</span>")
-	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [name] on [target]</font>")
+	user.attack_log += text("\[[gameTimestamp()]\] <font color='blue'>Has used [name] on [target]</font>")
 
 /obj/item/stack/packageWrap/Destroy()
 	if(!amount)

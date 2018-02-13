@@ -9,7 +9,7 @@ var/datum/atom_hud/huds = list( \
 	DATA_HUD_DIAGNOSTIC = new/datum/atom_hud/data/diagnostic(), \
 	DATA_HUD_DIAGNOSTIC_ADVANCED = new/datum/atom_hud/data/diagnostic/advanced(), \
 	ANTAG_HUD_CULT = new/datum/atom_hud/antag(), \
-	ANTAG_HUD_REV = new/datum/atom_hud/antag(), \
+	ANTAG_HUD_REV = new/datum/atom_hud/antag/hidden(), \
 	ANTAG_HUD_OPS = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_WIZ = new/datum/atom_hud/antag(), \
 	ANTAG_HUD_SHADOW = new/datum/atom_hud/antag(), \
@@ -26,7 +26,8 @@ var/datum/atom_hud/huds = list( \
 	ANTAG_HUD_CYBERMEN = new/datum/atom_hud/antag(),\
 	DATA_HUD_CYBERMEN_HACK = new/datum/atom_hud/data/cybermen(),\
 	ANTAG_HUD_SUMMON_MAGIC = new/datum/atom_hud/antag(),\
-	ANTAG_HUD_ASHWALKER = new/datum/atom_hud/antag()
+	ANTAG_HUD_ASHWALKER = new/datum/atom_hud/antag(), \
+	DATA_HUD_REV = new/datum/atom_hud/data/human/rev()
 	)
 
 /datum/atom_hud

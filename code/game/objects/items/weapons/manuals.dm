@@ -1504,6 +1504,48 @@
 			Good luck!
 			</html>"}
 
+/obj/item/weapon/book/manual/hop
+	name = "Guide to the Identification Console"
+	icon_state ="bookHop"
+	author = "Centcom" // Who wrote the thing, can be changed by pen or PC. It is not automatically assigned
+	title = "Centcom's Command for Dummies - Guide to the Identification Console"
+	desc = "A guide on how to use the Identification Console"
+	dat = {"<html>
+			Guide to the Identification Console:<br>
+			Congratulations, new employee! Welcome to your new job as the Head of Personnel!<br>
+			This guide aims to help you in your job by providing instructions on the Identification Console, or ID console in short.<br>
+			<br>	## Changing Access - Why You Are Here <br>
+			Look out of the window. People are probably already queueing up, waiting for you to change their access!<br>
+			Fret not, this is easy enough to do if you know how.<br>
+			Start with taking their ID and place them in the Target slot of the console. <br>
+			Then, put your own ID (or another ID with sufficient access) in the Confirm Identity slot. <br>
+			This opens up the access menu. From here you can add or remove access from the ID and/or change the assigned job entirely. <br>
+			Listen to the owner of the ID: Do they want to transfer jobs, or only additional access? <br><br>
+			<i> They want to transfer jobs. </i> <br>
+			This is easy enough to do. Is their request reasonable? Then go ahead and press their job under Assignment.<br>
+			A list of all the jobs will appear. Press the one you need to transfer the ID to. <br>
+			Now the access to the ID is automatically set, and you're good to go.<br><br>
+			<i> They want additional access. </i><br>
+			Under the Assignment button, you can see a list of all the locations (some are more under the same button) on the station, categorized on department.<br>
+			Is the owner's request reasonable? Then go ahead and click the needed access. <br>
+			Remember, giving access to some place also includes giving access to the <i>path</i> the person needs to take.<br>
+			Virology access is pretty useless when you can't even get into the medbay itself.<br><br>
+			Open the window and place their ID on the desk. You need your own ID to open it!<br>
+			If everything went alright, the person should be happy and leave the queue.<br><br>
+			## Miscellaneous Features<br><br>
+			<i> Change arrival message </i><br>
+			Simple enough. Fill in a message, and everytime the arrival message plays, it also delivers your message. Example: <br>
+			<i> Joe McSchmoe has entered the station as Assistant. (Your message here.) </i><br><br>
+			<i>Prioritize or Unprioritize a job</i><br>
+			When you select a job to be prioritzed, potential employees will see that the job you chose has been marked with a red "!". <br><br>
+			<i>Access Crew Manifest</i> <br>
+			List of all the crew on the station. Press print to print the list out.<br><br>
+			<i> Job Management </i><br>
+			Lets you open up and close slots for jobs, so more/less people can work the same job. Has a cooldown.<br><br>
+			Good luck with your job, and have a nice shift!
+			</html>"}
+ 
+
 // Wiki books that are linked to the configured wiki link.
 
 // A book that links to the wiki

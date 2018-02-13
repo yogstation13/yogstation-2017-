@@ -228,7 +228,7 @@
 	suffix = "train"
 	name = "The Emergency Escape Train"
 	description = "Fuck shuttles, Trains are AWESOME. And now, with a small transaction of funds, YOU can be the next universal conductor."
-	credit_cost = 2500
+	credit_cost = 7500
 
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"

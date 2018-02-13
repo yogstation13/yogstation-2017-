@@ -141,10 +141,8 @@ var/list/admin_verbs_server = list(
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_debug_del_all,
 	/client/proc/toggle_random_events,
-#if SERVERTOOLS
 	/client/proc/forcerandomrotate,
 	/client/proc/adminchangemap,
-#endif
 	/client/proc/panicbunker
 
 	)
@@ -837,6 +835,8 @@ var/list/admin_verbs_hideable = list(
 	log_admin("[src] deadmined themself.")
 	message_admins("[src] deadmined themself.")
 	feedback_add_details("admin_verb","DAS")
+	if(!admins.len)
+		webhook_send("adminless", "The last admin has de-adminned!")
 
 /client/proc/readmin()
 	set name = "Readmin"

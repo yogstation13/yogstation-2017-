@@ -196,6 +196,15 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/lizard/ashwalker/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	return
 
+/datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C.weather_immunities.Add("ash")
+
+/datum/species/lizard/ashwalker/on_species_loss(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C.weather_immunities.Remove("ash")
+
+
 /datum/species/lizard/ashwalker/cosmic
 	name = "Cosmic Ashwalker"
 	var/rebirth

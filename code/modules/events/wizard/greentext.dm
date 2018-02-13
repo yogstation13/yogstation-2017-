@@ -67,7 +67,7 @@
 		O.completed = 1 //YES!
 		O.owner = new_holder.mind
 		new_holder.mind.objectives += O
-		new_holder.attack_log += "\[[time_stamp()]\] <font color='green'>Won with greentext!!!</font>"
+		new_holder.attack_log += "\[[gameTimestamp()]\] <font color='green'>Won with greentext!!!</font>"
 		color_altered_mobs -= new_holder
 		burn_state = ON_FIRE
 		qdel(src)

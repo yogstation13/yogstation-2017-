@@ -203,6 +203,9 @@
 	..()
 	if(!timid)
 		register()
+	var/area/A = get_area(src)
+	if(istype(A, /area/shuttle))
+		areaInstance = A
 
 /obj/docking_port/mobile/proc/register()
 	SSshuttle.mobile += src
@@ -212,11 +215,10 @@
 		SSshuttle.mobile -= src
 	. = ..()
 
-/obj/docking_port/mobile/initialize()
-	var/area/A = get_area(src)
-	if(istype(A, /area/shuttle))
-		areaInstance = A
-
+/obj/docking_port/mobile/Initialize(mapload)
+	..()
+	if(!mapload)
+		return
 	if(!id)
 		id = "[SSshuttle.mobile.len]"
 	if(name == "shuttle")

@@ -119,3 +119,8 @@
 	name = "Bus"
 	autolinkers = list("processor1", "common")
 	freq_listening = list()
+
+/obj/machinery/telecomms/bus/preset_one/ministation
+	name = "Bus"
+	autolinkers = list("processor1", "common")
+	freq_listening = list()

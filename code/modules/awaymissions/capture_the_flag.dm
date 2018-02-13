@@ -24,11 +24,8 @@
 	var/reset_cooldown = 0
 	var/obj/effect/landmark/reset
 
-/obj/item/weapon/twohanded/ctf/New()
-	if(!reset)
-		reset = new /obj/effect/landmark(get_turf(src))
-
-/obj/item/weapon/twohanded/ctf/initialize()
+/obj/item/weapon/twohanded/ctf/Initialize()
+	..()
 	if(!reset)
 		reset = new /obj/effect/landmark(get_turf(src))
 

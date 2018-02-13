@@ -1,0 +1,7 @@
+{
+    "map_name": "Asteroid Station",
+    "map_path": "map_files/AsteroidStation",
+    "map_file": "AsteroidStation.dmm",
+    "minetype": "lavaland",
+    "transition_config": "default"
+}
