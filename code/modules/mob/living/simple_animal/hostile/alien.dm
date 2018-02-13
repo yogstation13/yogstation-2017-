@@ -15,8 +15,8 @@
 	weather_immunities = list("lava","ash")
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 2,
 							/obj/item/stack/sheet/animalhide/xeno = 2,
-							/obj/item/organ/alien/plasmavessel/small/tiny = 1,
-							/obj/item/organ/alien/hivenode = 1)
+							/obj/item/organ/alien/plasmavessel/small/tiny = 1
+							)
 	maxHealth = 150
 	health = 150
 	harm_intent_damage = 5
@@ -64,7 +64,6 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 2,
 							/obj/item/stack/sheet/animalhide/xeno = 1,
 							/obj/item/organ/alien/plasmavessel/small = 1,
-							/obj/item/organ/alien/hivenode = 1,
 							/obj/item/organ/alien/resinspinner = 1)
 
 /mob/living/simple_animal/hostile/alien/drone/handle_automated_action()
@@ -112,7 +111,6 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 2,
 							/obj/item/stack/sheet/animalhide/xeno = 1,
 							/obj/item/organ/alien/plasmavessel/small = 1,
-							/obj/item/organ/alien/hivenode = 1,
 							/obj/item/organ/alien/acid = 1,
 							/obj/item/organ/alien/neurotoxin = 1)
 
@@ -197,11 +195,11 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 10,
 							/obj/item/stack/sheet/animalhide/xeno = 2,
 							/obj/item/organ/alien/plasmavessel/large/queen = 1,
-							/obj/item/organ/alien/hivenode = 1,
 							/obj/item/organ/alien/resinspinner = 1,
 							/obj/item/organ/alien/acid = 1,
 							/obj/item/organ/alien/neurotoxin = 1,
 							/obj/item/organ/alien/eggsac = 1,
+							/obj/item/organ/alien/hivenode = 1,
 							/obj/item/organ/brain/alien = 1) //only the queen is smart
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = 0
@@ -267,7 +265,6 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 5,
 							/obj/item/stack/sheet/animalhide/xeno = 2,
 							/obj/item/organ/alien/plasmavessel = 1,
-							/obj/item/organ/alien/hivenode = 1,
 							/obj/item/organ/alien/resinspinner = 1,
 							/obj/item/organ/alien/acid = 1,
 							/obj/item/organ/alien/neurotoxin = 1)
