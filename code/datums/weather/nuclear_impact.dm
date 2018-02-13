@@ -88,3 +88,26 @@
 			if(!(RADIMMUNE in H.dna.species.specflags))
 				if(prob(max(0,100-resist)))
 					H.adjustToxLoss(1)
+
+
+
+/client/proc/tactical_nuke_the_station()
+	set name = "Fire tactical nuke "
+	set category = "Fun"
+	set popup_menu = 0
+	if(!check_rights(R_FUN))
+		return
+	var/our_badmin = usr
+	var/areyouDrunk = input(our_badmin, "Please confirm action", "Centcom Nuclear Failsafe") in list("YES","NO")
+	switch(areyouDrunk)
+		if("YES")
+			feedback_inc("admin_secrets_fun_used",1)
+			feedback_add_details("admin_secrets_fun_used","P")
+			log_admin("[key_name(usr)] launched a nuke at the station!", 1)
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] launched a nuke at the station!</span>")
+			SSweather.run_weather("nuclear detonation",1)
+			return 1
+		if("NO")
+			log_admin("[key_name(usr)] Resisted the temptation to press the nuclear launch button.", 1)
+			return 0
+
