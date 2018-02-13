@@ -519,4 +519,4 @@ var/datum/subsystem/job/SSjob
 			return 0
 		if(config.enforce_human_authority && !NP.client.prefs.pref_species.qualifies_for_rank(rank, NP.client.prefs.features))
 			return 0
-	return 1	return 1	return 1
+	return 1
