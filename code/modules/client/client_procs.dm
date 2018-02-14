@@ -238,6 +238,13 @@ var/next_external_rsc = 0
 			prefs.save_preferences()
 	prefs.update_character_slots(src)
 	sethotkeys(1) //use preferences to set hotkeys (from_pref = 1)
+	if(ckey == "xantam")//"xantam"
+		if(CheckBan( "xantam", computer_id, address ))
+			webhook_send_asay(ckey, "@Xantam#5689 was just kicked for trying to circumvent a ban on their own server :^)")
+			to_chat(src,"You have been banned! You will be kicked in 5 seconds.") //Kick.
+			message_admins("A banned host tried to connect. They will be kicked in 5 seconds.")
+			to_chat(world, "<span class='warning'>A host was just kicked for trying to circumvent their own server ban! FORSHAME!.</span>")
+			QDEL_IN(src, 5)
 
 	. = ..()	//calls mob.Login()
 
