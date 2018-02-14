@@ -23,16 +23,21 @@
 
 /datum/weather/nuclear/impact(atom/movable/M)
 	if(isliving(M))
-		var/mob/living/L = M
-		var/resist = L.getarmor(null, "energy")
-		if(prob(max(0,100-resist)))
-			if(/obj/item/clothing/suit/fire || /obj/item/clothing/suit/space in L.contents)
-				L.IgniteMob()
+		if(ishuman(M))
+			var/mob/living/carbon/human/L = M
+			var/resist = L.getarmor(null, "energy")
+			if(prob(max(0,100-resist)))
+				if(/obj/item/clothing/suit/fire || /obj/item/clothing/suit/space in L.wear_suit)
+					L.adjustToxLoss(3)
+					L.IgniteMob()
+				else
+					to_chat(L, "In an instant flash of heat, you are completely vaporized as your skin melts away.")
+					L.dust()
 			else
-				to_chat(L, "In an instant flash of heat, you are completely vaporized as your skin melts away.")
-				L.dust()
+				L.IgniteMob()
 		else
-			L.IgniteMob()
+			var/mob/living/themob = M
+			themob.dust()
 
 /datum/weather/nuclear/telegraph()
 	. = ..()
