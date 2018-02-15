@@ -70,9 +70,9 @@ Station Engineer
 	outfit = /datum/outfit/job/engineer
 
 	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-									access_external_airlocks, access_construction, access_atmospherics, access_tcomsat, access_tcomadmin)
+									access_external_airlocks, access_construction, access_atmospherics, access_tcomsat, access_tcomadmin, access_mineral_storeroom)
 	minimal_access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels,
-									access_external_airlocks, access_construction, access_tcomsat)
+									access_external_airlocks, access_construction, access_tcomsat, access_mineral_storeroom)
 
 /datum/outfit/job/engineer
 	name = "Station Engineer"
