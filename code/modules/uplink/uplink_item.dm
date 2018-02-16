@@ -321,7 +321,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			are dirt cheap but are half as effective as .357 rounds."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
-
+	
+/datum/uplink_item/ammo/uzi
+	name = "9mm Uzi Submachinegun Magazine"
+	desc = "An additional 32-round 9mm magazine; compatible with the Uzi Submachinegun."
+	item = /obj/item/ammo_box/magazine/uzim9mm
+	cost = 3
+	
 /datum/uplink_item/ammo/bolt_action
 	name = "Surplus Rifle Clip"
 	desc = "A stripper clip used to quickly load bolt action rifles. Contains 5 rounds."
@@ -1093,7 +1099,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	desc = "A gun concealed within a briefcase, used by her majesty's secret service"
 	item = /obj/item/weapon/storage/briefcase/gun
 	restricted_roles = list("Lawyer")
-	cost = 10
+	cost = 12
 
 /datum/uplink_item/role_restricted/bikehornsword
 	name = "Energy Sword Bikehorn"
