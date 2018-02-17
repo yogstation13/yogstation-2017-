@@ -25,6 +25,7 @@
 	icon_state = "watermelonslice"
 	filling_color = "#FF1493"
 	foodtype = FRUIT
+	juice_results = list("watermelonjuice" = 0)
 
 /obj/item/weapon/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"

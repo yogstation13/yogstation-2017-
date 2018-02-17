@@ -106,6 +106,7 @@
 		to_chat(user, "<span class='notice'>You inject the solution into the power cell.</span>")
 		if(S.reagents.has_reagent("plasma", 5))
 			rigged = 1
+			grind_results["plasma"] = 5
 		S.reagents.clear_reagents()
 
 

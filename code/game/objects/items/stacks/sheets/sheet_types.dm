@@ -62,6 +62,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	origin_tech = "materials=1"
 	novariants = FALSE
 	merge_type = /obj/item/stack/sheet/metal
+	grind_results = list("iron" = 20)
 
 /obj/item/stack/sheet/metal/narsie_act()
 	if(prob(20))
@@ -101,6 +102,7 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	origin_tech = "materials=2"
 	novariants = FALSE
 	merge_type = /obj/item/stack/sheet/plasteel
+	grind_results = list("iron" = 20, "plasma" = 20)
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 	recipes = plasteel_recipes
@@ -145,6 +147,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	burn_state = FLAMMABLE
 	novariants = FALSE
 	merge_type = /obj/item/stack/sheet/mineral/wood
+	grind_results = list("carbon" = 20)
 
 /obj/item/stack/sheet/mineral/wood/New(var/loc, var/amount=null)
 	recipes = wood_recipes

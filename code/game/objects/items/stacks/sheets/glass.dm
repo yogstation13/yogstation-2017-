@@ -18,6 +18,7 @@
 	origin_tech = "materials=1"
 	novariants = FALSE
 	merge_type = /obj/item/stack/sheet/glass
+	grind_results = list("silicon" = 20)
 
 /obj/item/stack/sheet/glass/cyborg
 	materials = list()
@@ -143,6 +144,7 @@
 	origin_tech = "materials=2"
 	novariants = FALSE
 	merge_type = /obj/item/stack/sheet/rglass
+	grind_results = list("silicon" = 20, "iron" = 20)
 
 /obj/item/stack/sheet/rglass/cyborg
 	materials = list()

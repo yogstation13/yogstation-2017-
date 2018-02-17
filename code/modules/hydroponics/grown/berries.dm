@@ -25,6 +25,7 @@
 	filling_color = "#FF00FF"
 	bitesize_mod = 2
 	foodtype = FRUIT
+	juice_results = list("berryjuice" = 0)
 
 // Poison Berries
 /obj/item/seeds/berry/poison
@@ -45,6 +46,7 @@
 	icon_state = "poisonberrypile"
 	filling_color = "#C71585"
 	foodtype = FRUIT | TOXIC
+	juice_results = list("poisonberryjuice" = 0)
 
 // Death Berries
 /obj/item/seeds/berry/death
@@ -120,6 +122,7 @@
 	filling_color = "#FF0000"
 	bitesize_mod = 2
 	foodtype = FRUIT
+	grind_results = list("cherryjelly" = 0)
 
 // Blue Cherries
 /obj/item/seeds/cherry/blue
@@ -141,6 +144,7 @@
 	filling_color = "#6495ED"
 	bitesize_mod = 2
 	foodtype = FRUIT
+	grind_results = list("bluecherryjelly" = 0)
 
 // Grapes
 /obj/item/seeds/grape

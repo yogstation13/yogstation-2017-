@@ -26,6 +26,7 @@
 	trash = /obj/item/weapon/grown/corncob
 	bitesize_mod = 2
 	foodtype = VEGETABLES
+	juice_results = list("corn_starch" = 0)
 
 /obj/item/weapon/grown/corncob
 	name = "corn cob"

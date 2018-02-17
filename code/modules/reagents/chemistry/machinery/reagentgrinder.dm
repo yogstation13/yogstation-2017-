@@ -1,5 +1,5 @@
 /obj/machinery/reagentgrinder
-		name = "All-In-One Grinder"
+		name = "\improper All-In-One Grinder"
 		desc = "Used to grind things up into raw materials."
 		icon = 'icons/obj/kitchen.dmi'
 		icon_state = "juicer1"
@@ -12,74 +12,7 @@
 		var/operating = 0
 		var/obj/item/weapon/reagent_containers/beaker = null
 		var/limit = 10
-		var/list/blend_items = list (
-
-				//Sheets
-				/obj/item/stack/sheet/mineral/plasma = list("plasma" = 20),
-				/obj/item/stack/sheet/metal = list("iron" = 20),
-				/obj/item/stack/sheet/plasteel = list("iron" = 20, "plasma" = 20),
-				/obj/item/stack/sheet/mineral/wood = list("carbon" = 20),
-				/obj/item/stack/sheet/glass = list("silicon" = 20),
-				/obj/item/stack/sheet/rglass = list("silicon" = 20, "iron" = 20),
-				/obj/item/stack/sheet/mineral/uranium = list("uranium" = 20),
-				/obj/item/stack/sheet/mineral/bananium = list("banana" = 20),
-				/obj/item/stack/sheet/mineral/silver = list("silver" = 20),
-				/obj/item/stack/sheet/mineral/gold = list("gold" = 20),
-				/obj/item/weapon/grown/nettle/basic = list("sacid" = 0),
-				/obj/item/weapon/grown/nettle/death = list("facid" = 0),
-				/obj/item/weapon/grown/novaflower = list("capsaicin" = 0, "condensedcapsaicin" = 0),
-
-				//Blender Stuff
-				/obj/item/weapon/reagent_containers/food/snacks/grown/soybeans = list("soymilk" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("ketchup" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = list("flour" = -5),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/oat = list("flour" = -5),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/rice = list("rice" = -5),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/bluecherries = list("bluecherryjelly" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/egg = list("eggyolk" = -5),
-
-				//Grinder stuff, but only if dry
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0),
-
-
-				//All types that you can put into the grinder to transfer the reagents to the beaker. !Put all recipes above this.!
-				/obj/item/weapon/reagent_containers/pill = list(),
-				/obj/item/weapon/reagent_containers/food = list(),
-				/obj/item/weapon/reagent_containers/honeycomb = list()
-		)
-
-		var/list/juice_items = list (
-
-				//Juicer Stuff
-				/obj/item/weapon/reagent_containers/food/snacks/grown/corn = list("corn_starch" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tomato = list("tomatojuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/carrot = list("carrotjuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/berries = list("berryjuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/banana = list("banana" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/potato = list("potato" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lemon = list("lemonjuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/orange = list("orangejuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/citrus/lime = list("limejuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/watermelon = list("watermelonjuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/watermelonslice = list("watermelonjuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/berries/poison = list("poisonberryjuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin = list("pumpkinjuice" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin = list("blumpkinjuice" = 0),
-		)
-
-		var/list/dried_items = list(
-				//Grinder stuff, but only if dry,
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee/robusta = list("coffeepowder" = 0, "morphine" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/coffee = list("coffeepowder" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra = list("teapowder" = 0, "salglu_solution" = 0),
-				/obj/item/weapon/reagent_containers/food/snacks/grown/tea = list("teapowder" = 0)
-		)
-
-		var/list/holdingitems = list()
+		var/list/items = list()
 
 /obj/machinery/reagentgrinder/New()
 		..()
@@ -92,60 +25,52 @@
 
 
 /obj/machinery/reagentgrinder/attackby(obj/item/I, mob/user, params)
-		if(default_unfasten_wrench(user, I))
-				return
-
-		if (istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER) )
-				if (!beaker)
-						if(!user.drop_item())
-								return 1
-						beaker =  I
-						beaker.loc = src
-						update_icon()
-						src.updateUsrDialog()
-				else
-						to_chat(user, "<span class='warning'>There's already a container inside.</span>")
-				return 1 //no afterattack
-
-		if(is_type_in_list(I, dried_items))
-				if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown))
-						var/obj/item/weapon/reagent_containers/food/snacks/grown/G = I
-						if(!G.dry)
-								to_chat(user, "<span class='warning'>You must dry that first!</span>")
-								return 1
-
-		if(holdingitems && holdingitems.len >= limit)
-				to_chat(usr, "The machine cannot hold anymore items.")
+	if(default_unfasten_wrench(user, I))
+		return
+	if (istype(I, /obj/item/weapon/reagent_containers) && (I.flags & OPENCONTAINER) )
+		if (!beaker)
+			if(!user.drop_item())
 				return 1
+			beaker =  I
+			beaker.loc = src
+			to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")
+			update_icon()
+			src.updateUsrDialog()
+		else
+			to_chat(user, "<span class='warning'>There's already a container inside.</span>")
+		return 1 //no afterattack
 
-		//Fill machine with a bag!
-		if(istype(I, /obj/item/weapon/storage/bag))
-				var/obj/item/weapon/storage/bag/B = I
-				for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in B.contents)
-						B.remove_from_storage(G, src)
-						holdingitems += G
-						if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
-								to_chat(user, "<span class='notice'>You fill the All-In-One grinder to the brim.</span>")
-								break
-
-				if(!I.contents.len)
-						to_chat(user, "<span class='notice'>You empty the plant bag into the All-In-One grinder.</span>")
-
+	if(items.len >= limit)
+		to_chat(user, "<span class='warning'>[src] is filled to capacity!</span>")
+	//Fill machine with a bag!
+	if(istype(I, /obj/item/weapon/storage/bag))
+		var/obj/item/weapon/storage/bag/B = I
+		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in B.contents)
+			B.remove_from_storage(G, src)
+			items += G
+			if(items && items.len >= limit) //Sanity checking so the blender doesn't overfill
+				to_chat(user, "<span class='notice'>You fill the All-In-One grinder to the brim.</span>")
+				break
+			if(!I.contents.len)
+				to_chat(user, "<span class='notice'>You empty the plant bag into the All-In-One grinder.</span>")
 				src.updateUsrDialog()
 				return 1
 
-		if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
-				if(user.a_intent == "harm")
-						return ..()
-				else
-						to_chat(user, "<span class='warning'>Cannot refine into a reagent!</span>")
-						return 1
+	if(!I.grind_results && !I.juice_results)
+		if(user.a_intent == "harm")
+			return ..()
+		else
+			to_chat(user, "<span class='warning'>You cannot grind [I] into reagents!</span>")
+			return 1
 
-		if(user.drop_item())
-				I.loc = src
-				holdingitems += I
-				src.updateUsrDialog()
-				return 0
+	if(!I.grind_requirements(src)) //Error messages should be in the objects' definitions
+		return
+
+	if(user.drop_item())
+		I.forceMove(src)
+		items[I] = TRUE
+		src.updateUsrDialog()
+		return 0
 
 /obj/machinery/reagentgrinder/attack_paw(mob/user)
 		return src.attack_hand(user)
@@ -165,7 +90,7 @@
 		var/dat = ""
 
 		if(!operating)
-				for (var/obj/item/O in holdingitems)
+				for (var/obj/item/O in items)
 						processing_chamber += "\A [O.name]<BR>"
 
 				if (!processing_chamber)
@@ -192,7 +117,7 @@
 				if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
 						dat += "<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>"
 						dat += "<A href='?src=\ref[src];action=juice'>Juice the reagents</a><BR><BR>"
-				if(holdingitems && holdingitems.len > 0)
+				if(items && items.len > 0)
 						dat += "<A href='?src=\ref[src];action=eject'>Eject the reagents</a><BR>"
 				if (beaker)
 						dat += "<A href='?src=\ref[src];action=detach'>Detach the beaker</a><BR>"
@@ -223,194 +148,84 @@
 			detach()
 
 /obj/machinery/reagentgrinder/proc/detach()
-
-		if (usr.stat != 0)
-				return
-		if (!beaker)
-				return
-		beaker.loc = src.loc
-		beaker = null
-		update_icon()
-		updateUsrDialog()
+	if (usr.stat != 0)
+		return
+	if (!beaker)
+		return
+	beaker.loc = src.loc
+	beaker = null
+	update_icon()
+	updateUsrDialog()
 
 /obj/machinery/reagentgrinder/proc/eject()
-
-		if (usr.stat != 0)
-				return
-		if (holdingitems && holdingitems.len == 0)
-				return
-
-		for(var/obj/item/O in holdingitems)
-				O.loc = src.loc
-				holdingitems -= O
-		holdingitems = list()
-		updateUsrDialog()
-
-/obj/machinery/reagentgrinder/proc/is_allowed(obj/item/weapon/reagent_containers/O)
-		for (var/i in blend_items)
-				if(istype(O, i))
-						return 1
-		return 0
-
-/obj/machinery/reagentgrinder/proc/get_allowed_by_id(obj/item/O)
-		for (var/i in blend_items)
-				if (istype(O, i))
-						return blend_items[i]
-
-/obj/machinery/reagentgrinder/proc/get_allowed_snack_by_id(obj/item/weapon/reagent_containers/food/snacks/O)
-		for(var/i in blend_items)
-				if(istype(O, i))
-						return blend_items[i]
-
-/obj/machinery/reagentgrinder/proc/get_allowed_juice_by_id(obj/item/weapon/reagent_containers/food/snacks/O)
-		for(var/i in juice_items)
-				if(istype(O, i))
-						return juice_items[i]
-
-/obj/machinery/reagentgrinder/proc/get_grownweapon_amount(obj/item/weapon/grown/O)
-		if (!istype(O) || !O.seed)
-				return 5
-		else if (O.seed.potency == -1)
-				return 5
-		else
-				return round(O.seed.potency)
-
-/obj/machinery/reagentgrinder/proc/get_juice_amount(obj/item/weapon/reagent_containers/food/snacks/grown/O)
-		if (!istype(O) || !O.seed)
-				return 5
-		else if (O.seed.potency == -1)
-				return 5
-		else
-				return round(5*sqrt(O.seed.potency))
+	if (usr.stat != 0)
+		return
+	if (items && items.len == 0)
+		return
+	for(var/obj/item/O in items)
+		O.loc = src.loc
+		items -= O
+	items = list()
+	updateUsrDialog()
 
 /obj/machinery/reagentgrinder/proc/remove_object(obj/item/O)
-		holdingitems -= O
+		items -= O
 		qdel(O)
 
 /obj/machinery/reagentgrinder/proc/juice()
-		power_change()
-		if(stat & (NOPOWER|BROKEN))
-				return
-		if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
-				return
-		playsound(src.loc, 'sound/machines/juicer.ogg', 20, 1)
-		var/offset = prob(50) ? -2 : 2
-		animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250) //start shaking
-		operating = 1
+	power_change()
+	if(!beaker || (beaker && (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)))
+		return
+	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+	var/offset = prob(50) ? -2 : 2
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250) //start shaking
+	operating = 1
+	updateUsrDialog()
+	spawn(60)
+		pixel_x = initial(pixel_x) //return to its spot after shaking
+		operating = 0
 		updateUsrDialog()
-		spawn(50)
-				pixel_x = initial(pixel_x) //return to its spot after shaking
-				operating = 0
-				updateUsrDialog()
+	for(var/obj/item/i in items)
+		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+			break
+		var/obj/item/I = i
+		if(I.juice_results)
+			juice_item(I)
 
-		//Snacks
-		for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-						break
-
-				var/allowed = get_allowed_juice_by_id(O)
-				if(isnull(allowed))
-						break
-
-				for (var/r_id in allowed)
-
-						var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-						var/amount = get_juice_amount(O)
-
-						beaker.reagents.add_reagent(r_id, min(amount, space))
-
-						if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-								break
-
-				remove_object(O)
+/obj/machinery/reagentgrinder/proc/juice_item(obj/item/I) //Juicing results can be found in respective object definitions
+	if(I.on_juice(src) == -1)
+		to_chat(usr, "<span class='danger'>[src] shorts out as it tries to juice up [I], and transfers it back to storage.</span>")
+		return
+	beaker.reagents.add_reagent_list(I.juice_results)
+	remove_object(I)
 
 /obj/machinery/reagentgrinder/proc/grind()
-
-		power_change()
-		if(stat & (NOPOWER|BROKEN))
-				return
-		if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
-				return
-		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
-		var/offset = prob(50) ? -2 : 2
-		animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250) //start shaking
-		operating = 1
+	power_change()
+	if(stat & (NOPOWER|BROKEN))
+		return
+	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
+		return
+	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+	var/offset = prob(50) ? -2 : 2
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 250) //start shaking
+	operating = 1
+	updateUsrDialog()
+	spawn(60)
+		pixel_x = initial(pixel_x) //return to its spot after shaking
+		operating = 0
 		updateUsrDialog()
-		spawn(60)
-				pixel_x = initial(pixel_x) //return to its spot after shaking
-				operating = 0
-				updateUsrDialog()
+	for(var/i in items)
+		if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+			break
+		var/obj/item/I = i
+		if(I.grind_results)
+			grind_item(i)
 
-		//Snacks and Plants
-		for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-						break
-
-				var/allowed = get_allowed_snack_by_id(O)
-				if(isnull(allowed))
-						break
-
-				for (var/r_id in allowed)
-
-						var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-						var/amount = allowed[r_id]
-						if(amount <= 0)
-								if(amount == 0)
-										if (O.reagents != null && O.reagents.has_reagent("nutriment"))
-												beaker.reagents.add_reagent(r_id, min(O.reagents.get_reagent_amount("nutriment"), space))
-												O.reagents.remove_reagent("nutriment", min(O.reagents.get_reagent_amount("nutriment"), space))
-								else
-										if (O.reagents != null && O.reagents.has_reagent("nutriment"))
-												beaker.reagents.add_reagent(r_id, min(round(O.reagents.get_reagent_amount("nutriment")*abs(amount)), space))
-												O.reagents.remove_reagent("nutriment", min(O.reagents.get_reagent_amount("nutriment"), space))
-
-						else
-								O.reagents.trans_id_to(beaker, r_id, min(amount, space))
-
-						if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-								break
-
-				if(O.reagents.reagent_list.len == 0)
-						remove_object(O)
-
-		//Sheets
-		for (var/obj/item/stack/sheet/O in holdingitems)
-				var/allowed = get_allowed_by_id(O)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-						break
-				for(var/i = 1; i <= round(O.amount, 1); i++)
-						for (var/r_id in allowed)
-								var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-								var/amount = allowed[r_id]
-								beaker.reagents.add_reagent(r_id,min(amount, space))
-								if (space < amount)
-										break
-						if (i == round(O.amount, 1))
-								remove_object(O)
-								break
-		//Plants
-		for (var/obj/item/weapon/grown/O in holdingitems)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-						break
-				var/allowed = get_allowed_by_id(O)
-				for (var/r_id in allowed)
-						var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
-						var/amount = allowed[r_id]
-						if (amount == 0)
-								if (O.reagents != null && O.reagents.has_reagent(r_id))
-										beaker.reagents.add_reagent(r_id,min(O.reagents.get_reagent_amount(r_id), space))
-						else
-								beaker.reagents.add_reagent(r_id,min(amount, space))
-
-						if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-								break
-				remove_object(O)
-
-		//Everything else - Transfers reagents from it into beaker
-		for (var/obj/item/weapon/reagent_containers/O in holdingitems)
-				if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-						break
-				var/amount = O.reagents.total_volume
-				O.reagents.trans_to(beaker, amount)
-				if(!O.reagents.total_volume)
-						remove_object(O)
+/obj/machinery/reagentgrinder/proc/grind_item(obj/item/I) //Grind results can be found in respective object definitions
+	if(I.on_grind(src) == -1) //Call on_grind() to change amount as needed, and stop grinding the item if it returns -1
+		to_chat(usr, "<span class='danger'>[src] shorts out as it tries to grind up [I], and transfers it back to storage.</span>")
+		return
+	beaker.reagents.add_reagent_list(I.grind_results)
+	if(I.reagents)
+		I.reagents.trans_to(beaker, I.reagents.total_volume)
+	remove_object(I)

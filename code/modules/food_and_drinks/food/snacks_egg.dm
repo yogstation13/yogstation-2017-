@@ -17,6 +17,7 @@
 	cooked_type = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	filling_color = "#F0E68C"
 	foodtype = MEAT
+	grind_results = list("eggyolk" = 0)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	if(!..()) //was it caught by a mob?

@@ -113,6 +113,7 @@ var/global/list/datum/stack_recipe/diamond_recipes = list ( \
 	sheettype = "uranium"
 	materials = list(MAT_URANIUM=MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/uranium
+	grind_results = list("uranium" = 20)
 
 var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	new/datum/stack_recipe("uranium door", /obj/structure/mineral_door/uranium, 10, one_per_turf = 1, on_floor = 1), \
@@ -140,10 +141,11 @@ var/global/list/datum/stack_recipe/uranium_recipes = list ( \
 	burntime = 5
 	materials = list(MAT_PLASMA=MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/plasma
+	grind_results = list("plasma" = 20)
 
 /obj/item/stack/sheet/mineral/plasma/fifty
 	amount = 50
-	
+
 var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	new/datum/stack_recipe("plasma door", /obj/structure/mineral_door/transparent/plasma, 10, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("plasma tile", /obj/item/stack/tile/mineral/plasma, 1, 4, 20), \
@@ -179,6 +181,7 @@ var/global/list/datum/stack_recipe/plasma_recipes = list ( \
 	sheettype = "gold"
 	materials = list(MAT_GOLD=MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/gold
+	grind_results = list("gold" = 20)
 
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	new/datum/stack_recipe("golden door", /obj/structure/mineral_door/gold, 10, one_per_turf = 1, on_floor = 1), \
@@ -207,6 +210,7 @@ var/global/list/datum/stack_recipe/gold_recipes = list ( \
 	sheettype = "silver"
 	materials = list(MAT_SILVER=MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/silver
+	grind_results = list("silver" = 20)
 
 var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	new/datum/stack_recipe("silver door", /obj/structure/mineral_door/silver, 10, one_per_turf = 1, on_floor = 1), \
@@ -235,6 +239,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "clown"
 	materials = list(MAT_BANANIUM=MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/bananium
+	grind_results = list("banana" = 20)
 
 var/global/list/datum/stack_recipe/clown_recipes = list ( \
 	new/datum/stack_recipe("bananium tile", /obj/item/stack/tile/mineral/bananium, 1, 4, 20), \

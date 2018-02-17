@@ -24,6 +24,7 @@
 	filling_color = "#FFFF00"
 	bitesize = 5
 	foodtype = FRUIT
+	juice_results = list("banana" = 0)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is aiming the [src.name] at themself! It looks like \he's trying to commit suicide.</span>")
@@ -93,7 +94,7 @@
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bluespace
 	mutatelist = list()
 	genes = list(/datum/plant_gene/trait/slip, /datum/plant_gene/trait/teleport)
-	reagents_add = list("singulo" = 0.4, "banana" = 0.2, "vitamin" = 0.08, "nutriment" = 0.04)
+	reagents_add = list("bluespace" = 0.2, "banana" = 0.1, "vitamin" = 0.08, "nutriment" = 0.04)
 	rarity = 30
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/bluespace

@@ -23,6 +23,7 @@
 	filling_color = "#F0E68C"
 	bitesize_mod = 2
 	foodtype = GRAIN
+	grind_results = list("flour" = 0)
 
 // Oat
 /obj/item/seeds/wheat/oat
@@ -43,6 +44,7 @@
 	filling_color = "#556B2F"
 	bitesize_mod = 2
 	foodtype = GRAIN
+	grind_results = list("flour" = 0)
 
 // Rice
 /obj/item/seeds/wheat/rice
@@ -64,6 +66,7 @@
 	filling_color = "#FAFAD2"
 	bitesize_mod = 2
 	foodtype = GRAIN
+	grind_results = list("rice" = 0)
 
 //Meatwheat - grows into synthetic meat
 /obj/item/seeds/wheat/meat
