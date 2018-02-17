@@ -319,6 +319,8 @@
 	for(var/mob/living/player in player_list)
 		if(istype(player, /mob/living/silicon))
 			continue
+		if(isdrone(player))
+			continue
 		if(player.mind)
 			if(player.stat != DEAD)
 				if(get_area(player) == A)
