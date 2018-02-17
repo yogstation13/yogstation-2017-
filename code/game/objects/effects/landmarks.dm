@@ -292,7 +292,7 @@
 	if(!template_name)
 		for(var/t in template_names)
 			if(!SSmapping.maint_room_templates[t])
-				world.log << "Maintenance room spawner placed at ([T.x], [T.y], [T.z]) has invalid ruin name of \"[t]\" in its list"
+				log_world("Maintenance room spawner placed at ([T.x], [T.y], [T.z]) has invalid ruin name of \"[t]\" in its list")
 				template_names -= t
 		template_name = safepick(template_names)
 	if(!template_name)
@@ -300,7 +300,7 @@
 	var/datum/map_template/template = SSmapping.maint_room_templates[template_name]
 	if(!template)
 		return FALSE
-	world.log << "Ruin \"[template_name]\" placed at ([T.x], [T.y], [T.z])"
+	log_world("Ruin \"[template_name]\" placed at ([T.x], [T.y], [T.z])")
 	template.load(T, centered = FALSE)
 	template.loaded++
 	return TRUE

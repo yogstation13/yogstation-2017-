@@ -131,6 +131,7 @@
 	var/time = (world.timeofday - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] seconds!"
 	to_chat(world, "<span class='boldannounce'>[msg]</span>")
+	log_world(msg)
 	return time
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.

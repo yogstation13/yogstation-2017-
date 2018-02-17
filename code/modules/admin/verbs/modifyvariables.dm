@@ -494,7 +494,7 @@ var/list/VVpixelmovement = list("step_x", "step_y", "bound_height", "bound_width
 		if (O.vv_edit_var(objectvar, L) == FALSE)
 			to_chat(src, "Your edit was rejected by the object.")
 			return
-	world.log << "### ListVarEdit by [src]: [(O ? O.type : "/list")] [objectvar]: [original_var]=[new_var]"
+	log_world("### ListVarEdit by [src]: [(O ? O.type : "/list")] [objectvar]: [original_var]=[new_var]")
 	log_admin("[key_name(src)] modified [original_name]'s [objectvar]: [original_var]=[new_var]")
 	message_admins("[key_name_admin(src)] modified [original_name]'s varlist [objectvar]: [original_var]=[new_var]")
 
