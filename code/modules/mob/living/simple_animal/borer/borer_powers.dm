@@ -49,7 +49,7 @@
 		return 0
 
 	if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
-		to_chat(src, "<span class='warning'>It would be unwise to enter this being.")
+		to_chat(src, "<span class='warning'>It would be unwise to enter this being."</span>)
 		return 0
 
 	if(isshadow(H))
