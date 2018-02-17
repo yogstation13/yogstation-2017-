@@ -7,7 +7,7 @@
 # NOTE: if the rank-name cannot be found in admin_ranks.txt, they will not be adminned! ~Carn #
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
-Kn0ss0s	=	Head Coder
+Nichlas0010	=	Head Coder
 Oisin100	=	Head Coder
 Slovenian	=	Council Member
 George99	=	Council Member
