@@ -48,7 +48,7 @@
 		to_chat(src, "<span class='warning'>This being has a strange presence, it would be unwise to enter their body.")
 		return 0
 
-	if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
+	if(H.mind && (H.mind in ticker.mode.head_revolutionaries))
 		to_chat(src, "<span class='warning'>It would be unwise to enter this being.</span>")
 		return 0
 
