@@ -1096,7 +1096,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 
 /datum/uplink_item/role_restricted/briefcasegun
 	name = "Briefcase Gun"
-	desc = "A gun concealed within a briefcase, used by her majesty's secret service"
+	desc = "A gun concealed within a briefcase, used by her majesty's secret service. Uses UZI-9mm ammo."
 	item = /obj/item/weapon/storage/briefcase/gun
 	restricted_roles = list("Lawyer")
 	cost = 12
