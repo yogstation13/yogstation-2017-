@@ -10,7 +10,7 @@
 	var/list/zombies = list()
 
 	for(var/mob/living/carbon/human/H in living_mob_list)
-		if(!H.client)
+		if(!H.mind || H.mind in ticker.mode.wizards)
 			continue
 		zombies += H
 
