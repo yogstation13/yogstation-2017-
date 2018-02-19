@@ -2,7 +2,7 @@
 	name = "Zombie Outbreak"
 	weight = 3
 	typepath = /datum/round_event/wizard/zombies/
-	max_occurrences = 3
+	max_occurrences = 1
 	earliest_start = 12000 // 20 minutes (Allow the crew to get ready)
 
 /datum/round_event/wizard/zombies/start()
