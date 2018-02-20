@@ -8,7 +8,7 @@
 	density = 1
 	layer = OPEN_DOOR_LAYER
 	power_channel = ENVIRON
-	
+
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
 	var/secondsElectrified = 0
@@ -67,7 +67,7 @@
 				if(world.time - mecha.occupant.last_bumped <= 10)
 					return
 				mecha.occupant.last_bumped = world.time
-			if(mecha.occupant && (src.allowed(mecha.occupant) || src.check_access_list(mecha.operation_req_access) || emergency == 1))
+			if(mecha.occupant && src.allowed(mecha.occupant) && (src.check_access_list(mecha.operation_req_access) || emergency == 1))
 				open()
 			else
 				do_animate("deny")
@@ -315,7 +315,7 @@ obj/machinery/door/proc/try_to_crowbar(obj/item/I, mob/user)
 		//add_blood doesn't work for borgs/xenos, but add_blood_floor does.
 		L.add_splatter_floor(location)
 		actionstaken += "\[[time_stamp()]\]crushed [L]/[L.ckey]"
-		
+
 	for(var/obj/mecha/M in get_turf(src))
 		M.take_damage(DOOR_CRUSH_DAMAGE)
 		actionstaken += "\[[time_stamp()]\]crushed [M]/[M.occupant.name]/[M.occupant.ckey]"
