@@ -376,7 +376,7 @@
 		item = "[VV_HTML_ENCODE(name)] = <span class='value'>null</span>"
 
 	else if (istext(value))
-		item = "[VV_HTML_ENCODE(name)] = <span class='value'>\"[VV_HTML_ENCODE(value)]\"</span>"
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>\"value\"</span>"
 
 	else if (isicon(value))
 		#ifdef VARSICON
