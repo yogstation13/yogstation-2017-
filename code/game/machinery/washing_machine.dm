@@ -153,6 +153,16 @@
 				desc = "The colors are a bit dodgy."
 				break
 
+obj/item/clothing/head/spookyghost/machine_wash(obj/machinery/washing_machine/WM)
+	if(WM.color_source)
+		var/wash_color = WM.color_source.item_color
+		for(var/T in typesof(/obj/item/clothing/head/spookyghost))
+			var/obj/item/clothing/head/spookyghost/SG = T
+			if(wash_color == initial(SG.item_color))
+				icon_state = initial(SG.icon_state)
+				item_color = wash_color
+				break
+
 /obj/item/clothing/head/soft/machine_wash(obj/machinery/washing_machine/WM)
 	if(WM.color_source)
 		var/wash_color = WM.color_source.item_color

@@ -432,3 +432,46 @@
 	desc = "Comes from the land down under!"
 	icon_state = "outback"
 	item_state = "outback"
+
+/obj/item/clothing/head/spookyghost
+	name = "bedsheet ghost"
+	desc = "this is obviously just a bedsheet."
+	icon_state = "sheetwhite"
+	item_color = "white"
+	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH
+	tint = 2
+	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire
+
+/obj/item/clothing/head/spookyghost/extraspooky
+	name = "spooky ghost"
+	desc = "this is obviously just a bedsheet, but maybe try it on?"
+	user_vars_to_edit = list("name" = "Spooky Ghost", "real_name" = "Spooky Ghost" , "incorporeal_move" = 1, "appearance_flags" = KEEP_TOGETHER|TILE_BOUND, "alpha" = 150)
+	alternate_worn_layer = ABOVE_BODY_FRONT_LAYER //so the bedsheet goes over everything but fire
+
+obj/item/clothing/head/spookyghost/blue
+	icon_state = "sheetblue"
+	item_color = "blue"
+
+obj/item/clothing/head/spookyghost/orange
+	icon_state = "sheetorange"
+	item_color = "orange"
+
+obj/item/clothing/head/spookyghost/red
+	icon_state = "sheetred"
+	item_color = "red"
+
+obj/item/clothing/head/spookyghost/purple
+	icon_state = "sheetpurple"
+	item_color = "purple"
+
+obj/item/clothing/head/spookyghost/green
+	icon_state = "sheetgreen"
+	item_color = "green"
+
+obj/item/clothing/head/spookyghost/yellow
+	icon_state = "sheetyellow"
+	item_color = "yellow"
+
+obj/item/clothing/head/spookyghost/rainbow
+	icon_state = "sheetrainbow"
+	item_color = "rainbow"
