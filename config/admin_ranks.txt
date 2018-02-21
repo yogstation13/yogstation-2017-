@@ -12,7 +12,7 @@
 # PLEASE NOTE: depending on config options, some abilities will be unavailable regardless if you have permission to use them!
 
 # KEYWORDS:
-# +ADMIN = general admin tools, verbs etc
+# +ADMIN = general admin tools, verbs etk
 # +FUN = events, other event-orientated actions. Access to the fun secrets in the secrets panel.
 # +BAN = the ability to ban, jobban and fullban
 # +STEALTH = the ability to stealthmin (make yourself appear with a fake name to everyone but other admins
