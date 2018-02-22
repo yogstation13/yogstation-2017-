@@ -1,6 +1,5 @@
 /datum/wires/radio
 	holder_type = /obj/item/device/radio
-	code/datums/wires/radio.dm
 
 /datum/wires/radio/New(atom/holder)
 	wires = list(

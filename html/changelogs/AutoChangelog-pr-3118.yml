@@ -1,0 +1,4 @@
+author: " Satan"
+delete-after: true 
+changes: 
+  - rscadd: "Our host is now able to be banned"
