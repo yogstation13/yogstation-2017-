@@ -8,7 +8,7 @@
 # NOTE: syntax was changed to allow hyphenation of ranknames, since spaces are stripped.      #
 ###############################################################################################
 AshCorr	=	Head Coder
-Oisin100	=	Head Coder
+Nichlas0010	=	Head Coder
 Slovenian	=	Council Member
 George99	=	Council Member
 Thee_Flame_Prince	=	Council Member
