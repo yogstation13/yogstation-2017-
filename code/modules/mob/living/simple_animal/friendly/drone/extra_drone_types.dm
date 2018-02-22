@@ -80,7 +80,7 @@
 	picked = TRUE
 	languages_spoken = RATVAR
 	languages_understood = HUMAN|RATVAR
-	pass_flags = PASSTABLE || PASSMOB
+	pass_flags = PASSTABLE | PASSMOB
 	health = 70
 	maxHealth = 70
 	density = TRUE
