@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors/mapgen_protected)
@@ -43,11 +43,6 @@
 /obj/structure/mineral_door/sandstone,
 /obj/structure/fans/tiny/invisible,
 /turf/open/floor/plasteel/airless/asteroid,
-/area/ruin/unpowered)
-"l" = (
-/obj/structure/mineral_door/sandstone,
-/obj/structure/fans/tiny/invisible,
-/turf/open/space,
 /area/ruin/unpowered)
 "m" = (
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion,

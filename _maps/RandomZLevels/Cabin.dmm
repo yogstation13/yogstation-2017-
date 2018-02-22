@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/closed/indestructible/rock/snow,
 /area/space)
@@ -877,16 +877,9 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowforest)
-"cZ" = (
-/turf/open/floor/plating/snowed/temperate,
-/area/awaymission/snowforest)
 "da" = (
 /obj/structure/chair,
 /turf/open/floor/plating/snowed,
-/area/awaymission/snowforest)
-"db" = (
-/obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/snowed/temperate,
 /area/awaymission/snowforest)
 "dc" = (
 /obj/structure/chair,

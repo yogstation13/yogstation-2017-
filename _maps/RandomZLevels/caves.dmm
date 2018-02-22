@@ -249,15 +249,6 @@
 /area/awaymission/BMPship{
 	name = "\improper BMP Asteroid Level 4"
 	})
-"aD" = (
-/obj/item/stack/sheet/runed_metal,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/BMPship{
-	name = "\improper BMP Asteroid Level 4"
-	})
 "aE" = (
 /obj/structure/cult/tome,
 /obj/item/stack/sheet/runed_metal{
@@ -398,14 +389,6 @@
 	})
 "aR" = (
 /obj/effect/forcefield/cult,
-/turf/open/floor/engine/cult{
-	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/BMPship{
-	name = "\improper BMP Asteroid Level 4"
-	})
-"aS" = (
 /turf/open/floor/engine/cult{
 	baseturf = /turf/open/floor/plating/lava/smooth;
 	initial_gas_mix = "n2=23;o2=14"
@@ -1252,13 +1235,6 @@
 "cI" = (
 /turf/open/floor/plating{
 	baseturf = /turf/open/floor/plating/lava/smooth;
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/BMPship{
-	name = "\improper BMP Asteroid Level 2"
-	})
-"cJ" = (
-/turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/BMPship{
@@ -55773,7 +55749,7 @@ ax
 aV
 aV
 ax
-aD
+aA
 ao
 ax
 ax
@@ -57547,7 +57523,7 @@ ad
 ax
 ay
 ao
-aD
+aA
 ax
 ao
 ao
@@ -58573,7 +58549,7 @@ ai
 ai
 ai
 ax
-aD
+aA
 ax
 ax
 ax

@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -9100,14 +9100,6 @@
 	icon_state = "white"
 	},
 /area/medical/medbay)
-"sF" = (
-/obj/machinery/telecomms/receiver/preset_left/ministation,
-/turf/open/floor/bluegrid{
-	icon_state = "dark";
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
-/area/tcommsat/computer)
 "sG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -14539,14 +14531,6 @@
 	initial_gas_mix = "n2=100;TEMP=80"
 	},
 /area/tcommsat/computer)
-"EW" = (
-/obj/machinery/telecomms/server/presets/common/ministation,
-/turf/open/floor/bluegrid{
-	icon_state = "dark";
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
-/area/tcommsat/computer)
 "EX" = (
 /obj/machinery/message_server,
 /turf/open/floor/bluegrid{
@@ -15388,14 +15372,6 @@
 /area/shuttle/syndicate)
 "GP" = (
 /obj/machinery/telecomms/processor/preset_one,
-/turf/open/floor/bluegrid{
-	icon_state = "dark";
-	name = "Mainframe Floor";
-	initial_gas_mix = "n2=100;TEMP=80"
-	},
-/area/tcommsat/computer)
-"GQ" = (
-/obj/machinery/telecomms/broadcaster/preset_left/ministation,
 /turf/open/floor/bluegrid{
 	icon_state = "dark";
 	name = "Mainframe Floor";

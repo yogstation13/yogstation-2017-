@@ -993,9 +993,6 @@
 	dir = 2
 	},
 /area/awaymission/centcomAway/hangar)
-"cR" = (
-/turf/open/floor/plating,
-/area/awaymission/centcomAway/hangar)
 "cS" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -2611,20 +2608,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/centcomAway/courtroom)
-"hu" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/centcomAway/hangar)
 "hv" = (
 /turf/open/floor/plating,
 /obj/structure/shuttle/engine/propulsion/burst{
@@ -3067,12 +3050,6 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/plasteel{
 	icon_state = "dark"
-	},
-/area/awaymission/centcomAway/hangar)
-"iG" = (
-/turf/open/floor/plasteel{
-	icon_state = "vault";
-	dir = 5
 	},
 /area/awaymission/centcomAway/hangar)
 "iH" = (
@@ -3934,10 +3911,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/carpet,
 /area/awaymission/centcomAway/general)
-"kP" = (
-/obj/structure/table/wood,
-/turf/open/floor/carpet,
-/area/awaymission/centcomAway/general)
 "kQ" = (
 /obj/structure/table/wood,
 /obj/item/clothing/tie/medal/gold,
@@ -4749,12 +4722,6 @@
 	icon_state = "grimy"
 	},
 /area/awaymission/centcomAway/general)
-"mV" = (
-/turf/open/floor/plasteel{
-	icon_state = "redyellowfull";
-	dir = 5
-	},
-/area/awaymission/centcomAway/thunderdome)
 "mW" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
