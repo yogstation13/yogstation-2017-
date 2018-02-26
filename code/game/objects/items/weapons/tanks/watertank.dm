@@ -447,7 +447,7 @@
 	update_filling()
 
 //Operator backpack spray
-/obj/item/weapon/watertank/operator
+/obj/item/weapon/watertank/op
 	name = "backpack water tank"
 	desc = "A New Russian backpack spray for systematic cleansing of carbon lifeforms."
 	icon_state = "waterbackpackjani"
@@ -456,7 +456,7 @@
 	volume = 2000
 	slowdown = 0
 
-/obj/item/weapon/watertank/operator/New()
+/obj/item/weapon/watertank/op/New()
 	..()
 	reagents.add_reagent("mutagen",350)
 	reagents.add_reagent("napalm",125)
@@ -466,7 +466,7 @@
 	reagents.add_reagent("plasma",250)
 	reagents.add_reagent("condensedcapsaicin",500)
 
-/obj/item/weapon/reagent_containers/spray/mister/operator
+/obj/item/weapon/reagent_containers/spray/mister/op
 	name = "janitor spray nozzle"
 	desc = "A mister nozzle attached to several extended water tanks. It suspiciously has a compressor in the system and is labelled entirely in New Cyrillic."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
@@ -476,5 +476,5 @@
 	amount_per_transfer_from_this = 100
 	possible_transfer_amounts = list(75,100,150)
 
-/obj/item/weapon/watertank/operator/make_noz()
-	return new /obj/item/weapon/reagent_containers/spray/mister/operator(src)
+/obj/item/weapon/watertank/op/make_noz()
+	return new /obj/item/weapon/reagent_containers/spray/mister/op(src)
