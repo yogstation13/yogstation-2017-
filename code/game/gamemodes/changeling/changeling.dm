@@ -126,10 +126,14 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 			escape_objective_possible = FALSE
 			break
 
-	var/datum/objective/absorb/absorb_objective = new
+	/*var/datum/objective/absorb/absorb_objective = new
 	absorb_objective.owner = changeling
 	absorb_objective.gen_amount_goal(6, 8)
-	changeling.objectives += absorb_objective
+	changeling.objectives += absorb_objective*/
+
+	var/datum/objective/absorb/absorb_someone = new
+	absorb_someone.owner = changeling
+	changeling.objectives += absorb_someone
 
 	if(prob(60))
 		var/datum/objective/steal/steal_objective = new
@@ -362,7 +366,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 		return
 	return 1
 
-/datum/changeling/proc/create_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0)
+/datum/changeling/proc/create_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0, absorbed = FALSE)
 	var/datum/changelingprofile/prof = new
 
 	H.dna.real_name = H.real_name //Set this again, just to be sure that it's properly set.
@@ -371,6 +375,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	prof.dna = new_dna
 	prof.name = H.real_name
 	prof.protected = protect
+	prof.absorbed = absorbed
 
 	prof.underwear = H.underwear
 	prof.undershirt = H.undershirt
@@ -400,8 +405,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	profilecount++
 	stored_profiles += prof
 
-/datum/changeling/proc/add_new_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0)
-	var/datum/changelingprofile/prof = create_profile(H, protect)
+/datum/changeling/proc/add_new_profile(mob/living/carbon/human/H, mob/living/carbon/human/user, protect = 0, absorbed = FALSE)
+	var/datum/changelingprofile/prof = create_profile(H, user, protect, absorbed)
 	add_profile(prof)
 	return prof
 
@@ -479,6 +484,8 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	var/list/item_color_list = list()
 	var/list/item_state_list = list()
 
+	var/absorbed = FALSE
+
 	var/underwear
 	var/undershirt
 	var/socks
@@ -491,6 +498,7 @@ var/list/slot2type = list("head" = /obj/item/clothing/head/changeling, "wear_mas
 	newprofile.name = name
 	newprofile.protected = protected
 	newprofile.dna = new dna.type
+	newprofile.absorbed = absorbed
 	dna.copy_dna(newprofile.dna)
 	newprofile.name_list = name_list.Copy()
 	newprofile.appearance_list = appearance_list.Copy()
