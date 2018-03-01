@@ -48,6 +48,7 @@
 	var/Tickcomp = 0
 	var/allow_holidays = 0				//toggles whether holiday-specific content should be used
 	var/admin_who_blocked = 0	// log OOC channel
+	var/tick_limit_mc_init = TICK_LIMIT_MC_INIT_DEFAULT	//SSinitialization throttling
 
 	var/hostedby = null
 	var/respawn = 1
@@ -366,6 +367,8 @@
 					var/ticklag = text2num(value)
 					if(ticklag > 0)
 						fps = 10 / ticklag
+				if("tick_limit_mc_init")
+					tick_limit_mc_init = text2num(value)
 				if("fps")
 					fps = text2num(value)
 				if("tickcomp")

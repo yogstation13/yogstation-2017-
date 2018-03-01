@@ -314,7 +314,7 @@
 	O.rename_self("ai")
 	. = O
 	qdel(src)
-	return O
+	return 0
 
 
 //human -> robot
