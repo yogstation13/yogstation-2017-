@@ -270,7 +270,7 @@
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
 				user.dir = i
 				if(i == 8 && flip)
-					user.emote("flip")
+					user.SpinAnimation(7,1)
 				sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/proc/impale(mob/living/user)
