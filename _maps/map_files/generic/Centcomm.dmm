@@ -5382,7 +5382,7 @@
 /turf/open/floor/plasteel/bot,
 /area/centcom/control)
 "ry" = (
-/obj/item/robot_parts/l_arm,
+/obj/item/bodypart/l_arm/robot,
 /turf/open/floor/plasteel/bot,
 /area/centcom/control)
 "rz" = (
@@ -5525,7 +5525,7 @@
 	},
 /area/wizard_station)
 "rZ" = (
-/obj/item/robot_parts/chest,
+/obj/item/bodypart/chest/robot,
 /turf/open/floor/plasteel/bot,
 /area/centcom/control)
 "sa" = (

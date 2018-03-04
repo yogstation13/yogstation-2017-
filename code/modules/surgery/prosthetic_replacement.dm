@@ -16,16 +16,13 @@
 
 /datum/surgery_step/add_prosthetic
 	name = "add prosthetic"
-	implements = list(/obj/item/robot_parts = 100, /obj/item/bodypart = 100)
+	implements = list(/obj/item/bodypart = 100)
 	time = 32
 	var/organ_rejection_dam = 0
 
 /datum/surgery_step/add_prosthetic/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/tool_body_zone
-	if(istype(tool, /obj/item/robot_parts))
-		var/obj/item/robot_parts/RP = tool
-		tool_body_zone = RP.body_zone
-	else if(istype(tool, /obj/item/bodypart))
+	if(istype(tool, /obj/item/bodypart))
 		var/obj/item/bodypart/L = tool
 		if(L.status != ORGAN_ROBOTIC)
 			organ_rejection_dam = 10
@@ -40,13 +37,8 @@
 
 /datum/surgery_step/add_prosthetic/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/bodypart/L
-	if(istype(tool, /obj/item/robot_parts))
-		L = newBodyPart(target_zone, 1, 1)
-		user.drop_item()
-		qdel(tool)
-	else
-		L = tool
-		user.drop_item()
+	L = tool
+	user.drop_item()
 	L.attach_limb(target)
 	if(organ_rejection_dam)
 		target.adjustToxLoss(organ_rejection_dam)

@@ -49,7 +49,7 @@
 	specflags = list(EYECOLOR,HAIR,FACEHAIR,LIPS) //Else the shits over with the amputations and make you invisible
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	use_skintones = 0
-	mutant_organs = list(/obj/item/organ/tongue/fly)
+	mutant_organs = list(/obj/item/organ/tongue/fly,/obj/item/organ/liver/fly,/obj/item/organ/stomach/fly)
 	specflags = list()
 	roundstart = 0
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
@@ -238,7 +238,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Unafly"
 	id = "unafly"
 	say_mod = "buzzes"
-	mutant_organs = list(/obj/item/organ/tongue/fly)
+	mutant_organs = list(/obj/item/organ/tongue/fly,/obj/item/organ/liver/fly,/obj/item/organ/stomach/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	specflags = list(EYECOLOR,LIPS,PROTECTEDEYES)
 	roundstart = 0
@@ -483,7 +483,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	specflags = list(CONSUMEPOWER,EASYIMPLANTS)
 	roundstart = 0
 	sexes = 0
-	mutant_organs = list(/obj/item/organ/tongue/fly)
+	mutant_organs = list(/obj/item/organ/tongue/fly,/obj/item/organ/liver/fly,/obj/item/organ/stomach/fly)
 
 /datum/species/android/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
@@ -533,7 +533,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/last_light_level = 0
 	var/last_light_message = -STATUS_MESSAGE_COOLDOWN
 	var/last_plantbgone_message = -STATUS_MESSAGE_COOLDOWN
-	disliked_food = MEAT | DAIRY //he's vegan
+	disliked_food = MEAT | DAIRY //he's vegan. dude what the fuck, a real plant only eats humans because humans eat fucking plants
 	liked_food = VEGETABLES | FRUIT
 	toxic_food = TOXIC | RAW
 
@@ -822,7 +822,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	id = "flytosian"
 	specflags = list(THRALLAPPTITUDE, PLANT,LIPS)
 	say_mod = "buzzes"
-	mutant_organs = list(/obj/item/organ/tongue/fly)
+	mutant_organs = list(/obj/item/organ/tongue/fly,/obj/item/organ/liver/fly,/obj/item/organ/stomach/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	roundstart = 0
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
@@ -1140,7 +1140,7 @@ GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 	name = "Human?"
 	id = "manfly"
 	say_mod = "buzzes"
-	mutant_organs = list(/obj/item/organ/tongue/fly)
+	mutant_organs = list(/obj/item/organ/tongue/fly,/obj/item/organ/liver/fly,/obj/item/organ/stomach/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
 	toxic_food = TOXIC
 

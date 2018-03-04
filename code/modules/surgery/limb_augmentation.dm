@@ -16,16 +16,16 @@
 
 /datum/surgery_step/add_limb
 	name = "replace limb"
-	implements = list(/obj/item/robot_parts = 100)
+	implements = list(/obj/item/bodypart = 100)
 	time = 32
-	var/obj/item/bodypart/L = null // L because "limb"
+	var/obj/item/bodypart/L = null // L because "limb" //Why not BD because of bodypart?
 
 
 
 /datum/surgery_step/add_limb/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	L = surgery.organ
 	if(L)
-		user.visible_message("[user] begins to augment [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to augment [target]'s [parse_zone(user.zone_selected)]...</span>")
+		user.visible_message("[user] begins to replace [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You begin to replace [target]'s [parse_zone(user.zone_selected)]...</span>")
 	else
 		user.visible_message("[user] looks for [target]'s [parse_zone(user.zone_selected)].", "<span class ='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
 
@@ -44,12 +44,16 @@
 
 /datum/surgery_step/add_limb/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(L)
-		if(ishuman(target))
+		if(ishuman(target) && istype(tool, /obj/item/bodypart))
+			var/obj/item/bodypart/BD = tool
+			if(BD.status != ORGAN_ROBOTIC)
+				user << "<span class='warning'>The [BD.name] needs to be robotic.</span>"
+				return
 			var/mob/living/carbon/human/H = target
 			user.visible_message("[user] successfully augments [target]'s [parse_zone(target_zone)]!", "<span class='notice'>You successfully augment [target]'s [parse_zone(target_zone)].</span>")
-			L.change_bodypart_status(ORGAN_ROBOTIC, 1)
-			user.drop_item()
-			qdel(tool)
+			user.drop_item(tool)
+			L.drop_limb(2)
+			BD.attach_limb(H)
 			H.update_damage_overlays(0)
 			H.updatehealth()
 			add_logs(user, target, "augmented", addition="by giving him new [parse_zone(target_zone)] INTENT: [uppertext(user.a_intent)]")

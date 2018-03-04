@@ -1,4 +1,3 @@
-
 /obj/item/bodypart
 	name = "limb"
 	desc = "why is it detached..."
@@ -26,6 +25,7 @@
 	var/species_color = ""
 	var/mutation_color = ""
 	var/no_update = 0
+	var/limb_icon  //manual override
 
 	var/px_x = 0
 	var/px_y = 0
@@ -252,7 +252,14 @@
 	var/image_dir
 	if(dropped)
 		image_dir = SOUTH
-	if(status == ORGAN_ORGANIC)
+	if(limb_icon)
+		if(should_draw_gender)
+			I = image("icon"=limb_icon, "icon_state"="[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+		else
+			I = image("icon"=limb_icon, "icon_state"="[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+		world << "[I.icon] [limb_icon] [src]"
+		return I
+	else if(status == ORGAN_ORGANIC)
 		if(should_draw_greyscale)
 			if(should_draw_gender)
 				I = image("icon"='icons/mob/human_parts_greyscale.dmi', "icon_state"="[species_id]_[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
@@ -265,9 +272,9 @@
 				I = image("icon"='icons/mob/human_parts.dmi', "icon_state"="[species_id]_[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 	else
 		if(should_draw_gender)
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			I = image("icon"=icon, "icon_state"="[body_zone]_[icon_gender]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		else
-			I = image("icon"='icons/mob/augments.dmi', "icon_state"="[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
+			I = image("icon"=icon, "icon_state"="[body_zone]_s", "layer"=-BODYPARTS_LAYER, "dir"=image_dir)
 		return I
 
 

@@ -1,70 +1,16 @@
-/obj/item/robot_parts
-	name = "robot parts"
-	icon = 'icons/obj/robot_parts.dmi'
-	force = 4
-	throwforce = 4
-	item_state = "buildpipe"
-	icon_state = "blank"
-	flags = CONDUCT
-	slot_flags = SLOT_BELT
-	var/body_zone
-
-/obj/item/robot_parts/l_arm
-	name = "cyborg left arm"
-	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb = list("slapped", "punched")
-	icon_state = "l_arm"
-	body_zone = "l_arm"
-
-/obj/item/robot_parts/r_arm
-	name = "cyborg right arm"
-	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb = list("slapped", "punched")
-	icon_state = "r_arm"
-	body_zone = "r_arm"
-
-/obj/item/robot_parts/l_leg
-	name = "cyborg left leg"
-	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb = list("kicked", "stomped")
-	icon_state = "l_leg"
-	body_zone = "l_leg"
-
-/obj/item/robot_parts/r_leg
-	name = "cyborg right leg"
-	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
-	attack_verb = list("kicked", "stomped")
-	icon_state = "r_leg"
-	body_zone = "r_leg"
-
-/obj/item/robot_parts/chest
-	name = "cyborg torso"
-	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
-	icon_state = "chest"
-	body_zone = "chest"
-	var/wired = 0
-	var/obj/item/weapon/stock_parts/cell/cell = null
-
-/obj/item/robot_parts/head
-	name = "cyborg head"
-	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
-	icon_state = "head"
-	body_zone = "head"
-	var/obj/item/device/assembly/flash/handheld/flash1 = null
-	var/obj/item/device/assembly/flash/handheld/flash2 = null
-
 /obj/item/robot_parts/robot_suit
 	name = "cyborg endoskeleton"
 	desc = "A complex metal backbone with standard limb sockets and pseudomuscle anchors."
 	attack_verb = list("borged", "stated the laws of", "robotized")
 	hitsound = 'sound/voice/liveagain.ogg'
+	icon = 'icons/obj/robot_parts.dmi'
 	icon_state = "robo_suit"
-	var/obj/item/robot_parts/l_arm/l_arm = null
-	var/obj/item/robot_parts/r_arm/r_arm = null
-	var/obj/item/robot_parts/l_leg/l_leg = null
-	var/obj/item/robot_parts/r_leg/r_leg = null
-	var/obj/item/robot_parts/chest/chest = null
-	var/obj/item/robot_parts/head/head = null
+	var/obj/item/bodypart/l_arm/robot/l_arm = null
+	var/obj/item/bodypart/r_arm/robot/r_arm = null
+	var/obj/item/bodypart/l_leg/robot/l_leg = null
+	var/obj/item/bodypart/r_leg/robot/r_leg = null
+	var/obj/item/bodypart/chest/robot/chest = null
+	var/obj/item/bodypart/head/robot/head = null
 
 	var/created_name = ""
 	var/mob/living/silicon/ai/forced_ai
@@ -116,7 +62,7 @@
 			else
 				to_chat(user, "<span class='warning'>You need one sheet of metal to start building ED-209!</span>")
 				return
-	else if(istype(W, /obj/item/robot_parts/l_leg))
+	else if(istype(W, /obj/item/bodypart/l_leg/robot))
 		if(src.l_leg)
 			return
 		if(!user.unEquip(W))
@@ -125,7 +71,7 @@
 		src.l_leg = W
 		src.updateicon()
 
-	else if(istype(W, /obj/item/robot_parts/r_leg))
+	else if(istype(W, /obj/item/bodypart/r_leg/robot))
 		if(src.r_leg)
 			return
 		if(!user.unEquip(W))
@@ -134,7 +80,7 @@
 		src.r_leg = W
 		src.updateicon()
 
-	else if(istype(W, /obj/item/robot_parts/l_arm))
+	else if(istype(W, /obj/item/bodypart/l_arm/robot))
 		if(src.l_arm)
 			return
 		if(!user.unEquip(W))
@@ -143,7 +89,7 @@
 		src.l_arm = W
 		src.updateicon()
 
-	else if(istype(W, /obj/item/robot_parts/r_arm))
+	else if(istype(W, /obj/item/bodypart/r_arm/robot))
 		if(src.r_arm)
 			return
 		if(!user.unEquip(W))
@@ -152,7 +98,7 @@
 		src.r_arm = W
 		src.updateicon()
 
-	else if(istype(W, /obj/item/robot_parts/chest))
+	else if(istype(W, /obj/item/bodypart/chest/robot))
 		if(src.chest)
 			return
 		if(W:wired && W:cell)
@@ -166,7 +112,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need to attach a cell to it first!</span>")
 
-	else if(istype(W, /obj/item/robot_parts/head))
+	else if(istype(W, /obj/item/bodypart/head/robot))
 		if(src.head)
 			return
 		if(W:flash2 && W:flash1)
@@ -336,49 +282,3 @@
 	add_fingerprint(usr)
 	Interact(usr)
 	return
-
-/obj/item/robot_parts/chest/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/stock_parts/cell))
-		if(src.cell)
-			to_chat(user, "<span class='warning'>You have already inserted a cell!</span>")
-			return
-		else
-			if(!user.unEquip(W))
-				return
-			W.loc = src
-			src.cell = W
-			to_chat(user, "<span class='notice'>You insert the cell.</span>")
-	else if(istype(W, /obj/item/stack/cable_coil))
-		if(src.wired)
-			to_chat(user, "<span class='warning'>You have already inserted wire!</span>")
-			return
-		var/obj/item/stack/cable_coil/coil = W
-		if (coil.use(1))
-			src.wired = 1
-			to_chat(user, "<span class='notice'>You insert the wire.</span>")
-		else
-			to_chat(user, "<span class='warning'>You need one length of coil to wire it!</span>")
-	else
-		return ..()
-
-/obj/item/robot_parts/head/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/device/assembly/flash/handheld))
-		var/obj/item/device/assembly/flash/handheld/F = W
-		if(src.flash1 && src.flash2)
-			to_chat(user, "<span class='warning'>You have already inserted the eyes!</span>")
-			return
-		else if(F.crit_fail)
-			to_chat(user, "<span class='warning'>You can't use a broken flash!</span>")
-			return
-		else
-			if(!user.unEquip(W))
-				return
-			F.loc = src
-			if(src.flash1)
-				src.flash2 = F
-			else
-				src.flash1 = F
-			to_chat(user, "<span class='notice'>You insert the flash into the eye socket.</span>")
-	else
-		return ..()
-

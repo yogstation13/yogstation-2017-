@@ -132,7 +132,9 @@ DIAGNOSTIC ANALYZER
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.heart_attack && H.stat != DEAD)
-			to_chat(user, "<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>")
+			to_chat(user,"<span class='danger'>Subject suffering from heart attack: Apply defibrillator immediately!</span>")
+		if(H.undergoing_liver_failure() && H.stat != DEAD)
+			to_chat(user,"<span class='danger'>Subject suffering from liver failure: apply corazone and begin a liver transplant immediately!</span>")
 		if(cyberman_network)
 			if(ticker.mode.is_cyberman(M.mind))
 				to_chat(user, "<span class='danger'>Unknown harmful implants detected in patient's brain - recommend removal via brain surgery.</span>")
@@ -170,6 +172,13 @@ DIAGNOSTIC ANALYZER
 		var/mob/living/carbon/C = M
 		if(C.borer)
 			to_chat(user, "<span class='danger'>Foreign organism detected in subject's cranium. Recommended treatment: Dosage of sucrose solution and removal of object via surgery.</span>")
+
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/ldamage = H.return_liver_damage()
+		if(ldamage > 10)
+			user << "\t<span class='alert'>[ldamage > 45 ? "severe" : "minor"] liver damage detected.</span>"
+
 
 	// Organ damage report
 	if(istype(M, /mob/living/carbon/human) && mode == 1)

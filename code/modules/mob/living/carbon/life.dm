@@ -11,6 +11,9 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
+	if(stat != DEAD)
+		handle_liver()
+
 	if(..())
 		. = 1
 
@@ -276,11 +279,6 @@
 			else
 				radiation = Clamp(radiation, 0, 100)
 
-/mob/living/carbon/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src)
-
-
 /mob/living/carbon/handle_stomach()
 	set waitfor = 0
 	for(var/mob/living/M in stomach_contents)
@@ -381,9 +379,6 @@
 		spawn handle_hallucinations()
 		hallucination = max(hallucination-2,0)
 
-	if(disgust)
-		adjust_disgust(-1)
-
 /mob/living/carbon/proc/regenStamina()
 	if(sleeping)
 		adjustStaminaLoss(-10)
@@ -405,3 +400,44 @@
 		if(360.15 to INFINITY) //360.15 is 310.15 + 50, the temperature where you start to feel effects.
 			//We totally need a sweat system cause it totally makes sense...~
 			bodytemperature += min((body_temperature_difference / BODYTEMP_AUTORECOVERY_DIVISOR), -BODYTEMP_AUTORECOVERY_MINIMUM)	//We're dealing with negative numbers
+
+/////////
+//LIVER//
+/////////
+
+/mob/living/carbon/proc/handle_liver()
+	var/obj/item/organ/liver/liver = getorganslot("liver")
+	if(liver)
+		if(liver.damage >= 100)
+			liver.failing = TRUE
+			liver_failure()
+		else
+			liver.failing = FALSE
+
+	if(((!(NOLIVER in dna.species.specflags)) && (!liver)))
+		liver_failure()
+
+/mob/living/carbon/proc/undergoing_liver_failure()
+	var/obj/item/organ/liver/liver = getorganslot("liver")
+	if(liver && liver.failing)
+		return TRUE
+
+/mob/living/carbon/proc/return_liver_damage()
+	var/obj/item/organ/liver/liver = getorganslot("liver")
+	if(liver)
+		return liver.damage
+
+/mob/living/carbon/proc/applyLiverDamage(var/d)
+	var/obj/item/organ/liver/L = getorganslot("liver")
+	if(L)
+		L.damage += d
+
+/mob/living/carbon/proc/liver_failure()
+	if(reagents.get_reagent_amount("corazone"))//corazone is processed here an not in the liver because a failing liver can't metabolize reagents
+		reagents.remove_reagent("corazone", 1) //corazone slowly deletes itself.
+		return
+	adjustToxLoss(8)
+	if(prob(30))
+		src << "<span class='notice'>You feel confused and nauseous...</span>" //actual symptoms of liver failure
+
+

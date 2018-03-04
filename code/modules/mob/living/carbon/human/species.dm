@@ -179,6 +179,8 @@
 	var/obj/item/organ/heart/heart = C.getorganslot("heart")
 	var/obj/item/organ/lungs/lungs = C.getorganslot("lungs")
 	var/obj/item/organ/appendix/appendix = C.getorganslot("appendix")
+	var/obj/item/organ/liver/liver = C.getorganslot("liver")
+	var/obj/item/organ/stomach/stomach = C.getorganslot("stomach")
 
 	if((NOBLOOD in specflags) && heart)
 		heart.Remove(C, 1, 1)
@@ -198,6 +200,16 @@
 	else if((!(NOHUNGER in specflags)) && (!appendix))
 		appendix = new()
 		appendix.Insert(C, 1)
+	if((NOSTOMACH in specflags) && stomach)
+		stomach.Remove(C,1, 1)
+	else if((!(NOSTOMACH in specflags)) && (!stomach))
+		stomach = new()
+		stomach.Insert(C, 1)
+	if((NOLIVER in specflags) && liver)
+		liver.Remove(C,1, 1)
+	else if((!(NOLIVER in specflags)) && (!liver))
+		liver = new()
+		liver.Insert(C, 1)
 
 	for(var/path in mutant_organs)
 		var/obj/item/organ/I = new path()
@@ -759,7 +771,7 @@
 	//LIFE//
 	////////
 
-/datum/species/proc/handle_chemicals_in_body(mob/living/carbon/human/H)
+/datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(H.disabilities & FAT)
@@ -822,6 +834,39 @@
 			H.throw_alert("nutrition", /obj/screen/alert/hungry)
 		else
 			H.throw_alert("nutrition", /obj/screen/alert/starving)
+
+/datum/species/proc/handle_disgust(mob/living/carbon/human/H)
+	if(H.disgust)
+		var/pukeprob = 5 + 0.1 * H.disgust
+		if(H.disgust >= DISGUST_LEVEL_GROSS)
+			if(prob(25))
+				H.stuttering += 1
+				H.confused += 2
+			if(prob(10) && !H.stat)
+				H << "<span class='warning'>You feel kind of iffy...</span>"
+			H.jitteriness = max(H.jitteriness - 3, 0)
+		if(H.disgust >= DISGUST_LEVEL_VERYGROSS)
+			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
+				H.confused += 2.5
+				H.stuttering += 1
+				H.vomit(10, 0, 1, 0, 1, 0)
+			H.Dizzy(5)
+		if(H.disgust >= DISGUST_LEVEL_DISGUSTED)
+			if(prob(50))
+				H.blur_eyes(3) //We need to add more shit down here
+
+		H.adjust_disgust(-1)
+
+	switch(H.disgust)
+		if(0 to DISGUST_LEVEL_GROSS)
+			H.clear_alert("disgust")
+		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
+			H.throw_alert("disgust", /obj/screen/alert/gross)
+		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
+			H.throw_alert("disgust", /obj/screen/alert/verygross)
+		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
+			H.throw_alert("disgust", /obj/screen/alert/disgusted)
+
 
 
 /datum/species/proc/update_sight(mob/living/carbon/human/H)

@@ -259,13 +259,6 @@
 
 	return min(1,thermal_protection)
 
-
-/mob/living/carbon/human/handle_chemicals_in_body()
-	if(reagents)
-		reagents.metabolize(src, can_overdose=1)
-	dna.species.handle_chemicals_in_body(src)
-
-
 /mob/living/carbon/human/handle_random_events()
 	//Puke if toxloss is too high
 	if(!stat)
@@ -398,26 +391,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 		if(drunkenness >= 101)
 			adjustToxLoss(4) //Let's be honest you shouldn't be alive by now
-
-	if(disgust)
-		var/pukeprob = 0.2 * disgust
-		if(disgust >= DISGUST_LEVEL_GROSS)
-			if(prob(25))
-				stuttering += 1
-				confused += 2
-			if(prob(10) && !stat)
-				to_chat(src, "<span class='warning'>You feel kind of iffy...</span>")
-			jitteriness = max(jitteriness - 3, 0)
-		if(disgust >= DISGUST_LEVEL_VERYGROSS)
-			if(prob(pukeprob)) //iT hAndLeS mOrE ThaN PukInG
-				confused += 2.5
-				stuttering += 1
-				vomit(10, 0, 1, 0, 1, 0, 4)
-			Dizzy(5)
-		if(disgust >= DISGUST_LEVEL_DISGUSTED)
-			if(prob(50))
-				blur_eyes(3) //We need to add more shit down here
-
 
 /mob/living/carbon/human/regenStamina()
 	if(dna && dna.species)
