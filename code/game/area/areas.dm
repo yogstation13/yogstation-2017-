@@ -140,7 +140,7 @@ var/list/motion_alert_listeners = list()
 			for(var/obj/machinery/door/firedoor/D in RA)
 				if(!D.welded)
 					if(D.operating)
-						D.nextstate = FD_CLOSED
+						D.nextstate = CLOSED
 					else if(!D.density)
 						spawn(0)
 							D.close()
