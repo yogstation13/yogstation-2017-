@@ -1080,21 +1080,12 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	exclude_modes = list(/datum/game_mode/nuclear)
 	//restricted_roles = list("Assistant")
 
-/datum/uplink_item/role_restricted/slipping_carp
-	name = "Slipping Carp Scroll"
-	desc = "A scroll that teaches you the secrets of slipping carp, allowing you to deflect projectiles and deal massive melee damage, \
-			but only while holding your mop."
-	item = /obj/item/weapon/martial_arts_scroll/slipping_carp_scroll
-	restricted_roles = list("Janitor")
-	cost = 19 //they need 1 remaining to buy syndicate soap
-
 /datum/uplink_item/role_restricted/bikehornsword
 	name = "Energy Sword Bikehorn"
 	desc = "A bikehorn with a built-in energy sword. Activate through Alt-Click."
 	item = /obj/item/weapon/melee/energy/sword/bikehorn
 	restricted_roles = list("Clown")
 	cost = 9
-
 
 // Pointless
 /datum/uplink_item/badass
