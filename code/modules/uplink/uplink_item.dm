@@ -1086,7 +1086,8 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 			but only while holding your mop."
 	item = /obj/item/weapon/martial_arts_scroll/slipping_carp_scroll
 	restricted_roles = list("Janitor")
-	cost = 19 //they need 1 remaining to buy syndicate soap */
+	cost = 19 //they need 1 remaining to buy syndicate soap 
+*/
 
 /datum/uplink_item/role_restricted/bikehornsword
 	name = "Energy Sword Bikehorn"
