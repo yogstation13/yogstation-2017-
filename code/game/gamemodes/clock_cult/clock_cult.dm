@@ -94,10 +94,10 @@ This file's folder contains:
 	var/roundstart_player_count
 
 /datum/game_mode/clockwork_cult/announce()
-	world << "<b>The game mode is: Clockwork Cult!</b>"
-	world << "<b><span class='brass'>Ratvar</span>, the Clockwork Justiciar, has formed a covenant of Enlightened aboard [station_name()].</b>"
-	world << "<b><span class='brass'>Enlightened</span>: Serve your master so that his influence might grow.</b>"
-	world << "<b><span class='boldannounce'>Crew</span>: Prevent the servants of Ratvar from taking over the station.</b>"
+	to_chat(world, "<b>The game mode is: Clockwork Cult!</b>")
+	to_chat(world, "<b><span class='brass'>Ratvar</span>, the Clockwork Justiciar, has formed a covenant of Enlightened aboard [station_name()].</b>")
+	to_chat(world, "<b><span class='brass'>Enlightened</span>: Serve your master so that his influence might grow.</b>")
+	to_chat(world, "<b><span class='boldannounce'>Crew</span>: Prevent the servants of Ratvar from taking over the station.</b>")
 
 /datum/game_mode/clockwork_cult/pre_setup()
 	if(config.protect_roles_from_antagonist)
@@ -124,7 +124,6 @@ This file's folder contains:
 	return 1
 
 /datum/game_mode/clockwork_cult/post_setup()
-	forge_clock_objectives()
 	for(var/S in servants_to_serve)
 		var/datum/mind/servant = S
 		log_game("[servant.key] was made an initial servant of Ratvar")
@@ -136,21 +135,8 @@ This file's folder contains:
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/forge_clock_objectives() //Determine what objective that Ratvar's servants will fulfill
-	var/list/possible_objectives = list(CLOCKCULT_ESCAPE, CLOCKCULT_GATEWAY)
-	var/silicons_possible = FALSE
-	for(var/mob/living/silicon/S in living_mob_list)
-		silicons_possible = TRUE
-	if(silicons_possible)
-		possible_objectives += CLOCKCULT_SILICONS
-	clockwork_objective = pick(possible_objectives)
-	switch(clockwork_objective)
-		if(CLOCKCULT_ESCAPE)
-			required_escapees = round(max(1, roundstart_player_count / 3)) //33% of the player count must be cultists
-			clockwork_explanation = "Ensure that [required_escapees] servants of Ratvar escape from [station_name()]."
-		if(CLOCKCULT_GATEWAY)
-			clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."
-		if(CLOCKCULT_SILICONS)
-			clockwork_explanation = "Ensure that all active silicon-based lifeforms on [station_name()] are servants of Ratvar by the end of the shift."
+	clockwork_objective = CLOCKCULT_GATEWAY
+	clockwork_explanation = "Construct a Gateway to the Celestial Derelict and free Ratvar."
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/greet_servant(mob/M) //Description of their role
@@ -159,7 +145,7 @@ This file's folder contains:
 	var/greeting_text = "<br><b><span class='large_brass'>You are a servant of Ratvar, the Clockwork Justiciar.</span>\n\
 	Rusting eternally in the Celestial Derelict, Ratvar has formed a covenant of mortals, with you as one of its members. As one of the Justiciar's servants, you are to work to the best of your \
 	ability to assist in completion of His agenda. You do not know the specifics of how to do so, but luckily you have a vessel to help you learn.</b>"
-	M << greeting_text
+	to_chat(M, greeting_text)
 	return 1
 
 /datum/game_mode/proc/equip_servant(mob/living/L) //Grants a clockwork slab to the mob, with one of each component
@@ -174,17 +160,16 @@ This file's folder contains:
 			slot = "In your [B.name]"
 	if(slot == "At your feet")
 		new/obj/item/clockwork/slab/starter(get_turf(L))
-	L << "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your \
-	tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
-	and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>"
-	L << "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>"
+	to_chat(L, "<b>[slot] is a link to the halls of Reebe and your master. You may use it to perform many tasks, but also become oriented with the workings of Ratvar and how to best complete your tasks. This clockwork slab will be instrumental in your triumph. Remember: you can speak discreetly with your fellow servants by using the <span class='brass'>Hierophant Network</span> action button, \
+	and you can find a concise tutorial by using the slab in-hand and selecting Recollection.</b>")
+	to_chat(L, "<i>Alternatively, check out the wiki page at </i><b>https://tgstation13.org/wiki/Clockwork_Cult</b><i>, which contains additional information.</i>")
 	return 1
 
 /datum/game_mode/clockwork_cult/proc/present_tasks(mob/living/L) //Memorizes and displays the clockwork cult's objective
 	if(!L || !istype(L) || !L.mind)
 		return 0
 	var/datum/mind/M = L.mind
-	M.current << "<b>This is Ratvar's will:</b> [clockwork_explanation]"
+	to_chat(M.current, "<b>This is Ratvar's will:</b> [clockwork_explanation]")
 	M.memory += "<b>Ratvar's will:</b> [clockwork_explanation]<br>"
 	return 1
 
@@ -248,7 +233,7 @@ This file's folder contains:
 		text += "<b>Ratvar's servants were:</b>"
 		for(var/datum/mind/M in servants_of_ratvar)
 			text += printplayer(M)
-	world << text
+	to_chat(world, text)
 
 /datum/game_mode/proc/update_servant_icons_added(datum/mind/M)
 	var/datum/atom_hud/antag/A = huds[ANTAG_HUD_CLOCKWORK]

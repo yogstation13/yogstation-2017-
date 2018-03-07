@@ -118,6 +118,7 @@ var/list/wire_colors = list( // http://www.crockford.com/wrrrld/color.html
 	"yellowgreen",
 )
 var/list/wire_color_directory = list()
+var/list/wire_name_directory = list()
 
 /proc/is_wire_tool(obj/item/I)
 	if(istype(I, /obj/item/device/multitool))
@@ -142,6 +143,7 @@ var/list/wire_color_directory = list()
 	var/list/colors = list() // Dictionary of colors to wire.
 	var/list/assemblies = list() // List of attached assemblies.
 	var/randomize = 0 // If every instance of these wires should be random.
+	var/proper_name = "Unknown" // The display name for the wire set shown in station blueprints. Not used if randomize is true or it's an item NT wouldn't know about (Explosives/Nuke)
 
 /datum/wires/New(atom/holder)
 	..()
@@ -156,6 +158,7 @@ var/list/wire_color_directory = list()
 		if(!wire_color_directory[holder_type])
 			randomize()
 			wire_color_directory[holder_type] = colors
+			wire_name_directory[holder_type] = proper_name
 		else
 			colors = wire_color_directory[holder_type]
 
@@ -166,7 +169,7 @@ var/list/wire_color_directory = list()
 
 /datum/wires/proc/add_duds(duds)
 	while(duds)
-		var/dud = "dud[--duds]"
+		var/dud = WIRE_DUD_PREFIX + "[--duds]"
 		if(dud in wires)
 			continue
 		wires += dud
@@ -213,6 +216,13 @@ var/list/wire_color_directory = list()
 	else
 		cut_wires += wire
 		on_cut(wire, mend = FALSE)
+
+/datum/wires/proc/is_dud(wire)
+	return dd_hasprefix(wire, WIRE_DUD_PREFIX)
+
+/datum/wires/proc/is_dud_color(color)
+	return is_dud(get_wire(color))
+
 
 /datum/wires/proc/cut_color(color)
 	cut(get_wire(color))
@@ -288,16 +298,28 @@ var/list/wire_color_directory = list()
 							datum/tgui/master_ui = null, datum/ui_state/state = physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "wires", "[holder.name] wires", 350, 150 + wires.len * 30, master_ui, state)
+		ui = new(user, src, ui_key, "wires", "[holder.name] wires", 450, 150 + wires.len * 30, master_ui, state)
 		ui.open()
 
 /datum/wires/ui_data(mob/user)
 	var/list/data = list()
 	var/list/payload = list()
+	var/reveal_wires = FALSE
+
+	// Admin ghost can see a purpose of each wire.
+	if(IsAdminGhost(user))
+		reveal_wires = TRUE
+
+	if(issilicon(user) && !randomize) //!randomize because if not then cyborgs are going to be able to read things like syndiebombs.
+		reveal_wires = TRUE
+
+	// Station blueprints do that too, but only if the wires are not randomized.
+	else if(user.is_holding_item_of_type(/obj/item/areaeditor/blueprints) && !randomize)
+		reveal_wires = TRUE
 	for(var/color in colors)
 		payload.Add(list(list(
 			"color" = color,
-			"wire" = (IsAdminGhost(user) ? get_wire(color) : null),
+			"wire" = ((reveal_wires && !is_dud_color(color)) ? get_wire(color) : null),
 			"cut" = is_color_cut(color),
 			"attached" = is_attached(color)
 		)))
@@ -318,14 +340,14 @@ var/list/wire_color_directory = list()
 				cut_color(target_wire)
 				. = TRUE
 			else
-				L << "<span class='warning'>You need wirecutters!</span>"
+				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
 			if(istype(I, /obj/item/device/multitool) || IsAdminGhost(usr))
 				playsound(holder, 'sound/weapons/empty.ogg', 20, 1)
 				pulse_color(target_wire)
 				. = TRUE
 			else
-				L << "<span class='warning'>You need a multitool!</span>"
+				to_chat(L, "<span class='warning'>You need a multitool!</span>")
 		if("attach")
 			if(is_attached(target_wire))
 				var/obj/item/O = detach_assembly(target_wire)
@@ -341,4 +363,4 @@ var/list/wire_color_directory = list()
 						attach_assembly(target_wire, A)
 						. = TRUE
 					else
-						L << "<span class='warning'>You need an attachable assembly!</span>"
+						to_chat(L, "<span class='warning'>You need an attachable assembly!</span>")

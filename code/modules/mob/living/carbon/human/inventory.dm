@@ -106,7 +106,7 @@
 			s_store = I
 			update_inv_s_store()
 		else
-			src << "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>"
+			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
 
 /mob/living/carbon/human/unEquip(obj/item/I)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
@@ -179,7 +179,7 @@
 		internal = null
 	if(C.flags_inv & HIDEEYES)
 		update_inv_glasses()
-	sec_hud_set_security_status()
+	update_face_dependant_huds()
 	..()
 
 /mob/living/carbon/human/head_update(obj/item/I, forced)
@@ -189,7 +189,7 @@
 		update_inv_glasses()
 	if(I.flags_inv & HIDEEARS || forced)
 		update_body()
-	sec_hud_set_security_status()
+	update_face_dependant_huds()
 	..()
 
 

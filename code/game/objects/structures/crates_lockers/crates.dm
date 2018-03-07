@@ -42,7 +42,7 @@
 	..()
 
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
-	user << "<span class='notice'>You tear the manifest off of the crate.</span>"
+	to_chat(user, "<span class='notice'>You tear the manifest off of the crate.</span>")
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
 
 	manifest.loc = loc
@@ -98,6 +98,17 @@
 	new /obj/item/weapon/reagent_containers/blood/lizard(src)
 	for(var/i in 1 to 3)
 		new /obj/item/weapon/reagent_containers/blood/random(src)
+
+/obj/structure/closet/crate/freezer/xeno
+	name = "freezer"
+	desc = "It smells... funky."
+
+/obj/structure/closet/crate/freezer/xeno/New()
+	. = ..()
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/spider(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno(src)
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."

@@ -157,7 +157,7 @@
 	if(issilicon(crosser))
 		return
 	if(prob(severity) && istype(crosser))
-		crosser << "<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>"
+		to_chat(crosser, "<span class='alert'>You accidently touch the vine and feel a strange sensation.</span>")
 		crosser.adjustToxLoss(5)
 
 /datum/spacevine_mutation/toxicity/on_eat(obj/effect/spacevine/holder, mob/living/eater)
@@ -289,13 +289,13 @@
 	if(prob(severity) && istype(crosser))
 		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
-		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
+		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 /datum/spacevine_mutation/thorns/on_hit(obj/effect/spacevine/holder, mob/living/hitter)
 	if(prob(severity) && istype(hitter))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
-		M << "<span class='alert'>You cut yourself on the thorny vines.</span>"
+		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 /datum/spacevine_mutation/woodening
 	name = "hardened"
@@ -359,7 +359,7 @@
 		if(!master.vines.len)
 			var/obj/item/seeds/kudzu/KZ = new(loc)
 			KZ.mutations |= mutations
-			KZ.potency = min(100, master.mutativness * 10)
+			KZ.potency = min(100, master.mutativeness * 10)
 			KZ.production = (master.spread_cap / initial(master.spread_cap)) * 50
 	mutations = list()
 	SetOpacity(0)
@@ -444,18 +444,18 @@
 	var/spread_multiplier = 5
 	var/spread_cap = 30
 	var/list/mutations_list = list()
-	var/mutativness = 1
+	var/mutativeness = 1
 
-/obj/effect/spacevine_controller/New(loc, list/muts, mttv, spreading)
+/obj/effect/spacevine_controller/New(loc, list/muts, potency, production)
 	spawn_spacevine_piece(loc, , muts)
 	START_PROCESSING(SSobj, src)
 	init_subtypes(/datum/spacevine_mutation/, mutations_list)
-	if(mttv != null)
-		mutativness = mttv / 10
-	if(spreading != null)
-		spread_cap *= spreading / 50
-		spread_multiplier /= spreading / 50
-
+	if(potency != null)
+		mutativeness = potency / 10
+	if(production != null)
+		spread_cap *= production / 5
+		spread_multiplier /= production / 5
+		..()
 /obj/effect/spacevine_controller/ex_act() //only killing all vines will end this suffering
 	return
 
@@ -480,7 +480,7 @@
 		SV.mutations |= parent.mutations
 		SV.color = parent.color
 		SV.desc = parent.desc
-		if(prob(mutativness))
+		if(prob(mutativeness))
 			SV.mutations |= pick(mutations_list)
 			var/datum/spacevine_mutation/randmut = pick(SV.mutations)
 			SV.color = randmut.hue
@@ -553,8 +553,8 @@
 	for(var/datum/spacevine_mutation/SM in mutations)
 		SM.on_buckle(src, V)
 	if((V.stat != DEAD) && (V.buckled != src)) //not dead or captured
-		V << "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>"
-		buckle_mob(V)
+		to_chat(V, "<span class='danger'>The vines [pick("wind", "tangle", "tighten")] around you!</span>")
+		buckle_mob(V, TRUE)
 
 /obj/effect/spacevine/proc/spread()
 	var/direction = pick(cardinal)

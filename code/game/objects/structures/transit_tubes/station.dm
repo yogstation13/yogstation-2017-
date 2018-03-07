@@ -65,7 +65,7 @@
 				var/mob/living/GM = user.pulling
 				if(user.grab_state >= GRAB_AGGRESSIVE)
 					if(GM.buckled || GM.has_buckled_mobs())
-						user << "<span class='warning'>[GM] is attached to something!</span>"
+						to_chat(user, "<span class='warning'>[GM] is attached to something!</span>")
 						return
 					for(var/obj/structure/transit_tube_pod/pod in loc)
 						pod.visible_message("<span class='warning'>[user] starts putting [GM] into the [pod]!</span>")
@@ -100,7 +100,7 @@
 	if(istype(W, /obj/item/weapon/crowbar))
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(pod.contents)
-				user << "<span class='warning'>Empty the pod first!</span>"
+				to_chat(user, "<span class='warning'>Empty the pod first!</span>")
 				return
 			user.visible_message("[user] removes the [pod].", "<span class='notice'>You remove the [pod].</span>")
 			var/obj/structure/c_transit_tube_pod/R = new/obj/structure/c_transit_tube_pod(src.loc)
@@ -153,7 +153,12 @@
 		open_animation()
 		sleep(OPEN_DURATION + 2)
 		pod_moving = 0
-		pod.mix_air()
+		if(!qdeleted(pod))
+			var/datum/gas_mixture/floor_mixture = loc.return_air()
+			floor_mixture.archive()
+			pod.air_contents.archive()
+			pod.air_contents.share(floor_mixture, 1) //mix the pod's gas mixture with the tile it's on
+			air_update_turf()
 
 // Tube station directions are simply 90 to either side of
 //  the exit.

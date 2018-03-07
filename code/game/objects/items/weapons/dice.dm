@@ -37,6 +37,7 @@
 /obj/item/weapon/dice/New()
 	result = rand(1, sides)
 	update_icon()
+	..()
 
 /obj/item/weapon/dice/d1
 	name = "d1"
@@ -114,6 +115,7 @@
 	diceroll(user)
 
 /obj/item/weapon/dice/proc/diceroll(mob/user)
+	playsound(loc, 'sound/effects/die_roll.ogg', 50, 1, -1)
 	result = rand(1, sides)
 	var/comment = ""
 	if(sides == 20 && result == 20)
@@ -136,7 +138,7 @@
 	if(istype(H) && !H.shoes)
 		if(PIERCEIMMUNE in H.dna.species.specflags)
 			return 0
-		H << "<span class='userdanger'>You step on the D4!</span>"
+		to_chat(H, "<span class='userdanger'>You step on the D4!</span>")
 		H.apply_damage(4,BRUTE,(pick("l_leg", "r_leg")))
 		H.Weaken(3)
 

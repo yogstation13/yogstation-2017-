@@ -13,7 +13,7 @@ var/datum/subsystem/minimap/SSminimap
 	NEW_SS_GLOBAL(SSminimap)
 
 /datum/subsystem/minimap/Initialize(timeofday)
-	var/hash = md5(file2text("_maps/[MAP_PATH]/[MAP_FILE]"))
+	var/hash = md5(SSmapping.config.GetFullMapPath())
 	if(config.generate_minimaps)
 		if(hash == trim(file2text(hash_path())))
 			for(var/z in z_levels)	//We have these files cached, let's register them
@@ -25,19 +25,19 @@ var/datum/subsystem/minimap/SSminimap
 		fdel(hash_path())
 		text2file(hash, hash_path())
 	else
-		world << "<span class='boldannounce'>Minimap generation disabled. Loading from cache...</span>"
+		to_chat(world, "<span class='boldannounce'>Minimap generation disabled. Loading from cache...</span>")
 		var/fileloc = 0
 		if(check_files(0))	//Let's first check if we have maps cached in the data folder. NOTE: This will override the backup files even if this map is older.
 			world.log << "cache"
 			if(hash != trim(file2text(hash_path())))
-				world << "<span class='boldannounce'>Loaded cached minimap is outdated. There may be minor discrepancies in layout.</span>"	//Disclaimer against players saying map is wrong.
+				to_chat(world, "<span class='boldannounce'>Loaded cached minimap is outdated. There may be minor discrepancies in layout.</span>"	)
 			fileloc = 0
 		else
 			if(!check_files(1))
-				world << "<span class='boldannounce'>Failed to load backup minimap file. Aborting.</span>"	//We couldn't find something. Bail to prevent issues with null files
+				to_chat(world, "<span class='boldannounce'>Failed to load backup minimap file. Aborting.</span>"	)
 				return
 			fileloc = 1	//No map image cached with the current map, and we have a backup. Let's fall back to it.
-			world << "<span class='boldannounce'>No cached minimaps detected. Backup files loaded.</span>"
+			to_chat(world, "<span class='boldannounce'>No cached minimaps detected. Backup files loaded.</span>")
 		for(var/z in z_levels)
 			register_asset("minimap_[z].png", fcopy_rsc(map_path(z,fileloc)))
 	..()
@@ -46,22 +46,22 @@ var/datum/subsystem/minimap/SSminimap
 	for(var/z in z_levels)
 		if(!fexists(file(map_path(z,backup))))	//Let's make sure we have a file for this map
 			if(backup)
-				world.log << "Failed to find backup file for map [MAP_NAME] on zlevel [z]."
+				world.log << "Failed to find backup file for map [SSmapping.config.map_name] on zlevel [z]."
 			return FALSE
 	return TRUE
 
 
 /datum/subsystem/minimap/proc/hash_path(backup)
 	if(backup)
-		return "icons/minimaps/[MAP_NAME].md5"
+		return "icons/minimaps/[SSmapping.config.map_name].md5"
 	else
-		return "data/minimaps/[MAP_NAME].md5"
+		return "data/minimaps/[SSmapping.config.map_name].md5"
 
 /datum/subsystem/minimap/proc/map_path(z,backup)
 	if(backup)
-		return "icons/minimaps/[MAP_NAME]_[z].png"
+		return "icons/minimaps/[SSmapping.config.map_name]_[z].png"
 	else
-		return "data/minimaps/[MAP_NAME]_[z].png"
+		return "data/minimaps/[SSmapping.config.map_name]_[z].png"
 
 /datum/subsystem/minimap/proc/send(client/client)
 	for(var/z in z_levels)

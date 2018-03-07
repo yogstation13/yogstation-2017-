@@ -19,10 +19,10 @@
 		hijack_objective.owner = H.mind
 		H.mind.objectives += hijack_objective
 
-		H << "<B>You are the traitor.</B>"
+		to_chat(H, "<B>You are the traitor.</B>")
 		var/obj_count = 1
 		for(var/datum/objective/OBJ in H.mind.objectives)
-			H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
+			to_chat(H, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
 			obj_count++
 
 		for (var/obj/item/I in H)
@@ -41,9 +41,7 @@
 		W.icon_state = "centcom"
 		W.access = get_all_accesses()
 		W.access += get_all_centcom_access()
-		W.assignment = "Highlander"
-		W.registered_name = H.real_name
-		W.update_label(H.real_name)
+		W.update_label(H.real_name, "Highlander")
 		H.equip_to_slot_or_del(W, slot_wear_id)
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ONE!</span>")
@@ -66,10 +64,10 @@
 		hijack_objective.owner = H.mind
 		H.mind.objectives += hijack_objective
 
-		H << "<B>You are the multiverse summoner. Activate your blade to summon copies of yourself from another universe to fight by your side.</B>"
+		to_chat(H, "<B>You are the multiverse summoner. Activate your blade to summon copies of yourself from another universe to fight by your side.</B>")
 		var/obj_count = 1
 		for(var/datum/objective/OBJ in H.mind.objectives)
-			H << "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]"
+			to_chat(H, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
 			obj_count++
 
 		var/obj/item/slot_item_ID = H.get_item_by_slot(slot_wear_id)
@@ -84,9 +82,7 @@
 		W.icon_state = "centcom"
 		W.access = get_all_accesses()
 		W.access += get_all_centcom_access()
-		W.assignment = "Multiverse Summoner"
-		W.registered_name = H.real_name
-		W.update_label(H.real_name)
+		W.update_label(H.real_name, "Multiverse Summoner")
 		H.equip_to_slot_or_del(W, slot_wear_id)
 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used THERE CAN BE ONLY ME!</span>")

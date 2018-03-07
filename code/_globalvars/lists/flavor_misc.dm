@@ -37,6 +37,8 @@ var/global/list/r_wings_list = list()
 var/global/list/ghost_forms_with_directions_list = list("ghost") //stores the ghost forms that support directional sprites
 var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the ghost forms that support hair and other such things
 
+var/global/list/security_depts_prefs = list("random", "none", "engineering", "supply", "medical", "science")
+
 	//Backpacks
 #define GBACKPACK "Grey Backpack"
 #define GSATCHEL "Grey Satchel"
@@ -46,6 +48,13 @@ var/global/list/ghost_forms_with_accessories_list = list("ghost") //stores the g
 #define DSATCHEL "Department Satchel"
 #define DDUFFLEBAG "Department Dufflebag"
 var/global/list/backbaglist = list(DBACKPACK, DSATCHEL, DDUFFLEBAG, GBACKPACK, GSATCHEL, GDUFFLEBAG, LSATCHEL)
+
+	//uplink spawn loc
+#define UPLINK_PDA "PDA"
+#define UPLINK_RADIO "Radio"
+#define UPLINK_PEN "Pen"
+var/global/list/uplink_spawn_loc_list = list(UPLINK_PDA, UPLINK_RADIO, UPLINK_PEN)
+
 	//Female Uniforms
 var/global/list/female_clothing_icons = list()
 

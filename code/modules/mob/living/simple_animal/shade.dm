@@ -23,7 +23,7 @@
 	speed = -1
 	stop_automated_movement = 1
 	faction = list("cult")
-	status_flags = CANPUSH
+	status_flags = list(CANPUSH)
 	flying = 1
 	loot = list(/obj/item/weapon/ectoplasm)
 	del_on_death = 1
@@ -50,7 +50,7 @@
 			M.visible_message("<span class='danger'>[src] heals \the <b>[M]</b>.</span>", \
 					   "<span class='cult'>You heal <b>[M]</b>, leaving <b>[M]</b> at <b>[health]/[maxHealth]</b> health.</span>")
 		else
-			src << "<span class='cult'>You cannot heal <b>[M]</b>, as it is unharmed!</span>"
+			to_chat(src, "<span class='cult'>You cannot heal <b>[M]</b>, as it is unharmed!</span>")
 	else if(src != M)
 		..()
 
@@ -64,7 +64,7 @@
 /mob/living/simple_animal/shade/examine(mob/user)
 	. = ..()
 	if((iscultist(user) || iswizard(user)) && (!src.key || !src.client))
-		user << "<span class='danger'>You can also tell that they've lost all conscious awareness and have become as engaging as a blank wall.</span>"
+		to_chat(user, "<span class='danger'>You can also tell that they've lost all conscious awareness and have become as engaging as a blank wall.</span>")
 
 /mob/living/simple_animal/shade/proc/set_affiliation(var/_affiliation)
 	if(_affiliation)

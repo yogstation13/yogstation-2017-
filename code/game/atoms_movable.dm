@@ -14,6 +14,10 @@
 	var/verb_exclaim = "exclaims"
 	var/verb_yell = "yells"
 	var/inertia_dir = 0
+	var/atom/inertia_last_loc
+	var/inertia_moving = 0
+	var/inertia_next_move = 0
+	var/inertia_move_delay = 5
 	var/pass_flags = 0
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	var/list/mobs_in_contents // This contains all the client mobs within this container
@@ -72,16 +76,14 @@
 
 	last_move = direct
 
-	spawn(5)	// Causes space drifting. /tg/station has no concept of speed, we just use 5
-		if(loc && direct && last_move == direct)
-			if(loc == newloc) //Remove this check and people can accelerate. Not opening that can of worms just yet.
-				newtonian_move(last_move)
-
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct)) //movement failed due to buckled mob(s)
 		. = 0
 
 //Called after a successful Move(). By this point, we've already moved
 /atom/movable/proc/Moved(atom/OldLoc, Dir)
+	if(!inertia_moving)
+		inertia_next_move = world.time + inertia_move_delay
+		newtonian_move(Dir)
 	update_parallax_contents()
 	return 1
 
@@ -173,11 +175,15 @@
 
 	if(pulledby)
 		return 1
+		
+	if(throwing)
+		return 1
 
 	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
 		return 1
 
 	return 0
+
 
 /atom/movable/proc/newtonian_move(direction) //Only moves the object if it's under no gravity
 
@@ -189,9 +195,9 @@
 	if(!direction)
 		return 1
 
-	var/old_dir = dir
-	. = step(src, direction)
-	dir = old_dir
+	inertia_last_loc = loc
+	SSspacedrift.processing[src] = src
+	return 1
 
 /atom/movable/proc/checkpass(passflag)
 	return pass_flags&passflag
@@ -288,6 +294,9 @@
 
 	//done throwing, either because it hit something or it finished moving
 	throwing = 0
+	var/turf/T = get_turf(src)
+	if(T)
+		T.Entered(src)
 	if(!hit)
 		for(var/atom/A in get_turf(src)) //looking for our target on the turf we land on.
 			if(A == target)
@@ -296,6 +305,7 @@
 				return 1
 
 		throw_impact(get_turf(src))  // we haven't hit something yet and we still must, let's hit the ground.
+	newtonian_move(init_dir)
 	return 1
 
 /atom/movable/proc/prethrow_at(var/target) // If an item is thrown by a mob, but it's still currently held.
@@ -442,3 +452,8 @@
 	// And animate the attack!
 	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
 	animate(I, alpha = 175, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3, easing = QUAD_EASING)
+
+/atom/movable/vv_get_dropdown()
+	. = ..()
+	. -= "Jump to"
+	.["Follow"] = "?_src_=holder;adminplayerobservefollow=\ref[src]"

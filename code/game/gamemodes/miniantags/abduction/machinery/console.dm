@@ -35,7 +35,7 @@
 	if(..())
 		return
 	if(!isabductor(user))
-		user << "<span class='warning'>You start mashing alien buttons at random!</span>"
+		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
 		if(do_after(user,100, target = src))
 			TeleporterSend()
 		return
@@ -138,7 +138,7 @@
 		temp = disguises[i]
 		tempname = temp.name
 		entries["[tempname]"] = disguises[i]
-	var/entry_name = input( "Choose Disguise", "Disguise") in entries
+	var/entry_name = input( "Choose Disguise", "Disguise") as anything in entries
 	var/datum/icon_snapshot/chosen = entries[entry_name]
 	if(chosen && (remote || in_range(usr,src)))
 		vest.SetDisguise(chosen)
@@ -146,15 +146,15 @@
 
 /obj/machinery/abductor/console/proc/SetDroppoint(turf/open/location,user)
 	if(!istype(location))
-		user << "<span class='warning'>That place is not safe for the specimen.</span>"
+		to_chat(user, "<span class='warning'>That place is not safe for the specimen.</span>")
 		return
 
 	if(pad)
 		pad.teleport_target = location
-		user << "<span class='notice'>Location marked as test subject release point.</span>"
+		to_chat(user, "<span class='notice'>Location marked as test subject release point.</span>")
 
 
-/obj/machinery/abductor/console/proc/Initialize()
+/obj/machinery/abductor/console/proc/Setup()
 
 	for(var/obj/machinery/abductor/pad/p in machines)
 		if(p.team == team)
@@ -188,12 +188,12 @@
 /obj/machinery/abductor/console/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/device/abductor/gizmo))
 		var/obj/item/device/abductor/gizmo/G = O
-		user << "<span class='notice'>You link the tool to the console.</span>"
+		to_chat(user, "<span class='notice'>You link the tool to the console.</span>")
 		gizmo = G
 		G.console = src
 	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest))
 		var/obj/item/clothing/suit/armor/abductor/vest/V = O
-		user << "<span class='notice'>You link the vest to the console.</span>"
+		to_chat(user, "<span class='notice'>You link the vest to the console.</span>")
 		vest = V
 	else
 		return ..()

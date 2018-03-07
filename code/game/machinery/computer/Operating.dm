@@ -32,10 +32,8 @@
 
 
 
-/obj/machinery/computer/operating/New()
-	..()
-	if(ticker)
-		find_table()
+/obj/machinery/computer/operating/Initialize()
+	find_table()
 
 /obj/machinery/computer/operating/erase_data()
 	implants = null
@@ -67,9 +65,6 @@
 	implants += /obj/item/weapon/implant/mindshield
 	implants += /obj/item/weapon/implant/tracking
 	implants += /obj/item/weapon/implant/chem
-
-/obj/machinery/computer/operating/initialize()
-	find_table()
 
 /obj/machinery/computer/operating/proc/find_table()
 	for(var/dir in cardinal)
@@ -308,7 +303,7 @@
 				W.loc = src
 				src.cube = W
 				src.cube.loc = W.loc
-				user << "<span class='notice'>You insert [W] into [src].</span>"
+				to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
 				src.updateUsrDialog()
 				return
 
@@ -318,7 +313,7 @@
 					return ..()
 				W.loc = src
 				src.case = W
-				user << "<span class='notice'>You insert [W] into [src].</span>"
+				to_chat(user, "<span class='notice'>You insert [W] into [src].</span>")
 				src.updateUsrDialog()
 				return
 

@@ -22,7 +22,7 @@
 	power_environ = 0
 	power_equip = 0
 	power_light = 0
-	ambientsounds = list('sound/ambience/ambimine.ogg')
+	ambientsounds = list('sound/ambience/ambimine.ogg','sound/ambience/ambimine2.ogg')
 
 
 /area/lavaland/surface/outdoors
@@ -30,4 +30,5 @@
 	outdoors = 1
 
 /area/lavaland/surface/outdoors/mapgen_protected
+	icon_state = "mapgen_protect"
 	mapgen_protected = 1

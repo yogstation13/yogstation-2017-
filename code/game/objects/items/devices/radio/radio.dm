@@ -54,8 +54,6 @@
 		wires.cut(WIRE_TX) // OH GOD WHY
 	secure_radio_connections = new
 	..()
-	if(SSradio)
-		initialize()
 
 /obj/item/device/radio/proc/recalculateChannels()
 	channels = list()
@@ -105,7 +103,8 @@
 	keyslot = null
 	return ..()
 
-/obj/item/device/radio/initialize()
+/obj/item/device/radio/Initialize()
+	..()
 	frequency = sanitize_frequency(frequency, freerange)
 	set_frequency(frequency)
 
@@ -117,6 +116,9 @@
 		return
 	if(b_stat && !istype(user, /mob/living/silicon/ai))
 		wires.interact(user)
+	else if(hidden_uplink && hidden_uplink.active)
+		hidden_uplink.interact(user)
+		return
 	else
 		ui_interact(user)
 
@@ -352,7 +354,7 @@
 			"mobtype" = M.type, 	// the mob's type
 			"realname" = real_name, // the mob's real name
 			"name" = voice,			// the mob's voice name
-			"uuid" = real_name,		// Used for tracking when $source is change
+			"uuid" = voice,			// Used for tracking when $source is change
 			"job" = jobname,		// the mob's job
 			"key" = mobkey,			// the mob's key
 			"vmask" = voicemask,	// 1 if the mob is using a voice gas mask
@@ -405,7 +407,7 @@
 		"mobtype" = M.type, 	// the mob's type
 		"realname" = real_name, // the mob's real name
 		"name" = voice,			// the mob's voice name
-		"uuid" = real_name, // Used for tracking when $source is changed
+		"uuid" = voice, 		// Used for tracking when $source is changed
 		"job" = jobname,		// the mob's job
 		"key" = mobkey,			// the mob's key
 		"vmask" = voicemask,	// 1 if the mob is using a voice gas mas
@@ -436,7 +438,7 @@
 
 /obj/item/device/radio/proc/broadcast_delayed(datum/signal/signal, atom/movable/M, message, channel, list/spans, voicemask, voice, jobname, real_name, freq)
 	var/turf/position = get_turf(src)
-	if(signal.data["done"] && (position.z in signal.data["level"]))
+	if(signal.data["done"] && (position.z in signal.data["broadcast_levels"]))
 		// we're done here.
 		return
 
@@ -466,7 +468,7 @@
 */
 
 
-/obj/item/device/radio/proc/receive_range(freq, level)
+/obj/item/device/radio/proc/receive_range(freq, list/broadcast_levels)
 	// check if this radio can receive on the given frequency, and if so,
 	// what the range is in which mobs will hear the radio
 	// returns: -1 if can't receive, range otherwise
@@ -475,9 +477,9 @@
 		return -1
 	if(!listening)
 		return -1
-	if(!(0 in level))
+	if(!(0 in broadcast_levels))
 		var/turf/position = get_turf(src)
-		if(!position || !(position.z in level))
+		if(!position || !(position.z in broadcast_levels))
 			return -1
 	if(freq == SYND_FREQ)
 		if(!(src.syndie)) //Checks to see if it's allowed on that frequency, based on the encryption keys
@@ -502,28 +504,21 @@
 			return -1
 	return canhear_range
 
-/obj/item/device/radio/proc/send_hear(freq, level)
-
-	var/range = receive_range(freq, level)
-	if(range > -1)
-		return get_hearers_in_view(canhear_range, src)
-
-
 /obj/item/device/radio/examine(mob/user)
 	..()
 	if (b_stat)
-		user << "<span class='notice'>[name] can be attached and modified.</span>"
+		to_chat(user, "<span class='notice'>[name] can be attached and modified.</span>")
 	else
-		user << "<span class='notice'>[name] can not be modified or attached.</span>"
+		to_chat(user, "<span class='notice'>[name] can not be modified or attached.</span>")
 
 /obj/item/device/radio/attackby(obj/item/weapon/W, mob/user, params)
 	add_fingerprint(user)
 	if(istype(W, /obj/item/weapon/screwdriver))
 		b_stat = !b_stat
 		if(b_stat)
-			user << "<span class='notice'>The radio can now be attached and modified!</span>"
+			to_chat(user, "<span class='notice'>The radio can now be attached and modified!</span>")
 		else
-			user << "<span class='notice'>The radio can no longer be modified or attached!</span>"
+			to_chat(user, "<span class='notice'>The radio can no longer be modified or attached!</span>")
 	else
 		return ..()
 
@@ -531,7 +526,7 @@
 	emped++ //There's been an EMP; better count it
 	var/curremp = emped //Remember which EMP this was
 	if (listening && ismob(loc))	// if the radio is turned on and on someone's person they notice
-		loc << "<span class='warning'>\The [src] overloads.</span>"
+		to_chat(loc, "<span class='warning'>\The [src] overloads.</span>")
 	broadcasting = 0
 	listening = 0
 	for (var/ch_name in channels)
@@ -578,14 +573,14 @@
 					keyslot = null
 
 			recalculateChannels()
-			user << "<span class='notice'>You pop out the encryption key in the radio.</span>"
+			to_chat(user, "<span class='notice'>You pop out the encryption key in the radio.</span>")
 
 		else
-			user << "<span class='warning'>This radio doesn't have any encryption keys!</span>"
+			to_chat(user, "<span class='warning'>This radio doesn't have any encryption keys!</span>")
 
 	else if(istype(W, /obj/item/device/encryptionkey/))
 		if(keyslot)
-			user << "<span class='warning'>The radio can't hold another key!</span>"
+			to_chat(user, "<span class='warning'>The radio can't hold another key!</span>")
 			return
 
 		if(!keyslot)

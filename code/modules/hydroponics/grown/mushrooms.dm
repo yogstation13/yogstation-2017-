@@ -1,6 +1,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom
 	name = "mushroom"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 
 // Reishi
@@ -23,13 +24,13 @@
 	growing_icon = 'icons/obj/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list("morphine" = 0.5, "charcoal" = 0.5)
 
+
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi
 	seed = /obj/item/seeds/reishi
 	name = "reishi"
 	desc = "<I>Ganoderma lucidum</I>: A special fungus known for its medicinal and stress relieving properties."
 	icon_state = "reishi"
 	filling_color = "#FF4500"
-
 
 // Fly Amanita
 /obj/item/seeds/amanita
@@ -177,7 +178,7 @@
 	M.move_to_delay -= round(seed.production / 50)
 	M.health = M.maxHealth
 	qdel(src)
-	user << "<span class='notice'>You plant the walking mushroom.</span>"
+	to_chat(user, "<span class='notice'>You plant the walking mushroom.</span>")
 
 
 // Chanterelle
@@ -248,7 +249,7 @@
 	planted.endurance = seed.endurance
 	planted.yield = seed.yield
 	planted.potency = seed.potency
-	user << "<span class='notice'>You plant [src].</span>"
+	to_chat(user, "<span class='notice'>You plant [src].</span>")
 	qdel(src)
 
 

@@ -1139,6 +1139,12 @@
 	cost = 1000
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 	crate_name = "sandstone blocks crate"
+	
+/datum/supply_pack/materials/carpet50
+	name = "50 Carpet Sheets"
+	cost = 1000
+	contains = list(/obj/item/stack/tile/carpet/fifty)
+	crate_name = "carpet sheets crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
@@ -1210,6 +1216,39 @@
 	contraband = TRUE
 	contains = list(/obj/item/weapon/storage/box/lasertagpins)
 	crate_name = "laser tag crate"
+
+/datum/supply_pack/misc/paintball
+	name = "mixed paintball supplies crate"
+	cost = 2500
+	contains = list(/obj/item/weapon/gun/projectile/automatic/paintball,
+				/obj/item/weapon/gun/projectile/automatic/paintball,
+				/obj/item/weapon/gun/projectile/automatic/paintball/red,
+				/obj/item/weapon/gun/projectile/automatic/paintball/red,
+				/obj/item/weapon/gun/projectile/automatic/paintball/super,
+				/obj/item/ammo_box/magazine/paintball,
+				/obj/item/ammo_box/magazine/paintball,
+				/obj/item/ammo_box/magazine/paintball,
+				/obj/item/ammo_box/magazine/paintball/blue,
+				/obj/item/ammo_box/magazine/paintball/blue,
+				/obj/item/ammo_box/magazine/paintball/blue,
+				/obj/item/ammo_box/magazine/paintball/violet,
+				/obj/item/ammo_box/magazine/paintball/yellow,)
+	crate_name = "paintball starter pack"
+
+/datum/supply_pack/misc/paintball/ammo
+	name = "paintball ammo crate"
+	cost = 700
+	contains = list(/obj/item/ammo_box/magazine/paintball/blue,
+					/obj/item/ammo_box/magazine/paintball/blue,
+					/obj/item/ammo_box/magazine/paintball/blue,
+					/obj/item/ammo_box/magazine/paintball,
+					/obj/item/ammo_box/magazine/paintball,
+					/obj/item/ammo_box/magazine/paintball,
+					/obj/item/ammo_box/magazine/paintball/violet,
+					/obj/item/ammo_box/magazine/paintball/violet,
+					/obj/item/ammo_box/magazine/paintball/yellow,
+					/obj/item/ammo_box/magazine/paintball/yellow,)
+	crate_name = "paintball ammunition crate"
 
 /datum/supply_pack/misc/clownpin
 	name = "Hilarious Firing Pin Crate"
@@ -1286,7 +1325,7 @@
 					/obj/item/weapon/caution,
 					/obj/item/weapon/storage/bag/trash,
 					/obj/item/weapon/reagent_containers/spray/cleaner,
-					/obj/item/weapon/reagent_containers/glass/rag,
+					/obj/item/weapon/mop/rag,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner)
@@ -1295,7 +1334,7 @@
 /datum/supply_pack/misc/janitor/janicart
 	name = "Janitorial Cart and Galoshes Crate"
 	cost = 2000
-	contains = list(/obj/structure/janitorialcart,
+	contains = list(/obj/structure/mopbucket/janitorialcart,
 					/obj/item/clothing/shoes/galoshes)
 	crate_name = "janitorial cart crate"
 	crate_type = /obj/structure/closet/crate/large
@@ -1379,6 +1418,7 @@
 					/obj/item/clothing/suit/suspenders,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing,
 					/obj/item/weapon/storage/backpack/mime)
+
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/secure
 
@@ -1443,12 +1483,25 @@
 	                /obj/item/toy/talking/skeleton,
 	                /obj/item/toy/nuke,
 	                /obj/item/toy/minimeteor,
-	                /obj/item/toy/carpplushie,
 	                /obj/item/weapon/coin/antagtoken,
 	                /obj/item/stack/tile/fakespace/loaded,
 	                /obj/item/weapon/gun/projectile/shotgun/toy/crossbow,
 	                /obj/item/toy/redbutton)
 	crate_name = "toy crate"
+
+/datum/supply_pack/misc/plushies
+	name = "Plushie Crate"
+	cost = 2000
+	contains = list(/obj/item/toy/plushie/carpplushie,
+									/obj/item/toy/plushie/bubbleplush,
+									/obj/item/toy/plushie/plushvar,
+									/obj/item/toy/plushie/narplush,
+									/obj/item/toy/plushie/Lizardplush,
+									/obj/item/toy/plushie/snakeplush,
+									/obj/item/toy/plushie/nukeplush,
+									/obj/item/toy/plushie/slimeplush,
+									/obj/item/toy/plushie/inorixplush)
+	crate_name = "plushie crate"
 
 /datum/supply_pack/misc/autodrobe
 	name = "Autodrobe Supply Crate"
@@ -1501,6 +1554,19 @@
 					/obj/item/weapon/gun/projectile/shotgun/toy,
 					/obj/item/weapon/gun/projectile/shotgun/toy)
 	crate_name = "foam force crate"
+
+/datum/supply_pack/misc/rubberpigeon
+	name = "Rubber Pigeon Crate"
+	cost = 1000
+	contains = list(/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon,
+					/obj/item/device/assembly/bikehorn/rubber_pigeon)
+	crate_name = "rubber pigeon crate"
 
 /datum/supply_pack/misc/foamforce/bonus
 	name = "Foam Force Pistols Crate"

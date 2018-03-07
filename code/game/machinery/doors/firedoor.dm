@@ -4,8 +4,8 @@
 #define CONSTRUCTION_GUTTED 3 //Wires are removed, circuit ready to remove
 #define CONSTRUCTION_NOCIRCUIT 4 //Circuit board removed, can safely weld apart
 
-/var/const/OPEN = 1
-/var/const/CLOSED = 2
+/var/const/FD_OPEN = 1
+/var/const/FD_CLOSED = 2
 
 /obj/machinery/door/firedoor
 	name = "firelock"
@@ -19,6 +19,8 @@
 	var/nextstate = null
 	sub_door = 1
 	closingLayer = CLOSED_FIREDOOR_LAYER
+	
+	CanAtmosPass = ATMOS_PASS_PROC
 
 /obj/machinery/door/firedoor/Bumped(atom/AM)
 	if(panel_open || operating)
@@ -71,7 +73,8 @@
 /obj/machinery/door/firedoor/try_to_weld(obj/item/weapon/weldingtool/W, mob/user)
 	if(W.remove_fuel(0, user))
 		welded = !welded
-		user << "<span class='danger'>You [welded?"welded":"unwelded"] \the [src]</span>"
+		to_chat(user, "<span class='danger'>You [welded?"welded":"unwelded"] \the [src]</span>")
+		actionstaken += "\[[time_stamp()]\][user]/[user.ckey] [welded?"welded":"unwelded"]"
 		update_icon()
 
 /obj/machinery/door/firedoor/try_to_crowbar(obj/item/I, mob/user)
@@ -94,7 +97,7 @@
 /obj/machinery/door/firedoor/attack_alien(mob/user)
 	add_fingerprint(user)
 	if(welded)
-		user << "<span class='warning'>[src] refuses to budge!</span>"
+		to_chat(user, "<span class='warning'>[src] refuses to budge!</span>")
 		return
 	open()
 
@@ -128,10 +131,10 @@
 	if(operating || stat & NOPOWER || !nextstate)
 		return
 	switch(nextstate)
-		if(OPEN)
+		if(FD_OPEN)
 			nextstate = null
 			open()
-		if(CLOSED)
+		if(FD_CLOSED)
 			nextstate = null
 			close()
 
@@ -186,13 +189,13 @@
 	..()
 	switch(constructionStep)
 		if(CONSTRUCTION_PANEL_OPEN)
-			user << "There is a small metal plate covering the wires."
+			to_chat(user, "There is a small metal plate covering the wires.")
 		if(CONSTRUCTION_WIRES_EXPOSED)
-			user << "Wires are trailing from the maintenance panel."
+			to_chat(user, "Wires are trailing from the maintenance panel.")
 		if(CONSTRUCTION_GUTTED)
-			user << "The circuit board is visible."
+			to_chat(user, "The circuit board is visible.")
 		if(CONSTRUCTION_NOCIRCUIT)
-			user << "There are no electronics in the frame."
+			to_chat(user, "There are no electronics in the frame.")
 
 /obj/structure/firelock_frame/update_icon()
 	..()
@@ -272,7 +275,7 @@
 			if(istype(C, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/B = C
 				if(B.amount < 5)
-					user << "<span class='warning'>You need more wires to add wiring to [src].</span>"
+					to_chat(user, "<span class='warning'>You need more wires to add wiring to [src].</span>")
 					return
 				user.visible_message("<span class='notice'>[user] begins wiring [src]...</span>", \
 									 "<span class='notice'>You begin adding wires to [src]...</span>")

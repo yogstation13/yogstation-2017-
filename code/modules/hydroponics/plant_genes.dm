@@ -173,8 +173,8 @@
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
 	origin_tech = list("biotech" = 5)
 
-/*/datum/plant_gene/trait/squash/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
-	G.squash(target)*/
+/datum/plant_gene/trait/squash/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/target)
+	G.squash(target)
 
 
 /datum/plant_gene/trait/slip
@@ -237,7 +237,7 @@
 				C.update_icon()
 				batteries_recharged = 1
 		if(batteries_recharged)
-			target << "<span class='notice'>Your batteries are recharged!</span>"
+			to_chat(target, "<span class='notice'>Your batteries are recharged!</span>")
 
 
 
@@ -281,7 +281,7 @@
 /datum/plant_gene/trait/teleport/on_slip(obj/item/weapon/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	var/teleport_radius = max(round(G.seed.potency / 10), 1)
 	var/turf/T = get_turf(C)
-	C << "<span class='warning'>You slip through spacetime!</span>"
+	to_chat(C, "<span class='warning'>You slip through spacetime!</span>")
 	do_teleport(C, T, teleport_radius)
 	if(prob(50))
 		do_teleport(G, T, teleport_radius)

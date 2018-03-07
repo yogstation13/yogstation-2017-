@@ -104,7 +104,7 @@
 /turf/open/floor/carpet,
 /area/ruin/powered)
 "at" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 4
 	},
 /turf/open/floor/plasteel/bar,

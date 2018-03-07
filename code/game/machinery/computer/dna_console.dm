@@ -45,7 +45,7 @@
 				return
 			I.loc = src
 			src.diskette = I
-			user << "<span class='notice'>You insert [I].</span>"
+			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			src.updateUsrDialog()
 			return
 	else
@@ -354,7 +354,7 @@
 				var/can_add = max(min(REJUVENATORS_MAX - epinephrine_amount, REJUVENATORS_INJECT), 0)
 				viable_occupant.reagents.add_reagent("epinephrine", can_add)
 		if("setbufferlabel")
-			var/text = sanitize(input(usr, "Input a new label:", "Input an Text", null) as text|null)
+			var/text = stripped_input(usr, "Input a new label:", "Input an Text", null)
 			if(num && text)
 				num = Clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
@@ -572,7 +572,7 @@
 					viable_occupant.dna.blood_type = buffer_slot["blood_type"]
 
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
-	connected.occupant << "<span class='notice'>[src] activates!</span>"
+	to_chat(connected.occupant, "<span class='notice'>[src] activates!</span>")
 	if(delayed_action)
 		apply_buffer(delayed_action["action"],delayed_action["buffer"])
 		delayed_action = null //or make it stick + reset button ?

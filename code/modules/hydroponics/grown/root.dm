@@ -22,10 +22,11 @@
 	icon_state = "carrot"
 	filling_color = "#FFA500"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/kitchen/knife) || istype(I, /obj/item/weapon/hatchet))
-		user << "<span class='notice'>You sharpen the carrot into a shiv with [I].</span>"
+		to_chat(user, "<span class='notice'>You sharpen the carrot into a shiv with [I].</span>")
 		var/obj/item/weapon/kitchen/knife/carrotshiv/Shiv = new /obj/item/weapon/kitchen/knife/carrotshiv
 		if(!remove_item_from_storage(user))
 			user.unEquip(src)
@@ -52,6 +53,7 @@
 	desc = "Closely related to carrots."
 	icon_state = "parsnip"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 
 // White-Beet
@@ -78,6 +80,7 @@
 	icon_state = "whitebeet"
 	filling_color = "#F4A460"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 // Red Beet
 /obj/item/seeds/redbeet
@@ -93,6 +96,7 @@
 	oneharvest = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
+	genes = list(/datum/plant_gene/trait/maxchem)
 	reagents_add = list("vitamin" = 0.1, "nutriment" = 0.1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/redbeet
@@ -101,3 +105,4 @@
 	desc = "You can't beat red beet."
 	icon_state = "redbeet"
 	bitesize_mod = 2
+	foodtype = VEGETABLES

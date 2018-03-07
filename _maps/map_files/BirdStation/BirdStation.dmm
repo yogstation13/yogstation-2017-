@@ -5499,7 +5499,7 @@
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/toy/carpplushie{
+/obj/item/toy/plushie/carpplushie{
 	attack_verb = list("bitten","pecked","wing slapped");
 	desc = "An adorable stuffed toy that resembles a parrot.";
 	icon = 'icons/mob/animal.dmi';
@@ -7905,7 +7905,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fsmaint)
 "asR" = (
-/obj/structure/toilet{
+/obj/machinery/disposal/bin/toilet{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -10213,7 +10213,7 @@
 /turf/open/floor/plasteel,
 /area/maintenance/disposal)
 "ayL" = (
-/obj/structure/janitorialcart,
+/obj/structure/mopbucket/janitorialcart,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -13272,7 +13272,7 @@
 	})
 "aFX" = (
 /obj/structure/table/wood,
-/obj/item/weapon/reagent_containers/glass/rag,
+/obj/item/weapon/mop/rag,
 /turf/open/floor/wood,
 /area/crew_quarters/bar{
 	name = "\improper Bar and Kitchen"
@@ -18568,7 +18568,7 @@
 /area/security/brig)
 "aSz" = (
 /obj/structure/table,
-/obj/item/toy/carpplushie{
+/obj/item/toy/plushie/carpplushie{
 	attack_verb = list("bitten","pecked","wing slapped");
 	desc = "An adorable stuffed toy that resembles a parrot.";
 	icon = 'icons/mob/animal.dmi';
@@ -20808,7 +20808,7 @@
 /obj/item/device/laser_pointer,
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker,
 /obj/item/clothing/head/rabbitears,
-/obj/item/toy/carpplushie{
+/obj/item/toy/plushie/carpplushie{
 	attack_verb = list("bitten","pecked","wing slapped");
 	desc = "An adorable stuffed toy that resembles a parrot.";
 	icon = 'icons/mob/animal.dmi';
@@ -21727,7 +21727,7 @@
 	name = "Security Maintenance"
 	})
 "aZZ" = (
-/obj/item/weapon/reagent_containers/glass/rag,
+/obj/item/weapon/mop/rag,
 /turf/open/floor/plating,
 /area/maintenance/fore{
 	name = "Security Maintenance"

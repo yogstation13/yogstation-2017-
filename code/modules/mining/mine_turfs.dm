@@ -6,7 +6,7 @@
 	icon_state = "rock"
 	var/smooth_icon = 'icons/turf/smoothrocks.dmi'
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed/mineral, /turf/closed/wall)
+	canSmoothWith
 	baseturf = /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = "TEMP=2.7"
 	opacity = 1
@@ -25,6 +25,8 @@
 	var/defer_change = 0
 
 /turf/closed/mineral/New()
+	if(!canSmoothWith)
+		canSmoothWith = list(/turf/closed/mineral, /turf/closed/wall)
 	pixel_y = -4
 	pixel_x = -4
 	icon = smooth_icon
@@ -59,14 +61,19 @@
 	new src.type(T)
 
 /turf/closed/mineral/random
-	var/mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium = 5, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 10,
-		/turf/closed/mineral/silver = 12, /turf/closed/mineral/plasma = 20, /turf/closed/mineral/iron = 40,
-		/turf/closed/mineral/gibtonite = 4, /turf/open/floor/plating/asteroid/airless/cave = 2, /turf/closed/mineral/bscrystal = 1)
-		//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	var/mineralSpawnChanceList
 	var/mineralChance = 13
+	var/display_icon_state = "rock"
 
 /turf/closed/mineral/random/New()
+	if(!mineralSpawnChanceList)
+		mineralSpawnChanceList = list(
+			/turf/closed/mineral/uranium = 5, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 10,
+			/turf/closed/mineral/silver = 12, /turf/closed/mineral/plasma = 20, /turf/closed/mineral/iron = 40,
+			/turf/closed/mineral/gibtonite = 4, /turf/open/floor/plating/asteroid/airless/cave = 2, /turf/closed/mineral/bscrystal = 1)
+			//Currently, Adamantine won't spawn as it has no uses. -Durandan
+	if(display_icon_state)
+		icon_state = display_icon_state
 	..()
 
 	if (prob(mineralChance))
@@ -89,10 +96,6 @@
 		/turf/closed/mineral/uranium = 35, /turf/closed/mineral/diamond = 30, /turf/closed/mineral/gold = 45,
 		/turf/closed/mineral/silver = 50, /turf/closed/mineral/plasma = 50, /turf/closed/mineral/bscrystal = 20)
 
-/turf/closed/mineral/random/high_chance/New()
-	icon_state = "rock"
-	..()
-
 /turf/closed/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 6
@@ -100,10 +103,6 @@
 		/turf/closed/mineral/uranium = 2, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 4,
 		/turf/closed/mineral/silver = 6, /turf/closed/mineral/plasma = 15, /turf/closed/mineral/iron = 40,
 		/turf/closed/mineral/gibtonite = 2, /turf/closed/mineral/bscrystal = 1)
-
-/turf/closed/mineral/random/low_chance/New()
-	icon_state = "rock"
-	..()
 
 /turf/closed/mineral/iron
 	mineralType = /obj/item/weapon/ore/iron
@@ -356,7 +355,7 @@
 /turf/closed/mineral/attackby(obj/item/weapon/pickaxe/P, mob/user, params)
 
 	if (!user.IsAdvancedToolUser())
-		usr << "<span class='warning'>You don't have the dexterity to do this!</span>"
+		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	if (istype(P, /obj/item/weapon/pickaxe))
@@ -367,12 +366,12 @@
 		if(last_act+P.digspeed > world.time)//prevents message spam
 			return
 		last_act = world.time
-		user << "<span class='notice'>You start picking...</span>"
+		to_chat(user, "<span class='notice'>You start picking...</span>")
 		P.playDigSound()
 
 		if(do_after(user,P.digspeed, target = src))
 			if(istype(src, /turf/closed/mineral))
-				user << "<span class='notice'>You finish cutting into the rock.</span>"
+				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 				gets_drilled(user)
 				feedback_add_details("pick_used_mining","[P.type]")
 	return
@@ -395,10 +394,10 @@
 	..()
 
 /turf/closed/mineral/attack_alien(mob/living/carbon/alien/M)
-	M << "<span class='notice'>You start digging into the rock...</span>"
+	to_chat(M, "<span class='notice'>You start digging into the rock...</span>")
 	playsound(src, 'sound/effects/break_stone.ogg', 50, 1)
 	if(do_after(M,40, target = src))
-		M << "<span class='notice'>You tunnel into the rock.</span>"
+		to_chat(M, "<span class='notice'>You tunnel into the rock.</span>")
 		gets_drilled(M)
 
 /turf/closed/mineral/Bumped(AM as mob|obj)
@@ -513,15 +512,15 @@
 			return
 
 		if (dug)
-			user << "<span class='warning'>This area has already been dug!</span>"
+			to_chat(user, "<span class='warning'>This area has already been dug!</span>")
 			return
 
-		user << "<span class='notice'>You start digging...</span>"
+		to_chat(user, "<span class='notice'>You start digging...</span>")
 		playsound(src, 'sound/effects/shovel_dig.ogg', 50, 1)
 
 		if(do_after(user, digging_speed, target = src))
 			if(istype(src, /turf/open/floor/plating/asteroid))
-				user << "<span class='notice'>You dig a hole.</span>"
+				to_chat(user, "<span class='notice'>You dig a hole.</span>")
 				gets_dug()
 				feedback_add_details("pick_used_mining","[W.type]")
 
@@ -575,6 +574,8 @@
 	baseturf = /turf/open/chasm/straight_down/lava_land_surface
 
 /turf/open/chasm/straight_down/lava_land_surface/drop(atom/movable/AM)
+	if(!AM)
+		return
 	if(!AM.invisibility)
 		AM.visible_message("<span class='boldwarning'>[AM] falls into [src]!</span>", "<span class='userdanger'>You stumble and stare into an abyss before you. It stares back, and you fall \
 		into the enveloping dark.</span>")

@@ -59,6 +59,7 @@
 /obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
 	name = "airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps."
+	CanAtmosPass = ATMOS_PASS_NO
 
 /obj/structure/plasticflaps/mining/New() //set the turf below the flaps to block air
 	var/turf/T = get_turf(loc)

@@ -86,11 +86,15 @@
 			var/roll_for_shatter = check_shatter(owner, damage)
 			if(roll_for_shatter) // the damage to the sheld is processed, but we'll still be able to block it
 				final_block_chance += 50
+				owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>",\
+					"<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 				return ..()
 			else
 				return 0
 		else
 			final_block_chance += 50
+			owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>",\
+				"<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 			return ..()
 
 	else if(attack_type == UNARMED_ATTACK)
@@ -98,6 +102,8 @@
 			return 0
 		else
 			final_block_chance += 50
+			owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>",\
+				"<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 			return ..()
 
 
@@ -110,9 +116,13 @@
 				return 0
 			else
 				final_block_chance += 50
+				owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>",\
+					"<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 				return ..()
 		else
 			final_block_chance += 50
+			owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>",\
+				"<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 			return ..()
 
 	else if(attack_type == PROJECTILE_ATTACK)
@@ -128,16 +138,20 @@
 			target = get_step(target, pick(alldirs))
 		src.throw_at(target,7,1, spin = 1)
 		final_block_chance -= 50
+		owner.visible_message("<span class='danger'>[owner] fails to block [attack_text] with [src]!</span>",\
+			"<span class='danger'>[owner] block [attack_text] with [src]!</span>")
 		return ..()
 	else
+		owner.visible_message("<span class='danger'>[owner] blocks [attack_text] with [src]!</span>",\
+			"<span class='danger'>[owner] blocks [attack_text] with [src]!</span>")
 		return 1
 
 /obj/item/weapon/shield/riot/examine(mob/user)
 	..()
 	if(shieldstate == SHIELD_CRACKED)
-		user << "<span class='notice'>The shield has a few cracks in it.</span class>"
+		to_chat(user, "<span class='notice'>The shield has a few cracks in it.</span class>")
 	if(shieldstate == SHIELD_BREAKING)
-		user << "<span class='danger'>The shield is breaking apart.</span class>"
+		to_chat(user, "<span class='danger'>The shield is breaking apart.</span class>")
 
 /obj/item/weapon/shield/riot/roman
 	name = "roman shield"
@@ -203,7 +217,7 @@
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/carbon/human/user)
 	if((clumsy_check && (user.disabilities & CLUMSY)) && prob(50))
-		user << "<span class='warning'>You beat yourself in the head with [src].</span>"
+		to_chat(user, "<span class='warning'>You beat yourself in the head with [src].</span>")
 		user.take_organ_damage(5)
 	active = !active
 	icon_state = "[icon_state_base][active]"
@@ -214,14 +228,14 @@
 		throw_speed = on_throw_speed
 		w_class = on_w_class
 		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
-		user << "<span class='notice'>[src] is now active.</span>"
+		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
 		throw_speed = initial(throw_speed)
 		w_class = initial(w_class)
 		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)
-		user << "<span class='notice'>[src] can now be concealed.</span>"
+		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	add_fingerprint(user)
 
 /obj/item/weapon/shield/riot/tele
@@ -254,14 +268,14 @@
 		throw_speed = 2
 		w_class = 4
 		slot_flags = SLOT_BACK
-		user << "<span class='notice'>You extend \the [src].</span>"
+		to_chat(user, "<span class='notice'>You extend \the [src].</span>")
 	else
 		force = 3
 		throwforce = 3
 		throw_speed = 3
 		w_class = 3
 		slot_flags = null
-		user << "<span class='notice'>[src] can now be concealed.</span>"
+		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	add_fingerprint(user)
 
 

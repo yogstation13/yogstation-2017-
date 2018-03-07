@@ -45,6 +45,8 @@
 /datum/atom_hud/data/human/security/advanced
 	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD)
 
+/datum/atom_hud/data/human/rev
+	hud_icons = list(REV_APPEARANCE_HUD)
 
 /datum/atom_hud/data/diagnostic
 	hud_icons = list (DIAG_HUD, DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_BOT_HUD)
@@ -239,6 +241,26 @@
 			else if(istype(I,/obj/item/weapon/implant/chem))
 				holder = hud_list[IMPCHEM_HUD]
 				holder.icon_state = "hud_imp_chem"
+
+/mob/living/carbon/human/proc/update_face_dependant_huds()
+	sec_hud_set_ID()
+	update_rev_hud()
+
+/mob/living/carbon/human/proc/update_rev_hud()
+	var/image/holder = hud_list[REV_APPEARANCE_HUD]
+	var/hudstate
+	if(get_face_name("Unknown") == "Unknown")
+		hudstate = "rev_maybe"
+	else if(mind)
+		if(mind in ticker.mode.get_all_heads())
+			hudstate = "rev_enemyhead"
+		else if(mind in ticker.mode.head_revolutionaries)
+			hudstate = "rev_head"
+		else if(mind in ticker.mode.revolutionaries)
+			hudstate = "rev"
+	if(!hudstate)
+		hudstate = "rev_convertable"
+	holder.icon_state = hudstate
 
 /mob/living/carbon/human/proc/sec_hud_set_security_status()
 	var/image/holder = hud_list[WANTED_HUD]

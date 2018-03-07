@@ -4,7 +4,6 @@ var/datum/subsystem/timer/SStimer
 	name = "Timer"
 	wait = 2 //SS_TICKER subsystem, so wait is in ticks
 	init_order = 1
-	display_order = 3
 	can_fire = 0 //start disabled
 	flags = SS_FIRE_IN_LOBBY|SS_TICKER|SS_POST_FIRE_TIMING|SS_NO_INIT
 

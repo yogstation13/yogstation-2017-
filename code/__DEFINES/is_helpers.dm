@@ -56,9 +56,17 @@
 
 #define isalien(A) (istype(A, /mob/living/carbon/alien))
 
+#define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
+
 #define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
 
-#define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
+#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
+
+#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+
+#define isalienroyal(A) (istype(A, /mob/living/carbon/alien/humanoid/royal))
+
+#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/royal/queen))
 
 #define issimpleanimal(A) (istype(A, /mob/living/simple_animal))
 
@@ -77,6 +85,8 @@
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
 
 #define isconstruct(A) (istype(A, /mob/living/simple_animal/hostile/construct))
+
+#define ismegafauna(A) (istype(A, /mob/living/simple_animal/hostile/megafauna))
 
 #define isclockmob(A) (istype(A, /mob/living/simple_animal/hostile/clockwork))
 
@@ -139,3 +149,5 @@
 #define issignaler(O) (istype(O, /obj/item/device/assembly/signaler))
 
 #define istimer(O) (istype(O, /obj/item/device/assembly/timer))
+
+#define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune))

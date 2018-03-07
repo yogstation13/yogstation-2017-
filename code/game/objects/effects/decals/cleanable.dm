@@ -2,6 +2,8 @@
 	var/list/random_icon_states = list()
 	var/blood_state = "" //I'm sorry but cleanable/blood code is ass, and so is blood_DNA
 	var/bloodiness = 0 //0-100, amount of blood in this decal, used for making footprints and affecting the alpha of bloody footprints
+	var/placedby = null
+	var/mergeable_decal = TRUE
 
 /obj/effect/decal/cleanable/New()
 	if (random_icon_states && length(src.random_icon_states) > 0)
@@ -16,19 +18,20 @@
 
 
 /obj/effect/decal/cleanable/proc/replace_decal(obj/effect/decal/cleanable/C)
-	destroy_effect()
+	if(mergeable_decal)
+		destroy_effect()
 
 /obj/effect/decal/cleanable/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/reagent_containers/glass) || istype(W, /obj/item/weapon/reagent_containers/food/drinks))
 		if(src.reagents && W.reagents)
 			. = 1 //so the containers don't splash their content on the src while scooping.
 			if(!src.reagents.total_volume)
-				user << "<span class='notice'>[src] isn't thick enough to scoop up!</span>"
+				to_chat(user, "<span class='notice'>[src] isn't thick enough to scoop up!</span>")
 				return
 			if(W.reagents.total_volume >= W.reagents.maximum_volume)
-				user << "<span class='notice'>[W] is full!</span>"
+				to_chat(user, "<span class='notice'>[W] is full!</span>")
 				return
-			user << "<span class='notice'>You scoop up [src] into [W]!</span>"
+			to_chat(user, "<span class='notice'>You scoop up [src] into [W]!</span>")
 			reagents.trans_to(W, reagents.total_volume)
 			if(!reagents.total_volume) //scooped up all of it
 				destroy_effect()
@@ -41,7 +44,7 @@
 			var/added_heat = (hotness / 100)
 			src.reagents.chem_temp = min(src.reagents.chem_temp + added_heat, hotness)
 			src.reagents.handle_reactions()
-			user << "<span class='notice'>You heat [src] with [W]!</span>"
+			to_chat(user, "<span class='notice'>You heat [src] with [W]!</span>")
 
 /obj/effect/decal/cleanable/ex_act()
 	if(reagents)

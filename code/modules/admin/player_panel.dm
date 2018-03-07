@@ -1,5 +1,5 @@
 /datum/admins/proc/player_panel_new()//The new one
-	if(!check_rights())
+	if(!check_rights(R_BASIC))
 		return
 	var/dat = "<html><head><title>Player Panel</title></head>"
 

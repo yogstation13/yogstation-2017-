@@ -33,15 +33,15 @@
 		size = "big"
 	if(ingredients.len>8)
 		size = "monster"
-	user << "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)]."
+	to_chat(user, "It contains [ingredients.len?"[ingredients_listed]":"no ingredient, "]making a [size]-sized [initial(name)].")
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/attackby(obj/item/I, mob/user, params)
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)
-			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
+			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
 		else if((ingredients.len >= ingMax) || (reagents.total_volume >= volume))
-			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
+			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else
 			if(!user.unEquip(I))
 				return
@@ -52,14 +52,15 @@
 			S.loc = src
 			mix_filling_color(S)
 			S.reagents.trans_to(src,min(S.reagents.total_volume, 15)) //limit of 15, we don't want our custom food to be completely filled by just one ingredient with large reagent volume.
+			src.foodtype |= S.foodtype
 			update_overlays(S)
-			user << "<span class='notice'>You add the [I.name] to the [name].</span>"
+			to_chat(user, "<span class='notice'>You add the [I.name] to the [name].</span>")
 			update_name(S)
 	else if(istype(I, /obj/item/weapon/pen))
 		var/txt = stripped_input(user, "What would you like the food to be called?", "Food Naming", "", 30)
 		if(txt)
 			ingMax = ingredients.len
-			user << "<span class='notice'>You add a last touch to the dish by renaming it.</span>"
+			to_chat(user, "<span class='notice'>You add a last touch to the dish by renaming it.</span>")
 			customname = txt
 			if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich))
 				var/obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/S = src
@@ -172,6 +173,7 @@
 	ingredients_placement = INGREDIENTS_STACKPLUSTOP
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "bun"
+	foodtype = GRAIN
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/bread
@@ -181,6 +183,7 @@
 	slices_num = 5
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "tofubread"
+	foodtype = GRAIN
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/cake
@@ -190,6 +193,7 @@
 	slices_num = 5
 	icon = 'icons/obj/food/piecake.dmi'
 	icon_state = "plaincake"
+	foodtype = GRAIN | DAIRY
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/kebab
@@ -201,7 +205,6 @@
 	ingMax = 6
 	icon_state = "rod"
 
-
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pasta
 	name = "spaghetti"
 	desc = "Noodles. With stuff. Delicious."
@@ -209,6 +212,7 @@
 	ingMax = 6
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "spaghettiboiled"
+	foodtype = GRAIN
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pie
@@ -216,6 +220,7 @@
 	ingMax = 6
 	icon = 'icons/obj/food/piecake.dmi'
 	icon_state = "pie"
+	foodtype = GRAIN | DAIRY
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pizza
@@ -227,6 +232,7 @@
 	slices_num = 6
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "pizzamargherita"
+	foodtype = GRAIN | DAIRY
 
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/salad
@@ -245,6 +251,7 @@
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "breadslice"
 	var/finished = 0
+	foodtype = GRAIN
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/sandwich/initialize_custom_food(obj/item/weapon/reagent_containers/BASE, obj/item/I, mob/user)
 	icon_state = BASE.icon_state
@@ -255,7 +262,7 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/breadslice/BS = I
 		if(finished)
 			return
-		user << "<span class='notice'>You finish the [src.name].</span>"
+		to_chat(user, "<span class='notice'>You finish the [src.name].</span>")
 		finished = 1
 		name = "[customname] sandwich"
 		BS.reagents.trans_to(src, BS.reagents.total_volume)
@@ -307,9 +314,9 @@
 	if(istype(I,/obj/item/weapon/reagent_containers/food/snacks))
 		var/obj/item/weapon/reagent_containers/food/snacks/S = I
 		if(I.w_class > 2)
-			user << "<span class='warning'>The ingredient is too big for [src]!</span>"
+			to_chat(user, "<span class='warning'>The ingredient is too big for [src]!</span>")
 		else if(contents.len >= 20)
-			user << "<span class='warning'>You can't add more ingredients to [src]!</span>"
+			to_chat(user, "<span class='warning'>You can't add more ingredients to [src]!</span>")
 		else
 			if(reagents.has_reagent("water", 10)) //are we starting a soup or a salad?
 				var/obj/item/weapon/reagent_containers/food/snacks/customizable/A = new/obj/item/weapon/reagent_containers/food/snacks/customizable/soup(get_turf(src))

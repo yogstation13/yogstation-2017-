@@ -4,13 +4,13 @@
 	set category = "OOC"
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
 	if(!mob)
 		return
 	if(IsGuestKey(key))
-		src << "Guests may not use OOC."
+		to_chat(src, "Guests may not use OOC.")
 		return
 
 	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
@@ -18,51 +18,42 @@
 		return
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
-		src << "<span class='danger'>You have OOC muted.</span>"
+		to_chat(src, "<span class='danger'>You have OOC muted.</span>")
 		return
 
 	if(!holder)
 		if(!ooc_allowed)
-			src << "<span class='danger'>OOC is globally muted.</span>"
+			to_chat(src, "<span class='danger'>OOC is globally muted.</span>")
 			return
 		if(!dooc_allowed && (mob.stat == DEAD))
-			usr << "<span class='danger'>OOC for dead mobs has been turned off.</span>"
+			to_chat(usr, "<span class='danger'>OOC for dead mobs has been turned off.</span>")
 			return
 		if(prefs.muted & MUTE_OOC)
-			src << "<span class='danger'>You cannot use OOC (muted).</span>"
+			to_chat(src, "<span class='danger'>You cannot use OOC (muted).</span>")
 			return
 		if(src.mob)
 			if(jobban_isbanned(src.mob, "OOC"))
-				src << "<span class='danger'>You have been banned from OOC.</span>"
+				to_chat(src, "<span class='danger'>You have been banned from OOC.</span>")
 				return
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
 		if(findtext(msg, "byond://"))
-			src << "<B>Advertising other servers is not allowed.</B>"
+			to_chat(src, "<B>Advertising other servers is not allowed.</B>")
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
 
-	msg = pretty_filter(msg)
-
 	log_ooc("[mob.name]/[key] : [msg]")
+
+	msg = pretty_filter(msg)
 
 	var/raw_msg = msg
 
-
 	msg = pretty_filter(msg)
-
-	log_ooc("[mob.name]/[key] : [msg]")
-
 
 	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
 		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
 			return
-
-	log_ooc("[mob.name]/[key] : [raw_msg]")
-	if(!findtext(raw_msg, "@"))
-		send_discord_message("ooc", "**[holder ? (holder.fakekey ? holder.fakekey : key) : key]: ** [raw_msg]")
-
 
 	if(!holder && !bypass_ooc_approval)
 		var/regex/R = new("((\[a-z\]+://|www\\.)\\S+)", "ig")
@@ -87,6 +78,7 @@
 			keyname += "<img style='width:9px;height:9px;' class=icon src=\ref['icons/member_content.dmi'] iconstate=yogdon>"
 
 	keyname += "[key]"
+	webhook_send_ooc(key, msg)
 	msg = emoji_parse(msg)
 
 	for(var/client/C in clients)
@@ -95,17 +87,17 @@
 				if(!holder.fakekey || C.holder)
 					var/tag = "[find_admin_rank(src)]"
 					if(check_rights_for(src, R_ADMIN) || holder.rank.name == ("SeniorCoder" || "Coder"))
-						C << "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>[tag] OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>"
+						to_chat(C, "<span class='adminooc'>[config.allow_admin_ooccolor && prefs.ooccolor ? "<font color=[prefs.ooccolor]>" :"" ]<span class='prefix'>[tag] OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span></font>")
 					else
-						C << "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>"
+						to_chat(C, "<span class='adminobserverooc'><span class='prefix'>OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message'>[msg]</span></span>")
 				else
-					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>"
+					to_chat(C, "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>")
 
 			else if(!(key in C.prefs.ignoring))
 				if(is_donator(src))
-					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>\[Donator\] OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+					to_chat(C, "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>\[Donator\] OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>")
 				else
-					C << "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>"
+					to_chat(C, "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>")
 
 
 /proc/toggle_ooc(toggle = null)
@@ -116,7 +108,7 @@
 			return
 	else //otherwise just toggle it
 		ooc_allowed = !ooc_allowed
-	world << "<B>The OOC channel has been globally [ooc_allowed ? "enabled" : "disabled"].</B>"
+	to_chat(world, "<B>The OOC channel has been globally [ooc_allowed ? "enabled" : "disabled"].</B>")
 
 var/global/normal_ooc_colour = OOC_COLOR
 
@@ -166,9 +158,9 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set desc ="Check the admin notice if it has been set"
 
 	if(admin_notice)
-		src << "<span class='boldnotice'>Admin Notice:</span>\n \t [admin_notice]"
+		to_chat(src, "<span class='boldnotice'>Admin Notice:</span>\n \t [admin_notice]")
 	else
-		src << "<span class='notice'>There are no admin notices at the moment.</span>"
+		to_chat(src, "<span class='notice'>There are no admin notices at the moment.</span>")
 
 /client/verb/motd()
 	set name = "MOTD"
@@ -176,9 +168,9 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set desc ="Check the Message of the Day"
 
 	if(join_motd)
-		src << "<div class=\"motd\">[join_motd]</div>"
+		to_chat(src, "<div class=\"motd\">[join_motd]</div>")
 	else
-		src << "<span class='notice'>The Message of the Day has not been set.</span>"
+		to_chat(src, "<span class='notice'>The Message of the Day has not been set.</span>")
 
 /client/proc/self_notes()
 	set name = "View Admin Notes"
@@ -186,7 +178,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 	set desc = "View the notes that admins have written about you"
 
 	if(!config.see_own_notes)
-		usr << "<span class='notice'>Sorry, that function is not enabled on this server.</span>"
+		to_chat(usr, "<span class='notice'>Sorry, that function is not enabled on this server.</span>")
 		return
 
 	show_note(usr, null, 1)
@@ -197,7 +189,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 		prefs.ignoring -= C.key
 	else
 		prefs.ignoring |= C.key
-	src << "You are [(C.key in prefs.ignoring) ? "now" : "no longer"] ignoring [C.key] on the OOC channel."
+	to_chat(src, "You are [(C.key in prefs.ignoring) ? "now" : "no longer"] ignoring [C.key] on the OOC channel.")
 	prefs.save_preferences()
 
 /client/verb/select_ignore()
@@ -209,7 +201,7 @@ var/global/normal_ooc_colour = OOC_COLOR
 	if(!selection)
 		return
 	if(selection == src)
-		src << "You can't ignore yourself."
+		to_chat(src, "You can't ignore yourself.")
 		return
 	ignore_key(selection)
 
@@ -218,35 +210,23 @@ var/global/normal_ooc_colour = OOC_COLOR
 
 	switch(C.holder.rank.name)
 
-		if("Host")
-			return "\[Host\]"
-
 		if("CouncilMember")
 			return "\[Council\]"
 
 		if("Moderator")
-			return "\[Moderator\]"
+			return "\[Mod\]"
 
 		if("Administrator")
 			return "\[Admin\]"
 
-		if("PrimaryAdmin")
-			return "\[PrimaryAdmin\]"
-
-		if("Tribunal")
-			return "\[Tribunal\]"
-
-		if("HeadCoder")
-			return "\[HeadCoder\]"
-
 		if("ModeratorOnProbation")
 			return "\[ModOnProbation\]"
-
-		if("Coder")
-			return "\[Coder\]"
 
 		if("Bot")
 			return "\[YogBot\]"
 
 		if("RetiredAdmin")
 			return "\[Retmin\]"
+
+		else
+			return "\[[C.holder.rank.name]\]"

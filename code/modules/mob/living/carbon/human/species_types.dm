@@ -14,6 +14,9 @@
 	use_skintones = 1
 	roundstart = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
+	disliked_food = GROSS
+	liked_food = JUNKFOOD | FRIED
+	toxic_food = TOXIC | RAW
 
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
@@ -50,6 +53,9 @@
 	specflags = list()
 	roundstart = 0
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
+	disliked_food = null //atleast they got that going for them
+	liked_food = GROSS
+	toxic_food = TOXIC
 
 
 /datum/species/human/fly/handle_speech(message)
@@ -112,12 +118,16 @@
 	highpressure_mod = 0.75
 	lowpressure_mod = 0.75
 
+	disliked_food = DAIRY | GRAIN
+	liked_food = GROSS
+	toxic_food = TOXIC //and raw meat
+
 datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H << "<span class='notice'><b>You are Unathi.</b> Hailing from the homeworld of Moghes, your people are descended from an older race lost to the sands of time.</span>"
-	H << "<span class='notice'>Thick scales afford you protection from heat and pressure, but your cold-blooded nature is not exactly advantageous in a metal vessel surrounded by the cold depths of space.</span>"
-	H << "<span class='notice'>You possess sharp claws that rend flesh easily, though NT obviously does not sanction their use against the crew.</span>"
-	H << "<span class='notice'>Beware all things cold, for your metabolism cannot mitigate their effects as well as other warm-blooded creatures.</span>"
-	H << "<span class='info'>For more information on your race, see https://wiki.yogstation.net/index.php?title=Unathi</span>"
+	to_chat(H, "<span class='notice'><b>You are Unathi.</b> Hailing from the homeworld of Moghes, your people are descended from an older race lost to the sands of time.</span>")
+	to_chat(H, "<span class='notice'>Thick scales afford you protection from heat and pressure, but your cold-blooded nature is not exactly advantageous in a metal vessel surrounded by the cold depths of space.</span>")
+	to_chat(H, "<span class='notice'>You possess sharp claws that rend flesh easily, though NT obviously does not sanction their use against the crew.</span>")
+	to_chat(H, "<span class='notice'>Beware all things cold, for your metabolism cannot mitigate their effects as well as other warm-blooded creatures.</span>")
+	to_chat(H, "<span class='info'>For more information on your race, see https://wiki.yogstation.net/index.php?title=Unathi</span>")
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -186,6 +196,15 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/lizard/ashwalker/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	return
 
+/datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C.weather_immunities.Add("ash")
+
+/datum/species/lizard/ashwalker/on_species_loss(mob/living/carbon/C, datum/species/old_species)
+	..()
+	C.weather_immunities.Remove("ash")
+
+
 /datum/species/lizard/ashwalker/cosmic
 	name = "Cosmic Ashwalker"
 	var/rebirth
@@ -202,16 +221,17 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			return
 		rebirth = TRUE
 		rebirthcount++
-		H << "<span class='notice'>Your body is entering cryogenic rebirth. You will soon be restored to your physical form. Once this happens your soul will be dragged back into your body."
+		to_chat(H, "<span class='notice'>Your body is entering cryogenic rebirth. You will soon be restored to your physical form. Once this happens your soul will be dragged back into your body.")
+		if(rebirthcount >= 3)
+			to_chat(H, "<span class='notice'>You notice that your body isn't regenerating as fast as it use to. It seems like the abductor's effects are wearing off of you. This is your last rebirth cycle..</span>")
 		H.death()
+		H.ghostize()
+		for(var/obj/item/I in H)
+			H.unEquip(I)
 		var/obj/effect/cyrogenicbubble/CB = new(get_turf(H))
 		CB.name = H.real_name
 		H.forceMove(CB)
 		CB.ashwalker = H
-		if(rebirthcount >= 3)
-			H << "<span class='notice'>You notice that your body isn't regenerating as fast as it use to. It seems like the abductor's effects are wearing off of you. This is your last rebirth cycle..</span>"
-			//H << "<span class='notice'>If only there was a mutant out there with the same powers as you... female too.</span>"
-
 
 /datum/species/lizard/fly
 	// lizards turned into fly-like abominations in teleporter accidents.
@@ -225,6 +245,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN //I am here because flies
 	specflags = list()
 	default_color = "FFFFFF"
+	toxic_food = TOXIC
 
 /datum/species/lizard/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
@@ -282,17 +303,19 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	low_temp_level_1 = 280
 	low_temp_level_2 = 250
 	low_temp_level_3 = 190
+	toxic_food = null
+	disliked_food = null
 
 	var/last_eat_message = -STATUS_MESSAGE_COOLDOWN
 	var/emagged = 0
 	var/image/emag_eyes = null
 
 /datum/species/android/before_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H << "<span class='info'><b>You are a Preternis.</b> Half-human, half-silicon, you lie in the nebulous area between the two lifeforms, neither one, nor the other.</span>"
-	H << "<span class='info'>Powerful ocular implants afford you greater vision in the darkness, but in turn make your eyes weak to bright light.</span>"
-	H << "<span class='info'>Normal food is worth only a fraction of its normal sustenance to you. You must instead draw your nourishment from power cells, APCs, and other sources by <b>alt-clicking</b> on them.</span>"
-	H << "<span class='info'>Beware electromagnetic pulses, for they would do grevious damage to your internal organs. You can communicate with silicons and other preternis with <b>:d.</b></span>"
-	H << "<span class='info'>For more information on your race, see https://wiki.yogstation.net/index.php?title=Preternis</span>"
+	to_chat(H, "<span class='info'><b>You are a Preternis.</b> Half-human, half-silicon, you lie in the nebulous area between the two lifeforms, neither one, nor the other.</span>")
+	to_chat(H, "<span class='info'>Powerful ocular implants afford you greater vision in the darkness, but in turn make your eyes weak to bright light.</span>")
+	to_chat(H, "<span class='info'>Normal food is worth only a fraction of its normal sustenance to you. You must instead draw your nourishment from power cells, APCs, and other sources by <b>alt-clicking</b> on them.</span>")
+	to_chat(H, "<span class='info'>Beware electromagnetic pulses, for they would do grevious damage to your internal organs. You can communicate with silicons and other preternis with <b>:d.</b></span>")
+	to_chat(H, "<span class='info'>For more information on your race, see https://wiki.yogstation.net/index.php?title=Preternis</span>")
 
 /datum/species/android/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
@@ -372,7 +395,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		if (food.nutriment_factor)
 			food.nutriment_factor = initial(food.nutriment_factor) * 0.2
 			if (world.time - last_eat_message > STATUS_MESSAGE_COOLDOWN)
-				H << "<span class='info'>NOTICE: Digestive subroutines are inefficient. Seek sustenance via power-cell CONSUME induction.</span>"
+				to_chat(H, "<span class='info'>NOTICE: Digestive subroutines are inefficient. Seek sustenance via power-cell CONSUME induction.</span>")
 				last_eat_message = world.time
 		return 0
 	return 0
@@ -427,15 +450,15 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	if(emagged == 0)
 		emagged = 1
 		if(user)
-			user << "<span class='notice'>You stealthily swipe the cryptographic sequencer along the implants on the back of [H]'s head.</span>"
-		H << "<span class='danger'>You suddenly feel stupid.</span>"
+			to_chat(user, "<span class='notice'>You stealthily swipe the cryptographic sequencer along the implants on the back of [H]'s head.</span>")
+		to_chat(H, "<span class='danger'>You suddenly feel stupid.</span>")
 		H.adjustBrainLoss(30)
 		return 1
 	else if(emagged == 1)
 		emagged = 2
 		if(user)
-			user << "<span class='notice'>You stealthily swipe the cryptographic sequencer along the implants on the back of [H]'s head.</span>"
-		H << "<span class='danger'>You suddenly feel very stupid, but look at the pretty colors!</span>"
+			to_chat(user, "<span class='notice'>You stealthily swipe the cryptographic sequencer along the implants on the back of [H]'s head.</span>")
+		to_chat(H, "<span class='danger'>You suddenly feel very stupid, but look at the pretty colors!</span>")
 		emag_eyes = image('icons/mob/eyes.dmi', "rainbow", layer = UNDER_GLASSES_LAYER)
 		H.overlays += emag_eyes
 		H.adjustBrainLoss(40)
@@ -510,14 +533,17 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/last_light_level = 0
 	var/last_light_message = -STATUS_MESSAGE_COOLDOWN
 	var/last_plantbgone_message = -STATUS_MESSAGE_COOLDOWN
+	disliked_food = MEAT | DAIRY //he's vegan
+	liked_food = VEGETABLES | FRUIT
+	toxic_food = TOXIC | RAW
 
 
 /datum/species/plant/before_equip_job(datum/job/J, mob/living/carbon/human/H)
-	H << "<span class='info'><b>You are a Phytosian.</b> Born on the core-worlds of G-D52, you are a distant relative of a vestige of humanity long discarded.</span>"
-	H << "<span class='info'>Symbiotic plant-cells suffuse your skin and provide a protective layer that keeps you alive, and affords you regeneration unmatched by any other race.</span>"
-	H << "<span class='info'>Darkness is your greatest foe. Even the cold expanses of space are lit by neighbouring stars, but the darkest recesses of the station's interior may prove to be your greatest foe.</span>"
-	H << "<span class='info'>Heat and cold will damage your epidermis far faster than your natural regeneration can match. You can communicate with other phytosians use <b>:P</b>.</span>"
-	H << "<span class='info'>For more information on your race, see https://wiki.yogstation.net/index.php?title=Phytosian</span>"
+	to_chat(H, "<span class='info'><b>You are a Phytosian.</b> Born on the core-worlds of G-D52, you are a distant relative of a vestige of humanity long discarded.</span>")
+	to_chat(H, "<span class='info'>Symbiotic plant-cells suffuse your skin and provide a protective layer that keeps you alive, and affords you regeneration unmatched by any other race.</span>")
+	to_chat(H, "<span class='info'>Darkness is your greatest foe. Even the cold expanses of space are lit by neighbouring stars, but the darkest recesses of the station's interior may prove to be your greatest foe.</span>")
+	to_chat(H, "<span class='info'>Heat and cold will damage your epidermis far faster than your natural regeneration can match. You can communicate with other phytosians use <b>:P</b>.</span>")
+	to_chat(H, "<span class='info'>For more information on your race, see https://wiki.yogstation.net/index.php?title=Phytosian</span>")
 
 /datum/species/plant/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "plantbgone")
@@ -528,7 +554,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		chem.current_cycle++
 		if (world.time - last_plantbgone_message > STATUS_MESSAGE_COOLDOWN)
 			last_plantbgone_message = world.time
-			H << "<span class='warning'>Your skin rustles and wilts! You are dying!</span>"
+			to_chat(H, "<span class='warning'>Your skin rustles and wilts! You are dying!</span>")
 		return 1
 	if(chem.id == "saltpetre")
 		H.adjustFireLoss(-2.5*REAGENTS_EFFECT_MULTIPLIER, 1, DAMAGE_CHEMICAL)
@@ -728,12 +754,12 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		last_light_level = light_level
 		if(light_msg)
 			last_light_message = world.time
-			H << light_msg
+			to_chat(H, light_msg)
 	else
 		if(world.time - last_light_message > STATUS_MESSAGE_COOLDOWN)
 			if(light_msg)
 				last_light_message = world.time
-				H << light_msg
+				to_chat(H, light_msg)
 
 	if(H.nutrition > NUTRITION_LEVEL_FULL)
 		H.nutrition = NUTRITION_LEVEL_FULL
@@ -743,7 +769,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			if(light_level != last_light_level)
 				last_light_level = light_level
 				last_light_message = -STATUS_MESSAGE_COOLDOWN
-				H << "<span class='userdanger'>Your internal stores of light are depleted. Find a source to replenish your nourishment at once!</span>"
+				to_chat(H, "<span class='userdanger'>Your internal stores of light are depleted. Find a source to replenish your nourishment at once!</span>")
 			H.take_overall_damage(2,0)
 
 /datum/species/plant/handle_environment(datum/gas_mixture/environment, mob/living/carbon/human/H)
@@ -774,18 +800,18 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		for(var/Hearer in listening)
 			if(isobserver(Hearer))
 				var/mob/dead/observer/O = Hearer
-				O << "<span class='pheromone'>\[Pheromones\] [H]: [message]</span>"
+				to_chat(O, "<span class='pheromone'>\[Pheromones\] [H]: [message]</span>")
 				continue
 			var/mob/living/carbon/human/human = Hearer
 			if(istype(human) && istype(human.dna.species, /datum/species/plant) )
-				human << "<span class='pheromone'>\[Pheromones\] [H]: [message]</span>"
+				to_chat(human, "<span class='pheromone'>\[Pheromones\] [H]: [message]</span>")
 			else if(isliving(Hearer))
 				var/mob/living/L
 				if(get_dist(H, L) <= 1)
 					L.show_message("<span class='notice'>You hear quiet, garbled whispers.</span>", 2)
 				if(iscarbon(L) && L.stat)
-					L << "<span class='notice'>The room smells like leaves.</span>"
-		log_say("[H.name]/[H.key] : \[Pheromones\]: [message]")
+					to_chat(L, "<span class='notice'>The room smells like leaves.</span>")
+		log_say("[H.name]/[H.key] : [message]", "PHEROMONE")
 		H.say_log += "\[Pheromones\]: [message]"
 		return 1
 	return ..()
@@ -833,6 +859,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	name = "Podperson"
 	id = "pod"
 	default_color = "59CE00"
+	roundstart = 0
 
 /*
  SHADOWPEOPLE
@@ -899,7 +926,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	if(!H.blood_volume)
 		H.blood_volume += 5
 		H.adjustBruteLoss(5)
-		H << "<span class='danger'>You feel empty!</span>"
+		to_chat(H, "<span class='danger'>You feel empty!</span>")
 
 	if(H.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(H.nutrition >= NUTRITION_LEVEL_STARVING)
@@ -907,7 +934,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			H.nutrition -= 2.5
 	if(H.blood_volume < BLOOD_VOLUME_OKAY)
 		if(prob(5))
-			H << "<span class='danger'>You feel drained!</span>"
+			to_chat(H, "<span class='danger'>You feel drained!</span>")
 	if(H.blood_volume < BLOOD_VOLUME_BAD)
 		Cannibalize_Body(H)
 	H.update_action_buttons_icon()
@@ -922,7 +949,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		limbs_to_consume -= list("r_arm", "l_arm")
 	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
-	H << "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>"
+	to_chat(H, "<span class='userdanger'>Your [consumed_limb] is drawn back into your body, unable to maintain its shape!</span>")
 	qdel(consumed_limb)
 	H.blood_volume += 20
 
@@ -946,13 +973,13 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/mob/living/carbon/human/H = owner
 	var/list/limbs_to_heal = H.get_missing_limbs()
 	if(limbs_to_heal.len < 1)
-		H << "<span class='notice'>You feel intact enough as it is.</span>"
+		to_chat(H, "<span class='notice'>You feel intact enough as it is.</span>")
 		return
-	H << "<span class='notice'>You focus intently on your missing [limbs_to_heal.len >= 2 ? "limbs" : "limb"]...</span>"
+	to_chat(H, "<span class='notice'>You focus intently on your missing [limbs_to_heal.len >= 2 ? "limbs" : "limb"]...</span>")
 	if(H.blood_volume >= 40*limbs_to_heal.len+BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
 		H.blood_volume -= 40*limbs_to_heal.len
-		H << "<span class='notice'>...and after a moment you finish reforming!</span>"
+		to_chat(H, "<span class='notice'>...and after a moment you finish reforming!</span>")
 		return
 	else if(H.blood_volume >= 40)//We can partially heal some limbs
 		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
@@ -960,9 +987,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			H.regenerate_limb(healed_limb)
 			limbs_to_heal -= healed_limb
 			H.blood_volume -= 40
-		H << "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>"
+		to_chat(H, "<span class='warning'>...but there is not enough of you to fix everything! You must attain more mass to heal completely!</span>")
 		return
-	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>"
+	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to heal!</span>")
 
 /*
  SLIMEPEOPLE
@@ -986,6 +1013,10 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/datum/action/innate/split_body/slime_split
 	var/datum/action/innate/swap_body/body_swap
 
+	disliked_food = FRUIT
+	liked_food = TOXIC
+	toxic_food = null
+
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
 	if(slime_split)
 		slime_split.Remove(C)
@@ -1005,7 +1036,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/jelly/slime/spec_life(mob/living/carbon/human/H)
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(prob(5))
-			H << "<span class='notice'>You feel very bloated!</span>"
+			to_chat(H, "<span class='notice'>You feel very bloated!</span>")
 	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
 		H.blood_volume += 3
 		H.nutrition -= 2.5
@@ -1028,7 +1059,7 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 
 /datum/action/innate/split_body/Activate()
 	var/mob/living/carbon/human/H = owner
-	H << "<span class='notice'>You focus intently on moving your body while standing perfectly still...</span>"
+	to_chat(H, "<span class='notice'>You focus intently on moving your body while standing perfectly still...</span>")
 	H.notransform = 1
 	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
 		var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
@@ -1052,9 +1083,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 		SS.body_swap = new
 		SS.body_swap.Grant(spare)
 		H.mind.transfer_to(spare)
-		spare << "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>"
+		to_chat(spare, "<span class='notice'>...and after a moment of disorentation, you're besides yourself!</span>")
 		return
-	H << "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to split!</span>"
+	to_chat(H, "<span class='warning'>...but there is not enough of you to go around! You must attain more mass to split!</span>")
 	H.notransform = 0
 
 /datum/action/innate/swap_body
@@ -1075,12 +1106,12 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 			temp_body_list += body
 
 	if(owner.mind.slime_bodies.len == 1) //if our current body is our only one it means the rest are dead
-		owner << "<span class='warning'>Something is wrong, you cannot sense your other bodies!</span>"
+		to_chat(owner, "<span class='warning'>Something is wrong, you cannot sense your other bodies!</span>")
 		Remove(owner)
 		return
 
 	if(!temp_body_list.len)
-		owner << "<span class='warning'>You can sense your bodies, but they are unconscious.</span>"
+		to_chat(owner, "<span class='warning'>You can sense your bodies, but they are unconscious.</span>")
 		return
 
 	var/body_name = input(owner, "Select the body you want to move into", "List of active bodies") as null|anything in temp_body_list
@@ -1091,81 +1122,14 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	var/mob/living/carbon/human/selected_body = body_name
 
 	if(selected_body.stat == UNCONSCIOUS || owner.stat == UNCONSCIOUS) //sanity check
-		owner << "<span class='warning'>The user or the target body have become unconscious during selection.</span>"
+		to_chat(owner, "<span class='warning'>The user or the target body have become unconscious during selection.</span>")
 		return
 
 	owner.mind.transfer_to(selected_body)
 
 /*
- GOLEMS
+GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 */
-
-/datum/species/golem
-	// Animated beings of stone. They have increased defenses, and do not need to breathe. They're also slow as fuuuck.
-	name = "Golem"
-	id = "golem"
-	specflags = list(NOBREATH,RESISTTEMP,NOGUNS,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NODISMEMBER,MUTCOLORS)
-	speedmod = 2
-	armor = 55
-	siemens_coeff = 0
-	punchdamagelow = 5
-	punchdamagehigh = 14
-	punchstunthreshold = 11 //about 40% chance to stun
-	no_equip = list(slot_wear_mask, slot_wear_suit, slot_gloves, slot_shoes, slot_w_uniform)
-	nojumpsuit = 1
-	sexes = 1
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem
-	// To prevent golem subtypes from overwhelming the odds when random species
-	// changes, only the Random Golem type can be chosen
-	blacklisted = TRUE
-	dangerous_existence = TRUE
-	limbs_id = "golem"
-	fixed_mut_color = "aaa"
-
-/datum/species/golem/random
-	name = "Random Golem"
-	blacklisted = FALSE
-	dangerous_existence = FALSE
-
-/datum/species/golem/random/New()
-	. = ..()
-	var/list/golem_types = typesof(/datum/species/golem) - src.type
-	var/datum/species/golem/golem_type = pick(golem_types)
-	name = initial(golem_type.name)
-	id = initial(golem_type.id)
-	meat = initial(golem_type.meat)
-
-/datum/species/golem/adamantine
-	name = "Adamantine Golem"
-	id = "adamantine"
-	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/golem/adamantine
-	fixed_mut_color = "4ed"
-
-/datum/species/golem/plasma
-	name = "Plasma Golem"
-	id = "plasma"
-	fixed_mut_color = "a3d"
-
-/datum/species/golem/diamond
-	name = "Diamond Golem"
-	id = "diamond"
-	fixed_mut_color = "0ff"
-
-/datum/species/golem/gold
-	name = "Gold Golem"
-	id = "gold"
-	fixed_mut_color = "ee0"
-
-/datum/species/golem/silver
-	name = "Silver Golem"
-	id = "silver"
-	fixed_mut_color = "ddd"
-
-/datum/species/golem/uranium
-	name = "Uranium Golem"
-	id = "uranium"
-	fixed_mut_color = "7f0"
-
 
 /*
  FLIES
@@ -1174,10 +1138,11 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 /datum/species/fly
 	// Humans turned into fly-like abominations in teleporter accidents.
 	name = "Human?"
-	id = "fly"
+	id = "manfly"
 	say_mod = "buzzes"
 	mutant_organs = list(/obj/item/organ/tongue/fly)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/fly
+	toxic_food = TOXIC
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(chem.id == "pestkiller")
@@ -1211,6 +1176,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	meat = /obj/item/weapon/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,VIRUSIMMUNE,PIERCEIMMUNE,NOHUNGER,EASYDISMEMBER,EASYLIMBATTACHMENT)
 	mutant_organs = list(/obj/item/organ/tongue/bone)
+	disliked_food = null
+	liked_food = RAW | MEAT | GROSS
+	toxic_food = null //I doubt a skeleton would care
 
 /*
  ZOMBIES
@@ -1227,6 +1195,9 @@ datum/species/lizard/before_equip_job(datum/job/J, mob/living/carbon/human/H)
 	specflags = list(NOBREATH,RESISTTEMP,NOBLOOD,RADIMMUNE,NOZOMBIE,EASYDISMEMBER,EASYLIMBATTACHMENT, TOXINLOVER)
 	mutant_organs = list(/obj/item/organ/tongue/zombie)
 	speedmod = 2
+	disliked_food = null
+	liked_food = RAW | MEAT | GROSS
+	toxic_food = null
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
@@ -1302,7 +1273,9 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	blacklisted = 1 //See above
 	burnmod = 2
 	heatmod = 2
-	speedmod = 1
+	disliked_food = GROSS
+	liked_food = RAW | VEGETABLES
+	toxic_food = TOXIC | RAW
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
@@ -1355,6 +1328,8 @@ var/global/image/plasmaman_on_fire = image("icon"='icons/mob/OnFire.dmi', "icon_
 	meat = null
 	exotic_damage_overlay = "synth"
 	limbs_id = "synth"
+	disliked_food = null
+	toxic_food = null
 	var/list/initial_specflags = list(NOTRANSSTING,NOBREATH,VIRUSIMMUNE,NOHUNGER) //for getting these values back for assume_disguise()
 	var/disguise_fail_health = 75 //When their health gets to this level their synthflesh partially falls off
 	var/datum/species/fake_species = null //a species to do most of our work for us, unless we're damaged
@@ -1562,7 +1537,7 @@ SYNDICATE BLACK OPS
 	if(H.stat || H.stunned || H.weakened)
 		return 0
 	if(H.wear_suit && (H.wear_suit.flags_inv & HIDEJUMPSUIT))	//Jumpsuits have tail holes, so it makes sense they have wing holes too
-		H << "Your suit blocks your wings from extending!"
+		to_chat(H, "Your suit blocks your wings from extending!")
 		return 0
 	var/turf/T = get_turf(H)
 	if(!T)
@@ -1570,7 +1545,7 @@ SYNDICATE BLACK OPS
 
 	var/datum/gas_mixture/environment = T.return_air()
 	if(environment && !(environment.return_pressure() > 30))
-		H << "<span class='warning'>The atmosphere is too thin for you to fly!</span>"
+		to_chat(H, "<span class='warning'>The atmosphere is too thin for you to fly!</span>")
 		return 0
 	else
 		return 1
@@ -1586,11 +1561,11 @@ SYNDICATE BLACK OPS
 	var/datum/species/angel/A = H.dna.species
 	if(A.CanFly(H))
 		if(FLYING in A.specflags)
-			H << "<span class='notice'>You settle gently back onto the ground...</span>"
+			to_chat(H, "<span class='notice'>You settle gently back onto the ground...</span>")
 			A.ToggleFlight(H,0)
 			H.update_canmove()
 		else
-			H << "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>"
+			to_chat(H, "<span class='notice'>You beat your wings and begin to hover gently above the ground...</span>")
 			H.resting = 0
 			A.ToggleFlight(H,1)
 			H.update_canmove()
@@ -1600,7 +1575,7 @@ SYNDICATE BLACK OPS
 	if(H.buckled)
 		buckled_obj = H.buckled
 
-	H << "<span class='notice'>Your wings spazz out and launch you!</span>"
+	to_chat(H, "<span class='notice'>Your wings spazz out and launch you!</span>")
 
 	playsound(H.loc, 'sound/misc/slip.ogg', 50, 1, -3)
 

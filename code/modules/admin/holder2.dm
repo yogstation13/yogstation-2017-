@@ -56,6 +56,9 @@ var/list/admin_datums = list()
 			return 1 //we have all the rights they have and more
 	return 0
 
+/datum/admins/vv_edit_var(var_name, var_value)
+	return FALSE
+
 /*
 checks if usr is an admin with at least ONE of the flags in rights_required. (Note, they don't need all the flags)
 if rights_required == 0, then it simply checks if they are an admin.
@@ -64,7 +67,7 @@ generally it would be used like so:
 
 proc/admin_proc()
 	if(!check_rights(R_ADMIN)) return
-	world << "you have enough rights!"
+	to_chat(world, "you have enough rights!")
 
 NOTE: it checks usr! not src! So if you're checking somebody's rank in a proc which they did not call
 you will have to do something like if(client.rights & R_ADMIN) yourself.
@@ -75,7 +78,10 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 			return 1
 		else
 			if(show_msg)
-				usr << "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>"
+				if(usr.client.holder)
+					to_chat(usr, "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>")
+				else
+					to_chat(usr, "<font color='red'>You must be an administrator to use this command.</font>")
 	return 0
 
 //probably a bit iffy - will hopefully figure out a better solution

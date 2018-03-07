@@ -87,8 +87,7 @@
 
 	stamp_names = sortList(stamp_names)
 
-	var/input_stamp = input(user, "Choose a stamp to disguise as.",
-		"Choose a stamp.") as null|anything in stamp_names
+	var/input_stamp = input(user, "Choose a stamp to disguise as.", "Choose a stamp.") as null|anything in stamp_names
 
 	if(user && (src in user.contents) && input_stamp)
 		var/obj/item/weapon/stamp/stamp_type

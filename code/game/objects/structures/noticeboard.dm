@@ -7,7 +7,12 @@
 	anchored = 1
 	var/notices = 0
 
-/obj/structure/noticeboard/initialize()
+/obj/structure/noticeboard/Initialize(mapload)
+	..()
+
+	if(!mapload)
+		return
+
 	for(var/obj/item/I in loc)
 		if(notices > 4) break
 		if(istype(I, /obj/item/weapon/paper))
@@ -26,9 +31,9 @@
 			O.loc = src
 			notices++
 			icon_state = "nboard0[notices]"	//update sprite
-			user << "<span class='notice'>You pin the paper to the noticeboard.</span>"
+			to_chat(user, "<span class='notice'>You pin the paper to the noticeboard.</span>")
 		else
-			user << "<span class='notice'>You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>"
+			to_chat(user, "<span class='notice'>You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>")
 	else
 		return ..()
 
@@ -68,7 +73,7 @@
 					add_fingerprint(usr)
 					P.attackby(usr.l_hand, usr)
 				else
-					usr << "<span class='notice'>You'll need something to write with!</span>"
+					to_chat(usr, "<span class='notice'>You'll need something to write with!</span>")
 
 	if(href_list["read"])
 		var/obj/item/weapon/paper/P = locate(href_list["read"])

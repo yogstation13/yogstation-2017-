@@ -37,7 +37,7 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/New()
 	..()
 	internal = new/obj/item/device/gps/internal/lavaland/dragon(src)
-	
+
 
 // VAR SCALING //
 	if(istype(src,/mob/living/simple_animal/hostile/megafauna/dragon/lesser))
@@ -48,7 +48,7 @@
 		scaling = rawScaling / 100
 	maxHealth = round(maxHealth * scaling, 1)
 	health = round(health * scaling, 1)
-	
+
 	if(istype(src,/mob/living/simple_animal/hostile/megafauna/dragon/lesser))
 		return
 	if(rawScaling < 100)
@@ -137,7 +137,7 @@
 		var/obj/effect/overlay/temp/fireball/F = new(src.loc)
 		animate(F, pixel_z = 0, time = 12)
 		sleep(12)
-		explosion(T, 0, 0, 1, 0, 0, 0, 1)
+		explosion(T, 0, 0, 1, 0, 0, 0, 1, pummel = 0)
 		qdel(F)
 		qdel(src)
 
@@ -158,6 +158,8 @@
 			swoop_attack()
 			swoop_attack()
 			swoop_attack()
+	else if(prob(5))
+		xoxo()
 	else
 		fire_walls()
 
@@ -186,7 +188,7 @@
 				for(var/mob/living/L in J)
 					if(L != src)
 						L.adjustFireLoss(round(20*scaling,1))
-						L << "<span class='danger'>You're hit by the drake's fire breath!</span>"
+						to_chat(L, "<span class='danger'>You're hit by the drake's fire breath!</span>")
 				sleep(1)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/proc/swoop_attack(fire_rain = 0, atom/movable/manual_target)
@@ -241,11 +243,27 @@
 	swooping = 0
 	density = 1
 
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/xoxo()
+	visible_message("<span class='danger'>[src] shoots fire into the sky!</span>")
+	var/xoxofiring = pick(1, 2)
+	for(var/turf/turf in range(round(12*scaling,1),get_turf(src)))
+		if(IsOdd(xoxofiring))
+			new /obj/effect/overlay/temp/target(turf)
+			xoxofiring++
+		else
+			xoxofiring++
+	addtimer(src, "and_friends", 25)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/proc/and_friends()
+	visible_message("<span class='danger'>[src] roars and calls for aid!</span>")
+	var/mob/living/simple_animal/hostile/megafauna/dragon/lesser/L = new(src.loc)
+	L.faction = list("mining")
+
 /mob/living/simple_animal/hostile/megafauna/dragon/AltClickOn(atom/movable/A)
 	if(!istype(A))
 		return
 	if(swoop_cooldown >= world.time)
-		src << "You need to wait 20 seconds between swoop attacks!"
+		to_chat(src, "You need to wait 20 seconds between swoop attacks!")
 		return
 	swoop_attack(1, A)
 
@@ -261,3 +279,6 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 	butcher_results = list(/obj/item/weapon/ore/diamond = 1, /obj/item/stack/sheet/sinew = 1, /obj/item/stack/sheet/animalhide/ashdrake = 2, /obj/item/stack/sheet/bone = 6)
 	loot = list()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/and_friends()
+	return

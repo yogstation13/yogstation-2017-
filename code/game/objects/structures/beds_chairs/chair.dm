@@ -1,6 +1,6 @@
 /obj/structure/chair
 	name = "chair"
-	desc = "You sit in this. Either by will or force.\n<span class='notice'>Alt-click to rotate it clockwise.</span>"
+	desc = "You sit in this. Either by will or force. Sometimes you can drag them. \n<span class='notice'>Alt-click to rotate it clockwise.</span>"
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
 	anchored = 1
@@ -10,6 +10,8 @@
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 1
 	var/item_chair = /obj/item/chair // if null it can't be picked up
+	var/creates_scraping_noise = TRUE
+	var/scrapingsound = 'sound/effects/chair_scrape.ogg'
 
 /obj/structure/chair/New()
 	..()
@@ -17,6 +19,7 @@
 
 /obj/structure/chair/user_buckle_mob(mob/living/M, mob/user)
 	. = ..()
+	playsound(loc, "buckle", 50, 1, -1)
 	if(.)
 		var/obj/item/whoopee/W = locate() in src
 		if(W)
@@ -46,6 +49,8 @@
 /obj/structure/chair/Move(atom/newloc, direct)
 	..()
 	handle_rotation()
+	if(creates_scraping_noise)
+		playsound(loc, scrapingsound, 25, 1)
 
 /obj/structure/chair/ex_act(severity, target)
 	switch(severity)
@@ -87,14 +92,14 @@
 			return
 		var/obj/item/whoopee/whoo = locate() in src
 		if(whoo)
-			user << "<span class='warning'>There's already a cushion over this seat!</span>"
+			to_chat(user, "<span class='warning'>There's already a cushion over this seat!</span>")
 			return
-		user << "<span class='warning'>You softly place [W] ontop of [src].</span>"
+		to_chat(user, "<span class='warning'>You softly place [W] ontop of [src].</span>")
 		desc = "[desc]. There seems to be [W] sitting on top already."
 		if(user.drop_item())
 			W.forceMove(src)
 		else
-			user << "<span class='warning'>Seems like [W] is stuck to your hand.</span>"
+			to_chat(user, "<span class='warning'>Seems like [W] is stuck to your hand.</span>")
 	else
 		return ..()
 
@@ -149,7 +154,7 @@
 /obj/structure/chair/AltClick(mob/user)
 	..()
 	if(user.incapacitated())
-		user << "<span class='warning'>You can't do that right now!</span>"
+		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
 		return
 	if(!in_range(src, user))
 		return
@@ -166,6 +171,8 @@
 	buildstacktype = /obj/item/stack/sheet/mineral/wood
 	buildstackamount = 3
 	item_chair = /obj/item/chair/wood
+	scrapingsound = 'sound/effects/woodenchair_scrape.ogg'
+	anchored = 0
 
 /obj/structure/chair/wood/narsie_act()
 	return
@@ -187,6 +194,8 @@
 	buildstackamount = 2
 	var/image/armrest = null
 	item_chair = null
+	creates_scraping_noise = FALSE
+	anchored = 1
 
 /obj/structure/chair/comfy/New()
 	armrest = image("icons/obj/chairs.dmi", "comfychair_armrest")
@@ -236,6 +245,7 @@
 	can_buckle = 0
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
+	anchored = 0
 
 /obj/structure/chair/stool/narsie_act()
 	return
@@ -246,7 +256,7 @@
 		if(!item_chair || !ishuman(usr) || has_buckled_mobs() || src.flags & NODECONSTRUCT)
 			return
 		if(usr.incapacitated())
-			usr << "<span class='warning'>You can't do that right now!</span>"
+			to_chat(usr, "<span class='warning'>You can't do that right now!</span>")
 			return
 		usr.visible_message("<span class='notice'>[usr] grabs \the [src.name].</span>", "<span class='notice'>You grab \the [src.name].</span>")
 		var/C = new item_chair(loc)
@@ -261,6 +271,7 @@
 	desc = "It has some unsavory stains on it..."
 	icon_state = "bar"
 	item_chair = /obj/item/chair/stool/bar
+	anchored = 0
 
 /obj/item/chair
 	name = "chair"
@@ -289,10 +300,10 @@
 /obj/item/chair/proc/plant(mob/user)
 	for(var/obj/A in get_turf(loc))
 		if(istype(A,/obj/structure/chair))
-			user << "<span class='danger'>There is already a chair here.</span>"
+			to_chat(user, "<span class='danger'>There is already a chair here.</span>")
 			return
 		if(A.density && !(A.flags & ON_BORDER))
-			user << "<span class='danger'>There is already something here.</span>"
+			to_chat(user, "<span class='danger'>There is already something here.</span>")
 			return
 
 	user.visible_message("<span class='notice'>[user] rights \the [src.name].</span>", "<span class='notice'>You right \the [name].</span>")

@@ -142,7 +142,7 @@
 
 	if(statpanel("Lobby"))
 		stat("Game Mode:", (ticker.hide_mode) ? "Secret" : "[master_mode]")
-		stat("Map:", MAP_NAME)
+		stat("Map:", SSmapping.config.map_name)
 
 		if(ticker.current_state == GAME_STATE_PREGAME)
 			stat("Time To Start:", (ticker.timeLeft >= 0) ? "[round(ticker.timeLeft / 10)]s" : "DELAYED")
@@ -192,11 +192,11 @@
 			observer.started_as_observer = 1
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
-			src << "<span class='notice'>Now teleporting.</span>"
+			to_chat(src, "<span class='notice'>Now teleporting.</span>")
 			if (O)
 				observer.loc = O.loc
 			else
-				src << "<span class='notice'>Teleporting failed. You should be able to use ghost verbs to teleport somewhere useful</span>"
+				to_chat(src, "<span class='notice'>Teleporting failed. The map is probably still loading...</span>")
 			observer.key = key
 			observer.client = client
 			observer.set_ghost_appearance()
@@ -232,13 +232,13 @@
 				client.prefs.save_preferences()
 			src << browse(null, "window=disclaimer")
 			if(joining_forbidden)
-				src << "Please spend this round observing the game to familiarise yourself with the map, rules, and general playstyle."
+				to_chat(src, "Please spend this round observing the game to familiarise yourself with the map, rules, and general playstyle.")
 			new_player_panel();
 		return
 
 	if(href_list["late_join"])
 		if(!ticker || ticker.current_state != GAME_STATE_PLAYING)
-			usr << "<span class='danger'>The round is either not ready, or has already finished...</span>"
+			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
 			return
 
 		if(href_list["late_join"] == "override")
@@ -246,16 +246,16 @@
 			return
 
 		if(ticker.queued_players.len || (relevant_cap && living_player_count() >= relevant_cap && !(ckey(key) in admin_datums)))
-			usr << "<span class='danger'>[config.hard_popcap_message]</span>"
+			to_chat(usr, "<span class='danger'>[config.hard_popcap_message]</span>")
 
 			var/queue_position = ticker.queued_players.Find(usr)
 			if(queue_position == 1)
-				usr << "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>"
+				to_chat(usr, "<span class='notice'>You are next in line to join the game. You will be notified when a slot opens up.</span>")
 			else if(queue_position)
-				usr << "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>"
+				to_chat(usr, "<span class='notice'>There are [queue_position-1] players in front of you in the queue to join the game.</span>")
 			else
 				ticker.queued_players += usr
-				usr << "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>"
+				to_chat(usr, "<span class='notice'>You have been added to the queue to join the game. Your position in queue is [ticker.queued_players.len].</span>")
 			return
 		LateChoices()
 
@@ -265,12 +265,12 @@
 	if(href_list["SelectedJob"])
 
 		if(!enter_allowed)
-			usr << "<span class='notice'>There is an administrative lock on entering the game!</span>"
+			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 			return
 
 		if(ticker.queued_players.len && !(ckey(key) in admin_datums))
 			if((living_player_count() >= relevant_cap) || (src != ticker.queued_players[1]))
-				usr << "<span class='warning'>Server is full.</span>"
+				to_chat(usr, "<span class='warning'>Server is full.</span>")
 				return
 
 		AttemptLateSpawn(href_list["SelectedJob"])
@@ -301,21 +301,21 @@
 			if(POLLTYPE_OPTION)
 				var/optionid = text2num(href_list["voteoptionid"])
 				if(vote_on_poll(pollid, optionid))
-					usr << "<span class='notice'>Vote successful.</span>"
+					to_chat(usr, "<span class='notice'>Vote successful.</span>")
 				else
-					usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+					to_chat(usr, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 			if(POLLTYPE_TEXT)
 				var/replytext = href_list["replytext"]
 				if(log_text_poll_reply(pollid, replytext))
-					usr << "<span class='notice'>Feedback logging successful.</span>"
+					to_chat(usr, "<span class='notice'>Feedback logging successful.</span>")
 				else
-					usr << "<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>"
+					to_chat(usr, "<span class='danger'>Feedback logging failed, please try again or contact an administrator.</span>")
 			if(POLLTYPE_RATING)
 				var/id_min = text2num(href_list["minid"])
 				var/id_max = text2num(href_list["maxid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
-					usr << "The option ID difference is too big. Please contact administration or the database admin."
+					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
@@ -329,15 +329,15 @@
 								return
 
 						if(!vote_on_numval_poll(pollid, optionid, rating))
-							usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+							to_chat(usr, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 							return
-				usr << "<span class='notice'>Vote successful.</span>"
+				to_chat(usr, "<span class='notice'>Vote successful.</span>")
 			if(POLLTYPE_MULTI)
 				var/id_min = text2num(href_list["minoptionid"])
 				var/id_max = text2num(href_list["maxoptionid"])
 
 				if( (id_max - id_min) > 100 )	//Basic exploit prevention
-					usr << "The option ID difference is too big. Please contact administration or the database admin."
+					to_chat(usr, "The option ID difference is too big. Please contact administration or the database admin.")
 					return
 
 				for(var/optionid = id_min; optionid <= id_max; optionid++)
@@ -347,16 +347,16 @@
 							if(0)
 								continue
 							if(1)
-								usr << "<span class='danger'>Vote failed, please try again or contact an administrator.</span>"
+								to_chat(usr, "<span class='danger'>Vote failed, please try again or contact an administrator.</span>")
 								return
 							if(2)
-								usr << "<span class='danger'>Maximum replies reached.</span>"
+								to_chat(usr, "<span class='danger'>Maximum replies reached.</span>")
 								break
-				usr << "<span class='notice'>Vote successful.</span>"
+				to_chat(usr, "<span class='notice'>Vote successful.</span>")
 
 /mob/new_player/proc/AttemptLateSpawn(rank)
 	if(!SSjob.IsJobAvailable(rank, src))
-		src << alert("[rank] is not available. Please try another.")
+		to_chat(src, alert("[rank] is not available. Please try another."))
 		return 0
 
 	//Remove the player from the join queue if he was in one and reset the timer
@@ -426,66 +426,85 @@
 	var/mins = (mills % 36000) / 600
 	var/hours = mills / 36000
 
-	var/dat = "<div class='notice'>Round Duration: [round(hours)]h [round(mins)]m</div>"
+	var/dat = "<html><body><center>"
+	dat += "Round Duration: [round(hours)]h [round(mins)]m<br>"
 
 	switch(SSshuttle.emergency.mode)
 		if(SHUTTLE_ESCAPE)
-			dat += "<div class='notice red'>The station has been evacuated.</div><br>"
+			dat += "<font color='red'><b>The station has been evacuated.</b></font><br>"
 		if(SHUTTLE_CALL)
 			if(!SSshuttle.canRecall())
-				dat += "<div class='notice red'>The station is currently undergoing evacuation procedures.</div><br>"
+				dat += "<font color='red'>The station is currently undergoing evacuation procedures.</font><br>"
 
 	if(ticker.identification_console_message)
 		dat += "<div class='notice'>[station_name()] has delievered the following message, \"[ticker.identification_console_message]\"</div><br>"
 
-	var/available_job_count = 0
-	for(var/datum/job/job in SSjob.occupations)
-		if(job && SSjob.IsJobAvailable(job.title, src))
-			available_job_count++;
-
 	if(length(SSjob.prioritized_jobs))
-		dat += "<div class='notice'>The Head of Personnel has flagged these jobs as high priority:"
+		dat += "<font color='lime'>The Head of Personnel has flagged these jobs as high priority: "
 		var/amt = length(SSjob.prioritized_jobs)
 		var/amt_count
-		for(var/a in SSjob.prioritized_jobs)
+		for(var/A in SSjob.prioritized_jobs)
 			amt_count++
-			if(amt_count == amt) // checks for the last job added.
-				if(amt == 1) // we only have one prioritized job.
-					dat += " [a]"
-				else if(amt == 2)
-					dat += " and [a]"
-				else
-					dat += ", and [a]"
+			if(amt_count != amt)
+				dat += " [A], "
 			else
-				dat += " [a][amt == 2 ? "" : ","]" // this is to prevent "Jaintor, and Medical Doctor" so it outputs "Jaintor and Medical Doctor"
-		dat += "</div><br>"
+				dat += " [A]. </font><br>"
 
-	dat += "<div class='clearBoth'>Choose from the following open positions:</div><br>"
+	dat += "Choose from the following open positions:<br><br>"
+	var/list/categorizedJobs = list(
+		"Command" = list(jobs = list(), titles = command_positions, color = "#aac1ee"),
+		"Engineering" = list(jobs = list(), titles = engineering_positions, color = "#ffd699"),
+		"Security" = list(jobs = list(), titles = security_positions, color = "#ff9999", colBreak = 1),
+		"Supply" = list(jobs = list(), titles = supply_positions, color = "#ead4ae"),
+		"Miscellaneous" = list(jobs = list(), titles = list(), color = "#ffffff"),
+		"Synthetic" = list(jobs = list(), titles = nonhuman_positions, color = "#ccffcc"),
+		"Service" = list(jobs = list(), titles = civilian_positions, color = "#cccccc", colBreak = 1),
+		"Medical" = list(jobs = list(), titles = medical_positions, color = "#99ffe6", colBreak = 1),
+		"Science" = list(jobs = list(), titles = science_positions, color = "#e6b3e6"),
+		)
 	dat += "<div class='jobs'><div class='jobsColumn'>"
-	var/job_count = 0
 	for(var/datum/job/job in SSjob.occupations)
+		var/categorized = 0
 		if(job && SSjob.IsJobAvailable(job.title, src))
-			job_count++;
-			var/prior
-			if (job_count > round(available_job_count / 2))
-				dat += "</div><div class='jobsColumn'>"
-			var/position_class = "otherPosition"
-			if (job.title in SSjob.prioritized_jobs)
-				prior = TRUE
+			for(var/jobcat in categorizedJobs)
+				var/list/jobs = categorizedJobs[jobcat]["jobs"]
+				if(job.title in categorizedJobs[jobcat]["titles"])
+					categorized = 1
+					if(jobcat == "Command") // Put captain at top of command jobs
+						if(job.title == "Captain")
+							jobs.Insert(1, job)
+						else
+							jobs += job
+					else // Put heads at top of non-command jobs
+						if(job.title in command_positions)
+							jobs.Insert(1, job)
+						else
+							jobs += job
+			if(!categorized)
+				categorizedJobs["Miscellaneous"]["jobs"] += job
 
-			dat += "<a class='[position_class]' href='byond://?src=\ref[src];SelectedJob=[job.title]'><span class='[prior ? "good" : ""]'>[prior ? "(!)" : ""][job.title]</span> ([job.current_positions])</a><br>"
-	if(!job_count) //if there's nowhere to go, assistant opens up.
-		for(var/datum/job/job in SSjob.occupations)
-			if(job.title != "Assistant") continue
-			dat += "<a class='otherPosition' href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
-			break
-	dat += "</div></div>"
+	dat += "<table><tr><td valign='top'>"
+	for(var/jobcat in categorizedJobs)
+		if(categorizedJobs[jobcat]["colBreak"])
+			dat += "</td><td valign='top'>"
+		if(length(categorizedJobs[jobcat]["jobs"]) < 1)
+			continue
+		var/color = categorizedJobs[jobcat]["color"]
+		dat += "<fieldset style='border: 2px solid [color]; display: inline'>"
+		dat += "<legend align='center' style='color: [color]'>[jobcat]</legend>"
+		for(var/datum/job/job in categorizedJobs[jobcat]["jobs"])
+			if(job.title in SSjob.prioritized_jobs)
+				dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'><font color='lime'><B>[job.title] ([job.current_positions])</B></font></a><br>"
+			else
+				dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions])</a><br>"
+		dat += "</fieldset><br>"
 
+	dat += "</td></tr></table></center>"
 	// Removing the old window method but leaving it here for reference
 	//src << browse(dat, "window=latechoices;size=300x640;can_close=1")
 
 	// Added the new browser window method
-	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 440, 500)
+	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 900, 600)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(dat)
 	popup.open(0) // 0 is passed to open so that it doesn't use the onclose() proc

@@ -34,6 +34,8 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/init_timeofday
 	var/init_time
 	var/tickdrift = 0
+	
+	var/sleep_delta = 1
 
 	var/make_runtime = 0
 
@@ -47,6 +49,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	var/datum/subsystem/queue_tail //End of queue linked list (used for appending to the list)
 	var/queue_priority_count = 0 //Running total so that we don't have to loop thru the queue each run to split up the tick
 	var/queue_priority_count_bg = 0 //Same, but for background subsystems
+	var/map_loading = FALSE //Are we loading in a new map?
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
@@ -104,7 +107,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		spawn (10)
 			StartProcessing()
 	else
-		world << "<span class='boldannounce'>The Master Controller is having some issues, we will need to re-initialize EVERYTHING</span>"
+		to_chat(world, "<span class='boldannounce'>The Master Controller is having some issues, we will need to re-initialize EVERYTHING</span>")
 		spawn (20)
 			init_subtypes(/datum/subsystem, subsystems)
 			Setup()
@@ -114,7 +117,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 // 	Make a subsystem, give it the SS_NO_FIRE flag, and do your work in it's Initialize()
 /datum/controller/master/proc/Setup()
 	check_for_cleanbot_bug()
-	world << "<span class='boldannounce'>Initializing subsystems...</span>"
+	to_chat(world, "<span class='boldannounce'>Initializing subsystems...</span>")
 
 	// Sort subsystems by init_order, so they initialize in the correct order.
 	sortTim(subsystems, /proc/cmp_subsystem_init)
@@ -128,7 +131,7 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 		CHECK_TICK
 	CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
-	world << "<span class='boldannounce'>Initializations complete!</span>"
+	to_chat(world, "<span class='boldannounce'>Initializations complete!</span>")
 	world.log << "Initializations complete."
 
 	// Sort subsystems by display setting for easy access.
@@ -224,28 +227,36 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 	//the actual loop.
 	while (1)
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((world.timeofday - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
+		var/starting_tick_usage = world.tick_usage
 		if (processing <= 0)
 			sleep(10)
 			continue
 
-		//if there are mutiple sleeping procs running before us hogging the cpu, we have to run later
-		//	because sleeps are processed in the order received, so longer sleeps are more likely to run first
-		if (world.tick_usage > TICK_LIMIT_MC)
-			sleep_delta += 2
-			sleep(world.tick_lag * (processing + sleep_delta))
+		//Anti-tick-contention heuristics:
+		//if there are mutiple sleeping procs running before us hogging the cpu, we have to run later.
+		//	(because sleeps are processed in the order received, longer sleeps are more likely to run first)
+		if (starting_tick_usage > TICK_LIMIT_MC) //if there isn't enough time to bother doing anything this tick, sleep a bit.
+			sleep_delta *= 2
+			sleep(world.tick_lag * (processing * sleep_delta))
 			continue
 
-		sleep_delta = MC_AVERAGE_FAST(sleep_delta, 0)
-		if (last_run + (world.tick_lag * processing) > world.time)
+		//Byond resumed us late. assume it might have to do the same next tick
+		if (last_run + Ceiling(world.tick_lag * (processing * sleep_delta), world.tick_lag) < world.time)
 			sleep_delta += 1
-		if (world.tick_usage > (TICK_LIMIT_MC*0.5))
+		
+		sleep_delta = MC_AVERAGE_FAST(sleep_delta, 1) //decay sleep_delta
+		
+		if (starting_tick_usage > (TICK_LIMIT_MC*0.75)) //we ran 3/4 of the way into the tick
 			sleep_delta += 1
 
+		//debug
 		if (make_runtime)
 			var/datum/subsystem/SS
 			SS.can_fire = 0
 		if (!Failsafe || (Failsafe.processing_interval > 0 && (Failsafe.lasttick+(Failsafe.processing_interval*5)) < world.time))
 			new/datum/controller/failsafe() // (re)Start the failsafe.
+
+		//now do the actual stuff
 		if (!queue_head || !(iteration % 3))
 			if (round_started)
 				subsystems_to_check = normalsubsystems
@@ -280,8 +291,9 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 		iteration++
 		last_run = world.time
-		sleep(world.tick_lag * (processing + sleep_delta))
-
+		src.sleep_delta = MC_AVERAGE_FAST(src.sleep_delta, sleep_delta)
+		CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
+		sleep(world.tick_lag * (processing * sleep_delta))
 
 
 
@@ -489,3 +501,18 @@ var/CURRENT_TICKLIMIT = TICK_LIMIT_RUNNING
 
 	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (TickDrift:[round(Master.tickdrift)]) (Iteration:[Master.iteration])"))
 
+
+/datum/controller/master/proc/StartLoadingMap()
+	//disallow more than one map to load at once, multithreading it will just cause race conditions
+	while(map_loading)
+		stoplag()
+	for(var/S in subsystems)
+		var/datum/subsystem/SS = S
+		SS.StartLoadingMap()
+	map_loading = TRUE
+	
+/datum/controller/master/proc/StopLoadingMap(bounds = null)
+	map_loading = FALSE
+	for(var/S in subsystems)
+		var/datum/subsystem/SS = S
+		SS.StopLoadingMap()

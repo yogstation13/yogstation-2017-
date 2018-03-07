@@ -1,8 +1,8 @@
 /datum/round_event_control/operative
 	name = "Lone Operative"
 	typepath = /datum/round_event/ghost_role/operative
-	weight = 0 //Admin only
 	max_occurrences = 1
+	gamemode_blacklist = list("nuclear","wizard","revolution","blob")
 
 /datum/round_event/ghost_role/operative
 	minimum_required = 1
@@ -45,7 +45,7 @@
 			nuke_code = nuke.r_code
 
 		Mind.store_memory("<B>Station Self-Destruct Device Code</B>: [nuke_code]", 0, 0)
-		Mind.current << "The nuclear authorization code is: <B>[nuke_code]</B>"
+		to_chat(Mind.current, "The nuclear authorization code is: <B>[nuke_code]</B>")
 
 		var/datum/objective/nuclear/O = new()
 		O.owner = Mind

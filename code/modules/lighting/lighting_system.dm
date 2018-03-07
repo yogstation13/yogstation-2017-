@@ -102,7 +102,7 @@
 		SSlighting.changed_lights |= src
 
 //Remove current effect
-/datum/light_source/proc/remove_effect().
+/datum/light_source/proc/remove_effect()
 	for(var/turf/T in effect)
 		T.update_lumcount(-effect[T])
 
@@ -163,23 +163,6 @@
 
 /atom
 	var/datum/light_source/light
-
-
-//Turfs with opacity when they are constructed will trigger nearby lights to update
-//Turfs and atoms with luminosity when they are constructed will create a light_source automatically
-/turf/New()
-	..()
-	if(luminosity)
-		light = new(src)
-
-//Movable atoms with opacity when they are constructed will trigger nearby lights to update
-//Movable atoms with luminosity when they are constructed will create a light_source automatically
-/atom/movable/New()
-	..()
-	if(opacity && isturf(loc))
-		loc.UpdateAffectingLights()
-	if(luminosity)
-		light = new(src)
 
 //Objects with opacity will trigger nearby lights to update at next SSlighting fire
 /atom/movable/Destroy()

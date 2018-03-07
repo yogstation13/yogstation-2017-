@@ -11,9 +11,12 @@
 	var/list/jumpto_ports = list()
 	var/list/blacklisted_turfs = list()
 	var/obj/docking_port/stationary/my_port
+	var/obj/docking_port/mobile/shuttle_port
+	var/area/shuttle_port_area
 	var/view_range = 7
 	var/x_offset = 0
 	var/y_offset = 0
+	var/space_turfs_only = TRUE
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/GrantActions(mob/living/user)
 	if(jumpto_ports.len)
@@ -31,18 +34,21 @@
 		actions += place_action
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/CreateEye()
-	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
-	if(!M)
+	shuttle_port = SSshuttle.getShuttle(shuttleId)
+	if(!shuttle_port)
+		shuttle_port = null
+		return
+	shuttle_port_area = shuttle_port.areaInstance
+	if(!shuttle_port_area)
+		shuttle_port = null
+		shuttle_port_area = null
 		return
 	eyeobj = new /mob/camera/aiEye/remote/shuttle_docker()
 	var/mob/camera/aiEye/remote/shuttle_docker/the_eye = eyeobj
 	the_eye.origin = src
-	the_eye.dir = M.dir
-	var/area/A = M.areaInstance
-	if(!A)
-		return
-	var/turf/origin = locate(M.x + x_offset, M.y + y_offset, M.z)
-	for(var/turf/T in A)
+	the_eye.dir = shuttle_port.dir
+	var/turf/origin = locate(shuttle_port.x + x_offset, shuttle_port.y + y_offset, shuttle_port.z)
+	for(var/turf/T in shuttle_port_area)
 		if(T.z != origin.z)
 			continue
 		var/image/I = image('icons/effects/alphacolors.dmi', origin, "red")
@@ -124,7 +130,7 @@
 	checkLandingSpot()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/checkLandingTurf(turf/T)
-	return T && !blacklisted_turfs[T]
+	return T && ((T.loc == shuttle_port_area) || (!blacklisted_turfs || !blacklisted_turfs[T]) && (!space_turfs_only || isspaceturf(T)) )
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/generateBlacklistedTurfs()
 	for(var/V in SSshuttle.stationary)
@@ -194,9 +200,9 @@
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/origin = remote_eye.origin
 	if(origin.placeLandingSpot())
-		target << "<span class='notice'>Transit location designated</span>"
+		to_chat(target, "<span class='notice'>Transit location designated</span>")
 	else
-		target << "<span class='warning'>Invalid transit location</span>"
+		to_chat(target, "<span class='warning'>Invalid transit location</span>")
 
 /datum/action/innate/camera_jump/shuttle_docker
 	name = "Jump to Location"
@@ -224,4 +230,4 @@
 		var/turf/T = get_turf(L[selected])
 		if(T)
 			remote_eye.setLoc(T)
-			target << "<span class='notice'>Jumped to location [selected]</span>"
+			to_chat(target, "<span class='notice'>Jumped to location [selected]</span>")

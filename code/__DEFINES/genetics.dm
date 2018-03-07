@@ -1,6 +1,8 @@
 
 //Defines copying names of mutations in all cases, make sure to change this if you change mutation's name
-#define HULK		"Hulk"
+#define HULK		"Mutation"
+#define GENETICS_HULK	"Hulk"
+#define ACTIVE_HULK	"Hulk State"
 #define XRAY		"X Ray Vision"
 #define COLDRES		"Cold Resistance"
 #define TK			"Telekinesis"
@@ -10,6 +12,7 @@
 #define COUGH		"Cough"
 #define DWARFISM	"Dwarfism"
 #define CLOWNMUT	"Clumsiness"
+#define CLUWNEMUT	"Cluwne"
 #define TOURETTES	"Tourettes Syndrome"
 #define DEAFMUT		"Deafness"
 #define BLINDMUT	"Blindness"
@@ -106,3 +109,9 @@
 #define BLOOD_VOLUME_OKAY			336
 #define BLOOD_VOLUME_BAD			224
 #define BLOOD_VOLUME_SURVIVE		122
+
+//Might as well put grossed out levels here too huehuehue
+#define DISGUST_LEVEL_MAXEDOUT 150 //We can always add PTSD later
+#define DISGUST_LEVEL_DISGUSTED 75
+#define DISGUST_LEVEL_VERYGROSS 50
+#define DISGUST_LEVEL_GROSS 25

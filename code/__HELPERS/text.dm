@@ -90,8 +90,12 @@
 	var/name = input(user, message, title, default) as message|null
 	return html_encode(trim(name, max_length))
 
+/proc/name_input(mob/user, message = "", title = "", default = "", allow_numbers = FALSE, max_length=MAX_NAME_LEN)
+	var/name = input(user, message, title, default) as text|null
+	return reject_bad_name(name, allow_numbers, max_length)
+
 //Filters out undesirable characters from names
-/proc/reject_bad_name(t_in, allow_numbers=0, max_length=MAX_NAME_LEN)
+/proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN)
 	if(!t_in || length(t_in) > max_length)
 		return //Rejects the input if it is null or if it is longer then the max length allowed
 
@@ -127,18 +131,18 @@
 				number_of_alphanumeric++
 				last_char_group = 3
 
-			// '  -  .
-			if(39,45,46)			//Common name punctuation
+			// ~   |   @  :  #  $  %  *  +
+			if(126,124,64,58,35,36,37,42,43)			//Other symbols that we'll allow (mainly for AI)
 				if(!last_char_group)
+					continue	//suppress at start of string
+				if(!allow_numbers)
 					continue
 				t_out += ascii2text(ascii_char)
 				last_char_group = 2
 
-			// ~   |   @  :  #  $  %  &  *  +
-			if(126,124,64,58,35,36,37,38,42,43)			//Other symbols that we'll allow (mainly for AI)
+			// '  -  .
+			if(39,45,46)			//Common name punctuation
 				if(!last_char_group)
-					continue	//suppress at start of string
-				if(!allow_numbers)
 					continue
 				t_out += ascii2text(ascii_char)
 				last_char_group = 2
@@ -472,3 +476,6 @@ var/list/rot13_lookup = list()
 			ca -= 13
 		result += ascii2text(ca)
 	return jointext(result, "")
+
+/proc/fix_apostrophes(str)
+	return replacetext(replacetext(str, "&#39;", "'"), "&#34;", "\"")

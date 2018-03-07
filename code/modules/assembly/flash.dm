@@ -41,6 +41,7 @@
 	T.visible_message("<span class='disarm'>[src] emits a blinding light!</span>")
 	for(var/mob/living/carbon/M in viewers(3, T))
 		flash_carbon(M, null, 5, 0)
+	try_burnout()
 
 
 /obj/item/device/assembly/flash/proc/burn_out() //Made so you can override it if you want to have an invincible flash from R&D or something.
@@ -52,10 +53,6 @@
 
 
 /obj/item/device/assembly/flash/proc/flash_recharge(interval=10)
-	if(prob(times_used * 3)) //The more often it's used in a short span of time the more likely it will burn out
-		burn_out()
-		return 0
-
 	var/deciseconds_passed = world.time - last_used
 	for(var/seconds = deciseconds_passed/10, seconds>=interval, seconds-=interval) //get 1 charge every interval
 		times_used--
@@ -89,15 +86,15 @@
 			M.confused += power
 			M.Stun(1)
 			visible_message("<span class='disarm'>[user] blinds [M] with the flash!</span>")
-			user << "<span class='danger'>You blind [M] with the flash!</span>"
-			M << "<span class='userdanger'>[user] blinds you with the flash!</span>"
+			to_chat(user, "<span class='danger'>You blind [M] with the flash!</span>")
+			to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
 			if(M.weakeyes)
 				M.Stun(2)
 				M.visible_message("<span class='disarm'>[M] gasps and shields their eyes!</span>", "<span class='userdanger'>You gasp and shields your eyes!</span>")
 		else
 			visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>")
-			user << "<span class='warning'>You fail to blind [M] with the flash!</span>"
-			M << "<span class='danger'>[user] fails to blind you with the flash!</span>"
+			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")
+			to_chat(M, "<span class='danger'>[user] fails to blind you with the flash!</span>")
 	else
 		if(M.flash_eyes())
 			M.confused += power
@@ -108,6 +105,7 @@
 
 	if(iscarbon(M))
 		flash_carbon(M, user, 5, 1)
+		try_burnout()
 		return 1
 
 	else if(issilicon(M))
@@ -115,9 +113,11 @@
 		update_icon(1)
 		M.Weaken(rand(5,10))
 		user.visible_message("<span class='disarm'>[user] overloads [M]'s sensors with the flash!</span>", "<span class='danger'>You overload [M]'s sensors with the flash!</span>")
+		try_burnout()
 		return 1
 
 	user.visible_message("<span class='disarm'>[user] fails to blind [M] with the flash!</span>", "<span class='warning'>You fail to blind [M] with the flash!</span>")
+	try_burnout()
 
 
 /obj/item/device/assembly/flash/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
@@ -128,6 +128,7 @@
 	user.visible_message("<span class='disarm'>[user]'s flash emits a blinding light!</span>", "<span class='danger'>Your flash emits a blinding light!</span>")
 	for(var/mob/living/carbon/M in oviewers(3, null))
 		flash_carbon(M, user, 1, 0)
+	try_burnout()
 
 
 /obj/item/device/assembly/flash/emp_act(severity)
@@ -141,23 +142,27 @@
 /obj/item/device/assembly/flash/attackby(obj/item/W, mob/user, params)
 	..()
 	if(crit_fail)
-		user << "<span class='warning'>You cannot do this to a broken flash!</span>"
+		to_chat(user, "<span class='warning'>You cannot do this to a broken flash!</span>")
 		return
 	if(istype(W,/obj/item/device/revtool))
 		if(user.mind && (user.mind in ticker.mode.head_revolutionaries))
 			if(istype(src, /obj/item/device/assembly/flash/rev))
-				user << "<span class='danger'>This device is already a conversion tool!"
+				to_chat(user, "<span class='danger'>This device is already a conversion tool!")
 				return
-			user << "<span class='warning'>You plug the device into the flash. (This will take about 30 seconds, and you need to stand still!)</span>"
+			to_chat(user, "<span class='warning'>You plug the device into the flash. (This will take about 30 seconds, and you need to stand still!)</span>")
 			if(do_after(user, rand(250,350), target = src))
 				var/obj/item/device/assembly/flash/rev/R = new
 				user.unEquip(src)
 				user.put_in_hands(R)
-				user << "<span class='warning'>The flash seems to elongate, and lets out a soft whistle.</span>"
+				to_chat(user, "<span class='warning'>The flash seems to elongate, and lets out a soft whistle.</span>")
 				qdel(src)
 		else
-			user << "<span class='warning'>You're not sure how to use this!</span>"
+			to_chat(user, "<span class='warning'>You're not sure how to use this!</span>")
 			return
+
+/obj/item/device/assembly/flash/proc/try_burnout()
+	if(prob(times_used * 3)) //The more often it's used in a short span of time the more likely it will burn out
+		burn_out()
 
 /obj/item/device/assembly/flash/cyborg
 	origin_tech = null

@@ -14,11 +14,10 @@
 
 /obj/machinery/computer/teleporter/New()
 	src.id = "[rand(1000, 9999)]"
-	link_power_station()
 	..()
-	return
 
-/obj/machinery/computer/teleporter/initialize()
+/obj/machinery/computer/teleporter/Initialize()
+	..()
 	link_power_station()
 
 /obj/machinery/computer/teleporter/Destroy()
@@ -41,11 +40,11 @@
 		var/obj/item/device/gps/L = I
 		if(L.locked_location && !(stat & (NOPOWER|BROKEN)))
 			if(!user.unEquip(L))
-				user << "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>"
+				to_chat(user, "<span class='warning'>\the [I] is stuck to your hand, you cannot put it in \the [src]!</span>")
 				return
 			L.loc = src
 			locked = L
-			user << "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>"
+			to_chat(user, "<span class='caution'>You insert the GPS device into the [name]'s slot.</span>")
 	else
 		return ..()
 
@@ -199,7 +198,7 @@
 					areaindex[tmpname] = 1
 				L[tmpname] = I
 
-		var/desc = input("Please select a location to lock in.", "Locking Computer") in L
+		var/desc = input("Please select a location to lock in.", "Locking Computer") as anything in L
 		target = L[desc]
 
 	else
@@ -207,7 +206,7 @@
 		var/list/areaindex = list()
 		var/list/S = power_station.linked_stations
 		if(!S.len)
-			user << "<span class='alert'>No connected stations located.</span>"
+			to_chat(user, "<span class='alert'>No connected stations located.</span>")
 			return
 		for(var/obj/machinery/teleport/station/R in S)
 			var/turf/T = get_turf(R)
@@ -221,7 +220,7 @@
 			else
 				areaindex[tmpname] = 1
 			L[tmpname] = R
-		var/desc = input("Please select a station to lock in.", "Locking Computer") in L
+		var/desc = input("Please select a station to lock in.", "Locking Computer") as anything in L
 		target = L[desc]
 		if(target)
 			var/obj/machinery/teleport/station/trg = target
@@ -254,7 +253,6 @@
 
 /obj/machinery/teleport/hub/New()
 	..()
-	link_power_station()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_hub(null)
 	B.apply_default_parts(src)
 
@@ -267,7 +265,8 @@
 							/obj/item/weapon/stock_parts/matter_bin = 1)
 	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
-/obj/machinery/teleport/hub/initialize()
+/obj/machinery/teleport/hub/Initialize()
+	..()
 	link_power_station()
 
 /obj/machinery/teleport/hub/Destroy()
@@ -293,7 +292,7 @@
 
 /obj/machinery/teleport/hub/Bumped(M as mob|obj)
 	if(z == ZLEVEL_CENTCOM)
-		M << "You can't use this here."
+		to_chat(M, "You can't use this here.")
 	if(is_ready())
 		teleport(M)
 		use_power(5000)
@@ -374,7 +373,6 @@
 	..()
 	var/obj/item/weapon/circuitboard/machine/B = new /obj/item/weapon/circuitboard/machine/teleporter_station(null)
 	B.apply_default_parts(src)
-	link_console_and_hub()
 
 /obj/item/weapon/circuitboard/machine/teleporter_station
 	name = "circuit board (Teleporter Station)"
@@ -386,7 +384,7 @@
 							/obj/item/weapon/stock_parts/console_screen = 1)
 	def_components = list(/obj/item/weapon/ore/bluespace_crystal = /obj/item/weapon/ore/bluespace_crystal/artificial)
 
-/obj/machinery/teleport/station/initialize()
+/obj/machinery/teleport/station/Initialize()
 	link_console_and_hub()
 
 /obj/machinery/teleport/station/RefreshParts()
@@ -424,15 +422,15 @@
 		var/obj/item/device/multitool/M = W
 		if(panel_open)
 			M.buffer = src
-			user << "<span class='caution'>You download the data to the [W.name]'s buffer.</span>"
+			to_chat(user, "<span class='caution'>You download the data to the [W.name]'s buffer.</span>")
 		else
 			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 				if(linked_stations.len < efficiency)
 					linked_stations.Add(M.buffer)
 					M.buffer = null
-					user << "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>"
+					to_chat(user, "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>")
 				else
-					user << "<span class='alert'>This station can't hold more information, try to use better parts.</span>"
+					to_chat(user, "<span class='alert'>This station can't hold more information, try to use better parts.</span>")
 		return
 	else if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_icon()
@@ -447,7 +445,7 @@
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(panel_open)
 			link_console_and_hub()
-			user << "<span class='caution'>You reconnect the station to nearby machinery.</span>"
+			to_chat(user, "<span class='caution'>You reconnect the station to nearby machinery.</span>")
 			return
 	else
 		return ..()

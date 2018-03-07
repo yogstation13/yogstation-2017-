@@ -378,7 +378,7 @@ var/time_last_changed_position = 0
 						if(region_access)
 							authenticated = 1
 			else if ((!( authenticated ) && (istype(usr, /mob/living/silicon))) && (!modify))
-				usr << "<span class='warning'>You can't modify an ID without an ID inserted to modify! Once one is in the modify slot on the computer, you can log in.</span>"
+				to_chat(usr, "<span class='warning'>You can't modify an ID without an ID inserted to modify! Once one is in the modify slot on the computer, you can log in.</span>")
 		if ("logout")
 			region_access = null
 			head_subordinates = null
@@ -396,7 +396,7 @@ var/time_last_changed_position = 0
 			if (authenticated == 2)
 				var/t1 = href_list["assign_target"]
 				if(t1 == "Custom")
-					var/newJob = reject_bad_text(input("Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"), MAX_NAME_LEN)
+					var/newJob = reject_bad_text(stripped_input(usr, "Enter a custom job assignment.", "Assignment", modify ? modify.assignment : "Unassigned"), MAX_NAME_LEN)
 					if(newJob)
 						t1 = newJob
 
@@ -411,27 +411,28 @@ var/time_last_changed_position = 0
 							jobdatum = J
 							break
 					if(!jobdatum)
-						usr << "<span class='error'>No log exists for this job.</span>"
+						to_chat(usr, "<span class='error'>No log exists for this job.</span>")
 						return
 
 					modify.access = ( istype(src,/obj/machinery/computer/card/centcom) ? get_centcom_access(t1) : jobdatum.get_access() )
 				if (modify)
+					log_game("[modify.registered_name]'s ID had its job changed to [t1] from [modify.assignment]")
 					modify.assignment = t1
 		if ("demote")
 			if(modify.assignment in head_subordinates || modify.assignment == "Assistant")
 				modify.assignment = "Unassigned"
 			else
-				usr << "<span class='error'>You are not authorized to demote this position.</span>"
+				to_chat(usr, "<span class='error'>You are not authorized to demote this position.</span>")
 		if ("reg")
 			if (authenticated)
 				var/t2 = modify
-				//var/t1 = input(usr, "What name?", "ID computer", null)  as text
+				//var/t1 = stripped_input(usr, "What name?", "ID computer", null)
 				if ((authenticated && modify == t2 && (in_range(src, usr) || (istype(usr, /mob/living/silicon))) && istype(loc, /turf)))
 					var/newName = reject_bad_name(href_list["reg"])
 					if(newName)
 						modify.registered_name = newName
 					else
-						usr << "<span class='error'>Invalid name entered.</span>"
+						to_chat(usr, "<span class='error'>Invalid name entered.</span>")
 						return
 		if ("mode")
 			mode = text2num(href_list["mode_target"])
@@ -483,17 +484,17 @@ var/time_last_changed_position = 0
 
 		if ("arrivalmessage")
 			if(!allowed(usr))
-				usr << "<span class='warning'>Invalid ID.</span>"
+				to_chat(usr, "<span class='warning'>Invalid ID.</span>")
 				return
 			var/mob/M = usr
 			if(ticker.id_console_msg_lock)
-				M << "<span class='warning'>Central Command has blocked your station's power to do this.</span>"
+				to_chat(M, "<span class='warning'>Central Command has blocked your station's power to do this.</span>")
 				log_game("[M] ([M.ckey]) has attempted to change the arrivals message while it was locked.")
 				return
 
 			message_admins("[M.name] ([M.ckey]) is changing the arrival message.")
 			log_game("[M] ([M.ckey]) is attempting to change the arrivals message ([ticker.identification_console_message]).")
-			var/msg = input(usr, "What do you want centcomm to tell potential employees enlisting to [station_name()]?", "Arrivals Message")
+			var/msg = stripped_input(usr, "What do you want centcomm to tell potential employees enlisting to [station_name()]?", "Arrivals Message")
 			if(!allowed(usr) || !usr.canUseTopic(src,be_close=TRUE))
 				message_admins("[M.name] ([M.ckey] (ckey)) did not have the correct ID, or simply was interrupted when trying to change the arrival message.")
 				return
@@ -507,10 +508,10 @@ var/time_last_changed_position = 0
 
 		if ("prioritize")
 			if(!allowed(usr))
-				usr << "<span class='warning'>Invalid ID.</span>"
+				to_chat(usr, "<span class='warning'>Invalid ID.</span>")
 				return
 			if(length(SSjob.prioritized_jobs) >= ID_PRIORITIZE_LEN)
-				usr << "<span class='warning'>Centcomm cannot accept more than 5 priority requests.</span>"
+				to_chat(usr, "<span class='warning'>Centcomm cannot accept more than 5 priority requests.</span>")
 				return
 			var/mob/M = usr
 			var/list/jobs = list()
@@ -532,9 +533,9 @@ var/time_last_changed_position = 0
 					else
 						SSjob.prioritized_jobs += pickjob
 						log_game("[M] ([M.ckey]) has prioritized [pickjob].")
-					usr << "<span class='notice'>[pickjob] has been successfully [prior ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>"
+					to_chat(usr, "<span class='notice'>[pickjob] has been successfully [prior ?  "prioritized" : "unprioritized"]. Potential employees will notice your request.</span>")
 			else
-				usr << "<span class='notice'>Surprisingly... there aren't any jobs to prioritize.</span>"
+				to_chat(usr, "<span class='notice'>Surprisingly... there aren't any jobs to prioritize.</span>")
 
 	if (modify)
 		modify.update_label()

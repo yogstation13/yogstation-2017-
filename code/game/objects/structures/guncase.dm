@@ -12,17 +12,14 @@
 	var/open = 1
 	var/capacity = 4
 
-/obj/structure/guncase/New()
+/obj/structure/guncase/Initialize(mapload)
 	..()
-	update_icon()
-
-/obj/structure/guncase/initialize()
-	..()
-	for(var/obj/item/I in loc.contents)
-		if(istype(I, gun_category))
-			I.loc = src
-		if(contents.len >= capacity)
-			break
+	if(mapload)
+		for(var/obj/item/I in loc.contents)
+			if(istype(I, gun_category))
+				I.loc = src
+			if(contents.len >= capacity)
+				break
 	update_icon()
 
 /obj/structure/guncase/update_icon()
@@ -42,7 +39,7 @@
 			if(!user.drop_item())
 				return
 			contents += I
-			user << "<span class='notice'>You place [I] in [src].</span>"
+			to_chat(user, "<span class='notice'>You place [I] in [src].</span>")
 			update_icon()
 			return
 
@@ -76,7 +73,9 @@
 
 /obj/structure/guncase/Topic(href, href_list)
 	if(href_list["retrieve"])
-		var/obj/item/O = locate(href_list["retrieve"])
+		var/obj/item/O = locate(href_list["retrieve"]) in src
+		if(!O)
+			return
 		if(!usr.canUseTopic(src))
 			return
 		if(ishuman(usr))

@@ -80,9 +80,9 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	if(ishuman(user) && istype(A, /obj/item))
 		var/mob/living/carbon/human/H = user
 		if(H.put_in_hands(A))
-			H << "[A] materializes into your hands!"
+			to_chat(H, "[A] materializes into your hands!")
 		else
-			H << "\The [A] materializes onto the floor."
+			to_chat(H, "\The [A] materializes onto the floor.")
 	return 1
 
 // Nuclear Operative (Special Offers)
@@ -209,7 +209,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 		targets and cause them to slur as if inebriated. It can produce an \
 		infinite amount of bolts, but takes time to automatically recharge \
 		after each shot."
-	item = /obj/item/weapon/gun/energy/kinetic_accelerator/crossbow
+	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 9
 	surplus = 50
 	exclude_modes = list(/datum/game_mode/nuclear)
@@ -610,7 +610,7 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	name = "Dehydrated Space Carp"
 	desc = "Looks like a plush toy carp, but just add water and it becomes a real-life space carp! Activate in \
 			your hand before use so it knows not to kill you."
-	item = /obj/item/toy/carpplushie/dehy_carp
+	item = /obj/item/toy/plushie/carpplushie/dehy_carp
 	cost = 1
 
 /datum/uplink_item/stealthy_weapons/soap_clusterbang
@@ -954,6 +954,14 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/device_tools/projector
+	name = "Holographic Object Projector"
+	item = /obj/item/device/holoprojector
+	desc = "A device for masters of deception and trickery. This item allows you to scan objects and create \
+			holograms of them. The holograms will dissipate when interacted with. You can replace the stock \
+			parts it comes with to increase the maximum number of holograms and variety of scannable objects."
+	cost = 4
+
 // Implants
 /datum/uplink_item/implants
 	category = "Implants"
@@ -1071,6 +1079,22 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	category = "Role-Restricted"
 	exclude_modes = list(/datum/game_mode/nuclear)
 	//restricted_roles = list("Assistant")
+
+/datum/uplink_item/role_restricted/slipping_carp
+	name = "Slipping Carp Scroll"
+	desc = "A scroll that teaches you the secrets of slipping carp, allowing you to deflect projectiles and deal massive melee damage, \
+			but only while holding your mop."
+	item = /obj/item/weapon/martial_arts_scroll/slipping_carp_scroll
+	restricted_roles = list("Janitor")
+	cost = 19 //they need 1 remaining to buy syndicate soap
+
+/datum/uplink_item/role_restricted/bikehornsword
+	name = "Energy Sword Bikehorn"
+	desc = "A bikehorn with a built-in energy sword. Activate through Alt-Click."
+	item = /obj/item/weapon/melee/energy/sword/bikehorn
+	restricted_roles = list("Clown")
+	cost = 9
+
 
 // Pointless
 /datum/uplink_item/badass

@@ -187,3 +187,43 @@
 	slicing_duration = 200   //alien wall takes twice as much time to slice
 	explosion_block = 3
 	canSmoothWith = list(/turf/closed/wall/mineral/abductor, /obj/structure/falsewall/abductor)
+
+/turf/closed/wall/mineral/plastitanium
+	name = "wall"
+	desc = "An evil wall of plasma and titanium."
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "map-shuttle"
+	explosion_block = 4
+	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
+	canSmoothWith = list(/turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/shuttle/engine)
+
+/turf/closed/wall/mineral/plastitanium/nodiagonal
+	smooth = SMOOTH_MORE
+	icon_state = "map-shuttle_nd"
+
+/turf/closed/wall/mineral/plastitanium/nosmooth
+	icon = 'icons/turf/shuttle.dmi'
+	icon_state = "wall"
+	smooth = SMOOTH_FALSE
+
+/turf/closed/wall/mineral/plastitanium/overspace
+	icon_state = "map-overspace"
+	fixed_underlay = list("space"=1)
+
+/turf/closed/wall/mineral/plastitanium/interior/copyTurf(turf/T)
+	if(T.type != type)
+		T.ChangeTurf(type)
+		if(underlays.len)
+			T.underlays = underlays
+	if(T.icon_state != icon_state)
+		T.icon_state = icon_state
+	if(T.icon != icon)
+		T.icon = icon
+	if(T.dir != dir)
+		T.dir = dir
+	T.transform = transform
+	return T
+
+/turf/closed/wall/mineral/plastitanium/copyTurf(turf/T)
+	. = ..()
+	T.transform = transform

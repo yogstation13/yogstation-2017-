@@ -31,10 +31,12 @@
 	icon_state = "tallcabinet"
 
 
-/obj/structure/filingcabinet/initialize()
-	for(var/obj/item/I in loc)
-		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
-			I.loc = src
+/obj/structure/filingcabinet/Initialize(mapload)
+	..()
+	if(mapload)
+		for(var/obj/item/I in loc)
+			if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo))
+				I.loc = src
 
 /obj/structure/filingcabinet/ex_act(severity, target)
 	for(var/obj/item/I in src)
@@ -43,10 +45,10 @@
 	..()
 
 /obj/structure/filingcabinet/attackby(obj/item/P, mob/user, params)
-	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/documents))
+	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/documents/secret))
 		if(!user.drop_item())
 			return
-		user << "<span class='notice'>You put [P] in [src].</span>"
+		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
 		P.loc = src
 		icon_state = "[initial(icon_state)]-open"
 		sleep(5)
@@ -55,16 +57,16 @@
 	else if(istype(P, /obj/item/weapon/wrench))
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
-		user << "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>"
+		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] [src].</span>")
 	else if(user.a_intent != "harm")
-		user << "<span class='warning'>You can't put [P] in [src]!</span>"
+		to_chat(user, "<span class='warning'>You can't put [P] in [src]!</span>")
 	else
 		return ..()
 
 
 /obj/structure/filingcabinet/attack_hand(mob/user)
 	if(contents.len <= 0)
-		user << "<span class='notice'>[src] is empty.</span>"
+		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 		return
 
 	user.set_machine(src)
@@ -89,9 +91,9 @@
 			I.loc = loc
 			if(prob(25))
 				step_rand(I)
-			user << "<span class='notice'>You pull \a [I] out of [src] at random.</span>"
+			to_chat(user, "<span class='notice'>You pull \a [I] out of [src] at random.</span>")
 			return
-	user << "<span class='notice'>You find nothing in [src].</span>"
+	to_chat(user, "<span class='notice'>You find nothing in [src].</span>")
 
 /obj/structure/filingcabinet/Topic(href, href_list)
 	if(href_list["retrieve"])
@@ -194,8 +196,9 @@ var/list/employmentCabinets = list()
 		var/datum/data/record/G = record
 		if(!G)
 			continue
-		if(G.fields["reference"])
-			addFile(G.fields["reference"])
+		var/datum/mind/M = G.fields["mindref"]
+		if(M && ishuman(M.current))
+			addFile(M.current)
 
 
 /obj/structure/filingcabinet/employment/proc/addFile(mob/living/carbon/human/employee)
@@ -211,17 +214,17 @@ var/list/employmentCabinets = list()
 		sleep(100) // prevents the devil from just instantly emptying the cabinet, ensuring an easy win.
 		cooldown = 0
 	else
-		user << "<span class='warning'>The [src] is jammed, give it a few seconds.</span>"
+		to_chat(user, "<span class='warning'>The [src] is jammed, give it a few seconds.</span>")
 
 
 
 
 /obj/structure/filingcabinet/employment/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin to [anchored ? "wrench" : "unwrench"] [src].</span>"
+		to_chat(user, "<span class='notice'>You begin to [anchored ? "wrench" : "unwrench"] [src].</span>")
 		if (do_after(user,300,user))
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = !anchored
-			user << "<span class='notice'>You successfully [anchored ? "wrench" : "unwrench"] [src].</span>"
+			to_chat(user, "<span class='notice'>You successfully [anchored ? "wrench" : "unwrench"] [src].</span>")
 	else
 		return ..()

@@ -84,7 +84,7 @@
 	if(chambered && !chambered.BB) //if BB is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered
 		power_supply.use(shot.e_cost)//... drain the power_supply cell
-		chambered = null 
+		chambered = null
 		newshot()
 	else
 		chambered = null
@@ -101,7 +101,7 @@
 		chambered = null
 		newshot()
 	if (shot.select_name)
-		user << "<span class='notice'>[src] is now set to [shot.select_name].</span>"
+		to_chat(user, "<span class='notice'>[src] is now set to [shot.select_name].</span>")
 	update_icon()
 	return
 
@@ -165,13 +165,15 @@
 			if(R.cell.use(shot.e_cost)) 		//Take power from the borg...
 				power_supply.give(shot.e_cost)	//... to recharge the shot
 
-/obj/item/weapon/gun/energy/on_varedit(modified_var)
-	if(modified_var == "selfcharge")
-		if(selfcharge)
-			START_PROCESSING(SSobj, src)
-		else
-			STOP_PROCESSING(SSobj, src)
-	..()
+
+/obj/item/weapon/gun/energy/vv_edit_var(var_name, var_value)
+	switch(var_name)
+		if("selfcharge")
+			if(var_value)
+				START_PROCESSING(SSobj, src)
+			else
+				STOP_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/item/weapon/gun/energy/burn()
 	if(power_supply)

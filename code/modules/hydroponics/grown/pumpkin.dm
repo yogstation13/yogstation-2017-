@@ -22,6 +22,7 @@
 	icon_state = "pumpkin"
 	filling_color = "#FFA500"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
 	..()
@@ -40,7 +41,7 @@
 	plantname = "Blumpkin Vines"
 	product = /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
 	mutatelist = list()
-	reagents_add = list("ammonia" = 0.4, "chlorine" = 0.4, "nutriment" = 0.4)
+	reagents_add = list("ammonia" = 0.4, "chlorine" = 0.2, "nutriment" = 0.4)
 	rarity = 20
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/blumpkin
@@ -50,3 +51,4 @@
 	icon_state = "blumpkin"
 	filling_color = "#87CEFA"
 	bitesize_mod = 2
+	foodtype = VEGETABLES

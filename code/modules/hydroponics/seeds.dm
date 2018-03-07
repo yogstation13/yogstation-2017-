@@ -36,6 +36,9 @@
 
 	var/innate_yieldmod = 1 //modifier for yield, seperate to the one in Hydro trays, as that one is SPECIFICALLY for nutriment/chems (which means it's constantly reset)
 	//This is added onto the yield mod of the hydro tray, yield *= (parent.yieldmod+innate_yieldmod)
+	
+	var/weed_rate = 1 //If the chance below passes, then this many weeds sprout during growth
+	var/weed_chance = 5 //Percentage chance per tray update to grow weeds
 
 /obj/item/seeds/New(loc, nogenes = 0)
 	..()
@@ -237,10 +240,10 @@
 
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if (is_plant_analyzer(O))
-		user << "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>"
+		to_chat(user, "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>")
 		var/text = get_analyzer_text()
 		if(text)
-			user << "<span class='notice'>[text]</span>"
+			to_chat(user, "<span class='notice'>[text]</span>")
 
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
@@ -263,11 +266,11 @@
 		for(var/i in 1 to seed.growthstages)
 			if("[seed.icon_grow][i]" in states)
 				continue
-			world << "[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!"
+			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!")
 
 		if(!(seed.icon_dead in states))
-			world << "[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!"
+			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!")
 
 		if(seed.icon_harvest) // mushrooms have no grown sprites, same for items with no product
 			if(!(seed.icon_harvest in states))
-				world << "[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!"
+				to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!")

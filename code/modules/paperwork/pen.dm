@@ -24,6 +24,8 @@
 	materials = list(MAT_METAL=10)
 	pressure_resistance = 2
 	var/colour = "black"	//what colour the ink is!
+	var/traitor_unlock_degrees = 0
+	var/degrees = 0
 
 /obj/item/weapon/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over themself with [src]! It looks like they're trying to commit sudoku!</span>")
@@ -59,8 +61,29 @@
 			colour = "blue"
 		else
 			colour = "black"
-	user << "<span class='notice'>\The [src] will now write in [colour].</span>"
+	to_chat(user, "<span class='notice'>\The [src] will now write in [colour].</span>")
 	desc = "It's a fancy four-color ink pen, set to [colour]."
+
+
+/obj/item/weapon/pen/attack_self(mob/living/carbon/user)
+	if(hidden_uplink && hidden_uplink.active)
+		hidden_uplink.interact(user)
+		return
+	var/deg = input(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head") as null|num
+	if(deg && (deg > 0 && deg <= 360))
+		degrees = deg
+		to_chat(user, "<span class='notice'>You rotate the top of the pen to [degrees] degrees.</span>")
+		if(hidden_uplink && degrees == traitor_unlock_degrees)
+			to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
+			degrees = 0
+			hidden_uplink.interact(user)
+
+
+/obj/item/weapon/pen/attackby(obj/item/I, mob/user, params)
+	if(hidden_uplink)
+		return hidden_uplink.attackby(I, user, params)
+	else
+		return ..()
 
 /obj/item/weapon/pen/attack(mob/living/M, mob/user,stealth)
 	if(!istype(M))
@@ -68,9 +91,9 @@
 
 	if(!force)
 		if(M.can_inject(user, 1))
-			user << "<span class='warning'>You stab [M] with the pen.</span>"
+			to_chat(user, "<span class='warning'>You stab [M] with the pen.</span>")
 			if(!stealth)
-				M << "<span class='danger'>You feel a tiny prick!</span>"
+				to_chat(M, "<span class='danger'>You feel a tiny prick!</span>")
 			. = 1
 
 		add_logs(user, M, "stabbed", src)
@@ -98,7 +121,9 @@
 
 /obj/item/weapon/pen/sleepy/New()
 	create_reagents(45)
-	reagents.add_reagent("morphine", 20)
+	reagents.add_reagent("chloralhydrate", 8)
+	reagents.add_reagent("haloperidol", 4)
+	reagents.add_reagent("sodium_thiopental", 8)
 	reagents.add_reagent("mutetoxin", 15)
 	reagents.add_reagent("tirizene", 10)
 	..()
@@ -121,7 +146,7 @@
 		embed_chance = initial(embed_chance)
 		throwforce = initial(throwforce)
 		playsound(user, 'sound/weapons/saberoff.ogg', 5, 1)
-		user << "<span class='warning'>[src] can now be concealed.</span>"
+		to_chat(user, "<span class='warning'>[src] can now be concealed.</span>")
 	else
 		on = 1
 		force = 18
@@ -132,7 +157,7 @@
 		throwforce = 35
 		sharpness = IS_SHARP
 		playsound(user, 'sound/weapons/saberon.ogg', 5, 1)
-		user << "<span class='warning'>[src] is now active.</span>"
+		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 	update_icon()
 
 /obj/item/weapon/pen/edagger/update_icon()

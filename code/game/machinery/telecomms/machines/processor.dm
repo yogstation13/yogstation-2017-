@@ -77,3 +77,6 @@
 
 /obj/machinery/telecomms/processor/preset_one/birdstation
 	name = "Processor"
+
+/obj/machinery/telecomms/processor/preset_one/ministation
+	name = "Processor"

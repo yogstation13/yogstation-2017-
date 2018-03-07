@@ -12,10 +12,12 @@
 	name = "plating"
 	icon_state = "plating"
 	intact = 0
-	broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
-	burnt_states = list("panelscorched")
 
 /turf/open/floor/plating/New()
+	if(!broken_states)
+		broken_states = list("platingdmg1", "platingdmg2", "platingdmg3")
+	if(!burnt_states)
+		burnt_states = list("panelscorched")
 	..()
 	icon_plating = icon_state
 
@@ -30,20 +32,20 @@
 		return
 	if(istype(C, /obj/item/stack/rods))
 		if(broken || burnt)
-			user << "<span class='warning'>Repair the plating first!</span>"
+			to_chat(user, "<span class='warning'>Repair the plating first!</span>")
 			return
 		var/obj/item/stack/rods/R = C
 		if (R.get_amount() < 2)
-			user << "<span class='warning'>You need two rods to make a reinforced floor!</span>"
+			to_chat(user, "<span class='warning'>You need two rods to make a reinforced floor!</span>")
 			return
 		else
-			user << "<span class='notice'>You begin reinforcing the floor...</span>"
+			to_chat(user, "<span class='notice'>You begin reinforcing the floor...</span>")
 			if(do_after(user, 30, target = src))
 				if (R.get_amount() >= 2 && !istype(src, /turf/open/floor/engine))
 					ChangeTurf(/turf/open/floor/engine)
 					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					R.use(2)
-					user << "<span class='notice'>You reinforce the floor.</span>"
+					to_chat(user, "<span class='notice'>You reinforce the floor.</span>")
 				return
 	else if(istype(C, /obj/item/stack/tile))
 		if(!broken && !burnt)
@@ -51,18 +53,19 @@
 			if(!W.use(1))
 				return
 			var/turf/open/floor/T = ChangeTurf(W.turf_type)
+			placedby = user.ckey
 			if(istype(W,/obj/item/stack/tile/light)) //TODO: get rid of this ugly check somehow
 				var/obj/item/stack/tile/light/L = W
 				var/turf/open/floor/light/F = T
 				F.state = L.state
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 		else
-			user << "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>"
+			to_chat(user, "<span class='warning'>This section is too damaged to support a tile! Use a welder to fix the damage.</span>")
 	else if(istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/welder = C
 		if( welder.isOn() && (broken || burnt) )
 			if(welder.remove_fuel(0,user))
-				user << "<span class='danger'>You fix some dents on the broken plating.</span>"
+				to_chat(user, "<span class='danger'>You fix some dents on the broken plating.</span>")
 				playsound(src, 'sound/items/Welder.ogg', 80, 1)
 				icon_state = icon_plating
 				burnt = 0
@@ -98,7 +101,7 @@
 	if(!C || !user)
 		return
 	if(istype(C, /obj/item/weapon/wrench))
-		user << "<span class='notice'>You begin removing rods...</span>"
+		to_chat(user, "<span class='notice'>You begin removing rods...</span>")
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30/C.toolspeed, target = src))
 			if(!istype(src, /turf/open/floor/engine))
@@ -151,7 +154,27 @@
 
 /turf/open/floor/engine/cult
 	name = "engraved floor"
-	icon_state = "cult"
+	icon_state = "plating"
+	var/obj/effect/clockwork/overlay/floor/realappearence
+
+/turf/open/floor/engine/cult/New()
+	..()
+	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
+	realappearence = PoolOrNew(/obj/effect/overlay/cult/floor, src)
+	realappearence.linked = src
+
+/turf/open/floor/engine/cult/Destroy()
+	be_removed()
+	return ..()
+
+/turf/open/floor/engine/cult/ChangeTurf(path, defer_change = FALSE)
+	if(path != type)
+		be_removed()
+	return ..()
+
+/turf/open/floor/engine/cult/proc/be_removed()
+	qdel(realappearence)
+	realappearence = null
 
 /turf/open/floor/engine/cult/New()
 	PoolOrNew(/obj/effect/overlay/temp/cult/turf/open/floor, src)
@@ -275,6 +298,8 @@
 			. = 1
 			var/mob/living/L = thing
 			if("lava" in L.weather_immunities)
+				continue
+			if(L.flying())
 				continue
 			if(L.buckled)
 				if(isobj(L.buckled))

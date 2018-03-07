@@ -13,7 +13,6 @@ var/datum/subsystem/air/SSair
 	priority = 20
 	wait = 5
 	flags = SS_BACKGROUND
-	display_order = 1
 
 	var/cost_turfs = 0
 	var/cost_groups = 0
@@ -291,7 +290,7 @@ var/datum/subsystem/air/SSair
 			EG.dismantle()
 
 		var/msg = "HEY! LISTEN! [(world.timeofday - timer)/10] Seconds were wasted processing [starting_ats] turf(s) (connected to [ending_ats] other turfs) with atmos differences at round start."
-		world << "<span class='boldannounce'>[msg]</span>"
+		to_chat(world, "<span class='boldannounce'>[msg]</span>")
 		warning(msg)
 
 /turf/open/proc/resolve_active_graph()

@@ -414,6 +414,8 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return 0
 
 /proc/get_both_hands(mob/living/carbon/M)
+	if(!M)
+		return
 	var/list/hands = list(M.l_hand, M.r_hand)
 	return hands
 
@@ -423,7 +425,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 /proc/notify_ghosts(var/message, var/ghost_sound = null, var/enter_link = null, var/atom/source = null, var/image/alert_overlay = null, var/action = NOTIFY_JUMP) //Easy notification of ghosts.
 	for(var/mob/dead/observer/O in player_list)
 		if(O.client)
-			O << "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>"
+			to_chat(O, "<span class='ghostalert'>[message][(enter_link) ? " [enter_link]" : ""]<span>")
 			if(ghost_sound)
 				O << sound(ghost_sound)
 			if(source)
@@ -468,7 +470,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			user.visible_message(msg1, msg2)
 			return
 		else
-			user << "<span class='warning'>[H]'s [affecting] is already in good condition!</span>"
+			to_chat(user, "<span class='warning'>[H]'s [affecting] is already in good condition!</span>")
 
 /proc/IsAdminGhost(var/mob/user)
 	if(!user)		//Are they a mob? Auto interface updates call this with a null src
@@ -484,7 +486,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return TRUE
 
 /proc/offer_control(mob/M)
-	M << "Control of your mob has been offered to dead players."
+	to_chat(M, "Control of your mob has been offered to dead players.")
 	log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 	message_admins("[key_name_admin(usr)] has offered control of ([key_name_admin(M)]) to ghosts")
 	var/poll_message = "Do you want to play as [M.real_name]?"
@@ -497,15 +499,21 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	if(candidates.len)
 		theghost = pick(candidates)
-		M << "Your mob has been taken over by a ghost!"
+		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(theghost)] has taken control of ([key_name_admin(M)])")
 		M.ghostize(0)
 		M.key = theghost.key
 		return TRUE
 	else
-		M << "There were no ghosts willing to take control."
+		to_chat(M, "There were no ghosts willing to take control.")
 		message_admins("No ghosts were willing to take control of [key_name_admin(M)])")
 		return FALSE
 
 /mob/proc/is_nearcrit()
+	return FALSE
+
+/mob/proc/is_holding_item_of_type(typepath)
+	for(var/obj/item/I in get_both_hands(usr))
+		if(istype(I, typepath))
+			return I
 	return FALSE

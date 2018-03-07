@@ -131,6 +131,9 @@
 		message_admins("[key_name_admin(mob)] (<A HREF='?_src_=holder;adminplayerobservefollow=\ref[usr]'>FLW</A>) has compiled and uploaded a NTSL script to [src.id]",0,1)
 
 /obj/machinery/telecomms/server/proc/compile(mob/user)
+	if(jobban_isbanned(user, "ntsl"))
+		to_chat(usr, "<span class='warning'>You are banned from using NTSL.</span>")
+		return
 	if(Compiler)
 		admin_log(user)
 		return Compiler.Compile(rawcode)
@@ -198,7 +201,7 @@
 		return
 	if(encryptionkey)
 		if(user)
-			user << "<span class='notice'>\The [src] already contains an encryption key.</span>"
+			to_chat(user, "<span class='notice'>\The [src] already contains an encryption key.</span>")
 	if(istype(key))
 		if(!user || user.unEquip(key))
 			encryptionkey = key
@@ -206,10 +209,10 @@
 			if(encryptionkey.encryption_keys.len)
 				encryption = encryptionkey.encryption_keys[1]
 			if(user)
-				user << "<span class='notice'>You insert [key] into [src].</span>"
+				to_chat(user, "<span class='notice'>You insert [key] into [src].</span>")
 		else
 			if(user)
-				user << "<span class='notice'>\The [key] is stuck to your hand!</span>"
+				to_chat(user, "<span class='notice'>\The [key] is stuck to your hand!</span>")
 	else
 
 /obj/machinery/telecomms/server/TelemonitorInfo()
@@ -291,3 +294,7 @@
 							/obj/item/weapon/stock_parts/manipulator = 2,
 							/obj/item/stack/cable_coil = 1,
 							/obj/item/weapon/stock_parts/subspace/filter = 1)
+
+/obj/machinery/telecomms/server/presets/common/ministation/New()
+	..()
+	freq_listening = list()

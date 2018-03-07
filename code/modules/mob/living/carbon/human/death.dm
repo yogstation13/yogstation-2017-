@@ -41,6 +41,7 @@
 
 /mob/living/carbon/human/proc/makeSkeleton()
 	status_flags |= DISFIGURED
+	update_face_dependant_huds()
 	set_species(/datum/species/skeleton)
 	return 1
 
@@ -57,6 +58,7 @@
 		update_hair()
 		update_body()
 		dna.species.spec_husk(src)
+		update_face_dependant_huds()
 
 /mob/living/carbon/proc/Drain()
 	ChangeToHusk()

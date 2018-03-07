@@ -5,7 +5,6 @@
 	var/name = "fire coderbus" //name of the subsystem
 	var/init_order = 0		//order of initialization. Higher numbers are initialized first, lower numbers later. Can be decimal and negative values.
 	var/wait = 20			//time to wait (in deciseconds) between each call to fire(). Must be a positive integer.
-	var/display_order = 100	//display affects the order the subsystem is displayed in the MC tab
 	var/priority = 50		//When mutiple subsystems need to run in the same tick, higher priority subsystems will run first and be given a higher share of the tick before MC_TICK_CHECK triggers a sleep
 
 	var/flags = 0			//see MC.dm in __DEFINES Most flags must be set on world start to take full effect. (You can also restart the mc to force them to process again)
@@ -131,7 +130,7 @@
 /datum/subsystem/proc/Initialize(start_timeofday)
 	var/time = (world.timeofday - start_timeofday) / 10
 	var/msg = "Initialized [name] subsystem within [time] seconds!"
-	world << "<span class='boldannounce'>[msg]</span>"
+	to_chat(world, "<span class='boldannounce'>[msg]</span>")
 	return time
 
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
@@ -157,8 +156,17 @@
 /datum/subsystem/proc/Recover()
 
 //this is so the subsystem doesn't rapid fire to make up missed ticks causing more lag
-/datum/subsystem/on_varedit(edited_var)
-	if (edited_var == "can_fire" && can_fire)
-		next_fire = world.time + wait
-	..()
+/datum/subsystem/vv_edit_var(var_name, var_value)
+	switch (var_name)
+		if ("can_fire")
+			if (var_value)
+				next_fire = world.time + wait
+		if ("queued_priority") //editing this breaks things.
+			return 0
+	. = ..()
 
+//when we enter dmm_suite.load_map
+/datum/subsystem/proc/StartLoadingMap()
+
+//when we exit dmm_suite.load_map
+/datum/subsystem/proc/StopLoadingMap()

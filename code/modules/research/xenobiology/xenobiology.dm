@@ -17,7 +17,7 @@
 /obj/item/slime_extract/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/slimepotion/enhancer))
 		if(Uses >= 5)
-			user << "<span class='warning'>You cannot enhance this extract further!</span>"
+			to_chat(user, "<span class='warning'>You cannot enhance this extract further!</span>")
 			return ..()
 		user <<"<span class='notice'>You apply the enhancer to the slime extract. It may now be reused one more time.</span>"
 		Uses++
@@ -126,7 +126,7 @@
 
 /obj/item/slimepotion/afterattack(obj/item/weapon/reagent_containers/target, mob/user , proximity)
 	if (istype(target))
-		user << "<span class='notice'>You cannot transfer [src] to [target]! It appears the potion must be given directly to a slime to absorb.</span>" // le fluff faec
+		to_chat(user, "<span class='notice'>You cannot transfer [src] to [target]! It appears the potion must be given directly to a slime to absorb.</span>" )
 		return
 
 /obj/item/slimepotion/docility
@@ -137,17 +137,17 @@
 
 /obj/item/slimepotion/docility/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
-		user << "<span class='warning'>The potion only works on slimes!</span>"
+		to_chat(user, "<span class='warning'>The potion only works on slimes!</span>")
 		return ..()
 	if(M.stat)
-		user << "<span class='warning'>The slime is dead!</span>"
+		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return ..()
 
 	M.docile = 1
 	M.nutrition = 700
 	M <<"<span class='warning'>You absorb the potion and feel your intense desire to feed melt away.</span>"
 	user <<"<span class='notice'>You feed the slime the potion, removing its hunger and calming it.</span>"
-	var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+	var/newname = stripped_input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime", MAX_NAME_LEN)
 
 	if (!newname)
 		newname = "pet slime"
@@ -169,7 +169,7 @@
 	if(!do_checks(M, user))
 		return ..()
 	var/mob/living/simple_animal/SM = M
-	user << "<span class='notice'>You offer the sentience potion to [SM]...</span>"
+	to_chat(user, "<span class='notice'>You offer the sentience potion to [SM]...</span>")
 	being_used = 1
 
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as [SM.name]?", "xenobio", null, ROLE_ALIEN, 50, SM)
@@ -181,12 +181,13 @@
 		SM.languages_understood |= HUMAN
 		SM.faction |= user.faction
 		SM.sentience_act()
-		SM << "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>"
-		SM << "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>"
-		user << "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>"
+		SM.add_memory("<b>Serve [user], and assist them in completing their goals at any cost.</b>")
+		to_chat(SM, "<span class='warning'>All at once it makes sense: you know what you are and who you are! Self awareness is yours!</span>")
+		to_chat(SM, "<span class='userdanger'>You are grateful to be self aware and owe [user] a great debt. Serve [user], and assist them in completing their goals at any cost.</span>")
+		to_chat(user, "<span class='notice'>[SM] accepts the potion and suddenly becomes attentive and aware. It worked!</span>")
 		qdel(src)
 	else
-		user << "<span class='notice'>[SM] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>"
+		to_chat(user, "<span class='notice'>[SM] looks interested for a moment, but then looks back down. Maybe you should try again later.</span>")
 		being_used = 0
 		..()
 
@@ -194,14 +195,14 @@
 	if(being_used || !ismob(M))
 		return 0
 	if(!isanimal(M) || M.ckey) //only works on animals that aren't player controlled
-		user << "<span class='warning'>[M] is already too intelligent for this to work!</span>"
+		to_chat(user, "<span class='warning'>[M] is already too intelligent for this to work!</span>")
 		return 0
 	if(M.stat)
-		user << "<span class='warning'>[M] is dead!</span>"
+		to_chat(user, "<span class='warning'>[M] is dead!</span>")
 		return 0
 	var/mob/living/simple_animal/SM = M
 	if(SM.sentience_type != sentience_type)
-		user << "<span class='warning'>The potion won't work on [SM].</span>"
+		to_chat(user, "<span class='warning'>The potion won't work on [SM].</span>")
 		return 0
 	return 1
 
@@ -218,17 +219,17 @@
 	if(prompted || !ismob(M))
 		return
 	if(!isanimal(M) || M.ckey) //much like sentience, these will not work on something that is already player controlled
-		user << "<span class='warning'>[M] already has a higher consciousness!</span>"
+		to_chat(user, "<span class='warning'>[M] already has a higher consciousness!</span>")
 		return ..()
 	if(M.stat)
-		user << "<span class='warning'>[M] is dead!</span>"
+		to_chat(user, "<span class='warning'>[M] is dead!</span>")
 		return ..()
 	var/mob/living/simple_animal/SM = M
 	if(SM.sentience_type != animal_type)
-		user << "<span class='warning'>You cannot transfer your consciousness to [SM].</span>" //no controlling machines
+		to_chat(user, "<span class='warning'>You cannot transfer your consciousness to [SM].</span>" )
 		return ..()
 	if(jobban_isbanned(user, ROLE_ALIEN)) //ideally sentience and trasnference potions should be their own unique role.
-		user << "<span class='warning'>Your mind goes blank as you attempt to use the potion.</span>"
+		to_chat(user, "<span class='warning'>Your mind goes blank as you attempt to use the potion.</span>")
 		return
 
 	prompted = 1
@@ -236,7 +237,7 @@
 		prompted = 0
 		return
 
-	user << "<span class='notice'>You drink the potion then place your hands on [SM]...</span>"
+	to_chat(user, "<span class='notice'>You drink the potion then place your hands on [SM]...</span>")
 
 
 	user.mind.transfer_to(SM)
@@ -245,8 +246,8 @@
 	SM.faction = user.faction
 	SM.sentience_act() //Same deal here as with sentience
 	user.death()
-	SM << "<span class='notice'>In a quick flash, you feel your consciousness flow into [SM]!</span>"
-	SM << "<span class='warning'>You are now [SM]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!</span>"
+	to_chat(SM, "<span class='notice'>In a quick flash, you feel your consciousness flow into [SM]!</span>")
+	to_chat(SM, "<span class='warning'>You are now [SM]. Your allegiances, alliances, and role is still the same as it was prior to consciousness transfer!</span>")
 	SM.name = "[SM.name] as [user.real_name]"
 	qdel(src)
 
@@ -258,13 +259,13 @@
 
 /obj/item/slimepotion/steroid/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))//If target is not a slime.
-		user << "<span class='warning'>The steroid only works on baby slimes!</span>"
+		to_chat(user, "<span class='warning'>The steroid only works on baby slimes!</span>")
 		return ..()
 	if(M.is_adult) //Can't steroidify adults
-		user << "<span class='warning'>Only baby slimes can use the steroid!</span>"
+		to_chat(user, "<span class='warning'>Only baby slimes can use the steroid!</span>")
 		return ..()
 	if(M.stat)
-		user << "<span class='warning'>The slime is dead!</span>"
+		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return ..()
 	if(M.cores >= 5)
 		user <<"<span class='warning'>The slime already has the maximum amount of extract!</span>"
@@ -288,10 +289,10 @@
 
 /obj/item/slimepotion/stabilizer/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
-		user << "<span class='warning'>The stabilizer only works on slimes!</span>"
+		to_chat(user, "<span class='warning'>The stabilizer only works on slimes!</span>")
 		return ..()
 	if(M.stat)
-		user << "<span class='warning'>The slime is dead!</span>"
+		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return ..()
 	if(M.mutation_chance == 0)
 		user <<"<span class='warning'>The slime already has no chance of mutating!</span>"
@@ -309,13 +310,13 @@
 
 /obj/item/slimepotion/mutator/attack(mob/living/simple_animal/slime/M, mob/user)
 	if(!isslime(M))
-		user << "<span class='warning'>The mutator only works on slimes!</span>"
+		to_chat(user, "<span class='warning'>The mutator only works on slimes!</span>")
 		return ..()
 	if(M.stat)
-		user << "<span class='warning'>The slime is dead!</span>"
+		to_chat(user, "<span class='warning'>The slime is dead!</span>")
 		return ..()
 	if(M.mutator_used)
-		user << "<span class='warning'>This slime has already consumed a mutator, any more would be far too unstable!</span>"
+		to_chat(user, "<span class='warning'>This slime has already consumed a mutator, any more would be far too unstable!</span>")
 		return ..()
 	if(M.mutation_chance == 100)
 		user <<"<span class='warning'>The slime is already guaranteed to mutate!</span>"
@@ -336,19 +337,19 @@
 /obj/item/slimepotion/speed/afterattack(obj/C, mob/user)
 	..()
 	if(!istype(C))
-		user << "<span class='warning'>The potion can only be used on items or vehicles!</span>"
+		to_chat(user, "<span class='warning'>The potion can only be used on items or vehicles!</span>")
 		return
 	if(istype(C, /obj/item))
 		var/obj/item/I = C
 		if(I.slowdown <= 0)
-			user << "<span class='warning'>The [C] can't be made any faster!</span>"
+			to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
 			return ..()
 		I.slowdown = 0
 
 	if(istype(C, /obj/vehicle))
 		var/obj/vehicle/V = C
 		if(V.vehicle_move_delay <= 0)
-			user << "<span class='warning'>The [C] can't be made any faster!</span>"
+			to_chat(user, "<span class='warning'>The [C] can't be made any faster!</span>")
 			return ..()
 		V.vehicle_move_delay = 0
 
@@ -371,10 +372,10 @@
 		qdel(src)
 		return
 	if(!istype(C))
-		user << "<span class='warning'>The potion can only be used on clothing!</span>"
+		to_chat(user, "<span class='warning'>The potion can only be used on clothing!</span>")
 		return
 	if(C.max_heat_protection_temperature == FIRE_IMMUNITY_SUIT_MAX_TEMP_PROTECT)
-		user << "<span class='warning'>The [C] is already fireproof!</span>"
+		to_chat(user, "<span class='warning'>The [C] is already fireproof!</span>")
 		return ..()
 	user <<"<span class='notice'>You slather the blue gunk over the [C], fireproofing it.</span>"
 	C.name = "fireproofed [C.name]"
@@ -386,159 +387,7 @@
 	if(!uses)
 		qdel(src)
 
-////////Adamantine Golem stuff I dunno where else to put it
-
-// This will eventually be removed.
-
-/obj/item/clothing/under/golem
-	name = "adamantine skin"
-	desc = "a golem's skin"
-	icon_state = "golem"
-	item_state = "golem"
-	item_color = "golem"
-	flags = ABSTRACT | NODROP
-	has_sensor = 0
-
-/obj/item/clothing/suit/golem
-	name = "adamantine shell"
-	desc = "a golem's thick outter shell"
-	icon_state = "golem"
-	item_state = "golem"
-	w_class = 4//bulky item
-	gas_transfer_coefficient = 0.90
-	permeability_coefficient = 0.50
-	body_parts_covered = FULL_BODY
-	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
-	flags = ABSTRACT | NODROP
-
-/obj/item/clothing/shoes/golem
-	name = "golem's feet"
-	desc = "sturdy adamantine feet"
-	icon_state = "golem"
-	item_state = null
-	flags = NOSLIP | ABSTRACT | NODROP
-
-
-/obj/item/clothing/mask/breath/golem
-	name = "golem's face"
-	desc = "the imposing face of an adamantine golem"
-	icon_state = "golem"
-	item_state = "golem"
-	siemens_coefficient = 0
-	unacidable = 1
-	flags = ABSTRACT | NODROP
-
-
-/obj/item/clothing/gloves/golem
-	name = "golem's hands"
-	desc = "strong adamantine hands"
-	icon_state = "golem"
-	item_state = null
-	siemens_coefficient = 0
-	flags = ABSTRACT | NODROP
-
-
-/obj/item/clothing/head/space/golem
-	icon_state = "golem"
-	item_state = "dermal"
-	item_color = "dermal"
-	name = "golem's head"
-	desc = "a golem's head"
-	unacidable = 1
-	flags = ABSTRACT | NODROP
-
-/obj/effect/golemrune
-	anchored = 1
-	desc = "a strange rune used to create golems. It glows when spirits are nearby."
-	name = "rune"
-	icon = 'icons/obj/rune.dmi'
-	icon_state = "golem"
-	unacidable = 1
-	layer = TURF_LAYER
-
-/obj/effect/golemrune/New()
-	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/effect/golemrune/process()
-	var/mob/dead/observer/ghost
-	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)
-			continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
-			continue
-		if (O.orbiting)
-			continue
-		if(jobban_isbanned(O, "xenobio"))
-			continue
-		ghost = O
-		break
-	if(ghost)
-		icon_state = "golem2"
-	else
-		icon_state = "golem"
-
-/obj/effect/golemrune/attack_hand(mob/living/user)
-	var/mob/dead/observer/ghost
-	for(var/mob/dead/observer/O in src.loc)
-		if(!O.client)
-			continue
-		if(O.mind && O.mind.current && O.mind.current.stat != DEAD)
-			continue
-		if (O.orbiting)
-			continue
-		if(jobban_isbanned(O, "xenobio"))
-			continue
-		ghost = O
-		break
-	if(!ghost)
-		user << "<span class='warning'>The rune fizzles uselessly! There is no spirit nearby.</span>"
-		return
-	var/mob/living/carbon/human/G = new /mob/living/carbon/human
-	G.set_species(/datum/species/golem/adamantine)
-	G.set_cloned_appearance()
-	G.real_name = "Adamantine Golem ([rand(1, 1000)])"
-	G.name = G.real_name
-	G.dna.unique_enzymes = G.dna.generate_unique_enzymes()
-	G.dna.species.auto_equip(G)
-	G.loc = src.loc
-	G.key = ghost.key
-	G << "You are an adamantine golem. You move slowly, but are highly resistant to heat and cold as well as blunt trauma. You are unable to wear clothes, but can still use most tools. Serve [user], and assist them in completing their goals at any cost."
-	G.mind.store_memory("<b>Serve [user.real_name], your creator.</b>")
-
-	var/golem_becomes_antag = FALSE
-	if(iscultist(user)) //If the golem's master is a part of a team antagonist, immediately make the golem one, too
-		ticker.mode.add_cultist(G.mind)
-		golem_becomes_antag = TRUE
-	else if(is_gangster(user))
-		ticker.mode.add_gangster(G.mind, user.mind.gang_datum, TRUE)
-		golem_becomes_antag = TRUE
-	else if(is_handofgod_redcultist(user) || is_handofgod_redprophet(user))
-		ticker.mode.add_hog_follower(G.mind, "Red")
-		golem_becomes_antag = TRUE
-	else if(is_handofgod_bluecultist(user) || is_handofgod_blueprophet(user))
-		ticker.mode.add_hog_follower(G.mind, "Blue")
-		golem_becomes_antag = TRUE
-	else if(is_revolutionary_in_general(user))
-		ticker.mode.add_revolutionary(G.mind)
-		golem_becomes_antag = TRUE
-	else if(is_shadow_or_thrall(user))
-		ticker.mode.add_thrall(G.mind)
-		golem_becomes_antag = TRUE
-	else if(is_servant_of_ratvar(user))
-		add_servant_of_ratvar(G)
-		golem_becomes_antag = TRUE
-
-	G.mind.enslaved_to = user
-	if(golem_becomes_antag)
-		G << "<span class='userdanger'>Despite your servitude to another cause, your true master remains [user.real_name]. This will never change unless your master's body is destroyed.</span>"
-	if(user.mind.special_role)
-		message_admins("[key_name_admin(G)](<A HREF='?_src_=holder;adminmoreinfo=\ref[G]'>?</A>) has been summoned by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>), an antagonist.")
-	log_game("[key_name(G)] was made a golem by [key_name(user)].")
-	log_admin("[key_name(G)] was made a golem by [key_name(user)].")
-	qdel(src)
-
-
+////////Adamantine Golem rune has been moved to golem_spawners
 
 
 /obj/effect/timestop

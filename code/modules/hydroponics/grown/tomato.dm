@@ -22,6 +22,7 @@
 	splat_type = /obj/effect/decal/cleanable/tomato_smudge
 	filling_color = "#FF6347"
 	bitesize_mod = 2
+	foodtype = VEGETABLES
 
 // Blood Tomato
 /obj/item/seeds/tomato/blood
@@ -43,7 +44,7 @@
 	splat_type = /obj/effect/gibspawner/generic
 	filling_color = "#FF0000"
 	origin_tech = "biotech=5"
-
+	foodtype = VEGETABLES | GROSS
 
 // Blue Tomato
 /obj/item/seeds/tomato/blue
@@ -119,14 +120,14 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack(mob/M, mob/user, def_zone)
 	if(awakening)
-		user << "<span class='warning'>The tomato is twitching and shaking, preventing you from eating it.</span>"
+		to_chat(user, "<span class='warning'>The tomato is twitching and shaking, preventing you from eating it.</span>")
 		return
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tomato/killer/attack_self(mob/user)
 	if(awakening || istype(user.loc,/turf/open/space))
 		return
-	user << "<span class='notice'>You begin to awaken the Killer Tomato...</span>"
+	to_chat(user, "<span class='notice'>You begin to awaken the Killer Tomato...</span>")
 	awakening = 1
 
 	spawn(30)
@@ -140,6 +141,6 @@
 			K.visible_message("<span class='notice'>The Killer Tomato growls as it suddenly awakens.</span>")
 			if(user)
 				user.unEquip(src)
-				user.attack_log += "\[[time_stamp()]\] <b>[user.real_name]/[user.ckey]</b> awakened a killer tomato."
+				user.attack_log += "\[[gameTimestamp()]\] <b>[user.real_name]/[user.ckey]</b> awakened a killer tomato."
 				K.spawnedBy = "[user.real_name]([user.ckey])"
 			qdel(src)

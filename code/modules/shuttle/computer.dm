@@ -6,12 +6,15 @@
 	circuit = /obj/item/weapon/circuitboard/computer/shuttle
 	var/shuttleId
 	var/possible_destinations = ""
+	var/list/rogue_destinations = list() //"mining_away" = "asteroid"
 	var/current_destination
 	var/admin_controlled
 	var/no_destination_swap = 0
 	var/notification // assign a frequency here - ex: SEC_FREQ, etc
 	var/cooldownlen
+	var/smart_transit = FALSE //TRUE for having the time be the difference between docking port distance
 	var/awayspeech // enables awayspeech()
+	var/error_chance = 1
 
 	var/sending
 
@@ -61,40 +64,50 @@
 	usr.set_machine(src)
 	src.add_fingerprint(usr)
 	if(!allowed(usr))
-		usr << "<span class='danger'>Access denied.</span>"
+		to_chat(usr, "<span class='danger'>Access denied.</span>")
 		return
 
 	if(href_list["move"])
 		var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 		if(M.launch_status == ENDGAME_LAUNCHED)
-			usr << "<span class='warning'>You've already escaped. Never going back to that place again!</span>"
+			to_chat(usr, "<span class='warning'>You've already escaped. Never going back to that place again!</span>")
 			return
 		if(no_destination_swap)
 			if(M.mode != SHUTTLE_IDLE)
-				usr << "<span class='warning'>Shuttle already in transit.</span>"
+				to_chat(usr, "<span class='warning'>Shuttle already in transit.</span>")
 				return
+		var/destination = href_list["move"]
 
-		if(processcooldown(shuttleId, href_list["move"]))
+		if(prob(error_chance) && rogue_destinations[destination])
+			destination = rogue_destinations[destination]
+			say("404 error message not found")
+
+		if(smart_transit)
+			var/obj/docking_port/stationary/D = SSshuttle.getDock(destination)
+			var/obj/docking_port/stationary/C = SSshuttle.getDock(current_destination)
+			M.callTime = abs(D.distance - C.distance)
+
+		if(processcooldown(shuttleId, destination))
 			processnotification("cooldown")
-			current_destination = href_list["move"]
+			current_destination = destination
 
-		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
+		switch(SSshuttle.moveShuttle(shuttleId, destination, 1))
 			if(0)
-				usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
+				to_chat(usr, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
 				processnotification("awayspeech")
 
 			if(1)
-				usr << "<span class='warning'>Invalid shuttle requested.</span>"
+				to_chat(usr, "<span class='warning'>Invalid shuttle requested.</span>")
 				endcooldown(noMove = TRUE)
 			if(3)
 				if(sending)
-					usr << "<span class='notice'>Shuttle received message and will be sent shortly.</span>"
+					to_chat(usr, "<span class='notice'>Shuttle received message and will be sent shortly.</span>")
 					sending = FALSE
 				else
-					usr << "<span class='warning'>Shuttle is preparing to take off. Please wait.</span>"
+					to_chat(usr, "<span class='warning'>Shuttle is preparing to take off. Please wait.</span>")
 
 			else
-				usr << "<span class='notice'>Unable to comply.</span>"
+				to_chat(usr, "<span class='notice'>Unable to comply.</span>")
 				endcooldown(noMove = TRUE)
 
 /obj/machinery/computer/shuttle/proc/processcooldown(shuttleID, moveID)
@@ -130,7 +143,8 @@
 	if(!emagged)
 		src.req_access = list()
 		emagged = 1
-		user << "<span class='notice'>You fried the consoles ID checking system.</span>"
+		to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
+		error_chance = 5
 
 /obj/machinery/computer/shuttle/proc/awayspeech(destination)
 	return "The shuttle is blasting off to [current_destination]!"

@@ -11,6 +11,7 @@
 	restricted_jobs = list("Cyborg", "AI")
 	var/carriers_to_make = 1
 	var/list/carriers = list()
+	var/list/survivors = list() // population count.
 	var/zombies_to_win = 0
 	var/escaped_zombies = 0
 	var/players_per_carrier = 7
@@ -30,17 +31,17 @@
 
 
 /datum/game_mode/zombies/announce()
-	world << "<B>The current game mode is - Zombie!</B>"
-	world << "<B>One or more crewmembers have been infected with an unknown virus! Crew: Contain the outbreak. This infection can under no circumstances be. \
-				allowed to leave the station. If the outbreak cannot be contained the station must be destroyed. Zombies: Eat brains and infect all crew members!</B>"
+	to_chat(world, "<B>The current game mode is - Zombie!</B>")
+	to_chat(world, "<B>One or more crewmembers have been infected with an unknown virus! Crew: Contain the outbreak. This infection can under no circumstances be. \
+				allowed to leave the station. If the outbreak cannot be contained the station must be destroyed. Zombies: Eat brains and infect all crew members!</B>")
 
 
 /datum/game_mode/zombies/proc/greet_carrier(datum/mind/carrier)
-	carrier.current << "<font style = 3><B><span class = 'notice'>You are the infection patient zero!!</B></font>"
-	carrier.current << "<b>You contracted an infection from your visit aboard a <span class='warning'>quarantined spacestation</span>.</b>"
-	carrier.current << "<b>Soon you will become a <span class='warning'>flesh eating [pick("zombie", "muerto", "walker", "clicker")]</span>. Your sole purpose is to hunt for crew members to infect them.</b>"
-	carrier.current << "<b>Eating <span class='warning'>brains</span> will make you stronger, so make sure you <span class='warning'>crack open some heads</span> for the delicious treats.</b>"
-	carrier.current << "<b>Your mission will be deemed a success if any of the live infected zombies reach Centcom.</b>"
+	to_chat(carrier.current, "<font style = 3><B><span class = 'notice'>You are the infection patient zero!!</B></font>")
+	to_chat(carrier.current, "<b>You contracted an infection from your visit aboard a <span class='warning'>quarantined spacestation</span>.</b>")
+	to_chat(carrier.current, "<b>Soon you will become a <span class='warning'>flesh eating [pick("zombie", "muerto", "walker", "clicker")]</span>. Your sole purpose is to hunt for crew members to infect them.</b>")
+	to_chat(carrier.current, "<b>Eating <span class='warning'>brains</span> will make you stronger, so make sure you <span class='warning'>crack open some heads</span> for the delicious treats.</b>")
+	to_chat(carrier.current, "<b>Your mission will be deemed a success if any of the live infected zombies reach Centcom.</b>")
 
 /datum/game_mode/zombies/post_setup()
 	for(var/datum/mind/carriermind in carriers)
@@ -48,6 +49,7 @@
 		zombie_infectees += carriermind
 		var/obj/item/organ/body_egg/zombie_infection/Z = new(carriermind.current)
 		Z.Insert(carriermind.current)
+		Z.reanimation_timer = world.time + 1200 // flat out 2 minutes, ready set GO.
 	..()
 
 /datum/game_mode/zombies/check_finished()
@@ -58,8 +60,34 @@
 	for(var/mob/living/carbon/human/H in living_mob_list)
 		if(H.client && !iszombie(H))
 			total_humans++
+		if(H.stat != DEAD && !(H in survivors) && (H.z == ZLEVEL_STATION))
+			if(!iszombie(H))
+				survivors += H // survivor list is basically the population list, but we only take in people involved in the zombie round.
 	if(total_humans == 0)
 		return 1
+
+	var/survivorcut = max((length(survivors) * 0.10), 1) // we take the total amount of people in the round, and figure out how much is 10%
+	var/nonturned_survivors
+	for(var/mob/living/M in survivors) // now we spoon through our population list to figure out whos still alive.
+		if(M.client)
+			if(M.stat != DEAD)
+				if(!iszombie(M))
+					nonturned_survivors++
+
+	if(survivorcut >= nonturned_survivors) // if the active survivor population is reduced to 10%, auto-shuttle call
+		switch(SSshuttle.emergency.mode)
+			if(SHUTTLE_RECALL)
+				return
+			if(SHUTTLE_CALL)
+				return
+			if(SHUTTLE_DOCKED)
+				return
+			if(SHUTTLE_ESCAPE)
+				return
+			if(SHUTTLE_STRANDED)
+				return
+		SSshuttle.emergency.request(null, 0.1) // cannot be recalled woohoo
+		priority_announce("We have discovered that your station might be in trouble. We're sending help as soon as we can.", "Central Command",'sound/AI/commandreport.ogg')
 	else if(!roundend)
 		return 0
 	else // only happens in declare_completion()
@@ -95,8 +123,8 @@
 	if(check_zombies_victory(1))
 		feedback_set_details("round_end_result","win - zombies win")
 		feedback_set("round_end_result",escaped_zombies)
-		world << "<span class='userdanger'><FONT size = 3>The zombies have infected the crew! UUUuuRRRRRRGGHHHHHHHHHhhhhh!!</FONT></span>"
+		to_chat(world, "<span class='userdanger'><FONT size = 3>The zombies have infected the crew! UUUuuRRRRRRGGHHHHHHHHHhhhhh!!</FONT></span>")
 	else
 		feedback_set_details("round_end_result","loss - staff stopped the zombies")
 		feedback_set("round_end_result",escaped_zombies)
-		world << "<span class='userdanger'><FONT size = 3>The staff managed to contain the zombie outbreak!</FONT></span>"
+		to_chat(world, "<span class='userdanger'><FONT size = 3>The staff managed to contain the zombie outbreak!</FONT></span>")

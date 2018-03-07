@@ -418,7 +418,7 @@
 "bE" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
-/obj/item/toy/carpplushie,
+/obj/item/toy/plushie/carpplushie,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "bF" = (

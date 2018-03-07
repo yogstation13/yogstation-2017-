@@ -302,7 +302,7 @@
 /mob/living/carbon/handle_status_effects()
 	..()
 
-	if(staminaloss)
+	if(staminaloss || (dna && dna.species && dna.species.stamina_recover_normal < 0))
 		regenStamina()
 
 	if(sleeping)
@@ -380,6 +380,9 @@
 	if(hallucination)
 		spawn handle_hallucinations()
 		hallucination = max(hallucination-2,0)
+
+	if(disgust)
+		adjust_disgust(-1)
 
 /mob/living/carbon/proc/regenStamina()
 	if(sleeping)

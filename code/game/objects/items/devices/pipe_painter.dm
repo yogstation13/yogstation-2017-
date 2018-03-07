@@ -29,13 +29,12 @@
 	var/obj/machinery/atmospherics/pipe/P = A
 	P.color = modes[mode]
 	P.pipe_color = modes[mode]
-	P.stored.color = modes[mode]
 	user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
 	P.update_node_icon() //updates the neighbors
 
 /obj/item/device/pipe_painter/attack_self(mob/user)
-	mode = input("Which colour do you want to use?","Pipe painter") in modes
+	mode = input("Which colour do you want to use?","Pipe painter") as anything in modes
 
 /obj/item/device/pipe_painter/examine()
 	..()
-	usr << "It is set to [mode]."
+	to_chat(usr, "It is set to [mode].")

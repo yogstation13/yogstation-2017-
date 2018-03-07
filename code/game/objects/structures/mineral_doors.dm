@@ -18,6 +18,7 @@
 	var/oreAmount = 7
 	var/openSound = 'sound/effects/stonedoor_openclose.ogg'
 	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
+	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/mineral_door/New(location)
 	..()
@@ -58,9 +59,6 @@
 /obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
-	return !density
-
-/obj/structure/mineral_door/CanAtmosPass()
 	return !density
 
 /obj/structure/mineral_door/proc/TryToSwitchState(atom/user)
@@ -125,9 +123,9 @@
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W,/obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/digTool = W
-		user << "<span class='notice'>You start digging the [name]...</span>"
+		to_chat(user, "<span class='notice'>You start digging the [name]...</span>")
 		if(do_after(user,digTool.digspeed*hardness, target = src) && src)
-			user << "<span class='notice'>You finish digging.</span>"
+			to_chat(user, "<span class='notice'>You finish digging.</span>")
 			Dismantle()
 	else if(user.a_intent != "harm")
 		attack_hand(user)

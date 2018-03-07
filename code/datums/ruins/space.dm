@@ -59,7 +59,7 @@
 /datum/map_template/ruin/space/freeminer_asteroid/load(turf/T, centered = FALSE)
 	. = ..()
 	if(.)
-		var/datum/map_template/shuttle/S = shuttle_templates["whiteship_miner"]
+		var/datum/map_template/shuttle/S = SSmapping.shuttle_templates["whiteship_miner"]
 		if(S)
 			for(var/obj/machinery/shuttle_manipulator/M in machines)
 				M.existing_shuttle = SSshuttle.getShuttle(S.port_id)
@@ -177,7 +177,7 @@
 	description = "In the darkest times, we will find our way home."
 
 
-/datum/map_template/ruin/space/wizard_academy
+/*/datum/map_template/ruin/space/wizard_academy
 	id = "wizard-academy"
 	suffix = "Academy.dmm"
 	name = "Wizard Academy"
@@ -188,6 +188,8 @@
 		of the area exists in any record. After all, it's not like \
 		some doofus with an EVA suit and jetpack can just waltz around \
 		in space and find it..."
+
+*/
 
 /datum/map_template/ruin/space/hippie_shuttle
 	id = "hippie_shuttle"

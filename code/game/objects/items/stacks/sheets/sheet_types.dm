@@ -54,11 +54,14 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	name = "metal"
 	desc = "Sheets made out of metal."
 	singular_name = "metal sheet"
-	icon_state = "sheet-metal"
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "metal"
 	materials = list(MAT_METAL=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 10
 	flags = CONDUCT
 	origin_tech = "materials=1"
+	novariants = FALSE
+	merge_type = /obj/item/stack/sheet/metal
 
 /obj/item/stack/sheet/metal/narsie_act()
 	if(prob(20))
@@ -89,12 +92,15 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	name = "plasteel"
 	singular_name = "plasteel sheet"
 	desc = "This sheet is an alloy of iron and plasma."
-	icon_state = "sheet-plasteel"
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "rmetal"
 	item_state = "sheet-metal"
 	materials = list(MAT_METAL=6000, MAT_PLASMA=6000)
 	throwforce = 10
 	flags = CONDUCT
 	origin_tech = "materials=2"
+	novariants = FALSE
+	merge_type = /obj/item/stack/sheet/plasteel
 
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 	recipes = plasteel_recipes
@@ -132,11 +138,13 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	name = "wooden plank"
 	desc = "One can only guess that this is a bunch of wood."
 	singular_name = "wood plank"
-	icon_state = "sheet-wood"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "planks"
 	origin_tech = "materials=1;biotech=1"
 	sheettype = "wood"
 	burn_state = FLAMMABLE
+	novariants = FALSE
+	merge_type = /obj/item/stack/sheet/mineral/wood
 
 /obj/item/stack/sheet/mineral/wood/New(var/loc, var/amount=null)
 	recipes = wood_recipes
@@ -161,7 +169,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	new/datum/stack_recipe("bio bag", /obj/item/weapon/storage/bag/bio, 4), \
 	null, \
 	new/datum/stack_recipe("bandage", /obj/item/stack/medical/gauze/improvised, 1, 2, 6), \
-	new/datum/stack_recipe("rag", /obj/item/weapon/reagent_containers/glass/rag, 1), \
+	new/datum/stack_recipe("rag", /obj/item/weapon/mop/rag, 1), \
 	new/datum/stack_recipe("black shoes", /obj/item/clothing/shoes/sneakers/black, 2), \
 	new/datum/stack_recipe("bedsheet", /obj/item/weapon/bedsheet, 3), \
 	new/datum/stack_recipe("empty sandbag", /obj/item/weapon/emptysandbag, 4), \
@@ -176,6 +184,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list ( \
 	burn_state = FLAMMABLE
 	force = 0
 	throwforce = 0
+	merge_type = /obj/item/stack/sheet/cloth
 
 /obj/item/stack/sheet/cloth/New(var/loc, var/amount=null)
 	recipes = cloth_recipes
@@ -207,6 +216,7 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	icon_state = "sheet-card"
 	origin_tech = "materials=1"
 	burn_state = FLAMMABLE
+	merge_type = /obj/item/stack/sheet/cardboard
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
 		recipes = cardboard_recipes
@@ -235,16 +245,17 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	icon_state = "sheet-runed"
 	icon = 'icons/obj/items.dmi'
 	sheettype = "runed"
+	merge_type = /obj/item/stack/sheet/runed_metal
 
 /obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
 	if(!iscultist(user))
-		user << "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>"
+		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
 		return
 	return ..()
 
 /obj/item/stack/sheet/runed_metal/attack(atom/target, mob/living/user)
 	if(!iscultist(user))
-		user << "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>"
+		to_chat(user, "<span class='warning'>Only one with forbidden knowledge could hope to work this metal...</span>")
 		return
 	..()
 
@@ -261,6 +272,7 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	singular_name = "lesser gem"
 	icon_state = "sheet-lessergem"
 	origin_tech = "materials=4"
+	merge_type = /obj/item/stack/sheet/lessergem
 
 
 /obj/item/stack/sheet/greatergem
@@ -269,6 +281,7 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	singular_name = "greater gem"
 	icon_state = "sheet-greatergem"
 	origin_tech = "materials=7"
+	merge_type = /obj/item/stack/sheet/greatergem
 
 	/*
  * Bones
@@ -285,3 +298,4 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	throw_speed = 1
 	throw_range = 3
 	origin_tech = "materials=2;biotech=2"
+	merge_type = /obj/item/stack/sheet/bone

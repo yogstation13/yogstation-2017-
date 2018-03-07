@@ -17,9 +17,18 @@
 		return (BRUTELOSS|FIRELOSS|TOXLOSS|OXYLOSS)
 
 /obj/item/weapon/banhammer/attack(mob/M, mob/user)
-	M << "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>"
-	user << "<font color='red'>You have <b>BANNED</b> [M]</font>"
+	to_chat(M, "<font color='red'><b> You have been banned FOR NO REISIN by [user]<b></font>")
+	to_chat(user, "<font color='red'>You have <b>BANNED</b> [M]</font>")
 	playsound(loc, 'sound/effects/adminhelp.ogg', 15) //keep it at 15% volume so people don't jump out of their skin too much
+
+/obj/item/weapon/banhammer/pummel
+	name = "pummelhammer"
+	desc = "An ancient warhammer infused with enough power to blow someone back to the stone age."
+	force = 10
+
+/obj/item/weapon/banhammer/pummel/attack(mob/living/L, mob/user)
+	L.pummel(user,force)
+	playsound(loc, 'sound/effects/adminhelp.ogg', 15*force)
 
 /obj/item/weapon/sord
 	name = "\improper SORD"
@@ -99,7 +108,7 @@
 		user.unEquip(I)
 
 		user.put_in_hands(S)
-		user << "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>"
+		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
 		qdel(I)
 		qdel(src)
 
@@ -111,7 +120,7 @@
 		user.unEquip(I)
 
 		user.put_in_hands(P)
-		user << "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>"
+		to_chat(user, "<span class='notice'>You fasten [I] to the top of the rod with the cable.</span>")
 		qdel(I)
 		qdel(src)
 	else

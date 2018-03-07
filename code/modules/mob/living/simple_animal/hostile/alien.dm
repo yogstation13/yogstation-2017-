@@ -115,7 +115,7 @@
 							/obj/item/organ/alien/hivenode = 1,
 							/obj/item/organ/alien/acid = 1,
 							/obj/item/organ/alien/neurotoxin = 1)
-							
+
 
 /mob/living/simple_animal/hostile/alien/sentinel/adjustHealth(amount)
 	. = ..()
@@ -214,13 +214,13 @@
 
 /mob/living/simple_animal/hostile/alien/queen/large/adjustHealth(amount)
 	. = ..()
-	if(stat != DEAD)	
+	if(stat != DEAD)
 		if(health < maxHealth/2)
 			angry = TRUE
 		else
 			angry = FALSE
 
-			
+
 
 /mob/living/simple_animal/hostile/alien/queen/large/Aggro()
 	..()
@@ -282,7 +282,7 @@
 	damage = 20
 	stamina = 15
 	icon_state = "toxin"
-	
+
 /obj/item/projectile/neurotox/panic //sentinels swap to kill mode
 	name = "neurotoxin"
 	damage = 35
@@ -327,7 +327,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab/xeno = 1,
 							/obj/item/stack/sheet/animalhide/xeno = 1,
 							/obj/item/organ/brain/alien = 1, //alien maids are also really smart as well, but the economic downturn is hard on everyone. 5 years at xeno college and a masters in egg laying for a part time job cleaning floors.
-							/obj/item/weapon/reagent_containers/glass/rag = 1)
+							/obj/item/weapon/mop/rag = 1)
 
 
 /mob/living/simple_animal/hostile/alien/maid/AttackingTarget()

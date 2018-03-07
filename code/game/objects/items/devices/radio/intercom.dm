@@ -29,14 +29,14 @@
 	..()
 	ui_interact(user, state = default_state)
 
-/obj/item/device/radio/intercom/receive_range(freq, level)
+/obj/item/device/radio/intercom/receive_range(freq, list/broadcast_levels)
 	if(!on)
 		return -1
 	if(wires.is_cut(WIRE_RX))
 		return -1
-	if(!(0 in level))
+	if(!(0 in broadcast_levels))
 		var/turf/position = get_turf(src)
-		if(isnull(position) || !(position.z in level))
+		if(isnull(position) || !(position.z in broadcast_levels))
 			return -1
 	if(!src.listening)
 		return -1

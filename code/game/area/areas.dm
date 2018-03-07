@@ -35,7 +35,7 @@ var/list/motion_alert_listeners = list()
 									'sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg',\
 									'sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg',\
 									'sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg',\
-									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')
+									'sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg','sound/ambience/ambigen15.ogg')
 
 /area/New()
 	icon_state = ""
@@ -140,7 +140,7 @@ var/list/motion_alert_listeners = list()
 			for(var/obj/machinery/door/firedoor/D in RA)
 				if(!D.welded)
 					if(D.operating)
-						D.nextstate = CLOSED
+						D.nextstate = FD_CLOSED
 					else if(!D.density)
 						spawn(0)
 							D.close()

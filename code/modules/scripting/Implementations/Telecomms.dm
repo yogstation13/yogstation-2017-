@@ -88,6 +88,10 @@ var/allowed_translateable_langs = ALL
 	interpreter.SetVar("$security",	1359)
 	interpreter.SetVar("$supply",	1347)
 	interpreter.SetVar("$service",	1349)
+	interpreter.SetVar("$centcom",	1337) // Yes, that is the real Centcom freq.
+	//This whole game is a big fuckin' meme.
+	interpreter.SetVar("$aiprivate", 1447) // The Common Server is the one...
+	// ...that handles the AI Private Channel, btw.
 
 	// Signal data
 
@@ -95,6 +99,7 @@ var/allowed_translateable_langs = ALL
 	interpreter.SetVar("$freq"   , 	signal.frequency)
 	interpreter.SetVar("$source" , 	signal.data["name"])
 	interpreter.SetVar("$uuid"   , 	signal.data["uuid"])
+	interpreter.SetVar("$sector" , 	signal.data["level"])
 	interpreter.SetVar("$job"    , 	signal.data["job"])
 	interpreter.SetVar("$sign"   ,	signal)
 	interpreter.SetVar("$pass"	 ,  !(signal.data["reject"])) // if the signal isn't rejected, pass = 1; if the signal IS rejected, pass = 0
@@ -236,6 +241,7 @@ var/allowed_translateable_langs = ALL
 		signal.data["realname"] = setname
 	signal.data["name"]			= setname
 	signal.data["uuid"]			= interpreter.GetCleanVar("$uuid", signal.data["uuid"])
+	signal.data["level"]		= interpreter.GetCleanVar("$sector", signal.data["level"])
 	signal.data["job"]			= interpreter.GetCleanVar("$job", signal.data["job"])
 	signal.data["reject"]		= !(interpreter.GetCleanVar("$pass")) // set reject to the opposite of $pass
 	signal.data["verb_say"]		= interpreter.GetCleanVar("$say")
@@ -246,7 +252,7 @@ var/allowed_translateable_langs = ALL
 	var/list/setspans 			= interpreter.GetCleanVar("$filters") //Save the span vector/list to a holder list
 	if(islist(setspans)) //Players cannot be trusted with ANYTHING. At all. Ever.
 		setspans &= allowed_custom_spans //Prune out any illegal ones. Go ahead, comment this line out. See the horror you can unleash!
-		signal.data["spans"]	= setspans //Apply new span to the signal only if it is a valid list, made using vector() in the script.
+		signal.data["spans"]	= setspans //Apply new span to the signal only if it is a valid list, made using $filters & vector() in the script.
 
 	// If the message is invalid, just don't broadcast it!
 	if(signal.data["message"] == "" || !signal.data["message"])
@@ -255,6 +261,7 @@ var/allowed_translateable_langs = ALL
 /*  -- Actual language proc code --  */
 
 var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
+var/const/MAX_MEM_VARS	 = 500
 
 /datum/signal
 
@@ -267,6 +274,9 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 			return S.memory[address]
 
 		else
+			if(S.memory.len >= MAX_MEM_VARS)
+				if(!(address in S.memory))
+					return
 			S.memory[address] = value
 
 
@@ -284,6 +294,9 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 
 		if(findtext(num2text(freq), ".")) // if the frequency has been set as a decimal
 			freq *= 10 // shift the decimal one place
+			// "But wait, wouldn't floating point mess this up?" You ask.
+			// Nah. That actually can't happen when you multiply by a whole number.
+			// Think about it.
 
 		freq = sanitize_frequency(freq)
 
@@ -300,7 +313,6 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 		var/time = time2text(world.realtime,"hh:mm:ss")
 		lastsignalers.Add("[time] <B>:</B> [S.id] sent a signal command, which was triggered by NTSL.<B>:</B> [format_frequency(freq)]/[code]")
 
-
 /datum/signal/proc/tcombroadcast(message, freq, source, job, spans, say = "says", ask = "asks", yell = "yells", exclaim = "exclaims", languages = HUMAN)
 	languages &= allowed_translateable_langs //we can only translate to certain languages
 	var/datum/signal/newsign = new
@@ -310,19 +322,25 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 	if(!hradio)
 		throw EXCEPTION("tcombroadcast(): signal has no radio")
 		return
-
+	//First lets do some checks for bad input
+	if(isnum(message)) // Allows for setting $content to a number value
+		message = "[message]"
 	if((!message) && message != 0)
 		message = "*beep*"
 	if(!source)
 		source = "[html_encode(uppertext(S.id))]"
 		hradio = new // sets the hradio as a radio intercom
-	if(!freq || (!isnum(freq) && text2num(freq) == null))
-		freq = 1459
-	if(findtext(num2text(freq), ".")) // if the frequency has been set as a decimal
-		freq *= 10 // shift the decimal one place
-
 	if(!job)
 		job = "Unknown"
+	if(!freq || (!isnum(freq) && text2num(freq) == null))
+		freq = 1459
+	if(!isnum(freq))
+		freq = text2num(freq)
+	if(findtext(num2text(freq), ".")) // if the frequency has been set as a decimal
+		freq *= 10 // shift the decimal one place
+		// "But wait, wouldn't floating point mess this up?" You ask.
+		// Nah. That actually can't happen when you multiply by a whole number.
+		// Think about it.
 
 	if(!islist(spans))
 		spans = list()
@@ -338,6 +356,7 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 	virt.languages_understood = virt.languages_spoken //do not remove this or everything turns to jibberish
 	//END SAY REWRITE RELATED CODE.
 
+	//Now we set up the signal
 	newsign.data["mob"] = virt
 	newsign.data["mobtype"] = /mob/living/carbon/human
 	newsign.data["name"] = source
@@ -353,20 +372,15 @@ var/const/SIGNAL_COOLDOWN = 20 // 2 seconds
 	newsign.data["verb_ask"] = ask
 	newsign.data["verb_yell"]= yell
 	newsign.data["verb_exclaim"] = exclaim
-	if(!isnum(freq))
-		freq = text2num(freq)
 	newsign.frequency = freq
-
-
 	newsign.data["radio"] = hradio
 	newsign.data["vmessage"] = message
 	newsign.data["vname"] = source
 	newsign.data["vmask"] = 0
 	newsign.data["level"] = data["level"]
-
+	newsign.data["broadcast_levels"] = data["broadcast_levels"]
 	newsign.sanitize_data()
 
 	var/pass = S.relay_information(newsign, "/obj/machinery/telecomms/hub")
-	if(!pass)
-		S.relay_information(newsign, "/obj/machinery/telecomms/broadcaster") // send this simple message to broadcasters
-
+	if(!pass) // If we're not sending this to the hub (i.e. we're running a basic tcomms or something)
+		S.relay_information(newsign, "/obj/machinery/telecomms/broadcaster") // send this message to broadcasters directly

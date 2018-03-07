@@ -123,6 +123,7 @@
 	weaken = 8
 	stun = 8
 	hitsound = 'sound/effects/meteorimpact.ogg'
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/bullet/meteorshot/weak
 	damage = 10
@@ -130,6 +131,7 @@
 	stun = 4
 
 /obj/item/projectile/bullet/honker
+	name = "ethereal honk"
 	damage = 0
 	weaken = 5
 	stun = 5
@@ -140,6 +142,7 @@
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "banana"
 	range = 200
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/bullet/honker/New()
 	..()
@@ -172,11 +175,12 @@
 	icon_state = "cbbolt"
 	damage = 6
 	var/piercing = 0
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/bullet/dart/New()
 	..()
 	create_reagents(50)
-	reagents.set_reacting(FALSE)
+	reagents.set_reacting(TRUE)
 
 /obj/item/projectile/bullet/dart/on_hit(atom/target, blocked = 0, hit_zone)
 	if(iscarbon(target))
@@ -219,6 +223,7 @@
 	damage = 5
 	damage_type = TOX
 	weaken = 5
+	makesBulletHoles = FALSE
 
 /obj/item/projectile/bullet/neurotoxin/on_hit(atom/target, blocked = 0)
 	if(isalien(target))

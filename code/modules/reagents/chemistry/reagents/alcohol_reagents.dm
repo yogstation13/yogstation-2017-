@@ -11,7 +11,7 @@
 	description = "A well-known alcohol with a variety of applications."
 	color = "#404030" // rgb: 64, 64, 48
 	nutriment_factor = 0
-	var/boozepwr = 65 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
+	var/boozepwr = 100 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
 
 /*
 Boozepwr Chart
@@ -43,14 +43,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	if(istype(O,/obj/item/weapon/paper))
 		var/obj/item/weapon/paper/paperaffected = O
 		paperaffected.clearpaper()
-		usr << "<span class='notice'>[paperaffected]'s ink washes away.</span>"
+		to_chat(usr, "<span class='notice'>[paperaffected]'s ink washes away.</span>")
 	if(istype(O,/obj/item/weapon/book))
 		if(reac_volume >= 5)
 			var/obj/item/weapon/book/affectedbook = O
 			affectedbook.dat = null
-			usr << "<span class='notice'>Through thorough application, you wash away [affectedbook]'s writing.</span>"
+			to_chat(usr, "<span class='notice'>Through thorough application, you wash away [affectedbook]'s writing.</span>")
 		else
-			usr << "<span class='warning'>The ink smears, but doesn't wash away!</span>"
+			to_chat(usr, "<span class='warning'>The ink smears, but doesn't wash away!</span>")
 	return
 
 /datum/reagent/consumable/ethanol/reaction_mob(mob/living/M, method=TOUCH, reac_volume) //Splashing people with ethanol isn't quite as good as fuel.
@@ -136,6 +136,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "Number one drink AND fueling choice for Russians worldwide."
 	color = "#0064C8" // rgb: 0, 100, 200
 	boozepwr = 65
+	cleans = TRUE
 
 /datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/M)
 	M.radiation = max(M.radiation-2,0)
@@ -737,9 +738,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/hearty_punch
 	name = "Hearty Punch"
 	id = "hearty_punch"
-	description = "Brave bull/syndicate bomb/absinthe mixture resulting in an energizing beverage. Mild alcohol content."
+	description = "Brave bull/syndicate bomb/absinthe mixture resulting in an energizing beverage. Kicks like a horse, however."
 	color = rgb(140, 0, 0)
-	boozepwr = 10
+	boozepwr = 120
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
 /datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/M)

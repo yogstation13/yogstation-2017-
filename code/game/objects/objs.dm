@@ -66,29 +66,24 @@
 		return null
 
 /obj/proc/updateUsrDialog()
-	if(in_use)
-		var/is_in_use = 0
-		var/list/nearby = viewers(1, src)
-		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
-				is_in_use = 1
-				src.attack_hand(M)
-		if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot) || IsAdminGhost(usr))
-			if (!(usr in nearby))
-				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-					is_in_use = 1
-					src.attack_ai(usr)
-
-		// check for TK users
-
-		if(ishuman(usr))
-			var/mob/living/carbon/human/H = usr
-			if(!(usr in nearby))
-				if(usr.client && usr.machine==src)
-					if(H.dna.check_mutation(TK))
-						is_in_use = 1
-						src.attack_hand(usr)
-		in_use = is_in_use
+	if(!in_use)
+		return
+	var/is_in_use = FALSE
+	var/list/nearby = viewers(1, src)
+	for(var/mob/M in nearby)
+		if ((M.client && M.machine == src))
+			is_in_use = TRUE
+			attack_hand(M)
+	//Check if the person who triggered the update can see the change, in case they were not adjacent
+	if((usr.machine == src) && usr.canUseTopic(src) && !(usr in nearby))
+		is_in_use = TRUE
+		var/mob/living/carbon/human/H = usr
+		if(istype(H) && H.dna.check_mutation(TK))
+			attack_tk(H)
+		else
+			//if it is not a human using TK, it must be some sort of silicon
+			attack_ai(usr)
+	in_use = is_in_use
 
 /obj/proc/updateDialog()
 	// Check that people are actually using the machine. If not, don't update anymore.
@@ -220,4 +215,7 @@
 /obj/proc/CanAStarPass()
 	. = !density
 
-
+/obj/vv_get_dropdown()
+	. = ..()
+	.["Delete all of type"] = "?_src_=vars;delall=\ref[src]"
+	.["Osay"] = "?_src_=vars;osay=\ref[src]"

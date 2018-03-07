@@ -55,7 +55,7 @@
 /obj/effect/mob_spawn/human/ash_walker/special(mob/living/new_spawn)
 	new_spawn.real_name = random_unique_lizard_name(gender)
 	if(in_tribe)
-		new_spawn << "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis, and her chosen son: The Chieftain!</b>"
+		to_chat(new_spawn, "<b>Drag the corpses of men and beasts to your nest. It will absorb them to create more of your kind. Glory to the Necropolis, and her chosen son: The Chieftain!</b>")
 		new_spawn <<"<b>The chieftain will have a special HUD over their head. Remember to show utmost respect.</b>"
 	if(ishuman(new_spawn))
 		var/mob/living/carbon/human/H = new_spawn
@@ -63,7 +63,6 @@
 		H.update_body()
 		H.languages_spoken = ASHWALKER
 		H.languages_understood = ASHWALKER
-		H.weather_immunities |= "ash"
 
 	if(in_tribe)
 		var/datum/atom_hud/antag/ashhud = huds[ANTAG_HUD_ASHWALKER]
@@ -115,8 +114,8 @@
 		var/mob/living/carbon/human/H = new_spawn
 		H.languages_spoken |= HUMAN
 		H.languages_understood |= HUMAN
-		H << "<span class='notice'>You are familiar with these human's language. Use this to your advantage to communicate with those authentic with it.</span>"
-	new_spawn << "<span class='notice'>When you are close to death you will enter a chrysalis state where you will slowly regenerate. During this state you are very vunerable.</span>"
+		to_chat(H, "<span class='notice'>You are familiar with these human's language. Use this to your advantage to communicate with those authentic with it.</span>")
+	to_chat(new_spawn, "<span class='notice'>When you are close to death you will enter a chrysalis state where you will slowly regenerate. During this state you are very vunerable.</span>")
 
 // Rebirth egg that ashwalkers regenerate in when they reach under 0 health. Takes time to regenerate.
 /obj/effect/cyrogenicbubble
@@ -126,7 +125,7 @@
 	icon_state = "bluespace"
 	density = 1
 	var/health = 100
-	var/progress = 0 // needs 300
+	var/progress = 0
 	var/mob/living/ashwalker
 
 /obj/effect/cyrogenicbubble/New()
@@ -143,13 +142,11 @@
 
 /obj/effect/cyrogenicbubble/process()
 	if(health)
-		progress++
+		progress = min(50, progress + 1) // capped at 50, its all we need.
 	else
 		ejectEgg()
-	if(progress == 150)
+	if(progress == 50)
 		ejectEgg()
-	else
-		healAshwalker()
 
 /obj/effect/cyrogenicbubble/proc/reset_rebirth()
 	if(!ashwalker)
@@ -161,13 +158,14 @@
 		C.rebirth = FALSE
 
 /obj/effect/cyrogenicbubble/attackby(obj/item/weapon, mob/user)
-	. = ..()
 	if(health)
 		if(weapon.force > health)
 			ejectEgg()
 			qdel(src)
 		else
 			health -= weapon.force
+	playsound(loc, weapon.hitsound, 50, 1, 1)
+	user.changeNext_move(CLICK_CD_MELEE)
 
 /obj/effect/cyrogenicbubble/attack_animal(mob/living/simple_animal/M)
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -180,24 +178,24 @@
 
 /obj/effect/cyrogenicbubble/proc/ejectEgg()
 	if(ashwalker)
+		if(progress == 50)
+			ashwalker.revive(1) // full heal
+		else
+			// if they didn't make it to 50, then they'll be healed, but not completely
+			// scaling is multiplied by 2, based on the fact that damage varies and I don't want to exactly set their brute/fire/tox/oxy damage
+			ashwalker.adjustToxLoss(-progress*2, 0)
+			ashwalker.adjustOxyLoss(-progress*2, 0)
+			ashwalker.adjustBruteLoss(-progress*2, 0)
+			ashwalker.adjustFireLoss(-progress*2, 0)
+			ashwalker.revive()
 		ashwalker.forceMove(get_turf(src))
 		ashwalker.real_name = name
 		ashwalker.name = name
 		ashwalker.blood_volume = BLOOD_VOLUME_NORMAL
 		reset_rebirth()
+		ashwalker.grab_ghost()
 		ashwalker = null
 	qdel(src)
-
-/obj/effect/cyrogenicbubble/proc/healAshwalker()
-	if(!ashwalker)
-		return
-	ashwalker.adjustToxLoss(-1, 0)
-	ashwalker.adjustOxyLoss(-1, 0)
-	ashwalker.adjustBruteLoss(-1, 0)
-	ashwalker.adjustFireLoss(-1, 0)
-	if(ashwalker.stat == DEAD) // one does not DIE in the cyro bubble.
-		ashwalker.revive()
-
 
 /obj/effect/cyrogenicbubble/return_air()
 	if(get_turf(src))
@@ -228,71 +226,15 @@
 	var/wish = rand(1,4)
 	switch(wish)
 		if(1)
-			new_spawn << "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>"
+			to_chat(new_spawn, "<b>You wished to kill, and kill you did. You've lost track of how many, but the spark of excitement that murder once held has winked out. You feel only regret.</b>")
 		if(2)
-			new_spawn << "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?</b>"
+			to_chat(new_spawn, "<b>You wished for unending wealth, but no amount of money was worth this existence. Maybe charity might redeem your soul?</b>")
 		if(3)
-			new_spawn << "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>"
+			to_chat(new_spawn, "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>")
 		if(4)
-			new_spawn << "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>"
+			to_chat(new_spawn, "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>")
 
-//Golem shells: Spawns in Free Golem ships in lavaland. Ghosts become mineral golems and are advised to spread personal freedom.
-/obj/effect/mob_spawn/human/golem
-	name = "inert golem shell"
-	desc = "A humanoid shape, empty, lifeless, and full of potential."
-	mob_name = "a free golem"
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "construct"
-	mob_species = /datum/species/golem
-	roundstart = FALSE
-	death = FALSE
-	anchored = 0
-	density = 0
-	flavour_text = "<font size=3><b>Y</b></font><b>ou are a Free Golem. Your family worships <span class='danger'>The Liberator</span>. In his infinite and divine wisdom, he set your clan free to \
-	travel the stars with a single declaration: \"Yeah go do whatever.\" Though you are bound to the one who created you, it is customary in your society to repeat those same words to newborn \
-	golems, so that no golem may ever be forced to serve again.</b>"
-	jobban_type = "lavaland"
-
-/obj/effect/mob_spawn/human/golem/New()
-	..()
-	var/area/A = get_area(src)
-	if(A)
-		notify_ghosts("A golem shell has been completed in \the [A.name].", source = src, action=NOTIFY_ATTACK)
-
-/obj/effect/mob_spawn/human/golem/special(mob/living/new_spawn)
-	var/golem_surname = pick(golem_names)
-	// 3% chance that our golem has a human surname, because
-	// cultural contamination
-	if(prob(3))
-		golem_surname = pick(last_names)
-
-	var/datum/species/X = mob_species
-	var/golem_forename = initial(X.id)
-
-	// The id of golem species is either their material "diamond","gold",
-	// or just "golem" for the plain ones. So we're using it for naming.
-
-	if(golem_forename == "golem")
-		golem_forename = "iron"
-
-	new_spawn.real_name = "[capitalize(golem_forename)] [golem_surname]"
-	// This means golems have names like Iron Forge, or Diamond Quarry
-	// also a tiny chance of being called "Plasma Meme"
-	// which is clearly a feature
-
-	new_spawn << "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked."
-	if(ishuman(new_spawn))
-		var/mob/living/carbon/human/H = new_spawn
-		H.set_cloned_appearance()
-
-
-/obj/effect/mob_spawn/human/golem/adamantine
-	name = "dust-caked golem shell"
-	desc = "A humanoid shape, empty, lifeless, and full of potential."
-	mob_name = "a free golem"
-	anchored = 1
-	density = 1
-	mob_species = /datum/species/golem/adamantine
+//GOLEMS HAVE BEEN MOVED TO THEIR OWN MODULE
 
 //Malfunctioning cryostasis sleepers: Spawns in makeshift shelters in lavaland. Ghosts become hermits with knowledge of how they got to where they are now.
 /obj/effect/mob_spawn/human/hermit

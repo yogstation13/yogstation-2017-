@@ -30,7 +30,8 @@ Clown
 		/obj/item/weapon/stamp/clown = 1,
 		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/device/megaphone/clown = 1
+		/obj/item/device/megaphone/clown = 1,
+		/obj/item/whoopee = 1
 		)
 
 	backpack = /obj/item/weapon/storage/backpack/clown
@@ -57,6 +58,7 @@ Clown
 
 	H.dna.add_mutation(CLOWNMUT)
 	H.rename_self("clown")
+	log_game("[H.real_name]/[H.ckey] joined the round as [H.job].")
 
 /*
 Mime
@@ -106,6 +108,7 @@ Mime
 		H.mind.miming = 1
 
 	H.rename_self("mime")
+	log_game("[H.real_name]/[H.ckey] joined the round as [H.job].")
 
 /*
 Librarian
