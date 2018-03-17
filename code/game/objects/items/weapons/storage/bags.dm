@@ -119,7 +119,7 @@
 
 /obj/item/weapon/storage/bag/plants/portaseeder
 	name = "portable seed extractor"
-	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
+	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant. Also has the function to deshell grown goods like eggplants easily."
 	icon_state = "portaseeder"
 	origin_tech = "biotech=3;engineering=2"
 
@@ -133,6 +133,15 @@
 		seedify(O, 1)
 	close_all()
 
+/obj/item/weapon/storage/bag/plants/portaseeder/verb/deshell()
+	set name = "Deshell grown products"
+	set category = "Object"
+	set desc = "Activate to deshell plants, dropping the items on the ground."
+	if(usr.stat || !usr.canmove || usr.restrained())
+		return
+	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/shell/O in contents)
+		O.deshell(O, usr, 0)
+	close_all()
 
 // -----------------------------
 //        Sheet Snatcher

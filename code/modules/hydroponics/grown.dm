@@ -160,17 +160,15 @@
 			user.AddLuminosity(-G.get_lum(seed))
 			SetLuminosity(G.get_lum(seed))
 
-
-
 // For item-containing growns such as eggy or gatfruit
-/obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user as mob)
-	user.unEquip(src)
+/obj/item/weapon/reagent_containers/food/snacks/grown/shell/attack_self(mob/user as mob, message)
+	deshell(src, user, 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/grown/shell/proc/deshell(obj/item/O, mob/living/user, message)
 	if(trash)
 		var/obj/item/weapon/T
-		if(ispath(trash, /obj/item/weapon/grown) || ispath(trash, /obj/item/weapon/reagent_containers/food/snacks/grown))
-			T = new trash(user.loc, seed)
-		else
-			T = new trash(user.loc)
-		user.put_in_hands(T)
-		to_chat(user, "<span class='notice'>You open [src]\'s shell, revealing \a [T].</span>")
-	qdel(src)
+		T = new trash(user.loc)
+		if(message)
+			to_chat(user, "<span class='notice'>You open [O]\'s shell and a [T] drops on the ground.</span>")
+		qdel(O)
+		return 1
