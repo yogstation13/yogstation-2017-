@@ -17,6 +17,8 @@
 	disliked_food = GROSS
 	liked_food = JUNKFOOD | FRIED
 	toxic_food = TOXIC | RAW
+	nojumpsuit = TRUE
+	no_equip = list(slot_shoes,slot_w_uniform)
 
 
 /datum/species/human/qualifies_for_rank(rank, list/features)
