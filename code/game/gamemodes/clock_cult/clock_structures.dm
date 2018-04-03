@@ -759,6 +759,7 @@
 	post_channel(L)
 	if(is_eligible_servant(L))
 		to_chat(L, "<span class='heavy_brass'>\"You belong to me now.\"</span>")
+		log_game("[key_name(L)] has been converted to the cult of Ratvar!")
 	add_servant_of_ratvar(L)
 	L.Weaken(3) //Completely defenseless for about five seconds - mainly to give them time to read over the information they've just been presented with
 	L.Stun(3)
