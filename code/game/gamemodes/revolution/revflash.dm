@@ -71,6 +71,7 @@
 				to_chat(user, "<span class='danger'>You fail to convert [M] with the device!</span>")
 			else
 				to_chat(user, "<span class='danger'>You convert [M] to the cause!</span>")
+				log_game("[key_name(M)] has become a revolutionary!")
 			to_chat(M, "<span class='userdanger'>[user] holds something up to your face!</span>")
 			if(M.weakeyes)
 				M.Stun(2)
