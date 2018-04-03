@@ -136,7 +136,7 @@
 			var/value
 			if (IS_NORMAL_LIST(L) && !isnum(key))
 				value = L[key]
-			variable_html += debug_variable(i, value, 0, D)
+			variable_html += debug_variable(i, value, 0, D, FALSE)
 	else
 		names = sortList(names)
 		for (var/V in names)
@@ -150,10 +150,6 @@
 			body {
 				font-family: Verdana, sans-serif;
 				font-size: 9pt;
-			}
-			.value {
-				font-family: "Courier New", monospace;
-				font-size: 8pt;
 			}
 		</style>
 	</head>
@@ -380,7 +376,7 @@
 		item = "[VV_HTML_ENCODE(name)] = <span class='value'>null</span>"
 
 	else if (istext(value))
-		item = "[VV_HTML_ENCODE(name)] = <span class='value'>\"[VV_HTML_ENCODE(value)]\"</span>"
+		item = "[VV_HTML_ENCODE(name)] = <span class='value'>\"value\"</span>"
 
 	else if (isicon(value))
 		#ifdef VARSICON
