@@ -30,6 +30,7 @@ var/list/start_landmarks_list = list()			//list of all spawn points created
 var/list/department_security_spawns = list()	//list of all department security spawns
 var/list/generic_event_spawns = list()			//list of all spawns for events
 var/list/maintroom_landmarks = list()			//list of all random maintenance room landmarks
+var/list/bar_landmarks = list() //What kind of bars the station can be equipped with, preference controlled.
 
 var/list/monkeystart = list()
 var/list/wizardstart = list()

@@ -260,6 +260,7 @@
 #include "code\datums\martial\krav_maga.dm"
 #include "code\datums\martial\slipping_carp.dm"
 #include "code\datums\martial\wrestling.dm"
+#include "code\datums\ruins\BarTypes.dm"
 #include "code\datums\ruins\lavaland.dm"
 #include "code\datums\ruins\maint.dm"
 #include "code\datums\ruins\space.dm"

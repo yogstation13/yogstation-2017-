@@ -250,7 +250,6 @@ var/datum/subsystem/ticker/ticker
 			var/datum/holiday/holiday = SSevent.holidays[holidayname]
 			to_chat(world, "<h4>[holiday.greet()]</h4>")
 
-
 	spawn(0)//Forking here so we dont have to wait for this to finish
 		mode.post_setup()
 		//Cleanup some stuff
@@ -263,7 +262,54 @@ var/datum/subsystem/ticker/ticker
 		if(!adm["present"])
 			webhook_send("adminless", "Round just started with no active admins online!")
 
+	if(!setup_bar()) //This calls on SSmapping, the list of bar choosers is established in subsystems/jobs.dm
+		backup_bar() //well fuck me it broke...somehow.
 	return 1
+
+
+
+/datum/subsystem/ticker/proc/setup_bar(override)
+	if(!override)
+		var/list/our_list = list()
+		for(var/V in bar_landmarks)	//First of all, copy all the map template names
+			var/obj/effect/landmark/bar_spawner/LM = V
+			our_list = LM.template_names
+		if(bar_choosers.len)
+			for(var/mob/living/H in bar_choosers)		//So, we're doing this the non-democratic way (thanks Nich and Asv :^)) Player choice is weighted against a random bar, if loads of players cooperate and pick the same bar, their chance of rolling it goes up
+				our_list += H.client.prefs.preferred_bar_theme
+			if(!bar_chosen)
+				var/our_new_bar = pick(our_list) //So, they're all weighted, players can pitch in and increase their chances of getting the one they want, but it is still random
+				SSmapping.seedBar(our_new_bar)
+				bar_chosen = TRUE
+				log_game("Bar: [our_new_bar] has been selected at random.")
+				return 1
+		else//Error meme
+			if(!bar_chosen)//Doubbbleee check
+				var/therandombar = pick(our_list)
+				SSmapping.seedBar(therandombar)
+				bar_chosen = TRUE
+				log_game("No bartenders or cooks were present to choose the bar theme, picked [therandombar] at random instead.")
+				return 1
+		return 1
+	else
+		SSmapping.seedBar(override)
+		bar_chosen = TRUE
+		log_game("An admin forced their bar preference of [override]!")
+
+
+/datum/subsystem/ticker/proc/backup_bar() //If, by some freak of nature, bar spawning breaks. This will spawn a new map. This shouldn't ever be needed.
+	var/list/our_list = list()
+	if(!bar_chosen)
+		for(var/V in bar_landmarks)	//First of all, copy all the map template names
+			var/obj/effect/landmark/bar_spawner/LM = V
+			our_list = LM.template_names
+		var/therandombar = pick(our_list)
+		SSmapping.seedBar(therandombar)
+		bar_chosen = TRUE
+		log_game("Bar error: Uhhh that shouldn't have happened, but luckily I kicked in and picked [therandombar] as a backup.")
+		return 1
+	else
+		return 0 //Nice, this wasn't needed.
 
 //Plus it provides an easy way to make cinematics for other events. Just use this as a template
 /datum/subsystem/ticker/proc/station_explosion_cinematic(station_missed=0, override = null)

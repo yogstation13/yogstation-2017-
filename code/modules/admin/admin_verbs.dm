@@ -103,6 +103,7 @@ var/list/admin_verbs_sounds = list(
 	/client/proc/set_round_end_sound,
 	)
 var/list/admin_verbs_fun = list(
+	/client/proc/force_bar_spawn,
 	/client/proc/cmd_admin_dress,
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
