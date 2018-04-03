@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -66472,7 +66472,7 @@
 	dir = 4
 	},
 /obj/machinery/camera{
-	c_tag = "Cargo Office";
+	c_tag = "Telecoms Control Room";
 	dir = 4;
 	network = list("SS13")
 	},
