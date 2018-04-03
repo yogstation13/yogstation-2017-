@@ -6,6 +6,7 @@
  *		Cloth
  *		Cardboard
  *		Runed Metal (cult)
+ *		Plastic
  */
 
 /*
@@ -283,7 +284,7 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	origin_tech = "materials=7"
 	merge_type = /obj/item/stack/sheet/greatergem
 
-	/*
+/*
  * Bones
  */
 /obj/item/stack/sheet/bone
@@ -299,3 +300,34 @@ var/global/list/datum/stack_recipe/runed_metal_recipes = list ( \
 	throw_range = 3
 	origin_tech = "materials=2;biotech=2"
 	merge_type = /obj/item/stack/sheet/bone
+
+/*
+ * Plastc
+ */
+var/global/list/datum/stack_recipe/plastic_recipes = list(
+	new /datum/stack_recipe("plastic flaps", /obj/structure/plasticflaps, 5, one_per_turf = TRUE, on_floor = TRUE, time = 40), \
+	new /datum/stack_recipe("water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/empty), \
+	new /datum/stack_recipe("large water bottle", /obj/item/weapon/reagent_containers/glass/beaker/waterbottle/large/empty,3), \
+	new /datum/stack_recipe("wet floor sign", /obj/item/weapon/caution, 2))
+
+/obj/item/stack/sheet/plastic
+	name = "plastic"
+	desc = "Compress dinosaur over millions of years, then refine, split and mold, and voila! You have plastic."
+	singular_name = "plastic sheet"
+	icon_state = "sheet-plastic"
+	icon = 'icons/obj/items.dmi'
+	throwforce = 6
+	flags = CONDUCT
+	origin_tech = "materials=1"
+	origin_tech = "materials=1;biotech=1"
+	merge_type = /obj/item/stack/sheet/plastic
+
+/obj/item/stack/sheet/plastic/fifty
+	amount = 50
+
+/obj/item/stack/sheet/plastic/five
+	amount = 5
+
+/obj/item/stack/sheet/plastic/New()
+	recipes = plastic_recipes
+	. = ..()
