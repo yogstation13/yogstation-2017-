@@ -1139,7 +1139,7 @@
 	cost = 1000
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 	crate_name = "sandstone blocks crate"
-	
+
 /datum/supply_pack/materials/carpet50
 	name = "50 Carpet Sheets"
 	cost = 1000
@@ -1149,6 +1149,26 @@
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
+
+/datum/supply_pack/misc/vape
+	name = "Vape crate"
+	cost = 2000
+	contains = list(/obj/item/clothing/mask/vape/tank,
+					/obj/item/clothing/mask/vape,
+					/obj/item/clothing/mask/vape,
+					/obj/item/clothing/mask/vape,
+					/obj/item/clothing/mask/vape/tank/wood,
+					/obj/item/clothing/mask/vape/tank,
+					/obj/item/clothing/mask/vape/tank,
+					/obj/item/clothing/mask/vape/tank/wood)
+	crate_name = "cloud machine"
+
+/datum/supply_pack/misc/hypervape
+	name = "Advanced smoke generation kit (vapes)"
+	cost = 5000
+	contains = list(/obj/item/clothing/mask/vape/tank/tpriv,
+					/obj/item/clothing/mask/vape/tank/tpriv)
+	crate_name = "Clouds"
 
 /datum/supply_pack/misc
 	group = "Miscellaneous Supplies"

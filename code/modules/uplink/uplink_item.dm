@@ -564,6 +564,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 1
 	surplus = 50
 
+/datum/uplink_item/stealthy_weapons/vape
+	name = "Syndicate vape"
+	desc = "Ever wanted to instantly mist up any room? Ever wanted to inhale CLF3?, \
+			this thing will instantly hotbox a room with a few puffs with its sub-ohm resistance and ultra smooth coil (which is oriented for cloud ripping)."
+	item = /obj/item/clothing/mask/vape/tank/syndie
+	cost = 2 // fuck
+
 /datum/uplink_item/stealthy_weapons/traitor_chem_bottle
 	name = "Poison Kit"
 	desc = "An assortment of deadly chemicals packed into a compact box. Comes with a syringe for more precise application."

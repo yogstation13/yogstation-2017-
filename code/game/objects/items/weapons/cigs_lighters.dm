@@ -688,3 +688,257 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		new /obj/effect/decal/cleanable/ash(get_turf(src))
 		amount_of_stubs = 0
 		update_icon()
+
+
+///////////////
+//VAPE NATION//
+///////////////
+/obj/item/clothing/mask/vape
+	name = "\improper E-Cigarette"
+	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: Do not fill with flammable materials.\""//<<< i'd vape to that.
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = null
+	item_state = null
+	w_class = 1
+	var/chem_volume = 100
+	var/vapetime = 0 //this so it won't puff out clouds every tick
+	var/screw = 0 // kinky
+	var/super = 0 //for the fattest vapes dude.
+	var/vapetype = null //only for tanks
+	var/emagged = 0
+	var/wattage = 1 //Shit tier clouds :(
+
+/obj/item/clothing/mask/vape/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] starts sucking on [src] with extreme vigor!")//it doesn't give you cancer, it is cancer
+	user.visible_message("<span class='suicide'>[user] is trying to hotbox the room!")
+	if(do_after(user, 50, target=src))
+		hotbox()
+		user.visible_message("<span class='suicide'>[user] rips the fattest cloud in existence! their coil disintegrates into embers knowing its job to be done as smoke fills the room.")
+	return (TOXLOSS|OXYLOSS)
+
+
+/obj/item/clothing/mask/vape/proc/hotbox() //Fill an entire room with MIST
+	var/datum/effect_system/smoke_spread/chem/s = new
+	if(emagged)
+		s.set_up(reagents, 20, loc, silent=TRUE)
+	if(super)
+		s.set_up(reagents, 8, loc, silent=TRUE)
+	else
+		s.set_up(reagents, 4, loc, silent=TRUE)
+	s.start()
+	vapetime = 0
+
+/obj/item/clothing/mask/vape/Initialize(mapload, param_color)
+	. = ..()
+	create_reagents(chem_volume)
+	reagents.set_reacting(FALSE) // so it doesn't react until you light it
+	reagents.add_reagent("nicotine", (chem_volume/2)) //half tank to start
+	if(!icon_state)
+		if(!param_color)
+			param_color = pick("red","blue","black","white","green","purple","yellow","orange")
+		icon_state = "[param_color]_vape"
+		item_state = "[param_color]_vape"
+
+/obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/weapon/reagent_containers))
+		if(reagents.total_volume < chem_volume)
+			if(O.reagents.total_volume > 0)
+				O.reagents.trans_to(src,25)
+				to_chat(user, "<span class='notice'>You add the contents of [O] to [src].</span>")
+			else
+				to_chat(user, "<span class='warning'>[O] is empty!</span>")
+		else
+			to_chat(user, "<span class='warning'>[src] can't hold anymore reagents!</span>")
+
+	if(istype(O, /obj/item/weapon/screwdriver))
+		if(!screw)
+			screw = 1
+			to_chat(user, "<span class='notice'>You open the cap on [src].</span>")
+			if(super)
+				add_overlay("[vapetype]vapeopen_med")
+			else
+				add_overlay("[vapetype]vapeopen_low")
+		else
+			screw = 0
+			to_chat(user, "<span class='notice'>You close the cap on [src].</span>")
+			cut_overlays()
+
+	if(istype(O, /obj/item/device/multitool))
+		if(screw && !emagged)//also kinky
+			if(!super)
+				cut_overlays()
+				super = 1
+				to_chat(user, "<span class='notice'>You increase the voltage of [src].</span>")
+				wattage += 1
+				add_overlay("vapeopen_med")
+			else
+				cut_overlays()
+				super = 0
+				to_chat(user, "<span class='notice'>You decrease the voltage of [src].</span>")
+				add_overlay("vapeopen_low")
+				wattage -= 1
+
+		if(screw && emagged)
+			to_chat(user, "<span class='notice'>[src] can't be modified!</span>")
+
+
+/obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
+	if(screw)
+		if(!emagged)
+			cut_overlays()
+			emagged = TRUE
+			super = 0
+			to_chat(user, "<span class='warning'>You maximize the voltage of [src].</span>")
+			add_overlay("[vapetype]vapeopen_high")
+			wattage += 2
+			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread //for effect
+			sp.set_up(5, 1, src)
+			sp.start()
+		else
+			to_chat(user, "<span class='warning'>[src] is already emagged!</span>")
+	else
+		to_chat(user, "<span class='notice'>You need to open the cap to do that.</span>")
+
+/obj/item/clothing/mask/vape/attack_self(mob/user)
+	if(reagents.total_volume > 0)
+		to_chat(user, "<span class='notice'>You empty [src] of all reagents.</span>")
+		reagents.clear_reagents()
+	return
+
+/obj/item/clothing/mask/vape/equipped(mob/user, slot)
+	if(slot == slot_wear_mask)
+		if(!screw)
+			to_chat(user, "<span class='notice'>You start puffing on the vape.</span>")
+			reagents.set_reacting(TRUE)
+			START_PROCESSING(SSobj, src)
+		else //it will not start if the vape is opened.
+			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
+
+/obj/item/clothing/mask/vape/dropped(mob/user)
+	var/mob/living/carbon/C = user
+	if(C.get_item_by_slot(slot_wear_mask) == src)
+		reagents.set_reacting(FALSE)
+		STOP_PROCESSING(SSobj, src)
+
+/obj/item/clothing/mask/vape/proc/hand_reagents()//had to rename to avoid duplicate error
+	if(reagents.total_volume)
+		if(iscarbon(loc))
+			var/mob/living/carbon/C = loc
+			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
+				var/fraction = min(REAGENTS_METABOLISM/reagents.total_volume, 1) //this will react instantly, making them a little more dangerous than cigarettes
+				reagents.reaction(C, INGEST, fraction)
+				if(!reagents.trans_to(C, REAGENTS_METABOLISM))
+					reagents.remove_any(REAGENTS_METABOLISM)
+				if(reagents.get_reagent_amount("welding_fuel"))
+					//HOT STUFF
+					C.fire_stacks = 2
+					C.IgniteMob()
+
+				if(reagents.get_reagent_amount("plasma")) // the plasma explodes when exposed to fire
+					var/datum/effect_system/reagents_explosion/e = new()
+					e.set_up(round(reagents.get_reagent_amount("plasma") / 2.5, 1), get_turf(src), 0, 0)
+					e.start()
+					qdel(src)
+				return
+		reagents.remove_any(REAGENTS_METABOLISM)
+
+/obj/item/clothing/mask/vape/process()
+	var/mob/living/M = loc
+
+	if(isliving(loc))
+		M.IgniteMob()
+
+	vapetime++
+
+	if(!reagents.total_volume)
+		if(ismob(loc))
+			to_chat(M, "<span class='notice'>[src] is empty!</span>")
+			STOP_PROCESSING(SSobj, src)
+			//it's reusable so it won't unequip when empty
+		return
+	//open flame removed because vapes are a closed system, they wont light anything on fire
+
+	if(super && vapetime > 2)//Time to start puffing those fat vapes, yo.
+		var/datum/effect_system/smoke_spread/chem/s = new
+		s.set_up(reagents, wattage, loc, silent=TRUE)
+		s.start()
+		vapetime = 0
+
+	if(emagged && vapetime > 2)
+		var/datum/effect_system/smoke_spread/chem/s = new
+		s.set_up(reagents, wattage*2, loc, silent=TRUE)
+		s.start()
+		vapetime = 0
+		if(prob(5))//small chance for the vape to break and deal damage if it's emagged
+			M.apply_damage(20, BURN, "head")
+			M.Weaken(5)
+			var/datum/effect_system/spark_spread/sp = new /datum/effect_system/spark_spread
+			sp.set_up(5, 1, src)
+			sp.start()
+			to_chat(M, "<span class='userdanger'>[src] suddenly explodes in your mouth!</span>")
+			qdel(src)
+			return
+
+	if(reagents && reagents.total_volume)
+		hand_reagents()
+
+
+
+/////////////////////////////////////////////
+//Tank vapes for ripping the FATTEST clouds//
+/////////////////////////////////////////////
+/obj/item/clothing/mask/vape/tank
+	name = "\improper Tank Vape"
+	desc = "A tank like box with a screen on it, it is basic but should be able to rip FAT clouds were you to try.."
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "tank_vape"
+	item_state = "tank_vape"
+	w_class = 1
+	chem_volume = 200 //it's a tank, fuck
+	super = 1 //FAT CLOUDS
+	vapetype = "tank"
+	wattage = 2
+
+/obj/item/clothing/mask/vape/tank/wood
+	name = "\improper Wooden Tank Vape"
+	desc = "A classy looking tank vape with a wooden veneer, extra classy and smooth but also perfectly able to RIP FAT CLOUDS."
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "tank_vape_wood"
+	item_state = "tank_vape_wood"
+	w_class = 1
+	chem_volume = 250 //it's a tank, fuck
+
+/obj/item/clothing/mask/vape/tank/tpriv
+	name = "\improper T-priv Tank Vape"
+	desc = "A cloud machine capable of holding a ludicrous amount of juice, it comes preset on a high wattage."
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "tank_vape_tpriv"
+	item_state = "tank_vape_tpriv"
+	w_class = 1
+	chem_volume = 500 //FUCK
+
+/obj/item/clothing/mask/vape/tank/syndie
+	name = "\improper Gorlex Cloud Ripper 5,000,000"
+	desc = "If your lungs survive this I will be thoroughly impressed."
+	icon = 'icons/obj/clothing/masks.dmi'
+	icon_state = "tank_vape_syndicate"
+	item_state = "tank_vape_syndicate"
+	w_class = 1
+	chem_volume = 1000 //FUCK
+
+/obj/item/clothing/mask/vape/tank/equipped(mob/user, slot)
+	if(slot == slot_wear_mask)
+		if(!screw)
+			to_chat(user, "<span class='notice'>You feels your lungs melting as you rip MASSIVE clouds</span>")
+			reagents.set_reacting(TRUE)
+			START_PROCESSING(SSobj,src) //Vape = MAXIMUM PRIORITY
+			icon_state += "_rip" //rip a fat one
+		else //it will not start if the vape is opened.
+			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
+
+/obj/item/clothing/mask/vape/tank/dropped(mob/user)
+	var/mob/living/carbon/C = user
+	if(C.get_item_by_slot(slot_wear_mask) == src)
+		reagents.set_reacting(FALSE)
+		STOP_PROCESSING(SSobj, src)
+		icon_state = initial(icon_state) //rip a fat one
