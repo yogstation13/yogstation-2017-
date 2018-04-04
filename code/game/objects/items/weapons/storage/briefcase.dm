@@ -54,3 +54,20 @@
 	new /obj/item/ammo_box/magazine/sniper_rounds/haemorrhage(src)
 	new /obj/item/weapon/suppressor/specialoffer(src)
 
+/obj/item/weapon/storage/briefcase/gun
+	var/obj/item/weapon/gun/projectile/automatic/mini_uzi/briefcase/gun
+
+/obj/item/weapon/storage/briefcase/gun/New()
+	..()
+	gun = new()
+
+/obj/item/weapon/storage/briefcase/gun/afterattack(atom/target, mob/living/user, flag, params)
+	return gun.afterattack(target, user, flag, params)
+
+/obj/item/weapon/storage/briefcase/gun/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/ammo_box/magazine) && !gun.magazine)
+		return gun.attackby(I, user)
+	..()
+
+/obj/item/weapon/storage/briefcase/gun/attack_self(mob/user)
+	return gun.attack_self(user)
