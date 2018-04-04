@@ -50,6 +50,7 @@
 			<A href='?src=\ref[src];secrets=power'>Make all areas powered</A><BR>
 			<A href='?src=\ref[src];secrets=unpower'>Make all areas unpowered</A><BR>
 			<A href='?src=\ref[src];secrets=quickpower'>Power all SMES</A><BR>
+			<A href='?src=\ref[src];secrets=nuclearlaunch'>Launch a nuclear missile</A><BR>
 			<A href='?src=\ref[src];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
 			<A href='?src=\ref[src];secrets=traitorAI'>Force traitor AI (needs to be used in the lobby)</A><BR>
 			<A href='?src=\ref[src];secrets=traitor_all'>Everyone is the traitor</A><BR>
@@ -327,6 +328,11 @@
 			log_admin("[key_name(usr)] made all SMESs powered", 1)
 			message_admins("<span class='adminnotice'>[key_name_admin(usr)] made all SMESs powered</span>")
 			power_restore_quick()
+
+		if("nuclearlaunch")
+			if(!check_rights(R_FUN))
+				return
+			usr.client.tactical_nuke_the_station()
 
 		if("traitor_all")
 			if(!check_rights(R_FUN))
