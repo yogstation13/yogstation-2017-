@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -43,12 +43,6 @@
 /area/ruin/unpowered)
 "k" = (
 /obj/effect/mob_spawn/human/prisoner_transport,
-/turf/open/floor/plasteel/shuttle/red{
-	baseturf = /turf/open/floor/plating/lava/smooth
-	},
-/area/ruin/unpowered)
-"l" = (
-/obj/machinery/suit_storage_unit/ert/security,
 /turf/open/floor/plasteel/shuttle/red{
 	baseturf = /turf/open/floor/plating/lava/smooth
 	},

@@ -262,9 +262,6 @@
 /obj/machinery/door/airlock,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered)
-"aW" = (
-/turf/open/floor/plasteel,
-/area/ruin/unpowered)
 "aX" = (
 /obj/machinery/door/airlock/clown,
 /turf/open/floor/plasteel,

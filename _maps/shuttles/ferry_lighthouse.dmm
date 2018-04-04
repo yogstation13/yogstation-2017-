@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/shuttle/transport)
@@ -175,13 +175,6 @@
 /area/shuttle/transport)
 "aL" = (
 /turf/closed/wall/rust,
-/area/shuttle/transport)
-"aM" = (
-/obj/structure/table/wood,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/turf/open/floor/wood,
 /area/shuttle/transport)
 "aN" = (
 /obj/machinery/power/grounding_rod{

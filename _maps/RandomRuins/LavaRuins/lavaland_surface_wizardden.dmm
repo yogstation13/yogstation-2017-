@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -130,12 +130,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/pizza/donkpocket,
 /obj/machinery/light/small{
 	dir = 8
-	},
-/turf/open/floor/wood,
-/area/ruin/powered)
-"u" = (
-/mob/living/simple_animal/hostile/wizard{
-	name = "Malarky The Mad"
 	},
 /turf/open/floor/wood,
 /area/ruin/powered)

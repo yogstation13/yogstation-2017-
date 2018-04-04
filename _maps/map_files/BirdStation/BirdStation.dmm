@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/open/space,
 /area/space)
@@ -9575,13 +9575,6 @@
 	dir = 4
 	},
 /area/quartermaster/storage)
-"axc" = (
-/obj/structure/table,
-/obj/item/weapon/paper_bin{
-	pixel_y = 5
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "axd" = (
 /obj/structure/table,
 /obj/item/weapon/stamp/denied{
@@ -10614,12 +10607,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/mining)
-"azP" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningdock{
-	name = "\improper Mining Office"
-	})
 "azQ" = (
 /obj/structure/table,
 /obj/item/weapon/twohanded/spear{
@@ -10937,14 +10924,6 @@
 /area/shuttle/mining)
 "aAF" = (
 /obj/structure/closet/secure_closet/miner,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningdock{
-	name = "\improper Mining Office"
-	})
-"aAG" = (
-/obj/structure/closet/secure_closet/miner,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/device/gps/mining,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock{
 	name = "\improper Mining Office"
@@ -23846,16 +23825,16 @@
 /area/maintenance/fore{
 	name = "Security Maintenance"
 	})
-"ZAv" = (
-/obj/item/weapon/coin/gold,
-/turf/open/floor/wood,
-/area/maintenance/fsmaint)
-"ZAw" = (
+"lTz" = (
 /obj/structure/table,
 /obj/machinery/computer/stockexchange,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"ZAx" = (
+"qcW" = (
+/obj/item/weapon/coin/gold,
+/turf/open/floor/wood,
+/area/maintenance/fsmaint)
+"vgR" = (
 /obj/structure/table,
 /obj/item/clothing/under/burial,
 /obj/item/clothing/under/burial,
@@ -56116,7 +56095,7 @@ auw
 arh
 avD
 aws
-ZAw
+lTz
 aqE
 aqE
 azg
@@ -64646,7 +64625,7 @@ aRZ
 bcs
 bcz
 bcI
-ZAx
+vgR
 aBR
 aaa
 aay
@@ -70243,7 +70222,7 @@ akk
 akk
 akk
 akk
-ZAv
+qcW
 asZ
 aqZ
 akk

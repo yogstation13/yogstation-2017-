@@ -62,9 +62,6 @@
 	dir = 2
 	},
 /area/shuttle)
-"aj" = (
-/turf/open/floor/plasteel/airless/shuttle,
-/area/shuttle)
 "ak" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/fulltile,
@@ -102,33 +99,9 @@
 /obj/structure/window/reinforced/fulltile,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle)
-"aq" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8;
-	external_pressure_bound = 0;
-	frequency = 1441;
-	id_tag = "co2_out";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
-	},
-/turf/open/floor/plasteel/airless/shuttle,
-/area/shuttle)
 "ar" = (
 /turf/open/floor/plasteel/shuttle{
 	icon = 'icons/turf/floors.dmi';
-	icon_state = "dark"
-	},
-/area/shuttle)
-"as" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 6
-	},
-/turf/open/floor/plasteel{
 	icon_state = "dark"
 	},
 /area/shuttle)
@@ -165,22 +138,6 @@
 "ay" = (
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle)
-"az" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plasteel/airless/shuttle/white,
-/area/shuttle)
-"aA" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/atmospherics/pipe/simple,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/shuttle)
 "aB" = (
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor3"
@@ -210,66 +167,9 @@
 	dir = 2
 	},
 /area/shuttle)
-"aG" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible{
-	dir = 8
-	},
-/turf/open/floor/plasteel/airless/shuttle/white,
-/area/shuttle)
-"aH" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plasteel/airless/shuttle/white,
-/area/shuttle)
 "aI" = (
 /obj/machinery/door/airlock/glass,
 /turf/open/floor/plasteel/shuttle,
-/area/shuttle)
-"aJ" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/structure/window/reinforced/fulltile,
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/shuttle)
-"aK" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/machinery/suit_storage_unit/standard_unit,
-/turf/open/floor/plasteel/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "dark"
-	},
-/area/shuttle)
-"aL" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/turf/open/floor/plasteel/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "dark"
-	},
-/area/shuttle)
-"aM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9
-	},
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
-/area/shuttle)
-"aN" = (
-/obj/machinery/door/airlock/glass,
-/turf/open/floor/plasteel/airless/shuttle,
 /area/shuttle)
 "aO" = (
 /obj/structure/tank_dispenser/oxygen,
@@ -277,12 +177,6 @@
 	icon_state = "shuttlefloor3"
 	},
 /area/shuttle)
-"aP" = (
-/turf/closed/wall/shuttle{
-	icon_state = "swall_f10";
-	dir = 2
-	},
-/area/space)
 "aQ" = (
 /obj/structure/shuttle/engine/propulsion{
 	icon_state = "burst_r";
@@ -322,19 +216,6 @@
 /area/shuttle)
 "aV" = (
 /turf/closed/wall/shuttle/interior,
-/area/shuttle)
-"aW" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1;
-	name = "Airlock Pump";
-	on = 1
-	},
-/turf/open/floor/plasteel/airless/shuttle/white,
-/area/shuttle)
-"aX" = (
-/turf/open/floor/plasteel{
-	icon_state = "dark"
-	},
 /area/shuttle)
 "aY" = (
 /obj/machinery/camera{
@@ -384,13 +265,6 @@
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor2"
 	},
-/area/shuttle)
-"be" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plasteel/airless/shuttle/white,
 /area/shuttle)
 "bf" = (
 /turf/open/floor/plasteel{
@@ -781,16 +655,6 @@
 /obj/structure/window/shuttle,
 /turf/open/floor/plasteel/shuttle/white,
 /area/shuttle/abandoned)
-"ck" = (
-/turf/open/floor/plasteel/airless/shuttle/white,
-/turf/closed/wall/shuttle/interior{
-	icon_state = "swall_f9"
-	},
-/turf/closed/wall/shuttle{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/shuttle/abandoned)
 "cl" = (
 /obj/machinery/mech_bay_recharge_port,
 /turf/open/floor/plasteel/shuttle{
@@ -849,9 +713,6 @@
 /turf/open/floor/plasteel/shuttle{
 	icon_state = "shuttlefloor5"
 	},
-/area/shuttle/abandoned)
-"ct" = (
-/turf/open/floor/plasteel/airless/shuttle/purple,
 /area/shuttle/abandoned)
 "cu" = (
 /obj/machinery/r_n_d/protolathe,
@@ -938,12 +799,6 @@
 	icon_state = "shuttlefloor3"
 	},
 /area/shuttle)
-"cD" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/turf/open/floor/plasteel/airless/shuttle/white,
-/area/shuttle/abandoned)
 "cE" = (
 /obj/machinery/computer/mecha,
 /turf/open/floor/plasteel/shuttle{
@@ -966,12 +821,6 @@
 	name = "Exosuit Deployment"
 	},
 /turf/open/floor/plasteel/shuttle,
-/area/shuttle/abandoned)
-"cJ" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 10
-	},
-/turf/open/floor/plasteel/airless/shuttle/purple,
 /area/shuttle/abandoned)
 "cK" = (
 /obj/machinery/r_n_d/circuit_imprinter,
@@ -1056,11 +905,6 @@
 /turf/closed/wall/shuttle{
 	icon_state = "diagonalWall3"
 	},
-/area/shuttle/abandoned)
-"cV" = (
-/obj/machinery/mech_bay_recharge_port,
-/obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/airless/shuttle/purple,
 /area/shuttle/abandoned)
 "cW" = (
 /obj/structure/table,
@@ -1151,12 +995,6 @@
 	icon_state = "shuttlefloor3"
 	},
 /area/shuttle)
-"dh" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
-/obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/open/floor/plasteel/airless/shuttle/purple,
-/area/shuttle/abandoned)
 "di" = (
 /obj/machinery/door/airlock/research{
 	name = "Exosuit Bay";
@@ -1212,57 +1050,6 @@
 	icon_state = "shuttlefloor3"
 	},
 /area/shuttle)
-"dq" = (
-/obj/machinery/door/airlock/shuttle,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
-/turf/open/floor/plasteel/airless/shuttle,
-/area/shuttle/abandoned)
-"dr" = (
-/obj/machinery/atmospherics/pipe/manifold/general/visible,
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
-/area/shuttle/abandoned)
-"ds" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
-/area/shuttle/abandoned)
-"dt" = (
-/obj/machinery/vending/wallmed{
-	pixel_y = -30
-	},
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
-/area/shuttle/abandoned)
-"du" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Science Wing Airlock Pump";
-	on = 1
-	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
-/area/shuttle/abandoned)
-"dv" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
-/turf/open/floor/plasteel/shuttle{
-	icon_state = "shuttlefloor3"
-	},
-/area/shuttle/abandoned)
 "dw" = (
 /obj/structure/bed,
 /obj/item/weapon/bedsheet,
