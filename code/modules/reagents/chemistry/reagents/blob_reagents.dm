@@ -688,11 +688,12 @@
 	reac_volume = ..()
 	M.rad_act(0.3*reac_volume)
 	M.apply_damage(0.3*reac_volume, TOX)
-	M.eye_blind = 1
-	M.ear_deaf = 10
-	M.eye_blurry = 10
-	if(prob(5))
-		M.disabilities |= CLUMSY
+	if(ishuman(M))
+		M.eye_blind = 1
+		M.ear_deaf = 10
+		M.eye_blurry = 10
+		if(prob(5))
+			M.disabilities |= CLUMSY
 
 /datum/reagent/blob/proc/send_message(mob/living/M)
 	var/totalmessage = message
