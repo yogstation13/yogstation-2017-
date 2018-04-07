@@ -102,6 +102,21 @@
 	item_state = "dg_suit"
 	item_color = "centcom"
 
+/obj/item/clothing/under/rank/centcom_officer/alt
+	desc = "It's a jumpsuit worn by Centcom Officers, this one looks very slick."
+	name = "\improper Centcom offizier's jumpsuit"
+	icon_state = "officer-alt"
+	item_state = "g_suit"
+	item_color = "officer-alt"
+	alt_covers_chest = 1
+
+/obj/item/clothing/under/rank/centcom_commander/alt
+	desc = "It's a jumpsuit worn by Centcom's highest-tier Commanders, this one is made from high quality fibers and comes with a free armband."
+	name = "\improper Centcom kommander's jumpsuit"
+	icon_state = "centcom-alt"
+	item_state = "dg_suit"
+	item_color = "centcom-alt"
+
 /obj/item/clothing/under/space
 	name = "\improper NASA jumpsuit"
 	desc = "It has a NASA logo on it and is made of space-proofed materials."
@@ -610,7 +625,7 @@
 	item_state = "ronald"
 	item_color = "ronald"
 	can_adjust = 0
-	
+
 /obj/item/clothing/under/cluwne
 	name = "clown suit"
 	desc = "<i>'HONK!'</i>"
@@ -629,6 +644,6 @@
 		var/mob/living/carbon/human/H = user
 		H.dna.add_mutation(CLUWNEMUT)
 	return ..()
-	
+
 /obj/item/clothing/under/cluwne/Destroy(force)
 	return QDEL_HINT_LETMELIVE

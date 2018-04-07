@@ -255,6 +255,21 @@
 	name = "Centcom Official"
 
 	uniform = /obj/item/clothing/under/rank/centcom_officer
+	shoes = /obj/item/clothing/shoes/combat/swat
+	gloves = /obj/item/clothing/gloves/color/black
+	ears = /obj/item/device/radio/headset/headset_cent
+	glasses = /obj/item/clothing/glasses/sunglasses
+	belt = /obj/item/weapon/gun/energy/gun
+	l_pocket = /obj/item/weapon/pen
+	back = /obj/item/weapon/storage/backpack/satchel_norm
+	r_pocket = /obj/item/device/pda/heads
+	l_hand = /obj/item/weapon/clipboard
+	id = /obj/item/weapon/card/id
+
+/datum/outfit/centcom_official/german
+	name = "Centcom Offiziel"
+
+	uniform = /obj/item/clothing/under/rank/centcom_officer/alt
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	gloves = /obj/item/clothing/gloves/color/black
 	ears = /obj/item/device/radio/headset/headset_cent
@@ -265,6 +280,7 @@
 	r_pocket = /obj/item/device/pda/heads
 	l_hand = /obj/item/weapon/clipboard
 	id = /obj/item/weapon/card/id
+	head = /obj/item/clothing/head/warden
 
 /datum/outfit/centcom_official/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
