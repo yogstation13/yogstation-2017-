@@ -12,7 +12,7 @@
 # PLEASE NOTE: depending on config options, some abilities will be unavailable regardless if you have permission to use them!
 
 # KEYWORDS:
-# +ADMIN = general admin tools, verbs etc
+# +ADMIN = general admin tools, verbs etk
 # +FUN = events, other event-orientated actions. Access to the fun secrets in the secrets panel.
 # +BAN = the ability to ban, jobban and fullban
 # +STEALTH = the ability to stealthmin (make yourself appear with a fake name to everyone but other admins
@@ -35,7 +35,7 @@ Council Member	=	+EVERYTHING
  
 SeniorAdmin	=	+EVERYTHING
 ProbationAdmin	=	+STEALTH +ADMIN +REJUV +BAN +SERVER +VAREDIT +TICKET
-Primary Admin	=	+STEALTH +ADMIN +REJUV +BAN +SPAWN +VAREDIT +DEBUG +SERVER +FUN +POSSESS +BUILDMODE +TICKET
+Primary Admin	=	+ALL
 Non Playing Admin	=	+STEALTH +ADMIN +REJUV +NOJOIN +BAN +SERVER
 Administrator	=	+STEALTH +ADMIN +REJUV +BAN +SPAWN +VAREDIT +DEBUG +SERVER +FUN +TICKET
 Admin Observer	=	+STEALTH +TICKET
@@ -51,4 +51,4 @@ Coder	=	+ADMIN +VAREDIT +DEBUG +SERVER +FUN +BUILDMODE +SPAWN
  
 Retired Admin	=	+ADMIN +STEALTH +REJUV +SERVER +BAN +TICKET
  
-Bot	=	+ALL
+Bot	=	+ALLL
