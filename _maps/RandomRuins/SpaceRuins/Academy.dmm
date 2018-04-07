@@ -1,4 +1,4 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/open/space,
 /area/space)
@@ -4713,18 +4713,12 @@
 /turf/open/floor/plasteel,
 /area/awaymission/academy/academycellar)
 "mM" = (
-/obj/machinery/computer/teleporter,
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "mN" = (
-/obj/machinery/teleport/station,
 /obj/structure/cable,
-/turf/open/floor/carpet,
-/area/awaymission/academy/academygate)
-"mO" = (
-/obj/machinery/teleport/hub,
-/obj/structure/cable,
+/obj/item/device/radio/beacon,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
 "mP" = (
@@ -10497,7 +10491,7 @@ mj
 lM
 lM
 mk
-mO
+mM
 lM
 lM
 mX

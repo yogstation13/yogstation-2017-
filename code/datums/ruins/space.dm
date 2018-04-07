@@ -177,7 +177,7 @@
 	description = "In the darkest times, we will find our way home."
 
 
-/*/datum/map_template/ruin/space/wizard_academy
+/datum/map_template/ruin/space/wizard_academy
 	id = "wizard-academy"
 	suffix = "Academy.dmm"
 	name = "Wizard Academy"
@@ -189,7 +189,6 @@
 		some doofus with an EVA suit and jetpack can just waltz around \
 		in space and find it..."
 
-*/
 
 /datum/map_template/ruin/space/hippie_shuttle
 	id = "hippie_shuttle"
