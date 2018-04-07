@@ -246,6 +246,7 @@ var/banned_borer_emotes = list("*collapse", "*collapses", "*surrender", "*surren
 	if(!victim || !controlling) return
 
 	controlling = 0
+	victim.controlled = FALSE
 
 	victim.verbs -= /mob/living/carbon/proc/release_control
 	victim.verbs -= /mob/living/carbon/proc/spawn_larvae
