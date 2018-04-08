@@ -116,6 +116,8 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 	//Need it for hit_reaction() and check_for_positions() calls.
 	var/thrower_dir
 
+	var/anthrax_laced = FALSE
+
 /obj/item/New()
 	if(!materials)
 		materials = list()
@@ -401,6 +403,10 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		if(holder.install_holder(src, user))
 			to_chat(user, "<span class='notice>You install the module holder into [src].</span>")
 
+	if(istype(W, /obj/item/anthrax_packet))
+		var/obj/item/anthrax_packet/A = W
+		A.apply(src, user)
+
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
 /obj/item/proc/hit_reaction(mob/living/carbon/human/owner, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, atom/movable/AT)
@@ -452,6 +458,12 @@ var/global/image/fire_overlay = image("icon" = 'icons/effects/fire.dmi', "icon_s
 		var/datum/action/A = X
 		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
 			A.Grant(user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(anthrax_laced && ((slot != slot_l_hand && slot != slot_r_hand && (slot == slot_head || slot == slot_wear_mask || slot == slot_w_uniform || slot == slot_gloves || slot == slot_shoes || slot == slot_ears || slot == slot_glasses)) || (!H.gloves || istype(H.gloves, /obj/item/clothing/gloves/fingerless))))
+			H.ForceContractDisease(new /datum/disease/anthrax)
+			H.attack_log += "\[[time_stamp()]\] <font color='red'>Has been infected by anthrax by touching <a href='?_src_=vars;Vars=\ref[src]'>[src]</a>.</font>"
+			log_attack("[H]/[H.ckey] has been infected by anthrax by touching [src].")
 
 /obj/item/proc/unequipped(mob/user)
 	if(chameleon)

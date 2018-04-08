@@ -68,7 +68,6 @@
 	else
 		to_chat(user, "<span class='notice'>It is too far away.</span>")
 
-
 /obj/item/weapon/paper/verb/rename()
 	set name = "Rename paper"
 	set category = "Object"
@@ -297,7 +296,6 @@
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()
 
-
 	add_fingerprint(user)
 
 /obj/item/weapon/paper/fire_act()
@@ -329,7 +327,7 @@
 /obj/item/weapon/paper/hydroponics
 	name = "paper- 'Greetings from Billy Bob'"
 	info = "<B>Hey fellow botanist!</B><BR>\n<BR>\nI didn't trust the station folk so I left<BR>\na couple of weeks ago. But here's some<BR>\ninstructions on how to operate things here.<BR>\nYou can grow plants and each iteration they become<BR>\nstronger, more potent and have better yield, if you<BR>\nknow which ones to pick. Use your botanist's analyzer<BR>\nfor that. You can turn harvested plants into seeds<BR>\nat the seed extractor, and replant them for better stuff!<BR>\nSometimes if the weed level gets high in the tray<BR>\nmutations into different mushroom or weed species have<BR>\nbeen witnessed. On the rare occassion even weeds mutate!<BR>\n<BR>\nEither way, have fun!<BR>\n<BR>\nBest regards,<BR>\nBilly Bob Johnson.<BR>\n<BR>\nPS.<BR>\nHere's a few tips:<BR>\nIn nettles, potency = damage<BR>\nIn amanitas, potency = deadliness + side effect<BR>\nIn Liberty caps, potency = drug power + effect<BR>\nIn chilis, potency = heat<BR>\n<B>Nutrients keep mushrooms alive!</B><BR>\n<B>Water keeps weeds such as nettles alive!</B><BR>\n<B>All other plants need both.</B>"
-	
+
 /obj/item/weapon/paper/rpg
 	name = "paper- 'Character Sheet'"
 	info = "<large><center><B>Microlite20 Character Sheet</B></center></large><BR>\n<BR>\nRace: <field><BR>\n<small>human, dwarf, elf, halfling</small><BR>\n<BR>\nClass: <field><br><small>cleric, fighter, rogue, wizard</small><BR>\n<BR>\nAlignment: <field><BR>\n<BR>\nHit Points: <field><BR>\nArmor: <field><BR>\nArmor Bonus: <field><BR>\n<BR>\nStats:<BR>\nSTR:<field><BR>\nDEX:<field><BR>\nMIND:<field><BR>\n<BR>\nSkills:<BR>\nPhysical:<field><BR>\nSubterfuge:<field><BR>\nKnowledge:<field><BR>\nCommunication:<field><BR>\n<BR>\nWeapon 1: <field><BR>\nWeapon 2: <field><BR>\nSpells: <field><BR>\n<BR>\nItems: <field><BR>\nMoney: <field><BR>\n"

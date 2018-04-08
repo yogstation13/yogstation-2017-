@@ -724,6 +724,13 @@ var/list/uplink_items = list() // Global list so we only initialize this once.
 	cost = 2
 	surplus = 30
 
+/datum/uplink_item/stealthy_tools/anthrax
+	name = "Anthrax spores"
+	desc = "A packet of anthrax spores disguised as hot sauce. Any person who touches an item laced with these barehand \
+			will become infected with a lethal and fast acting disease. Use gloves to apply the \"sauce\" and handle such items safely."
+	item = /obj/item/anthrax_packet
+	cost = 6
+
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
 	category = "Space Suits and Hardsuits"
