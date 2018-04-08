@@ -45,7 +45,7 @@ var/global/list/special_roles = list(
 	ROLE_ALIEN,
 	ROLE_PAI,
 	ROLE_CULTIST = /datum/game_mode/cult,
-	ROLE_BLOB = /datum/game_mode/blob,
+	ROLE_BLOB,
 	ROLE_NINJA,
 	ROLE_MONKEY = /datum/game_mode/monkey,
 	ROLE_GANG = /datum/game_mode/gang,

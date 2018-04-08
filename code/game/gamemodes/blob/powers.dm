@@ -46,8 +46,9 @@
 	if(placed && blob_core)
 		blob_core.forceMove(loc)
 	else
-		var/obj/effect/blob/core/core = new(get_turf(src), null, point_rate, 1)
+		var/obj/effect/blob/core/core = new(get_turf(src), src, point_rate, 1)
 		core.overmind = src
+		blobs_legit += src
 		blob_core = core
 		core.update_icon()
 	update_health_hud()
@@ -206,18 +207,25 @@
 
 /mob/camera/blob/proc/remove_blob(turf/T)
 	var/obj/effect/blob/B = locate() in T
+	if(!placed)
+		return
+
 	if(!B)
 		to_chat(src, "<span class='warning'>There is no blob there!</span>")
 		return
+
 	if(B.point_return < 0)
 		to_chat(src, "<span class='warning'>Unable to remove this blob.</span>")
 		return
+
 	if(max_blob_points < B.point_return + blob_points)
 		to_chat(src, "<span class='warning'>You have too many resources to remove this blob!</span>")
 		return
+
 	if(B.point_return)
 		add_points(B.point_return)
 		to_chat(src, "<span class='notice'>Gained [B.point_return] resources from removing \the [B].</span>")
+
 	qdel(B)
 
 /mob/camera/blob/verb/expand_blob_power()
@@ -277,27 +285,46 @@
 	set category = "Blob"
 	set name = "Split consciousness (100) (One use)"
 	set desc = "Expend resources to attempt to produce another sentient overmind"
+	
+	if(overmind_get_delay > world.time)
+		to_chat(src, "<span class='warning'>You must wait a while before using this again.</span>")
+		return
 
 	if(!blob_core)
-		to_chat(src, "You do not have a core to split yourself.")
+		to_chat(src, "<span class='warning'>You do not have a core to split yourself!<span>")
 		return
 
 	var/turf/T = get_turf(src)
 	var/obj/effect/blob/node/B = locate(/obj/effect/blob/node) in T
-
 	if(!B)
 		to_chat(src, "<span class='warning'>You must be on a blob node!</span>")
+		return
+	
+	var/mob/dead/observer/O = find_overmind()
+	if(!O)
+		to_chat(src, "<span class='warning'>Couldn't find a suitable overmind!</span>")
 		return
 
 	if(!can_buy(100))
 		return
-
+	
+	var/wincount = initial(blobwincount) * 2
 	verbs -= /mob/camera/blob/verb/split_consciousness
-	new /obj/effect/blob/core/(get_turf(B), 200, null, blob_core.point_rate, "offspring")
+	
+	O.loc = src.loc
+	var/mob/camera/blob/BC = O.become_overmind()
+	var/obj/effect/blob/C = new /obj/effect/blob/core(T, O.client, blob_core.point_rate, TRUE)
+	
+	BC.blob_core = C
+	BC.placed = TRUE
+	C.overmind = BC
+	C.update_icon()
+	
+	for(var/V in overminds)
+		var/mob/camera/blob/OM = V
+		OM.blobwincount = wincount
+
 	qdel(B)
-	if(ticker && ticker.mode.name == "blob")
-		var/datum/game_mode/blob/BL = ticker.mode
-		BL.blobwincount = initial(BL.blobwincount) * 2
 
 
 /mob/camera/blob/verb/blob_broadcast()
