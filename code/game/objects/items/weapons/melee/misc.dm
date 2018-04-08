@@ -131,6 +131,133 @@
 	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
 	add_fingerprint(user)
 
+
+/obj/item/weapon/twohanded/dual_telebaton
+	name = "double ended telescopic baton"
+	desc = "A huge fighting pike made of two telescopic batons bound together by wires, it has a switch in the middle."
+	icon = 'icons/obj/weapons.dmi'
+	icon_state = "dualbaton0"
+	item_state = null
+	slot_flags = SLOT_BELT
+	w_class = 4
+	needs_permit = 0
+	force = 0
+	force_wielded = 10
+	force_unwielded = 5
+	attack_verb = list("shoved","sweeped","punted")
+	block_chance = 10
+	var/current_target = null
+	var/streak = 1
+	var/max_streak_length = 4 //ULTIMATE COMBO
+	hitsound = 'sound/effects/hit_punch.ogg'
+	sharpness = null
+
+/obj/item/weapon/twohanded/dual_telebaton/attack_self(mob/user)
+	. = ..()
+	playsound(loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	add_fingerprint(user)
+
+/obj/item/weapon/twohanded/dual_telebaton/examine(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>This item has a combo, to use this combo attack with the following intents in the following order (whilst the item is wielded in-hand): harm, harm, disarm, grab</span>")
+
+/obj/item/weapon/twohanded/dual_telebaton/update_icon()
+	if(wielded)
+		icon_state = "dualbaton1"
+	else
+		icon_state = "dualbaton0"
+	clean_blood()//blood overlays get weird otherwise, because the sprite changes.
+	return
+
+/obj/item/weapon/twohanded/dual_telebaton/attack(mob/target, mob/living/carbon/human/user)
+	if(wielded)
+		var/mob/living/carbon/H = target
+		if(target != current_target || !current_target)
+			streak = 0
+			current_target = target
+		if(user.has_dna())
+			if(user.dna.check_mutation(HULK) || user.dna.check_mutation(ACTIVE_HULK) || (CLUMSY in user.disabilities))
+				to_chat(user, "<span class='warning'>You grip [src] too hard and accidentally close it!</span>")
+				unwield()
+				return
+		if(streak < max_streak_length)
+			streak ++
+			user.do_attack_animation(target)
+			playsound(src.loc, hitsound, 50, 1)
+			switch(streak)
+				if(1)
+					if(user.a_intent == "harm")
+						H.visible_message("<span class='warning'>[user] punts their [src] into [H]'s stomach, winding them!</span>")
+						H.adjustStaminaLoss(rand(5,10))
+						return
+					else
+						reset_target()
+				if(2)
+					if(user.a_intent == "harm")
+						H.visible_message("<span class='warning'>[user] thwacks [H] in the chin with their [src]!</span>")
+						H.apply_damage(force, BRUTE, "head")
+						H.Dizzy(2)
+						return
+					else
+						reset_target()
+				if(3)
+					if(user.a_intent == "disarm")
+						H.visible_message("<span class='warning'>[user] quickly slaps [H]'s hands with their [src] disarming them!</span>")
+						H.apply_damage(force, BRUTE, "chest")
+						H.drop_item()
+						H.Stun(2)
+						return
+					else
+						reset_target()
+				if(4)
+					if(user.a_intent == "grab")
+						user.emote("flip")
+						H.visible_message("<span class='warning'>[user] does a backflip!</span>")
+						H.visible_message("<span class='warning'>As [user] lands, they ram [H] with [src] with all their might, sending [H] flying!</span>")
+						var/atom/throw_target = get_edge_target_turf(target, get_dir(target, get_step_away(target, user)))
+						H.throw_at(throw_target, 200, 4,user)
+						H.visible_message("<span class='warning'>[H] slams into [throw_target.name], weakening them!.</span>")
+						H.visible_message("<span class='warning'>[H] stumbles around!</span>")
+						step_to(H,get_step(H,H.dir),1)
+						H.Stun(4)
+						playsound(H.loc,'sound/items/trayhit2.ogg',40,0)
+						H.visible_message("<span class='warning'>With lightning-fast reflexes, [user] pounces towards [H]!</span>")
+						user.emote("flip")
+						user.throw_at(H, 200, 4,user)
+						sleep(5) //Give it a bit to throw them at the target
+						if(user in orange(2,H))
+							H.visible_message("<span class='warning'>[user] rams [H] with [src] as they land!</span>")
+							H.Stun(9)
+							H.apply_damage(force, BRUTE, "head")
+							playsound(H.loc,'sound/effects/knockout.ogg',40,0)
+							H.Weaken(6)
+							reset_target()
+						else
+							H.visible_message("<span class='warning'>[user] completely misses [H] and falls flat on their face!</span>")
+							user.Weaken(5)
+							reset_target()
+						return
+					else
+						reset_target()
+		..()
+	else
+		streak = 0
+		current_target = null
+		return ..()
+/obj/item/weapon/twohanded/dual_telebaton/proc/reset_target()
+	current_target = null
+	streak = 0
+
+/datum/crafting_recipe/dualbaton
+	name = "Double ended telescopic baton"
+	reqs = list(
+		/obj/item/weapon/melee/classic_baton/telescopic = 2,
+		/obj/item/weapon/restraints/handcuffs/cable = 1,
+		/obj/item/stack/rods = 2
+	)
+	result = /obj/item/weapon/twohanded/dual_telebaton
+	category = CAT_MISC
+
 /obj/item/weapon/melee/supermatter_sword
 	name = "supermatter sword"
 	desc = "In a station full of bad ideas, this might just be the worst."
