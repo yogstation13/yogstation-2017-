@@ -94,6 +94,16 @@
 			to_chat(user, "<span class='warning'>[src] does not have a power source!</span>")
 		else
 			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
+	if(status == 1)
+		if(loc == user)
+			user.SetLuminosity(0.9)
+		else if(isturf(loc))
+			SetLuminosity(0.9)
+	else
+		if(loc == user)
+			user.SetLuminosity(0)
+		else if(isturf(loc))
+			SetLuminosity(0)
 	update_icon()
 	add_fingerprint(user)
 
