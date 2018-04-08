@@ -56,6 +56,8 @@
 	var/datum/changeling/changeling		//changeling holder
 	var/linglink
 
+	var/datum/vampire/vampire			//vampire holder
+
 	var/miming = 0 // Mime's vow of silence
 	var/antag_hud_icon_state = null //this mind's ANTAG_HUD should have this icon_state
 	var/datum/atom_hud/antag/antag_hud = null //this mind's antag HUD
@@ -660,6 +662,25 @@
 	else
 		text += "|Disabled in Prefs"
 	sections["devil"] = text
+
+	/**	vampires **/
+	text = "vampire"
+	if(ticker.mode.config_tag == "vampire")
+		text = uppertext(text)
+	text = "<i><b>[text]</b></i>: "
+	if(src in ticker.mode.vampires)
+		text += "<b>VAMPIRE</b>|<a href='?src=\ref[src];vampire=clear'>human</a>"
+	else
+		text += "<a href='?src=\ref[src];vampire=vampire'>vampire</a>|<b>HUMAN</b>"
+
+	text += "|<b><a href'?src=\ref[src];vampire=supervampire'>Super-Vampire</a>"
+
+	if(current && current.client && (ROLE_VAMPIRE in current.client.prefs.be_special))
+		text += "|Enabled in Prefs"
+	else
+		text += "|Disabled in Prefs"
+
+	sections["vampire"] = text
 
 
 	/** SILICON ***/
@@ -1450,6 +1471,35 @@
 				ticker.mode.add_cyberman(src, "<span class='userdanger'>Suddenly, you feel new, digital senses in your mind. You are now a cyberman!</span>")
 				message_admins("[key_name_admin(usr)] has cyberman'ed [current].")
 				log_admin("[key_name(usr)] has cyberman'ed [current].")
+
+	else if(href_list["vampire"])
+		switch(href_list["vampire"])
+			if("clear")
+				if(src in ticker.mode.vampires)
+					ticker.mode.devampire(src)
+					ticker.mode.vampires -= src
+					message_admins("[key_name_admin(usr)] has de-vampired [current].")
+					log_admin("[key_name(usr)] has de-vampired [current].")
+			if("vampire")
+				if(!ishuman(current))
+					usr << "<span class='warning'>This only works on humans!</span>"
+					return
+				ticker.mode.transform_vampire(src)
+				ticker.mode.vampires += src
+				message_admins("[key_name_admin(usr)] has vampired [current].")
+				log_admin("[key_name(usr)] has vampired [current].")
+
+			if("supervampire")
+				if(!(src in ticker.mode.vampires))
+					ticker.mode.vampires += src
+				ticker.mode.transform_vampire(src)
+				if(vampire)
+					vampire.GetAllPowers()
+					src << "<span class='vampirealert'>YOU FEEL <font size=4>SUPER</font> POWERFUL!</span>"
+					message_admins("[key_name_admin(usr)] has given [current] every vampire power.")
+					log_admin("[key_name(usr)] has given [current] every vampire power.")
+				else
+					usr << "SUPERVAMPIRE ERROR: Contact a coder, and report what happened."
 
 	else if (href_list["common"])
 		switch(href_list["common"])

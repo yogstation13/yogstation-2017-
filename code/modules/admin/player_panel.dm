@@ -688,6 +688,19 @@
 						dat += "<tr><td><i>Cyberman not found!</i></td></tr>"
 				dat += "</table>"
 
+		if(ticker.mode.vampires.len)
+			dat += "<br><table cellspacing=5><tr><td><B>Vampires</B></td><td></td></tr>"
+			for(var/datum/mind/N in ticker.mode.vampires)
+				var/mob/M = N.current
+				if(M)
+					dat += "<tr><td><a href='?_src_=holder;adminplayeropts=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(ghost)</i>"][M.stat == 2 ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+					dat += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
+					dat += "<td><A href='?_src_=holder;adminplayerobservefollow=\ref[M]'>FLW</a></td></tr>"
+				else
+					dat += "<tr><td><a href='?_src_=vars;Vars=\ref[N]'>[N.name]([N.key])</a><i>Vampire body destroyed!</i></td>"
+					dat += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
+			dat += "</table>"
+
 		dat += "</body></html>"
 		usr << browse(dat, "window=roundstatus;size=420x500")
 	else

@@ -1117,6 +1117,33 @@
 		return 0
 	return ..()
 
+
+/mob/living/carbon/human/proc/UpdateBloodTracking()
+	if(bloodtracking)
+		RemoveBloodTracking()
+
+	bloodtracking = image(icon('icons/effects/effects.dmi', "redoverlay"), loc = src)
+	bloodtracking.override = 1
+
+	for(var/mob/living/L in mob_list)
+		if(L.mind)
+			if(L.mind.vampire)
+				if(L.mind.vampire.tracking == src)
+					if(L.client)
+						if(L.client.images)
+							L.client.images |= bloodtracking
+
+/mob/living/carbon/human/proc/RemoveBloodTracking()
+	if(!bloodtracking)
+		return
+
+	for(var/mob/living/L in mob_list)
+		if(L.mind.vampire)
+			if(L.mind.vampire.tracking == src)
+				if(L.client)
+					L.client.images.Remove(bloodtracking)
+	qdel(bloodtracking)
+	bloodtracking = null
 /mob/living/carbon/human/is_nearcrit()
 	if(health <= config.health_threshold_crit && health > HEALTH_THRESHOLD_DEEPCRIT)
 		if(!(NOCRIT in status_flags))

@@ -16,6 +16,8 @@
 	var/obj/screen/ling/chems/lingchemdisplay
 	var/obj/screen/ling/sting/lingstingdisplay
 
+	var/obj/screen/vamp/vampblooddisplay
+
 	var/obj/screen/blobpwrdisplay
 
 	var/obj/screen/alien_plasma_display

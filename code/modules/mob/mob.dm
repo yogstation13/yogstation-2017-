@@ -666,6 +666,9 @@ var/next_mob_id = 0
 				if("holdervar")
 					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
 
+	for(var/obj/effect/proc_holder/vampire/V in spells)
+		statpanel("[V.panel]","[V.cooldowncount/10.0]/[V.cooldownlen/10]",V)
+
 /mob/proc/add_stings_to_statpanel(list/stings)
 	for(var/obj/effect/proc_holder/changeling/S in stings)
 		if(S.chemical_cost >=0 && S.can_be_used_by(src))

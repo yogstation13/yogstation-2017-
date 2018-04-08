@@ -201,6 +201,7 @@ var/global/list/crematoriums = new/list()
 	if(locked)
 		return //don't let you cremate something twice or w/e
 
+	var/vampirized
 	if(contents.len <= 1)
 		audible_message("<span class='italics'>You hear a hollow crackle.</span>")
 		return
@@ -222,13 +223,20 @@ var/global/list/crematoriums = new/list()
 			M.death(1)
 			if(M) //some animals get automatically deleted on death.
 				M.ghostize()
+				if(M.mind.vampire)
+					var/obj/effect/decal/cleanable/ash/vampiric/V = new(get_turf(src), strong = M.mind.vampire.check_ash_strength())
+					M.mind.vampire.handle_ash_movement(V, M)
+					vampirized = TRUE
+					M << "<span class='noticevampire'>Your body has been crumpled up into dust. Ashes to ashes, and \
+				when blood falls over them you will be reborn.</span>"
 				qdel(M)
 
 		for(var/obj/O in contents) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
 			if(O != connected) //Creamtorium does not burn hot enough to destroy the tray
 				qdel(O)
 
-		new /obj/effect/decal/cleanable/ash(src)
+		if(!vampirized)
+			new /obj/effect/decal/cleanable/ash(src)
 		sleep(30)
 		locked = 0
 		update_icon()

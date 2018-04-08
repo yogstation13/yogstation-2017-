@@ -96,6 +96,19 @@
 		else
 			to_chat(user, "<span class='warning'>The plating is going to need some support! Place metal rods first.</span>")
 
+/turf/open/space/Enter(atom/movable/mover)
+	if(iscarbon(mover))
+		var/mob/living/L = mover
+		if(L.mind)
+			if(L.mind.vampire) // vampires cannot walk into space
+				L << "<span class='alertvampire'>Vampires cannot move into or through space.</span>"
+				mover.Bump(src, 1)
+				return 0
+		if(istype(L, /mob/living/simple_animal/hostile/bat/vampire))
+			mover.Bump(src, 1)
+			return 0
+	..()
+
 /turf/open/space/Entered(atom/movable/A)
 	..()
 	if ((!(A) || src != A.loc))
