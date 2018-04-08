@@ -93,6 +93,9 @@
 			check_heads()
 			ticker.mode.check_win()
 		check_counter = 0
+	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
+		if(prob(0.1) || SSshuttle.emergency.timeLeft(10) <= 360)
+			SSshuttle.emergency.cancel(null, TRUE)
 	return 0
 
 
