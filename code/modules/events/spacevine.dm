@@ -456,6 +456,7 @@
 		spread_cap *= production / 5
 		spread_multiplier /= production / 5
 		..()
+
 /obj/effect/spacevine_controller/ex_act() //only killing all vines will end this suffering
 	return
 
@@ -557,6 +558,8 @@
 		buckle_mob(V, TRUE)
 
 /obj/effect/spacevine/proc/spread()
+	if(!SSobj.allowVineGrowth)
+		return
 	var/direction = pick(cardinal)
 	var/turf/stepturf = get_step(src,direction)
 	for(var/datum/spacevine_mutation/SM in mutations)

@@ -130,6 +130,7 @@ var/list/admin_verbs_spawn = list(
 var/list/admin_verbs_server = list(
 	/client/proc/lag_fixer,
 	/client/proc/remove_all_vines,
+	/client/proc/toggle_vine_growth,
 	/datum/admins/proc/startnow,
 	/datum/admins/proc/restart,
 	/datum/admins/proc/end_round,
@@ -1071,3 +1072,14 @@ var/list/admin_verbs_hideable = list(
 
 	message_admins("[key_name_admin(usr)] has deleted all vines.")
 	log_admin("[key_name(usr)] has deleted all vines.")
+
+/client/proc/toggle_vine_growth()
+	set category = "Admin"
+	set name = "Toggle Vine Growth"
+	set desc = "Stops vines from speading any further"
+
+	if(!holder)
+		return
+
+	SSobj.allowVineGrowth = !SSobj.allowVineGrowth
+	message_admins("[src] has toggled vine growth [SSobj.allowVineGrowth? "on":"off"].")
