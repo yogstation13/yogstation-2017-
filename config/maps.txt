@@ -17,23 +17,3 @@ map yogstation
 	default
 	#voteweight 1.5
 endmap
-
-map metastation
-	minplayers 25
-	#voteweight 0.5
-endmap
-
-#map ministation
-	maxplayers 30
-	voteweight 0
-endmap
-
-map birdstation
-	maxplayers 35
-endmap
-
-map dreamstation
-endmap
-
-map efficiencystation
-endmap
