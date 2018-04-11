@@ -165,6 +165,8 @@
 		head_clothes = glasses
 	if(wear_mask)
 		head_clothes = wear_mask
+	if(wear_neck)
+		head_clothes = wear_neck
 	if(head)
 		head_clothes = head
 	if(head_clothes)
@@ -173,6 +175,7 @@
 			acid_volume_left = max(acid_volume_left - acid_decay, 0) //We remove some of the acid volume.
 			update_inv_glasses()
 			update_inv_wear_mask()
+			update_inv_neck()
 			update_inv_head()
 		else
 			to_chat(src, "<span class='notice'>Your [head_clothes.name] protects your head and face from the acid!</span>")

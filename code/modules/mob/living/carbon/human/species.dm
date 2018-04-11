@@ -418,6 +418,8 @@
 	var/image/I
 
 	for(var/layer in relevent_layers)
+		var/layertext = mutant_bodyparts_layertext(layer)
+
 		for(var/bodypart in bodyparts_to_add)
 			var/datum/sprite_accessory/S
 			switch(bodypart)
@@ -461,9 +463,9 @@
 			var/icon_string
 
 			if(S.gender_specific)
-				icon_string = "[g]_[bodypart]_[S.icon_state]_[layer]"
+				icon_string = "[g]_[bodypart]_[S.icon_state]_[layertext]"
 			else
-				icon_string = "m_[bodypart]_[S.icon_state]_[layer]"
+				icon_string = "m_[bodypart]_[S.icon_state]_[layertext]"
 
 			I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
 
@@ -493,9 +495,9 @@
 
 			if(S.hasinner)
 				if(S.gender_specific)
-					icon_string = "[g]_[bodypart]inner_[S.icon_state]_[layer]"
+					icon_string = "[g]_[bodypart]inner_[S.icon_state]_[layertext]"
 				else
-					icon_string = "m_[bodypart]inner_[S.icon_state]_[layer]"
+					icon_string = "m_[bodypart]inner_[S.icon_state]_[layertext]"
 
 				I = image("icon" = S.icon, "icon_state" = icon_string, "layer" =- layer)
 
@@ -510,6 +512,19 @@
 	H.apply_overlay(BODY_BEHIND_LAYER)
 	H.apply_overlay(BODY_ADJ_LAYER)
 	H.apply_overlay(BODY_FRONT_LAYER)
+	
+
+//This exists so sprite accessories can still be per-layer without having to include that layer's
+//number in their sprite name, which causes issues when those numbers change.
+/datum/species/proc/mutant_bodyparts_layertext(layer)
+	switch(layer)
+		if(BODY_BEHIND_LAYER)
+			return "BEHIND"
+		if(BODY_ADJ_LAYER)
+			return "ADJ"
+		if(BODY_FRONT_LAYER)
+			return "FRONT"
+
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
 	if(NOBREATH in specflags)
@@ -578,6 +593,12 @@
 			if( !(I.slot_flags & SLOT_MASK) )
 				return 0
 			if(!H.get_bodypart("head"))
+				return 0
+			return 1
+		if(slot_neck)
+			if(H.wear_neck)
+				return 0
+			if( !(I.slot_flags & SLOT_NECK) )
 				return 0
 			return 1
 		if(slot_back)

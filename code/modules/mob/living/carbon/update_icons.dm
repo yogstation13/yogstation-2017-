@@ -102,6 +102,15 @@
 			overlays_standing[FACEMASK_LAYER] = standing
 		update_hud_wear_mask(wear_mask)
 	apply_overlay(FACEMASK_LAYER)
+	
+/mob/living/carbon/update_inv_neck()
+	remove_overlay(NECK_LAYER)
+	if(istype(wear_neck, /obj/item/clothing/neck))
+		if(!(head && (head.flags_inv & HIDENECK)))
+			var/image/standing = wear_neck.build_worn_icon(state = wear_neck.icon_state, default_layer = NECK_LAYER, default_icon_file = 'icons/mob/neck.dmi')
+			overlays_standing[NECK_LAYER] = standing
+		update_hud_neck(wear_neck)
+	apply_overlay(NECK_LAYER)
 
 /mob/living/carbon/update_inv_back()
 	remove_overlay(BACK_LAYER)
@@ -145,6 +154,9 @@
 
 //update whether our mask item appears on our hud.
 /mob/living/carbon/proc/update_hud_wear_mask(obj/item/I)
+	return
+	
+/mob/living/carbon/proc/update_hud_neck(obj/item/I)
 	return
 
 //update whether our back item appears on our hud.
