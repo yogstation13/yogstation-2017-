@@ -142,6 +142,12 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 /proc/register_asset(var/asset_name, var/asset)
 	SSasset.cache[asset_name] = asset
 
+//Generated names do not include file extention.
+//Used mainly for code that deals with assets in a generic way
+//The same asset will always lead to the same asset name
+/proc/generate_asset_name(var/file)
+	return "asset.[md5(fcopy_rsc(file))]"
+
 //These datums are used to populate the asset cache, the proc "register()" does this.
 
 //all of our asset datums, used for referring to these later
@@ -176,6 +182,31 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 
+//Generates assets based on iconstates of a single icon
+/datum/asset/simple/icon_states
+	var/icon
+	var/direction = SOUTH
+	var/frame = 1
+	var/movement_states = FALSE
+
+	var/prefix = "default" //asset_name = "[prefix].[icon_state_name].png"
+	var/generic_icon_names = FALSE //generate icon filenames using generate_asset_name() instead the above format
+
+	verify = FALSE
+
+/datum/asset/simple/icon_states/register()
+	for(var/icon_state_name in icon_states(icon))
+		var/asset = icon(icon, icon_state_name, direction, frame, movement_states)
+		if (!asset)
+			continue
+		asset = fcopy_rsc(asset) //dedupe
+		var/asset_name = sanitize_filename("[prefix].[icon_state_name].png")
+		if (generic_icon_names)
+			asset_name = "[generate_asset_name(asset)].png"
+
+		assets[asset_name] = asset
+
+	..()
 
 /datum/asset/simple/tgui
 	assets = list(
@@ -240,6 +271,25 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"ad7.png" = 'icons/ads/ad7.png',
 	)
 
+
+/datum/asset/simple/goonchat
+	verify = FALSE
+	assets = list(
+		"jquery.min.js"            = 'code/modules/html_interface/js/jquery.min.js',
+		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
+		"errorHandler.js"          = 'code/modules/goonchat/browserassets/js/errorHandler.js',
+		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
+		"fontawesome-webfont.eot"  = 'tgui/assets/fonts/fontawesome-webfont.eot',
+		"fontawesome-webfont.svg"  = 'tgui/assets/fonts/fontawesome-webfont.svg',
+		"fontawesome-webfont.ttf"  = 'tgui/assets/fonts/fontawesome-webfont.ttf',
+		"fontawesome-webfont.woff" = 'tgui/assets/fonts/fontawesome-webfont.woff',
+		"font-awesome.css"	       = 'code/modules/goonchat/browserassets/css/font-awesome.css',
+		"browserOutput.css"	       = 'code/modules/goonchat/browserassets/css/browserOutput.css',
+	)
+
+/datum/asset/simple/icon_states/emojis
+	icon = 'icons/emoji.dmi'
+	generic_icon_names = TRUE
 
 //Registers HTML Interface assets.
 /datum/asset/HTML_interface/register()

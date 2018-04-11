@@ -14,7 +14,7 @@
 	msg = emoji_parse(msg)
 	msg = keywords_lookup(msg)
 	if(check_rights(R_ADMIN,0))
-		msg = "<span class='adminobserver'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> (<a href='?_src_=holder;adminplayerobservefollow=\ref[mob]'>FLW</A>): <span class='message'>[msg]</span></span>"
+		msg = "<span class='admin'><span class='prefix'>ADMIN:</span> <EM>[key_name(usr, 1)]</EM> [ADMIN_FLW(mob)]: <span class='message'>[msg]</span></span>"
 		to_chat(admins, msg)
 	else
 		msg = "<span class='adminobserver'><span class='prefix'>OBSERVER:</span> <EM>[key_name(usr, 1)]</EM> (<a href='?_src_=holder;adminplayerobservefollow=\ref[mob]'>FLW</A>): <span class='message'>[msg]</span></span>"

@@ -882,11 +882,11 @@ var/list/WALLITEMS_INVERSE = list(
 
 /obj/proc/atmosanalyzer_scan(datum/gas_mixture/air_contents, mob/user, obj/target = src)
 	var/obj/icon = target
-	user.visible_message("[user] has used the analyzer on \icon[icon] [target].", "<span class='notice'>You use the analyzer on \icon[icon] [target].</span>")
+	user.visible_message("[user] has used the analyzer on [icon2html(icon, viewers(user))] [target].", "<span class='notice'>You use the analyzer on [icon2html(icon, user)] [target].</span>")
 	var/pressure = air_contents.return_pressure()
 	var/total_moles = air_contents.total_moles()
 
-	to_chat(user, "<span class='notice'>Results of analysis of \icon[icon] [target].</span>")
+	to_chat(user, "<span class='notice'>Results of analysis of [icon2html(icon, user)] [target].</span>")
 	if(total_moles>0)
 		to_chat(user, "<span class='notice'>Pressure: [round(pressure,0.1)] kPa</span>")
 
@@ -1493,11 +1493,3 @@ proc/pick_closest_path(value, list/matches = get_fancy_list_of_atom_types())
 			spawn(25)
 				message_admins(msg)
 		stack_trace(msg)
-
-//easy conversion to goonchat later on
-/proc/to_chat(target, msg)
-	if(istype(target, /datum/mind))
-		var/datum/mind/M = target
-		M.current << msg
-	else
-		target << msg

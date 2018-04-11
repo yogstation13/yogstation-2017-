@@ -316,6 +316,8 @@ var/list/bloody_footprints_cache = list()
 //subtypesof(), typesof() without the parent path
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
+#define LIBVG(function, arguments...) call("./libvg.[world.system_type == "UNIX" ? "so" : "dll"]", function)(arguments)
+
 //Gets the turf this atom inhabits
 #define get_turf(A) (get_step(A, 0))
 

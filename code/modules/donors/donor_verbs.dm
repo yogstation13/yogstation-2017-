@@ -41,7 +41,7 @@ var/global/normal_donor_ooc_colour = "#333333"
 		return
 
 	if(!(prefs.agree))
-		to_chat(src, "\red Agree to the rules before using Donor.")
+		to_chat(src, "<font color='red'>Agree to the rules before using Donor.</font>")
 		return
 
 	if(!holder)

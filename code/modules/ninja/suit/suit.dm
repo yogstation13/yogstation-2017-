@@ -118,7 +118,7 @@ Contents:
 		H.gloves.item_state = "s-ninjan"
 	else
 		if(H.mind.special_role!="Space Ninja")
-			to_chat(H, "\red <B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...")
+			to_chat(H, "<font color='red'><B>fÄTaL ÈÈRRoR</B>: 382200-*#00CÖDE <B>RED</B>\nUNAUHORIZED USÈ DETÈCeD\nCoMMÈNCING SUB-R0UIN3 13...\nTÈRMInATING U-U-USÈR...</font>")
 			H.gib()
 			return 0
 		if(!istype(H.head, /obj/item/clothing/head/helmet/space/space_ninja))

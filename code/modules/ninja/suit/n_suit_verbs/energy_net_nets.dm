@@ -153,7 +153,7 @@ It is possible to destroy the net by the occupant or someone else.
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
 	user.visible_message("<span class='danger'>[user] slices the energy net apart!</span>", \
-						 "\green You slice the energy net to pieces.")
+						 "<font color='green'>You slice the energy net to pieces.</font>")
 	qdel(src)
 
 

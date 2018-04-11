@@ -781,9 +781,7 @@
 
 	if(health >= 0)
 		if(src == M)
-			visible_message( \
-				"[src] examines \himself.", \
-				"<span class='notice'>You check yourself for injuries.</span>")
+			visible_message("[src] examines \himself.", "<span class='notice'>You check yourself for injuries.</span>")
 
 			var/list/missing = list("head", "chest", "l_arm", "r_arm", "l_leg", "r_leg")
 			for(var/X in bodyparts)
@@ -815,10 +813,10 @@
 					status += "numb"
 				if(status == "")
 					status = "OK"
-				to_chat(src, "\t [status == "OK" ? "\blue" : "\red"] Your [LB.name] is [status].")
+				to_chat(src, "\t [status == "OK" ? "<font color='blue'>" : "<font color='red'>"] Your [LB.name] is [status].</font>")
 
 				for(var/obj/item/I in LB.embedded_objects)
-					to_chat(src, "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'>\red There is \a [I] embedded in your [LB.name]!</a>")
+					to_chat(src, "\t <a href='byond://?src=\ref[src];embedded_object=\ref[I];embedded_limb=\ref[LB]'><font color=red>There is \a [I] embedded in your [LB.name]!</font></a>")
 
 			for(var/t in missing)
 				to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")

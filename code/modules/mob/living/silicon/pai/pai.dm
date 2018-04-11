@@ -216,7 +216,7 @@
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
 		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+			O.show_message("<font color='red'><B>[M]</B> [M.attacktext] [src]!</font>", 1)
 		M.attack_log += text("\[[gameTimestamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[gameTimestamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -236,7 +236,7 @@
 		if ("help")
 			for(var/mob/O in viewers(src, null))
 				if ((O.client && !( O.stat )))
-					O.show_message(text("\blue [M] caresses [src]'s casing with its scythe like arm."), 1)
+					O.show_message(text("<span class='notice'>[M] caresses [src]'s casing with its scythe like arm.</span>"), 1)
 		else //harm
 			M.do_attack_animation(src)
 			var/damage = rand(10, 20)
@@ -244,14 +244,14 @@
 				playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.stat )))
-						O.show_message(text("\red <B>[] has slashed at []!</B>", M, src), 1)
+						O.show_message(text("<font color='red'><B>[] has slashed at []!</B></font>", M, src), 1)
 				src.adjustBruteLoss(damage)
 				src.updatehealth()
 			else
 				playsound(src.loc, 'sound/weapons/slashmiss.ogg', 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.stat )))
-						O.show_message(text("\red <B>[] took a swipe at []!</B>", M, src), 1)
+						O.show_message(text("<font color='red'><B>[] took a swipe at []!</B></font>", M, src), 1)
 	return
 
 /mob/living/silicon/pai/attackby(obj/item/weapon/W as obj, mob/user as mob, params)
@@ -442,19 +442,19 @@ mob/verb/makePAI(var/turf/t in view())
 		return
 
 	if (wiped)
-		to_chat(src, "\red Your holographic control processes were the first to be deleted! You can't move!")
+		to_chat(src, "<font color='red'>Your holographic control processes were the first to be deleted! You can't move!</font>")
 		return
 
 	if (!canholo)
-		to_chat(src, "\red Your master has not enabled your external holographic emitters! Ask nicely!")
+		to_chat(src, "<font color='red'>Your master has not enabled your external holographic emitters! Ask nicely!</font>")
 		return
 
 	if(src.loc != card)
-		to_chat(src, "\red You are already in your holographic form!")
+		to_chat(src, "<font color='red'>You are already in your holographic form!</font>")
 		return
 
 	if(world.time <= last_special)
-		to_chat(src, "\red You must wait before altering your holographic emitters again!")
+		to_chat(src, "<font color='red'>You must wait before altering your holographic emitters again!</font>")
 		return
 
 	last_special = world.time + 200
@@ -522,11 +522,11 @@ mob/verb/makePAI(var/turf/t in view())
 		return
 
 	if(src.loc == card)
-		to_chat(src, "\red You are already in your card form!")
+		to_chat(src, "<font color='red'>You are already in your card form!</font>")
 		return
 
 	if(world.time <= last_special)
-		to_chat(src, "\red You must wait before returning to your card form!")
+		to_chat(src, "<font color='red'>You must wait before returning to your card form!</font>")
 		return
 
 	if (emitter_OD)
@@ -540,7 +540,7 @@ mob/verb/makePAI(var/turf/t in view())
 	set name = "Choose Holographic Projection"
 
 	if (src.loc == card)
-		to_chat(src, "\red You must be in your holographic form to choose your projection shape!")
+		to_chat(src, "<font color='red'>You must be in your holographic form to choose your projection shape!</font>")
 		return
 
 	var/choice
@@ -563,10 +563,10 @@ mob/verb/makePAI(var/turf/t in view())
 
 	if(src && istype(src.loc,/obj/item/device/paicard))
 		resting = 0
-		to_chat(src, "\blue You spool down the clock on your internal processor for a moment. Ahhh. T h a t ' s  t h e  s t u f f.")
+		to_chat(src, "<font color='blue'>You spool down the clock on your internal processor for a moment. Ahhh. T h a t ' s  t h e  s t u f f.</font>")
 	else
 		resting = !resting
 		icon_state = resting ? "[chassis]_rest" : "[chassis]"
-		to_chat(src, "\blue You are now [resting ? "resting" : "getting up"]")
+		to_chat(src, "<font color='blue'>You are now [resting ? "resting" : "getting up"]</font>")
 
 	canmove = !resting

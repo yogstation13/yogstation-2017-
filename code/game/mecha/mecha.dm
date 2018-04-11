@@ -260,7 +260,7 @@
 	if(equipment && equipment.len)
 		to_chat(user, "It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME in equipment)
-			to_chat(user, "\icon[ME] [ME]")
+			to_chat(user, "[icon2html(ME, user)] [ME]")
 	return
 
 
@@ -968,7 +968,7 @@
 /obj/mecha/proc/occupant_message(message as text)
 	if(message)
 		if(occupant && occupant.client)
-			to_chat(occupant, "\icon[src] [message]")
+			to_chat(occupant, "[icon2html(src, occupant)] [message]")
 	return
 
 /obj/mecha/proc/log_message(message as text,red=null)

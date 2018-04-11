@@ -6,7 +6,7 @@
 	if (!did_suicide)
 		if(canmove || resting)
 			for (var/mob/M in viewers(T))
-				M.show_message("\red [src]'s holographic emitters lose power and coherence immediately, collapsing into the charred remains of what was once a personal AI.", 3, "\red A loud beeping followed by the tinkling clatter of glass and metal suddenly fills the air.", 2)
+				M.show_message("<font color='red'>[src]'s holographic emitters lose power and coherence immediately, collapsing into the charred remains of what was once a personal AI.</font>", 3, "<font color='red'>A loud beeping followed by the tinkling clatter of glass and metal suddenly fills the air.</font>", 2)
 			name = "pAI debris"
 			desc = "The unfortunate remains of some poor personal AI device."
 			icon = 'icons/mob/robots.dmi'

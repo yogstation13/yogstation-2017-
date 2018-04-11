@@ -107,6 +107,8 @@ var/list/preferences_datums = list()
 	var/clientfps = 0
 	var/uplink_spawn_loc = UPLINK_PDA
 
+	var/goonchat = TRUE
+
 /datum/preferences/New(client/C)
 	custom_names["ai"] = pick(ai_names)
 	custom_names["cyborg"] = pick(ai_names)
@@ -424,7 +426,9 @@ var/list/preferences_datums = list()
 						p_map += " (No longer exists)"
 				dat += "<b>Preferred Map:</b> <a href='?_src_=prefs;preference=preferred_map;task=input'>[p_map]</a><br>"
 
-			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a>"
+			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
+
+			dat += "<b>Chat Window:</b> <a href='?_src_=prefs;preference=goonchat'>[goonchat ? "Goonchat" : "Oldchat"]</a><br>"
 
 			dat += "</td><td width='300px' height='300px' valign='top'>"
 
@@ -1258,6 +1262,13 @@ var/list/preferences_datums = list()
 
 				if("allow_midround_antag")
 					toggles ^= MIDROUND_ANTAG
+
+				if("goonchat")
+					goonchat = !goonchat
+					if(user.client && user.client.chatOutput)
+						var/datum/chatOutput/CO = user.client.chatOutput
+						CO.disabled = !goonchat
+						CO.showChat()
 
 				if("save")
 					save_preferences()

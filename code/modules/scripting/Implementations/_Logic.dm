@@ -103,8 +103,7 @@
 
 		else
 			if(istext(haystack))
-				if(length(haystack) >= end && start > 0)
-					return findtext(haystack, needle, start, end)
+				return utf8_find(haystack, needle, start, end)
 
 //Returns a substring of the string
 /proc/n_substr(string, start = 1, end = 0)
@@ -114,10 +113,10 @@
 
 //Returns the length of the string or list
 /proc/n_smartlength(container)
-	if(container)
-		if(istype(container, /list) || istext(container))
-			return length(container)
-	return 0
+	if (istext(container))
+		return utf8_len(container)
+
+	return length(container)
 
 //Lowercase all characters
 /proc/n_lower(string)

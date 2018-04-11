@@ -102,7 +102,7 @@
 		if(M.client)
 			if(!M.client.prefs.soundenv)
 				S.environment = ROOM
-	to_chat(src, S)
+	src << S
 
 /mob/playsound_local(turf/turf_source, soundin, vol as num, vary, frequency, falloff, surround = 1)
 	if(!client || ear_deaf > 0)
@@ -110,13 +110,13 @@
 	..()
 
 /mob/proc/stopLobbySound()
-	to_chat(src, nullify_sound(null, repeat = 0, wait = 0, volume = 85, channel = 1))
+	src << nullify_sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)
 		return
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
-		to_chat(src, nullify_sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) )
+		src << nullify_sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1)
 
 /proc/get_rand_frequency()
 	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.

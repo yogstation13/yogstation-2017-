@@ -6,7 +6,7 @@
 
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot speak in IC (muted).")
+			to_chat(src, "<font color='red'>You cannot speak in IC (muted).</font>")
 			return
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
