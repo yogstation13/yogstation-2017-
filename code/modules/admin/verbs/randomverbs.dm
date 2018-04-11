@@ -139,6 +139,8 @@
 			mute_string = "pray"
 		if(MUTE_ADMINHELP)
 			mute_string = "adminhelp, admin PM and ASAY"
+		if(MUTE_MENTORHELP)
+			mute_string = "mentorhelp"
 		if(MUTE_DEADCHAT)
 			mute_string = "deadchat and DSAY"
 		if(MUTE_ALL)

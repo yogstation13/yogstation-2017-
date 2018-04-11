@@ -71,6 +71,9 @@
 	var/forbid_singulo_possession = 0
 	var/useircbot = 0
 
+	var/mentors_mobname_only = 0		// Only display mob name to mentors in mentorhelps
+	var/mentor_legacy_system = 0		// Whether to use the legacy mentor system (flat file) instead of SQL
+
 	var/check_randomizer = 0
 
 	var/admin_legacy_system = 0	//Defines whether the server uses the legacy admin system with admins.txt or the SQL system. Config option in config.txt
@@ -443,6 +446,10 @@
 					webhook_key = value
 				if("check_randomizer")
 					config.check_randomizer = 1
+				if ("mentor_mobname_only")
+					config.mentors_mobname_only = 1
+				if ("mentor_legacy_system")
+					config.mentor_legacy_system = 1
 				if("roundlength")
 					config.roundlength = text2num(value)
 

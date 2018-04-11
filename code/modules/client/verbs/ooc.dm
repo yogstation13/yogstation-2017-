@@ -94,6 +94,10 @@
 					to_chat(C, "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message'>[msg]</span></span></font>")
 
 			else if(!(key in C.prefs.ignoring))
+				var/ooc_color = normal_ooc_colour
+				if(check_mentor())
+					ooc_color = "#FF3E96"
+				to_chat(C, "<font color='[ooc_color]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>")
 				if(is_donator(src))
 					to_chat(C, "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>\[Donator\] OOC:</span> <EM>[keyname]:</EM> <span class='message'>[msg]</span></span></font>")
 				else

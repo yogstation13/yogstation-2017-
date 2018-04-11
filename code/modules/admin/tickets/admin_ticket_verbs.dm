@@ -20,8 +20,15 @@
 			found_ticket = T
 
 	if(!found_ticket)
-		var/datum/admin_ticket/T = new /datum/admin_ticket(src, ticket_title)
+		var/title_lower = lowertext(ticket_title)
+		if(findtext(title_lower, "how to") == 1 || findtext(title_lower, "how do") == 1)
+			if(mentors.len)
+				if(alert("\"[ticket_title]\" looks like a game mechanics question, would you like to ask in mentorhelp instead?",
+						 "Adminhelp?", "Yes, mentorhelp", "No, adminhelp") == "Yes, mentorhelp")
+					mentorhelp(ticket_title)
+					return
 
+		var/datum/admin_ticket/T = new /datum/admin_ticket(src, ticket_title)
 		if(!T.error)
 			tickets_list.Add(T)
 		else
