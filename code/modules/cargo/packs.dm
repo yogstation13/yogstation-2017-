@@ -1338,6 +1338,15 @@
 	crate_name = "standard costume crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/misc/sphere
+	name = "Advanced Crates"
+	cost = 2600
+	contains = list(/obj/structure/closet/crate/sphere,
+					/obj/structure/closet/crate/sphere,
+					/obj/structure/closet/crate/sphere)
+	crate_name = "Advanced Crate Container"
+	crate_type = /obj/structure/closet/crate/large
+
 /datum/supply_pack/misc/wizard
 	name = "Wizard Costume Crate"
 	cost = 2000
