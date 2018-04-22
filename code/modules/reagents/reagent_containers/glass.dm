@@ -63,8 +63,32 @@
 
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 		playsound(src, "pour", 50, 1)
-		to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
+		to_chat(user,"<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
+	else if(istype(target, /obj/structure/reagent_holder))
+		var/obj/structure/reagent_holder/C = target
+		if(C.mode)
+			if(!reagents.total_volume)
+				to_chat(user,"<span class='warning'>[src] is empty!</span>")
+				return
+			if(target.reagents.total_volume >= target.reagents.maximum_volume)
+				to_chat(user,"<span class='notice'>[C] is full.</span>")
+				return
 
+			var/trans = reagents.trans_to(C, amount_per_transfer_from_this)
+			playsound(src, "pour", 50, 1)
+			to_chat(user,"<span class='notice'>You transfer [trans] unit\s of the solution to [target].</span>")
+		else
+			if(target.reagents && !target.reagents.total_volume)
+				to_chat(user,"<span class='warning'>[C] is empty!</span>")
+				return
+			if(reagents.total_volume >= reagents.maximum_volume)
+				to_chat(user,"<span class='notice'>[src] is full.</span>")
+				return
+				
+			var/trans = C.reagents.trans_to(src, amount_per_transfer_from_this)
+			playsound(src, "pour", 50, 1)
+			to_chat(user, "<span class='notice'>You fill [src] with [trans] unit\s of the contents of [target].</span>")
+      
 	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")

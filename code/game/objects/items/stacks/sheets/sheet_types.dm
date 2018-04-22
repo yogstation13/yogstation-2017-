@@ -38,6 +38,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 /*	new/datum/stack_recipe("reflector frame", /obj/structure/reflector, 5, time = 25, one_per_turf = 1, on_floor = 1), \*/
 	null, \
 	new/datum/stack_recipe("grenade casing", /obj/item/weapon/grenade/chem_grenade), \
+	new/datum/stack_recipe("cauldron", /obj/structure/reagent_holder, 10, time = 20, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("light fixture frame", /obj/item/wallframe/light_fixture, 2), \
 	new/datum/stack_recipe("small light fixture frame", /obj/item/wallframe/light_fixture/small, 1), \
 	null, \
