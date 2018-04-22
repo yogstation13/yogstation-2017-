@@ -333,6 +333,11 @@ var/list/bloody_footprints_cache = list()
 #define SENTIENCE_MINEBOT 4
 #define SENTIENCE_BOSS 5
 
+
+//Ghost role timers
+#define DEFAULT_RESPAWN_TIME 18000 //In decimals. 30 minutes
+#define DRONE_WAIT 18000  //In decimals. 30 minutes
+
 //Fire stuff, for burn_state
 #define LAVA_PROOF -2
 #define FIRE_PROOF -1

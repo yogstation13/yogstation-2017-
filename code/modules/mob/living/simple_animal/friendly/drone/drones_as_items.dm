@@ -14,7 +14,7 @@
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "drone_maint_hat"//yes reuse the _hat state.
 	origin_tech = "programming=2;biotech=4"
-	var/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
+	var/mob/living/simple_animal/drone/drone_type = /mob/living/simple_animal/drone //Type of drone that will be spawned
 
 /obj/item/drone_shell/New()
 	..()
@@ -22,7 +22,7 @@
 	if(A)
 		notify_ghosts("A drone shell has been created in \the [A.name].", source = src, action=NOTIFY_ATTACK)
 
-/obj/item/drone_shell/attack_ghost(mob/user)
+/obj/item/drone_shell/attack_ghost(mob/dead/observer/user)
 	if(jobban_isbanned(user,"drone"))
 		return
 	if(config.use_age_restriction_for_jobs)
@@ -34,11 +34,20 @@
 	if(!ticker.mode)
 		to_chat(user, "Can't become a drone before the game has started.")
 		return
+
+	if(world.time < DRONE_WAIT)
+		to_chat(user, "<span class='warning'>You can only be a drone after the [round(DRONE_WAIT / 600)] mark has passed.</span>")
+		return
+
+	if(!user.respawn_check("a drone", DEFAULT_RESPAWN_TIME))
+		return
+
 	var/be_drone = alert("Become a drone? (Warning, You can no longer be cloned!)",,"Yes","No")
 	if(be_drone == "No" || qdeleted(src))
 		return
 	var/mob/living/simple_animal/drone/D = new drone_type(get_turf(loc))
 	D.key = user.key
+	D.is_ghostrole = TRUE
 	qdel(src)
 
 
