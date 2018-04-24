@@ -124,6 +124,9 @@
 	delay = 10
 	e_cost = 10
 
+/obj/item/ammo_casing/energy/plasma/adv/cyborg
+	e_cost = 50
+
 /obj/item/ammo_casing/energy/wormhole
 	projectile_type = /obj/item/projectile/beam/wormhole
 	e_cost = 0

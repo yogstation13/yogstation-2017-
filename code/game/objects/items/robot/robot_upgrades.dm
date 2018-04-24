@@ -177,7 +177,7 @@
 
 	return 1
 
-/obj/item/borg/upgrade/hyperka
+/*/obj/item/borg/upgrade/hyperka
 	name = "mining cyborg hyper-kinetic accelerator"
 	desc = "A satchel of holding replacement for mining cyborg's ore satchel module."
 	icon_state = "cyborg_upgrade3"
@@ -193,6 +193,22 @@
 		qdel(H)
 
 	R.module.modules += new /obj/item/weapon/gun/energy/kinetic_accelerator/hyper/cyborg(R.module)
+	R.module.rebuild()
+
+	return 1*/
+
+/obj/item/borg/upgrade/plasmacutter_adv
+	name = "mining cyborg advanced plasma cutter"
+	desc = "An advanced plasma cutter module"
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = /obj/item/weapon/robot_module/miner
+
+/obj/item/borg/upgrade/plasmacutter_adv/action(mob/living/silicon/robot/R)
+	if(..())
+		return
+
+	R.module.modules += new /obj/item/weapon/gun/energy/plasmacutter/adv/cyborg(R.module)
 	R.module.rebuild()
 
 	return 1
